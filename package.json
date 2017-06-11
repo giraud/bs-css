@@ -4,7 +4,8 @@
   "description": "glamor bindings for Reason",
   "main": "src/glamorRe.re",
   "scripts": {
-    "test": "exit 0",
+    "jest": "jest",
+    "test": "bsb -make-world && jest",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world && rm -f finalOutput/*.js"
   },
@@ -23,6 +24,12 @@
     "glamor": "^2.0.0"
   },
   "devDependencies": {
+    "bs-jest": "^0.1.0",
     "bs-platform": "^1.6.0"
+  },
+  "jest": {
+    "roots": [
+      "lib/js/src"
+    ]
   }
 }
