@@ -5,8 +5,10 @@
 ## Installation
 
 ```sh
-npm install bs-glamor
+npm install --save bs-glamor
 ```
+
+In your `bsconfig.js`, include `"bs-glamor"` in the `bs-dependencies`.
 
 ## Usage
 
