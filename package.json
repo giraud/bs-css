@@ -1,0 +1,28 @@
+{
+  "name": "glamor-reason",
+  "version": "0.1.0",
+  "description": "glamor bindings for Reason",
+  "main": "src/glamorRe.re",
+  "scripts": {
+    "test": "exit 0",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world && rm -f finalOutput/*.js"
+  },
+  "keywords": [
+    "glamor",
+    "reason",
+    "css"
+  ],
+  "author": "Jan Poeschko <jan@poeschko.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poeschko/glamor-reason.git"
+  },
+  "dependencies": {
+    "glamor": "^2.0.0"
+  },
+  "devDependencies": {
+    "bs-platform": "^1.6.0"
+  }
+}
