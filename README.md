@@ -8,7 +8,7 @@ The API is still **experimental**. Only the `css` function from glamor is expose
 npm install --save bs-glamor
 ```
 
-In your `bsconfig.js`, include `"bs-glamor"` in the `bs-dependencies`.
+In your `bsconfig.json`, include `"bs-glamor"` in the `bs-dependencies`.
 
 ## Usage
 
