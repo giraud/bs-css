@@ -2,7 +2,7 @@ open Jest;
 
 open Expect;
 
-open GlamorRe;
+open Glamor;
 
 /*
   We only test that a CSS spec is translated to *something* (not an empty string) without errors.
@@ -12,7 +12,7 @@ open GlamorRe;
 let check result => expect result |> not_ |> toBe "";
 
 describe
-  "GlamorRe"
+  "Glamor"
   (fun _ => {
     test "takes a single CSS property" (fun _ => check (
       css [

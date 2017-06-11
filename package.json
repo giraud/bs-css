@@ -1,8 +1,8 @@
 {
-  "name": "glamor-reason",
+  "name": "bs-glamor",
   "version": "0.1.0",
-  "description": "glamor bindings for Reason",
-  "main": "src/glamorRe.re",
+  "description": "BuckleScript bindings for glamor",
+  "main": "src/glamor.re",
   "scripts": {
     "jest": "jest",
     "test": "bsb -make-world && jest",
@@ -11,6 +11,7 @@
   },
   "keywords": [
     "glamor",
+    "bucklescript",
     "reason",
     "css"
   ],
@@ -18,7 +19,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/poeschko/glamor-reason.git"
+    "url": "git+https://github.com/poeschko/bs-glamor.git"
   },
   "dependencies": {
     "glamor": "^2.0.0"
