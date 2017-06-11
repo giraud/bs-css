@@ -64,6 +64,10 @@ The result of the `css` function can be assigned to a class name, e.g. in JSX:
 <div className=(css [color "red"]) />
 ```
 
+## Example
+
+See [reason-react-tictactoe](https://github.com/poeschko/reason-react-tictactoe) for a live example.
+
 ## Development
 
 ```sh
