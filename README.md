@@ -1,6 +1,6 @@
 # bs-glamor – [BuckleScript](https://github.com/bloomberg/bucklescript) bindings for [glamor](https://github.com/threepointone/glamor)
 
-**Highly experimental!**
+The API is still **experimental**. Only the `css` function from glamor is exposed (with its result slightly incorrectly typed as a `string`); no other functions such as `renderStatic` are supported yet.
 
 ## Installation
 
