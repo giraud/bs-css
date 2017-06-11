@@ -57,3 +57,7 @@ The result of the `css` function can be assigned to a class name, e.g. in JSX:
 There are some simplistic tests using [bs-jest](https://github.com/BuckleTypes/bs-jest).
 
     npm run test
+
+## Thanks
+
+Thanks to [reason-react-example](https://github.com/chenglou/reason-react-example), [reason-react](https://github.com/reasonml/reason-react), and [bs-jest](https://github.com/BuckleTypes/bs-jest) for inspiration how to create a Reason library, and of course, thanks to [glamor](https://github.com/threepointone/glamor).
