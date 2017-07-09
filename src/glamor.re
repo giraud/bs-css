@@ -143,7 +143,7 @@ let elevation v => Property "elevation" v;
 
 let emptyCells v => Property "emptyCells" v;
 
-let cssFloat v => Property "cssFloat" v;
+let cssFloat v => Property "float" v;
 
 let font v => Property "font" v;
 
