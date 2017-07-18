@@ -1,4 +1,4 @@
-# bs-glamor – [BuckleScript](https://github.com/bloomberg/bucklescript) bindings for [glamor](https://github.com/threepointone/glamor)
+# bs-glamor – [BuckleScript](https://github.com/bucklescript/bucklescript) bindings for [glamor](https://github.com/threepointone/glamor)
 
 The API is still **experimental**. Only the `css` function from glamor is exposed (with its result slightly incorrectly typed as a `string`); no other functions such as `renderStatic` are supported yet.
 
@@ -12,7 +12,7 @@ In your `bsconfig.json`, include `"bs-glamor"` in the `bs-dependencies`.
 
 ## Usage
 
-The following examples (in [Reason](https://facebook.github.io/reason) syntax) assume that `Glamor` is included in the namespace:
+The following examples (in [Reason](http://reasonml.github.io) syntax) assume that `Glamor` is included in the namespace:
 
 ```reason
 open Glamor;
