@@ -145,6 +145,8 @@ let emptyCells v => Property "emptyCells" v;
 
 let cssFloat v => Property "float" v;
 
+let filter v => Property "filter" v;
+
 let font v => Property "font" v;
 
 let fontFamily v => Property "fontFamily" v;
