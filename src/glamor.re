@@ -1,7 +1,7 @@
 type styleObj;
 external makeCSS : styleObj => string = "css" [@@bs.module "glamor"];
 external makeGlobalCSS : string => styleObj => unit = "global" [@@bs.scope "css"] [@@bs.module "glamor"];
-let combineStyles : list string => string = [%bs.raw {|
+let merge : list string => string = [%bs.raw {|
     function (styles) {
         const glamor = require('glamor');
         return glamor.css.apply(glamor, styles)
@@ -53,9 +53,6 @@ let rec addDeclaration obj (decl: declaration) =>
 and declarationsToObj decls => List.fold_left addDeclaration emptyObj decls;
 
 let css decls => makeCSS (declarationsToObj decls);
-
-let combine (styles: list string) => combineStyles styles;
-
 
 let global selector declarations => makeGlobalCSS selector (declarationsToObj declarations);
 
