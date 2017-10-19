@@ -89,6 +89,29 @@ glamor will make sure that rules are merged in the correct order, managing nesti
 
  ```
 
+## Keyframes
+
+define animation keyframes;
+
+```
+let bounce = Glamor.keyframes [
+  ("0%": [transform "scale(0.1)",  opacity "0"]),
+  ("60%": [transform "scale(1.2)",  opacity "1"]),
+  ("100%": [transform "scale(1)"])
+];
+let styles = css [
+    animationName bounce,
+    animationDuration "2s",
+    width "50px",
+    height "50px",
+    backgroundColor "red"
+];
+
+// ...
+<div className=styles>
+  bounce!
+</div>
+```
 
 ## Example
 
