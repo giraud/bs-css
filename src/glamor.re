@@ -112,15 +112,26 @@ let borderBottomStyle v => Property "borderBottomStyle" v;
 
 let borderLeftStyle v => Property "borderLeftStyle" v;
 
-let borderTopWidth v => Property "borderTopWidth" v;
+let borderTopWidth v => Property "borderTopWidth" (string_of_int v ^ "px");
 
-let borderRightWidth v => Property "borderRightWidth" v;
+let borderTopWidthPct v => Property "borderTopWidth" (string_of_int v ^ "%");
+let borderTopWidthRem v => Property "borderTopWidth" (string_of_int v ^ "rem");
 
-let borderBottomWidth v => Property "borderBottomWidth" v;
+let borderRightWidth v => Property "borderRightWidth" (string_of_int v ^ "px");
+let borderRightWidthPct v => Property "borderRightWidth" (string_of_int v ^ "%");
+let borderRightWidthRem v => Property "borderRightWidth" (string_of_int v ^ "rem");
 
-let borderLeftWidth v => Property "borderLeftWidth" v;
+let borderBottomWidth v => Property "borderBottomWidth" (string_of_int v ^ "px");
+let borderBottomWidthPct v => Property "borderBottomWidth" (string_of_int v ^ "%");
+let borderBottomWidthRem v => Property "borderBottomWidth" (string_of_int v ^ "rem");
 
-let borderWidth v => Property "borderWidth" v;
+let borderLeftWidth v => Property "borderLeftWidth" (string_of_int v ^ "px");
+let borderLeftWidthPct v => Property "borderLeftWidth" (string_of_int v ^ "%");
+let borderLeftWidthRem v => Property "borderLeftWidth" (string_of_int v ^ "rem");
+
+let borderWidth v => Property "borderWidth" (string_of_int v ^ "px");
+let borderWidthPct v => Property "borderWidth" (string_of_int v ^ "%");
+let borderWidthRem v => Property "borderWidth" (string_of_int v ^ "rem");
 
 let bottom v => Property "bottom" v;
 
@@ -193,15 +204,31 @@ let fontStyle v => Property "fontStyle" v;
 
 let fontVariant v => Property "fontVariant" v;
 
-let fontWeight v => Property "fontWeight" v;
+let fontWeight v => Property "fontWeight" (switch v {
+    | `normal => "normal"
+    | `bold => "bold"
+    | `_100 => "100"
+    | `_200 => "200"
+    | `_300 => "300"
+    | `_400 => "400"
+    | `_500 => "500"
+    | `_600 => "600"
+    | `_700 => "700"
+    | `_800 => "800"
+    | `_900 => "900"
+});
 
-let height v => Property "height" v;
+let height v => Property "height" (string_of_int v ^ "px");
+let heightPct v => Property "height" (string_of_int v ^ "%");
+let heightRem v => Property "height" (string_of_int v ^ "rem");
 
-let left v => Property "left" v;
+let left v => Property "left" (string_of_int v ^ "px");
+let leftPct v => Property "left" (string_of_int v ^ "%");
+let leftRem v => Property "left" (string_of_int v ^ "rem");
 
 let letterSpacing v => Property "letterSpacing" v;
 
-let lineHeight v => Property "lineHeight" v;
+let lineHeight v => Property "lineHeight" (string_of_float v);
 
 let listStyle v => Property "listStyle" v;
 
@@ -211,27 +238,45 @@ let listStylePosition v => Property "listStylePosition" v;
 
 let listStyleType v => Property "listStyleType" v;
 
-let margin v => Property "margin" v;
+let margin v => Property "margin" (string_of_int v ^ "px");
+let marginPct v => Property "margin" (string_of_int v ^ "%");
+let marginRem v => Property "margin" (string_of_int v ^ "rem");
 
-let marginTop v => Property "marginTop" v;
+let marginTop v => Property "marginTop" (string_of_int v ^ "px");
+let marginTopPct v => Property "marginTopPct" (string_of_int v ^ "%");
+let marginTopRem v => Property "marginTopRem" (string_of_int v ^ "rem");
 
-let marginRight v => Property "marginRight" v;
+let marginRight v => Property "marginRight" (string_of_int v ^ "px");
+let marginRightPct v => Property "marginRightPct" (string_of_int v ^ "%");
+let marginRightRem v => Property "marginRightRem" (string_of_int v ^ "rem");
 
-let marginBottom v => Property "marginBottom" v;
+let marginBottom v => Property "marginBottom" (string_of_int v ^ "px");
+let marginBottomPct v => Property "marginBottomPct" (string_of_int v ^ "%");
+let marginBottomRem v => Property "marginBottomRem" (string_of_int v ^ "rem");
 
-let marginLeft v => Property "marginLeft" v;
+let marginLeft v => Property "marginLeft" (string_of_int v ^ "px");
+let marginLeftPct v => Property "marginLeftPct" (string_of_int v ^ "%");
+let marginLeftRem v => Property "marginLeftRem" (string_of_int v ^ "rem");
 
 let markerOffset v => Property "markerOffset" v;
 
 let marks v => Property "marks" v;
 
-let maxHeight v => Property "maxHeight" v;
+let maxHeight v => Property "maxHeight" (string_of_int v ^ "px");
+let maxHeightPct v => Property "maxHeight" (string_of_int v ^ "pct");
+let maxHeightRem v => Property "maxHeight" (string_of_int v ^ "rem");
 
-let maxWidth v => Property "maxWidth" v;
+let maxWidth v => Property "maxWidth" (string_of_int v ^ "px");
+let maxWidthPct v => Property "maxWidth" (string_of_int v ^ "pct");
+let maxWidthRem v => Property "maxWidth" (string_of_int v ^ "rem");
 
-let minHeight v => Property "minHeight" v;
+let minHeight v => Property "minHeight" (string_of_int v ^ "px");
+let minHeightPct v => Property "minHeight" (string_of_int v ^ "pct");
+let minHeightRem v => Property "minHeight" (string_of_int v ^ "rem");
 
-let minWidth v => Property "minWidth" v;
+let minWidth v => Property "minWidth" (string_of_int v ^ "px");
+let minWidthPct v => Property "minWidth" (string_of_int v ^ "pct");
+let minWidthRem v => Property "minWidth" (string_of_int v ^ "rem");
 
 let orphans v => Property "orphans" v;
 
@@ -243,17 +288,31 @@ let outlineStyle v => Property "outlineStyle" v;
 
 let outlineWidth v => Property "outlineWidth" v;
 
-let overflow v => Property "overflow" v;
+let overflow v => Property "overflow" (switch v {
+    | `visible => "visible"
+    | `hidden => "hidden"
+    | `scroll => "scroll"
+    });
 
-let padding v => Property "padding" v;
+let padding v => Property "padding" (string_of_int v ^ "px");
+let paddingPct v => Property "padding" (string_of_int v ^ "%");
+let paddingRem v => Property "padding" (string_of_int v ^ "rem");
 
-let paddingTop v => Property "paddingTop" v;
+let paddingTop v => Property "paddingTop" (string_of_int v ^ "px");
+let paddingTopPct v => Property "paddingTop" (string_of_int v ^ "%");
+let paddingTopRem v => Property "paddingTop" (string_of_int v ^ "rem");
 
-let paddingRight v => Property "paddingRight" v;
+let paddingRight v => Property "paddingRight" (string_of_int v ^ "px");
+let paddingRightPct v => Property "paddingRight" (string_of_int v ^ "%");
+let paddingRightRem v => Property "paddingRight" (string_of_int v ^ "rem");
 
-let paddingBottom v => Property "paddingBottom" v;
+let paddingBottom v => Property "paddingBottom" (string_of_int v ^ "px");
+let paddingBottomPct v => Property "paddingBottom" (string_of_int v ^ "%");
+let paddingBottomRem v => Property "paddingBottom" (string_of_int v ^ "rem");
 
-let paddingLeft v => Property "paddingLeft" v;
+let paddingLeft v => Property "paddingLeft" (string_of_int v ^ "px");
+let paddingLeftPct v => Property "paddingLeft" (string_of_int v ^ "%");
+let paddingLeftRem v => Property "paddingLeft" (string_of_int v ^ "rem");
 
 let page v => Property "page" v;
 
@@ -305,7 +364,13 @@ let stress v => Property "stress" v;
 
 let tableLayout v => Property "tableLayout" v;
 
-let textAlign v => Property "textAlign" v;
+let textAlign v => Property "textAlign" ( switch v {
+    | `auto => "auto"
+    | `left => "left"
+    | `right => "right"
+    | `center => "center"
+    | `justify => "justify"
+});
 
 let textDecoration v => Property "textDecoration" v;
 
@@ -327,19 +392,27 @@ let voiceFamily v => Property "voiceFamily" v;
 
 let volume v => Property "volume" v;
 
-let whiteSpace v => Property "whiteSpace" v;
+let whiteSpace v => Property "whiteSpace" (switch v {
+ | `normal => "normal"
+ | `nowrap => "nowrap"
+ | `pre => "pre"
+ | `pre_wrap => "pre-wrap"
+ | `pre_line => "preLine"
+});
 
 let widows v => Property "widows" v;
 
-let width v => Property "width" v;
+let width v => Property "width" (string_of_int v ^ "px");
+let widthPct v => Property "width" (string_of_int v ^ "%");
+let widthRem v => Property "width" (string_of_int v ^ "rem");
 
 let wordSpacing v => Property "wordSpacing" v;
 
-let zIndex v => Property "zIndex" v;
+let zIndex v => Property "zIndex" (string_of_int v);
 
 /* Below properties based on https://www.w3.org/Style/CSS/all-properties */
 /* Color Level 3 - REC */
-let opacity v => Property "opacity" v;
+let opacity v => Property "opacity" (string_of_float v);
 
 /* Backgrounds and Borders Level 3 - CR */
 /* backgroundRepeat - already defined by CSS2Properties */
@@ -350,15 +423,15 @@ let backgroundSize v => Property "backgroundSize" v;
 
 let backgroundClip v => Property "backgroundClip" v;
 
-let borderRadius v => Property "borderRadius" v;
+let borderRadius v => Property "borderRadius" (string_of_int v);
 
-let borderTopLeftRadius v => Property "borderTopLeftRadius" v;
+let borderTopLeftRadius v => Property "borderTopLeftRadius" (string_of_int  v);
 
-let borderTopRightRadius v => Property "borderTopRightRadius" v;
+let borderTopRightRadius v => Property "borderTopRightRadius" (string_of_int  v);
 
-let borderBottomLeftRadius v => Property "borderBottomLeftRadius" v;
+let borderBottomLeftRadius v => Property "borderBottomLeftRadius" (string_of_int  v);
 
-let borderBottomRightRadius v => Property "borderBottomRightRadius" v;
+let borderBottomRightRadius v => Property "borderBottomRightRadius" (string_of_int  v);
 
 let borderImage v => Property "borderImage" v;
 
@@ -434,27 +507,61 @@ let imageResolution v => Property "imageResolution" v;
 let imageOrientation v => Property "imageOrientation" v;
 
 /* Flexible Box Layout - CR */
-let alignContent v => Property "alignContent" v;
+let alignContent v => Property "alignContent" (switch v {
+    | `flexStart => "flex-start"
+    | `flexEnd => "flex-end"
+    | `center => "center"
+    | `stretch => "stretch"
+    | `spaceAround => "space-around"
+    | `spaceBetween => "space-between"
+});
 
-let alignItems v => Property "alignItems" v;
+let alignItems v => Property "alignItems" (switch v {
+    | `flexStart => "flex-start"
+    | `flexEnd => "flex-end"
+    | `center => "center"
+    | `stretch => "stretch"
+    | `baseline => "baseline"
+});
 
-let alignSelf v => Property "alignSelf" v;
+let alignSelf v => Property "alignSelf" (switch v {
+    | `flexStart => "flex-start"
+    | `flexEnd => "flex-end"
+    | `center => "center"
+    | `stretch => "stretch"
+    | `baseline => "baseline"
+});
 
-let flex v => Property "flex" v;
+let flex v => Property "flex" (string_of_int v);
 
-let flexBasis v => Property "flexBasis" v;
+let flexBasis v => Property "flexBasis" (string_of_int v);
 
-let flexDirection v => Property "flexDirection" v;
+let flexDirection v => Property "flexDirection"  (switch v {
+    | `row => "row"
+    | `rowReverse => "row-reverse"
+    | `column => "column"
+    | `columnReverse => "column-reverse"
+});
 
-let flexFlow v => Property "flexFlow" v;
+let flexFlow v => Property "flexFlow" (string_of_int v);
 
-let flexGrow v => Property "flexGrow" v;
+let flexGrow v => Property "flexGrow" (string_of_int v);
 
-let flexShrink v => Property "flexShrink" v;
+let flexShrink v => Property "flexShrink" (string_of_int v);
 
-let flexWrap v => Property "flexWrap" v;
+let flexWrap v => Property "flexWrap" (switch v {
+    | `wrap => "wrap"
+    | `nowrap => "nowrap"
+});
 
-let justifyContent v => Property "justifyContent" v;
+let justifyContent v => Property "justifyContent" (switch v {
+    | `flexStart => "flex-start"
+    | `flexEnd => "flex-end"
+    | `center => "center"
+    | `stretch => "stretch"
+    | `spaceAround => "space-around"
+    | `spaceBetween => "space-between"
+});
 
 let order v => Property "order" v;
 
@@ -574,7 +681,10 @@ let boxDecorationBreak v => Property "boxDecorationBreak" v;
 /* breakBefore - already defined by Multi-column Layout */
 /* breakInside - already defined by Multi-column Layout */
 /* Basic User Interface Level 3 - CR */
-let boxSizing v => Property "boxSizing" v;
+let boxSizing v => Property "boxSizing" (switch v {
+| `content_box => "content-box"
+| `border_box => "border-box"
+});
 
 let caretColor v => Property "caretColor" v;
 
@@ -656,13 +766,18 @@ let wordWrap v => Property "wordWrap" v;
 /* Animations - WD */
 let animation v => Property "animation" v;
 
-let animationDelay v => Property "animationDelay" v;
+let animationDelay v => Property "animationDelay" (string_of_float v);
 
 let animationDirection v => Property "animationDirection" v;
 
-let animationDuration v => Property "animationDuration" v;
+let animationDuration v => Property "animationDuration" (string_of_float v);
 
-let animationFillMode v => Property "animationFillMode" v;
+let animationFillMode v => Property "animationFillMode" (switch v {
+    | `normal => "normal"
+    | `reverse => "reverse"
+    | `alternate => "alternate"
+    | `alternate_reverse => "alternate-reverse"
+});
 
 let animationIterationCount v => Property "animationIterationCount" v;
 
