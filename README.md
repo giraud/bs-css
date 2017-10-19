@@ -90,8 +90,6 @@ glamor will make sure that rules are merged in the correct order, managing nesti
  ```
 
 
-
-
 ## Example
 
 See [reason-react-tictactoe](https://github.com/poeschko/reason-react-tictactoe) for a live example.

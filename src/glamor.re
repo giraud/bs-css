@@ -1,6 +1,7 @@
 type styleObj;
 external makeCSS : styleObj => string = "css" [@@bs.module "glamor"];
 external makeGlobalCSS : string => styleObj => unit = "global" [@@bs.scope "css"] [@@bs.module "glamor"];
+external makeKeyFrames : Js.Dict.t styleObj => string = "keyframes" [@@bs.scope "css"] [@@bs.module "glamor"];
 let merge : list string => string = [%bs.raw {|
     function (styles) {
         const glamor = require('glamor');
@@ -57,6 +58,7 @@ let css decls => makeCSS (declarationsToObj decls);
 
 let global selector declarations => makeGlobalCSS selector (declarationsToObj declarations);
 
+let keyframes frames => makeKeyFrames (Js.Dict.fromList frames);
 /*
    ==============
    CSS properties
