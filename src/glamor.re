@@ -58,7 +58,7 @@ let css decls => makeCSS (declarationsToObj decls);
 
 let global selector declarations => makeGlobalCSS selector (declarationsToObj declarations);
 
-let keyframes frames => makeKeyFrames (Js.Dict.fromList frames);
+let keyframes frames => makeKeyFrames (frames |> List.map (fun (k, v) => (k, declarationsToObj v)) |> Js.Dict.fromList);
 /*
    ==============
    CSS properties
