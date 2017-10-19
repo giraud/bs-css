@@ -76,8 +76,10 @@ let unitToString unit => switch unit {
     | `pt => "pt"
 };
 
+type cssUnit = [ | `px | `pct | `pct | `rem | `rem | `em | `em | `vh | `pt ];
+
 let from_float v => string_of_float v ^ "0";
-let propertyWithUnit ::unit=`px name v => Property name (from_float v ^ unitToString unit);
+let propertyWithUnit name unit::(unit:cssUnit)=`px v => Property name (from_float v ^ unitToString unit);
 /*
    ==============
    CSS properties
