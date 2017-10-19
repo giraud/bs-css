@@ -8,6 +8,7 @@ let merge : list string => string = [%bs.raw {|
     }
 |}];
 
+
 let addObjToStyles: styleObj => string => styleObj => styleObj = [%bs.raw
   {|
         function (obj, key, value) {
