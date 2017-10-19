@@ -633,7 +633,7 @@ let animationDelay v => Property "animationDelay" v;
 
 let animationDirection v => Property "animationDirection" v;
 
-let anumationDuration v => Property "anumationDuration" v;
+let animationDuration v => Property "animationDuration" v;
 
 let animationFillMode v => Property "animationFillMode" v;
 
