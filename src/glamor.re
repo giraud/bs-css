@@ -1,17 +1,21 @@
 type styleObj;
+
 external makeCSS : styleObj => string = "css" [@@bs.module "glamor"];
-external makeGlobalCSS : string => styleObj => unit = "global" [@@bs.scope "css"] [@@bs.module "glamor"];
-external makeKeyFrames : Js.Dict.t styleObj => string = "keyframes" [@@bs.scope "css"] [@@bs.module "glamor"];
-let merge : list string => string = [%bs.raw {|
+
+external makeGlobalCSS : string => styleObj => unit =
+  "global" [@@bs.scope "css"] [@@bs.module "glamor"];
+
+external makeKeyFrames : Js.Dict.t styleObj => string =
+  "keyframes" [@@bs.scope "css"] [@@bs.module "glamor"];
+
+let merge: list string => string = [%bs.raw
+  {|
     function (styles) {
         const glamor = require('glamor');
         return glamor.css.apply(glamor, styles)
     }
-|}];
-
-
-
-
+|}
+];
 
 let addObjToStyles: styleObj => string => styleObj => styleObj = [%bs.raw
   {|
@@ -61,25 +65,31 @@ let css decls => makeCSS (declarationsToObj decls);
 
 let global selector declarations => makeGlobalCSS selector (declarationsToObj declarations);
 
-let keyframes frames => makeKeyFrames (frames |> List.map (fun (k, v) => (k, declarationsToObj v)) |> Js.Dict.fromList);
+let keyframes frames =>
+  makeKeyFrames (frames |> List.map (fun (k, v) => (k, declarationsToObj v)) |> Js.Dict.fromList);
 
+let empty = css [];
 
-let unitToString unit => switch unit {
-    | `px => "px"
-    | `pct => "%"
-    | `rem => "rem"
-    | `em => "em"
-    | `vh => "vh"
-    | `vw => "vw"
-    | `cm => "cm"
-    | `mm => "mm"
-    | `pt => "pt"
-};
+let unitToString unit =>
+  switch unit {
+  | `px => "px"
+  | `pct => "%"
+  | `rem => "rem"
+  | `em => "em"
+  | `vh => "vh"
+  | `vw => "vw"
+  | `cm => "cm"
+  | `mm => "mm"
+  | `pt => "pt"
+  };
 
-type cssUnit = [ | `px | `pct | `pct | `rem | `rem | `em | `em | `vh | `pt ];
+type cssUnit = [ | `px | `pct | `pct | `rem | `rem | `em | `em | `vh | `pt];
 
 let from_float v => string_of_float v ^ "0";
-let propertyWithUnit name unit::(unit:cssUnit)=`px v => Property name (from_float v ^ unitToString unit);
+
+let propertyWithUnit name unit::(unit: cssUnit)=`px v =>
+  Property name (from_float v ^ unitToString unit);
+
 /*
    ==============
    CSS properties
@@ -134,10 +144,15 @@ let borderBottomStyle v => Property "borderBottomStyle" v;
 let borderLeftStyle v => Property "borderLeftStyle" v;
 
 let borderTopWidth = propertyWithUnit "borderTopWidth";
+
 let borderRightWidth = propertyWithUnit "borderRightWidth";
+
 let borderBottomWidth = propertyWithUnit "borderBottomWidth";
+
 let borderLeftWidth = propertyWithUnit "borderLeftWidth";
+
 let borderWidth = propertyWithUnit "borderWidth";
+
 let bottom = propertyWithUnit "bottom";
 
 let captionSide v => Property "captionSide" v;
@@ -164,23 +179,28 @@ let cursor v => Property "cursor" v;
 
 let direction v => Property "direction" v;
 
-let display v => Property "display" (switch v {
-    | `block => "block"
-    | `none => "none"
-    | `inline => "inline"
-    | `flex => "flex"
-    | `grid => "grid"
-    | `subgrid => "subgrid"
-    | `contents => "contents"
-    | `table => "table"
-    | `tableRow => "table-row"
-    | `tableCell => "table-cell"
-    | `tableColumn => "table-column"
-    | `inlineBlock => "inline-block"
-    | `inlineTable => "inline-table"
-    | `inlineFlex => "inline-flex"
-    | `inlineGrid => "inline-grid"
-});
+let display v =>
+  Property
+    "display"
+    (
+      switch v {
+      | `block => "block"
+      | `none => "none"
+      | `inline => "inline"
+      | `flex => "flex"
+      | `grid => "grid"
+      | `subgrid => "subgrid"
+      | `contents => "contents"
+      | `table => "table"
+      | `tableRow => "table-row"
+      | `tableCell => "table-cell"
+      | `tableColumn => "table-column"
+      | `inlineBlock => "inline-block"
+      | `inlineTable => "inline-table"
+      | `inlineFlex => "inline-flex"
+      | `inlineGrid => "inline-grid"
+      }
+    );
 
 let elevation v => Property "elevation" v;
 
@@ -204,25 +224,28 @@ let fontStyle v => Property "fontStyle" v;
 
 let fontVariant v => Property "fontVariant" v;
 
-let fontWeight v => Property "fontWeight" (switch v {
-    | `normal => "normal"
-    | `bold => "bold"
-    | `_100 => "100"
-    | `_200 => "200"
-    | `_300 => "300"
-    | `_400 => "400"
-    | `_500 => "500"
-    | `_600 => "600"
-    | `_700 => "700"
-    | `_800 => "800"
-    | `_900 => "900"
-});
-
+let fontWeight v =>
+  Property
+    "fontWeight"
+    (
+      switch v {
+      | `normal => "normal"
+      | `bold => "bold"
+      | `_100 => "100"
+      | `_200 => "200"
+      | `_300 => "300"
+      | `_400 => "400"
+      | `_500 => "500"
+      | `_600 => "600"
+      | `_700 => "700"
+      | `_800 => "800"
+      | `_900 => "900"
+      }
+    );
 
 let height = propertyWithUnit "height";
 
 let left = propertyWithUnit "left";
-
 
 let letterSpacing v => Property "letterSpacing" v;
 
@@ -237,9 +260,13 @@ let listStylePosition v => Property "listStylePosition" v;
 let listStyleType v => Property "listStyleType" v;
 
 let margin = propertyWithUnit "margin";
+
 let marginTop = propertyWithUnit "marginTop";
+
 let marginRight = propertyWithUnit "marginRight";
+
 let marginBottom = propertyWithUnit "marginBottom";
+
 let marginLeft = propertyWithUnit "marginLeft";
 
 let markerOffset v => Property "markerOffset" v;
@@ -247,10 +274,12 @@ let markerOffset v => Property "markerOffset" v;
 let marks v => Property "marks" v;
 
 let maxHeight = propertyWithUnit "maxHeight";
-let maxWidth = propertyWithUnit "maxWidth";
-let minHeight = propertyWithUnit "minHeight";
-let minWidth = propertyWithUnit "minWidth";
 
+let maxWidth = propertyWithUnit "maxWidth";
+
+let minHeight = propertyWithUnit "minHeight";
+
+let minWidth = propertyWithUnit "minWidth";
 
 let orphans v => Property "orphans" v;
 
@@ -262,18 +291,26 @@ let outlineStyle v => Property "outlineStyle" v;
 
 let outlineWidth v => Property "outlineWidth" v;
 
-let overflow v => Property "overflow" (switch v {
-    | `visible => "visible"
-    | `hidden => "hidden"
-    | `scroll => "scroll"
-    });
+let overflow v =>
+  Property
+    "overflow"
+    (
+      switch v {
+      | `visible => "visible"
+      | `hidden => "hidden"
+      | `scroll => "scroll"
+      }
+    );
 
 let padding = propertyWithUnit "padding";
-let paddingTop = propertyWithUnit "paddingTop";
-let paddingRight = propertyWithUnit "paddingRight";
-let paddingBottom = propertyWithUnit "paddingBottom";
-let paddingLeft = propertyWithUnit "paddingLeft";
 
+let paddingTop = propertyWithUnit "paddingTop";
+
+let paddingRight = propertyWithUnit "paddingRight";
+
+let paddingBottom = propertyWithUnit "paddingBottom";
+
+let paddingLeft = propertyWithUnit "paddingLeft";
 
 let page v => Property "page" v;
 
@@ -295,20 +332,27 @@ let pitchRange v => Property "pitchRange" v;
 
 let playDuring v => Property "playDuring" v;
 
-let position v => Property "position" (switch v {
-| `static => "static"
-| `relative => "relative"
-| `absolute => "absolute"
-| `fixed => "fixed"
-| `sticky => "sticky"
-});
+let position v =>
+  Property
+    "position"
+    (
+      switch v {
+      | `static => "static"
+      | `relative => "relative"
+      | `absolute => "absolute"
+      | `fixed => "fixed"
+      | `sticky => "sticky"
+      }
+    );
 
 let quotes v => Property "quotes" v;
 
 let richness v => Property "richness" v;
 
 let right v => Property "right" (string_of_int v ^ "px");
+
 let rightPct v => Property "right" (from_float v ^ "%");
+
 let rightRem v => Property "right" (from_float v ^ "rem");
 
 let size v => Property "size" v;
@@ -327,13 +371,18 @@ let stress v => Property "stress" v;
 
 let tableLayout v => Property "tableLayout" v;
 
-let textAlign v => Property "textAlign" ( switch v {
-    | `auto => "auto"
-    | `left => "left"
-    | `right => "right"
-    | `center => "center"
-    | `justify => "justify"
-});
+let textAlign v =>
+  Property
+    "textAlign"
+    (
+      switch v {
+      | `auto => "auto"
+      | `left => "left"
+      | `right => "right"
+      | `center => "center"
+      | `justify => "justify"
+      }
+    );
 
 let textDecoration v => Property "textDecoration" v;
 
@@ -355,13 +404,18 @@ let voiceFamily v => Property "voiceFamily" v;
 
 let volume v => Property "volume" v;
 
-let whiteSpace v => Property "whiteSpace" (switch v {
- | `normal => "normal"
- | `nowrap => "nowrap"
- | `pre => "pre"
- | `pre_wrap => "pre-wrap"
- | `pre_line => "preLine"
-});
+let whiteSpace v =>
+  Property
+    "whiteSpace"
+    (
+      switch v {
+      | `normal => "normal"
+      | `nowrap => "nowrap"
+      | `pre => "pre"
+      | `pre_wrap => "pre-wrap"
+      | `pre_line => "preLine"
+      }
+    );
 
 let widows v => Property "widows" v;
 
@@ -386,13 +440,13 @@ let backgroundClip v => Property "backgroundClip" v;
 
 let borderRadius v => Property "borderRadius" (string_of_int v);
 
-let borderTopLeftRadius v => Property "borderTopLeftRadius" (string_of_int  v);
+let borderTopLeftRadius v => Property "borderTopLeftRadius" (string_of_int v);
 
-let borderTopRightRadius v => Property "borderTopRightRadius" (string_of_int  v);
+let borderTopRightRadius v => Property "borderTopRightRadius" (string_of_int v);
 
-let borderBottomLeftRadius v => Property "borderBottomLeftRadius" (string_of_int  v);
+let borderBottomLeftRadius v => Property "borderBottomLeftRadius" (string_of_int v);
 
-let borderBottomRightRadius v => Property "borderBottomRightRadius" (string_of_int  v);
+let borderBottomRightRadius v => Property "borderBottomRightRadius" (string_of_int v);
 
 let borderImage v => Property "borderImage" v;
 
@@ -468,41 +522,61 @@ let imageResolution v => Property "imageResolution" v;
 let imageOrientation v => Property "imageOrientation" v;
 
 /* Flexible Box Layout - CR */
-let alignContent v => Property "alignContent" (switch v {
-    | `flexStart => "flex-start"
-    | `flexEnd => "flex-end"
-    | `center => "center"
-    | `stretch => "stretch"
-    | `spaceAround => "space-around"
-    | `spaceBetween => "space-between"
-});
+let alignContent v =>
+  Property
+    "alignContent"
+    (
+      switch v {
+      | `flexStart => "flex-start"
+      | `flexEnd => "flex-end"
+      | `center => "center"
+      | `stretch => "stretch"
+      | `spaceAround => "space-around"
+      | `spaceBetween => "space-between"
+      }
+    );
 
-let alignItems v => Property "alignItems" (switch v {
-    | `flexStart => "flex-start"
-    | `flexEnd => "flex-end"
-    | `center => "center"
-    | `stretch => "stretch"
-    | `baseline => "baseline"
-});
+let alignItems v =>
+  Property
+    "alignItems"
+    (
+      switch v {
+      | `flexStart => "flex-start"
+      | `flexEnd => "flex-end"
+      | `center => "center"
+      | `stretch => "stretch"
+      | `baseline => "baseline"
+      }
+    );
 
-let alignSelf v => Property "alignSelf" (switch v {
-    | `flexStart => "flex-start"
-    | `flexEnd => "flex-end"
-    | `center => "center"
-    | `stretch => "stretch"
-    | `baseline => "baseline"
-});
+let alignSelf v =>
+  Property
+    "alignSelf"
+    (
+      switch v {
+      | `flexStart => "flex-start"
+      | `flexEnd => "flex-end"
+      | `center => "center"
+      | `stretch => "stretch"
+      | `baseline => "baseline"
+      }
+    );
 
 let flex v => Property "flex" (string_of_int v);
 
 let flexBasis v => Property "flexBasis" (string_of_int v);
 
-let flexDirection v => Property "flexDirection"  (switch v {
-    | `row => "row"
-    | `rowReverse => "row-reverse"
-    | `column => "column"
-    | `columnReverse => "column-reverse"
-});
+let flexDirection v =>
+  Property
+    "flexDirection"
+    (
+      switch v {
+      | `row => "row"
+      | `rowReverse => "row-reverse"
+      | `column => "column"
+      | `columnReverse => "column-reverse"
+      }
+    );
 
 let flexFlow v => Property "flexFlow" (string_of_int v);
 
@@ -510,19 +584,29 @@ let flexGrow v => Property "flexGrow" (string_of_int v);
 
 let flexShrink v => Property "flexShrink" (string_of_int v);
 
-let flexWrap v => Property "flexWrap" (switch v {
-    | `wrap => "wrap"
-    | `nowrap => "nowrap"
-});
+let flexWrap v =>
+  Property
+    "flexWrap"
+    (
+      switch v {
+      | `wrap => "wrap"
+      | `nowrap => "nowrap"
+      }
+    );
 
-let justifyContent v => Property "justifyContent" (switch v {
-    | `flexStart => "flex-start"
-    | `flexEnd => "flex-end"
-    | `center => "center"
-    | `stretch => "stretch"
-    | `spaceAround => "space-around"
-    | `spaceBetween => "space-between"
-});
+let justifyContent v =>
+  Property
+    "justifyContent"
+    (
+      switch v {
+      | `flexStart => "flex-start"
+      | `flexEnd => "flex-end"
+      | `center => "center"
+      | `stretch => "stretch"
+      | `spaceAround => "space-around"
+      | `spaceBetween => "space-between"
+      }
+    );
 
 let order v => Property "order" v;
 
@@ -642,10 +726,15 @@ let boxDecorationBreak v => Property "boxDecorationBreak" v;
 /* breakBefore - already defined by Multi-column Layout */
 /* breakInside - already defined by Multi-column Layout */
 /* Basic User Interface Level 3 - CR */
-let boxSizing v => Property "boxSizing" (switch v {
-| `content_box => "content-box"
-| `border_box => "border-box"
-});
+let boxSizing v =>
+  Property
+    "boxSizing"
+    (
+      switch v {
+      | `content_box => "content-box"
+      | `border_box => "border-box"
+      }
+    );
 
 let caretColor v => Property "caretColor" v;
 
@@ -733,12 +822,17 @@ let animationDirection v => Property "animationDirection" v;
 
 let animationDuration v => Property "animationDuration" (from_float v);
 
-let animationFillMode v => Property "animationFillMode" (switch v {
-    | `normal => "normal"
-    | `reverse => "reverse"
-    | `alternate => "alternate"
-    | `alternate_reverse => "alternate-reverse"
-});
+let animationFillMode v =>
+  Property
+    "animationFillMode"
+    (
+      switch v {
+      | `normal => "normal"
+      | `reverse => "reverse"
+      | `alternate => "alternate"
+      | `alternate_reverse => "alternate-reverse"
+      }
+    );
 
 let animationIterationCount v => Property "animationIterationCount" v;
 
