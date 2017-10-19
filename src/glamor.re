@@ -194,7 +194,7 @@ let font v => Property "font" v;
 
 let fontFamily v => Property "fontFamily" v;
 
-let fontSize v => Property "fontSize" v;
+let fontSize = propertyWithUnit "fontSize";
 
 let fontSizeAdjust v => Property "fontSizeAdjust" v;
 

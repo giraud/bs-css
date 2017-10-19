@@ -23,7 +23,7 @@ describe
     test "takes multiple properties" (fun _ => check (
       css [
         fontFamily "Arial",
-        fontSize "12pt"
+        fontSize unit::`pt 12.0
       ]
     ));
 
