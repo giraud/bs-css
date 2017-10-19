@@ -133,7 +133,9 @@ let borderWidth v => Property "borderWidth" (string_of_int v ^ "px");
 let borderWidthPct v => Property "borderWidth" (string_of_float v ^ "%");
 let borderWidthRem v => Property "borderWidth" (string_of_float v ^ "rem");
 
-let bottom v => Property "bottom" v;
+let bottom v => Property "bottom" (string_of_int v ^ "px");
+let bottomPct v => Property "bottom" (string_of_float v ^ "pct");
+let bottomRem v => Property "bottom" (string_of_float v ^ "rem");
 
 let captionSide v => Property "captionSide" v;
 
@@ -346,7 +348,9 @@ let quotes v => Property "quotes" v;
 
 let richness v => Property "richness" v;
 
-let right v => Property "right" v;
+let right v => Property "right" (string_of_int v ^ "px");
+let rightPct v => Property "right" (string_of_float v ^ "%");
+let rightRem v => Property "right" (string_of_float v ^ "rem");
 
 let size v => Property "size" v;
 
@@ -380,7 +384,9 @@ let textShadow v => Property "textShadow" v;
 
 let textTransform v => Property "textTransform" v;
 
-let top v => Property "top" v;
+let top v => Property "top" (string_of_int v ^ "px");
+let topPct v => Property "top" (string_of_float v ^ "%");
+let topRem v => Property "top" (string_of_float v ^ "rem");
 
 let unicodeBidi v => Property "unicodeBidi" v;
 
