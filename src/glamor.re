@@ -816,11 +816,11 @@ let wordWrap v => Property "wordWrap" v;
 /* Animations - WD */
 let animation v => Property "animation" v;
 
-let animationDelay v => Property "animationDelay" (from_float v);
+let animationDelay v => Property "animationDelay" (string_of_float v ^ "s");
 
 let animationDirection v => Property "animationDirection" v;
 
-let animationDuration v => Property "animationDuration" (from_float v);
+let animationDuration v => Property "animationDuration" (string_of_float v ^ "s");
 
 let animationFillMode v =>
   Property
