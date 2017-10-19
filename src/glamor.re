@@ -148,7 +148,28 @@ let cursor v => Property "cursor" v;
 
 let direction v => Property "direction" v;
 
-let display v => Property "display" v;
+let display v => Property "display" (switch v {
+    | `block => "block"
+    | `none => "none"
+    | `inline => "inline"
+    | `flex => "flex"
+    | `grid => "grid"
+    | `subgrid => "subgrid"
+    | `contents => "contents"
+    | `table => "table"
+    | `table_row_group => "table-row-group"
+    | `table_header_group => "table-header-group"
+    | `table_footer_group => "table-footer-group"
+    | `table_row => "table-row"
+    | `table_cell => "table-cell"
+    | `table_column_group => "table-column-group"
+    | `table_column => "table-column"
+    | `table_caption => "table-caption"
+    | `inline_block => "inline-block"
+    | `inline_table => "inline-table"
+    | `inline_flex => "inline-flex"
+    | `inline_grid => "inline-grid"
+});
 
 let elevation v => Property "elevation" v;
 
@@ -254,7 +275,13 @@ let pitchRange v => Property "pitchRange" v;
 
 let playDuring v => Property "playDuring" v;
 
-let position v => Property "position" v;
+let position v => Property "position" (switch v {
+| `static => "static"
+| `relative => "relative"
+| `absolute => "absolute"
+| `fixed => "fixed"
+| `sticky => "sticky"
+});
 
 let quotes v => Property "quotes" v;
 
