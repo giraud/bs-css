@@ -10,6 +10,9 @@ let merge : list string => string = [%bs.raw {|
 |}];
 
 
+let from_float v => string_of_float v ^ "0";
+
+
 let addObjToStyles: styleObj => string => styleObj => styleObj = [%bs.raw
   {|
         function (obj, key, value) {
@@ -114,28 +117,28 @@ let borderLeftStyle v => Property "borderLeftStyle" v;
 
 let borderTopWidth v => Property "borderTopWidth" (string_of_int v ^ "px");
 
-let borderTopWidthPct v => Property "borderTopWidth" (string_of_float v ^ "%");
-let borderTopWidthRem v => Property "borderTopWidth" (string_of_float v ^ "rem");
+let borderTopWidthPct v => Property "borderTopWidth" (from_float v ^ "%");
+let borderTopWidthRem v => Property "borderTopWidth" (from_float v ^ "rem");
 
 let borderRightWidth v => Property "borderRightWidth" (string_of_int v ^ "px");
-let borderRightWidthPct v => Property "borderRightWidth" (string_of_float v ^ "%");
-let borderRightWidthRem v => Property "borderRightWidth" (string_of_float v ^ "rem");
+let borderRightWidthPct v => Property "borderRightWidth" (from_float v ^ "%");
+let borderRightWidthRem v => Property "borderRightWidth" (from_float v ^ "rem");
 
 let borderBottomWidth v => Property "borderBottomWidth" (string_of_int v ^ "px");
-let borderBottomWidthPct v => Property "borderBottomWidth" (string_of_float v ^ "%");
-let borderBottomWidthRem v => Property "borderBottomWidth" (string_of_float v ^ "rem");
+let borderBottomWidthPct v => Property "borderBottomWidth" (from_float v ^ "%");
+let borderBottomWidthRem v => Property "borderBottomWidth" (from_float v ^ "rem");
 
 let borderLeftWidth v => Property "borderLeftWidth" (string_of_int v ^ "px");
-let borderLeftWidthPct v => Property "borderLeftWidth" (string_of_float v ^ "%");
-let borderLeftWidthRem v => Property "borderLeftWidth" (string_of_float v ^ "rem");
+let borderLeftWidthPct v => Property "borderLeftWidth" (from_float v ^ "%");
+let borderLeftWidthRem v => Property "borderLeftWidth" (from_float v ^ "rem");
 
 let borderWidth v => Property "borderWidth" (string_of_int v ^ "px");
-let borderWidthPct v => Property "borderWidth" (string_of_float v ^ "%");
-let borderWidthRem v => Property "borderWidth" (string_of_float v ^ "rem");
+let borderWidthPct v => Property "borderWidth" (from_float v ^ "%");
+let borderWidthRem v => Property "borderWidth" (from_float v ^ "rem");
 
 let bottom v => Property "bottom" (string_of_int v ^ "px");
-let bottomPct v => Property "bottom" (string_of_float v ^ "pct");
-let bottomRem v => Property "bottom" (string_of_float v ^ "rem");
+let bottomPct v => Property "bottom" (from_float v ^ "pct");
+let bottomRem v => Property "bottom" (from_float v ^ "rem");
 
 let captionSide v => Property "captionSide" v;
 
@@ -221,16 +224,16 @@ let fontWeight v => Property "fontWeight" (switch v {
 });
 
 let height v => Property "height" (string_of_int v ^ "px");
-let heightPct v => Property "height" (string_of_float v ^ "%");
-let heightRem v => Property "height" (string_of_float v ^ "rem");
+let heightPct v => Property "height" (from_float v ^ "%");
+let heightRem v => Property "height" (from_float v ^ "rem");
 
 let left v => Property "left" (string_of_int v ^ "px");
-let leftPct v => Property "left" (string_of_float v ^ "%");
-let leftRem v => Property "left" (string_of_float v ^ "rem");
+let leftPct v => Property "left" (from_float v ^ "%");
+let leftRem v => Property "left" (from_float v ^ "rem");
 
 let letterSpacing v => Property "letterSpacing" v;
 
-let lineHeight v => Property "lineHeight" (string_of_float v);
+let lineHeight v => Property "lineHeight" (from_float v);
 
 let listStyle v => Property "listStyle" v;
 
@@ -241,44 +244,44 @@ let listStylePosition v => Property "listStylePosition" v;
 let listStyleType v => Property "listStyleType" v;
 
 let margin v => Property "margin" (string_of_int v ^ "px");
-let marginPct v => Property "margin" (string_of_float v ^ "%");
-let marginRem v => Property "margin" (string_of_float v ^ "rem");
+let marginPct v => Property "margin" (from_float v ^ "%");
+let marginRem v => Property "margin" (from_float v ^ "rem");
 
 let marginTop v => Property "marginTop" (string_of_int v ^ "px");
-let marginTopPct v => Property "marginTopPct" (string_of_float v ^ "%");
-let marginTopRem v => Property "marginTopRem" (string_of_float v ^ "rem");
+let marginTopPct v => Property "marginTopPct" (from_float v ^ "%");
+let marginTopRem v => Property "marginTopRem" (from_float v ^ "rem");
 
 let marginRight v => Property "marginRight" (string_of_int v ^ "px");
-let marginRightPct v => Property "marginRightPct" (string_of_float v ^ "%");
-let marginRightRem v => Property "marginRightRem" (string_of_float v ^ "rem");
+let marginRightPct v => Property "marginRightPct" (from_float v ^ "%");
+let marginRightRem v => Property "marginRightRem" (from_float v ^ "rem");
 
 let marginBottom v => Property "marginBottom" (string_of_int v ^ "px");
-let marginBottomPct v => Property "marginBottomPct" (string_of_float v ^ "%");
-let marginBottomRem v => Property "marginBottomRem" (string_of_float v ^ "rem");
+let marginBottomPct v => Property "marginBottomPct" (from_float v ^ "%");
+let marginBottomRem v => Property "marginBottomRem" (from_float v ^ "rem");
 
 let marginLeft v => Property "marginLeft" (string_of_int v ^ "px");
-let marginLeftPct v => Property "marginLeftPct" (string_of_float v ^ "%");
-let marginLeftRem v => Property "marginLeftRem" (string_of_float v ^ "rem");
+let marginLeftPct v => Property "marginLeftPct" (from_float v ^ "%");
+let marginLeftRem v => Property "marginLeftRem" (from_float v ^ "rem");
 
 let markerOffset v => Property "markerOffset" v;
 
 let marks v => Property "marks" v;
 
 let maxHeight v => Property "maxHeight" (string_of_int v ^ "px");
-let maxHeightPct v => Property "maxHeight" (string_of_float v ^ "%");
-let maxHeightRem v => Property "maxHeight" (string_of_float v ^ "rem");
+let maxHeightPct v => Property "maxHeight" (from_float v ^ "%");
+let maxHeightRem v => Property "maxHeight" (from_float v ^ "rem");
 
 let maxWidth v => Property "maxWidth" (string_of_int v ^ "px");
-let maxWidthPct v => Property "maxWidth" (string_of_float v ^ "%");
-let maxWidthRem v => Property "maxWidth" (string_of_float v ^ "rem");
+let maxWidthPct v => Property "maxWidth" (from_float v ^ "%");
+let maxWidthRem v => Property "maxWidth" (from_float v ^ "rem");
 
 let minHeight v => Property "minHeight" (string_of_int v ^ "px");
-let minHeightPct v => Property "minHeight" (string_of_float v ^ "%");
-let minHeightRem v => Property "minHeight" (string_of_float v ^ "rem");
+let minHeightPct v => Property "minHeight" (from_float v ^ "%");
+let minHeightRem v => Property "minHeight" (from_float v ^ "rem");
 
 let minWidth v => Property "minWidth" (string_of_int v ^ "px");
-let minWidthPct v => Property "minWidth" (string_of_float v ^ "%");
-let minWidthRem v => Property "minWidth" (string_of_float v ^ "rem");
+let minWidthPct v => Property "minWidth" (from_float v ^ "%");
+let minWidthRem v => Property "minWidth" (from_float v ^ "rem");
 
 let orphans v => Property "orphans" v;
 
@@ -297,24 +300,24 @@ let overflow v => Property "overflow" (switch v {
     });
 
 let padding v => Property "padding" (string_of_int v ^ "px");
-let paddingPct v => Property "padding" (string_of_float v ^ "%");
-let paddingRem v => Property "padding" (string_of_float v ^ "rem");
+let paddingPct v => Property "padding" (from_float v ^ "%");
+let paddingRem v => Property "padding" (from_float v ^ "rem");
 
 let paddingTop v => Property "paddingTop" (string_of_int v ^ "px");
-let paddingTopPct v => Property "paddingTop" (string_of_float v ^ "%");
-let paddingTopRem v => Property "paddingTop" (string_of_float v ^ "rem");
+let paddingTopPct v => Property "paddingTop" (from_float v ^ "%");
+let paddingTopRem v => Property "paddingTop" (from_float v ^ "rem");
 
 let paddingRight v => Property "paddingRight" (string_of_int v ^ "px");
-let paddingRightPct v => Property "paddingRight" (string_of_float v ^ "%");
-let paddingRightRem v => Property "paddingRight" (string_of_float v ^ "rem");
+let paddingRightPct v => Property "paddingRight" (from_float v ^ "%");
+let paddingRightRem v => Property "paddingRight" (from_float v ^ "rem");
 
 let paddingBottom v => Property "paddingBottom" (string_of_int v ^ "px");
-let paddingBottomPct v => Property "paddingBottom" (string_of_float v ^ "%");
-let paddingBottomRem v => Property "paddingBottom" (string_of_float v ^ "rem");
+let paddingBottomPct v => Property "paddingBottom" (from_float v ^ "%");
+let paddingBottomRem v => Property "paddingBottom" (from_float v ^ "rem");
 
 let paddingLeft v => Property "paddingLeft" (string_of_int v ^ "px");
-let paddingLeftPct v => Property "paddingLeft" (string_of_float v ^ "%");
-let paddingLeftRem v => Property "paddingLeft" (string_of_float v ^ "rem");
+let paddingLeftPct v => Property "paddingLeft" (from_float v ^ "%");
+let paddingLeftRem v => Property "paddingLeft" (from_float v ^ "rem");
 
 let page v => Property "page" v;
 
@@ -349,8 +352,8 @@ let quotes v => Property "quotes" v;
 let richness v => Property "richness" v;
 
 let right v => Property "right" (string_of_int v ^ "px");
-let rightPct v => Property "right" (string_of_float v ^ "%");
-let rightRem v => Property "right" (string_of_float v ^ "rem");
+let rightPct v => Property "right" (from_float v ^ "%");
+let rightRem v => Property "right" (from_float v ^ "rem");
 
 let size v => Property "size" v;
 
@@ -385,8 +388,8 @@ let textShadow v => Property "textShadow" v;
 let textTransform v => Property "textTransform" v;
 
 let top v => Property "top" (string_of_int v ^ "px");
-let topPct v => Property "top" (string_of_float v ^ "%");
-let topRem v => Property "top" (string_of_float v ^ "rem");
+let topPct v => Property "top" (from_float v ^ "%");
+let topRem v => Property "top" (from_float v ^ "rem");
 
 let unicodeBidi v => Property "unicodeBidi" v;
 
@@ -409,8 +412,8 @@ let whiteSpace v => Property "whiteSpace" (switch v {
 let widows v => Property "widows" v;
 
 let width v => Property "width" (string_of_int v ^ "px");
-let widthPct v => Property "width" (string_of_float v ^ "%");
-let widthRem v => Property "width" (string_of_float v ^ "rem");
+let widthPct v => Property "width" (from_float v ^ "%");
+let widthRem v => Property "width" (from_float v ^ "rem");
 
 let wordSpacing v => Property "wordSpacing" v;
 
@@ -418,7 +421,7 @@ let zIndex v => Property "zIndex" (string_of_int v);
 
 /* Below properties based on https://www.w3.org/Style/CSS/all-properties */
 /* Color Level 3 - REC */
-let opacity v => Property "opacity" (string_of_float v);
+let opacity v => Property "opacity" (from_float v);
 
 /* Backgrounds and Borders Level 3 - CR */
 /* backgroundRepeat - already defined by CSS2Properties */
@@ -772,11 +775,11 @@ let wordWrap v => Property "wordWrap" v;
 /* Animations - WD */
 let animation v => Property "animation" v;
 
-let animationDelay v => Property "animationDelay" (string_of_float v);
+let animationDelay v => Property "animationDelay" (from_float v);
 
 let animationDirection v => Property "animationDirection" v;
 
-let animationDuration v => Property "animationDuration" (string_of_float v);
+let animationDuration v => Property "animationDuration" (from_float v);
 
 let animationFillMode v => Property "animationFillMode" (switch v {
     | `normal => "normal"
