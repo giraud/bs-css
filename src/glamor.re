@@ -818,19 +818,29 @@ let animation v => Property "animation" v;
 
 let animationDelay v => Property "animationDelay" (string_of_float v ^ "s");
 
-let animationDirection v => Property "animationDirection" v;
-
-let animationDuration v => Property "animationDuration" (string_of_float v ^ "s");
-
-let animationFillMode v =>
+let animationDirection v =>
   Property
-    "animationFillMode"
+    "animationDirection"
     (
       switch v {
       | `normal => "normal"
       | `reverse => "reverse"
       | `alternate => "alternate"
       | `alternate_reverse => "alternate-reverse"
+      }
+    );
+
+let animationDuration v => Property "animationDuration" (string_of_float v ^ "s");
+
+let animationFillMode v =>
+  Property
+    "animationDirection"
+    (
+      switch v {
+      | `none => "none"
+      | `forwards => "forwards"
+      | `backwards => "backwards"
+      | `both => "both"
       }
     );
 
