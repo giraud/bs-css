@@ -834,7 +834,7 @@ let animationDuration v => Property "animationDuration" (string_of_float v ^ "s"
 
 let animationFillMode v =>
   Property
-    "animationDirection"
+    "animationFillMode"
     (
       switch v {
       | `none => "none"
