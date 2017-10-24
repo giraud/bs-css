@@ -1,6 +1,6 @@
 {
   "name": "bs-glamor",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "BuckleScript bindings for glamor",
   "main": "src/glamor.re",
   "scripts": {
