@@ -349,7 +349,7 @@ let quotes v => Property "quotes" v;
 
 let richness v => Property "richness" v;
 
-let right v => Property "right" (string_of_int v ^ "px");
+let right v => Property "right" (from_float v ^ "px");
 
 let rightPct v => Property "right" (from_float v ^ "%");
 
