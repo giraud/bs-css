@@ -296,6 +296,7 @@ let overflow v =>
     "overflow"
     (
       switch v {
+      | `auto => "auto"
       | `visible => "visible"
       | `hidden => "hidden"
       | `scroll => "scroll"
@@ -307,6 +308,7 @@ let overflowY v =>
     "overflowY"
     (
       switch v {
+      | `auto => "auto"
       | `visible => "visible"
       | `hidden => "hidden"
       | `scroll => "scroll"
@@ -318,6 +320,7 @@ let overflowX v =>
     "overflowX"
     (
       switch v {
+      | `auto => "auto"
       | `visible => "visible"
       | `hidden => "hidden"
       | `scroll => "scroll"
