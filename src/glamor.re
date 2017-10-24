@@ -302,6 +302,28 @@ let overflow v =>
       }
     );
 
+let overflowY v =>
+  Property
+    "overflowY"
+    (
+      switch v {
+      | `visible => "visible"
+      | `hidden => "hidden"
+      | `scroll => "scroll"
+      }
+    );
+
+let overflowX v =>
+  Property
+    "overflowX"
+    (
+      switch v {
+      | `visible => "visible"
+      | `hidden => "hidden"
+      | `scroll => "scroll"
+      }
+    );
+
 let padding = propertyWithUnit "padding";
 
 let paddingTop = propertyWithUnit "paddingTop";
