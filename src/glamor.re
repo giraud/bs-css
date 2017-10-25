@@ -77,6 +77,12 @@ type cssUnit =
   | Vh float
   | Vw float;
 
+let px v => Px v;
+let pct v => Pct v;
+let rem v => Rem v;
+let vh v => Vh v;
+let vw v => Vw v;
+
 
 let from_float v => string_of_float v ^ "0";
 
