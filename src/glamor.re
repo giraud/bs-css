@@ -70,25 +70,30 @@ let keyframes frames =>
 
 let empty = css [];
 
-let unitToString unit =>
-  switch unit {
-  | `px => "px"
-  | `pct => "%"
-  | `rem => "rem"
-  | `em => "em"
-  | `vh => "vh"
-  | `vw => "vw"
-  | `cm => "cm"
-  | `mm => "mm"
-  | `pt => "pt"
-  };
+type cssUnit =
+  | Px int
+  | Pct float
+  | Rem float
+  | Vh float
+  | Vw float;
 
-type cssUnit = [ | `px | `pct | `pct | `rem | `rem | `em | `em | `vh | `pt];
 
 let from_float v => string_of_float v ^ "0";
 
-let propertyWithUnit name unit::(unit: cssUnit)=`px v =>
-  Property name (from_float v ^ unitToString unit);
+let unitToString unit =>
+  switch unit {
+  | Px v => string_of_int v ^ "px"
+  | Pct v => from_float v ^ "%"
+  | Rem v => from_float v ^ "rem"
+  | Vh v => from_float v ^ "vh"
+  | Vw v => from_float v ^ "vw"
+  };
+
+
+
+
+let propertyWithUnit name v =>
+  Property name (unitToString v);
 
 /*
    ==============
@@ -179,26 +184,44 @@ let cursor v => Property "cursor" v;
 
 let direction v => Property "direction" v;
 
+type display = 
+  | Block
+  | None
+  | Inline
+  | Flex
+  | Grid
+  | Subgrid
+  | Contents
+  | Table
+  | TableRow
+  | TableCell
+  | TableColumn
+  | InlineBlock
+  | InlineTable
+  | InlineFlex
+  | InlineGrid;
+
+
 let display v =>
   Property
     "display"
     (
       switch v {
-      | `block => "block"
-      | `none => "none"
-      | `inline => "inline"
-      | `flex => "flex"
-      | `grid => "grid"
-      | `subgrid => "subgrid"
-      | `contents => "contents"
-      | `table => "table"
-      | `tableRow => "table-row"
-      | `tableCell => "table-cell"
-      | `tableColumn => "table-column"
-      | `inlineBlock => "inline-block"
-      | `inlineTable => "inline-table"
-      | `inlineFlex => "inline-flex"
-      | `inlineGrid => "inline-grid"
+      | Block => "block"
+      | None => "none"
+      | Inline => "inline"
+      | Flex => "flex"
+      | Grid => "grid"
+      | Subgrid => "subgrid"
+      | Contents => "contents"
+      | Table => "table"
+      | TableRow => "table-row"
+      | TableCell => "table-cell"
+      | TableColumn => "table-column"
+      | InlineBlock => "inline-block"
+      | InlineTable => "inline-table"
+      | InlineFlex => "inline-flex"
+      | InlineGrid => "inline-grid"
       }
     );
 
@@ -224,22 +247,40 @@ let fontStyle v => Property "fontStyle" v;
 
 let fontVariant v => Property "fontVariant" v;
 
+type fontWeight =
+  | Normal
+  | Ligher
+  | Bold
+  | Bolder
+  | W100
+  | W200
+  | W300
+  | W400
+  | W500
+  | W600
+  | W700
+  | W800
+  | W900;
+
+  
 let fontWeight v =>
   Property
     "fontWeight"
     (
       switch v {
-      | `normal => "normal"
-      | `bold => "bold"
-      | `_100 => "100"
-      | `_200 => "200"
-      | `_300 => "300"
-      | `_400 => "400"
-      | `_500 => "500"
-      | `_600 => "600"
-      | `_700 => "700"
-      | `_800 => "800"
-      | `_900 => "900"
+      | Normal => "normal"
+      | Bold => "bold"
+      | Bolder => "bolder"
+      | Ligher => "lighter"
+      | W100 => "100"
+      | W200 => "200"
+      | W300 => "300"
+      | W400 => "400"
+      | W500 => "500"
+      | W600 => "600"
+      | W700 => "700"
+      | W800 => "800"
+      | W900 => "900"
       }
     );
 
@@ -291,41 +332,24 @@ let outlineStyle v => Property "outlineStyle" v;
 
 let outlineWidth v => Property "outlineWidth" v;
 
-let overflow v =>
-  Property
-    "overflow"
-    (
-      switch v {
-      | `auto => "auto"
-      | `visible => "visible"
-      | `hidden => "hidden"
-      | `scroll => "scroll"
-      }
-    );
+type overflow =
+  | Auto
+  | Visible
+  | Hidden
+  | Scroll;
 
-let overflowY v =>
-  Property
-    "overflowY"
-    (
-      switch v {
-      | `auto => "auto"
-      | `visible => "visible"
-      | `hidden => "hidden"
-      | `scroll => "scroll"
-      }
-    );
 
-let overflowX v =>
-  Property
-    "overflowX"
-    (
-      switch v {
-      | `auto => "auto"
-      | `visible => "visible"
-      | `hidden => "hidden"
-      | `scroll => "scroll"
-      }
-    );
+let overflowToString v => switch v {
+  | Auto => "auto"
+  | Visible => "visible"
+  | Hidden => "hidden"
+  | Scroll => "scroll"
+};
+
+let overflow v => Property "overflow" (overflowToString v);
+
+let overflowY v => Property "overflowY" (overflowToString v);
+let overflowX v => Property "overflowX" (overflowToString v);
 
 let padding = propertyWithUnit "padding";
 
@@ -357,18 +381,21 @@ let pitchRange v => Property "pitchRange" v;
 
 let playDuring v => Property "playDuring" v;
 
-let position v =>
-  Property
-    "position"
-    (
-      switch v {
-      | `static => "static"
-      | `relative => "relative"
-      | `absolute => "absolute"
-      | `fixed => "fixed"
-      | `sticky => "sticky"
-      }
-    );
+type position =
+  | Static
+  | Relative
+  | Absolute
+  | Fixed
+  | Sticky;
+
+
+let position v => Property "position" ( switch v {
+  | Static => "static"
+  | Relative => "relative"
+  | Absolute => "absolute"
+  | Fixed => "fixed"
+  | Sticky => "sticky"
+});
 
 let quotes v => Property "quotes" v;
 
@@ -395,7 +422,6 @@ let speechRate v => Property "speechRate" v;
 let stress v => Property "stress" v;
 
 let tableLayout v => Property "tableLayout" v;
-
 let textAlign v =>
   Property
     "textAlign"

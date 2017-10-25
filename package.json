@@ -4,8 +4,6 @@
   "description": "BuckleScript bindings for glamor",
   "main": "src/glamor.re",
   "scripts": {
-    "jest": "jest",
-    "test": "bsb -make-world && jest",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world && rm -f finalOutput/*.js"
   },
