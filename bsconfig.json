@@ -1,6 +1,23 @@
 {
   "name": "bs-glamor",
-  "sources": [{
-    "dir": "src"
-  }]
+  "reason": {
+    "react-jsx": 2
+  },
+  "bs-dev-dependencies": [
+    "reason-react"
+  ],
+  "bsc-flags": [
+    "-bs-super-errors",
+    "-warn-error",
+    "-a+8"
+  ],
+  "sources": [
+    {
+      "dir": "src"
+    },
+    {
+      "dir": "example",
+      "type": "dev"
+    }
+  ]
 }

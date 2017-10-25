@@ -1,985 +1,425 @@
-type styleObj;
-
-external makeCSS : styleObj => string = "css" [@@bs.module "glamor"];
-
-external makeGlobalCSS : string => styleObj => unit =
-  "global" [@@bs.scope "css"] [@@bs.module "glamor"];
-
-external makeKeyFrames : Js.Dict.t styleObj => string =
-  "keyframes" [@@bs.scope "css"] [@@bs.module "glamor"];
-
-let merge: list string => string = [%bs.raw
-  {|
-    function (styles) {
-        const glamor = require('glamor');
-        return glamor.css.apply(glamor, styles)
-    }
-|}
-];
-
-let addObjToStyles: styleObj => string => styleObj => styleObj = [%bs.raw
-  {|
-        function (obj, key, value) {
-            var newObj = {};
-            newObj[key] = value;
-            return Object.assign({}, obj, newObj);
-        }
-    |}
-];
+/* /*
+      ==============
+      CSS properties
+      ==============
+    */
 
-let addStringToStyles: styleObj => string => string => styleObj = [%bs.raw
-  {|
-        function (obj, key, value) {
-            var newObj = {};
-            newObj[key] = value;
-            return Object.assign({}, obj, newObj);
-        }
-    |}
-];
+   let clear v => Property "clear" v;
 
-let createEmptyObj: unit => styleObj = [%bs.raw
-  {|
-            function () {
-                return {};
-            }
-    |}
-];
+   let clip v => Property "clip" v;
 
-let emptyObj = createEmptyObj ();
 
-type declaration =
-  | Nothing
-  | Property string string
-  | Selector string declarations
-and declarations = list declaration;
+   let content v => Property "content" v;
 
-let rec addDeclaration obj (decl: declaration) =>
-  switch decl {
-  | Nothing => obj
-  | Property name value => addStringToStyles obj name value
-  | Selector sel decls => addObjToStyles obj sel (declarationsToObj decls)
-  }
-and declarationsToObj decls => List.fold_left addDeclaration emptyObj decls;
 
-let css decls => makeCSS (declarationsToObj decls);
+   let cursor v => Property "cursor" v;
 
-let global selector declarations => makeGlobalCSS selector (declarationsToObj declarations);
+   let direction v => Property "direction" v;
 
-let keyframes frames =>
-  makeKeyFrames (frames |> List.map (fun (k, v) => (k, declarationsToObj v)) |> Js.Dict.fromList);
 
-let empty = css [];
+   let filter v => Property "filter" v;
 
-type cssUnit =
-  | Px int
-  | Pct float
-  | Rem float
-  | Vh float
-  | Vw float;
 
-let px v => Px v;
-let pct v => Pct v;
-let rem v => Rem v;
-let vh v => Vh v;
-let vw v => Vw v;
 
 
-let from_float v => string_of_float v ^ "0";
+   let listStyle v => Property "listStyle" v;
 
-let unitToString unit =>
-  switch unit {
-  | Px v => string_of_int v ^ "px"
-  | Pct v => from_float v ^ "%"
-  | Rem v => from_float v ^ "rem"
-  | Vh v => from_float v ^ "vh"
-  | Vw v => from_float v ^ "vw"
-  };
+   let listStyleImage v => Property "listStyleImage" v;
 
+   let listStylePosition v => Property "listStylePosition" v;
 
+   let listStyleType v => Property "listStyleType" v;
 
 
-let propertyWithUnit name v =>
-  Property name (unitToString v);
 
-/*
-   ==============
-   CSS properties
-   ==============
- */
-let azimouth v => Property "azimouth" v;
+   let outline v => Property "outline" v;
 
-let background v => Property "background" v;
+   let outlineColor v => Property "outlineColor" v;
 
-let backgroundAttachment v => Property "backgroundAttachment" v;
+   let outlineStyle v => Property "outlineStyle" v;
 
-let backgroundColor v => Property "backgroundColor" v;
+   let outlineWidth v => Property "outlineWidth" v;
 
-let backgroundImage v => Property "backgroundImage" v;
+   type overflow =
+     | Auto
+     | Visible
+     | Hidden
+     | Scroll;
 
-let backgroundPosition v => Property "backgroundPosition" v;
+   let overflowToString v =>
+     switch v {
+     | Auto => "auto"
+     | Visible => "visible"
+     | Hidden => "hidden"
+     | Scroll => "scroll"
+     };
 
-let backgroundRepeat v => Property "backgroundRepeat" v;
+   let overflow v => Property "overflow" (overflowToString v);
 
-let border v => Property "border" v;
+   let overflowY v => Property "overflowY" (overflowToString v);
 
-let borderCollapse v => Property "borderCollapse" v;
+   let overflowX v => Property "overflowX" (overflowToString v);
 
-let borderColor v => Property "borderColor" v;
 
-let borderSpacing v => Property "borderSpacing" v;
 
-let borderStyle v => Property "borderStyle" v;
 
-let borderTop v => Property "borderTop" v;
 
-let borderRight v => Property "borderRight" v;
+   let size v => Property "size" v;
 
-let borderBottom v => Property "borderBottom" v;
 
-let borderLeft v => Property "borderLeft" v;
 
-let borderTopColor v => Property "borderTopColor" v;
+   let verticalAlign v => Property "verticalAlign" v;
 
-let borderRightColor v => Property "borderRightColor" v;
+   let visibility v => Property "visibility" v;
 
-let borderBottomColor v => Property "borderBottomColor" v;
+   let whiteSpace v =>
+     Property
+       "whiteSpace"
+       (
+         switch v {
+         | `normal => "normal"
+         | `nowrap => "nowrap"
+         | `pre => "pre"
+         | `pre_wrap => "pre-wrap"
+         | `pre_line => "preLine"
+         }
+       );
 
-let borderLeftColor v => Property "borderLeftColor" v;
 
-let borderTopStyle v => Property "borderTopStyle" v;
 
-let borderRightStyle v => Property "borderRightStyle" v;
+   let wordSpacing v => Property "wordSpacing" v;
 
-let borderBottomStyle v => Property "borderBottomStyle" v;
+   let zIndex v => Property "zIndex" (string_of_int v);
 
-let borderLeftStyle v => Property "borderLeftStyle" v;
+   let opacity v => Property "opacity" (from_float v);
 
-let borderTopWidth = propertyWithUnit "borderTopWidth";
+   let backgroundOrigin v => Property "backgroundOrigin" v;
 
-let borderRightWidth = propertyWithUnit "borderRightWidth";
+   let backgroundSize v => Property "backgroundSize" v;
 
-let borderBottomWidth = propertyWithUnit "borderBottomWidth";
+   let backgroundClip v => Property "backgroundClip" v;
 
-let borderLeftWidth = propertyWithUnit "borderLeftWidth";
 
-let borderWidth = propertyWithUnit "borderWidth";
+   let boxShadow v => Property "boxShadow" v;
 
-let bottom = propertyWithUnit "bottom";
+   /* Multi-column Layout - CR */
+   let columns v => Property "columns" v;
 
-let captionSide v => Property "captionSide" v;
+   let columnCount v => Property "columnCount" v;
 
-let clear v => Property "clear" v;
+   let columnFill v => Property "columnFill" v;
 
-let clip v => Property "clip" v;
+   let columnGap v => Property "columnGap" v;
 
-let color v => Property "color" v;
+   let columnRule v => Property "columnRule" v;
 
-let content v => Property "content" v;
+   let columnRuleColor v => Property "columnRuleColor" v;
 
-let counterIncrement v => Property "counterIncrement" v;
+   let columnRuleStyle v => Property "columnRuleStyle" v;
 
-let counterReset v => Property "counterReset" v;
+   let columnRuleWidth v => Property "columnRuleWidth" v;
 
-let cue v => Property "cue" v;
+   let columnSpan v => Property "columnSpan" v;
 
-let cueAfter v => Property "cueAfter" v;
+   let columnWidth v => Property "columnWidth" v;
 
-let cueBefore v => Property "cueBefore" v;
+   let breakAfter v => Property "breakAfter" v;
 
-let cursor v => Property "cursor" v;
+   let breakBefore v => Property "breakBefore" v;
 
-let direction v => Property "direction" v;
+   let breakInside v => Property "breakInside" v;
 
-type display = 
-  | Block
-  | None
-  | Inline
-  | Flex
-  | Grid
-  | Subgrid
-  | Contents
-  | Table
-  | TableRow
-  | TableCell
-  | TableColumn
-  | InlineBlock
-  | InlineTable
-  | InlineFlex
-  | InlineGrid;
 
 
-let display v =>
-  Property
-    "display"
-    (
-      switch v {
-      | Block => "block"
-      | None => "none"
-      | Inline => "inline"
-      | Flex => "flex"
-      | Grid => "grid"
-      | Subgrid => "subgrid"
-      | Contents => "contents"
-      | Table => "table"
-      | TableRow => "table-row"
-      | TableCell => "table-cell"
-      | TableColumn => "table-column"
-      | InlineBlock => "inline-block"
-      | InlineTable => "inline-table"
-      | InlineFlex => "inline-flex"
-      | InlineGrid => "inline-grid"
-      }
-    );
 
-let elevation v => Property "elevation" v;
 
-let emptyCells v => Property "emptyCells" v;
+   let textEmphasis v => Property "textEmphasis" v;
 
-let cssFloat v => Property "float" v;
+   let textEmphasisColor v => Property "textEmphasisColor" v;
 
-let filter v => Property "filter" v;
+   let textEmphasisPosition v => Property "textEmphasisPosition" v;
 
-let font v => Property "font" v;
+   let textEmphasisStyle v => Property "textEmphasisStyle" v;
 
-let fontFamily v => Property "fontFamily" v;
+   /* textShadow - already defined by CSS2Properties */
+   let textUnderlinePosition v => Property "textUnderlinePosition" v;
 
-let fontSize = propertyWithUnit "fontSize";
+   /* Fonts Level 3 - CR */
+   let fontFeatureSettings v => Property "fontFeatureSettings" v;
 
-let fontSizeAdjust v => Property "fontSizeAdjust" v;
+   let fontKerning v => Property "fontKerning" v;
 
-let fontStretch v => Property "fontStretch" v;
+   let fontLanguageOverride v => Property "fontLanguageOverride" v;
 
-let fontStyle v => Property "fontStyle" v;
+   /* fontSizeAdjust - already defined by CSS2Properties */
+   /* fontStretch - already defined by CSS2Properties */
+   let fontSynthesis v => Property "fontSynthesis" v;
 
-let fontVariant v => Property "fontVariant" v;
+   let forntVariantAlternates v => Property "forntVariantAlternates" v;
 
-type fontWeight =
-  | Normal
-  | Ligher
-  | Bold
-  | Bolder
-  | W100
-  | W200
-  | W300
-  | W400
-  | W500
-  | W600
-  | W700
-  | W800
-  | W900;
+   let fontVariantCaps v => Property "fontVariantCaps" v;
 
-  
-let fontWeight v =>
-  Property
-    "fontWeight"
-    (
-      switch v {
-      | Normal => "normal"
-      | Bold => "bold"
-      | Bolder => "bolder"
-      | Ligher => "lighter"
-      | W100 => "100"
-      | W200 => "200"
-      | W300 => "300"
-      | W400 => "400"
-      | W500 => "500"
-      | W600 => "600"
-      | W700 => "700"
-      | W800 => "800"
-      | W900 => "900"
-      }
-    );
+   let fontVariantEastAsian v => Property "fontVariantEastAsian" v;
 
-let height = propertyWithUnit "height";
+   let fontVariantLigatures v => Property "fontVariantLigatures" v;
 
-let left = propertyWithUnit "left";
+   let fontVariantNumeric v => Property "fontVariantNumeric" v;
 
-let letterSpacing v => Property "letterSpacing" v;
+   let fontVariantPosition v => Property "fontVariantPosition" v;
 
-let lineHeight v => Property "lineHeight" (from_float v);
+   /* Cascading and Inheritance Level 3 - CR */
+   let all v => Property "all" v;
 
-let listStyle v => Property "listStyle" v;
+   /* Writing Modes Level 3 - CR */
+   let glyphOrientationVertical v => Property "glyphOrientationVertical" v;
 
-let listStyleImage v => Property "listStyleImage" v;
+   let textCombineUpright v => Property "textCombineUpright" v;
 
-let listStylePosition v => Property "listStylePosition" v;
+   let textOrientation v => Property "textOrientation" v;
 
-let listStyleType v => Property "listStyleType" v;
+   let writingMode v => Property "writingMode" v;
 
-let margin = propertyWithUnit "margin";
+   /* Shapes Level 1 - CR */
+   let shapeImageThreshold v => Property "shapeImageThreshold" v;
 
-let marginTop = propertyWithUnit "marginTop";
+   let shapeMargin v => Property "shapeMargin" v;
 
-let marginRight = propertyWithUnit "marginRight";
+   let shapeOutside v => Property "shapeOutside" v;
 
-let marginBottom = propertyWithUnit "marginBottom";
+   /* Masking Level 1 - CR */
+   let clipPath v => Property "clipPath" v;
 
-let marginLeft = propertyWithUnit "marginLeft";
+   let clipRule v => Property "clipRule" v;
 
-let markerOffset v => Property "markerOffset" v;
+   let mask v => Property "mask" v;
 
-let marks v => Property "marks" v;
+   let maskBorder v => Property "maskBorder" v;
 
-let maxHeight = propertyWithUnit "maxHeight";
+   let maskBorderMode v => Property "maskBorderMode" v;
 
-let maxWidth = propertyWithUnit "maxWidth";
+   let maskBorderOutset v => Property "maskBorderOutset" v;
 
-let minHeight = propertyWithUnit "minHeight";
+   let maskBorderRepeat v => Property "maskBorderRepeat" v;
 
-let minWidth = propertyWithUnit "minWidth";
+   let maskBorderSlice v => Property "maskBorderSlice" v;
 
-let orphans v => Property "orphans" v;
+   let maskBorderSource v => Property "maskBorderSource" v;
 
-let outline v => Property "outline" v;
+   let maskBorderWidth v => Property "maskBorderWidth" v;
 
-let outlineColor v => Property "outlineColor" v;
+   let maskClip v => Property "maskClip" v;
 
-let outlineStyle v => Property "outlineStyle" v;
+   let maskComposite v => Property "maskComposite" v;
 
-let outlineWidth v => Property "outlineWidth" v;
+   let maskImage v => Property "maskImage" v;
 
-type overflow =
-  | Auto
-  | Visible
-  | Hidden
-  | Scroll;
+   let maskMode v => Property "maskMode" v;
 
+   let maskOrigin v => Property "maskOrigin" v;
 
-let overflowToString v => switch v {
-  | Auto => "auto"
-  | Visible => "visible"
-  | Hidden => "hidden"
-  | Scroll => "scroll"
-};
+   let maskPosition v => Property "maskPosition" v;
 
-let overflow v => Property "overflow" (overflowToString v);
+   let maskRepeat v => Property "maskRepeat" v;
 
-let overflowY v => Property "overflowY" (overflowToString v);
-let overflowX v => Property "overflowX" (overflowToString v);
+   let maskSize v => Property "maskSize" v;
 
-let padding = propertyWithUnit "padding";
+   let maskType v => Property "maskType" v;
 
-let paddingTop = propertyWithUnit "paddingTop";
+   /* Compositing and Blending Level 1 - CR */
+   let backgroundBlendMode v => Property "backgroundBlendMode" v;
 
-let paddingRight = propertyWithUnit "paddingRight";
+   let isolation v => Property "isolation" v;
 
-let paddingBottom = propertyWithUnit "paddingBottom";
+   let mixBlendMode v => Property "mixBlendMode" v;
 
-let paddingLeft = propertyWithUnit "paddingLeft";
+   /* Fragmentation Level 3 - CR */
+   let boxDecorationBreak v => Property "boxDecorationBreak" v;
 
-let page v => Property "page" v;
+   /* breakAfter - already defined by Multi-column Layout */
+   /* breakBefore - already defined by Multi-column Layout */
+   /* breakInside - already defined by Multi-column Layout */
+   /* Basic User Interface Level 3 - CR */
+   let boxSizing v =>
+     Property
+       "boxSizing"
+       (
+         switch v {
+         | `content_box => "content-box"
+         | `border_box => "border-box"
+         }
+       );
 
-let pageBreakAfter v => Property "pageBreakAfter" v;
+   let caretColor v => Property "caretColor" v;
 
-let pageBreakBefore v => Property "pageBreakBefore" v;
+   let navDown v => Property "navDown" v;
 
-let pageBreakInside v => Property "pageBreakInside" v;
+   let navLeft v => Property "navLeft" v;
 
-let pause v => Property "pause" v;
+   let navRight v => Property "navRight" v;
 
-let pauseAfter v => Property "pauseAfter" v;
+   let navUp v => Property "navUp" v;
 
-let pauseBefore v => Property "pauseBefore" v;
+   let outlineOffset v => Property "outlineOffset" v;
 
-let pitch v => Property "pitch" v;
+   let resize v => Property "resize" v;
 
-let pitchRange v => Property "pitchRange" v;
+   let textOverflow v => Property "textOverflow" v;
 
-let playDuring v => Property "playDuring" v;
+   /* Grid Layout Level 1 - CR */
+   let grid v => Property "grid" v;
 
-type position =
-  | Static
-  | Relative
-  | Absolute
-  | Fixed
-  | Sticky;
+   let gridArea v => Property "gridArea" v;
 
+   let gridAutoColumns v => Property "gridAutoColumns" v;
 
-let position v => Property "position" ( switch v {
-  | Static => "static"
-  | Relative => "relative"
-  | Absolute => "absolute"
-  | Fixed => "fixed"
-  | Sticky => "sticky"
-});
+   let gridAutoFlow v => Property "gridAutoFlow" v;
 
-let quotes v => Property "quotes" v;
+   let gridAutoRows v => Property "gridAutoRows" v;
 
-let richness v => Property "richness" v;
+   let gridColumn v => Property "gridColumn" v;
 
-let right v => Property "right" (from_float v ^ "px");
+   let gridColumnEnd v => Property "gridColumnEnd" v;
 
-let rightPct v => Property "right" (from_float v ^ "%");
+   let gridColumnGap v => Property "gridColumnGap" v;
 
-let rightRem v => Property "right" (from_float v ^ "rem");
+   let gridColumnStart v => Property "gridColumnStart" v;
 
-let size v => Property "size" v;
+   let gridGap v => Property "gridGap" v;
 
-let speak v => Property "speak" v;
+   let gridRow v => Property "gridRow" v;
 
-let speakHeader v => Property "speakHeader" v;
+   let gridRowEnd v => Property "gridRowEnd" v;
 
-let speakNumeral v => Property "speakNumeral" v;
+   let gridRowGap v => Property "gridRowGap" v;
 
-let speakPunctuation v => Property "speakPunctuation" v;
+   let gridRowStart v => Property "gridRowStart" v;
 
-let speechRate v => Property "speechRate" v;
+   let gridTemplate v => Property "gridTemplate" v;
 
-let stress v => Property "stress" v;
+   let gridTempalteAreas v => Property "gridTempalteAreas" v;
 
-let tableLayout v => Property "tableLayout" v;
-let textAlign v =>
-  Property
-    "textAlign"
-    (
-      switch v {
-      | `auto => "auto"
-      | `left => "left"
-      | `right => "right"
-      | `center => "center"
-      | `justify => "justify"
-      }
-    );
+   let gridTemplateColumns v => Property "gridTemplateColumns" v;
 
-let textDecoration v => Property "textDecoration" v;
+   let gridTemplateRows v => Property "gridTemplateRows" v;
 
-let textIndent v => Property "textIndent" v;
+   /* Will Change Level 1 - CR */
+   let willChange v => Property "willChange" v;
 
-let textShadow v => Property "textShadow" v;
+   /* Text Level 3 - LC */
+   let hangingPunctuation v => Property "hangingPunctuation" v;
 
-let textTransform v => Property "textTransform" v;
+   let hyphens v => Property "hyphens" v;
 
-let top = propertyWithUnit "top";
+   /* letterSpacing - already defined by CSS2Properties */
+   let lineBreak v => Property "lineBreak" v;
 
-let unicodeBidi v => Property "unicodeBidi" v;
+   let overflowWrap v => Property "overflowWrap" v;
 
-let verticalAlign v => Property "verticalAlign" v;
+   let tabSize v => Property "tabSize" v;
 
-let visibility v => Property "visibility" v;
+   /* textAlign - already defined by CSS2Properties */
+   let textAlignLast v => Property "textAlignLast" v;
 
-let voiceFamily v => Property "voiceFamily" v;
+   let textJustify v => Property "textJustify" v;
 
-let volume v => Property "volume" v;
+   let wordBreak v => Property "wordBreak" v;
 
-let whiteSpace v =>
-  Property
-    "whiteSpace"
-    (
-      switch v {
-      | `normal => "normal"
-      | `nowrap => "nowrap"
-      | `pre => "pre"
-      | `pre_wrap => "pre-wrap"
-      | `pre_line => "preLine"
-      }
-    );
+   let wordWrap v => Property "wordWrap" v;
 
-let widows v => Property "widows" v;
+   /* Animations - WD */
+   let animation v => Property "animation" v;
 
-let width = propertyWithUnit "width";
+   let animationDelay v => Property "animationDelay" (string_of_float v ^ "s");
 
-let wordSpacing v => Property "wordSpacing" v;
+   let animationDirection v =>
+     Property
+       "animationDirection"
+       (
+         switch v {
+         | `normal => "normal"
+         | `reverse => "reverse"
+         | `alternate => "alternate"
+         | `alternate_reverse => "alternate-reverse"
+         }
+       );
 
-let zIndex v => Property "zIndex" (string_of_int v);
+   let animationDuration v => Property "animationDuration" (string_of_float v ^ "s");
 
-/* Below properties based on https://www.w3.org/Style/CSS/all-properties */
-/* Color Level 3 - REC */
-let opacity v => Property "opacity" (from_float v);
+   let animationFillMode v =>
+     Property
+       "animationFillMode"
+       (
+         switch v {
+         | `none => "none"
+         | `forwards => "forwards"
+         | `backwards => "backwards"
+         | `both => "both"
+         }
+       );
 
-/* Backgrounds and Borders Level 3 - CR */
-/* backgroundRepeat - already defined by CSS2Properties */
-/* backgroundAttachment - already defined by CSS2Properties */
-let backgroundOrigin v => Property "backgroundOrigin" v;
+   let animationIterationCount v => Property "animationIterationCount" v;
 
-let backgroundSize v => Property "backgroundSize" v;
+   let animationName v => Property "animationName" v;
 
-let backgroundClip v => Property "backgroundClip" v;
+   let animationPlayState v => Property "animationPlayState" v;
 
-let borderRadius v => Property "borderRadius" (string_of_int v);
+   let animationTimingFunction v => Property "animationTimingFunction" v;
 
-let borderTopLeftRadius v => Property "borderTopLeftRadius" (string_of_int v);
+   /* Transitions - WD */
+   let transition v => Property "transition" v;
 
-let borderTopRightRadius v => Property "borderTopRightRadius" (string_of_int v);
+   let transitionDelay v => Property "transitionDelay" v;
 
-let borderBottomLeftRadius v => Property "borderBottomLeftRadius" (string_of_int v);
+   let transitionDuration v => Property "transitionDuration" v;
 
-let borderBottomRightRadius v => Property "borderBottomRightRadius" (string_of_int v);
+   let transitionProperty v => Property "transitionProperty" v;
 
-let borderImage v => Property "borderImage" v;
+   let transitionTimingFunction v => Property "transitionTimingFunction" v;
 
-let borderImageSource v => Property "borderImageSource" v;
+   /* Transforms Level 1 - WD */
+   let backfaceVisibility v => Property "backfaceVisibility" v;
 
-let borderImageSlice v => Property "borderImageSlice" v;
+   let perspective v => Property "perspective" v;
 
-let borderImageWidth v => Property "borderImageWidth" v;
+   let perspectiveOrigin v => Property "perspectiveOrigin" v;
 
-let borderImageOutset v => Property "borderImageOutset" v;
+   let transform v => Property "transform" v;
 
-let borderImageRepeat v => Property "borderImageRepeat" v;
+   let transformOrigin v => Property "transformOrigin" v;
 
-let boxShadow v => Property "boxShadow" v;
+   let transformStyle v => Property "transformStyle" v;
 
-/* Multi-column Layout - CR */
-let columns v => Property "columns" v;
+   /* Box Alignment Level 3 - WD */
+   /* alignContent - already defined by Flexible Box Layout */
+   /* alignItems - already defined by Flexible Box Layout */
+   let placeContent v => Property "placeContent" v;
 
-let columnCount v => Property "columnCount" v;
+   /* Basic User Interface Level 4 - FPWD */
+   let userSelect v => Property "userSelect" v;
 
-let columnFill v => Property "columnFill" v;
+   /* Overflow Level 3 - WD */
+   let maxLines v => Property "maxLines" v;
 
-let columnGap v => Property "columnGap" v;
+   /* Basix Box Model - WD */
+   let marqueeDirection v => Property "marqueeDirection" v;
 
-let columnRule v => Property "columnRule" v;
+   let marqueeLoop v => Property "marqueeLoop" v;
 
-let columnRuleColor v => Property "columnRuleColor" v;
+   let marqueeSpeed v => Property "marqueeSpeed" v;
 
-let columnRuleStyle v => Property "columnRuleStyle" v;
+   let marqueeStyle v => Property "marqueeStyle" v;
 
-let columnRuleWidth v => Property "columnRuleWidth" v;
+   let overflowStyle v => Property "overflowStyle" v;
 
-let columnSpan v => Property "columnSpan" v;
+   let rotation v => Property "rotation" v;
 
-let columnWidth v => Property "columnWidth" v;
+   let rotationPoint v => Property "rotationPoint" v;
 
-let breakAfter v => Property "breakAfter" v;
+   /* svg */
+   let fill v => Property "fill" v;
 
-let breakBefore v => Property "breakBefore" v;
+   let stroke v => Property "stroke" v;
 
-let breakInside v => Property "breakInside" v;
+   let strokeWidth v => Property "strokeWidth" v;
 
-/* Speech - CR */
-let rest v => Property "rest" v;
-
-let restAfter v => Property "restAfter" v;
-
-let restBefore v => Property "restBefore" v;
-
-let speakAs v => Property "speakAs" v;
-
-let voiceBalance v => Property "voiceBalance" v;
-
-let voiceDuration v => Property "voiceDuration" v;
-
-let voicePitch v => Property "voicePitch" v;
-
-let voiceRange v => Property "voiceRange" v;
-
-let voiceRate v => Property "voiceRate" v;
-
-let voiceStress v => Property "voiceStress" v;
-
-let voiceVolume v => Property "voiceVolume" v;
-
-/* Image Values and Replaced Content Level 3 - CR */
-let objectFit v => Property "objectFit" v;
-
-let objectPosition v => Property "objectPosition" v;
-
-let imageResolution v => Property "imageResolution" v;
-
-let imageOrientation v => Property "imageOrientation" v;
-
-/* Flexible Box Layout - CR */
-let alignContent v =>
-  Property
-    "alignContent"
-    (
-      switch v {
-      | `flexStart => "flex-start"
-      | `flexEnd => "flex-end"
-      | `center => "center"
-      | `stretch => "stretch"
-      | `spaceAround => "space-around"
-      | `spaceBetween => "space-between"
-      }
-    );
-
-let alignItems v =>
-  Property
-    "alignItems"
-    (
-      switch v {
-      | `flexStart => "flex-start"
-      | `flexEnd => "flex-end"
-      | `center => "center"
-      | `stretch => "stretch"
-      | `baseline => "baseline"
-      }
-    );
-
-let alignSelf v =>
-  Property
-    "alignSelf"
-    (
-      switch v {
-      | `flexStart => "flex-start"
-      | `flexEnd => "flex-end"
-      | `center => "center"
-      | `stretch => "stretch"
-      | `baseline => "baseline"
-      }
-    );
-
-let flex v => Property "flex" (string_of_int v);
-
-let flexBasis v => Property "flexBasis" (string_of_int v);
-
-let flexDirection v =>
-  Property
-    "flexDirection"
-    (
-      switch v {
-      | `row => "row"
-      | `rowReverse => "row-reverse"
-      | `column => "column"
-      | `columnReverse => "column-reverse"
-      }
-    );
-
-let flexFlow v => Property "flexFlow" (string_of_int v);
-
-let flexGrow v => Property "flexGrow" (string_of_int v);
-
-let flexShrink v => Property "flexShrink" (string_of_int v);
-
-let flexWrap v =>
-  Property
-    "flexWrap"
-    (
-      switch v {
-      | `wrap => "wrap"
-      | `nowrap => "nowrap"
-      }
-    );
-
-let justifyContent v =>
-  Property
-    "justifyContent"
-    (
-      switch v {
-      | `flexStart => "flex-start"
-      | `flexEnd => "flex-end"
-      | `center => "center"
-      | `stretch => "stretch"
-      | `spaceAround => "space-around"
-      | `spaceBetween => "space-between"
-      }
-    );
-
-let order v => Property "order" v;
-
-/* Text Decoration Level 3 - CR */
-/* textDecoration - already defined by CSS2Properties */
-let textDecorationColor v => Property "textDecorationColor" v;
-
-let textDecorationLine v => Property "textDecorationLine" v;
-
-let textDecorationSkip v => Property "textDecorationSkip" v;
-
-let textDecorationStyle v => Property "textDecorationStyle" v;
-
-let textEmphasis v => Property "textEmphasis" v;
-
-let textEmphasisColor v => Property "textEmphasisColor" v;
-
-let textEmphasisPosition v => Property "textEmphasisPosition" v;
-
-let textEmphasisStyle v => Property "textEmphasisStyle" v;
-
-/* textShadow - already defined by CSS2Properties */
-let textUnderlinePosition v => Property "textUnderlinePosition" v;
-
-/* Fonts Level 3 - CR */
-let fontFeatureSettings v => Property "fontFeatureSettings" v;
-
-let fontKerning v => Property "fontKerning" v;
-
-let fontLanguageOverride v => Property "fontLanguageOverride" v;
-
-/* fontSizeAdjust - already defined by CSS2Properties */
-/* fontStretch - already defined by CSS2Properties */
-let fontSynthesis v => Property "fontSynthesis" v;
-
-let forntVariantAlternates v => Property "forntVariantAlternates" v;
-
-let fontVariantCaps v => Property "fontVariantCaps" v;
-
-let fontVariantEastAsian v => Property "fontVariantEastAsian" v;
-
-let fontVariantLigatures v => Property "fontVariantLigatures" v;
-
-let fontVariantNumeric v => Property "fontVariantNumeric" v;
-
-let fontVariantPosition v => Property "fontVariantPosition" v;
-
-/* Cascading and Inheritance Level 3 - CR */
-let all v => Property "all" v;
-
-/* Writing Modes Level 3 - CR */
-let glyphOrientationVertical v => Property "glyphOrientationVertical" v;
-
-let textCombineUpright v => Property "textCombineUpright" v;
-
-let textOrientation v => Property "textOrientation" v;
-
-let writingMode v => Property "writingMode" v;
-
-/* Shapes Level 1 - CR */
-let shapeImageThreshold v => Property "shapeImageThreshold" v;
-
-let shapeMargin v => Property "shapeMargin" v;
-
-let shapeOutside v => Property "shapeOutside" v;
-
-/* Masking Level 1 - CR */
-let clipPath v => Property "clipPath" v;
-
-let clipRule v => Property "clipRule" v;
-
-let mask v => Property "mask" v;
-
-let maskBorder v => Property "maskBorder" v;
-
-let maskBorderMode v => Property "maskBorderMode" v;
-
-let maskBorderOutset v => Property "maskBorderOutset" v;
-
-let maskBorderRepeat v => Property "maskBorderRepeat" v;
-
-let maskBorderSlice v => Property "maskBorderSlice" v;
-
-let maskBorderSource v => Property "maskBorderSource" v;
-
-let maskBorderWidth v => Property "maskBorderWidth" v;
-
-let maskClip v => Property "maskClip" v;
-
-let maskComposite v => Property "maskComposite" v;
-
-let maskImage v => Property "maskImage" v;
-
-let maskMode v => Property "maskMode" v;
-
-let maskOrigin v => Property "maskOrigin" v;
-
-let maskPosition v => Property "maskPosition" v;
-
-let maskRepeat v => Property "maskRepeat" v;
-
-let maskSize v => Property "maskSize" v;
-
-let maskType v => Property "maskType" v;
-
-/* Compositing and Blending Level 1 - CR */
-let backgroundBlendMode v => Property "backgroundBlendMode" v;
-
-let isolation v => Property "isolation" v;
-
-let mixBlendMode v => Property "mixBlendMode" v;
-
-/* Fragmentation Level 3 - CR */
-let boxDecorationBreak v => Property "boxDecorationBreak" v;
-
-/* breakAfter - already defined by Multi-column Layout */
-/* breakBefore - already defined by Multi-column Layout */
-/* breakInside - already defined by Multi-column Layout */
-/* Basic User Interface Level 3 - CR */
-let boxSizing v =>
-  Property
-    "boxSizing"
-    (
-      switch v {
-      | `content_box => "content-box"
-      | `border_box => "border-box"
-      }
-    );
-
-let caretColor v => Property "caretColor" v;
-
-let navDown v => Property "navDown" v;
-
-let navLeft v => Property "navLeft" v;
-
-let navRight v => Property "navRight" v;
-
-let navUp v => Property "navUp" v;
-
-let outlineOffset v => Property "outlineOffset" v;
-
-let resize v => Property "resize" v;
-
-let textOverflow v => Property "textOverflow" v;
-
-/* Grid Layout Level 1 - CR */
-let grid v => Property "grid" v;
-
-let gridArea v => Property "gridArea" v;
-
-let gridAutoColumns v => Property "gridAutoColumns" v;
-
-let gridAutoFlow v => Property "gridAutoFlow" v;
-
-let gridAutoRows v => Property "gridAutoRows" v;
-
-let gridColumn v => Property "gridColumn" v;
-
-let gridColumnEnd v => Property "gridColumnEnd" v;
-
-let gridColumnGap v => Property "gridColumnGap" v;
-
-let gridColumnStart v => Property "gridColumnStart" v;
-
-let gridGap v => Property "gridGap" v;
-
-let gridRow v => Property "gridRow" v;
-
-let gridRowEnd v => Property "gridRowEnd" v;
-
-let gridRowGap v => Property "gridRowGap" v;
-
-let gridRowStart v => Property "gridRowStart" v;
-
-let gridTemplate v => Property "gridTemplate" v;
-
-let gridTempalteAreas v => Property "gridTempalteAreas" v;
-
-let gridTemplateColumns v => Property "gridTemplateColumns" v;
-
-let gridTemplateRows v => Property "gridTemplateRows" v;
-
-/* Will Change Level 1 - CR */
-let willChange v => Property "willChange" v;
-
-/* Text Level 3 - LC */
-let hangingPunctuation v => Property "hangingPunctuation" v;
-
-let hyphens v => Property "hyphens" v;
-
-/* letterSpacing - already defined by CSS2Properties */
-let lineBreak v => Property "lineBreak" v;
-
-let overflowWrap v => Property "overflowWrap" v;
-
-let tabSize v => Property "tabSize" v;
-
-/* textAlign - already defined by CSS2Properties */
-let textAlignLast v => Property "textAlignLast" v;
-
-let textJustify v => Property "textJustify" v;
-
-let wordBreak v => Property "wordBreak" v;
-
-let wordWrap v => Property "wordWrap" v;
-
-/* Animations - WD */
-let animation v => Property "animation" v;
-
-let animationDelay v => Property "animationDelay" (string_of_float v ^ "s");
-
-let animationDirection v =>
-  Property
-    "animationDirection"
-    (
-      switch v {
-      | `normal => "normal"
-      | `reverse => "reverse"
-      | `alternate => "alternate"
-      | `alternate_reverse => "alternate-reverse"
-      }
-    );
-
-let animationDuration v => Property "animationDuration" (string_of_float v ^ "s");
-
-let animationFillMode v =>
-  Property
-    "animationFillMode"
-    (
-      switch v {
-      | `none => "none"
-      | `forwards => "forwards"
-      | `backwards => "backwards"
-      | `both => "both"
-      }
-    );
-
-let animationIterationCount v => Property "animationIterationCount" v;
-
-let animationName v => Property "animationName" v;
-
-let animationPlayState v => Property "animationPlayState" v;
-
-let animationTimingFunction v => Property "animationTimingFunction" v;
-
-/* Transitions - WD */
-let transition v => Property "transition" v;
-
-let transitionDelay v => Property "transitionDelay" v;
-
-let transitionDuration v => Property "transitionDuration" v;
-
-let transitionProperty v => Property "transitionProperty" v;
-
-let transitionTimingFunction v => Property "transitionTimingFunction" v;
-
-/* Transforms Level 1 - WD */
-let backfaceVisibility v => Property "backfaceVisibility" v;
-
-let perspective v => Property "perspective" v;
-
-let perspectiveOrigin v => Property "perspectiveOrigin" v;
-
-let transform v => Property "transform" v;
-
-let transformOrigin v => Property "transformOrigin" v;
-
-let transformStyle v => Property "transformStyle" v;
-
-/* Box Alignment Level 3 - WD */
-/* alignContent - already defined by Flexible Box Layout */
-/* alignItems - already defined by Flexible Box Layout */
-let justifyItems v => Property "justifyItems" v;
-
-let justifySelf v => Property "justifySelf" v;
-
-let placeContent v => Property "placeContent" v;
-
-let placeItems v => Property "placeItems" v;
-
-let placeSelf v => Property "placeSelf" v;
-
-/* Basic User Interface Level 4 - FPWD */
-let appearance v => Property "appearance" v;
-
-let caret v => Property "caret" v;
-
-let caretAnimation v => Property "caretAnimation" v;
-
-let caretShape v => Property "caretShape" v;
-
-let userSelect v => Property "userSelect" v;
-
-/* Overflow Level 3 - WD */
-let maxLines v => Property "maxLines" v;
-
-/* Basix Box Model - WD */
-let marqueeDirection v => Property "marqueeDirection" v;
-
-let marqueeLoop v => Property "marqueeLoop" v;
-
-let marqueeSpeed v => Property "marqueeSpeed" v;
-
-let marqueeStyle v => Property "marqueeStyle" v;
-
-let overflowStyle v => Property "overflowStyle" v;
-
-let rotation v => Property "rotation" v;
-
-let rotationPoint v => Property "rotationPoint" v;
-
-/* svg */
-let fill v => Property "fill" v;
-
-let stroke v => Property "stroke" v;
-
-let strokeWidth v => Property "strokeWidth" v;
-
-let strokeMiterlimit v => Property "strokeMiterlimit" v;
+   let strokeMiterlimit v => Property "strokeMiterlimit" v; */
