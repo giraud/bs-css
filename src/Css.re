@@ -158,13 +158,18 @@ type backgroundSize =
   | Height cssunit
   | Custom cssunit cssunit;
 
-let backgroundSize v => Property "backgroundSize" (switch v {
-| Cover => "cover"
-| Contain => "contain"
-| Width v => v
-| Height v => "auto " ^ v
-| Custom v h => v ^ " " ^ h
-});
+let backgroundSize v =>
+  Property
+    "backgroundSize"
+    (
+      switch v {
+      | Cover => "cover"
+      | Contain => "contain"
+      | Width v => v
+      | Height v => "auto " ^ v
+      | Custom v h => v ^ " " ^ h
+      }
+    );
 
 type backgroundPosition =
   | Top
@@ -669,8 +674,8 @@ let animationFillMode v =>
     (
       switch v {
       | None => "none"
-      | Forwards => "backwards"
-      | Backwards => "forwards"
+      | Forwards => "forwards"
+      | Backwards => "backwards"
       | Both => "both"
       }
     );
