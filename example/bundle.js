@@ -6594,9 +6594,10 @@ function borderStyleToString(s) {
 }
 
 function borderProp(name, width, style, color) {
+  var styleString = borderStyleToString(style);
   return /* Property */Block.__(0, [
             name,
-            "" + (String(width) + (" " + (String(style) + (" " + (String(color) + ") ")))))
+            "" + (String(width) + (" " + (String(styleString) + (" " + (String(color) + ") ")))))
           ]);
 }
 
@@ -7546,6 +7547,23 @@ function media(query, rules) {
           ]);
 }
 
+function cursor(v) {
+  return /* Property */Block.__(0, [
+            "cursor",
+            typeof v === "number" ? (
+                v !== 0 ? "pointer" : "auto"
+              ) : v[0]
+          ]);
+}
+
+function outline(width, style, color) {
+  var outlineStyle = borderStyleToString(style);
+  return /* Property */Block.__(0, [
+            "outline",
+            "" + (String(width) + (" " + (String(outlineStyle) + (" " + (String(color) + "")))))
+          ]);
+}
+
 var white = "white";
 
 var black = "black";
@@ -7702,6 +7720,8 @@ exports.firstOfType              = firstOfType;
 exports.lastChild                = lastChild;
 exports.lastOfType               = lastOfType;
 exports.media                    = media;
+exports.cursor                   = cursor;
+exports.outline                  = outline;
 /* merge Not a pure module */
 
 

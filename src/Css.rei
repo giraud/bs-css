@@ -490,3 +490,13 @@ let lastChild: list rule => rule;
 let lastOfType: list rule => rule;
 
 let media: string => list rule => rule;
+
+/* MISC */
+type cursor =
+  | Auto
+  | Pointer
+  | Custom string;
+
+let cursor: cursor => rule;
+
+let outline: cssunit => borderStyle => color => rule;

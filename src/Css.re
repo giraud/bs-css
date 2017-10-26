@@ -347,7 +347,10 @@ let borderStyleToString s =>
   | Double => "double"
   };
 
-let borderProp name width style color => Property name {j|$(width) $(style) $color) |j};
+let borderProp name width style color => {
+  let styleString = borderStyleToString style;
+  Property name {j|$(width) $(styleString) $color) |j}
+};
 
 let border = borderProp "border";
 
@@ -813,3 +816,25 @@ let lastOfType = selector ":lastOfType";
 
 /* MEDIA */
 let media query rules => Selector ("@media " ^ query) rules;
+
+/* MISC */
+type cursor =
+  | Auto
+  | Pointer
+  | Custom string;
+
+let cursor v =>
+  Property
+    "cursor"
+    (
+      switch v {
+      | Auto => "auto"
+      | Pointer => "pointer"
+      | Custom cur => cur
+      }
+    );
+
+let outline width style color => {
+  let outlineStyle = borderStyleToString style;
+  Property "outline" {j|$width $outlineStyle $color|j}
+};
