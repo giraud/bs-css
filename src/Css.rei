@@ -80,6 +80,15 @@ let backgroundAttachment: backgroundAttachment => rule;
 
 let backgroundColor: color => rule;
 
+type backgroundSize =
+  | Cover
+  | Contain
+  | Width cssunit
+  | Height cssunit
+  | Custom cssunit cssunit;
+
+let backgroundSize: backgroundSize => rule;
+
 type backgroundPosition =
   | Top
   | Bottom

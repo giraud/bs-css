@@ -151,6 +151,21 @@ let backgroundAttachment v =>
 
 let backgroundColor = stringProp "backgroundColor";
 
+type backgroundSize =
+  | Cover
+  | Contain
+  | Width cssunit
+  | Height cssunit
+  | Custom cssunit cssunit;
+
+let backgroundSize v => Property "backgroundSize" (switch v {
+| Cover => "cover"
+| Contain => "contain"
+| Width v => v
+| Height v => "auto " ^ v
+| Custom v h => v ^ " " ^ h
+});
+
 type backgroundPosition =
   | Top
   | Bottom

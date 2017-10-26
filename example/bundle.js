@@ -6333,6 +6333,30 @@ function backgroundColor(param) {
           ]);
 }
 
+function backgroundSize(v) {
+  var tmp;
+  if (typeof v === "number") {
+    tmp = v ? "contain" : "cover";
+  } else {
+    switch (v.tag | 0) {
+      case 0 : 
+          tmp = v[0];
+          break;
+      case 1 : 
+          tmp = "auto " + v[0];
+          break;
+      case 2 : 
+          tmp = v[0] + (" " + v[1]);
+          break;
+      
+    }
+  }
+  return /* Property */Block.__(0, [
+            "backgroundSize",
+            tmp
+          ]);
+}
+
 function backgroundPosition(v) {
   var tmp;
   switch (v) {
@@ -7623,6 +7647,7 @@ exports.opacity                  = opacity;
 exports.backgroundImage          = backgroundImage;
 exports.backgroundAttachment     = backgroundAttachment;
 exports.backgroundColor          = backgroundColor;
+exports.backgroundSize           = backgroundSize;
 exports.backgroundPosition       = backgroundPosition;
 exports.backgroundRepeat         = backgroundRepeat;
 exports.background               = background;
