@@ -6076,9 +6076,9 @@ var ReasonReact = __webpack_require__(80);
 
 var styles = {
   page: Css.style(/* :: */[
-        Css.width(600.0, Css.px),
+        Css.width(Css.px(600)),
         /* :: */[
-          Css.height(600.0, Css.px),
+          Css.height(Css.px(600)),
           /* :: */[
             Css.backgroundColor(Css.rgba(0, 0, 0, 0.4)),
             /* :: */[
@@ -6088,10 +6088,10 @@ var styles = {
                 /* :: */[
                   Css.backgroundPosition(/* Left */2),
                   /* :: */[
-                    Css.border(10.0, Css.px, /* Solid */2, Css.black),
+                    Css.border(Css.px(60), /* Solid */2, Css.black),
                     /* :: */[
                       Css.transforms(/* :: */[
-                            Css.rotate(20.0, Css.deg),
+                            Css.rotate(Css.deg(20.0)),
                             /* :: */[
                               Css.scale(0.4, 0.4),
                               /* [] */0
@@ -6231,15 +6231,48 @@ function hex(v) {
   return "#" + v;
 }
 
-function unitToString(v, u) {
-  return Pervasives.string_of_float(v) + ("0" + u);
+function px(i) {
+  return "" + (String(i) + "px");
 }
 
-function unitProp(name, v, u) {
-  return /* Property */Block.__(0, [
-            name,
-            unitToString(v, u)
-          ]);
+function pct(i) {
+  return "" + (String(i) + "%");
+}
+
+function rem(i) {
+  return "" + (String(i) + "rem");
+}
+
+function em(i) {
+  return "" + (String(i) + "em");
+}
+
+function cm(i) {
+  return "" + (String(i) + "cm");
+}
+
+function mm(i) {
+  return "" + (String(i) + "mm");
+}
+
+function vh(i) {
+  return "" + (String(i) + "vh");
+}
+
+function vw(i) {
+  return "" + (String(i) + "vw");
+}
+
+function rad(i) {
+  return "" + (String(i) + "rad");
+}
+
+function deg(i) {
+  return "" + (String(i) + "deg");
+}
+
+function turn(i) {
+  return "" + (String(i) + "turn");
 }
 
 function unsafe(name, value) {
@@ -6366,8 +6399,11 @@ function fontFamily(param) {
           ]);
 }
 
-function fontSize(param, param$1) {
-  return unitProp("fontSize", param, param$1);
+function fontSize(param) {
+  return /* Property */Block.__(0, [
+            "fontSize",
+            param
+          ]);
 }
 
 function fontStyle(v) {
@@ -6434,15 +6470,18 @@ function fontWeight(v) {
           ]);
 }
 
-function textShadow(vx, ux, vy, uy, color) {
+function textShadow(x, y, color) {
   return /* Property */Block.__(0, [
             "textShadow",
-            unitToString(vx, ux) + (" " + (unitToString(vy, uy) + (" " + color)))
+            "" + (String(x) + (" " + (String(y) + (" " + (String(color) + "")))))
           ]);
 }
 
-function textIndent(param, param$1) {
-  return unitProp("textIndent", param, param$1);
+function textIndent(param) {
+  return /* Property */Block.__(0, [
+            "textIndent",
+            param
+          ]);
 }
 
 function textAlign(v) {
@@ -6508,12 +6547,18 @@ function textTransform(v) {
           ]);
 }
 
-function lineHeight(param, param$1) {
-  return unitProp("lineHeight", param, param$1);
+function lineHeight(param) {
+  return /* Property */Block.__(0, [
+            "lineHeight",
+            param
+          ]);
 }
 
-function letterSpacing(param, param$1) {
-  return unitProp("letterSpacing", param, param$1);
+function letterSpacing(param) {
+  return /* Property */Block.__(0, [
+            "letterSpacing",
+            param
+          ]);
 }
 
 function borderStyleToString(s) {
@@ -6534,51 +6579,66 @@ function borderStyleToString(s) {
   }
 }
 
-function borderProp(name, width, unit, style, color) {
+function borderProp(name, width, style, color) {
   return /* Property */Block.__(0, [
             name,
-            unitToString(width, unit) + (" " + (borderStyleToString(style) + (" " + color)))
+            "" + (String(width) + (" " + (String(style) + (" " + (String(color) + ") ")))))
           ]);
 }
 
-function border(param, param$1, param$2, param$3) {
-  return borderProp("border", param, param$1, param$2, param$3);
+function border(param, param$1, param$2) {
+  return borderProp("border", param, param$1, param$2);
 }
 
-function borderTop(param, param$1, param$2, param$3) {
-  return borderProp("borderTop", param, param$1, param$2, param$3);
+function borderTop(param, param$1, param$2) {
+  return borderProp("borderTop", param, param$1, param$2);
 }
 
-function borderBottom(param, param$1, param$2, param$3) {
-  return borderProp("borderBottom", param, param$1, param$2, param$3);
+function borderBottom(param, param$1, param$2) {
+  return borderProp("borderBottom", param, param$1, param$2);
 }
 
-function borderLeft(param, param$1, param$2, param$3) {
-  return borderProp("borderLeft", param, param$1, param$2, param$3);
+function borderLeft(param, param$1, param$2) {
+  return borderProp("borderLeft", param, param$1, param$2);
 }
 
-function borderRight(param, param$1, param$2, param$3) {
-  return borderProp("borderRight", param, param$1, param$2, param$3);
+function borderRight(param, param$1, param$2) {
+  return borderProp("borderRight", param, param$1, param$2);
 }
 
-function borderWidth(param, param$1) {
-  return unitProp("borderWidth", param, param$1);
+function borderWidth(param) {
+  return /* Property */Block.__(0, [
+            "borderWidth",
+            param
+          ]);
 }
 
-function borderTopWidth(param, param$1) {
-  return unitProp("borderTopWidth", param, param$1);
+function borderTopWidth(param) {
+  return /* Property */Block.__(0, [
+            "borderTopWidth",
+            param
+          ]);
 }
 
-function borderBottomWidth(param, param$1) {
-  return unitProp("borderBottomWidth", param, param$1);
+function borderBottomWidth(param) {
+  return /* Property */Block.__(0, [
+            "borderBottomWidth",
+            param
+          ]);
 }
 
-function borderLeftWidth(param, param$1) {
-  return unitProp("borderLeftWidth", param, param$1);
+function borderLeftWidth(param) {
+  return /* Property */Block.__(0, [
+            "borderLeftWidth",
+            param
+          ]);
 }
 
-function borderRightWidth(param, param$1) {
-  return unitProp("borderRightWidth", param, param$1);
+function borderRightWidth(param) {
+  return /* Property */Block.__(0, [
+            "borderRightWidth",
+            param
+          ]);
 }
 
 function borderStyle(style) {
@@ -6651,104 +6711,179 @@ function borderRightColor(color) {
           ]);
 }
 
-function borderRadius(param, param$1) {
-  return unitProp("borderRadius", param, param$1);
+function borderRadius(param) {
+  return /* Property */Block.__(0, [
+            "borderRadius",
+            param
+          ]);
 }
 
-function borderTopRightRadius(param, param$1) {
-  return unitProp("borderTopRightRadius", param, param$1);
+function borderTopRightRadius(param) {
+  return /* Property */Block.__(0, [
+            "borderTopRightRadius",
+            param
+          ]);
 }
 
-function borderTopLeftRadius(param, param$1) {
-  return unitProp("borderTopLeftRadius", param, param$1);
+function borderTopLeftRadius(param) {
+  return /* Property */Block.__(0, [
+            "borderTopLeftRadius",
+            param
+          ]);
 }
 
-function borderBottomRightRadius(param, param$1) {
-  return unitProp("borderBottomRightRadius", param, param$1);
+function borderBottomRightRadius(param) {
+  return /* Property */Block.__(0, [
+            "borderBottomRightRadius",
+            param
+          ]);
 }
 
-function borderBottomLeftRadius(param, param$1) {
-  return unitProp("borderBottomLeftRadius", param, param$1);
+function borderBottomLeftRadius(param) {
+  return /* Property */Block.__(0, [
+            "borderBottomLeftRadius",
+            param
+          ]);
 }
 
-function width(param, param$1) {
-  return unitProp("width", param, param$1);
+function width(param) {
+  return /* Property */Block.__(0, [
+            "width",
+            param
+          ]);
 }
 
-function minWidth(param, param$1) {
-  return unitProp("minWidth", param, param$1);
+function minWidth(param) {
+  return /* Property */Block.__(0, [
+            "minWidth",
+            param
+          ]);
 }
 
-function maxWidth(param, param$1) {
-  return unitProp("maxWidth", param, param$1);
+function maxWidth(param) {
+  return /* Property */Block.__(0, [
+            "maxWidth",
+            param
+          ]);
 }
 
-function height(param, param$1) {
-  return unitProp("height", param, param$1);
+function height(param) {
+  return /* Property */Block.__(0, [
+            "height",
+            param
+          ]);
 }
 
-function minHeight(param, param$1) {
-  return unitProp("minHeight", param, param$1);
+function minHeight(param) {
+  return /* Property */Block.__(0, [
+            "minHeight",
+            param
+          ]);
 }
 
-function maxHeight(param, param$1) {
-  return unitProp("maxHeight", param, param$1);
+function maxHeight(param) {
+  return /* Property */Block.__(0, [
+            "maxHeight",
+            param
+          ]);
 }
 
-function left(param, param$1) {
-  return unitProp("left", param, param$1);
+function left(param) {
+  return /* Property */Block.__(0, [
+            "left",
+            param
+          ]);
 }
 
-function right(param, param$1) {
-  return unitProp("right", param, param$1);
+function right(param) {
+  return /* Property */Block.__(0, [
+            "right",
+            param
+          ]);
 }
 
-function top(param, param$1) {
-  return unitProp("top", param, param$1);
+function top(param) {
+  return /* Property */Block.__(0, [
+            "top",
+            param
+          ]);
 }
 
-function bottom(param, param$1) {
-  return unitProp("bottom", param, param$1);
+function bottom(param) {
+  return /* Property */Block.__(0, [
+            "bottom",
+            param
+          ]);
 }
 
-function margin(param, param$1) {
-  return unitProp("margin", param, param$1);
+function margin(param) {
+  return /* Property */Block.__(0, [
+            "margin",
+            param
+          ]);
 }
 
-function marginLeft(param, param$1) {
-  return unitProp("marginLeft", param, param$1);
+function marginLeft(param) {
+  return /* Property */Block.__(0, [
+            "marginLeft",
+            param
+          ]);
 }
 
-function marginRight(param, param$1) {
-  return unitProp("marginRight", param, param$1);
+function marginRight(param) {
+  return /* Property */Block.__(0, [
+            "marginRight",
+            param
+          ]);
 }
 
-function marginTop(param, param$1) {
-  return unitProp("marginTop", param, param$1);
+function marginTop(param) {
+  return /* Property */Block.__(0, [
+            "marginTop",
+            param
+          ]);
 }
 
-function marginBottom(param, param$1) {
-  return unitProp("marginBottom", param, param$1);
+function marginBottom(param) {
+  return /* Property */Block.__(0, [
+            "marginBottom",
+            param
+          ]);
 }
 
-function padding(param, param$1) {
-  return unitProp("padding", param, param$1);
+function padding(param) {
+  return /* Property */Block.__(0, [
+            "padding",
+            param
+          ]);
 }
 
-function paddingLeft(param, param$1) {
-  return unitProp("paddingLeft", param, param$1);
+function paddingLeft(param) {
+  return /* Property */Block.__(0, [
+            "paddingLeft",
+            param
+          ]);
 }
 
-function paddingRight(param, param$1) {
-  return unitProp("paddingRight", param, param$1);
+function paddingRight(param) {
+  return /* Property */Block.__(0, [
+            "paddingRight",
+            param
+          ]);
 }
 
-function paddingTop(param, param$1) {
-  return unitProp("paddingTop", param, param$1);
+function paddingTop(param) {
+  return /* Property */Block.__(0, [
+            "paddingTop",
+            param
+          ]);
 }
 
-function paddingBottom(param, param$1) {
-  return unitProp("paddingBottom", param, param$1);
+function paddingBottom(param) {
+  return /* Property */Block.__(0, [
+            "paddingBottom",
+            param
+          ]);
 }
 
 function display(v) {
@@ -7207,24 +7342,24 @@ function transforms(transforms$1) {
           ]);
 }
 
-function translate(vx, ux, vy, uy) {
-  return "translate(" + (String(vx) + ("" + (String(ux) + (", " + (String(vy) + ("" + (String(uy) + ")")))))));
+function translate(x, y) {
+  return "translate(" + (String(x) + (", " + (String(y) + ")")));
 }
 
-function translateX(v, u) {
-  return "translateX(" + (String(v) + ("" + (String(u) + ")")));
+function translateX(x) {
+  return "translateX(" + (String(x) + ")");
 }
 
-function translateY(v, u) {
-  return "translateY(" + (String(v) + ("" + (String(u) + ")")));
+function translateY(y) {
+  return "translateY(" + (String(y) + ")");
 }
 
-function translateZ(v, u) {
-  return "translateZ(" + (String(v) + ("" + (String(u) + ")")));
+function translateZ(z) {
+  return "translateZ(" + (String(z) + ")");
 }
 
-function translate3d(vx, ux, vy, uy, vz, uz) {
-  return "translate(" + (String(vx) + ("" + (String(ux) + (", " + (String(vy) + ("" + (String(uy) + (", " + (String(vz) + ("" + (String(uz) + ")")))))))))));
+function translate3d(x, y, z) {
+  return "translate(" + (String(x) + (" " + (String(y) + (", " + (String(z) + ")")))));
 }
 
 function scale(x, y) {
@@ -7247,36 +7382,39 @@ function scaleZ(y) {
   return "scaleZ(" + (String(y) + ")");
 }
 
-function rotate(v, a) {
-  return "rotate(" + (String(v) + ("" + (String(a) + ")")));
+function rotate(a) {
+  return "rotate(" + (String(a) + ")");
 }
 
-function rotateX(v, a) {
-  return "rotateX(" + (String(v) + ("" + (String(a) + ")")));
+function rotateX(a) {
+  return "rotateX(" + (String(a) + ")");
 }
 
-function rotateY(v, a) {
-  return "rotateY(" + (String(v) + ("" + (String(a) + ")")));
+function rotateY(a) {
+  return "rotateY(" + (String(a) + ")");
 }
 
-function rotateZ(v, a) {
-  return "rotateZ(" + (String(v) + ("" + (String(a) + ")")));
+function rotateZ(a) {
+  return "rotateZ(" + (String(a) + ")");
 }
 
-function skew(vx, ax, vy, ay) {
-  return "skew(" + (String(vx) + ("" + (String(ax) + (", " + (String(vy) + ("" + (String(ay) + "")))))));
+function skew(ax, ay) {
+  return "skew(" + (String(ax) + (", " + (String(ay) + "")));
 }
 
-function skewX(v, a) {
-  return "skewX(" + (String(v) + ("" + (String(a) + "")));
+function skewX(a) {
+  return "skewX(" + (String(a) + "");
 }
 
-function skewY(v, a) {
-  return "skewY(" + (String(v) + ("" + (String(a) + "")));
+function skewY(a) {
+  return "skewY(" + (String(a) + "");
 }
 
-function perspective(param, param$1) {
-  return unitProp("perspective", param, param$1);
+function perspective(param) {
+  return /* Property */Block.__(0, [
+            "perspective",
+            param
+          ]);
 }
 
 function hover(param) {
@@ -7370,22 +7508,6 @@ function media(query, rules) {
           ]);
 }
 
-var rad = "rad";
-
-var deg = "deg";
-
-var turn = "turn";
-
-var px = "px";
-
-var pct = "%";
-
-var rem = "rem";
-
-var vh = "vh";
-
-var vw = "vw";
-
 var white = "white";
 
 var black = "black";
@@ -7401,8 +7523,11 @@ exports.empty                    = empty;
 exports.px                       = px;
 exports.pct                      = pct;
 exports.rem                      = rem;
+exports.em                       = em;
 exports.vh                       = vh;
 exports.vw                       = vw;
+exports.cm                       = cm;
+exports.mm                       = mm;
 exports.rgb                      = rgb;
 exports.rgba                     = rgba;
 exports.hex                      = hex;

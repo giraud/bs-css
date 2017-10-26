@@ -4,14 +4,14 @@ module Page = {
       {
         "page":
           style [
-            width 600.0 px,
-            height 600.0 px,
+            width (px 600),
+            height (px 600),
             backgroundColor (rgba 0 0 0 0.4),
             backgroundImage "./img-29.jpg",
             backgroundAttachment Scroll,
             backgroundPosition Left,
-            border 10.0 px Solid black,
-            transforms [rotate 20.0 deg, scale 0.4 0.4],
+            border (px 60) Solid black,
+            transforms [rotate (deg 20.0), scale 0.4 0.4],
             boxShadow (shadow y::3 blur::15 (rgba 0 0 0 0.5))
           ]
       }

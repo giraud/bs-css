@@ -12,11 +12,11 @@ type transform;
 
 type angle;
 
-let rad: angle;
+let rad: float => angle;
 
-let deg: angle;
+let deg: float => angle;
 
-let turn: angle;
+let turn: float => angle;
 
 let style: list rule => css;
 
@@ -29,15 +29,21 @@ let merge: list css => css;
 let empty: css;
 
 /* units */
-let px: cssunit;
+let px: int => cssunit;
 
-let pct: cssunit;
+let pct: float => cssunit;
 
-let rem: cssunit;
+let rem: float => cssunit;
 
-let vh: cssunit;
+let em: float => cssunit;
 
-let vw: cssunit;
+let vh: float => cssunit;
+
+let vw: float => cssunit;
+
+let cm: float => cssunit;
+
+let mm: float => cssunit;
 
 /* color */
 let rgb: int => int => int => color;
@@ -97,7 +103,7 @@ let color: color => rule;
 
 let fontFamily: string => rule;
 
-let fontSize: float => cssunit => rule;
+let fontSize: cssunit => rule;
 
 type fontStyle =
   | Normal
@@ -137,9 +143,9 @@ type textAlign =
 
 let textAlign: textAlign => rule;
 
-let textIndent: float => cssunit => rule;
+let textIndent: cssunit => rule;
 
-let textShadow: float => cssunit => float => cssunit => color => rule;
+let textShadow: cssunit => cssunit => color => rule;
 
 type textTransform =
   | None
@@ -150,9 +156,9 @@ type textTransform =
 
 let textTransform: textTransform => rule;
 
-let letterSpacing: float => cssunit => rule;
+let letterSpacing: cssunit => rule;
 
-let lineHeight: float => cssunit => rule;
+let lineHeight: cssunit => rule;
 
 /* BORDER */
 type borderStyle =
@@ -163,25 +169,25 @@ type borderStyle =
   | Dashed
   | Double;
 
-let border: float => cssunit => borderStyle => color => rule;
+let border: cssunit => borderStyle => color => rule;
 
-let borderTop: float => cssunit => borderStyle => color => rule;
+let borderTop: cssunit => borderStyle => color => rule;
 
-let borderBottom: float => cssunit => borderStyle => color => rule;
+let borderBottom: cssunit => borderStyle => color => rule;
 
-let borderLeft: float => cssunit => borderStyle => color => rule;
+let borderLeft: cssunit => borderStyle => color => rule;
 
-let borderRight: float => cssunit => borderStyle => color => rule;
+let borderRight: cssunit => borderStyle => color => rule;
 
-let borderWidth: float => cssunit => rule;
+let borderWidth: cssunit => rule;
 
-let borderTopWidth: float => cssunit => rule;
+let borderTopWidth: cssunit => rule;
 
-let borderBottomWidth: float => cssunit => rule;
+let borderBottomWidth: cssunit => rule;
 
-let borderLeftWidth: float => cssunit => rule;
+let borderLeftWidth: cssunit => rule;
 
-let borderRightWidth: float => cssunit => rule;
+let borderRightWidth: cssunit => rule;
 
 let borderStyle: borderStyle => rule;
 
@@ -203,56 +209,56 @@ let borderLeftColor: color => rule;
 
 let borderRightColor: color => rule;
 
-let borderRadius: float => cssunit => rule;
+let borderRadius: cssunit => rule;
 
-let borderTopLeftRadius: float => cssunit => rule;
+let borderTopLeftRadius: cssunit => rule;
 
-let borderTopRightRadius: float => cssunit => rule;
+let borderTopRightRadius: cssunit => rule;
 
-let borderBottomLeftRadius: float => cssunit => rule;
+let borderBottomLeftRadius: cssunit => rule;
 
-let borderBottomRightRadius: float => cssunit => rule;
+let borderBottomRightRadius: cssunit => rule;
 
 /* LAYOUT */
-let width: float => cssunit => rule;
+let width: cssunit => rule;
 
-let minWidth: float => cssunit => rule;
+let minWidth: cssunit => rule;
 
-let maxWidth: float => cssunit => rule;
+let maxWidth: cssunit => rule;
 
-let height: float => cssunit => rule;
+let height: cssunit => rule;
 
-let minHeight: float => cssunit => rule;
+let minHeight: cssunit => rule;
 
-let maxHeight: float => cssunit => rule;
+let maxHeight: cssunit => rule;
 
-let left: float => cssunit => rule;
+let left: cssunit => rule;
 
-let right: float => cssunit => rule;
+let right: cssunit => rule;
 
-let top: float => cssunit => rule;
+let top: cssunit => rule;
 
-let bottom: float => cssunit => rule;
+let bottom: cssunit => rule;
 
-let margin: float => cssunit => rule;
+let margin: cssunit => rule;
 
-let marginLeft: float => cssunit => rule;
+let marginLeft: cssunit => rule;
 
-let marginRight: float => cssunit => rule;
+let marginRight: cssunit => rule;
 
-let marginTop: float => cssunit => rule;
+let marginTop: cssunit => rule;
 
-let marginBottom: float => cssunit => rule;
+let marginBottom: cssunit => rule;
 
-let padding: float => cssunit => rule;
+let padding: cssunit => rule;
 
-let paddingLeft: float => cssunit => rule;
+let paddingLeft: cssunit => rule;
 
-let paddingRight: float => cssunit => rule;
+let paddingRight: cssunit => rule;
 
-let paddingTop: float => cssunit => rule;
+let paddingTop: cssunit => rule;
 
-let paddingBottom: float => cssunit => rule;
+let paddingBottom: cssunit => rule;
 
 type display =
   | Block
@@ -404,11 +410,11 @@ let transform: transform => rule;
 
 let transforms: list transform => rule;
 
-let translate: float => cssunit => float => cssunit => transform;
+let translate: cssunit => cssunit => transform;
 
-let translateX: float => cssunit => transform;
+let translateX: cssunit => transform;
 
-let translateY: float => cssunit => transform;
+let translateY: cssunit => transform;
 
 let scale: float => float => transform;
 
@@ -416,29 +422,29 @@ let scaleX: float => transform;
 
 let scaleY: float => transform;
 
-let rotate: float => angle => transform;
+let rotate: angle => transform;
 
-let skew: float => angle => float => angle => transform;
+let skew: angle => angle => transform;
 
-let skewX: float => angle => transform;
+let skewX: angle => transform;
 
-let skewY: float => angle => transform;
+let skewY: angle => transform;
 
-let translate3d: float => cssunit => float => cssunit => float => cssunit => transform;
+let translate3d: cssunit => cssunit => cssunit => transform;
 
-let translateZ: float => cssunit => transform;
+let translateZ: cssunit => transform;
 
 let scale3d: float => float => float => transform;
 
 let scaleZ: float => transform;
 
-let rotateX: float => angle => transform;
+let rotateX: angle => transform;
 
-let rotateY: float => angle => transform;
+let rotateY: angle => transform;
 
-let rotateZ: float => angle => transform;
+let rotateZ: angle => transform;
 
-let perspective: float => cssunit => rule;
+let perspective: cssunit => rule;
 
 /* PSEUDO CLASSES */
 let link: list rule => rule;

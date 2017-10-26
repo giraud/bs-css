@@ -42,8 +42,6 @@ let join sep strings => {
 
 let intProp name v => Property name (string_of_int v);
 
-let floatProp name v => Property name {j|$v|j};
-
 let stringProp name v => Property name v;
 
 let style rules => makeDict rules |> Glamor.make;
@@ -76,26 +74,28 @@ let hex v => "#" ^ v;
 /* Css units */
 type cssunit = string;
 
-let unitToString v u => string_of_float v ^ "0" ^ u;
+let px i => {j|$(i)px|j};
 
-let unitProp name v u => Property name (unitToString v u);
+let pct i => {j|$(i)%|j};
 
-let px = "px";
+let rem i => {j|$(i)rem|j};
 
-let pct = "%";
+let em i => {j|$(i)em|j};
 
-let rem = "rem";
+let cm i => {j|$(i)cm|j};
 
-let vh = "vh";
+let mm i => {j|$(i)mm|j};
 
-let vw = "vw";
+let vh i => {j|$(i)vh|j};
+
+let vw i => {j|$(i)vw|j};
 
 /* ANGLE */
-let rad = "rad";
+let rad i => {j|$(i)rad|j};
 
-let deg = "deg";
+let deg i => {j|$(i)deg|j};
 
-let turn = "turn";
+let turn i => {j|$(i)turn|j};
 
 /* RULES */
 let unsafe name value => Property name value;
@@ -186,7 +186,7 @@ let color = stringProp "color";
 
 let fontFamily = stringProp "fontFamily";
 
-let fontSize = unitProp "fontSize";
+let fontSize = stringProp "fontSize";
 
 type fontStyle =
   | Normal
@@ -236,10 +236,9 @@ let fontWeight v =>
       }
     );
 
-let textShadow vx ux vy uy color =>
-  Property "textShadow" (unitToString vx ux ^ " " ^ unitToString vy uy ^ " " ^ color);
+let textShadow x y color => Property "textShadow" {j|$(x) $(y) $(color)|j};
 
-let textIndent = unitProp "textIndent";
+let textIndent = stringProp "textIndent";
 
 type textAlign =
   | Auto
@@ -297,9 +296,9 @@ let textTransform v =>
       }
     );
 
-let lineHeight = unitProp "lineHeight";
+let lineHeight = stringProp "lineHeight";
 
-let letterSpacing = unitProp "letterSpacing";
+let letterSpacing = stringProp "letterSpacing";
 
 /* BORDER */
 type borderStyle =
@@ -320,8 +319,7 @@ let borderStyleToString s =>
   | Double => "double"
   };
 
-let borderProp name width unit style color =>
-  Property name (unitToString width unit ^ " " ^ borderStyleToString style ^ " " ^ color);
+let borderProp name width style color => Property name {j|$(width) $(style) $color) |j};
 
 let border = borderProp "border";
 
@@ -333,15 +331,15 @@ let borderLeft = borderProp "borderLeft";
 
 let borderRight = borderProp "borderRight";
 
-let borderWidth = unitProp "borderWidth";
+let borderWidth = stringProp "borderWidth";
 
-let borderTopWidth = unitProp "borderTopWidth";
+let borderTopWidth = stringProp "borderTopWidth";
 
-let borderBottomWidth = unitProp "borderBottomWidth";
+let borderBottomWidth = stringProp "borderBottomWidth";
 
-let borderLeftWidth = unitProp "borderLeftWidth";
+let borderLeftWidth = stringProp "borderLeftWidth";
 
-let borderRightWidth = unitProp "borderRightWidth";
+let borderRightWidth = stringProp "borderRightWidth";
 
 let borderStyle style => Property "borderStyle" (borderStyleToString style);
 
@@ -363,56 +361,56 @@ let borderLeftColor color => Property "borderLeftColor" color;
 
 let borderRightColor color => Property "borderRightColor" color;
 
-let borderRadius = unitProp "borderRadius";
+let borderRadius = stringProp "borderRadius";
 
-let borderTopRightRadius = unitProp "borderTopRightRadius";
+let borderTopRightRadius = stringProp "borderTopRightRadius";
 
-let borderTopLeftRadius = unitProp "borderTopLeftRadius";
+let borderTopLeftRadius = stringProp "borderTopLeftRadius";
 
-let borderBottomRightRadius = unitProp "borderBottomRightRadius";
+let borderBottomRightRadius = stringProp "borderBottomRightRadius";
 
-let borderBottomLeftRadius = unitProp "borderBottomLeftRadius";
+let borderBottomLeftRadius = stringProp "borderBottomLeftRadius";
 
 /* LAYOUT */
-let width = unitProp "width";
+let width = stringProp "width";
 
-let minWidth = unitProp "minWidth";
+let minWidth = stringProp "minWidth";
 
-let maxWidth = unitProp "maxWidth";
+let maxWidth = stringProp "maxWidth";
 
-let height = unitProp "height";
+let height = stringProp "height";
 
-let minHeight = unitProp "minHeight";
+let minHeight = stringProp "minHeight";
 
-let maxHeight = unitProp "maxHeight";
+let maxHeight = stringProp "maxHeight";
 
-let left = unitProp "left";
+let left = stringProp "left";
 
-let right = unitProp "right";
+let right = stringProp "right";
 
-let top = unitProp "top";
+let top = stringProp "top";
 
-let bottom = unitProp "bottom";
+let bottom = stringProp "bottom";
 
-let margin = unitProp "margin";
+let margin = stringProp "margin";
 
-let marginLeft = unitProp "marginLeft";
+let marginLeft = stringProp "marginLeft";
 
-let marginRight = unitProp "marginRight";
+let marginRight = stringProp "marginRight";
 
-let marginTop = unitProp "marginTop";
+let marginTop = stringProp "marginTop";
 
-let marginBottom = unitProp "marginBottom";
+let marginBottom = stringProp "marginBottom";
 
-let padding = unitProp "padding";
+let padding = stringProp "padding";
 
-let paddingLeft = unitProp "paddingLeft";
+let paddingLeft = stringProp "paddingLeft";
 
-let paddingRight = unitProp "paddingRight";
+let paddingRight = stringProp "paddingRight";
 
-let paddingTop = unitProp "paddingTop";
+let paddingTop = stringProp "paddingTop";
 
-let paddingBottom = unitProp "paddingBottom";
+let paddingBottom = stringProp "paddingBottom";
 
 type display =
   | Block
@@ -703,15 +701,15 @@ let transform = stringProp "transform";
 
 let transforms transforms => Property "transform" (join " " transforms);
 
-let translate vx ux vy uy => {j|translate($vx$ux, $vy$uy)|j};
+let translate x y => {j|translate($x, $y)|j};
 
-let translateX v u => {j|translateX($v$u)|j};
+let translateX x => {j|translateX($x)|j};
 
-let translateY v u => {j|translateY($v$u)|j};
+let translateY y => {j|translateY($y)|j};
 
-let translateZ v u => {j|translateZ($v$u)|j};
+let translateZ z => {j|translateZ($z)|j};
 
-let translate3d vx ux vy uy vz uz => {j|translate($vx$ux, $vy$uy, $vz$uz)|j};
+let translate3d x y z => {j|translate($x $y, $z)|j};
 
 let scale x y => {j|scale($x, $y)|j};
 
@@ -723,21 +721,21 @@ let scaleY y => {j|scaleY($y)|j};
 
 let scaleZ y => {j|scaleZ($y)|j};
 
-let rotate v a => {j|rotate($v$a)|j};
+let rotate a => {j|rotate($a)|j};
 
-let rotateX v a => {j|rotateX($v$a)|j};
+let rotateX a => {j|rotateX($a)|j};
 
-let rotateY v a => {j|rotateY($v$a)|j};
+let rotateY a => {j|rotateY($a)|j};
 
-let rotateZ v a => {j|rotateZ($v$a)|j};
+let rotateZ a => {j|rotateZ($a)|j};
 
-let skew vx ax vy ay => {j|skew($vx$ax, $vy$ay|j};
+let skew ax ay => {j|skew($ax, $ay|j};
 
-let skewX v a => {j|skewX($v$a|j};
+let skewX a => {j|skewX($a|j};
 
-let skewY v a => {j|skewY($v$a|j};
+let skewY a => {j|skewY($a|j};
 
-let perspective = unitProp "perspective";
+let perspective = stringProp "perspective";
 
 /* PSEUDO CLASSES */
 let selector name rules => Selector name rules;
