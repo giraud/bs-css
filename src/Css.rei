@@ -59,6 +59,14 @@ let black: color;
 /* CSS RULES */
 let unsafe: string => string => rule;
 
+type visibility =
+  | Visible
+  | Hidden;
+
+let visibility: visibility => rule;
+
+let opacity: float => rule;
+
 /* BACKGROUND */
 let backgroundImage: string => rule;
 

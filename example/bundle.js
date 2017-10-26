@@ -6282,6 +6282,20 @@ function unsafe(name, value) {
           ]);
 }
 
+function visibility(v) {
+  return /* Property */Block.__(0, [
+            "visibility",
+            v !== 0 ? "hidden" : "visible"
+          ]);
+}
+
+function opacity(v) {
+  return /* Property */Block.__(0, [
+            "opacity",
+            "" + (String(v) + "")
+          ]);
+}
+
 function backgroundImage(url) {
   return /* Property */Block.__(0, [
             "backgroundImage",
@@ -7541,6 +7555,8 @@ exports.hex                      = hex;
 exports.white                    = white;
 exports.black                    = black;
 exports.unsafe                   = unsafe;
+exports.visibility               = visibility;
+exports.opacity                  = opacity;
 exports.backgroundImage          = backgroundImage;
 exports.backgroundAttachment     = backgroundAttachment;
 exports.backgroundColor          = backgroundColor;

@@ -58,7 +58,10 @@ let merge = Glamor.merge;
 
 let empty = style [];
 
-/* colors */
+
+/*********
+ * COLORS
+ **********/
 type color = string;
 
 let rgb r g b => {j|rgb($r, $g, $b)|j};
@@ -71,7 +74,10 @@ let black = "black";
 
 let hex v => "#" ^ v;
 
-/* Css units */
+
+/*********
+ * UNITS
+ **********/
 type cssunit = string;
 
 let px i => {j|$(i)px|j};
@@ -90,15 +96,37 @@ let vh i => {j|$(i)vh|j};
 
 let vw i => {j|$(i)vw|j};
 
-/* ANGLE */
+
+/*********
+ * ANGLE
+ **********/
 let rad i => {j|$(i)rad|j};
 
 let deg i => {j|$(i)deg|j};
 
 let turn i => {j|$(i)turn|j};
 
-/* RULES */
+
+/*********
+ * CSS RULES
+ **********/
 let unsafe name value => Property name value;
+
+type visibility =
+  | Visible
+  | Hidden;
+
+let visibility v =>
+  Property
+    "visibility"
+    (
+      switch v {
+      | Hidden => "hidden"
+      | Visible => "visible"
+      }
+    );
+
+let opacity v => Property "opacity" {j|$v|j};
 
 /* BACKGROUND */
 let backgroundImage url => Property "backgroundImage" ("url(" ^ url ^ ")");
