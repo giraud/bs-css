@@ -6341,6 +6341,17 @@ function backgroundRepeat(v) {
           ]);
 }
 
+function background(v) {
+  var tmp;
+  tmp = typeof v === "number" ? "none" : (
+      v.tag ? "url(" + (String(v[0]) + ")") : v[0]
+    );
+  return /* Property */Block.__(0, [
+            "background",
+            tmp
+          ]);
+}
+
 function color(param) {
   return /* Property */Block.__(0, [
             "color",
@@ -7388,6 +7399,7 @@ exports.backgroundAttachment     = backgroundAttachment;
 exports.backgroundColor          = backgroundColor;
 exports.backgroundPosition       = backgroundPosition;
 exports.backgroundRepeat         = backgroundRepeat;
+exports.background               = background;
 exports.color                    = color;
 exports.fontFamily               = fontFamily;
 exports.fontSize                 = fontSize;

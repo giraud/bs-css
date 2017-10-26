@@ -165,6 +165,22 @@ let backgroundRepeat v =>
       }
     );
 
+type background =
+  | None
+  | Color color
+  | Image string;
+
+let background v =>
+  Property
+    "background"
+    (
+      switch v {
+      | None => "none"
+      | Color color => color
+      | Image url => {j|url($url)|j}
+      }
+    );
+
 /* TEXT */
 let color = stringProp "color";
 

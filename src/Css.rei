@@ -85,6 +85,13 @@ type backgroundRepeat =
 
 let backgroundRepeat: backgroundRepeat => rule;
 
+type background =
+  | None
+  | Color color
+  | Image string;
+
+let background: background => rule;
+
 /* TEXT */
 let color: color => rule;
 
