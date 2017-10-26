@@ -6968,6 +6968,13 @@ function position(v) {
           ]);
 }
 
+function boxSizing(v) {
+  return /* Property */Block.__(0, [
+            "boxSizing",
+            v !== 0 ? "content-box" : "border-box"
+          ]);
+}
+
 function flex(param) {
   return /* Property */Block.__(0, [
             "flex",
@@ -7599,6 +7606,7 @@ exports.paddingTop               = paddingTop;
 exports.paddingBottom            = paddingBottom;
 exports.display                  = display;
 exports.position                 = position;
+exports.boxSizing                = boxSizing;
 exports.flex                     = flex;
 exports.flexDirection            = flexDirection;
 exports.flexBasis                = flexBasis;

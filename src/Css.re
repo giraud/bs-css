@@ -472,6 +472,20 @@ let position v =>
       }
     );
 
+type boxSizing =
+  | BorderBox
+  | ContentBox;
+
+let boxSizing v =>
+  Property
+    "boxSizing"
+    (
+      switch v {
+      | BorderBox => "border-box"
+      | ContentBox => "content-box"
+      }
+    );
+
 /* FLEXBOX */
 let flex = intProp "flex";
 

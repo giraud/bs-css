@@ -288,6 +288,12 @@ type position =
 
 let position: position => rule;
 
+type boxSizing =
+  | BorderBox
+  | ContentBox;
+
+let boxSizing: boxSizing => rule;
+
 /* FLEXBOX */
 let flex: int => rule;
 
