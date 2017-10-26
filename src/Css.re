@@ -364,7 +364,7 @@ let borderStyleToString s =>
 
 let borderProp name width style color => {
   let styleString = borderStyleToString style;
-  Property name {j|$(width) $(styleString) $color) |j}
+  Property name {j|$(width) $(styleString) $(color) |j}
 };
 
 let border = borderProp "border";
