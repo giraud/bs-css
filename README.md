@@ -3,7 +3,7 @@
 statically typed DSL for writing css in reason.
 
 
-Bs-css is a statically typed interface to [Glamor] (https://github.com/threepointone/glamor)
+Bs-css is a statically typed interface to [Glamor](https://github.com/threepointone/glamor)
 
 
 ## Installation
