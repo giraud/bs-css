@@ -1,4 +1,5 @@
 # bs-css
+
 statically typed DSL for writing css in reason.
 
 
@@ -16,7 +17,7 @@ In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
 ## Usage
 
 
-### Merging css rules
+**Merging css rules**
 
 You can merge css rules using `merge`
 
@@ -32,7 +33,8 @@ let small = style [fontSize (px 10)];
 bs-css will make sure that rules are merged in the correct order, managing nesting and precedence for you.
 
 
-### Global css
+**Global css**
+
  You can defined global css rules with `global`
 
  ```
@@ -42,7 +44,7 @@ bs-css will make sure that rules are merged in the correct order, managing nesti
 
  ```
 
-## Keyframes
+**Keyframes**
 
 define animation keyframes;
 
