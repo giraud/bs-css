@@ -8,6 +8,16 @@ type cssunit;
 
 type animation;
 
+type transform;
+
+type angle;
+
+let rad: angle;
+
+let deg: angle;
+
+let turn: angle;
+
 let style: list rule => css;
 
 let global: string => list rule => unit;
@@ -315,6 +325,10 @@ let justifyContent: justify => rule;
 
 let order: int => rule;
 
+/* SHADOW */
+let boxShadow:
+  float => cssunit => float => cssunit => float => cssunit => float => cssunit => color => rule;
+
 /* ANIMATION */
 let animationDuration: int => rule;
 
@@ -350,7 +364,7 @@ type animationSteps =
   | Start
   | End;
 
-type animationTimingFunction =
+type timingFunction =
   | Ease
   | EaseIn
   | EaseOut
@@ -362,4 +376,54 @@ type animationTimingFunction =
   | Steps int animationSteps
   | Frames int;
 
-let animationTimingFunction: animationTimingFunction => rule;
+let animationTimingFunction: timingFunction => rule;
+
+/* TRANSITION */
+let transitionDelay: int => rule;
+
+let transitionDuration: int => rule;
+
+let transitionTimingFunction: timingFunction => rule;
+
+let transitionProperty: string => rule;
+
+/* TRANSFORM */
+let transform: transform => rule;
+
+let transforms: list transform => rule;
+
+let translate: float => cssunit => float => cssunit => transform;
+
+let translateX: float => cssunit => transform;
+
+let translateY: float => cssunit => transform;
+
+let scale: float => float => transform;
+
+let scaleX: float => transform;
+
+let scaleY: float => transform;
+
+let rotate: float => angle => transform;
+
+let skew: float => angle => float => angle => transform;
+
+let skewX: float => angle => transform;
+
+let skewY: float => angle => transform;
+
+let translate3d: float => cssunit => float => cssunit => float => cssunit => transform;
+
+let translateZ: float => cssunit => transform;
+
+let scale3d: float => float => float => transform;
+
+let scaleZ: float => transform;
+
+let rotateX: float => angle => transform;
+
+let rotateY: float => angle => transform;
+
+let rotateZ: float => angle => transform;
+
+let perspective: float => cssunit => rule;

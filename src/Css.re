@@ -8,7 +8,11 @@ type color = string;
 
 type cssunit = string;
 
+type angle = string;
+
 type animation = string;
+
+type transform = string;
 
 module Glamor = {
   external make : Js.Json.t => css = "css" [@@bs.module "glamor"];
@@ -35,13 +39,22 @@ let rec makeDict ruleset => {
   ruleset |> List.map toJs |> Js.Dict.fromList |> Js.Json.object_
 };
 
+let join sep strings => {
+  let rec j acc =>
+    fun
+    | [] => acc
+    | [x] => acc ^ x
+    | [x, y, ...strings] => j (acc ^ x ^ sep) [y, ...strings];
+  j "" strings
+};
+
 let unitToString v u => string_of_float v ^ "0" ^ u;
 
 let unitProp name v u => Property name (unitToString v u);
 
 let intProp name v => Property name (string_of_int v);
 
-let floatProp name v => Property name (string_of_float v ^ "0");
+let floatProp name v => Property name {j|$v|j};
 
 let stringProp name v => Property name v;
 
@@ -81,8 +94,17 @@ let vh = "vh";
 
 let vw = "vw";
 
+/* ANGLE */
+let rad = "rad";
+
+let deg = "deg";
+
+let turn = "turn";
+
+/* RULES */
 let unsafe name value => Property name value;
 
+/* BACKGROUND */
 let backgroundImage url => Property "backgroundImage" ("url(" ^ url ^ ")");
 
 type backgroundAttachment =
@@ -527,6 +549,10 @@ let alignSelf v => Property "alignSelf" (alignmentToString v);
 
 let justifyContent v => Property "justifyContent" (justifyToString v);
 
+/* SHADOW */
+let boxShadow x xunit y yunit blur blurunit spread spreadunit color =>
+  Property "boxShadow" {j|$x$xunit $y$yunit $blur$blurunit $spread$spreadunit $color|j};
+
 /* ANIMATION */
 let animationName = stringProp "animationName";
 
@@ -572,8 +598,6 @@ let animationFillMode v =>
 
 let animationIterationCount = intProp "animationIterationCount";
 
-let animationName = stringProp "animationName";
-
 type animationPlayState =
   | Paused
   | Running;
@@ -598,7 +622,7 @@ let animationStepsToString s =>
   | End => "end"
   };
 
-type animationTimingFunction =
+type timingFunction =
   | Ease
   | EaseIn
   | EaseOut
@@ -627,3 +651,69 @@ let animationTimingFunction v =>
       | Frames i => {j|frames($i)|j}
       }
     );
+
+/* TRANSITION */
+let transitionDelay = intProp "transitionDelay";
+
+let transitionDuration = intProp "transitionDuration";
+
+let transitionProperty = stringProp "transitionProperty";
+
+let transitionTimingFunction v =>
+  Property
+    "transitionTimingFunction"
+    (
+      switch v {
+      | Ease => "ease"
+      | EaseIn => "ease-in"
+      | EaseOut => "ease-out"
+      | EaseInOut => "ease-in-out"
+      | Linear => "linear"
+      | StepStart => "step-start"
+      | StepEnd => "step-end"
+      | CubicBezier x1 y1 x2 y2 => {j|cubic-bezier($x1, $y1, $x2, $y2)|j}
+      | Steps i s => "steps(" ^ string_of_int i ^ ", " ^ animationStepsToString s ^ ")"
+      | Frames i => {j|frames($i)|j}
+      }
+    );
+
+/* TRANSFORM */
+let transform = stringProp "transform";
+
+let transforms transforms => Property "transform" (join " " transforms);
+
+let translate vx ux vy uy => {j|translate($vx$ux, $vy$uy)|j};
+
+let translateX v u => {j|translateX($v$u)|j};
+
+let translateY v u => {j|translateY($v$u)|j};
+
+let translateZ v u => {j|translateZ($v$u)|j};
+
+let translate3d vx ux vy uy vz uz => {j|translate($vx$ux, $vy$uy, $vz$uz)|j};
+
+let scale x y => {j|scale($x, $y)|j};
+
+let scale3d x y z => {j|scale3d($x, $y, $z)|j};
+
+let scaleX x => {j|scaleX($x)|j};
+
+let scaleY y => {j|scaleY($y)|j};
+
+let scaleZ y => {j|scaleZ($y)|j};
+
+let rotate v a => {j|rotate($v$a)|j};
+
+let rotateX v a => {j|rotateX($v$a)|j};
+
+let rotateY v a => {j|rotateY($v$a)|j};
+
+let rotateZ v a => {j|rotateZ($v$a)|j};
+
+let skew vx ax vy ay => {j|skew($vx$ax, $vy$ay|j};
+
+let skewX v a => {j|skewX($v$a|j};
+
+let skewY v a => {j|skewY($v$a|j};
+
+let perspective = unitProp "perspective";

@@ -6089,7 +6089,19 @@ var styles = {
                   Css.backgroundPosition(/* Left */2),
                   /* :: */[
                     Css.border(10.0, Css.px, /* Solid */2, Css.black),
-                    /* [] */0
+                    /* :: */[
+                      Css.transforms(/* :: */[
+                            Css.rotate(20.0, Css.deg),
+                            /* :: */[
+                              Css.scale(0.4, 0.4),
+                              /* [] */0
+                            ]
+                          ]),
+                      /* :: */[
+                        Css.boxShadow(0, Css.px, 3, Css.px, 5, Css.px, 0, Css.px, Css.rgba(0, 0, 0, 0.3)),
+                        /* [] */0
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -6159,6 +6171,32 @@ function makeDict(ruleset) {
     }
   };
   return Js_dict.fromList(List.map(toJs, ruleset));
+}
+
+function join(sep, strings) {
+  var _acc = "";
+  var _param = strings;
+  while(true) {
+    var param = _param;
+    var acc = _acc;
+    if (param) {
+      var match = param[1];
+      var x = param[0];
+      if (match) {
+        _param = /* :: */[
+          match[0],
+          match[1]
+        ];
+        _acc = acc + (x + sep);
+        continue ;
+        
+      } else {
+        return acc + x;
+      }
+    } else {
+      return acc;
+    }
+  };
 }
 
 function unitToString(v, u) {
@@ -6918,6 +6956,20 @@ function justifyContent(v) {
           ]);
 }
 
+function boxShadow(x, xunit, y, yunit, blur, blurunit, spread, spreadunit, color) {
+  return /* Property */Block.__(0, [
+            "boxShadow",
+            "" + (String(x) + ("" + (String(xunit) + (" " + (String(y) + ("" + (String(yunit) + (" " + (String(blur) + ("" + (String(blurunit) + (" " + (String(spread) + ("" + (String(spreadunit) + (" " + (String(color) + "")))))))))))))))))
+          ]);
+}
+
+function animationName(param) {
+  return /* Property */Block.__(0, [
+            "animationName",
+            param
+          ]);
+}
+
 function animationDuration(ms) {
   return /* Property */Block.__(0, [
             "animationDuration",
@@ -6985,13 +7037,6 @@ function animationIterationCount(param) {
           ]);
 }
 
-function animationName(param) {
-  return /* Property */Block.__(0, [
-            "animationName",
-            param
-          ]);
-}
-
 function animationPlayState(v) {
   return /* Property */Block.__(0, [
             "animationPlayState",
@@ -7054,6 +7099,166 @@ function animationTimingFunction(v) {
           ]);
 }
 
+function transitionDelay(param) {
+  return /* Property */Block.__(0, [
+            "transitionDelay",
+            Pervasives.string_of_int(param)
+          ]);
+}
+
+function transitionDuration(param) {
+  return /* Property */Block.__(0, [
+            "transitionDuration",
+            Pervasives.string_of_int(param)
+          ]);
+}
+
+function transitionProperty(param) {
+  return /* Property */Block.__(0, [
+            "transitionProperty",
+            param
+          ]);
+}
+
+function transitionTimingFunction(v) {
+  var tmp;
+  if (typeof v === "number") {
+    switch (v) {
+      case 0 : 
+          tmp = "ease";
+          break;
+      case 1 : 
+          tmp = "ease-in";
+          break;
+      case 2 : 
+          tmp = "ease-out";
+          break;
+      case 3 : 
+          tmp = "ease-in-out";
+          break;
+      case 4 : 
+          tmp = "linear";
+          break;
+      case 5 : 
+          tmp = "step-start";
+          break;
+      case 6 : 
+          tmp = "step-end";
+          break;
+      
+    }
+  } else {
+    switch (v.tag | 0) {
+      case 0 : 
+          tmp = "cubic-bezier(" + (String(v[0]) + (", " + (String(v[1]) + (", " + (String(v[2]) + (", " + (String(v[3]) + ")")))))));
+          break;
+      case 1 : 
+          tmp = "steps(" + (Pervasives.string_of_int(v[0]) + (", " + (animationStepsToString(v[1]) + ")")));
+          break;
+      case 2 : 
+          tmp = "frames(" + (String(v[0]) + ")");
+          break;
+      
+    }
+  }
+  return /* Property */Block.__(0, [
+            "transitionTimingFunction",
+            tmp
+          ]);
+}
+
+function transform(param) {
+  return /* Property */Block.__(0, [
+            "transform",
+            param
+          ]);
+}
+
+function transforms(transforms$1) {
+  return /* Property */Block.__(0, [
+            "transform",
+            join(" ", transforms$1)
+          ]);
+}
+
+function translate(vx, ux, vy, uy) {
+  return "translate(" + (String(vx) + ("" + (String(ux) + (", " + (String(vy) + ("" + (String(uy) + ")")))))));
+}
+
+function translateX(v, u) {
+  return "translateX(" + (String(v) + ("" + (String(u) + ")")));
+}
+
+function translateY(v, u) {
+  return "translateY(" + (String(v) + ("" + (String(u) + ")")));
+}
+
+function translateZ(v, u) {
+  return "translateZ(" + (String(v) + ("" + (String(u) + ")")));
+}
+
+function translate3d(vx, ux, vy, uy, vz, uz) {
+  return "translate(" + (String(vx) + ("" + (String(ux) + (", " + (String(vy) + ("" + (String(uy) + (", " + (String(vz) + ("" + (String(uz) + ")")))))))))));
+}
+
+function scale(x, y) {
+  return "scale(" + (String(x) + (", " + (String(y) + ")")));
+}
+
+function scale3d(x, y, z) {
+  return "scale3d(" + (String(x) + (", " + (String(y) + (", " + (String(z) + ")")))));
+}
+
+function scaleX(x) {
+  return "scaleX(" + (String(x) + ")");
+}
+
+function scaleY(y) {
+  return "scaleY(" + (String(y) + ")");
+}
+
+function scaleZ(y) {
+  return "scaleZ(" + (String(y) + ")");
+}
+
+function rotate(v, a) {
+  return "rotate(" + (String(v) + ("" + (String(a) + ")")));
+}
+
+function rotateX(v, a) {
+  return "rotateX(" + (String(v) + ("" + (String(a) + ")")));
+}
+
+function rotateY(v, a) {
+  return "rotateY(" + (String(v) + ("" + (String(a) + ")")));
+}
+
+function rotateZ(v, a) {
+  return "rotateZ(" + (String(v) + ("" + (String(a) + ")")));
+}
+
+function skew(vx, ax, vy, ay) {
+  return "skew(" + (String(vx) + ("" + (String(ax) + (", " + (String(vy) + ("" + (String(ay) + "")))))));
+}
+
+function skewX(v, a) {
+  return "skewX(" + (String(v) + ("" + (String(a) + "")));
+}
+
+function skewY(v, a) {
+  return "skewY(" + (String(v) + ("" + (String(a) + "")));
+}
+
+function perspective(param, param$1) {
+  return unitProp("perspective", param, param$1);
+}
+
+var rad = "rad";
+
+var deg = "deg";
+
+var turn = "turn";
+
 var px = "px";
 
 var pct = "%";
@@ -7068,106 +7273,134 @@ var white = "white";
 
 var black = "black";
 
-exports.style                   = style;
-exports.$$global                = $$global;
-exports.keyframes               = keyframes;
-exports.merge                   = merge;
-exports.empty                   = empty;
-exports.px                      = px;
-exports.pct                     = pct;
-exports.rem                     = rem;
-exports.vh                      = vh;
-exports.vw                      = vw;
-exports.rgb                     = rgb;
-exports.rgba                    = rgba;
-exports.hex                     = hex;
-exports.white                   = white;
-exports.black                   = black;
-exports.unsafe                  = unsafe;
-exports.backgroundImage         = backgroundImage;
-exports.backgroundAttachment    = backgroundAttachment;
-exports.backgroundColor         = backgroundColor;
-exports.backgroundPosition      = backgroundPosition;
-exports.backgroundRepeat        = backgroundRepeat;
-exports.color                   = color;
-exports.fontFamily              = fontFamily;
-exports.fontSize                = fontSize;
-exports.fontStyle               = fontStyle;
-exports.fontWeight              = fontWeight;
-exports.textDecoration          = textDecoration;
-exports.textAlign               = textAlign;
-exports.textIndent              = textIndent;
-exports.textShadow              = textShadow;
-exports.textTransform           = textTransform;
-exports.letterSpacing           = letterSpacing;
-exports.lineHeight              = lineHeight;
-exports.border                  = border;
-exports.borderTop               = borderTop;
-exports.borderBottom            = borderBottom;
-exports.borderLeft              = borderLeft;
-exports.borderRight             = borderRight;
-exports.borderWidth             = borderWidth;
-exports.borderTopWidth          = borderTopWidth;
-exports.borderBottomWidth       = borderBottomWidth;
-exports.borderLeftWidth         = borderLeftWidth;
-exports.borderRightWidth        = borderRightWidth;
-exports.borderStyle             = borderStyle;
-exports.borderTopStyle          = borderTopStyle;
-exports.borderBottomStyle       = borderBottomStyle;
-exports.borderLeftStyle         = borderLeftStyle;
-exports.borderRightStyle        = borderRightStyle;
-exports.borderColor             = borderColor;
-exports.borderTopColor          = borderTopColor;
-exports.borderBottomColor       = borderBottomColor;
-exports.borderLeftColor         = borderLeftColor;
-exports.borderRightColor        = borderRightColor;
-exports.borderRadius            = borderRadius;
-exports.borderTopLeftRadius     = borderTopLeftRadius;
-exports.borderTopRightRadius    = borderTopRightRadius;
-exports.borderBottomLeftRadius  = borderBottomLeftRadius;
-exports.borderBottomRightRadius = borderBottomRightRadius;
-exports.width                   = width;
-exports.minWidth                = minWidth;
-exports.maxWidth                = maxWidth;
-exports.height                  = height;
-exports.minHeight               = minHeight;
-exports.maxHeight               = maxHeight;
-exports.left                    = left;
-exports.right                   = right;
-exports.top                     = top;
-exports.bottom                  = bottom;
-exports.margin                  = margin;
-exports.marginLeft              = marginLeft;
-exports.marginRight             = marginRight;
-exports.marginTop               = marginTop;
-exports.marginBottom            = marginBottom;
-exports.padding                 = padding;
-exports.paddingLeft             = paddingLeft;
-exports.paddingRight            = paddingRight;
-exports.paddingTop              = paddingTop;
-exports.paddingBottom           = paddingBottom;
-exports.display                 = display;
-exports.position                = position;
-exports.flex                    = flex;
-exports.flexDirection           = flexDirection;
-exports.flexBasis               = flexBasis;
-exports.flexFlow                = flexFlow;
-exports.flexGrow                = flexGrow;
-exports.flexShrink              = flexShrink;
-exports.flexWrap                = flexWrap;
-exports.alignContent            = alignContent;
-exports.alignItems              = alignItems;
-exports.alignSelf               = alignSelf;
-exports.justifyContent          = justifyContent;
-exports.order                   = order;
-exports.animationDuration       = animationDuration;
-exports.animationDelay          = animationDelay;
-exports.animationDirection      = animationDirection;
-exports.animationFillMode       = animationFillMode;
-exports.animationIterationCount = animationIterationCount;
-exports.animationName           = animationName;
-exports.animationPlayState      = animationPlayState;
-exports.animationTimingFunction = animationTimingFunction;
+exports.rad                      = rad;
+exports.deg                      = deg;
+exports.turn                     = turn;
+exports.style                    = style;
+exports.$$global                 = $$global;
+exports.keyframes                = keyframes;
+exports.merge                    = merge;
+exports.empty                    = empty;
+exports.px                       = px;
+exports.pct                      = pct;
+exports.rem                      = rem;
+exports.vh                       = vh;
+exports.vw                       = vw;
+exports.rgb                      = rgb;
+exports.rgba                     = rgba;
+exports.hex                      = hex;
+exports.white                    = white;
+exports.black                    = black;
+exports.unsafe                   = unsafe;
+exports.backgroundImage          = backgroundImage;
+exports.backgroundAttachment     = backgroundAttachment;
+exports.backgroundColor          = backgroundColor;
+exports.backgroundPosition       = backgroundPosition;
+exports.backgroundRepeat         = backgroundRepeat;
+exports.color                    = color;
+exports.fontFamily               = fontFamily;
+exports.fontSize                 = fontSize;
+exports.fontStyle                = fontStyle;
+exports.fontWeight               = fontWeight;
+exports.textDecoration           = textDecoration;
+exports.textAlign                = textAlign;
+exports.textIndent               = textIndent;
+exports.textShadow               = textShadow;
+exports.textTransform            = textTransform;
+exports.letterSpacing            = letterSpacing;
+exports.lineHeight               = lineHeight;
+exports.border                   = border;
+exports.borderTop                = borderTop;
+exports.borderBottom             = borderBottom;
+exports.borderLeft               = borderLeft;
+exports.borderRight              = borderRight;
+exports.borderWidth              = borderWidth;
+exports.borderTopWidth           = borderTopWidth;
+exports.borderBottomWidth        = borderBottomWidth;
+exports.borderLeftWidth          = borderLeftWidth;
+exports.borderRightWidth         = borderRightWidth;
+exports.borderStyle              = borderStyle;
+exports.borderTopStyle           = borderTopStyle;
+exports.borderBottomStyle        = borderBottomStyle;
+exports.borderLeftStyle          = borderLeftStyle;
+exports.borderRightStyle         = borderRightStyle;
+exports.borderColor              = borderColor;
+exports.borderTopColor           = borderTopColor;
+exports.borderBottomColor        = borderBottomColor;
+exports.borderLeftColor          = borderLeftColor;
+exports.borderRightColor         = borderRightColor;
+exports.borderRadius             = borderRadius;
+exports.borderTopLeftRadius      = borderTopLeftRadius;
+exports.borderTopRightRadius     = borderTopRightRadius;
+exports.borderBottomLeftRadius   = borderBottomLeftRadius;
+exports.borderBottomRightRadius  = borderBottomRightRadius;
+exports.width                    = width;
+exports.minWidth                 = minWidth;
+exports.maxWidth                 = maxWidth;
+exports.height                   = height;
+exports.minHeight                = minHeight;
+exports.maxHeight                = maxHeight;
+exports.left                     = left;
+exports.right                    = right;
+exports.top                      = top;
+exports.bottom                   = bottom;
+exports.margin                   = margin;
+exports.marginLeft               = marginLeft;
+exports.marginRight              = marginRight;
+exports.marginTop                = marginTop;
+exports.marginBottom             = marginBottom;
+exports.padding                  = padding;
+exports.paddingLeft              = paddingLeft;
+exports.paddingRight             = paddingRight;
+exports.paddingTop               = paddingTop;
+exports.paddingBottom            = paddingBottom;
+exports.display                  = display;
+exports.position                 = position;
+exports.flex                     = flex;
+exports.flexDirection            = flexDirection;
+exports.flexBasis                = flexBasis;
+exports.flexFlow                 = flexFlow;
+exports.flexGrow                 = flexGrow;
+exports.flexShrink               = flexShrink;
+exports.flexWrap                 = flexWrap;
+exports.alignContent             = alignContent;
+exports.alignItems               = alignItems;
+exports.alignSelf                = alignSelf;
+exports.justifyContent           = justifyContent;
+exports.order                    = order;
+exports.boxShadow                = boxShadow;
+exports.animationDuration        = animationDuration;
+exports.animationDelay           = animationDelay;
+exports.animationDirection       = animationDirection;
+exports.animationFillMode        = animationFillMode;
+exports.animationIterationCount  = animationIterationCount;
+exports.animationName            = animationName;
+exports.animationPlayState       = animationPlayState;
+exports.animationTimingFunction  = animationTimingFunction;
+exports.transitionDelay          = transitionDelay;
+exports.transitionDuration       = transitionDuration;
+exports.transitionTimingFunction = transitionTimingFunction;
+exports.transitionProperty       = transitionProperty;
+exports.transform                = transform;
+exports.transforms               = transforms;
+exports.translate                = translate;
+exports.translateX               = translateX;
+exports.translateY               = translateY;
+exports.scale                    = scale;
+exports.scaleX                   = scaleX;
+exports.scaleY                   = scaleY;
+exports.rotate                   = rotate;
+exports.skew                     = skew;
+exports.skewX                    = skewX;
+exports.skewY                    = skewY;
+exports.translate3d              = translate3d;
+exports.translateZ               = translateZ;
+exports.scale3d                  = scale3d;
+exports.scaleZ                   = scaleZ;
+exports.rotateX                  = rotateX;
+exports.rotateY                  = rotateY;
+exports.rotateZ                  = rotateZ;
+exports.perspective              = perspective;
 /* merge Not a pure module */
 
 

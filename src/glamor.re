@@ -141,51 +141,12 @@
 
    let textEmphasisStyle v => Property "textEmphasisStyle" v;
 
-   /* textShadow - already defined by CSS2Properties */
-   let textUnderlinePosition v => Property "textUnderlinePosition" v;
 
-   /* Fonts Level 3 - CR */
-   let fontFeatureSettings v => Property "fontFeatureSettings" v;
 
    let fontKerning v => Property "fontKerning" v;
 
-   let fontLanguageOverride v => Property "fontLanguageOverride" v;
-
-   /* fontSizeAdjust - already defined by CSS2Properties */
-   /* fontStretch - already defined by CSS2Properties */
-   let fontSynthesis v => Property "fontSynthesis" v;
-
-   let forntVariantAlternates v => Property "forntVariantAlternates" v;
-
-   let fontVariantCaps v => Property "fontVariantCaps" v;
-
-   let fontVariantEastAsian v => Property "fontVariantEastAsian" v;
-
-   let fontVariantLigatures v => Property "fontVariantLigatures" v;
 
    let fontVariantNumeric v => Property "fontVariantNumeric" v;
-
-   let fontVariantPosition v => Property "fontVariantPosition" v;
-
-   /* Cascading and Inheritance Level 3 - CR */
-   let all v => Property "all" v;
-
-   /* Writing Modes Level 3 - CR */
-   let glyphOrientationVertical v => Property "glyphOrientationVertical" v;
-
-   let textCombineUpright v => Property "textCombineUpright" v;
-
-   let textOrientation v => Property "textOrientation" v;
-
-   let writingMode v => Property "writingMode" v;
-
-   /* Shapes Level 1 - CR */
-   let shapeImageThreshold v => Property "shapeImageThreshold" v;
-
-   let shapeMargin v => Property "shapeMargin" v;
-
-   let shapeOutside v => Property "shapeOutside" v;
-
    /* Masking Level 1 - CR */
    let clipPath v => Property "clipPath" v;
 
@@ -225,20 +186,7 @@
 
    let maskType v => Property "maskType" v;
 
-   /* Compositing and Blending Level 1 - CR */
-   let backgroundBlendMode v => Property "backgroundBlendMode" v;
 
-   let isolation v => Property "isolation" v;
-
-   let mixBlendMode v => Property "mixBlendMode" v;
-
-   /* Fragmentation Level 3 - CR */
-   let boxDecorationBreak v => Property "boxDecorationBreak" v;
-
-   /* breakAfter - already defined by Multi-column Layout */
-   /* breakBefore - already defined by Multi-column Layout */
-   /* breakInside - already defined by Multi-column Layout */
-   /* Basic User Interface Level 3 - CR */
    let boxSizing v =>
      Property
        "boxSizing"
@@ -249,19 +197,7 @@
          }
        );
 
-   let caretColor v => Property "caretColor" v;
 
-   let navDown v => Property "navDown" v;
-
-   let navLeft v => Property "navLeft" v;
-
-   let navRight v => Property "navRight" v;
-
-   let navUp v => Property "navUp" v;
-
-   let outlineOffset v => Property "outlineOffset" v;
-
-   let resize v => Property "resize" v;
 
    let textOverflow v => Property "textOverflow" v;
 
@@ -302,68 +238,17 @@
 
    let gridTemplateRows v => Property "gridTemplateRows" v;
 
-   /* Will Change Level 1 - CR */
-   let willChange v => Property "willChange" v;
-
-   /* Text Level 3 - LC */
-   let hangingPunctuation v => Property "hangingPunctuation" v;
-
-   let hyphens v => Property "hyphens" v;
-
-   /* letterSpacing - already defined by CSS2Properties */
-   let lineBreak v => Property "lineBreak" v;
-
-   let overflowWrap v => Property "overflowWrap" v;
-
-   let tabSize v => Property "tabSize" v;
-
-   /* textAlign - already defined by CSS2Properties */
-   let textAlignLast v => Property "textAlignLast" v;
-
-   let textJustify v => Property "textJustify" v;
 
    let wordBreak v => Property "wordBreak" v;
 
    let wordWrap v => Property "wordWrap" v;
 
    /* Animations - WD */
-   let animation v => Property "animation" v;
 
-   let animationDelay v => Property "animationDelay" (string_of_float v ^ "s");
 
-   let animationDirection v =>
-     Property
-       "animationDirection"
-       (
-         switch v {
-         | `normal => "normal"
-         | `reverse => "reverse"
-         | `alternate => "alternate"
-         | `alternate_reverse => "alternate-reverse"
-         }
-       );
 
-   let animationDuration v => Property "animationDuration" (string_of_float v ^ "s");
 
-   let animationFillMode v =>
-     Property
-       "animationFillMode"
-       (
-         switch v {
-         | `none => "none"
-         | `forwards => "forwards"
-         | `backwards => "backwards"
-         | `both => "both"
-         }
-       );
 
-   let animationIterationCount v => Property "animationIterationCount" v;
-
-   let animationName v => Property "animationName" v;
-
-   let animationPlayState v => Property "animationPlayState" v;
-
-   let animationTimingFunction v => Property "animationTimingFunction" v;
 
    /* Transitions - WD */
    let transition v => Property "transition" v;
@@ -389,37 +274,10 @@
 
    let transformStyle v => Property "transformStyle" v;
 
-   /* Box Alignment Level 3 - WD */
-   /* alignContent - already defined by Flexible Box Layout */
-   /* alignItems - already defined by Flexible Box Layout */
-   let placeContent v => Property "placeContent" v;
-
-   /* Basic User Interface Level 4 - FPWD */
-   let userSelect v => Property "userSelect" v;
-
-   /* Overflow Level 3 - WD */
-   let maxLines v => Property "maxLines" v;
-
    /* Basix Box Model - WD */
-   let marqueeDirection v => Property "marqueeDirection" v;
 
-   let marqueeLoop v => Property "marqueeLoop" v;
-
-   let marqueeSpeed v => Property "marqueeSpeed" v;
-
-   let marqueeStyle v => Property "marqueeStyle" v;
-
-   let overflowStyle v => Property "overflowStyle" v;
 
    let rotation v => Property "rotation" v;
 
    let rotationPoint v => Property "rotationPoint" v;
-
-   /* svg */
-   let fill v => Property "fill" v;
-
-   let stroke v => Property "stroke" v;
-
-   let strokeWidth v => Property "strokeWidth" v;
-
-   let strokeMiterlimit v => Property "strokeMiterlimit" v; */
+   */
