@@ -302,6 +302,8 @@ type boxSizing =
 
 let boxSizing: boxSizing => rule;
 
+let zIndex: int => rule;
+
 /* FLEXBOX */
 let flex: int => rule;
 

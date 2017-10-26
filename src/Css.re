@@ -514,6 +514,8 @@ let boxSizing v =>
       }
     );
 
+let zIndex = intProp "zIndex";
+
 /* FLEXBOX */
 let flex = intProp "flex";
 

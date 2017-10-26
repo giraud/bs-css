@@ -6989,6 +6989,13 @@ function boxSizing(v) {
           ]);
 }
 
+function zIndex(param) {
+  return /* Property */Block.__(0, [
+            "zIndex",
+            Pervasives.string_of_int(param)
+          ]);
+}
+
 function flex(param) {
   return /* Property */Block.__(0, [
             "flex",
@@ -7623,6 +7630,7 @@ exports.paddingBottom            = paddingBottom;
 exports.display                  = display;
 exports.position                 = position;
 exports.boxSizing                = boxSizing;
+exports.zIndex                   = zIndex;
 exports.flex                     = flex;
 exports.flexDirection            = flexDirection;
 exports.flexBasis                = flexBasis;
