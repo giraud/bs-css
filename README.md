@@ -23,7 +23,7 @@ You can merge css rules using `merge`
 
 ```
 let text_primary = style [ color white ];
-let small = style [fontSize "10px"];
+let small = style [fontSize (px 10)];
 
 
 <p  className=(merge [text_primary, small])> ...
