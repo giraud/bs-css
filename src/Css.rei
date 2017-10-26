@@ -6,7 +6,7 @@ type color;
 
 type cssunit;
 
-type animation;
+type keyframes;
 
 type transform;
 
@@ -22,7 +22,7 @@ let style: list rule => css;
 
 let global: string => list rule => unit;
 
-let keyframes: list (string, list rule) => animation;
+let keyframes: list (string, list rule) => keyframes;
 
 let merge: list css => css;
 
@@ -395,7 +395,7 @@ let animationFillMode: animationFillMode => rule;
 
 let animationIterationCount: int => rule;
 
-let animationName: animation => rule;
+let animationName: keyframes => rule;
 
 type animationPlayState =
   | Paused

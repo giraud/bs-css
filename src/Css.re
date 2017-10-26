@@ -636,7 +636,7 @@ let boxShadow = stringProp "boxShadow";
 let boxShadows shadows => Property "boxShadow" (join ", " shadows);
 
 /* ANIMATION */
-type animation = string;
+type keyframes = string;
 
 let animationName = stringProp "animationName";
 
