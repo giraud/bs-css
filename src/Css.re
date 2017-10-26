@@ -4,15 +4,7 @@ type rule =
   | Property string string
   | Selector string (list rule);
 
-type color = string;
-
-type cssunit = string;
-
 type angle = string;
-
-type animation = string;
-
-type transform = string;
 
 module Glamor = {
   external make : Js.Json.t => css = "css" [@@bs.module "glamor"];
@@ -48,10 +40,6 @@ let join sep strings => {
   j "" strings
 };
 
-let unitToString v u => string_of_float v ^ "0" ^ u;
-
-let unitProp name v u => Property name (unitToString v u);
-
 let intProp name v => Property name (string_of_int v);
 
 let floatProp name v => Property name {j|$v|j};
@@ -73,6 +61,8 @@ let merge = Glamor.merge;
 let empty = style [];
 
 /* colors */
+type color = string;
+
 let rgb r g b => {j|rgb($r, $g, $b)|j};
 
 let rgba r g b a => {j|rgba($r, $g, $b, $a)|j};
@@ -84,6 +74,12 @@ let black = "black";
 let hex v => "#" ^ v;
 
 /* Css units */
+type cssunit = string;
+
+let unitToString v u => string_of_float v ^ "0" ^ u;
+
+let unitProp name v u => Property name (unitToString v u);
+
 let px = "px";
 
 let pct = "%";
@@ -554,6 +550,8 @@ let boxShadow x xunit y yunit blur blurunit spread spreadunit color =>
   Property "boxShadow" {j|$x$xunit $y$yunit $blur$blurunit $spread$spreadunit $color|j};
 
 /* ANIMATION */
+type animation = string;
+
 let animationName = stringProp "animationName";
 
 let animationDuration ms => Property "animationDuration" (string_of_int ms ^ "ms");
@@ -678,6 +676,8 @@ let transitionTimingFunction v =>
     );
 
 /* TRANSFORM */
+type transform = string;
+
 let transform = stringProp "transform";
 
 let transforms transforms => Property "transform" (join " " transforms);
@@ -717,3 +717,33 @@ let skewX v a => {j|skewX($v$a|j};
 let skewY v a => {j|skewY($v$a|j};
 
 let perspective = unitProp "perspective";
+
+/* PSEUDO CLASSES */
+let selector name rules => Selector name rules;
+
+let hover = selector ":hover";
+
+let disabled = selector ":disabled";
+
+let required = selector ":required";
+
+let readOnly = selector ":readOnly";
+
+let focus = selector ":focus";
+
+let active = selector ":active";
+
+let visited = selector ":visited";
+
+let link = selector ":link";
+
+let firstChild = selector ":firstChild";
+
+let firstOfType = selector ":firstOfType";
+
+let lastChild = selector ":lastChild";
+
+let lastOfType = selector ":lastOfType";
+
+/* MEDIA */
+let media query rules => Selector ("@media " ^ query) rules;

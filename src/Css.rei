@@ -427,3 +427,30 @@ let rotateY: float => angle => transform;
 let rotateZ: float => angle => transform;
 
 let perspective: float => cssunit => rule;
+
+/* PSEUDO CLASSES */
+let link: list rule => rule;
+
+let disabled: list rule => rule;
+
+let required: list rule => rule;
+
+let readOnly: list rule => rule;
+
+let focus: list rule => rule;
+
+let visited: list rule => rule;
+
+let active: list rule => rule;
+
+let hover: list rule => rule;
+
+let firstChild: list rule => rule;
+
+let firstOfType: list rule => rule;
+
+let lastChild: list rule => rule;
+
+let lastOfType: list rule => rule;
+
+let media: string => list rule => rule;

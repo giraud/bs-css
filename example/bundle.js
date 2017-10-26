@@ -6199,17 +6199,6 @@ function join(sep, strings) {
   };
 }
 
-function unitToString(v, u) {
-  return Pervasives.string_of_float(v) + ("0" + u);
-}
-
-function unitProp(name, v, u) {
-  return /* Property */Block.__(0, [
-            name,
-            unitToString(v, u)
-          ]);
-}
-
 function style(rules) {
   return Glamor.css(makeDict(rules));
 }
@@ -6240,6 +6229,17 @@ function rgba(r, g, b, a) {
 
 function hex(v) {
   return "#" + v;
+}
+
+function unitToString(v, u) {
+  return Pervasives.string_of_float(v) + ("0" + u);
+}
+
+function unitProp(name, v, u) {
+  return /* Property */Block.__(0, [
+            name,
+            unitToString(v, u)
+          ]);
 }
 
 function unsafe(name, value) {
@@ -7253,6 +7253,97 @@ function perspective(param, param$1) {
   return unitProp("perspective", param, param$1);
 }
 
+function hover(param) {
+  return /* Selector */Block.__(1, [
+            ":hover",
+            param
+          ]);
+}
+
+function disabled(param) {
+  return /* Selector */Block.__(1, [
+            ":disabled",
+            param
+          ]);
+}
+
+function required(param) {
+  return /* Selector */Block.__(1, [
+            ":required",
+            param
+          ]);
+}
+
+function readOnly(param) {
+  return /* Selector */Block.__(1, [
+            ":readOnly",
+            param
+          ]);
+}
+
+function focus(param) {
+  return /* Selector */Block.__(1, [
+            ":focus",
+            param
+          ]);
+}
+
+function active(param) {
+  return /* Selector */Block.__(1, [
+            ":active",
+            param
+          ]);
+}
+
+function visited(param) {
+  return /* Selector */Block.__(1, [
+            ":visited",
+            param
+          ]);
+}
+
+function link(param) {
+  return /* Selector */Block.__(1, [
+            ":link",
+            param
+          ]);
+}
+
+function firstChild(param) {
+  return /* Selector */Block.__(1, [
+            ":firstChild",
+            param
+          ]);
+}
+
+function firstOfType(param) {
+  return /* Selector */Block.__(1, [
+            ":firstOfType",
+            param
+          ]);
+}
+
+function lastChild(param) {
+  return /* Selector */Block.__(1, [
+            ":lastChild",
+            param
+          ]);
+}
+
+function lastOfType(param) {
+  return /* Selector */Block.__(1, [
+            ":lastOfType",
+            param
+          ]);
+}
+
+function media(query, rules) {
+  return /* Selector */Block.__(1, [
+            "@media " + query,
+            rules
+          ]);
+}
+
 var rad = "rad";
 
 var deg = "deg";
@@ -7401,6 +7492,19 @@ exports.rotateX                  = rotateX;
 exports.rotateY                  = rotateY;
 exports.rotateZ                  = rotateZ;
 exports.perspective              = perspective;
+exports.link                     = link;
+exports.disabled                 = disabled;
+exports.required                 = required;
+exports.readOnly                 = readOnly;
+exports.focus                    = focus;
+exports.visited                  = visited;
+exports.active                   = active;
+exports.hover                    = hover;
+exports.firstChild               = firstChild;
+exports.firstOfType              = firstOfType;
+exports.lastChild                = lastChild;
+exports.lastOfType               = lastOfType;
+exports.media                    = media;
 /* merge Not a pure module */
 
 
