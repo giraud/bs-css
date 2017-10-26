@@ -7356,6 +7356,16 @@ function transitionTimingFunction(v) {
           ]);
 }
 
+function transition($staropt$star, $staropt$star$1, $staropt$star$2, name) {
+  var delay = $staropt$star ? $staropt$star[0] : 0;
+  var duration = $staropt$star$1 ? $staropt$star$1[0] : 0;
+  var timingFunction = $staropt$star$2 ? $staropt$star$2[0] : /* Ease */0;
+  return /* Property */Block.__(0, [
+            "transition",
+            "" + (String(name) + (" " + (String(duration) + (" " + (String(timingFunction) + (" " + (String(delay) + "")))))))
+          ]);
+}
+
 function transform(param) {
   return /* Property */Block.__(0, [
             "transform",
@@ -7658,6 +7668,7 @@ exports.transitionDelay          = transitionDelay;
 exports.transitionDuration       = transitionDuration;
 exports.transitionTimingFunction = transitionTimingFunction;
 exports.transitionProperty       = transitionProperty;
+exports.transition               = transition;
 exports.transform                = transform;
 exports.transforms               = transforms;
 exports.translate                = translate;

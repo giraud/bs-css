@@ -421,6 +421,8 @@ let transitionTimingFunction: timingFunction => rule;
 
 let transitionProperty: string => rule;
 
+let transition: delay::int? => duration::int? => timingFunction::timingFunction? => string => rule;
+
 /* TRANSFORM */
 let transform: transform => rule;
 
