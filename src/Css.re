@@ -562,8 +562,13 @@ let alignSelf v => Property "alignSelf" (alignmentToString v);
 let justifyContent v => Property "justifyContent" (justifyToString v);
 
 /* SHADOW */
-let boxShadow x xunit y yunit blur blurunit spread spreadunit color =>
-  Property "boxShadow" {j|$x$xunit $y$yunit $blur$blurunit $spread$spreadunit $color|j};
+type shadow = string;
+
+let shadow ::x=0 ::y=0 ::blur=0 ::spread=0 color => {j|$(x)px $(y)px $(blur)px $(spread)px $color|j};
+
+let boxShadow = stringProp "boxShadow";
+
+let boxShadows shadows => Property "boxShadow" (join ", " shadows);
 
 /* ANIMATION */
 type animation = string;

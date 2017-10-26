@@ -12,7 +12,7 @@ module Page = {
             backgroundPosition Left,
             border 10.0 px Solid black,
             transforms [rotate 20.0 deg, scale 0.4 0.4],
-            boxShadow 0. px 3. px 5. px 0. px (rgba 0 0 0 0.3)
+            boxShadow (shadow y::3 blur::15 (rgba 0 0 0 0.5))
           ]
       }
     );

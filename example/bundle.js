@@ -6098,7 +6098,7 @@ var styles = {
                             ]
                           ]),
                       /* :: */[
-                        Css.boxShadow(0, Css.px, 3, Css.px, 5, Css.px, 0, Css.px, Css.rgba(0, 0, 0, 0.3)),
+                        Css.boxShadow(Css.shadow(/* None */0, /* Some */[3], /* Some */[15], /* None */0, Css.rgba(0, 0, 0, 0.5))),
                         /* [] */0
                       ]
                     ]
@@ -6967,10 +6967,25 @@ function justifyContent(v) {
           ]);
 }
 
-function boxShadow(x, xunit, y, yunit, blur, blurunit, spread, spreadunit, color) {
+function shadow($staropt$star, $staropt$star$1, $staropt$star$2, $staropt$star$3, color) {
+  var x = $staropt$star ? $staropt$star[0] : 0;
+  var y = $staropt$star$1 ? $staropt$star$1[0] : 0;
+  var blur = $staropt$star$2 ? $staropt$star$2[0] : 0;
+  var spread = $staropt$star$3 ? $staropt$star$3[0] : 0;
+  return "" + (String(x) + ("px " + (String(y) + ("px " + (String(blur) + ("px " + (String(spread) + ("px " + (String(color) + "")))))))));
+}
+
+function boxShadow(param) {
   return /* Property */Block.__(0, [
             "boxShadow",
-            "" + (String(x) + ("" + (String(xunit) + (" " + (String(y) + ("" + (String(yunit) + (" " + (String(blur) + ("" + (String(blurunit) + (" " + (String(spread) + ("" + (String(spreadunit) + (" " + (String(color) + "")))))))))))))))))
+            param
+          ]);
+}
+
+function boxShadows(shadows) {
+  return /* Property */Block.__(0, [
+            "boxShadow",
+            join(", ", shadows)
           ]);
 }
 
@@ -7471,7 +7486,9 @@ exports.alignItems               = alignItems;
 exports.alignSelf                = alignSelf;
 exports.justifyContent           = justifyContent;
 exports.order                    = order;
+exports.shadow                   = shadow;
 exports.boxShadow                = boxShadow;
+exports.boxShadows               = boxShadows;
 exports.animationDuration        = animationDuration;
 exports.animationDelay           = animationDelay;
 exports.animationDirection       = animationDirection;

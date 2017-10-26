@@ -333,8 +333,13 @@ let justifyContent: justify => rule;
 let order: int => rule;
 
 /* SHADOW */
-let boxShadow:
-  float => cssunit => float => cssunit => float => cssunit => float => cssunit => color => rule;
+type shadow;
+
+let shadow: x::int? => y::int? => blur::int? => spread::int? => color => shadow;
+
+let boxShadow: shadow => rule;
+
+let boxShadows: list shadow => rule;
 
 /* ANIMATION */
 let animationDuration: int => rule;
