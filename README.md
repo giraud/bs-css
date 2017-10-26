@@ -1,91 +1,44 @@
-# bs-glamor – [BuckleScript](https://github.com/bucklescript/bucklescript) bindings for [glamor](https://github.com/threepointone/glamor)
+# bs-css
+statically typed DSL for writing css in reason.
 
-The API is still **experimental**. Only the `css` function from glamor is exposed (with its result slightly incorrectly typed as a `string`); no other functions such as `renderStatic` are supported yet.
+
+Bs-css is a statically typed interface to [Glamor] (https://github.com/threepointone/glamor)
+
 
 ## Installation
 
 ```sh
-npm install --save bs-glamor
+npm install --save bs-css
 ```
 
-In your `bsconfig.json`, include `"bs-glamor"` in the `bs-dependencies`.
+In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
 
 ## Usage
 
-The following examples (in [Reason](http://reasonml.github.io) syntax) assume that `Glamor` is included in the namespace:
 
-```reason
-open Glamor;
-```
-
-* Simple styling:
-
-    ```reason
-    css [
-        color "red",
-        border "1px solid black"
-    ]
-    ```
-
-* Styling with selectors (`@media`, `:hover`, `&`, etc.):
-
-    ```reason
-    css [
-        color "red",
-        Selector "@media (min-width: 300px)" [
-            color "green"
-        ]
-    ]
-    ```
-
-* Selectors can be nested:
-
-    ```reason
-    css [
-        color "red",
-        Selector "@media (min-width: 300px)" [
-            color "green",
-            Selector "& .foo" [
-                color "blue"
-            ]
-        ]
-    ]
-    ```
-
-You can isolate inclusion of the `Glamor` namespace in the following way:
-
-```reason
-Glamor.(css [color "red"])
-```
-
-The result of the `css` function can be assigned to a class name, e.g. in JSX:
-
-```reason
-<div className=(css [color "red"]) />
-```
 ### Merging css rules
 
 You can merge css rules using `merge`
 
 
 ```
-let text_primary = css [ color "indigo" ];
-let small = css [fontSize "10px"];
+let text_primary = style [ color white ];
+let small = style [fontSize "10px"];
 
 
 <p  className=(merge [text_primary, small])> ...
 ```
 
-glamor will make sure that rules are merged in the correct order, managing nesting and precedence for you.
+bs-css will make sure that rules are merged in the correct order, managing nesting and precedence for you.
 
 
 ### Global css
  You can defined global css rules with `global`
 
  ```
- Glamor.(global "body" [margin "0px"]);
+ Css.(global "body" [margin (px 0)]);
 
- Glamor.(global "h1, h2, h3" [color "palegoldenrod"]);
+ Css.(global "h1, h2, h3" [color (rgb 33 33 33)]);
 
  ```
 
@@ -94,17 +47,18 @@ glamor will make sure that rules are merged in the correct order, managing nesti
 define animation keyframes;
 
 ```
-let bounce = Glamor.keyframes [
-  ("0%": [transform "scale(0.1)",  opacity "0"]),
-  ("60%": [transform "scale(1.2)",  opacity "1"]),
-  ("100%": [transform "scale(1)"])
+let bounce = Css.keyframes [
+  ("0%": [transform (scale 0.1 0.1),  opacity 0.0]),
+  ("60%": [transform (scale 1.2 1.2),  opacity 1.0]),
+  ("100%": [transform (scale 1.0 1.0), opacity 1.0])
 ];
+
 let styles = css [
     animationName bounce,
-    animationDuration "2s",
-    width "50px",
-    height "50px",
-    backgroundColor "red"
+    animationDuration 2000,
+    width (px 50),
+    height (px 50),
+    backgroundColor (rgb 255 0 0)
 ];
 
 // ...
@@ -113,9 +67,6 @@ let styles = css [
 </div>
 ```
 
-## Example
-
-See [reason-react-tictactoe](https://github.com/poeschko/reason-react-tictactoe) for a live example.
 
 ## Development
 
@@ -123,14 +74,12 @@ See [reason-react-tictactoe](https://github.com/poeschko/reason-react-tictactoe)
 npm run start
 ```
 
-### Tests
 
-There are some simplistic tests using [bs-jest](https://github.com/BuckleTypes/bs-jest).
-
-```sh
-npm run test
-```
+## Where is the documentation?
+Its on its way!
+until then you can check out [css.rei](./src/Css.rei).
 
 ## Thanks
-
-Thanks to [reason-react-example](https://github.com/chenglou/reason-react-example), [reason-react](https://github.com/reasonml/reason-react), and [bs-jest](https://github.com/BuckleTypes/bs-jest) for inspiration how to create a Reason library, and of course, thanks to [glamor](https://github.com/threepointone/glamor).
+Thanks to [glamor](https://github.com/threepointone/glamor) which is doing all the heavi lifting.
+Thanks to [bs-glamor](https://github.com/poeschko/bs-glamor) which this repo was forked from.
+Thanks to [elm-css](https://github.com/rtfeldman/elm-css) for dsl design inspiration.
