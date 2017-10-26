@@ -500,3 +500,11 @@ type cursor =
 let cursor: cursor => rule;
 
 let outline: cssunit => borderStyle => color => rule;
+
+let outlineStyle: borderStyle => rule;
+
+let outlineOffset: cssunit => rule;
+
+let outlineWidth: cssunit => rule;
+
+let outlineColor: color => rule;

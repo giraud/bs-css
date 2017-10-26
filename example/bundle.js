@@ -7564,6 +7564,34 @@ function outline(width, style, color) {
           ]);
 }
 
+function outlineStyle(v) {
+  return /* Property */Block.__(0, [
+            "outlineStyle",
+            borderStyleToString(v)
+          ]);
+}
+
+function outlineOffset(param) {
+  return /* Property */Block.__(0, [
+            "outlineOffset",
+            param
+          ]);
+}
+
+function outlineWidth(param) {
+  return /* Property */Block.__(0, [
+            "outlineWidth",
+            param
+          ]);
+}
+
+function outlineColor(param) {
+  return /* Property */Block.__(0, [
+            "outlineColor",
+            param
+          ]);
+}
+
 var white = "white";
 
 var black = "black";
@@ -7722,6 +7750,10 @@ exports.lastOfType               = lastOfType;
 exports.media                    = media;
 exports.cursor                   = cursor;
 exports.outline                  = outline;
+exports.outlineStyle             = outlineStyle;
+exports.outlineOffset            = outlineOffset;
+exports.outlineWidth             = outlineWidth;
+exports.outlineColor             = outlineColor;
 /* merge Not a pure module */
 
 

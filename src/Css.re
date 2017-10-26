@@ -838,3 +838,11 @@ let outline width style color => {
   let outlineStyle = borderStyleToString style;
   Property "outline" {j|$width $outlineStyle $color|j}
 };
+
+let outlineStyle v => Property "outlineStyle" (borderStyleToString v);
+
+let outlineOffset = stringProp "outlineOffset";
+
+let outlineWidth = stringProp "outlineWidth";
+
+let outlineColor = stringProp "outlineColor";
