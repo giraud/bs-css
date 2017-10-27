@@ -718,23 +718,21 @@ type timingFunction =
   | Steps int animationSteps
   | Frames int;
 
-let animationTimingFunction v =>
-  Property
-    "animationTimingFunction"
-    (
-      switch v {
-      | Ease => "ease"
-      | EaseIn => "ease-in"
-      | EaseOut => "ease-out"
-      | EaseInOut => "ease-in-out"
-      | Linear => "linear"
-      | StepStart => "step-start"
-      | StepEnd => "step-end"
-      | CubicBezier x1 y1 x2 y2 => {j|cubic-bezier($x1, $y1, $x2, $y2)|j}
-      | Steps i s => "steps(" ^ string_of_int i ^ ", " ^ animationStepsToString s ^ ")"
-      | Frames i => {j|frames($i)|j}
-      }
-    );
+let timingFunctionToString v =>
+  switch v {
+  | Ease => "ease"
+  | EaseIn => "ease-in"
+  | EaseOut => "ease-out"
+  | EaseInOut => "ease-in-out"
+  | Linear => "linear"
+  | StepStart => "step-start"
+  | StepEnd => "step-end"
+  | CubicBezier x1 y1 x2 y2 => {j|cubic-bezier($x1, $y1, $x2, $y2)|j}
+  | Steps i s => "steps(" ^ string_of_int i ^ ", " ^ animationStepsToString s ^ ")"
+  | Frames i => {j|frames($i)|j}
+  };
+
+let animationTimingFunction v => Property "animationTimingFunction" (timingFunctionToString v);
 
 /* TRANSITION */
 let transitionDelay = intProp "transitionDelay";
@@ -761,8 +759,10 @@ let transitionTimingFunction v =>
       }
     );
 
-let transition ::delay=0 ::duration=0 ::timingFunction=Ease name =>
-  Property "transition" {j|$name $(duration)ms $timingFunction $(delay)ms|j};
+let transition ::delay=0 ::duration=0 ::timingFunction=Ease name => {
+  let func = timingFunctionToString timingFunction;
+  Property "transition" {j|$name $(duration)ms $func $(delay)ms|j}
+};
 
 /* TRANSFORM */
 type transform = string;
