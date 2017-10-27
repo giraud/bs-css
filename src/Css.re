@@ -762,7 +762,7 @@ let transitionTimingFunction v =>
     );
 
 let transition ::delay=0 ::duration=0 ::timingFunction=Ease name =>
-  Property "transition" {j|$name $duration $timingFunction $delay|j};
+  Property "transition" {j|$name $(duration)ms $timingFunction $(delay)ms|j};
 
 /* TRANSFORM */
 type transform = string;
