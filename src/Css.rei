@@ -28,6 +28,8 @@ let merge: list css => css;
 
 let empty: css;
 
+let important: rule => rule;
+
 /* units */
 let px: int => cssunit;
 

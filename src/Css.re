@@ -58,6 +58,12 @@ let merge = Glamor.merge;
 
 let empty = style [];
 
+let important v =>
+  switch v {
+  | Property name value => Property name (value ^ " !important")
+  | _ => v
+  };
+
 
 /*********
  * COLORS
