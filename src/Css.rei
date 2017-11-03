@@ -18,13 +18,13 @@ let deg: float => angle;
 
 let turn: float => angle;
 
-let style: list rule => css;
+let style: list(rule) => css;
 
-let global: string => list rule => unit;
+let global: (string, list(rule)) => unit;
 
-let keyframes: list (string, list rule) => keyframes;
+let keyframes: list((string, list(rule))) => keyframes;
 
-let merge: list css => css;
+let merge: list(css) => css;
 
 let empty: css;
 
@@ -48,9 +48,9 @@ let cm: float => cssunit;
 let mm: float => cssunit;
 
 /* color */
-let rgb: int => int => int => color;
+let rgb: (int, int, int) => color;
 
-let rgba: int => int => int => float => color;
+let rgba: (int, int, int, float) => color;
 
 let hex: string => color;
 
@@ -59,7 +59,7 @@ let white: color;
 let black: color;
 
 /* CSS RULES */
-let unsafe: string => string => rule;
+let unsafe: (string, string) => rule;
 
 type visibility =
   | Visible
@@ -85,9 +85,9 @@ let backgroundColor: color => rule;
 type backgroundSize =
   | Cover
   | Contain
-  | Width cssunit
-  | Height cssunit
-  | Custom cssunit cssunit;
+  | Width(cssunit)
+  | Height(cssunit)
+  | Custom(cssunit, cssunit);
 
 let backgroundSize: backgroundSize => rule;
 
@@ -112,8 +112,8 @@ let backgroundRepeat: backgroundRepeat => rule;
 
 type background =
   | None
-  | Color color
-  | Image string;
+  | Color(color)
+  | Image(string);
 
 let background: background => rule;
 
@@ -148,8 +148,8 @@ let fontWeight: fontWeight => rule;
 
 type textDecoration =
   | None
-  | Underline color
-  | UnderlineWavy color;
+  | Underline(color)
+  | UnderlineWavy(color);
 
 let textDecoration: textDecoration => rule;
 
@@ -164,7 +164,7 @@ let textAlign: textAlign => rule;
 
 let textIndent: cssunit => rule;
 
-let textShadow: cssunit => cssunit => color => rule;
+let textShadow: (cssunit, cssunit, color) => rule;
 
 type textTransform =
   | None
@@ -188,15 +188,15 @@ type borderStyle =
   | Dashed
   | Double;
 
-let border: cssunit => borderStyle => color => rule;
+let border: (cssunit, borderStyle, color) => rule;
 
-let borderTop: cssunit => borderStyle => color => rule;
+let borderTop: (cssunit, borderStyle, color) => rule;
 
-let borderBottom: cssunit => borderStyle => color => rule;
+let borderBottom: (cssunit, borderStyle, color) => rule;
 
-let borderLeft: cssunit => borderStyle => color => rule;
+let borderLeft: (cssunit, borderStyle, color) => rule;
 
-let borderRight: cssunit => borderStyle => color => rule;
+let borderRight: (cssunit, borderStyle, color) => rule;
 
 let borderWidth: cssunit => rule;
 
@@ -313,6 +313,18 @@ type boxSizing =
 
 let boxSizing: boxSizing => rule;
 
+type overflow =
+  | Visible
+  | Hidden
+  | Scroll
+  | Auto;
+
+let overflow: overflow => rule;
+
+let overflowX: overflow => rule;
+
+let overflowY: overflow => rule;
+
 let zIndex: int => rule;
 
 /* FLEXBOX */
@@ -368,11 +380,11 @@ let order: int => rule;
 /* SHADOW */
 type shadow;
 
-let shadow: x::int? => y::int? => blur::int? => spread::int? => color => shadow;
+let shadow: (~x: int=?, ~y: int=?, ~blur: int=?, ~spread: int=?, color) => shadow;
 
 let boxShadow: shadow => rule;
 
-let boxShadows: list shadow => rule;
+let boxShadows: list(shadow) => rule;
 
 /* ANIMATION */
 let animationDuration: int => rule;
@@ -417,9 +429,9 @@ type timingFunction =
   | Linear
   | StepStart
   | StepEnd
-  | CubicBezier float float float float
-  | Steps int animationSteps
-  | Frames int;
+  | CubicBezier(float, float, float, float)
+  | Steps(int, animationSteps)
+  | Frames(int);
 
 let animationTimingFunction: timingFunction => rule;
 
@@ -432,20 +444,21 @@ let transitionTimingFunction: timingFunction => rule;
 
 let transitionProperty: string => rule;
 
-let transition: delay::int? => duration::int? => timingFunction::timingFunction? => string => rule;
+let transition:
+  (~delay: int=?, ~duration: int=?, ~timingFunction: timingFunction=?, string) => rule;
 
 /* TRANSFORM */
 let transform: transform => rule;
 
-let transforms: list transform => rule;
+let transforms: list(transform) => rule;
 
-let translate: cssunit => cssunit => transform;
+let translate: (cssunit, cssunit) => transform;
 
 let translateX: cssunit => transform;
 
 let translateY: cssunit => transform;
 
-let scale: float => float => transform;
+let scale: (float, float) => transform;
 
 let scaleX: float => transform;
 
@@ -453,17 +466,17 @@ let scaleY: float => transform;
 
 let rotate: angle => transform;
 
-let skew: angle => angle => transform;
+let skew: (angle, angle) => transform;
 
 let skewX: angle => transform;
 
 let skewY: angle => transform;
 
-let translate3d: cssunit => cssunit => cssunit => transform;
+let translate3d: (cssunit, cssunit, cssunit) => transform;
 
 let translateZ: cssunit => transform;
 
-let scale3d: float => float => float => transform;
+let scale3d: (float, float, float) => transform;
 
 let scaleZ: float => transform;
 
@@ -476,41 +489,41 @@ let rotateZ: angle => transform;
 let perspective: cssunit => rule;
 
 /* PSEUDO CLASSES */
-let link: list rule => rule;
+let link: list(rule) => rule;
 
-let disabled: list rule => rule;
+let disabled: list(rule) => rule;
 
-let required: list rule => rule;
+let required: list(rule) => rule;
 
-let readOnly: list rule => rule;
+let readOnly: list(rule) => rule;
 
-let focus: list rule => rule;
+let focus: list(rule) => rule;
 
-let visited: list rule => rule;
+let visited: list(rule) => rule;
 
-let active: list rule => rule;
+let active: list(rule) => rule;
 
-let hover: list rule => rule;
+let hover: list(rule) => rule;
 
-let firstChild: list rule => rule;
+let firstChild: list(rule) => rule;
 
-let firstOfType: list rule => rule;
+let firstOfType: list(rule) => rule;
 
-let lastChild: list rule => rule;
+let lastChild: list(rule) => rule;
 
-let lastOfType: list rule => rule;
+let lastOfType: list(rule) => rule;
 
-let media: string => list rule => rule;
+let media: (string, list(rule)) => rule;
 
 /* MISC */
 type cursor =
   | Auto
   | Pointer
-  | Custom string;
+  | Custom(string);
 
 let cursor: cursor => rule;
 
-let outline: cssunit => borderStyle => color => rule;
+let outline: (cssunit, borderStyle, color) => rule;
 
 let outlineStyle: borderStyle => rule;
 

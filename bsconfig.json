@@ -3,6 +3,7 @@
   "reason": {
     "react-jsx": 2
   },
+  "refmt": 3,
   "bs-dev-dependencies": [
     "reason-react"
   ],

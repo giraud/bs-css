@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "bs-jest": "^0.1.0",
-    "bs-platform": "^1.6.0",
+    "bs-platform": "^2.0.0",
     "reason-react": "^0.2.4",
     "webpack": "^3.8.1"
   },
