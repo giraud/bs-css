@@ -407,7 +407,11 @@ type animationFillMode =
 
 let animationFillMode: animationFillMode => rule;
 
-let animationIterationCount: int => rule;
+type animationIterationCount =
+  | Infinite
+  | Iterate(int);
+
+let animationIterationCount: animationIterationCount => rule;
 
 let animationName: keyframes => rule;
 
