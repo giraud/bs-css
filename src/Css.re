@@ -860,6 +860,8 @@ let lastChild = selector(":lastChild");
 
 let lastOfType = selector(":lastOfType");
 
+let children = selector(" > *");
+
 /* MEDIA */
 let media = (query, rules) => Selector("@media " ++ query, rules);
 

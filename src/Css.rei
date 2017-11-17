@@ -513,6 +513,8 @@ let lastChild: list(rule) => rule;
 
 let lastOfType: list(rule) => rule;
 
+let children: list(rule) => rule;
+
 let media: (string, list(rule)) => rule;
 
 /* MISC */
