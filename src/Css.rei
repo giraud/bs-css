@@ -47,6 +47,8 @@ let cm: float => cssunit;
 
 let mm: float => cssunit;
 
+let zero: cssunit;
+
 /* color */
 let rgb: (int, int, int) => color;
 

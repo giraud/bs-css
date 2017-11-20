@@ -102,6 +102,8 @@ let vh = (i) => {j|$(i)vh|j};
 
 let vw = (i) => {j|$(i)vw|j};
 
+let zero = "0";
+
 
 /*********
  * ANGLE
