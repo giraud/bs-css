@@ -1,6 +1,7 @@
 type css = string;
 
 type rule =
+  | Empty
   | Property(string, string)
   | Selector(string, list(rule));
 
