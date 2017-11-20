@@ -488,6 +488,8 @@ let rotateZ: angle => transform;
 
 let perspective: cssunit => rule;
 
+let selector: (string, list(rule)) => rule;
+
 /* PSEUDO CLASSES */
 let link: list(rule) => rule;
 
