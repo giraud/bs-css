@@ -709,7 +709,18 @@ let animationFillMode = (v) =>
     }
   );
 
-let animationIterationCount = intProp("animationIterationCount");
+type animationIterationCount =
+  | Infinite
+  | Iterate(int);
+
+let animationIterationCount = (v) =>
+  Property(
+    "animationIterationCount",
+    switch v {
+      | Infinite => "infinite"
+      | Iterate(v) => string_of_int(v)
+    }
+  );
 
 type animationPlayState =
   | Paused
