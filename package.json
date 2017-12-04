@@ -18,7 +18,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/poeschko/bs-glamor.git"
+    "url": "git+https://github.com/SentiaAnalytics/bs-css.git"
   },
   "dependencies": {
     "glamor": "^2.0.0"
