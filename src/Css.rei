@@ -49,6 +49,8 @@ let mm: float => cssunit;
 
 let zero: cssunit;
 
+let auto: cssunit;
+
 /* color */
 let rgb: (int, int, int) => color;
 
@@ -512,6 +514,10 @@ let visited: list(rule) => rule;
 let active: list(rule) => rule;
 
 let hover: list(rule) => rule;
+
+let before: list(rule) => rule;
+
+let after: list(rule) => rule;
 
 let firstChild: list(rule) => rule;
 
