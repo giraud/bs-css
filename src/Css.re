@@ -104,6 +104,8 @@ let vw = (i) => {j|$(i)vw|j};
 
 let zero = "0";
 
+let auto = "auto";
+
 
 /*********
  * ANGLE
@@ -850,6 +852,10 @@ let perspective = stringProp("perspective");
 let selector = (name, rules) => Selector(name, rules);
 
 let hover = selector(":hover");
+
+let before = selector("::before");
+
+let after = selector("::after");
 
 let disabled = selector(":disabled");
 
