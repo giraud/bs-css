@@ -12,6 +12,8 @@ type transform;
 
 type angle;
 
+let unsafeValue: string => 'a;
+
 let rad: float => angle;
 
 let deg: float => angle;

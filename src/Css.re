@@ -65,6 +65,8 @@ let important = v =>
   | _ => v
   };
 
+let unsafeValue: string => 'a = Obj.magic;
+
 
 /*********
  * COLORS
