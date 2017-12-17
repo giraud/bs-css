@@ -63,6 +63,8 @@ let white: color;
 let black: color;
 
 /* CSS RULES */
+let label: string => rule;
+
 let unsafe: (string, string) => rule;
 
 type visibility =

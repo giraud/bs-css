@@ -121,6 +121,8 @@ let turn = i => {j|$(i)turn|j};
 /*********
  * CSS RULES
  **********/
+let label = label => Property("label", label);
+
 let unsafe = (name, value) => Property(name, value);
 
 type visibility =
