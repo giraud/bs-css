@@ -361,7 +361,7 @@ let yellow: color;
 let yellowgreen: color;
 
 /* CSS RULES */
-let unsafe: (string, string) => rule;
+let unsafe: (string, 'a) => rule;
 
 type visibility =
   | Visible
