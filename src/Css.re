@@ -79,6 +79,8 @@ let hsl = (h, s, l) => {j|hsl($h, $s%, $l%)|j};
 
 let hsla = (h, s, l, a) => {j|hsl($h, $s%, $l%, $a)|j};
 
+let transparent = "transparent";
+
 let white = "white";
 
 let black = "black";

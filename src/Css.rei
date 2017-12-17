@@ -62,6 +62,8 @@ let hsla: (angle, int, int, float) => color;
 
 let hex: string => color;
 
+let transparent: color;
+
 let white: color;
 
 let black: color;
