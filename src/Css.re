@@ -79,11 +79,303 @@ let hsl = (h, s, l) => {j|hsl($h, $s%, $l%)|j};
 
 let hsla = (h, s, l, a) => {j|hsl($h, $s%, $l%, $a)|j};
 
+let currentColor = "currentColor";
+
 let transparent = "transparent";
+
+let aliceblue = "aliceblue";
+
+let antiquewhite = "antiquewhite";
+
+let aqua = "aqua";
+
+let aquamarine = "aquamarine";
+
+let azure = "azure";
+
+let beige = "beige";
+
+let bisque = "bisque";
+
+let black = "black";
+
+let blanchedalmond = "blanchedalmond";
+
+let blue = "blue";
+
+let blueviolet = "blueviolet";
+
+let brown = "brown";
+
+let burlywood = "burlywood";
+
+let cadetblue = "cadetblue";
+
+let chartreuse = "chartreuse";
+
+let chocolate = "chocolate";
+
+let coral = "coral";
+
+let cornflowerblue = "cornflowerblue";
+
+let cornsilk = "cornsilk";
+
+let crimson = "crimson";
+
+let cyan = "cyan";
+
+let darkblue = "darkblue";
+
+let darkcyan = "darkcyan";
+
+let darkgoldenrod = "darkgoldenrod";
+
+let darkgray = "darkgray";
+
+let darkgrey = "darkgrey";
+
+let darkgreen = "darkgreen";
+
+let darkkhaki = "darkkhaki";
+
+let darkmagenta = "darkmagenta";
+
+let darkolivegreen = "darkolivegreen";
+
+let darkorange = "darkorange";
+
+let darkorchid = "darkorchid";
+
+let darkred = "darkred";
+
+let darksalmon = "darksalmon";
+
+let darkseagreen = "darkseagreen";
+
+let darkslateblue = "darkslateblue";
+
+let darkslategray = "darkslategray";
+
+let darkslategrey = "darkslategrey";
+
+let darkturquoise = "darkturquoise";
+
+let darkviolet = "darkviolet";
+
+let deeppink = "deeppink";
+
+let deepskyblue = "deepskyblue";
+
+let dimgray = "dimgray";
+
+let dimgrey = "dimgrey";
+
+let dodgerblue = "dodgerblue";
+
+let firebrick = "firebrick";
+
+let floralwhite = "floralwhite";
+
+let forestgreen = "forestgreen";
+
+let fuchsia = "fuchsia";
+
+let gainsboro = "gainsboro";
+
+let ghostwhite = "ghostwhite";
+
+let gold = "gold";
+
+let goldenrod = "goldenrod";
+
+let gray = "gray";
+
+let grey = "grey";
+
+let green = "green";
+
+let greenyellow = "greenyellow";
+
+let honeydew = "honeydew";
+
+let hotpink = "hotpink";
+
+let indianred = "indianred";
+
+let indigo = "indigo";
+
+let ivory = "ivory";
+
+let khaki = "khaki";
+
+let lavender = "lavender";
+
+let lavenderblush = "lavenderblush";
+
+let lawngreen = "lawngreen";
+
+let lemonchiffon = "lemonchiffon";
+
+let lightblue = "lightblue";
+
+let lightcoral = "lightcoral";
+
+let lightcyan = "lightcyan";
+
+let lightgoldenrodyellow = "lightgoldenrodyellow";
+
+let lightgray = "lightgray";
+
+let lightgrey = "lightgrey";
+
+let lightgreen = "lightgreen";
+
+let lightpink = "lightpink";
+
+let lightsalmon = "lightsalmon";
+
+let lightseagreen = "lightseagreen";
+
+let lightskyblue = "lightskyblue";
+
+let lightslategray = "lightslategray";
+
+let lightslategrey = "lightslategrey";
+
+let lightsteelblue = "lightsteelblue";
+
+let lightyellow = "lightyellow";
+
+let lime = "lime";
+
+let limegreen = "limegreen";
+
+let linen = "linen";
+
+let magenta = "magenta";
+
+let maroon = "maroon";
+
+let mediumaquamarine = "mediumaquamarine";
+
+let mediumblue = "mediumblue";
+
+let mediumorchid = "mediumorchid";
+
+let mediumpurple = "mediumpurple";
+
+let mediumseagreen = "mediumseagreen";
+
+let mediumslateblue = "mediumslateblue";
+
+let mediumspringgreen = "mediumspringgreen";
+
+let mediumturquoise = "mediumturquoise";
+
+let mediumvioletred = "mediumvioletred";
+
+let midnightblue = "midnightblue";
+
+let mintcream = "mintcream";
+
+let mistyrose = "mistyrose";
+
+let moccasin = "moccasin";
+
+let navajowhite = "navajowhite";
+
+let navy = "navy";
+
+let oldlace = "oldlace";
+
+let olive = "olive";
+
+let olivedrab = "olivedrab";
+
+let orange = "orange";
+
+let orangered = "orangered";
+
+let orchid = "orchid";
+
+let palegoldenrod = "palegoldenrod";
+
+let palegreen = "palegreen";
+
+let paleturquoise = "paleturquoise";
+
+let palevioletred = "palevioletred";
+
+let papayawhip = "papayawhip";
+
+let peachpuff = "peachpuff";
+
+let peru = "peru";
+
+let pink = "pink";
+
+let plum = "plum";
+
+let powderblue = "powderblue";
+
+let purple = "purple";
+
+let red = "red";
+
+let rosybrown = "rosybrown";
+
+let royalblue = "royalblue";
+
+let saddlebrown = "saddlebrown";
+
+let salmon = "salmon";
+
+let sandybrown = "sandybrown";
+
+let seagreen = "seagreen";
+
+let seashell = "seashell";
+
+let sienna = "sienna";
+
+let silver = "silver";
+
+let skyblue = "skyblue";
+
+let slateblue = "slateblue";
+
+let slategray = "slategray";
+
+let slategrey = "slategrey";
+
+let snow = "snow";
+
+let springgreen = "springgreen";
+
+let steelblue = "steelblue";
+
+let tan = "tan";
+
+let teal = "teal";
+
+let thistle = "thistle";
+
+let tomato = "tomato";
+
+let turquoise = "turquoise";
+
+let violet = "violet";
+
+let wheat = "wheat";
 
 let white = "white";
 
-let black = "black";
+let whitesmoke = "whitesmoke";
+
+let yellow = "yellow";
+
+let yellowgreen = "yellowgreen";
 
 let hex = v => "#" ++ v;
 
