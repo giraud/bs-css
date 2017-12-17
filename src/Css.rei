@@ -73,6 +73,37 @@ let visibility: visibility => rule;
 
 let opacity: float => rule;
 
+type listStyleType =
+  | Disc
+  | Circle
+  | Square
+  | Decimal
+  | DecimalLeadingZero
+  | LowerRoman
+  | UpperRoman
+  | LowerGreek
+  | LowerLatin
+  | UpperLatin
+  | Armenian
+  | Georgian
+  | LowerAlpha
+  | UpperAlpha
+  | None;
+
+let listStyleType: listStyleType => rule;
+
+type listStyleImage =
+  | None
+  | Url(string);
+
+let listStyleImage: listStyleImage => rule;
+
+type listStylePosition =
+  | Inside
+  | Outside;
+
+let listStylePopsition: listStylePosition => rule;
+
 /* BACKGROUND */
 let backgroundImage: string => rule;
 

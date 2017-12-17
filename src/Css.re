@@ -138,6 +138,71 @@ let visibility = v =>
 
 let opacity = v => Property("opacity", {j|$v|j});
 
+type listStyleType =
+  | Disc
+  | Circle
+  | Square
+  | Decimal
+  | DecimalLeadingZero
+  | LowerRoman
+  | UpperRoman
+  | LowerGreek
+  | LowerLatin
+  | UpperLatin
+  | Armenian
+  | Georgian
+  | LowerAlpha
+  | UpperAlpha
+  | None;
+
+let listStyleType = value => {
+  let value =
+    switch value {
+    | Disc => "disc"
+    | Circle => "circle"
+    | Square => "square"
+    | Decimal => "decimal"
+    | DecimalLeadingZero => "decimal-leading-zero"
+    | LowerRoman => "lower-roman"
+    | UpperRoman => "upper-roman"
+    | LowerGreek => "lower-greek"
+    | LowerLatin => "lower-latin"
+    | UpperLatin => "upper-latin"
+    | Armenian => "armenian"
+    | Georgian => "georgian"
+    | LowerAlpha => "lower-alpha"
+    | UpperAlpha => "upper-alpha"
+    | None => "none"
+    };
+  Property("listStyleType", value);
+};
+
+type listStyleImage =
+  | None
+  | Url(string);
+
+let listStyleImage = value => {
+  let value =
+    switch value {
+    | None => "none"
+    | Url(url) => {j|url($url)|j}
+    };
+  Property("listStyleImage", value);
+};
+
+type listStylePosition =
+  | Inside
+  | Outside;
+
+let listStylePopsition = value => {
+  let value =
+    switch value {
+    | Inside => "inside"
+    | Outside => "outside"
+    };
+  Property("listStylePosition", value);
+};
+
 /* BACKGROUND */
 let backgroundImage = url => Property("backgroundImage", "url(" ++ url ++ ")");
 
