@@ -265,6 +265,13 @@ let bottom: cssunit => rule;
 
 let margin: cssunit => rule;
 
+let margin2: (~v: cssunit, ~h: cssunit) => rule;
+
+let margin3: (~top: cssunit, ~h: cssunit, ~bottom: cssunit) => rule;
+
+let margin4:
+  (~top: cssunit, ~right: cssunit, ~bottom: cssunit, ~left: cssunit) => rule;
+
 let marginLeft: cssunit => rule;
 
 let marginRight: cssunit => rule;

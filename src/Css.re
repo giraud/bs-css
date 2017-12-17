@@ -450,6 +450,13 @@ let bottom = stringProp("bottom");
 
 let margin = stringProp("margin");
 
+let margin2 = (~v, ~h) => Property("margin", {j|$v $h|j});
+
+let margin3 = (~top, ~h, ~bottom) => Property("margin", {j|$top $h $bottom|j});
+
+let margin4 = (~top, ~right, ~bottom, ~left) =>
+  Property("margin", {j|$top $right $bottom $left|j});
+
 let marginLeft = stringProp("marginLeft");
 
 let marginRight = stringProp("marginRight");
