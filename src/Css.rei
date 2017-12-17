@@ -131,7 +131,7 @@ let visibility: visibility => rule;
 let opacity: float => rule;
 
 /* BACKGROUND */
-let backgroundImage: string => rule;
+let backgroundImage: image => rule;
 
 type backgroundAttachment =
   | Scroll
@@ -174,7 +174,7 @@ let backgroundRepeat: backgroundRepeat => rule;
 type background =
   | None
   | Color(color)
-  | Image(string);
+  | Image(image);
 
 let background: background => rule;
 

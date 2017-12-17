@@ -240,6 +240,11 @@ type image =
   | Gradient(gradient)
   | Element(string);
 
+let _encodeImage = fun
+  | Url(url) => {j|url($url)|j}
+  | Gradient(gradient) => gradient
+  | Element(selector) => {j|element($selector)|j};
+
 
 /*********
  * CSS RULES
@@ -262,7 +267,9 @@ let visibility = v =>
 let opacity = v => Property("opacity", {j|$v|j});
 
 /* BACKGROUND */
-let backgroundImage = url => Property("backgroundImage", "url(" ++ url ++ ")");
+let backgroundImage = value => {
+  Property("backgroundImage", _encodeImage(value));
+};
 
 type backgroundAttachment =
   | Scroll
@@ -345,7 +352,7 @@ let backgroundRepeat = v =>
 type background =
   | None
   | Color(color)
-  | Image(string);
+  | Image(image);
 
 let background = v =>
   Property(
@@ -353,7 +360,7 @@ let background = v =>
     switch v {
     | None => "none"
     | Color(color) => color
-    | Image(url) => {j|url($url)|j}
+    | Image(image) => _encodeImage(image)
     }
   );
 
