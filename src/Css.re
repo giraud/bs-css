@@ -404,6 +404,53 @@ let textDecoration = v =>
     }
   );
 
+type textDecorationLineValue =
+  | Underline
+  | Overline
+  | LineThrough;
+
+type textDecorationLine =
+  | None
+  | Values(list(textDecorationLineValue));
+
+let textDecorationLine = value => {
+  let value =
+    switch value {
+    | None => "none"
+    | Values(values) =>
+      values
+      |> List.map(
+           fun
+           | Underline => "underline"
+           | Overline => "overline"
+           | LineThrough => "line-through"
+         )
+      |> String.concat(" ")
+    };
+  Property("textDecorationLine", value);
+};
+
+type textDecorationStyle =
+  | Solid
+  | Double
+  | Dotted
+  | Dashed
+  | Wavy;
+
+let textDecorationStyle = value => {
+  let value =
+    switch value {
+    | Solid => "solid"
+    | Double => "double"
+    | Dotted => "dotted"
+    | Dashed => "dashed"
+    | Wavy => "wavy"
+    };
+  Property("textDecorationStyle", value);
+};
+
+let textDecorationColor = stringProp("textDecorationColor");
+
 type textTransform =
   | None
   | Uppercase

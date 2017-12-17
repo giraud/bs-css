@@ -194,6 +194,28 @@ type textDecoration =
 
 let textDecoration: textDecoration => rule;
 
+type textDecorationLineValue =
+  | Underline
+  | Overline
+  | LineThrough;
+
+type textDecorationLine =
+  | None
+  | Values(list(textDecorationLineValue));
+
+let textDecorationLine: textDecorationLine => rule;
+
+type textDecorationStyle =
+  | Solid
+  | Double
+  | Dotted
+  | Dashed
+  | Wavy;
+
+let textDecorationStyle: textDecorationStyle => rule;
+
+let textDecorationColor: color => rule;
+
 type textAlign =
   | Auto
   | Left
