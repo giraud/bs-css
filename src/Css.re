@@ -858,6 +858,25 @@ let skewY = a => {j|skewY($a|j};
 
 let perspective = stringProp("perspective");
 
+type whiteSpace =
+  | Normal
+  | Nowrap
+  | Pre
+  | PreWrap
+  | PreLine;
+
+let whiteSpace = value => {
+  let value =
+    switch value {
+    | Normal => "normal"
+    | Nowrap => "nowrap"
+    | Pre => "pre"
+    | PreWrap => "pre-wrap"
+    | PreLine => "pre-line"
+    };
+  Property("whiteSpace", value);
+};
+
 /* PSEUDO CLASSES */
 let selector = (name, rules) => Selector(name, rules);
 

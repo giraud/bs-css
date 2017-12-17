@@ -503,6 +503,15 @@ let rotateZ: angle => transform;
 
 let perspective: cssunit => rule;
 
+type whiteSpace =
+  | Normal
+  | Nowrap
+  | Pre
+  | PreWrap
+  | PreLine;
+
+let whiteSpace: whiteSpace => rule;
+
 let selector: (string, list(rule)) => rule;
 
 /* PSEUDO CLASSES */
