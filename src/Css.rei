@@ -555,3 +555,11 @@ let outlineOffset: cssunit => rule;
 let outlineWidth: cssunit => rule;
 
 let outlineColor: color => rule;
+
+module SVG: {
+  let fill: color => rule;
+  let fillOpacity: float => rule;
+  let stroke: color => rule;
+  let strokeWidth: cssunit => rule;
+  let strokeOpacity: float => rule;
+};
