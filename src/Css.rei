@@ -192,6 +192,7 @@ type textDecoration =
   | Underline(color)
   | UnderlineWavy(color);
 
+[@deprecated "Use the individual textDecoration properties instead"]
 let textDecoration: textDecoration => rule;
 
 type textDecorationLineValue =
