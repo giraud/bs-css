@@ -345,6 +345,19 @@ let textTransform = v =>
     }
   );
 
+type textOverflow =
+  | Clip
+  | Ellipsis;
+
+let textOverflow = value => {
+  let value =
+    switch value {
+    | Clip => "clip"
+    | Ellipsis => "ellipsis"
+    };
+  Property("textOverflow", value);
+};
+
 let lineHeight = stringProp("lineHeight");
 
 let letterSpacing = stringProp("letterSpacing");

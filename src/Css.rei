@@ -179,6 +179,12 @@ type textTransform =
 
 let textTransform: textTransform => rule;
 
+type textOverflow =
+  | Clip
+  | Ellipsis;
+
+let textOverflow: textOverflow => rule;
+
 let letterSpacing: cssunit => rule;
 
 let lineHeight: cssunit => rule;
