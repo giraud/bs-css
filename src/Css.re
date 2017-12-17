@@ -75,6 +75,8 @@ let rgb = (r, g, b) => {j|rgb($r, $g, $b)|j};
 
 let rgba = (r, g, b, a) => {j|rgba($r, $g, $b, $a)|j};
 
+let hsl = (h, s, l) => {j|hsl($h, $s%, $l%)|j};
+
 let white = "white";
 
 let black = "black";

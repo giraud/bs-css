@@ -56,6 +56,8 @@ let rgb: (int, int, int) => color;
 
 let rgba: (int, int, int, float) => color;
 
+let hsl: (angle, int, int) => color;
+
 let hex: string => color;
 
 let white: color;
