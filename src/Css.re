@@ -287,6 +287,19 @@ let fontWeight = v =>
     }
   );
 
+type fontVariant =
+  | Normal
+  | SmallCaps;
+
+let fontVariant = value => {
+  let value =
+    switch value {
+    | Normal => "normal"
+    | SmallCaps => "small-caps"
+    };
+  Property("fontVariant", value);
+};
+
 let textShadow = (x, y, color) =>
   Property("textShadow", {j|$(x) $(y) $(color)|j});
 

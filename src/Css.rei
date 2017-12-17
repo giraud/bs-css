@@ -150,6 +150,12 @@ type fontWeight =
 
 let fontWeight: fontWeight => rule;
 
+type fontVariant =
+  | Normal
+  | SmallCaps;
+
+let fontVariant: fontVariant => rule;
+
 type textDecoration =
   | None
   | Underline(color)
