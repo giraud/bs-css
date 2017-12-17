@@ -371,6 +371,23 @@ let textOverflow = value => {
   Property("textOverflow", value);
 };
 
+type overflowWrap =
+  | Normal
+  | BreakWord;
+
+let _overflowWrap = (prop, value) => {
+  let value =
+    switch value {
+    | Normal => "normal"
+    | BreakWord => "break-word"
+    };
+  Property(prop, value);
+};
+
+let overflowWrap = _overflowWrap("overflowWrap");
+
+let wordWrap = _overflowWrap("wordWrap");
+
 let lineHeight = stringProp("lineHeight");
 
 let letterSpacing = stringProp("letterSpacing");

@@ -191,6 +191,14 @@ type textOverflow =
 
 let textOverflow: textOverflow => rule;
 
+type overflowWrap =
+  | Normal
+  | BreakWord;
+
+let overflowWrap: overflowWrap => rule;
+
+let wordWrap: overflowWrap => rule;
+
 let letterSpacing: cssunit => rule;
 
 let lineHeight: cssunit => rule;
