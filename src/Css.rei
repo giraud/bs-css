@@ -624,7 +624,41 @@ let media: (string, list(rule)) => rule;
 /* MISC */
 type cursor =
   | Auto
+  | Default
+  | None
+  | ContextMenu
+  | Help
   | Pointer
+  | Progress
+  | Wait
+  | Cell
+  | Crosshair
+  | Text
+  | VerticalText
+  | Alias
+  | Copy
+  | Move
+  | NoDrop
+  | NotAllowed
+  | AllScroll
+  | ColResize
+  | RowResize
+  | NResize
+  | EResize
+  | SResize
+  | WResize
+  | NEResize
+  | NWResize
+  | SEResize
+  | SWResize
+  | EWResize
+  | NSResize
+  | NESWResize
+  | NWSEResize
+  | ZoomIn
+  | ZoomOut
+  | Grab
+  | Grabbing
   | Custom(string);
 
 let cursor: cursor => rule;

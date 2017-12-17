@@ -1071,7 +1071,41 @@ let media = (query, rules) => Selector("@media " ++ query, rules);
 /* MISC */
 type cursor =
   | Auto
+  | Default
+  | None
+  | ContextMenu
+  | Help
   | Pointer
+  | Progress
+  | Wait
+  | Cell
+  | Crosshair
+  | Text
+  | VerticalText
+  | Alias
+  | Copy
+  | Move
+  | NoDrop
+  | NotAllowed
+  | AllScroll
+  | ColResize
+  | RowResize
+  | NResize
+  | EResize
+  | SResize
+  | WResize
+  | NEResize
+  | NWResize
+  | SEResize
+  | SWResize
+  | EWResize
+  | NSResize
+  | NESWResize
+  | NWSEResize
+  | ZoomIn
+  | ZoomOut
+  | Grab
+  | Grabbing
   | Custom(string);
 
 let cursor = v =>
@@ -1079,7 +1113,41 @@ let cursor = v =>
     "cursor",
     switch v {
     | Auto => "auto"
+    | Default => "default"
+    | None => "none"
+    | ContextMenu => "content-menu"
+    | Help => "help"
     | Pointer => "pointer"
+    | Progress => "progress"
+    | Wait => "wait"
+    | Cell => "cell"
+    | Crosshair => "crosshair"
+    | Text => "text"
+    | VerticalText => "vertical-text"
+    | Alias => "alias"
+    | Copy => "copy"
+    | Move => "move"
+    | NoDrop => "no-drop"
+    | NotAllowed => "not-allowed"
+    | AllScroll => "all-scroill"
+    | ColResize => "col-resize"
+    | RowResize => "row-resize"
+    | NResize => "n-resize"
+    | EResize => "e-resize"
+    | SResize => "s-resize"
+    | WResize => "w-resize"
+    | NEResize => "ne-resize"
+    | NWResize => "nw-resize"
+    | SEResize => "se-resize"
+    | SWResize => "sw-resize"
+    | EWResize => "ew-resize"
+    | NSResize => "ns-resize"
+    | NESWResize => "nesw-resize"
+    | NWSEResize => "nwse-resize"
+    | ZoomIn => "zoom-in"
+    | ZoomOut => "zoom-out"
+    | Grab => "grab"
+    | Grabbing => "grabbing"
     | Custom(cur) => cur
     }
   );
