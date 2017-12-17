@@ -384,7 +384,8 @@ let order: int => rule;
 /* SHADOW */
 type shadow;
 
-let shadow: (~x: int=?, ~y: int=?, ~blur: int=?, ~spread: int=?, color) => shadow;
+let shadow:
+  (~x: int=?, ~y: int=?, ~blur: int=?, ~spread: int=?, color) => shadow;
 
 let boxShadow: shadow => rule;
 
@@ -453,7 +454,13 @@ let transitionTimingFunction: timingFunction => rule;
 let transitionProperty: string => rule;
 
 let transition:
-  (~delay: int=?, ~duration: int=?, ~timingFunction: timingFunction=?, string) => rule;
+  (
+    ~delay: int=?,
+    ~duration: int=?,
+    ~timingFunction: timingFunction=?,
+    string
+  ) =>
+  rule;
 
 /* TRANSFORM */
 let transform: transform => rule;
