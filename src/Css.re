@@ -65,6 +65,8 @@ let important = v =>
   | _ => v
   };
 
+let unsafeValue: string => 'a = Obj.magic;
+
 
 /*********
  * COLORS
@@ -435,7 +437,7 @@ let turn = i => {j|$(i)turn|j};
 /*********
  * CSS RULES
  **********/
-let unsafe = (name, value) => Property(name, value);
+let unsafe = (name, value) => Property(name, Obj.magic(value));
 
 type visibility =
   | Visible
