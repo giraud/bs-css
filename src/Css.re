@@ -454,6 +454,71 @@ let visibility = v =>
 
 let opacity = v => Property("opacity", {j|$v|j});
 
+type listStyleType =
+  | Disc
+  | Circle
+  | Square
+  | Decimal
+  | DecimalLeadingZero
+  | LowerRoman
+  | UpperRoman
+  | LowerGreek
+  | LowerLatin
+  | UpperLatin
+  | Armenian
+  | Georgian
+  | LowerAlpha
+  | UpperAlpha
+  | None;
+
+let listStyleType = value => {
+  let value =
+    switch value {
+    | Disc => "disc"
+    | Circle => "circle"
+    | Square => "square"
+    | Decimal => "decimal"
+    | DecimalLeadingZero => "decimal-leading-zero"
+    | LowerRoman => "lower-roman"
+    | UpperRoman => "upper-roman"
+    | LowerGreek => "lower-greek"
+    | LowerLatin => "lower-latin"
+    | UpperLatin => "upper-latin"
+    | Armenian => "armenian"
+    | Georgian => "georgian"
+    | LowerAlpha => "lower-alpha"
+    | UpperAlpha => "upper-alpha"
+    | None => "none"
+    };
+  Property("listStyleType", value);
+};
+
+type listStyleImage =
+  | None
+  | Url(string);
+
+let listStyleImage = value => {
+  let value =
+    switch value {
+    | None => "none"
+    | Url(url) => {j|url($url)|j}
+    };
+  Property("listStyleImage", value);
+};
+
+type listStylePosition =
+  | Inside
+  | Outside;
+
+let listStylePopsition = value => {
+  let value =
+    switch value {
+    | Inside => "inside"
+    | Outside => "outside"
+    };
+  Property("listStylePosition", value);
+};
+
 /* BACKGROUND */
 let backgroundImage = url => Property("backgroundImage", "url(" ++ url ++ ")");
 
@@ -603,6 +668,19 @@ let fontWeight = v =>
     }
   );
 
+type fontVariant =
+  | Normal
+  | SmallCaps;
+
+let fontVariant = value => {
+  let value =
+    switch value {
+    | Normal => "normal"
+    | SmallCaps => "small-caps"
+    };
+  Property("fontVariant", value);
+};
+
 let textShadow = (x, y, color) =>
   Property("textShadow", {j|$(x) $(y) $(color)|j});
 
@@ -642,6 +720,53 @@ let textDecoration = v =>
     }
   );
 
+type textDecorationLineValue =
+  | Underline
+  | Overline
+  | LineThrough;
+
+type textDecorationLine =
+  | None
+  | Values(list(textDecorationLineValue));
+
+let textDecorationLine = value => {
+  let value =
+    switch value {
+    | None => "none"
+    | Values(values) =>
+      values
+      |> List.map(
+           fun
+           | Underline => "underline"
+           | Overline => "overline"
+           | LineThrough => "line-through"
+         )
+      |> String.concat(" ")
+    };
+  Property("textDecorationLine", value);
+};
+
+type textDecorationStyle =
+  | Solid
+  | Double
+  | Dotted
+  | Dashed
+  | Wavy;
+
+let textDecorationStyle = value => {
+  let value =
+    switch value {
+    | Solid => "solid"
+    | Double => "double"
+    | Dotted => "dotted"
+    | Dashed => "dashed"
+    | Wavy => "wavy"
+    };
+  Property("textDecorationStyle", value);
+};
+
+let textDecorationColor = stringProp("textDecorationColor");
+
 type textTransform =
   | None
   | Uppercase
@@ -660,6 +785,36 @@ let textTransform = v =>
     | FullWidth => "full-width"
     }
   );
+
+type textOverflow =
+  | Clip
+  | Ellipsis;
+
+let textOverflow = value => {
+  let value =
+    switch value {
+    | Clip => "clip"
+    | Ellipsis => "ellipsis"
+    };
+  Property("textOverflow", value);
+};
+
+type overflowWrap =
+  | Normal
+  | BreakWord;
+
+let _overflowWrap = (prop, value) => {
+  let value =
+    switch value {
+    | Normal => "normal"
+    | BreakWord => "break-word"
+    };
+  Property(prop, value);
+};
+
+let overflowWrap = _overflowWrap("overflowWrap");
+
+let wordWrap = _overflowWrap("wordWrap");
 
 let lineHeight = stringProp("lineHeight");
 
@@ -1174,6 +1329,25 @@ let skewY = a => {j|skewY($a|j};
 
 let perspective = stringProp("perspective");
 
+type whiteSpace =
+  | Normal
+  | Nowrap
+  | Pre
+  | PreWrap
+  | PreLine;
+
+let whiteSpace = value => {
+  let value =
+    switch value {
+    | Normal => "normal"
+    | Nowrap => "nowrap"
+    | Pre => "pre"
+    | PreWrap => "pre-wrap"
+    | PreLine => "pre-line"
+    };
+  Property("whiteSpace", value);
+};
+
 /* PSEUDO CLASSES */
 let selector = (name, rules) => Selector(name, rules);
 
@@ -1213,7 +1387,41 @@ let media = (query, rules) => Selector("@media " ++ query, rules);
 /* MISC */
 type cursor =
   | Auto
+  | Default
+  | None
+  | ContextMenu
+  | Help
   | Pointer
+  | Progress
+  | Wait
+  | Cell
+  | Crosshair
+  | Text
+  | VerticalText
+  | Alias
+  | Copy
+  | Move
+  | NoDrop
+  | NotAllowed
+  | AllScroll
+  | ColResize
+  | RowResize
+  | NResize
+  | EResize
+  | SResize
+  | WResize
+  | NEResize
+  | NWResize
+  | SEResize
+  | SWResize
+  | EWResize
+  | NSResize
+  | NESWResize
+  | NWSEResize
+  | ZoomIn
+  | ZoomOut
+  | Grab
+  | Grabbing
   | Custom(string);
 
 let cursor = v =>
@@ -1221,7 +1429,41 @@ let cursor = v =>
     "cursor",
     switch v {
     | Auto => "auto"
+    | Default => "default"
+    | None => "none"
+    | ContextMenu => "content-menu"
+    | Help => "help"
     | Pointer => "pointer"
+    | Progress => "progress"
+    | Wait => "wait"
+    | Cell => "cell"
+    | Crosshair => "crosshair"
+    | Text => "text"
+    | VerticalText => "vertical-text"
+    | Alias => "alias"
+    | Copy => "copy"
+    | Move => "move"
+    | NoDrop => "no-drop"
+    | NotAllowed => "not-allowed"
+    | AllScroll => "all-scroill"
+    | ColResize => "col-resize"
+    | RowResize => "row-resize"
+    | NResize => "n-resize"
+    | EResize => "e-resize"
+    | SResize => "s-resize"
+    | WResize => "w-resize"
+    | NEResize => "ne-resize"
+    | NWResize => "nw-resize"
+    | SEResize => "se-resize"
+    | SWResize => "sw-resize"
+    | EWResize => "ew-resize"
+    | NSResize => "ns-resize"
+    | NESWResize => "nesw-resize"
+    | NWSEResize => "nwse-resize"
+    | ZoomIn => "zoom-in"
+    | ZoomOut => "zoom-out"
+    | Grab => "grab"
+    | Grabbing => "grabbing"
     | Custom(cur) => cur
     }
   );
