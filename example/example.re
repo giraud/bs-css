@@ -8,7 +8,7 @@ module Page = {
             width(vw(100.)),
             height(vh(100.)),
             backgroundColor(rgba(0, 0, 0, 0.4)),
-            backgroundImage(Url("./img-29.jpg")),
+            backgroundImage("./img-29.jpg"),
             backgroundAttachment(Scroll),
             backgroundPosition(Left),
             border(vh(5.), Solid, black),

@@ -24,12 +24,10 @@ let make = _children => {
       <Box
         style=Css.(
                 style([
-                  backgroundImage(
-                    Gradient(
-                      linearGradient(
-                        ToTopLeft,
-                        [(hex("123"), pct(0.)), (hex("FED"), pct(100.))]
-                      )
+                  backgroundGradient(
+                    linearGradient(
+                      ToTopLeft,
+                      [(hex("123"), pct(0.)), (hex("FED"), pct(100.))]
                     )
                   )
                 ])
@@ -38,12 +36,10 @@ let make = _children => {
       <Box
         style=Css.(
                 style([
-                  backgroundImage(
-                    Gradient(
-                      repeatingLinearGradient(
-                        ToRight,
-                        [(hex("123"), px(10)), (hex("FED"), px(15))]
-                      )
+                  backgroundGradient(
+                    repeatingLinearGradient(
+                      ToRight,
+                      [(hex("123"), px(10)), (hex("FED"), px(15))]
                     )
                   )
                 ])
@@ -52,15 +48,13 @@ let make = _children => {
       <Box
         style=Css.(
                 style([
-                  backgroundImage(
-                    Gradient(
-                      repeatingRadialGradient(
-                        Circle,
-                        Bottom,
-                        FromRight(pct(10.)),
-                        FarthestCorner,
-                        [(hex("123"), px(10)), (hex("FED"), px(15))]
-                      )
+                  backgroundGradient(
+                    repeatingRadialGradient(
+                      Circle,
+                      Bottom,
+                      FromRight(pct(10.)),
+                      FarthestCorner,
+                      [(hex("123"), px(10)), (hex("FED"), px(15))]
                     )
                   )
                 ])

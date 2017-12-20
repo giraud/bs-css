@@ -199,9 +199,7 @@ let _encodeExtent =
 type colorStop = (color, cssunit);
 
 let _encodeColorStops = stops =>
-  stops
-  |> List.map(((color, pos)) => {j|$color $pos|j})
-  |> String.concat(", ");
+  stops |> List.map(((color, pos)) => {j|$color $pos|j}) |> String.concat(", ");
 
 type gradient = string;
 
@@ -240,7 +238,8 @@ type image =
   | Gradient(gradient)
   | Element(string);
 
-let _encodeImage = fun
+let _encodeImage =
+  fun
   | Url(url) => {j|url($url)|j}
   | Gradient(gradient) => gradient
   | Element(selector) => {j|element($selector)|j};
@@ -267,9 +266,10 @@ let visibility = v =>
 let opacity = v => Property("opacity", {j|$v|j});
 
 /* BACKGROUND */
-let backgroundImage = value => {
-  Property("backgroundImage", _encodeImage(value));
-};
+let backgroundImage = value =>
+  Property("backgroundImage", _encodeImage(Url(value)));
+
+let backgroundGradient = value => Property("backgroundImage", value);
 
 type backgroundAttachment =
   | Scroll
@@ -352,7 +352,7 @@ let backgroundRepeat = v =>
 type background =
   | None
   | Color(color)
-  | Image(image);
+  | Image(string);
 
 let background = v =>
   Property(
@@ -360,7 +360,7 @@ let background = v =>
     switch v {
     | None => "none"
     | Color(color) => color
-    | Image(image) => _encodeImage(image)
+    | Image(url) => _encodeImage(Url(url))
     }
   );
 
