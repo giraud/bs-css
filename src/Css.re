@@ -1236,3 +1236,11 @@ let outlineOffset = stringProp("outlineOffset");
 let outlineWidth = stringProp("outlineWidth");
 
 let outlineColor = stringProp("outlineColor");
+
+module SVG = {
+  let fill = stringProp("fill");
+  let fillOpacity = v => Property("fillOpacity", {j|$v|j});
+  let stroke = stringProp("stroke");
+  let strokeWidth = stringProp("strokeWidth");
+  let strokeOpacity = v => Property("strokeOpacity", {j|$v|j});
+};
