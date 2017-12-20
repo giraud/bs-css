@@ -393,13 +393,27 @@ let rem = i => {j|$(i)rem|j};
 
 let em = i => {j|$(i)em|j};
 
+let ex = i => {j|$(i)ex|j};
+
+let ch = i => {j|$(i)ch|j};
+
 let cm = i => {j|$(i)cm|j};
 
 let mm = i => {j|$(i)mm|j};
 
+let q = i => {j|$(i)q|j};
+
+let inch = i => {j|$(i)in|j};
+
+let pc = i => {j|$(i)pc|j};
+
 let vh = i => {j|$(i)vh|j};
 
 let vw = i => {j|$(i)vw|j};
+
+let vmin = i => {j|$(i)vmin|j};
+
+let vmax = i => {j|$(i)vmax|j};
 
 let zero = "0";
 
@@ -410,6 +424,8 @@ let auto = "auto";
  * ANGLE
  **********/
 let rad = i => {j|$(i)rad|j};
+
+let grad = i => {j|$(i)grad|j};
 
 let deg = i => {j|$(i)deg|j};
 

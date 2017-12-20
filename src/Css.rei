@@ -14,6 +14,8 @@ type angle;
 
 let rad: float => angle;
 
+let grad: float => angle;
+
 let deg: float => angle;
 
 let turn: float => angle;
@@ -39,13 +41,27 @@ let rem: float => cssunit;
 
 let em: float => cssunit;
 
+let ex: float => cssunit;
+
+let ch: float => cssunit;
+
 let vh: float => cssunit;
 
 let vw: float => cssunit;
 
+let vmin: float => cssunit;
+
+let vmax: float => cssunit;
+
 let cm: float => cssunit;
 
 let mm: float => cssunit;
+
+let q: float => cssunit;
+
+let inch: float => cssunit;
+
+let pc: float => cssunit;
 
 let zero: cssunit;
 
