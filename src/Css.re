@@ -435,6 +435,133 @@ let turn = i => {j|$(i)turn|j};
 
 
 /*********
+ * IMAGE
+ **********/
+type direction =
+  | Angle(angle)
+  | ToTop
+  | ToBottom
+  | ToLeft
+  | ToRight
+  | ToTopLeft
+  | ToTopRight
+  | ToBottomLeft
+  | ToBottomRight;
+
+let _encodeDirection =
+  fun
+  | Angle(angle) => angle
+  | ToTop => "to top"
+  | ToBottom => "to bottom"
+  | ToLeft => "to left"
+  | ToRight => "to right"
+  | ToTopLeft => "to top left"
+  | ToTopRight => "to top right"
+  | ToBottomLeft => "to bottom left"
+  | ToBottomRight => "to bottom right";
+
+type verticalPosition =
+  | Top
+  | FromTop(cssunit)
+  | Center
+  | Bottom
+  | FromBottom(cssunit);
+
+let _encodeVerticalPosition =
+  fun
+  | Top => "top"
+  | FromTop(v) => {j|top $v|j}
+  | Center => "center"
+  | Bottom => "bottom"
+  | FromBottom(v) => {j|bottom $v|j};
+
+type horizontalPosition =
+  | Left
+  | FromLeft(cssunit)
+  | Center
+  | Right
+  | FromRight(cssunit);
+
+let _encodeHorizontalPosition =
+  fun
+  | Left => "left"
+  | FromLeft(v) => {j|left $v|j}
+  | Center => "center"
+  | Right => "right"
+  | FromRight(v) => {j|right $v|j};
+
+type shape =
+  | Circle
+  | Ellipse;
+
+let _encodeShape =
+  fun
+  | Circle => "circle"
+  | Ellipse => "ellipse";
+
+type extent =
+  | ClosestSide
+  | ClosestCorner
+  | FarthestSide
+  | FarthestCorner;
+
+let _encodeExtent =
+  fun
+  | ClosestSide => "closest-side"
+  | ClosestCorner => "closest-corner"
+  | FarthestSide => "farthest-side"
+  | FarthestCorner => "farthest-corner";
+
+type colorStop = (color, cssunit);
+
+let _encodeColorStops = stops =>
+  stops |> List.map(((color, pos)) => {j|$color $pos|j}) |> String.concat(", ");
+
+type gradient = string;
+
+let linearGradient = (direction, stops) => {
+  let direction = _encodeDirection(direction);
+  let stops = _encodeColorStops(stops);
+  {j|linear-gradient($direction, $stops)|j};
+};
+
+let radialGradient = (shape, v, h, extent, stops) => {
+  let shape = _encodeShape(shape);
+  let v = _encodeVerticalPosition(v);
+  let h = _encodeHorizontalPosition(h);
+  let extent = _encodeExtent(extent);
+  let stops = _encodeColorStops(stops);
+  {j|radial-gradient($shape $extent at $v $h, $stops)|j};
+};
+
+let repeatingLinearGradient = (direction, stops) => {
+  let direction = _encodeDirection(direction);
+  let stops = _encodeColorStops(stops);
+  {j|repeating-linear-gradient($direction, $stops)|j};
+};
+
+let repeatingRadialGradient = (shape, v, h, extent, stops) => {
+  let shape = _encodeShape(shape);
+  let v = _encodeVerticalPosition(v);
+  let h = _encodeHorizontalPosition(h);
+  let extent = _encodeExtent(extent);
+  let stops = _encodeColorStops(stops);
+  {j|repeating-radial-gradient($shape $extent at $v $h, $stops)|j};
+};
+
+type image =
+  | Url(string)
+  | Gradient(gradient)
+  | Element(string);
+
+let _encodeImage =
+  fun
+  | Url(url) => {j|url($url)|j}
+  | Gradient(gradient) => gradient
+  | Element(selector) => {j|element($selector)|j};
+
+
+/*********
  * CSS RULES
  **********/
 let unsafe = (name, value) => Property(name, Obj.magic(value));
@@ -520,7 +647,10 @@ let listStylePopsition = value => {
 };
 
 /* BACKGROUND */
-let backgroundImage = url => Property("backgroundImage", "url(" ++ url ++ ")");
+let backgroundImage = value =>
+  Property("backgroundImage", _encodeImage(Url(value)));
+
+let backgroundGradient = value => Property("backgroundImage", value);
 
 type backgroundAttachment =
   | Scroll
@@ -611,7 +741,7 @@ let background = v =>
     switch v {
     | None => "none"
     | Color(color) => color
-    | Image(url) => {j|url($url)|j}
+    | Image(url) => _encodeImage(Url(url))
     }
   );
 

@@ -378,6 +378,63 @@ let yellow: color;
 
 let yellowgreen: color;
 
+/* image */
+type direction =
+  | Angle(angle)
+  | ToTop
+  | ToBottom
+  | ToLeft
+  | ToRight
+  | ToTopLeft
+  | ToTopRight
+  | ToBottomLeft
+  | ToBottomRight;
+
+type verticalPosition =
+  | Top
+  | FromTop(cssunit)
+  | Center
+  | Bottom
+  | FromBottom(cssunit);
+
+type horizontalPosition =
+  | Left
+  | FromLeft(cssunit)
+  | Center
+  | Right
+  | FromRight(cssunit);
+
+type shape =
+  | Circle
+  | Ellipse;
+
+type extent =
+  | ClosestSide
+  | ClosestCorner
+  | FarthestSide
+  | FarthestCorner;
+
+type colorStop = (color, cssunit);
+
+type gradient;
+
+let linearGradient: (direction, list(colorStop)) => gradient;
+
+let radialGradient:
+  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) =>
+  gradient;
+
+let repeatingLinearGradient: (direction, list(colorStop)) => gradient;
+
+let repeatingRadialGradient:
+  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) =>
+  gradient;
+
+type image =
+  | Url(string)
+  | Gradient(gradient)
+  | Element(string);
+
 /* CSS RULES */
 let unsafe: (string, 'a) => rule;
 
@@ -422,6 +479,8 @@ let listStylePopsition: listStylePosition => rule;
 
 /* BACKGROUND */
 let backgroundImage: string => rule;
+
+let backgroundGradient: gradient => rule;
 
 type backgroundAttachment =
   | Scroll
