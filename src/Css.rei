@@ -12,7 +12,11 @@ type transform;
 
 type angle;
 
+let unsafeValue: string => 'a;
+
 let rad: float => angle;
+
+let grad: float => angle;
 
 let deg: float => angle;
 
@@ -39,13 +43,27 @@ let rem: float => cssunit;
 
 let em: float => cssunit;
 
+let ex: float => cssunit;
+
+let ch: float => cssunit;
+
 let vh: float => cssunit;
 
 let vw: float => cssunit;
 
+let vmin: float => cssunit;
+
+let vmax: float => cssunit;
+
 let cm: float => cssunit;
 
 let mm: float => cssunit;
+
+let q: float => cssunit;
+
+let inch: float => cssunit;
+
+let pc: float => cssunit;
 
 let zero: cssunit;
 
@@ -360,10 +378,68 @@ let yellow: color;
 
 let yellowgreen: color;
 
+/* image */
+type direction =
+  | Angle(angle)
+  | ToTop
+  | ToBottom
+  | ToLeft
+  | ToRight
+  | ToTopLeft
+  | ToTopRight
+  | ToBottomLeft
+  | ToBottomRight;
+
+type verticalPosition =
+  | Top
+  | FromTop(cssunit)
+  | Center
+  | Bottom
+  | FromBottom(cssunit);
+
+type horizontalPosition =
+  | Left
+  | FromLeft(cssunit)
+  | Center
+  | Right
+  | FromRight(cssunit);
+
+type shape =
+  | Circle
+  | Ellipse;
+
+type extent =
+  | ClosestSide
+  | ClosestCorner
+  | FarthestSide
+  | FarthestCorner;
+
+type colorStop = (color, cssunit);
+
+type gradient;
+
+let linearGradient: (direction, list(colorStop)) => gradient;
+
+let radialGradient:
+  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) =>
+  gradient;
+
+let repeatingLinearGradient: (direction, list(colorStop)) => gradient;
+
+let repeatingRadialGradient:
+  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) =>
+  gradient;
+
+type image =
+  | Url(string)
+  | Gradient(gradient)
+  | Element(string);
+
 /* CSS RULES */
 let label: string => rule;
 
-let unsafe: (string, string) => rule;
+let unsafe: (string, 'a) => rule;
+
 
 type visibility =
   | Visible
@@ -373,8 +449,41 @@ let visibility: visibility => rule;
 
 let opacity: float => rule;
 
+type listStyleType =
+  | Disc
+  | Circle
+  | Square
+  | Decimal
+  | DecimalLeadingZero
+  | LowerRoman
+  | UpperRoman
+  | LowerGreek
+  | LowerLatin
+  | UpperLatin
+  | Armenian
+  | Georgian
+  | LowerAlpha
+  | UpperAlpha
+  | None;
+
+let listStyleType: listStyleType => rule;
+
+type listStyleImage =
+  | None
+  | Url(string);
+
+let listStyleImage: listStyleImage => rule;
+
+type listStylePosition =
+  | Inside
+  | Outside;
+
+let listStylePopsition: listStylePosition => rule;
+
 /* BACKGROUND */
 let backgroundImage: string => rule;
+
+let backgroundGradient: gradient => rule;
 
 type backgroundAttachment =
   | Scroll
@@ -450,12 +559,41 @@ type fontWeight =
 
 let fontWeight: fontWeight => rule;
 
+type fontVariant =
+  | Normal
+  | SmallCaps;
+
+let fontVariant: fontVariant => rule;
+
 type textDecoration =
   | None
   | Underline(color)
   | UnderlineWavy(color);
 
+[@deprecated "Use the individual textDecoration properties instead"]
 let textDecoration: textDecoration => rule;
+
+type textDecorationLineValue =
+  | Underline
+  | Overline
+  | LineThrough;
+
+type textDecorationLine =
+  | None
+  | Values(list(textDecorationLineValue));
+
+let textDecorationLine: textDecorationLine => rule;
+
+type textDecorationStyle =
+  | Solid
+  | Double
+  | Dotted
+  | Dashed
+  | Wavy;
+
+let textDecorationStyle: textDecorationStyle => rule;
+
+let textDecorationColor: color => rule;
 
 type textAlign =
   | Auto
@@ -478,6 +616,20 @@ type textTransform =
   | FullWidth;
 
 let textTransform: textTransform => rule;
+
+type textOverflow =
+  | Clip
+  | Ellipsis;
+
+let textOverflow: textOverflow => rule;
+
+type overflowWrap =
+  | Normal
+  | BreakWord;
+
+let overflowWrap: overflowWrap => rule;
+
+let wordWrap: overflowWrap => rule;
 
 let letterSpacing: cssunit => rule;
 
@@ -803,6 +955,15 @@ let rotateZ: angle => transform;
 
 let perspective: cssunit => rule;
 
+type whiteSpace =
+  | Normal
+  | Nowrap
+  | Pre
+  | PreWrap
+  | PreLine;
+
+let whiteSpace: whiteSpace => rule;
+
 let selector: (string, list(rule)) => rule;
 
 /* PSEUDO CLASSES */
@@ -841,7 +1002,41 @@ let media: (string, list(rule)) => rule;
 /* MISC */
 type cursor =
   | Auto
+  | Default
+  | None
+  | ContextMenu
+  | Help
   | Pointer
+  | Progress
+  | Wait
+  | Cell
+  | Crosshair
+  | Text
+  | VerticalText
+  | Alias
+  | Copy
+  | Move
+  | NoDrop
+  | NotAllowed
+  | AllScroll
+  | ColResize
+  | RowResize
+  | NResize
+  | EResize
+  | SResize
+  | WResize
+  | NEResize
+  | NWResize
+  | SEResize
+  | SWResize
+  | EWResize
+  | NSResize
+  | NESWResize
+  | NWSEResize
+  | ZoomIn
+  | ZoomOut
+  | Grab
+  | Grabbing
   | Custom(string);
 
 let cursor: cursor => rule;
@@ -855,3 +1050,11 @@ let outlineOffset: cssunit => rule;
 let outlineWidth: cssunit => rule;
 
 let outlineColor: color => rule;
+
+module SVG: {
+  let fill: color => rule;
+  let fillOpacity: float => rule;
+  let stroke: color => rule;
+  let strokeWidth: cssunit => rule;
+  let strokeOpacity: float => rule;
+};
