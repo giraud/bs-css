@@ -436,7 +436,10 @@ type image =
   | Element(string);
 
 /* CSS RULES */
+let label: string => rule;
+
 let unsafe: (string, 'a) => rule;
+
 
 type visibility =
   | Visible
