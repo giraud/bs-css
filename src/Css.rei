@@ -717,6 +717,13 @@ let bottom: cssunit => rule;
 
 let margin: cssunit => rule;
 
+let margin2: (~v: cssunit, ~h: cssunit) => rule;
+
+let margin3: (~top: cssunit, ~h: cssunit, ~bottom: cssunit) => rule;
+
+let margin4:
+  (~top: cssunit, ~right: cssunit, ~bottom: cssunit, ~left: cssunit) => rule;
+
 let marginLeft: cssunit => rule;
 
 let marginRight: cssunit => rule;
@@ -726,6 +733,13 @@ let marginTop: cssunit => rule;
 let marginBottom: cssunit => rule;
 
 let padding: cssunit => rule;
+
+let padding2: (~v: cssunit, ~h: cssunit) => rule;
+
+let padding3: (~top: cssunit, ~h: cssunit, ~bottom: cssunit) => rule;
+
+let padding4:
+  (~top: cssunit, ~right: cssunit, ~bottom: cssunit, ~left: cssunit) => rule;
 
 let paddingLeft: cssunit => rule;
 

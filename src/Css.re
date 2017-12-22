@@ -1054,6 +1054,13 @@ let bottom = stringProp("bottom");
 
 let margin = stringProp("margin");
 
+let margin2 = (~v, ~h) => Property("margin", {j|$v $h|j});
+
+let margin3 = (~top, ~h, ~bottom) => Property("margin", {j|$top $h $bottom|j});
+
+let margin4 = (~top, ~right, ~bottom, ~left) =>
+  Property("margin", {j|$top $right $bottom $left|j});
+
 let marginLeft = stringProp("marginLeft");
 
 let marginRight = stringProp("marginRight");
@@ -1063,6 +1070,14 @@ let marginTop = stringProp("marginTop");
 let marginBottom = stringProp("marginBottom");
 
 let padding = stringProp("padding");
+
+let padding2 = (~v, ~h) => Property("padding", {j|$v $h|j});
+
+let padding3 = (~top, ~h, ~bottom) =>
+  Property("padding", {j|$top $h $bottom|j});
+
+let padding4 = (~top, ~right, ~bottom, ~left) =>
+  Property("padding", {j|$top $right $bottom $left|j});
 
 let paddingLeft = stringProp("paddingLeft");
 
