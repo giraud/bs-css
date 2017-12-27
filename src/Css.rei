@@ -30,6 +30,8 @@ let keyframes: list((string, list(rule))) => keyframes;
 
 let merge: list(css) => css;
 
+let className: css => string;
+
 let empty: css;
 
 let important: rule => rule;
@@ -421,14 +423,12 @@ type gradient;
 let linearGradient: (direction, list(colorStop)) => gradient;
 
 let radialGradient:
-  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) =>
-  gradient;
+  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) => gradient;
 
 let repeatingLinearGradient: (direction, list(colorStop)) => gradient;
 
 let repeatingRadialGradient:
-  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) =>
-  gradient;
+  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) => gradient;
 
 type image =
   | Url(string)
@@ -439,7 +439,6 @@ type image =
 let label: string => rule;
 
 let unsafe: (string, 'a) => rule;
-
 
 type visibility =
   | Visible
@@ -850,8 +849,7 @@ let order: int => rule;
 /* SHADOW */
 type shadow;
 
-let shadow:
-  (~x: int=?, ~y: int=?, ~blur: int=?, ~spread: int=?, color) => shadow;
+let shadow: (~x: int=?, ~y: int=?, ~blur: int=?, ~spread: int=?, color) => shadow;
 
 let boxShadow: shadow => rule;
 
@@ -920,13 +918,7 @@ let transitionTimingFunction: timingFunction => rule;
 let transitionProperty: string => rule;
 
 let transition:
-  (
-    ~delay: int=?,
-    ~duration: int=?,
-    ~timingFunction: timingFunction=?,
-    string
-  ) =>
-  rule;
+  (~delay: int=?, ~duration: int=?, ~timingFunction: timingFunction=?, string) => rule;
 
 /* TRANSFORM */
 let transform: transform => rule;

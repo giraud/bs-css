@@ -20,7 +20,11 @@ module Page = {
   let component = ReasonReact.statelessComponent("Page");
   let make = (_) => {
     ...component,
-    render: (_) => <div> <div className=styles##page /> <Gradient /> </div>
+    render: (_) => {
+      Js.log("EXAMPLE");
+      Js.log @@ Css.className(styles##page);
+      <div> <div className=styles##page /> <Gradient /> </div>
+    }
   };
 };
 

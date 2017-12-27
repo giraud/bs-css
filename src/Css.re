@@ -1,5 +1,7 @@
 type css = string;
 
+[@bs.send] external className : css => string = "toString";
+
 type rule =
   | Property(string, string)
   | Selector(string, list(rule));
@@ -8,10 +10,10 @@ type angle = string;
 
 module Glamor = {
   [@bs.module "glamor"] external make : Js.Json.t => css = "css";
-  [@bs.scope "css"] [@bs.module "glamor"]
-  external makeGlobal : (string, Js.Json.t) => unit = "global";
-  [@bs.scope "css"] [@bs.module "glamor"]
-  external makeKeyFrames : Js.Dict.t(Js.Json.t) => string = "keyframes";
+  [@bs.scope "css"] [@bs.module "glamor"] external makeGlobal : (string, Js.Json.t) => unit =
+    "global";
+  [@bs.scope "css"] [@bs.module "glamor"] external makeKeyFrames : Js.Dict.t(Js.Json.t) => string =
+    "keyframes";
   let merge: list(string) => string = [%bs.raw
     {|
       function (styles) {
@@ -22,34 +24,33 @@ module Glamor = {
   ];
 };
 
-let rec makeDict = ruleset => {
-  let toJs = rule =>
+let rec makeDict = (ruleset) => {
+  let toJs = (rule) =>
     switch rule {
     | Property(name, value) => (name, Js.Json.string(value))
     | Selector(name, ruleset) => (name, makeDict(ruleset))
     };
-  ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_;
+  ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_
 };
 
 let join = (sep, strings) => {
-  let rec j = acc =>
+  let rec j = (acc) =>
     fun
     | [] => acc
     | [x] => acc ++ x
     | [x, y, ...strings] => j(acc ++ x ++ sep, [y, ...strings]);
-  j("", strings);
+  j("", strings)
 };
 
 let intProp = (name, v) => Property(name, string_of_int(v));
 
 let stringProp = (name, v) => Property(name, v);
 
-let style = rules => makeDict(rules) |> Glamor.make;
+let style = (rules) => makeDict(rules) |> Glamor.make;
 
-let global = (selector, rules) =>
-  makeDict(rules) |> Glamor.makeGlobal(selector);
+let global = (selector, rules) => makeDict(rules) |> Glamor.makeGlobal(selector);
 
-let keyframes = keyframes =>
+let keyframes = (keyframes) =>
   keyframes
   |> List.map(((k, ruleset)) => (k, makeDict(ruleset)))
   |> Js.Dict.fromList
@@ -59,7 +60,7 @@ let merge = Glamor.merge;
 
 let empty = style([]);
 
-let important = v =>
+let important = (v) =>
   switch v {
   | Property(name, value) => Property(name, value ++ " !important")
   | _ => v
@@ -379,7 +380,7 @@ let yellow = "yellow";
 
 let yellowgreen = "yellowgreen";
 
-let hex = v => "#" ++ v;
+let hex = (v) => "#" ++ v;
 
 
 /*********
@@ -387,35 +388,35 @@ let hex = v => "#" ++ v;
  **********/
 type cssunit = string;
 
-let px = i => {j|$(i)px|j};
+let px = (i) => {j|$(i)px|j};
 
-let pct = i => {j|$(i)%|j};
+let pct = (i) => {j|$(i)%|j};
 
-let rem = i => {j|$(i)rem|j};
+let rem = (i) => {j|$(i)rem|j};
 
-let em = i => {j|$(i)em|j};
+let em = (i) => {j|$(i)em|j};
 
-let ex = i => {j|$(i)ex|j};
+let ex = (i) => {j|$(i)ex|j};
 
-let ch = i => {j|$(i)ch|j};
+let ch = (i) => {j|$(i)ch|j};
 
-let cm = i => {j|$(i)cm|j};
+let cm = (i) => {j|$(i)cm|j};
 
-let mm = i => {j|$(i)mm|j};
+let mm = (i) => {j|$(i)mm|j};
 
-let q = i => {j|$(i)q|j};
+let q = (i) => {j|$(i)q|j};
 
-let inch = i => {j|$(i)in|j};
+let inch = (i) => {j|$(i)in|j};
 
-let pc = i => {j|$(i)pc|j};
+let pc = (i) => {j|$(i)pc|j};
 
-let vh = i => {j|$(i)vh|j};
+let vh = (i) => {j|$(i)vh|j};
 
-let vw = i => {j|$(i)vw|j};
+let vw = (i) => {j|$(i)vw|j};
 
-let vmin = i => {j|$(i)vmin|j};
+let vmin = (i) => {j|$(i)vmin|j};
 
-let vmax = i => {j|$(i)vmax|j};
+let vmax = (i) => {j|$(i)vmax|j};
 
 let zero = "0";
 
@@ -425,13 +426,13 @@ let auto = "auto";
 /*********
  * ANGLE
  **********/
-let rad = i => {j|$(i)rad|j};
+let rad = (i) => {j|$(i)rad|j};
 
-let grad = i => {j|$(i)grad|j};
+let grad = (i) => {j|$(i)grad|j};
 
-let deg = i => {j|$(i)deg|j};
+let deg = (i) => {j|$(i)deg|j};
 
-let turn = i => {j|$(i)turn|j};
+let turn = (i) => {j|$(i)turn|j};
 
 
 /*********
@@ -514,7 +515,7 @@ let _encodeExtent =
 
 type colorStop = (color, cssunit);
 
-let _encodeColorStops = stops =>
+let _encodeColorStops = (stops) =>
   stops |> List.map(((color, pos)) => {j|$color $pos|j}) |> String.concat(", ");
 
 type gradient = string;
@@ -522,7 +523,7 @@ type gradient = string;
 let linearGradient = (direction, stops) => {
   let direction = _encodeDirection(direction);
   let stops = _encodeColorStops(stops);
-  {j|linear-gradient($direction, $stops)|j};
+  {j|linear-gradient($direction, $stops)|j}
 };
 
 let radialGradient = (shape, v, h, extent, stops) => {
@@ -531,13 +532,13 @@ let radialGradient = (shape, v, h, extent, stops) => {
   let h = _encodeHorizontalPosition(h);
   let extent = _encodeExtent(extent);
   let stops = _encodeColorStops(stops);
-  {j|radial-gradient($shape $extent at $v $h, $stops)|j};
+  {j|radial-gradient($shape $extent at $v $h, $stops)|j}
 };
 
 let repeatingLinearGradient = (direction, stops) => {
   let direction = _encodeDirection(direction);
   let stops = _encodeColorStops(stops);
-  {j|repeating-linear-gradient($direction, $stops)|j};
+  {j|repeating-linear-gradient($direction, $stops)|j}
 };
 
 let repeatingRadialGradient = (shape, v, h, extent, stops) => {
@@ -546,7 +547,7 @@ let repeatingRadialGradient = (shape, v, h, extent, stops) => {
   let h = _encodeHorizontalPosition(h);
   let extent = _encodeExtent(extent);
   let stops = _encodeColorStops(stops);
-  {j|repeating-radial-gradient($shape $extent at $v $h, $stops)|j};
+  {j|repeating-radial-gradient($shape $extent at $v $h, $stops)|j}
 };
 
 type image =
@@ -564,8 +565,7 @@ let _encodeImage =
 /*********
  * CSS RULES
  **********/
-
-let label = label => Property("label", label);
+let label = (label) => Property("label", label);
 
 let unsafe = (name, value) => Property(name, Obj.magic(value));
 
@@ -573,7 +573,7 @@ type visibility =
   | Visible
   | Hidden;
 
-let visibility = v =>
+let visibility = (v) =>
   Property(
     "visibility",
     switch v {
@@ -582,7 +582,7 @@ let visibility = v =>
     }
   );
 
-let opacity = v => Property("opacity", {j|$v|j});
+let opacity = (v) => Property("opacity", {j|$v|j});
 
 type listStyleType =
   | Disc
@@ -601,7 +601,7 @@ type listStyleType =
   | UpperAlpha
   | None;
 
-let listStyleType = value => {
+let listStyleType = (value) => {
   let value =
     switch value {
     | Disc => "disc"
@@ -620,40 +620,39 @@ let listStyleType = value => {
     | UpperAlpha => "upper-alpha"
     | None => "none"
     };
-  Property("listStyleType", value);
+  Property("listStyleType", value)
 };
 
 type listStyleImage =
   | None
   | Url(string);
 
-let listStyleImage = value => {
+let listStyleImage = (value) => {
   let value =
     switch value {
     | None => "none"
     | Url(url) => {j|url($url)|j}
     };
-  Property("listStyleImage", value);
+  Property("listStyleImage", value)
 };
 
 type listStylePosition =
   | Inside
   | Outside;
 
-let listStylePopsition = value => {
+let listStylePopsition = (value) => {
   let value =
     switch value {
     | Inside => "inside"
     | Outside => "outside"
     };
-  Property("listStylePosition", value);
+  Property("listStylePosition", value)
 };
 
 /* BACKGROUND */
-let backgroundImage = value =>
-  Property("backgroundImage", _encodeImage(Url(value)));
+let backgroundImage = (value) => Property("backgroundImage", _encodeImage(Url(value)));
 
-let backgroundGradient = value => Property("backgroundImage", value);
+let backgroundGradient = (value) => Property("backgroundImage", value);
 
 type backgroundAttachment =
   | Scroll
@@ -661,7 +660,7 @@ type backgroundAttachment =
   | Local
   | Initial;
 
-let backgroundAttachment = v =>
+let backgroundAttachment = (v) =>
   Property(
     "backgroundAttachment",
     switch v {
@@ -681,7 +680,7 @@ type backgroundSize =
   | Height(cssunit)
   | Custom(cssunit, cssunit);
 
-let backgroundSize = v =>
+let backgroundSize = (v) =>
   Property(
     "backgroundSize",
     switch v {
@@ -700,7 +699,7 @@ type backgroundPosition =
   | Right
   | Center;
 
-let backgroundPosition = v =>
+let backgroundPosition = (v) =>
   Property(
     "backgroundPosition",
     switch v {
@@ -720,7 +719,7 @@ type backgroundRepeat =
   | Round
   | NoRepeat;
 
-let backgroundRepeat = v =>
+let backgroundRepeat = (v) =>
   Property(
     "backgroundRepeat",
     switch v {
@@ -738,7 +737,7 @@ type background =
   | Color(color)
   | Image(string);
 
-let background = v =>
+let background = (v) =>
   Property(
     "background",
     switch v {
@@ -760,7 +759,7 @@ type fontStyle =
   | Italic
   | Oblique;
 
-let fontStyle = v =>
+let fontStyle = (v) =>
   Property(
     "fontStyle",
     switch v {
@@ -783,7 +782,7 @@ type fontWeight =
   | W800
   | W900;
 
-let fontWeight = v =>
+let fontWeight = (v) =>
   Property(
     "fontWeight",
     switch v {
@@ -805,17 +804,16 @@ type fontVariant =
   | Normal
   | SmallCaps;
 
-let fontVariant = value => {
+let fontVariant = (value) => {
   let value =
     switch value {
     | Normal => "normal"
     | SmallCaps => "small-caps"
     };
-  Property("fontVariant", value);
+  Property("fontVariant", value)
 };
 
-let textShadow = (x, y, color) =>
-  Property("textShadow", {j|$(x) $(y) $(color)|j});
+let textShadow = (x, y, color) => Property("textShadow", {j|$(x) $(y) $(color)|j});
 
 let textIndent = stringProp("textIndent");
 
@@ -826,7 +824,7 @@ type textAlign =
   | Center
   | Justify;
 
-let textAlign = v =>
+let textAlign = (v) =>
   Property(
     "textAlign",
     switch v {
@@ -843,7 +841,7 @@ type textDecoration =
   | Underline(color)
   | UnderlineWavy(color);
 
-let textDecoration = v =>
+let textDecoration = (v) =>
   Property(
     "textDecoration",
     switch v {
@@ -862,7 +860,7 @@ type textDecorationLine =
   | None
   | Values(list(textDecorationLineValue));
 
-let textDecorationLine = value => {
+let textDecorationLine = (value) => {
   let value =
     switch value {
     | None => "none"
@@ -876,7 +874,7 @@ let textDecorationLine = value => {
          )
       |> String.concat(" ")
     };
-  Property("textDecorationLine", value);
+  Property("textDecorationLine", value)
 };
 
 type textDecorationStyle =
@@ -886,7 +884,7 @@ type textDecorationStyle =
   | Dashed
   | Wavy;
 
-let textDecorationStyle = value => {
+let textDecorationStyle = (value) => {
   let value =
     switch value {
     | Solid => "solid"
@@ -895,7 +893,7 @@ let textDecorationStyle = value => {
     | Dashed => "dashed"
     | Wavy => "wavy"
     };
-  Property("textDecorationStyle", value);
+  Property("textDecorationStyle", value)
 };
 
 let textDecorationColor = stringProp("textDecorationColor");
@@ -907,7 +905,7 @@ type textTransform =
   | Capitalize
   | FullWidth;
 
-let textTransform = v =>
+let textTransform = (v) =>
   Property(
     "textTransform",
     switch v {
@@ -923,13 +921,13 @@ type textOverflow =
   | Clip
   | Ellipsis;
 
-let textOverflow = value => {
+let textOverflow = (value) => {
   let value =
     switch value {
     | Clip => "clip"
     | Ellipsis => "ellipsis"
     };
-  Property("textOverflow", value);
+  Property("textOverflow", value)
 };
 
 type overflowWrap =
@@ -942,7 +940,7 @@ let _overflowWrap = (prop, value) => {
     | Normal => "normal"
     | BreakWord => "break-word"
     };
-  Property(prop, value);
+  Property(prop, value)
 };
 
 let overflowWrap = _overflowWrap("overflowWrap");
@@ -962,7 +960,7 @@ type borderStyle =
   | Dashed
   | Double;
 
-let borderStyleToString = s =>
+let borderStyleToString = (s) =>
   switch s {
   | None => "none"
   | Hidden => "hidden"
@@ -974,7 +972,7 @@ let borderStyleToString = s =>
 
 let borderProp = (name, width, style, color) => {
   let styleString = borderStyleToString(style);
-  Property(name, {j|$(width) $(styleString) $(color) |j});
+  Property(name, {j|$(width) $(styleString) $(color) |j})
 };
 
 let border = borderProp("border");
@@ -997,29 +995,25 @@ let borderLeftWidth = stringProp("borderLeftWidth");
 
 let borderRightWidth = stringProp("borderRightWidth");
 
-let borderStyle = style => Property("borderStyle", borderStyleToString(style));
+let borderStyle = (style) => Property("borderStyle", borderStyleToString(style));
 
-let borderTopStyle = style =>
-  Property("borderTopStyle", borderStyleToString(style));
+let borderTopStyle = (style) => Property("borderTopStyle", borderStyleToString(style));
 
-let borderBottomStyle = style =>
-  Property("borderBottomStyle", borderStyleToString(style));
+let borderBottomStyle = (style) => Property("borderBottomStyle", borderStyleToString(style));
 
-let borderLeftStyle = style =>
-  Property("borderLeftStyle", borderStyleToString(style));
+let borderLeftStyle = (style) => Property("borderLeftStyle", borderStyleToString(style));
 
-let borderRightStyle = style =>
-  Property("borderRightStyle", borderStyleToString(style));
+let borderRightStyle = (style) => Property("borderRightStyle", borderStyleToString(style));
 
-let borderColor = color => Property("borderColor", color);
+let borderColor = (color) => Property("borderColor", color);
 
-let borderTopColor = color => Property("borderTopColor", color);
+let borderTopColor = (color) => Property("borderTopColor", color);
 
-let borderBottomColor = color => Property("borderBottomColor", color);
+let borderBottomColor = (color) => Property("borderBottomColor", color);
 
-let borderLeftColor = color => Property("borderLeftColor", color);
+let borderLeftColor = (color) => Property("borderLeftColor", color);
 
-let borderRightColor = color => Property("borderRightColor", color);
+let borderRightColor = (color) => Property("borderRightColor", color);
 
 let borderRadius = stringProp("borderRadius");
 
@@ -1104,7 +1098,7 @@ type display =
   | InlineFlex
   | InlineGrid;
 
-let display = v =>
+let display = (v) =>
   Property(
     "display",
     switch v {
@@ -1133,7 +1127,7 @@ type position =
   | Fixed
   | Sticky;
 
-let position = v =>
+let position = (v) =>
   Property(
     "position",
     switch v {
@@ -1149,7 +1143,7 @@ type boxSizing =
   | BorderBox
   | ContentBox;
 
-let boxSizing = v =>
+let boxSizing = (v) =>
   Property(
     "boxSizing",
     switch v {
@@ -1164,7 +1158,7 @@ type overflow =
   | Scroll
   | Auto;
 
-let overflow = o =>
+let overflow = (o) =>
   Property(
     "overflow",
     switch o {
@@ -1175,7 +1169,7 @@ let overflow = o =>
     }
   );
 
-let overflowX = o =>
+let overflowX = (o) =>
   Property(
     "overflowX",
     switch o {
@@ -1186,7 +1180,7 @@ let overflowX = o =>
     }
   );
 
-let overflowY = o =>
+let overflowY = (o) =>
   Property(
     "overflowY",
     switch o {
@@ -1218,7 +1212,7 @@ type flexDirection =
   | Column
   | ColumnReverse;
 
-let flexDirection = v =>
+let flexDirection = (v) =>
   Property(
     "flexDirection",
     switch v {
@@ -1233,7 +1227,7 @@ type flexWrap =
   | Wrap
   | NoWrap;
 
-let flexWrap = v =>
+let flexWrap = (v) =>
   Property(
     "flexWrap",
     switch v {
@@ -1250,7 +1244,7 @@ type justify =
   | SpaceAround
   | SpaceBetween;
 
-let justifyToString = v =>
+let justifyToString = (v) =>
   switch v {
   | FlexStart => "flex-start"
   | FlexEnd => "flex-end"
@@ -1260,7 +1254,7 @@ let justifyToString = v =>
   | SpaceBetween => "space-between"
   };
 
-let alignContent = v => Property("alignContent", justifyToString(v));
+let alignContent = (v) => Property("alignContent", justifyToString(v));
 
 type alignment =
   | FlexStart
@@ -1269,7 +1263,7 @@ type alignment =
   | Stretch
   | Baseline;
 
-let alignmentToString = v =>
+let alignmentToString = (v) =>
   switch v {
   | FlexStart => "flex-start"
   | FlexEnd => "flex-end"
@@ -1278,11 +1272,11 @@ let alignmentToString = v =>
   | Baseline => "baseline"
   };
 
-let alignItems = v => Property("alignItems", alignmentToString(v));
+let alignItems = (v) => Property("alignItems", alignmentToString(v));
 
-let alignSelf = v => Property("alignSelf", alignmentToString(v));
+let alignSelf = (v) => Property("alignSelf", alignmentToString(v));
 
-let justifyContent = v => Property("justifyContent", justifyToString(v));
+let justifyContent = (v) => Property("justifyContent", justifyToString(v));
 
 /* SHADOW */
 type shadow = string;
@@ -1291,18 +1285,16 @@ let shadow = (~x=0, ~y=0, ~blur=0, ~spread=0, color) => {j|$(x)px $(y)px $(blur)
 
 let boxShadow = stringProp("boxShadow");
 
-let boxShadows = shadows => Property("boxShadow", join(", ", shadows));
+let boxShadows = (shadows) => Property("boxShadow", join(", ", shadows));
 
 /* ANIMATION */
 type keyframes = string;
 
 let animationName = stringProp("animationName");
 
-let animationDuration = ms =>
-  Property("animationDuration", string_of_int(ms) ++ "ms");
+let animationDuration = (ms) => Property("animationDuration", string_of_int(ms) ++ "ms");
 
-let animationDelay = ms =>
-  Property("animationDelay", string_of_int(ms) ++ "ms");
+let animationDelay = (ms) => Property("animationDelay", string_of_int(ms) ++ "ms");
 
 type animationDirection =
   | Normal
@@ -1310,7 +1302,7 @@ type animationDirection =
   | Alternate
   | AlternateReverse;
 
-let animationDirection = v =>
+let animationDirection = (v) =>
   Property(
     "animationDirection",
     switch v {
@@ -1327,7 +1319,7 @@ type animationFillMode =
   | Backwards
   | Both;
 
-let animationFillMode = v =>
+let animationFillMode = (v) =>
   Property(
     "animationFillMode",
     switch v {
@@ -1342,7 +1334,7 @@ type animationIterationCount =
   | Infinite
   | Iterate(int);
 
-let animationIterationCount = v =>
+let animationIterationCount = (v) =>
   Property(
     "animationIterationCount",
     switch v {
@@ -1355,7 +1347,7 @@ type animationPlayState =
   | Paused
   | Running;
 
-let animationPlayState = v =>
+let animationPlayState = (v) =>
   Property(
     "animationPlayState",
     switch v {
@@ -1368,7 +1360,7 @@ type animationSteps =
   | Start
   | End;
 
-let animationStepsToString = s =>
+let animationStepsToString = (s) =>
   switch s {
   | Start => "start"
   | End => "end"
@@ -1386,7 +1378,7 @@ type timingFunction =
   | Steps(int, animationSteps)
   | Frames(int);
 
-let timingFunctionToString = v =>
+let timingFunctionToString = (v) =>
   switch v {
   | Ease => "ease"
   | EaseIn => "ease-in"
@@ -1396,12 +1388,11 @@ let timingFunctionToString = v =>
   | StepStart => "step-start"
   | StepEnd => "step-end"
   | CubicBezier(x1, y1, x2, y2) => {j|cubic-bezier($x1, $y1, $x2, $y2)|j}
-  | Steps(i, s) =>
-    "steps(" ++ string_of_int(i) ++ ", " ++ animationStepsToString(s) ++ ")"
+  | Steps(i, s) => "steps(" ++ string_of_int(i) ++ ", " ++ animationStepsToString(s) ++ ")"
   | Frames(i) => {j|frames($i)|j}
   };
 
-let animationTimingFunction = v =>
+let animationTimingFunction = (v) =>
   Property("animationTimingFunction", timingFunctionToString(v));
 
 /* TRANSITION */
@@ -1411,7 +1402,7 @@ let transitionDuration = intProp("transitionDuration");
 
 let transitionProperty = stringProp("transitionProperty");
 
-let transitionTimingFunction = v =>
+let transitionTimingFunction = (v) =>
   Property(
     "transitionTimingFunction",
     switch v {
@@ -1423,15 +1414,14 @@ let transitionTimingFunction = v =>
     | StepStart => "step-start"
     | StepEnd => "step-end"
     | CubicBezier(x1, y1, x2, y2) => {j|cubic-bezier($x1, $y1, $x2, $y2)|j}
-    | Steps(i, s) =>
-      "steps(" ++ string_of_int(i) ++ ", " ++ animationStepsToString(s) ++ ")"
+    | Steps(i, s) => "steps(" ++ string_of_int(i) ++ ", " ++ animationStepsToString(s) ++ ")"
     | Frames(i) => {j|frames($i)|j}
     }
   );
 
 let transition = (~delay=0, ~duration=0, ~timingFunction=Ease, name) => {
   let func = timingFunctionToString(timingFunction);
-  Property("transition", {j|$name $(duration)ms $func $(delay)ms|j});
+  Property("transition", {j|$name $(duration)ms $func $(delay)ms|j})
 };
 
 /* TRANSFORM */
@@ -1439,15 +1429,15 @@ type transform = string;
 
 let transform = stringProp("transform");
 
-let transforms = transforms => Property("transform", join(" ", transforms));
+let transforms = (transforms) => Property("transform", join(" ", transforms));
 
 let translate = (x, y) => {j|translate($x, $y)|j};
 
-let translateX = x => {j|translateX($x)|j};
+let translateX = (x) => {j|translateX($x)|j};
 
-let translateY = y => {j|translateY($y)|j};
+let translateY = (y) => {j|translateY($y)|j};
 
-let translateZ = z => {j|translateZ($z)|j};
+let translateZ = (z) => {j|translateZ($z)|j};
 
 let translate3d = (x, y, z) => {j|translate($x $y, $z)|j};
 
@@ -1455,25 +1445,25 @@ let scale = (x, y) => {j|scale($x, $y)|j};
 
 let scale3d = (x, y, z) => {j|scale3d($x, $y, $z)|j};
 
-let scaleX = x => {j|scaleX($x)|j};
+let scaleX = (x) => {j|scaleX($x)|j};
 
-let scaleY = y => {j|scaleY($y)|j};
+let scaleY = (y) => {j|scaleY($y)|j};
 
-let scaleZ = y => {j|scaleZ($y)|j};
+let scaleZ = (y) => {j|scaleZ($y)|j};
 
-let rotate = a => {j|rotate($a)|j};
+let rotate = (a) => {j|rotate($a)|j};
 
-let rotateX = a => {j|rotateX($a)|j};
+let rotateX = (a) => {j|rotateX($a)|j};
 
-let rotateY = a => {j|rotateY($a)|j};
+let rotateY = (a) => {j|rotateY($a)|j};
 
-let rotateZ = a => {j|rotateZ($a)|j};
+let rotateZ = (a) => {j|rotateZ($a)|j};
 
 let skew = (ax, ay) => {j|skew($ax, $ay|j};
 
-let skewX = a => {j|skewX($a|j};
+let skewX = (a) => {j|skewX($a|j};
 
-let skewY = a => {j|skewY($a|j};
+let skewY = (a) => {j|skewY($a|j};
 
 let perspective = stringProp("perspective");
 
@@ -1484,7 +1474,7 @@ type whiteSpace =
   | PreWrap
   | PreLine;
 
-let whiteSpace = value => {
+let whiteSpace = (value) => {
   let value =
     switch value {
     | Normal => "normal"
@@ -1493,7 +1483,7 @@ let whiteSpace = value => {
     | PreWrap => "pre-wrap"
     | PreLine => "pre-line"
     };
-  Property("whiteSpace", value);
+  Property("whiteSpace", value)
 };
 
 /* PSEUDO CLASSES */
@@ -1572,7 +1562,7 @@ type cursor =
   | Grabbing
   | Custom(string);
 
-let cursor = v =>
+let cursor = (v) =>
   Property(
     "cursor",
     switch v {
@@ -1618,10 +1608,10 @@ let cursor = v =>
 
 let outline = (width, style, color) => {
   let outlineStyle = borderStyleToString(style);
-  Property("outline", {j|$width $outlineStyle $color|j});
+  Property("outline", {j|$width $outlineStyle $color|j})
 };
 
-let outlineStyle = v => Property("outlineStyle", borderStyleToString(v));
+let outlineStyle = (v) => Property("outlineStyle", borderStyleToString(v));
 
 let outlineOffset = stringProp("outlineOffset");
 
@@ -1631,8 +1621,8 @@ let outlineColor = stringProp("outlineColor");
 
 module SVG = {
   let fill = stringProp("fill");
-  let fillOpacity = v => Property("fillOpacity", {j|$v|j});
+  let fillOpacity = (v) => Property("fillOpacity", {j|$v|j});
   let stroke = stringProp("stroke");
   let strokeWidth = stringProp("strokeWidth");
-  let strokeOpacity = v => Property("strokeOpacity", {j|$v|j});
+  let strokeOpacity = (v) => Property("strokeOpacity", {j|$v|j});
 };
