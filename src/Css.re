@@ -1626,3 +1626,11 @@ module SVG = {
   let strokeWidth = stringProp("strokeWidth");
   let strokeOpacity = (v) => Property("strokeOpacity", {j|$v|j});
 };
+
+type operator = string;
+
+let addition = "+";
+
+let subtraction = "-";
+
+let calc = (x: cssunit, y: cssunit, operator: operator) => "calc(" ++ x ++ " " ++ operator ++ " " ++ y ++ ")";
