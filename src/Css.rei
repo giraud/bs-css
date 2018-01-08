@@ -1065,10 +1065,7 @@ module SVG: {
   let strokeOpacity: float => rule;
 };
 
-type operator;
-
-let addition: operator;
-
-let subtraction: operator;
-
-let calc: (cssunit, cssunit, operator) => cssunit;
+module Calc: {
+  let (-): (cssunit, cssunit) => cssunit;
+  let (+): (cssunit, cssunit) => cssunit;
+};

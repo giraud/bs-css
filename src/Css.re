@@ -1627,10 +1627,7 @@ module SVG = {
   let strokeOpacity = (v) => Property("strokeOpacity", {j|$v|j});
 };
 
-type operator = string;
-
-let addition = "+";
-
-let subtraction = "-";
-
-let calc = (x: cssunit, y: cssunit, operator: operator) => "calc(" ++ x ++ " " ++ operator ++ " " ++ y ++ ")";
+module Calc = {
+  let (-) = (a, b) => {j|calc($(a) - $(b))|j};
+  let (+) = (a, b) => {j|calc($(a) + $(b))|j};
+};
