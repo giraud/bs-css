@@ -1064,3 +1064,8 @@ module SVG: {
   let strokeWidth: cssunit => rule;
   let strokeOpacity: float => rule;
 };
+
+module Calc: {
+  let (-): (cssunit, cssunit) => cssunit;
+  let (+): (cssunit, cssunit) => cssunit;
+};

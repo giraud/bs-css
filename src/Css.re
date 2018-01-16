@@ -1626,3 +1626,8 @@ module SVG = {
   let strokeWidth = stringProp("strokeWidth");
   let strokeOpacity = (v) => Property("strokeOpacity", {j|$v|j});
 };
+
+module Calc = {
+  let (-) = (a, b) => {j|calc($(a) - $(b))|j};
+  let (+) = (a, b) => {j|calc($(a) + $(b))|j};
+};
