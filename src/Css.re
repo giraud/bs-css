@@ -604,6 +604,7 @@ let string_of_align =
   | `flexStart => "flex-start"
   | `flexEnd => "flex-end"
   | `center => "center"
+  | `auto => "auto"
   | `stretch => "stretch";
 let alignItems = x => d("alignItems", string_of_align(x));
 let alignSelf = x => d("alignSelf", string_of_align(x));
