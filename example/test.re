@@ -14,7 +14,7 @@ let box = Css.([
 ]);
 
 let rowLayout = Css.([
-  display(flex),
+  display(flexBox),
   flexDirection(row),
   flexWrap(wrap)
 ]);
@@ -100,7 +100,7 @@ let tests = {
     <div className=Css.(style([display(inline), ...box])) />
     <div className=Css.(style([display(inlineBlock), ...box])) />
     <div className=Css.(style([display(none), ...box])) />
-    <div className=Css.(style([display(flex), ...box])) />
+    <div className=Css.(style([display(flexBox), ...box])) />
   </Section>
 
   <Section name="position">
@@ -134,27 +134,27 @@ let tests = {
 
   <Section name="flexbox">
     <div className=Css.(style([ flexDirection(column), flexGrow(1), alignItems(stretch), selector("& > *", [ marginBottom(px(10)), width(pct(100.)) ]) ]))>
-      <div className=Css.(style([display(flex), flexDirection(row), background(gray), alignItems(flexStart), justifyContent(flexEnd)]))>
+      <div className=Css.(style([display(flexBox), flexDirection(row), background(gray), alignItems(flexStart), justifyContent(flexEnd)]))>
         <div className=Css.(style([order(1), flexGrow(1), flexShrink(1), flexBasis(1), ...box])) />
         <div className=Css.(style([alignSelf(flexEnd), ...box])) />
         <div className=Css.style(box) />
       </div>
-      <div className=Css.(style([display(flex), flexDirection(column), background(gray), alignItems(baseline), justifyContent(flexStart)]))>
+      <div className=Css.(style([display(flexBox), flexDirection(column), background(gray), alignItems(baseline), justifyContent(flexStart)]))>
         <div className=Css.style(box) />
         <div className=Css.style(box) />
         <div className=Css.style(box) />
       </div>
-      <div className=Css.(style([display(flex), flexDirection(rowReverse), background(gray), alignItems(center), justifyContent(spaceBetween)]))>
+      <div className=Css.(style([display(flexBox), flexDirection(rowReverse), background(gray), alignItems(center), justifyContent(spaceBetween)]))>
         <div className=Css.style(box) />
         <div className=Css.(style([height(px(50)), width(px(50)), ...box])) />
         <div className=Css.style(box) />
       </div>
-      <div className=Css.(style([display(flex), flexDirection(columnReverse), background(gray), alignItems(flexEnd), justifyContent(flexEnd)]))>
+      <div className=Css.(style([display(flexBox), flexDirection(columnReverse), background(gray), alignItems(flexEnd), justifyContent(flexEnd)]))>
         <div className=Css.style(box) />
         <div className=Css.(style([height(px(50)), width(px(50)), ...box])) />
         <div className=Css.style(box) />
       </div>
-      <div className=Css.(style([display(flex), flexDirection(row), background(gray), alignItems(stretch), justifyContent(spaceAround)]))>
+      <div className=Css.(style([display(flexBox), flexDirection(row), background(gray), alignItems(stretch), justifyContent(spaceAround)]))>
         <div className=Css.style(box) />
         <div className=Css.(style([height(px(50)), width(px(50)), ...box])) />
         <div className=Css.style(box) />

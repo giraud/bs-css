@@ -2511,6 +2511,10 @@ function right(x) {
   return d("right", string_of_length(x));
 }
 
+function flex(x) {
+  return d("flex", Pervasives.string_of_int(x));
+}
+
 function flexGrow(x) {
   return d("flexGrow", Pervasives.string_of_int(x));
 }
@@ -5017,7 +5021,7 @@ var noWrap = /* noWrap */513047211;
 
 var wrapReverse = /* wrapReverse */-463121288;
 
-var flex = /* flex */-1010954439;
+var flexBox = /* flex */-1010954439;
 
 var block = /* block */888960333;
 
@@ -5340,7 +5344,7 @@ exports.columnReverse            = columnReverse;
 exports.wrap                     = wrap;
 exports.noWrap                   = noWrap;
 exports.wrapReverse              = wrapReverse;
-exports.flex                     = flex;
+exports.flexBox                  = flexBox;
 exports.block                    = block;
 exports.inline                   = inline;
 exports.inlineBlock              = inlineBlock;
@@ -5423,6 +5427,7 @@ exports.top                      = top;
 exports.bottom                   = bottom;
 exports.left                     = left;
 exports.right                    = right;
+exports.flex                     = flex;
 exports.flexGrow                 = flexGrow;
 exports.flexShrink               = flexShrink;
 exports.flexBasis                = flexBasis;
@@ -14145,7 +14150,7 @@ var box = /* :: */[
   box_001
 ];
 
-var rowLayout_000 = Css.display(Css.flex);
+var rowLayout_000 = Css.display(Css.flexBox);
 
 var rowLayout_001 = /* :: */[
   Css.flexDirection(Css.row),
@@ -14501,7 +14506,7 @@ var tests = React.createElement("div", {
                   }),
               React.createElement("div", {
                     className: Css.style(/* :: */[
-                          Css.display(Css.flex),
+                          Css.display(Css.flexBox),
                           box
                         ])
                   })
@@ -14640,7 +14645,7 @@ var tests = React.createElement("div", {
                         ])
                   }, React.createElement("div", {
                         className: Css.style(/* :: */[
-                              Css.display(Css.flex),
+                              Css.display(Css.flexBox),
                               /* :: */[
                                 Css.flexDirection(Css.row),
                                 /* :: */[
@@ -14678,7 +14683,7 @@ var tests = React.createElement("div", {
                             className: Css.style(box)
                           })), React.createElement("div", {
                         className: Css.style(/* :: */[
-                              Css.display(Css.flex),
+                              Css.display(Css.flexBox),
                               /* :: */[
                                 Css.flexDirection(Css.column),
                                 /* :: */[
@@ -14701,7 +14706,7 @@ var tests = React.createElement("div", {
                             className: Css.style(box)
                           })), React.createElement("div", {
                         className: Css.style(/* :: */[
-                              Css.display(Css.flex),
+                              Css.display(Css.flexBox),
                               /* :: */[
                                 Css.flexDirection(Css.rowReverse),
                                 /* :: */[
@@ -14730,7 +14735,7 @@ var tests = React.createElement("div", {
                             className: Css.style(box)
                           })), React.createElement("div", {
                         className: Css.style(/* :: */[
-                              Css.display(Css.flex),
+                              Css.display(Css.flexBox),
                               /* :: */[
                                 Css.flexDirection(Css.columnReverse),
                                 /* :: */[
@@ -14759,7 +14764,7 @@ var tests = React.createElement("div", {
                             className: Css.style(box)
                           })), React.createElement("div", {
                         className: Css.style(/* :: */[
-                              Css.display(Css.flex),
+                              Css.display(Css.flexBox),
                               /* :: */[
                                 Css.flexDirection(Css.row),
                                 /* :: */[

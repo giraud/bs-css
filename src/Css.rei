@@ -277,7 +277,7 @@ let wrap : [> | `wrap];
 let noWrap : [> | `noWrap];
 let wrapReverse : [> | `wrapReverse];
 
-let flex : [> | `flex];
+let flexBox : [> | `flex];
 let block : [> | `block];
 let inline : [> | `inline];
 let inlineBlock : [> | `inlineBlock];
@@ -392,6 +392,7 @@ let bottom : [ | length] => rule;
 let left : [ | length] => rule;
 let right : [ | length] => rule;
 
+let flex: int => rule;
 let flexGrow: int => rule;
 let flexShrink: int => rule;
 let flexBasis: int => rule;
