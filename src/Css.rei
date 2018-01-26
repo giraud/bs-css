@@ -1,1071 +1,714 @@
-type css = string;
+type rule = [ 
+  | `selector(string, list(rule)) 
+  | `declaration(string, string)
+  | `animation(string)
+  | `shadow(string)
+  ];
+
+let empty : list(rule);
+let merge : list(list(rule)) => list(rule);
+let style : list(rule) => string;
+
+let global : (string, list(rule)) => unit;
+let important : rule => rule;
+let label : string => rule;
+
+/********************************************************
+ ************************ VALUES ************************
+ ********************************************************/
+type angle = [
+  | `deg(int)
+  | `rad(float)
+  | `grad(float)
+  | `turn(float)
+];
+
+let deg : int => [> | `deg(int)];
+let rad : float => [> | `rad(float)];
+let grad : float => [> | `grad(float)];
+let turn : float => [> | `turn(float)];
+
+type color = [
+  | `rgb(int, int, int)
+  | `rgba(int, int, int, float)
+  | `hsl(int, int, int)
+  | `hsla(int, int, int, float)
+  | `transparent
+  | `hex(string)
+  | `currentColor
+];
+
+let rgb : (int, int, int) => [> | `rgb(int, int, int)];
+let rgba : (int, int, int, float) => [> | `rgba(int, int, int, float)];
+let hsl : (int, int, int) => [> | `hsl(int, int, int)];
+let hsla : (int, int, int, float) => [> | `hsla(int, int, int, float)];
+let hex : string => [> | `hex(string)];
+let transparent : [> | `transparent];
+let currentColor : [> | `currentColor];
+
+type gradient = [
+  | `linearGradient(angle, list((int, color)))
+  | `repeatingLinearGradient(angle, list((int, color)))
+  | `radialGradient(list((int, color)))
+  | `repeatingRadialGradient(list((int, color)))
+];
+
+let linearGradient: (angle, list((int, color))) => [> | `linearGradient(angle, list((int, color)))];
+let repeatingLinearGradient: (angle, list((int, color))) => [> | `repeatingLinearGradient(angle, list((int, color)))];
+let radialGradient: (list((int, color))) => [> | `radialGradient(list((int, color)))];
+let repeatingRadialGradient: (list((int, color))) => [> | `repeatingRadialGradient(list((int, color)))];
+
+let aliceblue : [> | `hex(string)];
+let antiquewhite : [> | `hex(string)];
+let aqua : [> | `hex(string)];
+let aquamarine : [> | `hex(string)];
+let azure : [> | `hex(string)];
+let beige : [> | `hex(string)];
+let bisque : [> | `hex(string)];
+let black : [> | `hex(string)];
+let blanchedalmond : [> | `hex(string)];
+let blue : [> | `hex(string)];
+let blueviolet : [> | `hex(string)];
+let brown : [> | `hex(string)];
+let burlywood : [> | `hex(string)];
+let cadetblue : [> | `hex(string)];
+let chartreuse : [> | `hex(string)];
+let chocolate : [> | `hex(string)];
+let coral : [> | `hex(string)];
+let cornflowerblue : [> | `hex(string)];
+let cornsilk : [> | `hex(string)];
+let crimson : [> | `hex(string)];
+let cyan : [> | `hex(string)];
+let darkblue : [> | `hex(string)];
+let darkcyan : [> | `hex(string)];
+let darkgoldenrod : [> | `hex(string)];
+let darkgray : [> | `hex(string)];
+let darkgrey : [> | `hex(string)];
+let darkgreen : [> | `hex(string)];
+let darkkhaki : [> | `hex(string)];
+let darkmagenta : [> | `hex(string)];
+let darkolivegreen : [> | `hex(string)];
+let darkorange : [> | `hex(string)];
+let darkorchid : [> | `hex(string)];
+let darkred : [> | `hex(string)];
+let darksalmon : [> | `hex(string)];
+let darkseagreen : [> | `hex(string)];
+let darkslateblue : [> | `hex(string)];
+let darkslategray : [> | `hex(string)];
+let darkslategrey : [> | `hex(string)];
+let darkturquoise : [> | `hex(string)];
+let darkviolet : [> | `hex(string)];
+let deeppink : [> | `hex(string)];
+let deepskyblue : [> | `hex(string)];
+let dimgray : [> | `hex(string)];
+let dimgrey : [> | `hex(string)];
+let dodgerblue : [> | `hex(string)];
+let firebrick : [> | `hex(string)];
+let floralwhite : [> | `hex(string)];
+let forestgreen : [> | `hex(string)];
+let fuchsia : [> | `hex(string)];
+let gainsboro : [> | `hex(string)];
+let ghostwhite : [> | `hex(string)];
+let gold : [> | `hex(string)];
+let goldenrod : [> | `hex(string)];
+let gray : [> | `hex(string)];
+let grey : [> | `hex(string)];
+let green : [> | `hex(string)];
+let greenyellow : [> | `hex(string)];
+let honeydew : [> | `hex(string)];
+let hotpink : [> | `hex(string)];
+let indianred : [> | `hex(string)];
+let indigo : [> | `hex(string)];
+let ivory : [> | `hex(string)];
+let khaki : [> | `hex(string)];
+let lavender : [> | `hex(string)];
+let lavenderblush : [> | `hex(string)];
+let lawngreen : [> | `hex(string)];
+let lemonchiffon : [> | `hex(string)];
+let lightblue : [> | `hex(string)];
+let lightcoral : [> | `hex(string)];
+let lightcyan : [> | `hex(string)];
+let lightgoldenrodyellow : [> | `hex(string)];
+let lightgray : [> | `hex(string)];
+let lightgrey : [> | `hex(string)];
+let lightgreen : [> | `hex(string)];
+let lightpink : [> | `hex(string)];
+let lightsalmon : [> | `hex(string)];
+let lightseagreen : [> | `hex(string)];
+let lightskyblue : [> | `hex(string)];
+let lightslategray : [> | `hex(string)];
+let lightslategrey : [> | `hex(string)];
+let lightsteelblue : [> | `hex(string)];
+let lightyellow : [> | `hex(string)];
+let lime : [> | `hex(string)];
+let limegreen : [> | `hex(string)];
+let linen : [> | `hex(string)];
+let magenta : [> | `hex(string)];
+let maroon : [> | `hex(string)];
+let mediumaquamarine : [> | `hex(string)];
+let mediumblue : [> | `hex(string)];
+let mediumorchid : [> | `hex(string)];
+let mediumpurple : [> | `hex(string)];
+let mediumseagreen : [> | `hex(string)];
+let mediumslateblue : [> | `hex(string)];
+let mediumspringgreen : [> | `hex(string)];
+let mediumturquoise : [> | `hex(string)];
+let mediumvioletred : [> | `hex(string)];
+let midnightblue : [> | `hex(string)];
+let mintcream : [> | `hex(string)];
+let mistyrose : [> | `hex(string)];
+let moccasin : [> | `hex(string)];
+let navajowhite : [> | `hex(string)];
+let navy : [> | `hex(string)];
+let oldlace : [> | `hex(string)];
+let olive : [> | `hex(string)];
+let olivedrab : [> | `hex(string)];
+let orange : [> | `hex(string)];
+let orangered : [> | `hex(string)];
+let orchid : [> | `hex(string)];
+let palegoldenrod : [> | `hex(string)];
+let palegreen : [> | `hex(string)];
+let paleturquoise : [> | `hex(string)];
+let palevioletred : [> | `hex(string)];
+let papayawhip : [> | `hex(string)];
+let peachpuff : [> | `hex(string)];
+let peru : [> | `hex(string)];
+let pink : [> | `hex(string)];
+let plum : [> | `hex(string)];
+let powderblue : [> | `hex(string)];
+let purple : [> | `hex(string)];
+let rebeccapurple : [> | `hex(string)];
+let red : [> | `hex(string)];
+let rosybrown : [> | `hex(string)];
+let royalblue : [> | `hex(string)];
+let saddlebrown : [> | `hex(string)];
+let salmon : [> | `hex(string)];
+let sandybrown : [> | `hex(string)];
+let seagreen : [> | `hex(string)];
+let seashell : [> | `hex(string)];
+let sienna : [> | `hex(string)];
+let silver : [> | `hex(string)];
+let skyblue : [> | `hex(string)];
+let slateblue : [> | `hex(string)];
+let slategray : [> | `hex(string)];
+let slategrey : [> | `hex(string)];
+let snow : [> | `hex(string)];
+let springgreen : [> | `hex(string)];
+let steelblue : [> | `hex(string)];
+let tan : [> | `hex(string)];
+let teal : [> | `hex(string)];
+let thistle : [> | `hex(string)];
+let tomato : [> | `hex(string)];
+let turquoise : [> | `hex(string)];
+let violet : [> | `hex(string)];
+let wheat : [> | `hex(string)];
+let white : [> | `hex(string)];
+let whitesmoke : [> | `hex(string)];
+let yellow : [> | `hex(string)];
+let yellowgreen : [> | `hex(string)];
+
+type length = [
+  | `calc( [ | `add | `sub], length, length)
+  | `ch(float)
+  | `cm(float)
+  | `em(float)
+  | `ex(float)
+  | `mm(float)
+  | `percent(float)
+  | `pt(int)
+  | `px(int)
+  | `rem(float)
+  | `vh(float)
+  | `vmin(float)
+  | `vmax(float)
+  | `vw(float)
+  | `zero
+];
+
+let ch : float => [> | `ch(float)];
+let cm : float => [> | `cm(float)];
+let em : float => [> | `em(float)];
+let ex : float => [> | `ex(float)];
+let mm : float => [> | `mm(float)];
+let pct : float => [> | `percent(float)];
+let pt : int => [> | `pt(int)];
+let px : int => [> | `px(int)];
+let rem : float => [> | `rem(float)];
+let vh : float => [> | `vh(float)];
+let vmax : float => [> | `vmax(float)];
+let vmin : float => [> | `vmin(float)];
+let vw : float => [> | `vw(float)];
+let zero : [> | `zero];
+
+
+module Calc: {
+  let (-): (length, length) => [> |length];
+  let (+): (length, length) => [> | length];
+};
+
+let size : (length, length) => [> |`size(length, length)];
+
+let solid : [> | `solid];
+let dotted : [> | `dotted];
+let dashed : [> | `dashed];
+
+let url : string => [> `url(string)];
+
+let none : [> | `none];
+let auto : [> | `auto];
+let hidden : [> | `hidden];
+let visible : [> | `visible];
+let local : [> | `local];
+let scroll : [> | `scroll];
+
+let paddingBox : [> | `paddingBox];
+let borderBox : [> | `borderBox];
+let contentBox : [> | `contentBox];
+
+let noRepeat : [> | `noRepeat];
+let repeat : [> | `repeat];
+let repeatX : [> | `repeatX];
+let repeatY : [> | `repeatY];
+let contain : [> | `contain];
+let cover : [> | `cover];
+
+let row : [> | `row];
+let rowReverse : [> | `rowReverse];
+let column : [> | `column];
+let columnReverse : [> | `columnReverse];
+let wrap : [> | `wrap];
+let noWrap : [> | `noWrap];
+let wrapReverse : [> | `wrapReverse];
+
+let flexBox : [> | `flex];
+let block : [> | `block];
+let inline : [> | `inline];
+let inlineBlock : [> | `inlineBlock];
+
+let absolute : [> | `absolute];
+let relative : [> | `relative];
+let static : [> | `static];
+let fixed : [> | `fixed];
+let sticky : [> | `sticky];
+
+let flexStart : [> | `flexStart];
+let flexEnd : [> | `flexEnd];
+let center : [> | `center];
+let stretch : [> | `stretch];
+let spaceBetween : [> | `spaceBetween];
+let spaceAround : [> | `spaceAround];
+let baseline : [> | `baseline];
+
+let forwards : [> | `forwards];
+let backwards : [> | `backwards];
+let both : [> | `both];
+let infinite : [> | `infinite];
+let count : int => [> | `count(int)];
+let paused : [> | `paused];
+let running : [> | `running];
+
+let inside : [> | `inside];
+let outside : [> | `outside];
+
+
+let translate  : (length, length) => [> | `translate(length, length)];
+let translate3d : (length, length, length) => [> | `translate3d(length, length, length)];
+let translateX : length => [> | `translaterX(length)];
+let translateY : length => [> | `translaterY(length)];
+let translateZ : length => [> | `translateZ(length)];
+let scale : (float, float) => [> | `scale(float, float)];
+let scale3d : (float, float, float) => [> | `scale3d(float, float, float)];
+let scaleX : float => [> | `scaleX(float)];
+let scaleY : float => [> | `scaleY(float)];
+let scaleZ : float => [> | `scaleZ(float)];
+let rotate : angle => [> | `rotate(angle)];
+let rotate3d : (float, float, float, angle) => [> | `rotate3d(float, float, float, angle)];
+let rotateX : angle => [> | `rotateX(angle)];
+let rotateY : angle => [> | `rotateY(angle)];
+let rotateZ : angle => [> | `rotateZ(angle)];
+let skew : (angle, angle) => [> | `skew(angle, angle)];
+let skewX : (angle) => [> | `skewX(angle)];
+let skewY : (angle) => [> | `skewY(angle)];
+
+let italic : [> | `italic];
+let oblique : [> | `oblique];
+
+let underline : [> | `underline];
+let overline : [> | `overline];
+let lineThrough : [> | `lineThough];
+
+let clip : [> | `clip];
+let ellipsis : [> | `ellipsis];
+
+let wavy : [> | `wavy];
+let double : [> | `double];
+
+let uppercase : [> | `uppercase];
+let lowercase : [> | `lowercase];
+let capitalize : [> | `capitalize];
+
+let sub : [> | `sub];
+let super : [> | `super];
+let textTop: [> | `textTop];
+let textBottom : [> | `textBottom];
+let middle : [> | `middle];
+
+let normal : [> | `normal];
+
+let breakAll : [> | `breakAll];
+let keepAll : [> | `keepAll];
+let breakWord : [> | `breakWord];
+
+let reverse : [> | `reverse];
+let alternate : [> | `alternate];
+let alternateReverse : [> | `alternateReverse];
+
+
+
+
+let linear : [> |`linear];
+let ease : [> |`ease];
+let easeIn : [> |`easeIn];
+let easeOut : [> |`easeOut];
+let easeInOut : [> |`easeInOut];
+let stepStart : [> |`stepStart];
+let stepEnd : [> |`stepEnd];
+let steps : (int, [ | `start | `end_]) => [> |`steps(int, [ | `start | `end_])];
+let cubicBesier : (float, float, float, float) =>[> |`cubicBezier(float, float, float, float)];
+
+/********************************************************
+ ******************** PROPERTIES ************************
+ ********************************************************/
+
+let unsafe : (string, string) => rule;
+
+/**
+ * Layout
+*/
+
+let display : [ | `flex | `block | `inline | `inlineBlock | `none ] => rule;
+let position : [ | `absolute | `relative | `static | `fixed | `sticky ] => rule;
+
+let top : [ | length] => rule;
+let bottom : [ | length] => rule;
+let left : [ | length] => rule;
+let right : [ | length] => rule;
 
-type rule;
-
-type color;
-
-type cssunit;
-
-type keyframes;
-
-type transform;
-
-type angle;
-
-let unsafeValue: string => 'a;
-
-let rad: float => angle;
-
-let grad: float => angle;
-
-let deg: float => angle;
-
-let turn: float => angle;
-
-let style: list(rule) => css;
-
-let global: (string, list(rule)) => unit;
-
-let keyframes: list((string, list(rule))) => keyframes;
-
-let merge: list(css) => css;
-
-let className: css => string;
-
-let empty: css;
-
-let important: rule => rule;
-
-/* units */
-let px: int => cssunit;
-
-let pct: float => cssunit;
-
-let rem: float => cssunit;
-
-let em: float => cssunit;
-
-let ex: float => cssunit;
-
-let ch: float => cssunit;
-
-let vh: float => cssunit;
-
-let vw: float => cssunit;
-
-let vmin: float => cssunit;
-
-let vmax: float => cssunit;
-
-let cm: float => cssunit;
-
-let mm: float => cssunit;
-
-let q: float => cssunit;
-
-let inch: float => cssunit;
-
-let pc: float => cssunit;
-
-let zero: cssunit;
-
-let auto: cssunit;
-
-/* color */
-let rgb: (int, int, int) => color;
-
-let rgba: (int, int, int, float) => color;
-
-let hsl: (angle, int, int) => color;
-
-let hsla: (angle, int, int, float) => color;
-
-let hex: string => color;
-
-let currentColor: color;
-
-let transparent: color;
-
-let aliceblue: color;
-
-let antiquewhite: color;
-
-let aqua: color;
-
-let aquamarine: color;
-
-let azure: color;
-
-let beige: color;
-
-let bisque: color;
-
-let black: color;
-
-let blanchedalmond: color;
-
-let blue: color;
-
-let blueviolet: color;
-
-let brown: color;
-
-let burlywood: color;
-
-let cadetblue: color;
-
-let chartreuse: color;
-
-let chocolate: color;
-
-let coral: color;
-
-let cornflowerblue: color;
-
-let cornsilk: color;
-
-let crimson: color;
-
-let cyan: color;
-
-let darkblue: color;
-
-let darkcyan: color;
-
-let darkgoldenrod: color;
-
-let darkgray: color;
-
-let darkgrey: color;
-
-let darkgreen: color;
-
-let darkkhaki: color;
-
-let darkmagenta: color;
-
-let darkolivegreen: color;
-
-let darkorange: color;
-
-let darkorchid: color;
-
-let darkred: color;
-
-let darksalmon: color;
-
-let darkseagreen: color;
-
-let darkslateblue: color;
-
-let darkslategray: color;
-
-let darkslategrey: color;
-
-let darkturquoise: color;
-
-let darkviolet: color;
-
-let deeppink: color;
-
-let deepskyblue: color;
-
-let dimgray: color;
-
-let dimgrey: color;
-
-let dodgerblue: color;
-
-let firebrick: color;
-
-let floralwhite: color;
-
-let forestgreen: color;
-
-let fuchsia: color;
-
-let gainsboro: color;
-
-let ghostwhite: color;
-
-let gold: color;
-
-let goldenrod: color;
-
-let gray: color;
-
-let grey: color;
-
-let green: color;
-
-let greenyellow: color;
-
-let honeydew: color;
-
-let hotpink: color;
-
-let indianred: color;
-
-let indigo: color;
-
-let ivory: color;
-
-let khaki: color;
-
-let lavender: color;
-
-let lavenderblush: color;
-
-let lawngreen: color;
-
-let lemonchiffon: color;
-
-let lightblue: color;
-
-let lightcoral: color;
-
-let lightcyan: color;
-
-let lightgoldenrodyellow: color;
-
-let lightgray: color;
-
-let lightgrey: color;
-
-let lightgreen: color;
-
-let lightpink: color;
-
-let lightsalmon: color;
-
-let lightseagreen: color;
-
-let lightskyblue: color;
-
-let lightslategray: color;
-
-let lightslategrey: color;
-
-let lightsteelblue: color;
-
-let lightyellow: color;
-
-let lime: color;
-
-let limegreen: color;
-
-let linen: color;
-
-let magenta: color;
-
-let maroon: color;
-
-let mediumaquamarine: color;
-
-let mediumblue: color;
-
-let mediumorchid: color;
-
-let mediumpurple: color;
-
-let mediumseagreen: color;
-
-let mediumslateblue: color;
-
-let mediumspringgreen: color;
-
-let mediumturquoise: color;
-
-let mediumvioletred: color;
-
-let midnightblue: color;
-
-let mintcream: color;
-
-let mistyrose: color;
-
-let moccasin: color;
-
-let navajowhite: color;
-
-let navy: color;
-
-let oldlace: color;
-
-let olive: color;
-
-let olivedrab: color;
-
-let orange: color;
-
-let orangered: color;
-
-let orchid: color;
-
-let palegoldenrod: color;
-
-let palegreen: color;
-
-let paleturquoise: color;
-
-let palevioletred: color;
-
-let papayawhip: color;
-
-let peachpuff: color;
-
-let peru: color;
-
-let pink: color;
-
-let plum: color;
-
-let powderblue: color;
-
-let purple: color;
-
-let red: color;
-
-let rosybrown: color;
-
-let royalblue: color;
-
-let saddlebrown: color;
-
-let salmon: color;
-
-let sandybrown: color;
-
-let seagreen: color;
-
-let seashell: color;
-
-let sienna: color;
-
-let silver: color;
-
-let skyblue: color;
-
-let slateblue: color;
-
-let slategray: color;
-
-let slategrey: color;
-
-let snow: color;
-
-let springgreen: color;
-
-let steelblue: color;
-
-let tan: color;
-
-let teal: color;
-
-let thistle: color;
-
-let tomato: color;
-
-let turquoise: color;
-
-let violet: color;
-
-let wheat: color;
-
-let white: color;
-
-let whitesmoke: color;
-
-let yellow: color;
-
-let yellowgreen: color;
-
-/* image */
-type direction =
-  | Angle(angle)
-  | ToTop
-  | ToBottom
-  | ToLeft
-  | ToRight
-  | ToTopLeft
-  | ToTopRight
-  | ToBottomLeft
-  | ToBottomRight;
-
-type verticalPosition =
-  | Top
-  | FromTop(cssunit)
-  | Center
-  | Bottom
-  | FromBottom(cssunit);
-
-type horizontalPosition =
-  | Left
-  | FromLeft(cssunit)
-  | Center
-  | Right
-  | FromRight(cssunit);
-
-type shape =
-  | Circle
-  | Ellipse;
-
-type extent =
-  | ClosestSide
-  | ClosestCorner
-  | FarthestSide
-  | FarthestCorner;
-
-type colorStop = (color, cssunit);
-
-type gradient;
-
-let linearGradient: (direction, list(colorStop)) => gradient;
-
-let radialGradient:
-  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) => gradient;
-
-let repeatingLinearGradient: (direction, list(colorStop)) => gradient;
-
-let repeatingRadialGradient:
-  (shape, verticalPosition, horizontalPosition, extent, list(colorStop)) => gradient;
-
-type image =
-  | Url(string)
-  | Gradient(gradient)
-  | Element(string);
-
-/* CSS RULES */
-let label: string => rule;
-
-let unsafe: (string, 'a) => rule;
-
-type visibility =
-  | Visible
-  | Hidden;
-
-let visibility: visibility => rule;
-
-let opacity: float => rule;
-
-type listStyleType =
-  | Disc
-  | Circle
-  | Square
-  | Decimal
-  | DecimalLeadingZero
-  | LowerRoman
-  | UpperRoman
-  | LowerGreek
-  | LowerLatin
-  | UpperLatin
-  | Armenian
-  | Georgian
-  | LowerAlpha
-  | UpperAlpha
-  | None;
-
-let listStyleType: listStyleType => rule;
-
-type listStyleImage =
-  | None
-  | Url(string);
-
-let listStyleImage: listStyleImage => rule;
-
-type listStylePosition =
-  | Inside
-  | Outside;
-
-let listStylePopsition: listStylePosition => rule;
-
-/* BACKGROUND */
-let backgroundImage: string => rule;
-
-let backgroundGradient: gradient => rule;
-
-type backgroundAttachment =
-  | Scroll
-  | Fixed
-  | Local
-  | Initial;
-
-let backgroundAttachment: backgroundAttachment => rule;
-
-let backgroundColor: color => rule;
-
-type backgroundSize =
-  | Cover
-  | Contain
-  | Width(cssunit)
-  | Height(cssunit)
-  | Custom(cssunit, cssunit);
-
-let backgroundSize: backgroundSize => rule;
-
-type backgroundPosition =
-  | Top
-  | Bottom
-  | Left
-  | Right
-  | Center;
-
-let backgroundPosition: backgroundPosition => rule;
-
-type backgroundRepeat =
-  | RepeatX
-  | RepeatY
-  | Repeat
-  | Space
-  | Round
-  | NoRepeat;
-
-let backgroundRepeat: backgroundRepeat => rule;
-
-type background =
-  | None
-  | Color(color)
-  | Image(string);
-
-let background: background => rule;
-
-/* TEXT */
-let color: color => rule;
-
-let fontFamily: string => rule;
-
-let fontSize: cssunit => rule;
-
-type fontStyle =
-  | Normal
-  | Italic
-  | Oblique;
-
-let fontStyle: fontStyle => rule;
-
-type fontWeight =
-  | Normal
-  | Bold
-  | W100
-  | W200
-  | W300
-  | W400
-  | W500
-  | W600
-  | W700
-  | W800
-  | W900;
-
-let fontWeight: fontWeight => rule;
-
-type fontVariant =
-  | Normal
-  | SmallCaps;
-
-let fontVariant: fontVariant => rule;
-
-type textDecoration =
-  | None
-  | Underline(color)
-  | UnderlineWavy(color);
-
-[@deprecated "Use the individual textDecoration properties instead"]
-let textDecoration: textDecoration => rule;
-
-type textDecorationLineValue =
-  | Underline
-  | Overline
-  | LineThrough;
-
-type textDecorationLine =
-  | None
-  | Values(list(textDecorationLineValue));
-
-let textDecorationLine: textDecorationLine => rule;
-
-type textDecorationStyle =
-  | Solid
-  | Double
-  | Dotted
-  | Dashed
-  | Wavy;
-
-let textDecorationStyle: textDecorationStyle => rule;
-
-let textDecorationColor: color => rule;
-
-type textAlign =
-  | Auto
-  | Left
-  | Right
-  | Center
-  | Justify;
-
-let textAlign: textAlign => rule;
-
-let textIndent: cssunit => rule;
-
-let textShadow: (cssunit, cssunit, color) => rule;
-
-type textTransform =
-  | None
-  | Uppercase
-  | Lowercase
-  | Capitalize
-  | FullWidth;
-
-let textTransform: textTransform => rule;
-
-type textOverflow =
-  | Clip
-  | Ellipsis;
-
-let textOverflow: textOverflow => rule;
-
-type overflowWrap =
-  | Normal
-  | BreakWord;
-
-let overflowWrap: overflowWrap => rule;
-
-let wordWrap: overflowWrap => rule;
-
-let letterSpacing: cssunit => rule;
-
-let lineHeight: cssunit => rule;
-
-/* BORDER */
-type borderStyle =
-  | None
-  | Hidden
-  | Solid
-  | Dotted
-  | Dashed
-  | Double;
-
-let border: (cssunit, borderStyle, color) => rule;
-
-let borderTop: (cssunit, borderStyle, color) => rule;
-
-let borderBottom: (cssunit, borderStyle, color) => rule;
-
-let borderLeft: (cssunit, borderStyle, color) => rule;
-
-let borderRight: (cssunit, borderStyle, color) => rule;
-
-let borderWidth: cssunit => rule;
-
-let borderTopWidth: cssunit => rule;
-
-let borderBottomWidth: cssunit => rule;
-
-let borderLeftWidth: cssunit => rule;
-
-let borderRightWidth: cssunit => rule;
-
-let borderStyle: borderStyle => rule;
-
-let borderTopStyle: borderStyle => rule;
-
-let borderBottomStyle: borderStyle => rule;
-
-let borderLeftStyle: borderStyle => rule;
-
-let borderRightStyle: borderStyle => rule;
-
-let borderColor: color => rule;
-
-let borderTopColor: color => rule;
-
-let borderBottomColor: color => rule;
-
-let borderLeftColor: color => rule;
-
-let borderRightColor: color => rule;
-
-let borderRadius: cssunit => rule;
-
-let borderTopLeftRadius: cssunit => rule;
-
-let borderTopRightRadius: cssunit => rule;
-
-let borderBottomLeftRadius: cssunit => rule;
-
-let borderBottomRightRadius: cssunit => rule;
-
-/* LAYOUT */
-let width: cssunit => rule;
-
-let minWidth: cssunit => rule;
-
-let maxWidth: cssunit => rule;
-
-let height: cssunit => rule;
-
-let minHeight: cssunit => rule;
-
-let maxHeight: cssunit => rule;
-
-let left: cssunit => rule;
-
-let right: cssunit => rule;
-
-let top: cssunit => rule;
-
-let bottom: cssunit => rule;
-
-let margin: cssunit => rule;
-
-let margin2: (~v: cssunit, ~h: cssunit) => rule;
-
-let margin3: (~top: cssunit, ~h: cssunit, ~bottom: cssunit) => rule;
-
-let margin4:
-  (~top: cssunit, ~right: cssunit, ~bottom: cssunit, ~left: cssunit) => rule;
-
-let marginLeft: cssunit => rule;
-
-let marginRight: cssunit => rule;
-
-let marginTop: cssunit => rule;
-
-let marginBottom: cssunit => rule;
-
-let padding: cssunit => rule;
-
-let padding2: (~v: cssunit, ~h: cssunit) => rule;
-
-let padding3: (~top: cssunit, ~h: cssunit, ~bottom: cssunit) => rule;
-
-let padding4:
-  (~top: cssunit, ~right: cssunit, ~bottom: cssunit, ~left: cssunit) => rule;
-
-let paddingLeft: cssunit => rule;
-
-let paddingRight: cssunit => rule;
-
-let paddingTop: cssunit => rule;
-
-let paddingBottom: cssunit => rule;
-
-type display =
-  | Block
-  | None
-  | Inline
-  | Flex
-  | Grid
-  | Subgrid
-  | Contents
-  | Table
-  | TableRow
-  | TableCell
-  | TableColumn
-  | InlineBlock
-  | InlineTable
-  | InlineFlex
-  | InlineGrid;
-
-let display: display => rule;
-
-type position =
-  | Static
-  | Relative
-  | Absolute
-  | Fixed
-  | Sticky;
-
-let position: position => rule;
-
-type boxSizing =
-  | BorderBox
-  | ContentBox;
-
-let boxSizing: boxSizing => rule;
-
-type overflow =
-  | Visible
-  | Hidden
-  | Scroll
-  | Auto;
-
-let overflow: overflow => rule;
-
-let overflowX: overflow => rule;
-
-let overflowY: overflow => rule;
-
-let zIndex: int => rule;
-
-/* FLEXBOX */
 let flex: int => rule;
-
-type flexDirection =
-  | Row
-  | RowReverse
-  | Column
-  | ColumnReverse;
-
-let flexDirection: flexDirection => rule;
-
+let flexGrow: int => rule;
+let flexShrink: int => rule;
 let flexBasis: int => rule;
 
-let flexFlow: int => rule;
-
-let flexGrow: int => rule;
-
-let flexShrink: int => rule;
-
-type flexWrap =
-  | Wrap
-  | NoWrap;
-
-let flexWrap: flexWrap => rule;
-
-type justify =
-  | FlexStart
-  | FlexEnd
-  | Center
-  | Stretch
-  | SpaceAround
-  | SpaceBetween;
-
-let alignContent: justify => rule;
-
-type alignment =
-  | FlexStart
-  | FlexEnd
-  | Center
-  | Stretch
-  | Baseline;
-
-let alignItems: alignment => rule;
-
-let alignSelf: alignment => rule;
-
-let justifyContent: justify => rule;
-
+let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
+let flexWrap: [ | `wrap | `noWrap | `wrapReverse] => rule;
 let order: int => rule;
 
-/* SHADOW */
-type shadow;
+let width : [ | length | `auto ] => rule;
+let minWidth : [ | length | `auto ] => rule;
+let maxWidth : [ | length | `auto ] => rule;
+let height : [ | length | `auto ] => rule;
+let minHeight : [ | length | `auto ] => rule;
+let maxHeight : [ | length | `auto ] => rule;
 
-let shadow: (~x: int=?, ~y: int=?, ~blur: int=?, ~spread: int=?, color) => shadow;
+let margin : [ | length | `auto] => rule;
+let margin2: (~v: [ | length | `auto ], ~h: [ | length | `auto]) => rule;
+let margin3: (~top: [ | length | `auto], ~h: [ | length | `auto], ~bottom: [ | length | `auto]) => rule;
+let margin4: (~top: [ | length | `auto], ~right: [ | length | `auto], ~bottom: [ | length | `auto], ~left: [ | length | `auto]) => rule;
+let marginLeft : [ | length | `auto] => rule;
+let marginRight : [ | length | `auto] => rule;
+let marginTop : [ | length | `auto] => rule;
+let marginBottom : [ | length | `auto] => rule;
 
-let boxShadow: shadow => rule;
+let padding : length => rule;
+let padding2: (~v: length, ~h: length) => rule;
+let padding3: (~top: length, ~h: length, ~bottom: length) => rule;
+let padding4: (~top: length, ~right: length, ~bottom: length, ~left: length) => rule;
+let paddingLeft : length => rule;
+let paddingRight : length => rule;
+let paddingTop : length => rule;
+let paddingBottom : length => rule;
 
-let boxShadows: list(shadow) => rule;
+let alignContent : [ | `stretch | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule; 
+let alignItems : [ | `stretch | `flexStart | `center | `flexEnd | `baseline ] => rule; 
+let alignSelf : [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto ] => rule; 
+let justifyContent : [ | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule; 
 
-/* ANIMATION */
-let animationDuration: int => rule;
+let boxSizing : [ | `borderBox | `contentBox] => rule;
 
-let animationDelay: int => rule;
+let float: [ | `left | `right| `none ] => rule; 
+let clear: [ | `left | `right | `both ] => rule; 
 
-type animationDirection =
-  | Normal
-  | Reverse
-  | Alternate
-  | AlternateReverse;
+let overflow: [ | `hidden | `visible | `scroll | `auto] => rule;
+let overflowX: [ | `hidden | `visible | `scroll | `auto] => rule;
+let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 
-let animationDirection: animationDirection => rule;
+let zIndex : int => rule;
 
-type animationFillMode =
-  | None
-  | Forwards
-  | Backwards
-  | Both;
 
-let animationFillMode: animationFillMode => rule;
+/**
+ * Style
+ */
+let backfaceVisibility : [ | `visible | `hidden] => rule;
 
-type animationIterationCount =
-  | Infinite
-  | Iterate(int);
+let border : length => [ | `solid | `dashed | `dotted | `none] => [ | color] => rule;
+let borderWidth : length => rule;
+let borderStyle : [ | `solid | `dashed | `dotted | `none] => rule;
+let borderColor : color => rule;
 
-let animationIterationCount: animationIterationCount => rule;
+let borderTop : (length, [ | `solid | `dashed | `dotted | `none], [ | color]) => rule;
+let borderTopWidth : length => rule;
+let borderTopStyle : [ | `solid | `dashed | `dotted | `none] => rule;
+let borderTopColor : color => rule;
+let borderBottom : (length, [ | `solid | `dashed | `dotted | `none], [ | color]) => rule;
+let borderBottomWidth : length => rule;
+let borderBottomStyle : [ | `solid | `dashed | `dotted | `none] => rule;
+let borderBottomColor : color => rule;
+let borderLeft : (length, [ | `solid | `dashed | `dotted | `none], [ | color]) => rule;
+let borderLeftWidth : length => rule;
+let borderLeftStyle : [ | `solid | `dashed | `dotted | `none] => rule;
+let borderLeftColor : color => rule;
+let borderRight : (length, [ | `solid | `dashed | `dotted], [ | color]) => rule;
+let borderRightWidth : length => rule;
+let borderRightStyle : [ | `solid | `dashed | `dotted | `none] => rule;
+let borderRightColor : color => rule;
 
-let animationName: keyframes => rule;
 
-type animationPlayState =
-  | Paused
-  | Running;
+let borderRadius : length => rule;
+let borderTopLeftRadius : length => rule;
+let borderTopRightRadius : length => rule;
+let borderBottomLeftRadius : length => rule;
+let borderBottomRightRadius : length => rule;
 
-let animationPlayState: animationPlayState => rule;
+let boxShadow : (~x:length=?, ~y:length=?, ~blur:length=?, ~spread:length=?, ~inset:bool=?, color) => [> | `shadow(string)];
+let boxShadows : list([ | `shadow(string)]) => rule;
 
-type animationSteps =
-  | Start
-  | End;
+let background : [ | color | `url(string) | gradient | `none] => rule;
+let backgroundColor: [ | color] => rule;
+let backgroundImage: [ | `url(string) | gradient | `none] => rule;
+let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
+let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
+let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
+let backgroundPosition: ([ | length], [ | length]) => rule;
+let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
+let backgroundSize: [ | `size(length, length) | `auto | `cover | `contain] => rule;
 
-type timingFunction =
-  | Ease
-  | EaseIn
-  | EaseOut
-  | EaseInOut
-  | Linear
-  | StepStart
-  | StepEnd
-  | CubicBezier(float, float, float, float)
-  | Steps(int, animationSteps)
-  | Frames(int);
+let cursor : [ 
+  | `pointer 
+  | `alias 
+  | `allScroll 
+  | `auto 
+  | `cell 
+  | `contextMenu 
+  | `default
+  | `none
+  | `crosshair
+  | `copy
+  | `grab
+  | `grabbing
+  | `help
+  | `move
+  | `notAllowed
+  | `progress
+  | `text
+  | `wait
+  | `zoomIn
+  | `zoomOut
+  ] => rule;
 
-let animationTimingFunction: timingFunction => rule;
 
-/* TRANSITION */
-let transitionDelay: int => rule;
+type listStyleType = [
+ | `disc
+ | `circle
+ | `square
+ | `decimal
+ | `lowerAlpha
+ | `upperAlpha
+ | `lowerGreek
+ | `lowerLatin
+ | `upperLatin
+ | `lowerRoman
+ | `upperRoman
+];
+let listStyle : (listStyleType, [ | `inside | `outside], [ | `none | `url(string)]) => rule;
+let listStyleType : listStyleType => rule;
+let listStylePosition : [ | `inside | `outside] => rule;
+let listStyleImage : [ | `none | `url(string)] => rule;
 
-let transitionDuration: int => rule;
 
-let transitionTimingFunction: timingFunction => rule;
+let opacity : float => rule;
 
-let transitionProperty: string => rule;
+type outlineStyle = [
+  | `none
+  | `hidden
+  | `dotted
+  | `dashed
+  | `solid
+  | `double
+  | `groove
+  | `ridge
+  | `inset
+  | `outset
+];
+let outline : (length, outlineStyle, color) => rule;
+let outlineStyle : outlineStyle => rule;
+let outlineWidth : length => rule;
+let outlineColor : color => rule;
+let outlineOffset : length => rule;
 
-let transition:
-  (~delay: int=?, ~duration: int=?, ~timingFunction: timingFunction=?, string) => rule;
 
-/* TRANSFORM */
-let transform: transform => rule;
+/**
+ * Text
+ */
+let color : color => rule;
+let fontFamily : string => rule;
+let fontSize : length => rule;
+let fontVariant : [ | `normal | `smallCaps] => rule;
+let fontStyle: [ | `italic | `normal | `oblique ] => rule; 
+let fontWeight : int => rule;
+let letterSpacing: [ `normal | length] => rule;
+let lineHeight: float => rule; 
+let textAlign : [ | `left | `center | `right | `justify] => rule;
+let textDecoration : [ | `none | `underline | `overline | `lineThrough ] => rule;
+let textDecorationColor : color => rule;
+let textDecorationStyle : [ | `wavy | `solid | `dotted | `dashed | `double] => rule;
+let textIndent : length => rule;
+let textOverflow : [ | `clip | `ellipsis | `string(string)] => rule;
+let textShadow : (~x:length=?, ~y:length=?, ~blur:length=?, color) => rule;
+let textTransform: [ | `uppercase | `lowercase | `capitalize | `none] => rule;
+let verticalAlign: [ | `baseline | length | `sub | `super | `top | `textTop | `middle | `bottom | `textBottom] => rule;
+let whiteSpace : [ | `normal | `noWrap | `pre | `preLine | `preWrap] => rule;
+let wordBreak : [ | `breakAll | `keepAll | `normal] => rule;
+let wordSpacing : [ | `normal | length ] => rule;
+let wordWrap : [ |`normal | `breakWord] => rule;
 
-let transforms: list(transform) => rule;
 
-let translate: (cssunit, cssunit) => transform;
+/**
+ * Transform
+ */
 
-let translateX: cssunit => transform;
+type transform = [
+   | `translate(length, length)
+   | `translate3d(length, length, length)
+   | `translateX(length)
+   | `translateY(length)
+   | `translateZ(length)
+   | `scale(float, float) 
+   | `scale3d(float, float, float) 
+   | `scaleX(float) 
+   | `scaleY(float) 
+   | `scaleZ(float) 
+   | `rotate(angle) 
+   | `rotate3d(float, float, float, angle) 
+   | `rotateX(angle) 
+   | `rotateY(angle) 
+   | `rotateZ(angle) 
+   | `skew(angle, angle)
+   | `skewX(angle)
+   | `skewY(angle)
+   | `perspective(int)
+];
 
-let translateY: cssunit => transform;
+ let transform : transform => rule;
+ let transforms : list(transform) => rule;
+ let transformOrigin: (length, length) => rule;
+ let transformOrigin3d: (length, length, length) => rule;
+ let transformStyle: [ | `preserve3d | `flat] => rule;
+ let perspective : [ `none | length] => rule;
+ let perspectiveOrigin: (length, length) => rule; 
 
-let scale: (float, float) => transform;
+ /**
+  * Transition
+  */
+type timingFunction = [
+  | `linear
+  | `ease
+  | `easeIn
+  | `easeOut
+  | `easeInOut
+  | `stepStart
+  | `stepEnd
+  | `steps(int, [ | `start | `end_])
+  | `cubicBezier(float, float, float, float)
+];
+let transition : (~duration:int=?, ~delay:int=?, ~timingFunction:timingFunction=?, string) => rule;
+let transitionDelay : int => rule;
+let transitionDuration : int => rule;
+let transitionTimingFunction : timingFunction => rule;
+let transitionProperty : string => rule;
 
-let scaleX: float => transform;
 
-let scaleY: float => transform;
+/**
+ * Animation
+ */
 
-let rotate: angle => transform;
+type animation; 
+let keyframes : list((int, list(rule))) => animation;
 
-let skew: (angle, angle) => transform;
+type animationDirection = [
+  | `normal
+  | `reverse
+  | `alternate
+  | `alternateReverse
+];
 
-let skewX: angle => transform;
+type animationFillMode = [ | `none | `forwards | `backwards | `both ];
+type animationIterationCount = [ | `infinite | `count(int) ];
+type animationPlayState = [ | `paused | `running ];
+   
+let animation : (
+  ~duration:int=?, 
+  ~delay:int=?, 
+  ~direction:animationDirection=?, 
+  ~timingFunction:timingFunction=?,
+  ~fillMode:animationFillMode=?,
+  ~playState:animationPlayState=?,
+  ~iterationCount:animationIterationCount=?,
+  animation
+  ) => [> | `animation(string)];
+let animations : list([ | `animation(string)]) => rule;
+  
+let animationDelay : int => rule;
+let animationDirection : animationDirection => rule;
+let animationDuration : int => rule;
+let animationFillMode : animationFillMode => rule;
+let animationIterationCount: [ | `infinite | `count(int)] => rule;
+let animationName : animation => rule;
+let animationPlayState : [ | `paused | `running] => rule;  
+let animationTimingFunction : timingFunction => rule;
 
-let skewY: angle => transform;
 
-let translate3d: (cssunit, cssunit, cssunit) => transform;
-
-let translateZ: cssunit => transform;
-
-let scale3d: (float, float, float) => transform;
-
-let scaleZ: float => transform;
-
-let rotateX: angle => transform;
-
-let rotateY: angle => transform;
-
-let rotateZ: angle => transform;
-
-let perspective: cssunit => rule;
-
-type whiteSpace =
-  | Normal
-  | Nowrap
-  | Pre
-  | PreWrap
-  | PreLine;
-
-let whiteSpace: whiteSpace => rule;
-
-let selector: (string, list(rule)) => rule;
-
-/* PSEUDO CLASSES */
-let link: list(rule) => rule;
-
-let disabled: list(rule) => rule;
-
-let required: list(rule) => rule;
-
-let readOnly: list(rule) => rule;
-
-let focus: list(rule) => rule;
-
-let visited: list(rule) => rule;
-
+/**
+ * selectors
+ */
+let selector : (string, list(rule)) => rule;
 let active: list(rule) => rule;
-
-let hover: list(rule) => rule;
-
-let before: list(rule) => rule;
-
 let after: list(rule) => rule;
-
-let firstChild: list(rule) => rule;
-
-let firstOfType: list(rule) => rule;
-
-let lastChild: list(rule) => rule;
-
-let lastOfType: list(rule) => rule;
-
+let before: list(rule) => rule;
 let children: list(rule) => rule;
+let disabled: list(rule) => rule;
+let firstChild: list(rule) => rule;
+let firstOfType: list(rule) => rule;
+let focus: list(rule) => rule;
+let hover: list(rule) => rule;
+let lastChild: list(rule) => rule;
+let lastOfType: list(rule) => rule;
+let link: list(rule) => rule;
+let readOnly: list(rule) => rule;
+let required: list(rule) => rule;
+let visited: list(rule) => rule;
 
 let media: (string, list(rule)) => rule;
 
-/* MISC */
-type cursor =
-  | Auto
-  | Default
-  | None
-  | ContextMenu
-  | Help
-  | Pointer
-  | Progress
-  | Wait
-  | Cell
-  | Crosshair
-  | Text
-  | VerticalText
-  | Alias
-  | Copy
-  | Move
-  | NoDrop
-  | NotAllowed
-  | AllScroll
-  | ColResize
-  | RowResize
-  | NResize
-  | EResize
-  | SResize
-  | WResize
-  | NEResize
-  | NWResize
-  | SEResize
-  | SWResize
-  | EWResize
-  | NSResize
-  | NESWResize
-  | NWSEResize
-  | ZoomIn
-  | ZoomOut
-  | Grab
-  | Grabbing
-  | Custom(string);
-
-let cursor: cursor => rule;
-
-let outline: (cssunit, borderStyle, color) => rule;
-
-let outlineStyle: borderStyle => rule;
-
-let outlineOffset: cssunit => rule;
-
-let outlineWidth: cssunit => rule;
-
-let outlineColor: color => rule;
+/**
+ * SVG
+ */
 
 module SVG: {
   let fill: color => rule;
   let fillOpacity: float => rule;
   let stroke: color => rule;
-  let strokeWidth: cssunit => rule;
+  let strokeWidth: length => rule;
   let strokeOpacity: float => rule;
 };
 
-module Calc: {
-  let (-): (cssunit, cssunit) => cssunit;
-  let (+): (cssunit, cssunit) => cssunit;
-};
+

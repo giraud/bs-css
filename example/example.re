@@ -1,31 +1,38 @@
+Css.(global("html, body", [
+  margin(zero),
+  padding(zero)
+]));
+let text = ReasonReact.stringToElement;
+let fadeIn = Css.(keyframes([
+  (0, [opacity(0.)]),
+  (100, [opacity(1.)]),
+]));
+
+let spin = Css.(keyframes([
+  (0, [ transform(rotate(deg(0))) ]),
+  (100, [ transform(rotate(deg(360))) ]),
+]));
+
+
+
 module Page = {
-  let styles =
-    Css.(
-      {
-        "page":
-          style([
-            position(Absolute),
-            width(vw(100.)),
-            height(vh(100.)),
-            backgroundColor(rgba(0, 0, 0, 0.4)),
-            backgroundImage("./img-29.jpg"),
-            backgroundAttachment(Scroll),
-            backgroundPosition(Left),
-            border(vh(5.), Solid, black),
-            transforms([rotate(deg(20.0)), scale(0.4, 0.4)]),
-            boxShadow(shadow(~y=3, ~blur=15, rgba(0, 0, 0, 0.5)))
-          ])
-      }
-    );
+  let styles = Css.({
+    "page": [
+      boxSizing(borderBox),
+      width(vw(100.)),
+      height(vh(100.))
+    ]
+  });
   let component = ReasonReact.statelessComponent("Page");
   let make = (_) => {
     ...component,
     render: (_) => {
-      Js.log("EXAMPLE");
-      Js.log @@ Css.className(styles##page);
-      <div> <div className=styles##page /> <Gradient /> </div>
+      <div> 
+        <div className=(Css.style(styles##page))> 
+       Test.tests
+        </div>
+      </div>
     }
   };
 };
-
 ReactDOMRe.renderToElementWithId(<Page />, "app");
