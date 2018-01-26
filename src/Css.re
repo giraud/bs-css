@@ -29,6 +29,8 @@ module Glamor = {
       switch rule {
       | `declaration(name, value) => (name, Js.Json.string(value))
       | `selector(name, ruleset) => (name, makeDict(ruleset))
+      | `shadow(value) => ("boxShadow", Js.Json.string(value))
+      | `animation(value) => ("animation", Js.Json.string(value))
       };
     ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_;
   };
@@ -36,7 +38,12 @@ module Glamor = {
 };
 
 type declaration = [ | `declaration(string, string)];
-type rule = [ | `selector(string, list(rule)) | `declaration(string, string)];
+type rule = [ 
+  | `selector(string, list(rule)) 
+  | `declaration(string, string)
+  | `animation(string)
+  | `shadow(string)
+  ];
 type selector = [ | `selector(string, list(rule))];
 let empty = [];
 
@@ -403,7 +410,6 @@ let noRepeat = `noRepeat;
 let noWrap = `noWrap;
 let paddingBox = `paddingBox;
 let paused = `paused;
-let perspective= (i) => `perspective(i);
 let relative = `relative;
 let repeat = `repeat;
 let repeatX = `repeatX;
@@ -665,7 +671,7 @@ let backfaceVisibility = x =>
   });
 
 let boxShadow = (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color) =>
-  d( "boxShadow", join( " ", [
+  `shadow(join( " ", [
     string_of_length(x),
     string_of_length(y),
     string_of_length(blur),
@@ -673,6 +679,10 @@ let boxShadow = (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color
     string_of_color(color),
     inset ? "inset" : "",
   ]));
+
+let string_of_shadow = fun
+| `shadow(s) => s;
+let boxShadows = shadows => d("boxShadow", shadows |> List.map(string_of_shadow) |> join(", "));
 
 let string_of_borderstyle =
   fun
@@ -1152,6 +1162,26 @@ let transformStyle = x =>
     | `flat => "flat"
   });
 
+let perspective = x => d("parspective", switch x {
+| `none => "none"
+| `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+| `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+| `ch(x) => string_of_float(x) ++ "ch"
+| `cm(x) => string_of_float(x) ++ "cm"
+| `em(x) => string_of_float(x) ++ "em"
+| `ex(x) => string_of_float(x) ++ "ex"
+| `mm(x) => string_of_float(x) ++ "mm"
+| `percent(x) => string_of_float(x) ++ "%"
+| `pt(x) => string_of_int(x) ++ "pt"
+| `px(x) => string_of_int(x) ++ "px"
+| `rem(x) => string_of_float(x) ++ "rem"
+| `vh(x) => string_of_float(x) ++ "vh"
+| `vmax(x) => string_of_float(x) ++ "vmax"
+| `vmin(x) => string_of_float(x) ++ "vmin"
+| `vw(x) => string_of_float(x) ++ "vw"
+| `zero => "0";
+});
+
 /**
 * Transition
 */
@@ -1197,8 +1227,6 @@ let transitionTimingFunction = x =>
   d("transitionTimingFunction", string_of_timingFunction(x));
 
 let transitionProperty = x => d("transitionProperty", x);
-
-let perspective = i => d("perspective", string_of_int(i));
 
 let perspectiveOrigin = (x, y) =>
   d("perspectiveOrigin", [x, y] |> List.map(string_of_length) |> join(" "));
@@ -1254,7 +1282,7 @@ let animation = (
       ~iterationCount=`count(1),
       name
     ) =>
-  d( "animation", join( " ", [
+  `animation(join( " ", [
     name,
     string_of_int(duration) ++ "ms",
     string_of_timingFunction(timingFunction),
@@ -1264,6 +1292,10 @@ let animation = (
     string_of_animationFillMode(fillMode),
     string_of_animationPlayState(playState)
   ]));
+
+let string_of_animation = fun
+| `animation(s) => s;
+let animations = xs => d("animation", xs |> List.map(string_of_animation) |> join(", "));
 
 let animationDelay = x => d("animationDelay", string_of_int(x) ++ "ms");
 let animationDirection = x => d("animationDirection", string_of_animationDirection(x));

@@ -1813,17 +1813,30 @@ function join(separator, strings) {
 
 function makeDict(ruleset) {
   var toJs = function (rule) {
-    if (rule[0] >= 829240095) {
-      var match = rule[1];
-      return /* tuple */[
-              match[0],
-              makeDict(match[1])
-            ];
-    } else {
+    var variant = rule[0];
+    if (variant >= 488687584) {
+      if (variant >= 829240095) {
+        var match = rule[1];
+        return /* tuple */[
+                match[0],
+                makeDict(match[1])
+              ];
+      } else {
+        return /* tuple */[
+                "boxShadow",
+                rule[1]
+              ];
+      }
+    } else if (variant >= -434952966) {
       var match$1 = rule[1];
       return /* tuple */[
               match$1[0],
               match$1[1]
+            ];
+    } else {
+      return /* tuple */[
+              "animation",
+              rule[1]
             ];
     }
   };
@@ -2808,7 +2821,7 @@ function maxHeight(x) {
 }
 
 function string_of_align(param) {
-  if (param !== 98248149) {
+  if (param >= 98248149) {
     if (param >= 662439529) {
       if (param >= 924268066) {
         return "flex-end";
@@ -2818,10 +2831,12 @@ function string_of_align(param) {
     } else if (param >= 287825029) {
       return "baseline";
     } else {
-      return "stretch";
+      return "center";
     }
+  } else if (param >= -162316795) {
+    return "stretch";
   } else {
-    return "center";
+    return "auto";
   }
 }
 
@@ -2917,25 +2932,36 @@ function boxShadow($staropt$star, $staropt$star$1, $staropt$star$2, $staropt$sta
   var blur = $staropt$star$2 ? $staropt$star$2[0] : /* zero */-789508312;
   var spread = $staropt$star$3 ? $staropt$star$3[0] : /* zero */-789508312;
   var inset = $staropt$star$4 ? $staropt$star$4[0] : /* false */0;
-  return d("boxShadow", join(" ", /* :: */[
-                  string_of_length(x),
+  return /* `shadow */[
+          488687584,
+          join(" ", /* :: */[
+                string_of_length(x),
+                /* :: */[
+                  string_of_length(y),
                   /* :: */[
-                    string_of_length(y),
+                    string_of_length(blur),
                     /* :: */[
-                      string_of_length(blur),
+                      string_of_length(spread),
                       /* :: */[
-                        string_of_length(spread),
+                        string_of_color(color),
                         /* :: */[
-                          string_of_color(color),
-                          /* :: */[
-                            inset !== 0 ? "inset" : "",
-                            /* [] */0
-                          ]
+                          inset !== 0 ? "inset" : "",
+                          /* [] */0
                         ]
                       ]
                     ]
                   ]
-                ]));
+                ]
+              ])
+        ];
+}
+
+function string_of_shadow(param) {
+  return param[1];
+}
+
+function boxShadows(shadows) {
+  return d("boxShadow", join(", ", List.map(string_of_shadow, shadows)));
 }
 
 function string_of_borderstyle(param) {
@@ -3893,6 +3919,44 @@ function transformStyle(x) {
   return d("transformStyle", x >= 589702045 ? "preserve-3d" : "flat");
 }
 
+function perspective(x) {
+  var tmp;
+  if (typeof x === "number") {
+    tmp = x >= -789508312 ? "0" : "none";
+  } else {
+    var variant = x[0];
+    if (variant >= 22643) {
+      tmp = variant >= 25096 ? (
+          variant >= 26433 ? (
+              variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
+            ) : (
+              variant >= 26418 ? string_of_float(x[1]) + "vh" : Pervasives.string_of_int(x[1]) + "px"
+            )
+        ) : (
+          variant !== 24416 ? (
+              variant >= 25092 ? Pervasives.string_of_int(x[1]) + "pt" : string_of_float(x[1]) + "ex"
+            ) : string_of_float(x[1]) + "mm"
+        );
+    } else if (variant >= -119887163) {
+      tmp = variant >= 22186 ? (
+          variant >= 22632 ? string_of_float(x[1]) + "em" : string_of_float(x[1]) + "cm"
+        ) : (
+          variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
+        );
+    } else if (variant !== -833472530) {
+      if (variant >= -833470756) {
+        tmp = string_of_float(x[1]) + "vmin";
+      } else {
+        var match = x[1];
+        tmp = match[0] >= 5745024 ? "calc(" + string_of_length(match[1]) + " - " + string_of_length(match[2]) + ")" : "calc(" + string_of_length(match[1]) + " + " + string_of_length(match[2]) + ")";
+      }
+    } else {
+      tmp = string_of_float(x[1]) + "vmax";
+    }
+  }
+  return d("parspective", tmp);
+}
+
 function string_of_timingFunction(param) {
   if (typeof param === "number") {
     if (param >= -193525386) {
@@ -3985,10 +4049,6 @@ function transitionProperty(x) {
   return d("transitionProperty", x);
 }
 
-function perspective(i) {
-  return d("perspective", Pervasives.string_of_int(i));
-}
-
 function perspectiveOrigin(x, y) {
   return d("perspectiveOrigin", join(" ", List.map(string_of_length, /* :: */[
                       x,
@@ -4054,31 +4114,42 @@ function animation($staropt$star, $staropt$star$1, $staropt$star$2, $staropt$sta
       -899463985,
       1
     ];
-  return d("animation", join(" ", /* :: */[
-                  name,
+  return /* `animation */[
+          -885723388,
+          join(" ", /* :: */[
+                name,
+                /* :: */[
+                  Pervasives.string_of_int(duration) + "ms",
                   /* :: */[
-                    Pervasives.string_of_int(duration) + "ms",
+                    string_of_timingFunction(timingFunction),
                     /* :: */[
-                      string_of_timingFunction(timingFunction),
+                      Pervasives.string_of_int(delay) + "ms",
                       /* :: */[
-                        Pervasives.string_of_int(delay) + "ms",
+                        string_of_animationIterationCount(iterationCount),
                         /* :: */[
-                          string_of_animationIterationCount(iterationCount),
+                          string_of_animationDirection(direction),
                           /* :: */[
-                            string_of_animationDirection(direction),
+                            string_of_animationFillMode(fillMode),
                             /* :: */[
-                              string_of_animationFillMode(fillMode),
-                              /* :: */[
-                                string_of_animationPlayState(playState),
-                                /* [] */0
-                              ]
+                              string_of_animationPlayState(playState),
+                              /* [] */0
                             ]
                           ]
                         ]
                       ]
                     ]
                   ]
-                ]));
+                ]
+              ])
+        ];
+}
+
+function string_of_animation(param) {
+  return param[1];
+}
+
+function animations(xs) {
+  return d("animation", join(", ", List.map(string_of_animation, xs)));
 }
 
 function animationDelay(x) {
@@ -5494,6 +5565,7 @@ exports.borderTopRightRadius     = borderTopRightRadius;
 exports.borderBottomLeftRadius   = borderBottomLeftRadius;
 exports.borderBottomRightRadius  = borderBottomRightRadius;
 exports.boxShadow                = boxShadow;
+exports.boxShadows               = boxShadows;
 exports.background               = background;
 exports.backgroundColor          = backgroundColor;
 exports.backgroundImage          = backgroundImage;
@@ -5549,6 +5621,7 @@ exports.transitionTimingFunction = transitionTimingFunction;
 exports.transitionProperty       = transitionProperty;
 exports.keyframes                = keyframes;
 exports.animation                = animation;
+exports.animations               = animations;
 exports.animationDelay           = animationDelay;
 exports.animationDirection       = animationDirection;
 exports.animationDuration        = animationDuration;
@@ -14129,6 +14202,26 @@ var spin = Css.keyframes(/* :: */[
       ]
     ]);
 
+var scaleAnimation = Css.keyframes(/* :: */[
+      /* tuple */[
+        0,
+        /* :: */[
+          Css.transform(Css.scale(0.3, 0.3)),
+          /* [] */0
+        ]
+      ],
+      /* :: */[
+        /* tuple */[
+          100,
+          /* :: */[
+            Css.transform(Css.scale(1.0, 1.0)),
+            /* [] */0
+          ]
+        ],
+        /* [] */0
+      ]
+    ]);
+
 var box_000 = Css.background(Css.red);
 
 var box_001 = /* :: */[
@@ -14179,13 +14272,19 @@ var section_000 = Css.selector("& > h1", /* :: */[
 var section_001 = /* :: */[
   Css.position(Css.relative),
   /* :: */[
-    Css.background(Css.white),
+    Css.background(Css.hex("f5f5f5")),
     /* :: */[
       Css.margin(Css.px(20)),
       /* :: */[
         Css.padding(Css.px(20)),
         /* :: */[
-          Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(5)], /* None */0, /* None */0, Css.rgba(0, 0, 0, 0.3)),
+          Css.boxShadows(/* :: */[
+                Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(5)], /* None */0, /* None */0, Css.rgba(0, 0, 0, 0.3)),
+                /* :: */[
+                  Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(10)], /* None */0, /* Some */[/* true */1], Css.rgba(255, 255, 255, 0.5)),
+                  /* [] */0
+                ]
+              ]),
           /* [] */0
         ]
       ]
@@ -15289,8 +15388,11 @@ var tests = React.createElement("div", {
                   }),
               React.createElement("div", {
                     className: Css.style(/* :: */[
-                          Css.transform(Css.rotate(Css.deg(10))),
-                          box
+                          Css.perspective(Css.px(500)),
+                          /* :: */[
+                            Css.transform(Css.rotate(Css.deg(10))),
+                            box
+                          ]
                         ])
                   }),
               React.createElement("div", {
@@ -15313,7 +15415,7 @@ var tests = React.createElement("div", {
                             /* :: */[
                               Css.transformStyle(/* preserve3d */589702045),
                               /* :: */[
-                                Css.perspective(900),
+                                Css.perspective(Css.px(900)),
                                 /* :: */[
                                   Css.perspectiveOrigin(Css.pct(10), Css.pct(10)),
                                   box
@@ -15428,6 +15530,18 @@ var tests = React.createElement("div", {
                   }),
               React.createElement("div", {
                     className: Css.style(/* :: */[
+                          Css.animations(/* :: */[
+                                Css.animation(/* Some */[300], /* None */0, /* None */0, /* None */0, /* None */0, /* None */0, /* Some */[Css.infinite], spin),
+                                /* :: */[
+                                  Css.animation(/* Some */[300], /* None */0, /* None */0, /* None */0, /* None */0, /* None */0, /* Some */[Css.infinite], scaleAnimation),
+                                  /* [] */0
+                                ]
+                              ]),
+                          box
+                        ])
+                  }),
+              React.createElement("div", {
+                    className: Css.style(/* :: */[
                           Css.animationName(spin),
                           /* :: */[
                             Css.animationTimingFunction(Css.easeIn),
@@ -15455,13 +15569,14 @@ var tests = React.createElement("div", {
                   })
             ])));
 
-exports.text      = text;
-exports.spin      = spin;
-exports.box       = box;
-exports.rowLayout = rowLayout;
-exports.section   = section;
-exports.Section   = Section;
-exports.tests     = tests;
+exports.text           = text;
+exports.spin           = spin;
+exports.scaleAnimation = scaleAnimation;
+exports.box            = box;
+exports.rowLayout      = rowLayout;
+exports.section        = section;
+exports.Section        = Section;
+exports.tests          = tests;
 /* spin Not a pure module */
 
 

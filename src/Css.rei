@@ -1,6 +1,9 @@
-
-
-type rule;
+type rule = [ 
+  | `selector(string, list(rule)) 
+  | `declaration(string, string)
+  | `animation(string)
+  | `shadow(string)
+  ];
 
 let empty : list(rule);
 let merge : list(list(rule)) => list(rule);
@@ -326,7 +329,6 @@ let rotateZ : angle => [> | `rotateZ(angle)];
 let skew : (angle, angle) => [> | `skew(angle, angle)];
 let skewX : (angle) => [> | `skewX(angle)];
 let skewY : (angle) => [> | `skewY(angle)];
-let perspective: (int) => [> | `perspective(int)];
 
 let italic : [> | `italic];
 let oblique : [> | `oblique];
@@ -477,7 +479,8 @@ let borderTopRightRadius : length => rule;
 let borderBottomLeftRadius : length => rule;
 let borderBottomRightRadius : length => rule;
 
-let boxShadow : (~x:length=?, ~y:length=?, ~blur:length=?, ~spread:length=?, ~inset:bool=?, color) => rule;
+let boxShadow : (~x:length=?, ~y:length=?, ~blur:length=?, ~spread:length=?, ~inset:bool=?, color) => [> | `shadow(string)];
+let boxShadows : list([ | `shadow(string)]) => rule;
 
 let background : [ | color | `url(string) | gradient | `none] => rule;
 let backgroundColor: [ | color] => rule;
@@ -610,7 +613,7 @@ type transform = [
  let transformOrigin: (length, length) => rule;
  let transformOrigin3d: (length, length, length) => rule;
  let transformStyle: [ | `preserve3d | `flat] => rule;
- let perspective: int => rule; 
+ let perspective : [ `none | length] => rule;
  let perspectiveOrigin: (length, length) => rule; 
 
  /**
@@ -661,7 +664,8 @@ let animation : (
   ~playState:animationPlayState=?,
   ~iterationCount:animationIterationCount=?,
   animation
-  ) => rule;
+  ) => [> | `animation(string)];
+let animations : list([ | `animation(string)]) => rule;
   
 let animationDelay : int => rule;
 let animationDirection : animationDirection => rule;

@@ -5,6 +5,10 @@ let spin = Css.(keyframes([
   (100, [ transform(rotate(deg(360)))])
 ]));
 
+let scaleAnimation = Css.(keyframes([
+  (0, [ transform(scale(0.3, 0.3))]),
+  (100, [ transform(scale(1.0, 1.0))])
+]));
 let box = Css.([
   background(red),
   borderBottom(px(5), solid, black),
@@ -26,10 +30,11 @@ let section = Css.([
     fontWeight(300),
   ]),
   position(relative),
-  background(white), 
+  background(hex("f5f5f5")), 
   margin(px(20)), 
   padding(px(20)),
-  boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3))
+  
+  boxShadows([boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)), boxShadow(~y=px(1), ~blur=px(10), ~inset=true, rgba(255, 255, 255, 0.5))])
 ]);
 
 module Section = {
@@ -283,9 +288,9 @@ let tests = {
 
   <Section name="transform">
   <div className=Css.(style([opacity(0.5), ...box])) />
-  <div className=Css.(style([transform(rotate(deg(10))), ...box])) />
+  <div className=Css.(style([perspective(px(500)), transform(rotate(deg(10))), ...box])) />
   <div className=Css.(style([transforms([ translate(px(10), pct(10.)), skew(deg(10), deg(10)) ]), ...box])) />
-  <div className=Css.(style([transform(rotate(deg(19))), transformOrigin(pct(50.), pct(50.)), transformStyle(`preserve3d), perspective(900), perspectiveOrigin(pct(10.), pct(10.)), ...box])) />
+  <div className=Css.(style([transform(rotate(deg(19))), transformOrigin(pct(50.), pct(50.)), transformStyle(`preserve3d), perspective(px(900)), perspectiveOrigin(pct(10.), pct(10.)), ...box])) />
   <div className=Css.(style([transform(translate(px(10), pct(10.))), transformOrigin3d(px(10), px(10), px(10)), ...box])) />
   </Section>
 
@@ -332,6 +337,7 @@ let tests = {
 
   <Section name="animation">
     <div className=Css.(style([animation(~duration=300, ~delay=300, ~direction=reverse, ~timingFunction=linear, ~fillMode=forwards, ~playState=running, ~iterationCount=infinite, spin), ...box])) />
+    <div className=Css.(style([animations([animation(~duration=300, ~iterationCount=infinite, spin), animation(~duration=300, ~iterationCount=infinite, scaleAnimation)]), ...box])) />
     <div className=Css.(style([
       animationName(spin),
       animationTimingFunction(easeIn),

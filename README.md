@@ -23,6 +23,9 @@ module Theme = {
 
 let styles = Css.({
   "card": style([
+    display(flexBox),
+    flexDirection(column), 
+    alignItems(stretch),
     backgroundColor(white),
     boxShadow(~y=3, ~blur=5, rgba(0, 0, 0, 0.3)),
     padding(Theme.basePadding)
