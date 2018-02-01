@@ -33,8 +33,11 @@ let section = Css.([
   background(hex("f5f5f5")), 
   margin(px(20)), 
   padding(px(20)),
-  
-  boxShadows([boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)), boxShadow(~y=px(1), ~blur=px(10), ~inset=true, rgba(255, 255, 255, 0.5))])
+  boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)),
+  boxShadows([
+    boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)), 
+    boxShadow(~y=px(1), ~blur=px(10), ~inset=true, rgba(255, 255, 255, 0.5))
+  ])
 ]);
 
 module Section = {
@@ -140,7 +143,7 @@ let tests = {
   <Section name="flexbox">
     <div className=Css.(style([ flexDirection(column), flexGrow(1), alignItems(stretch), selector("& > *", [ marginBottom(px(10)), width(pct(100.)) ]) ]))>
       <div className=Css.(style([display(flexBox), flexDirection(row), background(gray), alignItems(flexStart), justifyContent(flexEnd)]))>
-        <div className=Css.(style([order(1), flexGrow(1), flexShrink(1), flexBasis(1), ...box])) />
+        <div className=Css.(style([order(1), flexGrow(1), flexShrink(1), flexBasis(auto), ...box])) />
         <div className=Css.(style([alignSelf(flexEnd), ...box])) />
         <div className=Css.style(box) />
       </div>

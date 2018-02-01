@@ -2,6 +2,7 @@ type rule = [
   | `selector(string, list(rule)) 
   | `declaration(string, string)
   | `animation(string)
+  | `transition(string)
   | `shadow(string)
   ];
 
@@ -313,8 +314,8 @@ let outside : [> | `outside];
 
 let translate  : (length, length) => [> | `translate(length, length)];
 let translate3d : (length, length, length) => [> | `translate3d(length, length, length)];
-let translateX : length => [> | `translaterX(length)];
-let translateY : length => [> | `translaterY(length)];
+let translateX : length => [> | `translateX(length)];
+let translateY : length => [> | `translateY(length)];
 let translateZ : length => [> | `translateZ(length)];
 let scale : (float, float) => [> | `scale(float, float)];
 let scale3d : (float, float, float) => [> | `scale3d(float, float, float)];
@@ -363,6 +364,12 @@ let reverse : [> | `reverse];
 let alternate : [> | `alternate];
 let alternateReverse : [> | `alternateReverse];
 
+let fill : [> | `fill ];
+let content : [> | `content];
+let maxContent : [> | `maxContent];
+let minContent : [> | `minContent];
+let fitContent : [> | `fitContent];
+
 
 
 
@@ -397,7 +404,7 @@ let right : [ | length] => rule;
 let flex: int => rule;
 let flexGrow: int => rule;
 let flexShrink: int => rule;
-let flexBasis: int => rule;
+let flexBasis: [ | length | `auto | `fill | `content | `maxContent | `minContent | `fitContent ] => rule;
 
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `noWrap | `wrapReverse] => rule;
@@ -449,6 +456,7 @@ let zIndex : int => rule;
  * Style
  */
 let backfaceVisibility : [ | `visible | `hidden] => rule;
+let visibility : [ | `visible | `hidden] => rule;
 
 let border : length => [ | `solid | `dashed | `dotted | `none] => [ | color] => rule;
 let borderWidth : length => rule;
@@ -630,7 +638,8 @@ type timingFunction = [
   | `steps(int, [ | `start | `end_])
   | `cubicBezier(float, float, float, float)
 ];
-let transition : (~duration:int=?, ~delay:int=?, ~timingFunction:timingFunction=?, string) => rule;
+let transition : (~duration:int=?, ~delay:int=?, ~timingFunction:timingFunction=?, string) => [> |`transition(string)];
+let transitions : list([ | `transition(string)])=> rule;
 let transitionDelay : int => rule;
 let transitionDuration : int => rule;
 let transitionTimingFunction : timingFunction => rule;

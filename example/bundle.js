@@ -1814,28 +1814,35 @@ function join(separator, strings) {
 function makeDict(ruleset) {
   var toJs = function (rule) {
     var variant = rule[0];
-    if (variant >= 488687584) {
-      if (variant >= 829240095) {
-        var match = rule[1];
+    if (variant !== -659583595) {
+      if (variant >= 488687584) {
+        if (variant >= 829240095) {
+          var match = rule[1];
+          return /* tuple */[
+                  match[0],
+                  makeDict(match[1])
+                ];
+        } else {
+          return /* tuple */[
+                  "boxShadow",
+                  rule[1]
+                ];
+        }
+      } else if (variant >= -434952966) {
+        var match$1 = rule[1];
         return /* tuple */[
-                match[0],
-                makeDict(match[1])
+                match$1[0],
+                match$1[1]
               ];
       } else {
         return /* tuple */[
-                "boxShadow",
+                "animation",
                 rule[1]
               ];
       }
-    } else if (variant >= -434952966) {
-      var match$1 = rule[1];
-      return /* tuple */[
-              match$1[0],
-              match$1[1]
-            ];
     } else {
       return /* tuple */[
-              "animation",
+              "transition",
               rule[1]
             ];
     }
@@ -2461,15 +2468,15 @@ function translate3d(x, y, z) {
 }
 
 function translateX(x) {
-  return /* `translaterX */[
-          178203252,
+  return /* `translateX */[
+          106728778,
           x
         ];
 }
 
 function translateY(y) {
-  return /* `translaterY */[
-          178203253,
+  return /* `translateY */[
+          106728779,
           y
         ];
 }
@@ -2537,7 +2544,51 @@ function flexShrink(x) {
 }
 
 function flexBasis(x) {
-  return d("flexBasis", Pervasives.string_of_int(x));
+  var tmp;
+  if (typeof x === "number") {
+    tmp = x >= -550577721 ? (
+        x >= 60557045 ? (
+            x >= 427265337 ? "content" : "max-content"
+          ) : (
+            x >= -195805336 ? "fit-content" : "min-content"
+          )
+      ) : (
+        x !== -1011102077 ? (
+            x >= -789508312 ? "0" : "auto"
+          ) : "fill"
+      );
+  } else {
+    var variant = x[0];
+    if (variant >= 22643) {
+      tmp = variant >= 25096 ? (
+          variant >= 26433 ? (
+              variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
+            ) : (
+              variant >= 26418 ? string_of_float(x[1]) + "vh" : Pervasives.string_of_int(x[1]) + "px"
+            )
+        ) : (
+          variant !== 24416 ? (
+              variant >= 25092 ? Pervasives.string_of_int(x[1]) + "pt" : string_of_float(x[1]) + "ex"
+            ) : string_of_float(x[1]) + "mm"
+        );
+    } else if (variant >= -119887163) {
+      tmp = variant >= 22186 ? (
+          variant >= 22632 ? string_of_float(x[1]) + "em" : string_of_float(x[1]) + "cm"
+        ) : (
+          variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
+        );
+    } else if (variant !== -833472530) {
+      if (variant >= -833470756) {
+        tmp = string_of_float(x[1]) + "vmin";
+      } else {
+        var match = x[1];
+        tmp = match[0] >= 5745024 ? "calc(" + string_of_length(match[1]) + " - " + string_of_length(match[2]) + ")" : "calc(" + string_of_length(match[1]) + " + " + string_of_length(match[2]) + ")";
+      }
+    } else {
+      tmp = string_of_float(x[1]) + "vmax";
+    }
+  }
+  return d("flexBasis", tmp);
 }
 
 function flexDirection(x) {
@@ -2924,6 +2975,10 @@ function zIndex(i) {
 
 function backfaceVisibility(x) {
   return d("backfaceVisibililty", x >= 589592690 ? "visible" : "hidden");
+}
+
+function visibility(x) {
+  return d("isibililty", x >= 589592690 ? "visible" : "hidden");
 }
 
 function boxShadow($staropt$star, $staropt$star$1, $staropt$star$2, $staropt$star$3, $staropt$star$4, color) {
@@ -4018,19 +4073,28 @@ function transition($staropt$star, $staropt$star$1, $staropt$star$2, property) {
   var duration = $staropt$star ? $staropt$star[0] : 0;
   var delay = $staropt$star$1 ? $staropt$star$1[0] : 0;
   var timingFunction = $staropt$star$2 ? $staropt$star$2[0] : /* ease */-1022587922;
-  return d("transition", join(" ", /* :: */[
-                  Pervasives.string_of_int(duration) + "ms",
+  return /* `transition */[
+          -659583595,
+          join(" ", /* :: */[
+                Pervasives.string_of_int(duration) + "ms",
+                /* :: */[
+                  string_of_timingFunction(timingFunction),
                   /* :: */[
-                    string_of_timingFunction(timingFunction),
+                    Pervasives.string_of_int(delay) + "ms",
                     /* :: */[
-                      Pervasives.string_of_int(delay) + "ms",
-                      /* :: */[
-                        property,
-                        /* [] */0
-                      ]
+                      property,
+                      /* [] */0
                     ]
                   ]
-                ]));
+                ]
+              ])
+        ];
+}
+
+function transitions(xs) {
+  return d("transition", join(", ", List.map((function (param) {
+                        return param[1];
+                      }), xs)));
 }
 
 function transitionDelay(i) {
@@ -5188,6 +5252,16 @@ var alternate = /* alternate */892586298;
 
 var alternateReverse = /* alternateReverse */545428232;
 
+var fill$1 = /* fill */-1011102077;
+
+var content = /* content */427265337;
+
+var maxContent = /* maxContent */60557045;
+
+var minContent = /* minContent */-550577721;
+
+var fitContent = /* fitContent */-195805336;
+
 var linear = /* linear */-325037595;
 
 var ease = /* ease */-1022587922;
@@ -5482,6 +5556,11 @@ exports.breakWord                = breakWord;
 exports.reverse                  = reverse;
 exports.alternate                = alternate;
 exports.alternateReverse         = alternateReverse;
+exports.fill                     = fill$1;
+exports.content                  = content;
+exports.maxContent               = maxContent;
+exports.minContent               = minContent;
+exports.fitContent               = fitContent;
 exports.linear                   = linear;
 exports.ease                     = ease;
 exports.easeIn                   = easeIn;
@@ -5539,6 +5618,7 @@ exports.overflowX                = overflowX;
 exports.overflowY                = overflowY;
 exports.zIndex                   = zIndex;
 exports.backfaceVisibility       = backfaceVisibility;
+exports.visibility               = visibility;
 exports.border                   = border;
 exports.borderWidth              = borderWidth;
 exports.borderStyle              = borderStyle;
@@ -5615,6 +5695,7 @@ exports.transformStyle           = transformStyle;
 exports.perspective              = perspective;
 exports.perspectiveOrigin        = perspectiveOrigin;
 exports.transition               = transition;
+exports.transitions              = transitions;
 exports.transitionDelay          = transitionDelay;
 exports.transitionDuration       = transitionDuration;
 exports.transitionTimingFunction = transitionTimingFunction;
@@ -10390,8 +10471,11 @@ var ReasonReact = __webpack_require__(26);
 Css.$$global("html, body", /* :: */[
       Css.margin(Css.zero),
       /* :: */[
-        Css.padding(Css.zero),
-        /* [] */0
+        Css.marginLeft(Css.px(5)),
+        /* :: */[
+          Css.padding(Css.zero),
+          /* [] */0
+        ]
       ]
     ]);
 
@@ -10443,10 +10527,25 @@ var styles = {
   page: /* :: */[
     Css.boxSizing(Css.borderBox),
     /* :: */[
-      Css.width(Css.vw(100)),
+      Css.background(Css.linearGradient(Css.deg(45), /* :: */[
+                /* tuple */[
+                  0,
+                  Css.red
+                ],
+                /* :: */[
+                  /* tuple */[
+                    100,
+                    Css.blue
+                  ],
+                  /* [] */0
+                ]
+              ])),
       /* :: */[
-        Css.height(Css.vh(100)),
-        /* [] */0
+        Css.width(Css.vw(100)),
+        /* :: */[
+          Css.height(Css.vh(100)),
+          /* [] */0
+        ]
       ]
     ]
   ]
@@ -14278,14 +14377,17 @@ var section_001 = /* :: */[
       /* :: */[
         Css.padding(Css.px(20)),
         /* :: */[
-          Css.boxShadows(/* :: */[
-                Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(5)], /* None */0, /* None */0, Css.rgba(0, 0, 0, 0.3)),
-                /* :: */[
-                  Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(10)], /* None */0, /* Some */[/* true */1], Css.rgba(255, 255, 255, 0.5)),
-                  /* [] */0
-                ]
-              ]),
-          /* [] */0
+          Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(5)], /* None */0, /* None */0, Css.rgba(0, 0, 0, 0.3)),
+          /* :: */[
+            Css.boxShadows(/* :: */[
+                  Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(5)], /* None */0, /* None */0, Css.rgba(0, 0, 0, 0.3)),
+                  /* :: */[
+                    Css.boxShadow(/* None */0, /* Some */[Css.px(1)], /* Some */[Css.px(10)], /* None */0, /* Some */[/* true */1], Css.rgba(255, 255, 255, 0.5)),
+                    /* [] */0
+                  ]
+                ]),
+            /* [] */0
+          ]
         ]
       ]
     ]
@@ -14767,7 +14869,7 @@ var tests = React.createElement("div", {
                                     /* :: */[
                                       Css.flexShrink(1),
                                       /* :: */[
-                                        Css.flexBasis(1),
+                                        Css.flexBasis(Css.auto),
                                         box
                                       ]
                                     ]

@@ -1,5 +1,6 @@
 Css.(global("html, body", [
   margin(zero),
+  marginLeft(px(5)),
   padding(zero)
 ]));
 let text = ReasonReact.stringToElement;
@@ -19,6 +20,7 @@ module Page = {
   let styles = Css.({
     "page": [
       boxSizing(borderBox),
+      background(linearGradient(deg(45), [(0, red), (100, blue)])),
       width(vw(100.)),
       height(vh(100.))
     ]

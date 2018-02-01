@@ -30,6 +30,7 @@ module Glamor = {
       | `declaration(name, value) => (name, Js.Json.string(value))
       | `selector(name, ruleset) => (name, makeDict(ruleset))
       | `shadow(value) => ("boxShadow", Js.Json.string(value))
+      | `transition(value) => ("transition", Js.Json.string(value))
       | `animation(value) => ("animation", Js.Json.string(value))
       };
     ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_;
@@ -42,6 +43,7 @@ type rule = [
   | `selector(string, list(rule)) 
   | `declaration(string, string)
   | `animation(string)
+  | `transition(string)
   | `shadow(string)
   ];
 type selector = [ | `selector(string, list(rule))];
@@ -442,8 +444,8 @@ let sticky = `sticky;
 let stretch = `stretch;
 let translate  = (x, y) => `translate(x, y);
 let translate3d = (x, y, z) => `translate3d(x, y, z);
-let translateX = (x) => `translaterX(x);
-let translateY = (y) => `translaterY(y);
+let translateX = (x) => `translateX(x);
+let translateY = (y) => `translateY(y);
 let translateZ = (z) => `translateZ(z);
 let url = x => `url(x);
 let visible = `visible;
@@ -488,6 +490,13 @@ let reverse = `reverse;
 let alternate = `alternate;
 let alternateReverse = `alternateReverse;
 
+
+let fill = `fill;
+let content = `content;
+let maxContent = `maxContent;
+let minContent = `minContent;
+let fitContent = `fitContent;
+
 /********************************************************
  ******************** PROPERTIES ************************
  ********************************************************/
@@ -522,7 +531,30 @@ let right = x => d("right", string_of_length(x));
 let flex = x => d("flex", string_of_int(x));
 let flexGrow = x => d("flexGrow", string_of_int(x));
 let flexShrink = x => d("flexShrink", string_of_int(x));
-let flexBasis = x => d("flexBasis", string_of_int(x));
+let flexBasis = x => d("flexBasis", switch x {
+  | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+  | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+  | `ch(x) => string_of_float(x) ++ "ch"
+  | `cm(x) => string_of_float(x) ++ "cm"
+  | `em(x) => string_of_float(x) ++ "em"
+  | `ex(x) => string_of_float(x) ++ "ex"
+  | `mm(x) => string_of_float(x) ++ "mm"
+  | `percent(x) => string_of_float(x) ++ "%"
+  | `pt(x) => string_of_int(x) ++ "pt"
+  | `px(x) => string_of_int(x) ++ "px"
+  | `rem(x) => string_of_float(x) ++ "rem"
+  | `vh(x) => string_of_float(x) ++ "vh"
+  | `vmax(x) => string_of_float(x) ++ "vmax"
+  | `vmin(x) => string_of_float(x) ++ "vmin"
+  | `vw(x) => string_of_float(x) ++ "vw"
+  | `zero => "0"
+  | `fill => "fill"
+  | `maxContent => "max-content"
+  | `minContent => "min-content"
+  | `fitContent => "fit-content"
+  | `content => "content"
+  | `auto => "auto"
+});
 let flexDirection = x =>
   d( "flexDirection", switch x {
     | `row => "row"
@@ -666,6 +698,12 @@ let zIndex = i => d("zIndex", string_of_int(i));
 **/
 let backfaceVisibility = x =>
   d( "backfaceVisibililty", switch x {
+    | `hidden => "hidden"
+    | `visible => "visible"
+  });
+
+let visibility = x =>
+  d( "isibililty", switch x {
     | `hidden => "hidden"
     | `visible => "visible"
   });
@@ -1210,13 +1248,16 @@ let string_of_timingFunction =
   | `steps(i, `end_) => func("steps", [string_of_int(i), "end"])
   | `cubicBezier(a, b, c, d) => func("cubic-bezier", [a, b, c, d] |> List.map(string_of_float));
 
-  let transition = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
-  d( "transition", join( " ", [
+let transition = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
+  `transition(join( " ", [
     string_of_int(duration) ++ "ms",
     string_of_timingFunction(timingFunction),
     string_of_int(delay) ++ "ms",
     property
   ]));
+
+let transitions = xs => 
+  d("transition", xs |> List.map(fun | `transition(s) => s) |> join(", "));
 
 let transitionDelay = i => d("transitionDelay", string_of_int(i) ++ "ms");
 
