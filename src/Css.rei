@@ -393,7 +393,7 @@ let unsafe : (string, string) => rule;
  * Layout
 */
 
-let display : [ | `flex | `block | `inline | `inlineBlock | `none ] => rule;
+let display : [ | `flex | `block | `inline | `inlineBlock | `none | `inlineFlex ] => rule;
 let position : [ | `absolute | `relative | `static | `fixed | `sticky ] => rule;
 
 let top : [ | length] => rule;
