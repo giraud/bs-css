@@ -405,6 +405,7 @@ let hidden = `hidden;
 let infinite = `infinite;
 let inline = `inline;
 let inlineBlock = `inlineBlock;
+let inlineFlex = `inlineFlex;
 let linear = `linear;
 let local = `local;
 let none = `none;
@@ -512,6 +513,7 @@ let display = x =>
     | `inlineBlock => "inline-block"
     | `none => "none"
     | `flex => "flex"
+    | `inlineFlex => "inline-flex"
     });
 
 let position = x =>
