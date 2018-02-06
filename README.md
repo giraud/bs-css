@@ -15,46 +15,36 @@ In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
 ## Usage
 
 ```reason
-module Theme = {
-  open Css;
-  let textColor = hex("333");
-  let basePadding = px(15);
-};
 
-let styles = Css.({
-  "card": style([
+module Styles = {
+  let card = style([
     display(flexBox),
     flexDirection(column), 
     alignItems(stretch),
     backgroundColor(white),
     boxShadow(~y=3, ~blur=5, rgba(0, 0, 0, 0.3)),
     padding(Theme.basePadding)
-  ]),
-  "title": style([
+  ]);
+
+  let title = style([
     fontSize(rem(1.5)),
     color(Theme.textColor),
     marginBottom(Theme.basePadding)
-  ])
-});
+  ]);
+  let actionButton = disabled =>
+    style([
+      background(disabled ? darkGray : white),
+      color(black),
+      border(px(1) solid black),
+      borderRadius(px(3)),
+    ])
+};
 
-<div className=styles##card>
-  <h1 className=styles##title> (ReasonReact.stringToElement("Hello")) </h1>
+<div className=Style.card>
+  <h1 className=Styles.title> (ReasonReact.stringToElement("Hello")) </h1>
+  <button className=Styles.actionbutton(false)>
 </div>
 ```
-
-**Merging css rules**
-
-You can merge css rules using `merge`
-
-```reason
-let text_primary = style([ color(white) ]);
-let small = style([ fontSize(px(10)) ]);
-
-
-<p className=merge([ text_primary, small ])> ...
-```
-
-bs-css will make sure that rules are merged in the correct order, managing nesting and precedence for you.
 
 **Global css**
 
@@ -76,12 +66,12 @@ define animation keyframes;
 
 ```reason
 let bounce = Css.keyframes([
-  ("0%", [ transform( scale(0.1, 0.1) ),  opacity(0.0) ]),
-  ("60%", [ transform( scale(1.2, 1.2) ),  opacity(1.0) ]),
-  ("100%", [ transform( scale(1.0,1.0) ), opacity(1.0) ])
+  (0, [ transform( scale(0.1, 0.1) ),  opacity(0.0) ]),
+  (60, [ transform( scale(1.2, 1.2) ),  opacity(1.0) ]),
+  (100, [ transform( scale(1.0,1.0) ), opacity(1.0) ])
 ]);
 
-let styles = css([
+let styles = style([
   animationName(bounce),
   animationDuration(2000),
   width(px(50)),
