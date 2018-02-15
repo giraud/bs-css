@@ -498,6 +498,13 @@ let maxContent = `maxContent;
 let minContent = `minContent;
 let fitContent = `fitContent;
 
+
+let round = `round;
+let miter = `miter;
+let bevel = `bevel;
+let butt = `butt;
+let square = `square;
+
 /********************************************************
  ******************** PROPERTIES ************************
  ********************************************************/
@@ -1381,9 +1388,27 @@ let media = (query, rules) => `selector("@media " ++ query, rules);
 module SVG = {
   let fill = color => d("fill", string_of_color(color));
   let fillOpacity = opacity => d("fillOpacity", string_of_float(opacity));
+  let fillRule = x => d("fillRule", switch x {
+    | `evenodd => "evenodd"
+    | `nonzero => "nonzero"
+  });
   let stroke = color => d("stroke", string_of_color(color));
   let strokeWidth = length => d("strokeWidth", string_of_length(length));
   let strokeOpacity = opacity => d("strokeOpacity", string_of_float(opacity));
+  let strokeMiterlimit = x => d("strokeMiterlimit", string_of_float(x));
+  let strokeLinecap = x => d("strokeLinejoin", switch x {
+  | `butt => "butt"
+  | `round => "round"
+  | `square => "square"
+  });
+
+  let strokeLinejoin = x => d("strokeLinejoin", switch x {
+    | `miter => "miter"
+    | `round => "round"
+    | `bevel => "bevel"
+  });
+  let stopColor = c => d("stopColor", string_of_color(c));
+  let stopOpacity = o => d("stopOpacity", string_of_float(o));
 };
 
 

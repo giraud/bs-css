@@ -383,6 +383,12 @@ let stepEnd : [> |`stepEnd];
 let steps : (int, [ | `start | `end_]) => [> |`steps(int, [ | `start | `end_])];
 let cubicBesier : (float, float, float, float) =>[> |`cubicBezier(float, float, float, float)];
 
+let round : [> | `round];
+let miter : [> | `miter];
+let bevel : [> | `bevel];
+let butt : [> | `butt];
+let square : [> | `square];
+
 /********************************************************
  ******************** PROPERTIES ************************
  ********************************************************/
@@ -501,10 +507,10 @@ let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
 let backgroundSize: [ | `size(length, length) | `auto | `cover | `contain] => rule;
 
 let cursor : [ 
-  | `pointer 
-  | `alias 
-  | `allScroll 
-  | `auto 
+  | `pointer
+  | `alias
+  | `allScroll
+  | `auto
   | `cell 
   | `contextMenu 
   | `default
@@ -714,10 +720,16 @@ let media: (string, list(rule)) => rule;
 
 module SVG: {
   let fill: color => rule;
+  let fillRule: [ `nonzero | `evenodd ] => rule;
   let fillOpacity: float => rule;
   let stroke: color => rule;
+  let strokeLinecap: [ `butt | `round | `square] => rule;
+  let strokeLinejoin: [ `miter | `round | `bevel] => rule;
+  let strokeMiterlimit: float => rule;
   let strokeWidth: length => rule;
   let strokeOpacity: float => rule;
+  let stopColor: color => rule;
+  let stopOpacity: float => rule;
 };
 
 
