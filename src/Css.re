@@ -1396,7 +1396,7 @@ module SVG = {
   let strokeWidth = length => d("strokeWidth", string_of_length(length));
   let strokeOpacity = opacity => d("strokeOpacity", string_of_float(opacity));
   let strokeMiterlimit = x => d("strokeMiterlimit", string_of_float(x));
-  let strokeLinecap = x => d("strokeLinejoin", switch x {
+  let strokeLinecap = x => d("strokeLinecap", switch x {
   | `butt => "butt"
   | `round => "round"
   | `square => "square"
