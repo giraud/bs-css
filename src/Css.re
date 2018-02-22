@@ -410,7 +410,7 @@ let linear = `linear;
 let local = `local;
 let none = `none;
 let noRepeat = `noRepeat;
-let noWrap = `noWrap;
+let nowrap = `nowrap;
 let paddingBox = `paddingBox;
 let paused = `paused;
 let relative = `relative;
@@ -574,7 +574,7 @@ let flexDirection = x =>
 
 let flexWrap = x =>
   d( "flexWrap", switch x {
-    | `noWrap => "no-wrap"
+    | `nowrap => "nowrap"
     | `wrap => "wrap"
     | `wrapReverse => "wrap-reverse"
     });
@@ -1104,7 +1104,7 @@ let verticalAlign = x =>
 let whiteSpace = x =>
   d( "whiteSpace", switch x {
     | `normal => "normal"
-    | `noWrap => "no-wrap"
+    | `nowrap => "nowrap"
     | `pre => "pre"
     | `preLine => "pre-line"
     | `preWrap => "pre-wrap"
