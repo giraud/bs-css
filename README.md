@@ -15,6 +15,8 @@ In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
 ## Usage
 
 ```reason
+/*Open the Css module, so we can access the style properties below without prefixing them with Css.*/
+open Css;
 
 module Styles = {
   let card = style([
