@@ -278,7 +278,7 @@ let rowReverse : [> | `rowReverse];
 let column : [> | `column];
 let columnReverse : [> | `columnReverse];
 let wrap : [> | `wrap];
-let noWrap : [> | `noWrap];
+let nowrap : [> | `nowrap];
 let wrapReverse : [> | `wrapReverse];
 
 let flexBox : [> | `flex];
@@ -413,7 +413,7 @@ let flexShrink: int => rule;
 let flexBasis: [ | length | `auto | `fill | `content | `maxContent | `minContent | `fitContent ] => rule;
 
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
-let flexWrap: [ | `wrap | `noWrap | `wrapReverse] => rule;
+let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
 let order: int => rule;
 
 let width : [ | length | `auto ] => rule;
@@ -590,7 +590,7 @@ let textOverflow : [ | `clip | `ellipsis | `string(string)] => rule;
 let textShadow : (~x:length=?, ~y:length=?, ~blur:length=?, color) => rule;
 let textTransform: [ | `uppercase | `lowercase | `capitalize | `none] => rule;
 let verticalAlign: [ | `baseline | length | `sub | `super | `top | `textTop | `middle | `bottom | `textBottom] => rule;
-let whiteSpace : [ | `normal | `noWrap | `pre | `preLine | `preWrap] => rule;
+let whiteSpace : [ | `normal | `nowrap | `pre | `preLine | `preWrap] => rule;
 let wordBreak : [ | `breakAll | `keepAll | `normal] => rule;
 let wordSpacing : [ | `normal | length ] => rule;
 let wordWrap : [ |`normal | `breakWord] => rule;
