@@ -16,7 +16,11 @@ In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
 
 ```reason
 
+
 module Styles = {
+  /*Open the Css module, so we can access the style properties below without prefixing them with Css.*/
+  open Css;
+  
   let card = style([
     display(flexBox),
     flexDirection(column), 
