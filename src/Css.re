@@ -1377,6 +1377,20 @@ let link = selector(":link");
 let readOnly = selector(":read-only");
 let required = selector(":required");
 let visited = selector(":visited");
+let enabled = selector(":enabled");
+let noContent = selector(":empty");
+let default = selector(":default");
+let anyLink = selector(":any-link");
+let onlyChild = selector(":only-child");
+let onlyOfType = selector(":only-of-type");
+let optional = selector(":optional");
+let invalid = selector(":invalid");
+let outOfRange = selector(":out-of-range");
+let target = selector(":target");
+let firstLine = selector("::first-line");
+let firstLetter = selector("::first-letter");
+let selection = selector("::selection");
+
 
 let media = (query, rules) => `selector("@media " ++ query, rules);
 
