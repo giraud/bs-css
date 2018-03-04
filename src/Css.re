@@ -35,7 +35,7 @@ module Glamor = {
       };
     ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_;
   };
-  let make = rules => rules |> List.rev |> makeDict |> _make;
+  let make = rules => rules |> makeDict |> _make;
 };
 
 type declaration = [ | `declaration(string, string)];
