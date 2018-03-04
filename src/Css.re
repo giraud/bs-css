@@ -1391,7 +1391,6 @@ let firstLine = selector("::first-line");
 let firstLetter = selector("::first-letter");
 let selection = selector("::selection");
 
-
 let media = (query, rules) => `selector("@media " ++ query, rules);
 
 
