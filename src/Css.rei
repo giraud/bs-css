@@ -711,6 +711,20 @@ let link: list(rule) => rule;
 let readOnly: list(rule) => rule;
 let required: list(rule) => rule;
 let visited: list(rule) => rule;
+let enabled: list(rule) => rule;
+let noContent: list(rule) => rule;
+let default: list(rule) => rule;
+let anyLink: list(rule) => rule;
+let onlyChild: list(rule) => rule;
+let onlyOfType: list(rule) => rule;
+let optional: list(rule) => rule;
+let invalid: list(rule) => rule;
+let outOfRange: list(rule) => rule;
+let target: list(rule) => rule;
+let firstLine: list(rule) => rule;
+let firstLetter: list(rule) => rule;
+let selection: list(rule) => rule;
+
 
 let media: (string, list(rule)) => rule;
 
