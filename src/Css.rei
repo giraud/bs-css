@@ -370,8 +370,8 @@ let maxContent : [> | `maxContent];
 let minContent : [> | `minContent];
 let fitContent : [> | `fitContent];
 
-
-
+let all : [> | `all];
+let text : [> | `text];
 
 let linear : [> |`linear];
 let ease : [> |`ease];
@@ -589,6 +589,7 @@ let textIndent : length => rule;
 let textOverflow : [ | `clip | `ellipsis | `string(string)] => rule;
 let textShadow : (~x:length=?, ~y:length=?, ~blur:length=?, color) => rule;
 let textTransform: [ | `uppercase | `lowercase | `capitalize | `none] => rule;
+let userSelect: [ | `auto | `all | `text | `none] => rule;
 let verticalAlign: [ | `baseline | length | `sub | `super | `top | `textTop | `middle | `bottom | `textBottom] => rule;
 let whiteSpace : [ | `normal | `nowrap | `pre | `preLine | `preWrap] => rule;
 let wordBreak : [ | `breakAll | `keepAll | `normal] => rule;

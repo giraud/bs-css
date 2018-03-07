@@ -376,6 +376,7 @@ let size = (x, y) => `size((x, y));
  */
 
 let absolute = `absolute;
+let all = `all;
 let auto = `auto;
 let backwards = `backwards;
 let baseline = `baseline;
@@ -443,6 +444,7 @@ let steps = (i, dir) => `steps(i, dir);
 let stepStart = `stepStart;
 let sticky = `sticky;
 let stretch = `stretch;
+let text = `text;
 let translate  = (x, y) => `translate(x, y);
 let translate3d = (x, y, z) => `translate3d(x, y, z);
 let translateX = (x) => `translateX(x);
@@ -1069,6 +1071,14 @@ let textTransform = x =>
     | `uppercase => "uppercase"
     | `lowercase => "lowercase"
     | `capitalize => "capitalize"
+    | `none => "none"
+  });
+
+let userSelect = x =>
+  d("userSelect", switch x {
+    | `auto => "auto"
+    | `all => "all"
+    | `text => "text"
     | `none => "none"
   });
 
