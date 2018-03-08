@@ -190,8 +190,8 @@ let greenyellow = `hex("ADFF2F");
 let grey = `hex("808080");
 let honeydew = `hex("F0FFF0");
 let hotpink = `hex("FF69B4");
-let indianred = `hex("t#CD5C5C");
-let indigo = `hex("t#4B0082");
+let indianred = `hex("CD5C5C");
+let indigo = `hex("4B0082");
 let ivory = `hex("FFFFF0");
 let khaki = `hex("F0E68C");
 let lavender = `hex("E6E6FA");
@@ -706,13 +706,13 @@ let zIndex = i => d("zIndex", string_of_int(i));
  * Style
 **/
 let backfaceVisibility = x =>
-  d( "backfaceVisibililty", switch x {
+  d( "backfaceVisibility", switch x {
     | `hidden => "hidden"
     | `visible => "visible"
   });
 
 let visibility = x =>
-  d( "isibililty", switch x {
+  d( "visibility", switch x {
     | `hidden => "hidden"
     | `visible => "visible"
   });
@@ -917,7 +917,7 @@ let string_of_listStyleType =
 let string_of_listStylePosition =
   fun
   | `inside => "inside"
-  | `outside => "ourside";
+  | `outside => "outside";
 
 let stirng_of_listStyleImage =
   fun
@@ -983,7 +983,7 @@ let fontFamily = x => d("fontFamily", x);
 let fontSize = x => d("fontSize", string_of_length(x));
 let fontVariant = x => d("fontVariant", switch x {
 | `normal => "normal"
-| `smallCaps => "normal"
+| `smallCaps => "small-caps"
 });
 
 
