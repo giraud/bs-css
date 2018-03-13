@@ -1155,6 +1155,14 @@ let wordWrap = x =>
     | `breakWord => "break-word"
   });
 
+let string_of_pointerEvents =
+  fun
+  | `auto => "auto"
+  | `none => "none";
+
+let pointerEvents = x => d("pointerEvents", string_of_pointerEvents(x));
+
+
 /**
  * Transform
  */
