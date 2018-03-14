@@ -569,6 +569,8 @@ let outlineWidth : length => rule;
 let outlineColor : color => rule;
 let outlineOffset : length => rule;
 
+let pointerEvents : [ |`auto | `none] => rule;
+
 
 /**
  * Text
