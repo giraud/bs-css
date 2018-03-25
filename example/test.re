@@ -25,7 +25,7 @@ let rowLayout = Css.([
 
 let section = Css.([
   selector("& > h1", [
-    fontFamily("Helvetica, sans-serif"),
+    fontFamily("Arial FontFace Test, sans-serif"),
     fontSize(px(32)),
     fontWeight(300),
   ]),
