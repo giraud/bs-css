@@ -10349,11 +10349,6 @@ var spin = Css.keyframes(/* :: */[
       ]
     ]);
 
-Css.fontFace("Arial FontFace Test", /* :: */[
-      Css.localUrl("Arial Narrow"),
-      /* [] */0
-    ], /* Some */[Css.normal], /* None */0, /* () */0);
-
 var styles = {
   page: /* :: */[
     Css.boxSizing(Css.borderBox),
@@ -15658,6 +15653,11 @@ function text(prim) {
   return prim;
 }
 
+var arialNarrow = Css.fontFace("Arial FontFace Test", /* :: */[
+      Css.localUrl("Arial Narrow"),
+      /* [] */0
+    ], /* Some */[Css.normal], /* None */0, /* () */0);
+
 var spin = Css.keyframes(/* :: */[
       /* tuple */[
         0,
@@ -15735,7 +15735,7 @@ var rowLayout = /* :: */[
 ];
 
 var section_000 = Css.selector("& > h1", /* :: */[
-      Css.fontFamily("Arial FontFace Test, sans-serif"),
+      Css.fontFamily(arialNarrow),
       /* :: */[
         Css.fontSize(Css.px(32)),
         /* :: */[
@@ -17049,6 +17049,7 @@ var tests = React.createElement("div", {
             ])));
 
 exports.text = text;
+exports.arialNarrow = arialNarrow;
 exports.spin = spin;
 exports.scaleAnimation = scaleAnimation;
 exports.box = box;
@@ -17056,7 +17057,7 @@ exports.rowLayout = rowLayout;
 exports.section = section;
 exports.Section = Section;
 exports.tests = tests;
-/* spin Not a pure module */
+/* arialNarrow Not a pure module */
 
 
 /***/ }),

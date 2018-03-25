@@ -1,5 +1,12 @@
 let text = ReasonReact.stringToElement;
 
+let arialNarrow = Css.(fontFace(
+  ~fontFamily="Arial FontFace Test",
+  ~src=[localUrl("Arial Narrow")],
+  ~fontStyle=normal,
+  (),
+));
+
 let spin = Css.(keyframes([
   (0, [ transform(rotate(deg(0)))]),
   (100, [ transform(rotate(deg(360)))])
@@ -25,7 +32,7 @@ let rowLayout = Css.([
 
 let section = Css.([
   selector("& > h1", [
-    fontFamily("Arial FontFace Test, sans-serif"),
+    fontFamily(arialNarrow),
     fontSize(px(32)),
     fontWeight(300),
   ]),

@@ -14,13 +14,6 @@ let spin = Css.(keyframes([
   (100, [ transform(rotate(deg(360))) ]),
 ]));
 
-Css.(fontFace(
-  ~fontFamily="Arial FontFace Test",
-  ~src=[localUrl("Arial Narrow")],
-  ~fontStyle=normal,
-  (),
-));
-
 module Page = {
   let styles = Css.({
     "page": [
