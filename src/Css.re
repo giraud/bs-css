@@ -10,12 +10,25 @@ let join = (separator, strings) => {
 
 module Glamor = {
   type css;
+  type fontFace;
   [@bs.send] external className : css => string = "toString";
   [@bs.module "glamor"] external _make : Js.Json.t => css = "css";
   [@bs.scope "css"] [@bs.module "glamor"]
   external makeGlobal : (string, Js.Json.t) => unit = "global";
   [@bs.scope "css"] [@bs.module "glamor"]
   external makeKeyFrames : Js.Dict.t(Js.Json.t) => string = "keyframes";
+  [@bs.scope "css"] [@bs.module "glamor"]
+  external makeFontFace : fontFace => string = "fontFace";
+  [@bs.obj]
+  external fontFace :
+    (
+      ~fontFamily: string,
+      ~src: string,
+      ~fontStyle: string=?,
+      ~fontWeight: int=?,
+    ) =>
+    fontFace =
+    "";
   let merge: list(css) => css = [%bs.raw
     {|
       function (styles) {
