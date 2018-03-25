@@ -996,6 +996,12 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
 /**
  * Text
  * */
+
+[@bs.deriving jsConverter]
+type fontStyle = [ | `normal | `italic | `oblique];
+
+type fontFaceSource = [ | `local(string) | `url(string)];
+
 let color = x => d("color", string_of_color(x));
 
 let fontFamily = x => d("fontFamily", x);
@@ -1013,6 +1019,24 @@ let fontStyle = x =>
     | `normal => "normal"
     | `oblique => "oblique"
   });
+
+let fontFace =
+    (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
+  let fontStyle = mapOption(fontStyleToJs, fontStyle);
+  let src =
+    src
+    |> List.map(
+         fun
+         | `local(value) => {j|local("$(value)")|j}
+         | `url(value) => {j|url("$(value)")|j},
+       )
+    |> String.concat(", ");
+  Glamor.(
+    makeFontFace(
+      fontFace(~fontFamily, ~src, ~fontStyle?, ~fontWeight?),
+    )
+  );
+};
 
 let fontWeight = x => d("fontWeight", string_of_int(x));
 
