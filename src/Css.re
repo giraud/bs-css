@@ -1007,18 +1007,14 @@ let color = x => d("color", string_of_color(x));
 let fontFamily = x => d("fontFamily", x);
 
 let fontSize = x => d("fontSize", string_of_length(x));
+
 let fontVariant = x => d("fontVariant", switch x {
 | `normal => "normal"
 | `smallCaps => "small-caps"
 });
 
-
 let fontStyle = x =>
-  d( "fontStyle", switch x {
-    | `italic => "italic"
-    | `normal => "normal"
-    | `oblique => "oblique"
-  });
+  d("fontStyle", fontStyleToJs(x));
 
 let fontFace =
     (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
