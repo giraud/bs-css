@@ -427,6 +427,7 @@ let inlineBlock = `inlineBlock;
 let inlineFlex = `inlineFlex;
 let linear = `linear;
 let local = `local;
+let localUrl = x => `localUrl(x);
 let none = `none;
 let noRepeat = `noRepeat;
 let nowrap = `nowrap;
@@ -1000,8 +1001,6 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
 [@bs.deriving jsConverter]
 type fontStyle = [ | `normal | `italic | `oblique];
 
-type fontFaceSource = [ | `local(string) | `url(string)];
-
 let color = x => d("color", string_of_color(x));
 
 let fontFamily = x => d("fontFamily", x);
@@ -1023,7 +1022,7 @@ let fontFace =
     src
     |> List.map(
          fun
-         | `local(value) => {j|local("$(value)")|j}
+         | `localUrl(value) => {j|local("$(value)")|j}
          | `url(value) => {j|url("$(value)")|j},
        )
     |> String.concat(", ");
