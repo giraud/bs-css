@@ -8,11 +8,6 @@ let join = (separator, strings) => {
   run("", strings);
 };
 
-let mapOption = fn =>
-  fun
-  | Some(value) => Some(fn(value))
-  | None => None;
-
 module Glamor = {
   type css;
   type fontFace;
@@ -1017,7 +1012,7 @@ let fontStyle = x =>
 
 let fontFace =
     (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
-  let fontStyle = mapOption(fontStyleToJs, fontStyle);
+  let fontStyle = Js.Option.map((. value) => fontStyleToJs(value), fontStyle);
   let src =
     src
     |> List.map(
