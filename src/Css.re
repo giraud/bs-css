@@ -8,6 +8,11 @@ let join = (separator, strings) => {
   run("", strings);
 };
 
+let mapOption = fn =>
+  fun
+  | Some(value) => Some(fn(value))
+  | None => None;
+
 module Glamor = {
   type css;
   type fontFace;
