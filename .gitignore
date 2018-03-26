@@ -5,3 +5,4 @@ npm-debug.log
 finalOutput/*.js
 .merlin
 .bsb.lock
+*.log
