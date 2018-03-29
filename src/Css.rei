@@ -542,6 +542,7 @@ type listStyleType = [
  | `upperLatin
  | `lowerRoman
  | `upperRoman
+ | `none
 ];
 let listStyle : (listStyleType, [ | `inside | `outside], [ | `none | `url(string)]) => rule;
 let listStyleType : listStyleType => rule;
@@ -747,5 +748,4 @@ module SVG: {
   let stopColor: color => rule;
   let stopOpacity: float => rule;
 };
-
 

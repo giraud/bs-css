@@ -900,6 +900,7 @@ type listStyleType = [
   | `upperLatin
   | `lowerRoman
   | `upperRoman
+  | `none
 ];
 
 let string_of_listStyleType =
@@ -914,7 +915,8 @@ let string_of_listStyleType =
   | `lowerLatin => "lower-latin"
   | `upperLatin => "upper-latin"
   | `lowerRoman => "lower-roman"
-  | `upperRoman => "upper-roman";
+  | `upperRoman => "upper-roman"
+  | `none => "none";
 
 let string_of_listStylePosition =
   fun
@@ -1441,7 +1443,6 @@ module SVG = {
   let stopColor = c => d("stopColor", string_of_color(c));
   let stopOpacity = o => d("stopOpacity", string_of_float(o));
 };
-
 
 
 
