@@ -797,6 +797,22 @@ let borderTopRightRadius = i => d("borderTopRightRadius", string_of_length(i));
 let borderBottomLeftRadius = i => d("borderBottomLeftRadius", string_of_length(i));
 let borderBottomRightRadius = i => d("borderBottomRightRadius", string_of_length(i));
 
+let tableLayout = x =>
+  d("tableLayout", switch x {
+    | `auto => "auto"
+    | `fixed => "fixed"
+    },
+  );
+
+let borderCollapse = x =>
+  d("borderCollapse", switch x {
+    | `collapse => "collapse"
+    | `separate => "separate"
+    },
+  );
+
+let borderSpacing = i => d("borderSpacing", string_of_length(i));
+
 let background = x =>
   d( "background", switch x {
     | `none => "none"

@@ -493,6 +493,10 @@ let borderTopRightRadius : length => rule;
 let borderBottomLeftRadius : length => rule;
 let borderBottomRightRadius : length => rule;
 
+let tableLayout: [ | `auto | `fixed] => rule;
+let borderCollapse: [ | `separate | `collapse] => rule;
+let borderSpacing: length => rule;
+
 let boxShadow : (~x:length=?, ~y:length=?, ~blur:length=?, ~spread:length=?, ~inset:bool=?, color) => [> | `shadow(string)];
 let boxShadows : list([ | `shadow(string)]) => rule;
 
