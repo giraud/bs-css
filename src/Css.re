@@ -10,12 +10,25 @@ let join = (separator, strings) => {
 
 module Glamor = {
   type css;
+  type fontFace;
   [@bs.send] external className : css => string = "toString";
   [@bs.module "glamor"] external _make : Js.Json.t => css = "css";
   [@bs.scope "css"] [@bs.module "glamor"]
   external makeGlobal : (string, Js.Json.t) => unit = "global";
   [@bs.scope "css"] [@bs.module "glamor"]
   external makeKeyFrames : Js.Dict.t(Js.Json.t) => string = "keyframes";
+  [@bs.scope "css"] [@bs.module "glamor"]
+  external makeFontFace : fontFace => string = "fontFace";
+  [@bs.obj]
+  external fontFace :
+    (
+      ~fontFamily: string,
+      ~src: string,
+      ~fontStyle: string=?,
+      ~fontWeight: int=?,
+    ) =>
+    fontFace =
+    "";
   let merge: list(css) => css = [%bs.raw
     {|
       function (styles) {
@@ -409,6 +422,7 @@ let inlineBlock = `inlineBlock;
 let inlineFlex = `inlineFlex;
 let linear = `linear;
 let local = `local;
+let localUrl = x => `localUrl(x);
 let none = `none;
 let noRepeat = `noRepeat;
 let nowrap = `nowrap;
@@ -996,23 +1010,41 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
 /**
  * Text
  * */
+
+[@bs.deriving jsConverter]
+type fontStyle = [ | `normal | `italic | `oblique];
+
 let color = x => d("color", string_of_color(x));
 
 let fontFamily = x => d("fontFamily", x);
 
 let fontSize = x => d("fontSize", string_of_length(x));
+
 let fontVariant = x => d("fontVariant", switch x {
 | `normal => "normal"
 | `smallCaps => "small-caps"
 });
 
-
 let fontStyle = x =>
-  d( "fontStyle", switch x {
-    | `italic => "italic"
-    | `normal => "normal"
-    | `oblique => "oblique"
-  });
+  d("fontStyle", fontStyleToJs(x));
+
+let fontFace =
+    (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
+  let fontStyle = Js.Option.map((. value) => fontStyleToJs(value), fontStyle);
+  let src =
+    src
+    |> List.map(
+         fun
+         | `localUrl(value) => {j|local("$(value)")|j}
+         | `url(value) => {j|url("$(value)")|j},
+       )
+    |> String.concat(", ");
+  Glamor.(
+    makeFontFace(
+      fontFace(~fontFamily, ~src, ~fontStyle?, ~fontWeight?),
+    )
+  );
+};
 
 let fontWeight = x => d("fontWeight", string_of_int(x));
 

@@ -253,6 +253,7 @@ let solid : [> | `solid];
 let dotted : [> | `dotted];
 let dashed : [> | `dashed];
 
+let localUrl : string => [> `localUrl(string)];
 let url : string => [> `url(string)];
 
 let none : [> | `none];
@@ -580,11 +581,17 @@ let pointerEvents : [ |`auto | `none] => rule;
 /**
  * Text
  */
+
+type fontStyle = [ | `italic | `normal | `oblique ];
+
 let color : color => rule;
 let fontFamily : string => rule;
+let fontFace :
+  (~fontFamily: string, ~src: list([< `localUrl(string) | `url(string) ]),
+  ~fontStyle: fontStyle=?, ~fontWeight: int=?, unit) => string;
 let fontSize : length => rule;
 let fontVariant : [ | `normal | `smallCaps] => rule;
-let fontStyle: [ | `italic | `normal | `oblique ] => rule; 
+let fontStyle: fontStyle => rule;
 let fontWeight : int => rule;
 let letterSpacing: [ `normal | length] => rule;
 let lineHeight: float => rule; 

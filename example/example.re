@@ -14,8 +14,6 @@ let spin = Css.(keyframes([
   (100, [ transform(rotate(deg(360))) ]),
 ]));
 
-
-
 module Page = {
   let styles = Css.({
     "page": [
