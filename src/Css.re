@@ -366,6 +366,7 @@ let ch = x => `ch(x);
 let cm = x => `cm(x);
 let em = x => `em(x);
 let ex = x => `ex(x);
+let fr = x => `fr(x);
 let mm = x => `mm(x);
 let pct = x => `percent(x);
 let pt = x => `pt(x);
@@ -537,6 +538,8 @@ let display = x =>
     | `none => "none"
     | `flex => "flex"
     | `inlineFlex => "inline-flex"
+    | `grid => "grid"
+    | `inlineGrid => "inline-grid"
     });
 
 let position = x =>
@@ -660,6 +663,42 @@ let minWidth = x => d("minWidth", string_of_dimension(x));
 let height = x => d("height", string_of_dimension(x));
 let minHeight = x => d("minHeight", string_of_dimension(x));
 let maxHeight = x => d("maxHeight", string_of_dimension(x));
+
+let string_of_dimensions = dimensions =>
+  dimensions
+  |> List.map(string_of_dimension)
+  |> String.concat(" ");
+
+let gridTemplateColumns = dimensions =>
+  d("gridTemplateColumns", string_of_dimensions(dimensions));
+
+let gridTemplateRows = dimensions =>
+  d("gridTemplateRows", string_of_dimensions(dimensions));
+
+let gridAutoRows = dimensions =>
+  d("gridAutoRows", string_of_dimension(dimensions));
+
+let gridColumnStart = n =>
+  d("gridColumnStart", string_of_int(n));
+
+let gridColumnEnd = n =>
+  d("gridColumnEnd", string_of_int(n));
+
+let gridRowStart = n =>
+  d("gridRowStart", string_of_int(n));
+
+let gridRowEnd = n =>
+  d("gridRowEnd", string_of_int(n));
+
+let gridColumnGap = n =>
+  d("gridColumnGap", string_of_length(n));
+
+let gridRowGap = n =>
+  d("gridRowGap", string_of_length(n));
+
+let gridGap = n =>
+  d("gridGap", string_of_length(n));
+
 
 let string_of_align =
   fun

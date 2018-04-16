@@ -1,5 +1,5 @@
-type rule = [ 
-  | `selector(string, list(rule)) 
+type rule = [
+  | `selector(string, list(rule))
   | `declaration(string, string)
   | `animation(string)
   | `transition(string)
@@ -230,6 +230,7 @@ let ch : float => [> | `ch(float)];
 let cm : float => [> | `cm(float)];
 let em : float => [> | `em(float)];
 let ex : float => [> | `ex(float)];
+let fr : float => [> | `fr(float)];
 let mm : float => [> | `mm(float)];
 let pct : float => [> | `percent(float)];
 let pt : int => [> | `pt(int)];
@@ -243,7 +244,7 @@ let zero : [> | `zero];
 
 
 module Calc: {
-  let (-): (length, length) => [> |length];
+  let (-): (length, length) => [> | length];
   let (+): (length, length) => [> | length];
 };
 
@@ -400,7 +401,7 @@ let unsafe : (string, string) => rule;
  * Layout
 */
 
-let display : [ | `flex | `block | `inline | `inlineBlock | `none | `inlineFlex ] => rule;
+let display : [ | `flex | `block | `inline | `inlineBlock | `none | `inlineFlex | `grid | `inlineGrid ] => rule;
 let position : [ | `absolute | `relative | `static | `fixed | `sticky ] => rule;
 
 let top : [ | length] => rule;
@@ -416,6 +417,17 @@ let flexBasis: [ | length | `auto | `fill | `content | `maxContent | `minContent
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
 let order: int => rule;
+
+let gridTemplateColumns : list([ | length | `auto]) => rule;
+let gridTemplateRows : list([ | length | `auto]) => rule;
+let gridAutoRows : [ | length | `auto] => rule;
+let gridColumnStart : int => rule;
+let gridColumnEnd : int => rule;
+let gridRowStart : int => rule;
+let gridRowEnd : int => rule;
+let gridColumnGap : length => rule;
+let gridRowGap : length => rule;
+let gridGap : length => rule;
 
 let width : [ | length | `auto ] => rule;
 let minWidth : [ | length | `auto ] => rule;
@@ -442,15 +454,15 @@ let paddingRight : length => rule;
 let paddingTop : length => rule;
 let paddingBottom : length => rule;
 
-let alignContent : [ | `stretch | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule; 
-let alignItems : [ | `stretch | `flexStart | `center | `flexEnd | `baseline ] => rule; 
-let alignSelf : [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto ] => rule; 
-let justifyContent : [ | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule; 
+let alignContent : [ | `stretch | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule;
+let alignItems : [ | `stretch | `flexStart | `center | `flexEnd | `baseline ] => rule;
+let alignSelf : [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto ] => rule;
+let justifyContent : [ | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule;
 
 let boxSizing : [ | `borderBox | `contentBox] => rule;
 
-let float: [ | `left | `right| `none ] => rule; 
-let clear: [ | `left | `right | `both ] => rule; 
+let float: [ | `left | `right| `none ] => rule;
+let clear: [ | `left | `right | `both ] => rule;
 
 let overflow: [ | `hidden | `visible | `scroll | `auto] => rule;
 let overflowX: [ | `hidden | `visible | `scroll | `auto] => rule;
@@ -511,13 +523,13 @@ let backgroundPosition: ([ | length], [ | length]) => rule;
 let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
 let backgroundSize: [ | `size(length, length) | `auto | `cover | `contain] => rule;
 
-let cursor : [ 
+let cursor : [
   | `pointer
   | `alias
   | `allScroll
   | `auto
-  | `cell 
-  | `contextMenu 
+  | `cell
+  | `contextMenu
   | `default
   | `none
   | `crosshair
@@ -594,7 +606,7 @@ let fontVariant : [ | `normal | `smallCaps] => rule;
 let fontStyle: fontStyle => rule;
 let fontWeight : int => rule;
 let letterSpacing: [ `normal | length] => rule;
-let lineHeight: float => rule; 
+let lineHeight: float => rule;
 let textAlign : [ | `left | `center | `right | `justify] => rule;
 let textDecoration : [ | `none | `underline | `overline | `lineThrough ] => rule;
 let textDecorationColor : color => rule;
@@ -621,16 +633,16 @@ type transform = [
    | `translateX(length)
    | `translateY(length)
    | `translateZ(length)
-   | `scale(float, float) 
-   | `scale3d(float, float, float) 
-   | `scaleX(float) 
-   | `scaleY(float) 
-   | `scaleZ(float) 
-   | `rotate(angle) 
-   | `rotate3d(float, float, float, angle) 
-   | `rotateX(angle) 
-   | `rotateY(angle) 
-   | `rotateZ(angle) 
+   | `scale(float, float)
+   | `scale3d(float, float, float)
+   | `scaleX(float)
+   | `scaleY(float)
+   | `scaleZ(float)
+   | `rotate(angle)
+   | `rotate3d(float, float, float, angle)
+   | `rotateX(angle)
+   | `rotateY(angle)
+   | `rotateZ(angle)
    | `skew(angle, angle)
    | `skewX(angle)
    | `skewY(angle)
@@ -643,7 +655,7 @@ type transform = [
  let transformOrigin3d: (length, length, length) => rule;
  let transformStyle: [ | `preserve3d | `flat] => rule;
  let perspective : [ `none | length] => rule;
- let perspectiveOrigin: (length, length) => rule; 
+ let perspectiveOrigin: (length, length) => rule;
 
  /**
   * Transition
@@ -671,7 +683,7 @@ let transitionProperty : string => rule;
  * Animation
  */
 
-type animation; 
+type animation;
 let keyframes : list((int, list(rule))) => animation;
 
 type animationDirection = [
@@ -684,11 +696,11 @@ type animationDirection = [
 type animationFillMode = [ | `none | `forwards | `backwards | `both ];
 type animationIterationCount = [ | `infinite | `count(int) ];
 type animationPlayState = [ | `paused | `running ];
-   
+
 let animation : (
-  ~duration:int=?, 
-  ~delay:int=?, 
-  ~direction:animationDirection=?, 
+  ~duration:int=?,
+  ~delay:int=?,
+  ~direction:animationDirection=?,
   ~timingFunction:timingFunction=?,
   ~fillMode:animationFillMode=?,
   ~playState:animationPlayState=?,
@@ -696,14 +708,14 @@ let animation : (
   animation
   ) => [> | `animation(string)];
 let animations : list([ | `animation(string)]) => rule;
-  
+
 let animationDelay : int => rule;
 let animationDirection : animationDirection => rule;
 let animationDuration : int => rule;
 let animationFillMode : animationFillMode => rule;
 let animationIterationCount: [ | `infinite | `count(int)] => rule;
 let animationName : animation => rule;
-let animationPlayState : [ | `paused | `running] => rule;  
+let animationPlayState : [ | `paused | `running] => rule;
 let animationTimingFunction : timingFunction => rule;
 
 
