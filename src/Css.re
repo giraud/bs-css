@@ -52,8 +52,8 @@ module Glamor = {
 };
 
 type declaration = [ | `declaration(string, string)];
-type rule = [ 
-  | `selector(string, list(rule)) 
+type rule = [
+  | `selector(string, list(rule))
   | `declaration(string, string)
   | `animation(string)
   | `transition(string)
@@ -96,8 +96,8 @@ let label = (label) => `declaration("label", label);
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-type angle = [ 
-  | `deg(int) 
+type angle = [
+  | `deg(int)
   | `rad(float)
   | `grad(float)
   | `turn(float)
@@ -773,14 +773,14 @@ let borderLeft = (px, style, color) =>
 let borderLeftWidth = x => d("borderLeftWidth", string_of_length(x));
 let borderLeftStyle = x => d("borderLeftStyle", string_of_borderstyle(x));
 let borderLeftColor = x => d("borderLeftColor", string_of_color(x));
-  
+
 let borderRight = (px, style, color) =>
   d( "borderRight", join( " ", [
     string_of_length(px),
     string_of_borderstyle(style),
     string_of_color(color)
     ]));
-    
+
 let borderRightWidth = x => d("borderRightWidth", string_of_length(x));
 let borderRightColor = x => d("borderRightColor", string_of_color(x));
 let borderRightStyle = x => d("borderRightStyle", string_of_borderstyle(x));
@@ -1333,7 +1333,7 @@ let transition = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
     property
   ]));
 
-let transitions = xs => 
+let transitions = xs =>
   d("transition", xs |> List.map(fun | `transition(s) => s) |> join(", "));
 
 let transitionDelay = i => d("transitionDelay", string_of_int(i) ++ "ms");
