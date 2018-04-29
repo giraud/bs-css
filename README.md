@@ -26,7 +26,7 @@ module Styles = {
     flexDirection(column), 
     alignItems(stretch),
     backgroundColor(white),
-    boxShadow(~y=3, ~blur=5, rgba(0, 0, 0, 0.3)),
+    boxShadow(~y=px(3), ~blur=px(5), rgba(0, 0, 0, 0.3)),
     padding(Theme.basePadding)
   ]);
 
@@ -37,9 +37,9 @@ module Styles = {
   ]);
   let actionButton = disabled =>
     style([
-      background(disabled ? darkGray : white),
+      background(disabled ? darkgray : white),
       color(black),
-      border(px(1) solid black),
+      border(px(1), solid, black),
       borderRadius(px(3)),
     ])
 };
