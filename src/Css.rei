@@ -284,6 +284,8 @@ let nowrap : [> | `nowrap];
 let wrapReverse : [> | `wrapReverse];
 
 let flexBox : [> | `flex];
+let grid : [> `grid ];
+let inlineGrid : [> `inlineGrid ];
 let block : [> | `block];
 let inline : [> | `inline];
 let inlineBlock : [> | `inlineBlock];
@@ -421,6 +423,8 @@ let order: int => rule;
 let gridTemplateColumns : list([ | length | `auto]) => rule;
 let gridTemplateRows : list([ | length | `auto]) => rule;
 let gridAutoRows : [ | length | `auto] => rule;
+let gridColumn : (int, int) => rule;
+let gridRow : (int, int) => rule;
 let gridColumnStart : int => rule;
 let gridColumnEnd : int => rule;
 let gridRowStart : int => rule;

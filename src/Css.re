@@ -413,6 +413,8 @@ let easeInOut = `easeInOut;
 let easeOut = `easeOut;
 let fixed = `fixed;
 let flexBox = `flex;
+let grid = `grid;
+let inlineGrid = `inlineGrid;
 let flexEnd = `flexEnd;
 let flexStart = `flexStart;
 let forwards = `forwards;
@@ -678,6 +680,10 @@ let gridTemplateRows = dimensions =>
 let gridAutoRows = dimensions =>
   d("gridAutoRows", string_of_dimension(dimensions));
 
+
+let gridColumn = (start, end') => d("gridColumn", string_of_int(start) ++ " / " ++ string_of_int(end'));
+
+let gridRow = (start, end') => d("gridRow", string_of_int(start) ++ " / " ++ string_of_int(end'));
 let gridColumnStart = n =>
   d("gridColumnStart", string_of_int(n));
 

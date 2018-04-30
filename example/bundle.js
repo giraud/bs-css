@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -365,31 +365,130 @@ exports.undefined_recursive_module = undefined_recursive_module;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
 
 
-var Caml_array = __webpack_require__(33);
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Caml_array = __webpack_require__(15);
 
 function app(_f, _args) {
   while(true) {
     var args = _args;
     var f = _f;
     var arity = f.length;
-    var arity$1 = arity === 0 ? 1 : arity;
+    var arity$1 = arity ? arity : 1;
     var len = args.length;
     var d = arity$1 - len | 0;
-    if (d === 0) {
-      return f.apply(null, args);
-    } else if (d < 0) {
-      _args = Caml_array.caml_array_sub(args, arity$1, -d | 0);
-      _f = f.apply(null, Caml_array.caml_array_sub(args, 0, arity$1));
-      continue ;
-      
-    } else {
-      return (function(f,args){
-      return function (x) {
-        return app(f, args.concat(/* array */[x]));
+    if (d) {
+      if (d < 0) {
+        _args = Caml_array.caml_array_sub(args, arity$1, -d | 0);
+        _f = f.apply(null, Caml_array.caml_array_sub(args, 0, arity$1));
+        continue ;
+        
+      } else {
+        return (function(f,args){
+        return function (x) {
+          return app(f, args.concat(/* array */[x]));
+        }
+        }(f,args));
       }
-      }(f,args));
+    } else {
+      return f.apply(null, args);
     }
   };
 }
@@ -1001,103 +1100,6 @@ exports.__8 = __8;
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1147,9 +1149,9 @@ module.exports = emptyFunction;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(73);
-} else {
   module.exports = __webpack_require__(74);
+} else {
+  module.exports = __webpack_require__(75);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -1248,9 +1250,9 @@ module.exports = exports['default'];
 "use strict";
 
 
-var Curry = __webpack_require__(2);
-var Caml_obj = __webpack_require__(15);
-var Pervasives = __webpack_require__(34);
+var Curry = __webpack_require__(3);
+var Caml_obj = __webpack_require__(16);
+var Pervasives = __webpack_require__(18);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
 function length(l) {
@@ -1305,13 +1307,13 @@ function nth(l, n) {
       var n$1 = _n;
       var l$1 = _l;
       if (l$1) {
-        if (n$1 === 0) {
-          return l$1[0];
-        } else {
+        if (n$1) {
           _n = n$1 - 1 | 0;
           _l = l$1[1];
           continue ;
           
+        } else {
+          return l$1[0];
         }
       } else {
         throw [
@@ -1693,12 +1695,12 @@ function mem(x, _param) {
   while(true) {
     var param = _param;
     if (param) {
-      if (Caml_obj.caml_equal(param[0], x)) {
-        return /* true */1;
-      } else {
+      if (Caml_obj.caml_compare(param[0], x)) {
         _param = param[1];
         continue ;
         
+      } else {
+        return /* true */1;
       }
     } else {
       return /* false */0;
@@ -1728,12 +1730,12 @@ function assoc(x, _param) {
     var param = _param;
     if (param) {
       var match = param[0];
-      if (Caml_obj.caml_equal(match[0], x)) {
-        return match[1];
-      } else {
+      if (Caml_obj.caml_compare(match[0], x)) {
         _param = param[1];
         continue ;
         
+      } else {
+        return match[1];
       }
     } else {
       throw Caml_builtin_exceptions.not_found;
@@ -1763,12 +1765,12 @@ function mem_assoc(x, _param) {
   while(true) {
     var param = _param;
     if (param) {
-      if (Caml_obj.caml_equal(param[0][0], x)) {
-        return /* true */1;
-      } else {
+      if (Caml_obj.caml_compare(param[0][0], x)) {
         _param = param[1];
         continue ;
         
+      } else {
+        return /* true */1;
       }
     } else {
       return /* false */0;
@@ -1797,13 +1799,13 @@ function remove_assoc(x, param) {
   if (param) {
     var l = param[1];
     var pair = param[0];
-    if (Caml_obj.caml_equal(pair[0], x)) {
-      return l;
-    } else {
+    if (Caml_obj.caml_compare(pair[0], x)) {
       return /* :: */[
               pair,
               remove_assoc(x, l)
             ];
+    } else {
+      return l;
     }
   } else {
     return /* [] */0;
@@ -1988,22 +1990,24 @@ function chop(_k, _l) {
   while(true) {
     var l = _l;
     var k = _k;
-    if (k === 0) {
-      return l;
-    } else if (l) {
-      _l = l[1];
-      _k = k - 1 | 0;
-      continue ;
-      
+    if (k) {
+      if (l) {
+        _l = l[1];
+        _k = k - 1 | 0;
+        continue ;
+        
+      } else {
+        throw [
+              Caml_builtin_exceptions.assert_failure,
+              [
+                "list.ml",
+                223,
+                11
+              ]
+            ];
+      }
     } else {
-      throw [
-            Caml_builtin_exceptions.assert_failure,
-            [
-              "list.ml",
-              223,
-              11
-            ]
-          ];
+      return l;
     }
   };
 }
@@ -2012,9 +2016,9 @@ function stable_sort(cmp, l) {
   var sort = function (n, l) {
     var exit = 0;
     if (n !== 2) {
-      if (n !== 3 || !l) {
+      if (n !== 3) {
         exit = 1;
-      } else {
+      } else if (l) {
         var match = l[1];
         if (match) {
           var match$1 = match[1];
@@ -2097,6 +2101,8 @@ function stable_sort(cmp, l) {
         } else {
           exit = 1;
         }
+      } else {
+        exit = 1;
       }
     } else if (l) {
       var match$2 = l[1];
@@ -2173,9 +2179,9 @@ function stable_sort(cmp, l) {
   var rev_sort = function (n, l) {
     var exit = 0;
     if (n !== 2) {
-      if (n !== 3 || !l) {
+      if (n !== 3) {
         exit = 1;
-      } else {
+      } else if (l) {
         var match = l[1];
         if (match) {
           var match$1 = match[1];
@@ -2258,6 +2264,8 @@ function stable_sort(cmp, l) {
         } else {
           exit = 1;
         }
+      } else {
+        exit = 1;
       }
     } else if (l) {
       var match$2 = l[1];
@@ -2343,9 +2351,9 @@ function sort_uniq(cmp, l) {
   var sort = function (n, l) {
     var exit = 0;
     if (n !== 2) {
-      if (n !== 3 || !l) {
+      if (n !== 3) {
         exit = 1;
-      } else {
+      } else if (l) {
         var match = l[1];
         if (match) {
           var match$1 = match[1];
@@ -2354,54 +2362,58 @@ function sort_uniq(cmp, l) {
             var x2 = match[0];
             var x1 = l[0];
             var c = Curry._2(cmp, x1, x2);
-            if (c === 0) {
-              var c$1 = Curry._2(cmp, x2, x3);
-              if (c$1 === 0) {
-                return /* :: */[
-                        x2,
-                        /* [] */0
-                      ];
-              } else if (c$1 < 0) {
-                return /* :: */[
-                        x2,
-                        /* :: */[
-                          x3,
-                          /* [] */0
-                        ]
-                      ];
-              } else {
-                return /* :: */[
-                        x3,
-                        /* :: */[
-                          x2,
-                          /* [] */0
-                        ]
-                      ];
-              }
-            } else if (c < 0) {
-              var c$2 = Curry._2(cmp, x2, x3);
-              if (c$2 === 0) {
-                return /* :: */[
-                        x1,
-                        /* :: */[
-                          x2,
-                          /* [] */0
-                        ]
-                      ];
-              } else if (c$2 < 0) {
-                return /* :: */[
-                        x1,
-                        /* :: */[
-                          x2,
-                          /* :: */[
-                            x3,
-                            /* [] */0
-                          ]
-                        ]
-                      ];
-              } else {
-                var c$3 = Curry._2(cmp, x1, x3);
-                if (c$3 === 0) {
+            if (c) {
+              if (c < 0) {
+                var c$1 = Curry._2(cmp, x2, x3);
+                if (c$1) {
+                  if (c$1 < 0) {
+                    return /* :: */[
+                            x1,
+                            /* :: */[
+                              x2,
+                              /* :: */[
+                                x3,
+                                /* [] */0
+                              ]
+                            ]
+                          ];
+                  } else {
+                    var c$2 = Curry._2(cmp, x1, x3);
+                    if (c$2) {
+                      if (c$2 < 0) {
+                        return /* :: */[
+                                x1,
+                                /* :: */[
+                                  x3,
+                                  /* :: */[
+                                    x2,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      } else {
+                        return /* :: */[
+                                x3,
+                                /* :: */[
+                                  x1,
+                                  /* :: */[
+                                    x2,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      }
+                    } else {
+                      return /* :: */[
+                              x1,
+                              /* :: */[
+                                x2,
+                                /* [] */0
+                              ]
+                            ];
+                    }
+                  }
+                } else {
                   return /* :: */[
                           x1,
                           /* :: */[
@@ -2409,70 +2421,76 @@ function sort_uniq(cmp, l) {
                             /* [] */0
                           ]
                         ];
-                } else if (c$3 < 0) {
-                  return /* :: */[
-                          x1,
-                          /* :: */[
-                            x3,
+                }
+              } else {
+                var c$3 = Curry._2(cmp, x1, x3);
+                if (c$3) {
+                  if (c$3 < 0) {
+                    return /* :: */[
+                            x2,
                             /* :: */[
-                              x2,
-                              /* [] */0
+                              x1,
+                              /* :: */[
+                                x3,
+                                /* [] */0
+                              ]
                             ]
-                          ]
-                        ];
+                          ];
+                  } else {
+                    var c$4 = Curry._2(cmp, x2, x3);
+                    if (c$4) {
+                      if (c$4 < 0) {
+                        return /* :: */[
+                                x2,
+                                /* :: */[
+                                  x3,
+                                  /* :: */[
+                                    x1,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      } else {
+                        return /* :: */[
+                                x3,
+                                /* :: */[
+                                  x2,
+                                  /* :: */[
+                                    x1,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      }
+                    } else {
+                      return /* :: */[
+                              x2,
+                              /* :: */[
+                                x1,
+                                /* [] */0
+                              ]
+                            ];
+                    }
+                  }
                 } else {
                   return /* :: */[
-                          x3,
+                          x2,
                           /* :: */[
                             x1,
-                            /* :: */[
-                              x2,
-                              /* [] */0
-                            ]
+                            /* [] */0
                           ]
                         ];
                 }
               }
             } else {
-              var c$4 = Curry._2(cmp, x1, x3);
-              if (c$4 === 0) {
-                return /* :: */[
-                        x2,
-                        /* :: */[
-                          x1,
-                          /* [] */0
-                        ]
-                      ];
-              } else if (c$4 < 0) {
-                return /* :: */[
-                        x2,
-                        /* :: */[
-                          x1,
-                          /* :: */[
-                            x3,
-                            /* [] */0
-                          ]
-                        ]
-                      ];
-              } else {
-                var c$5 = Curry._2(cmp, x2, x3);
-                if (c$5 === 0) {
-                  return /* :: */[
-                          x2,
-                          /* :: */[
-                            x1,
-                            /* [] */0
-                          ]
-                        ];
-                } else if (c$5 < 0) {
+              var c$5 = Curry._2(cmp, x2, x3);
+              if (c$5) {
+                if (c$5 < 0) {
                   return /* :: */[
                           x2,
                           /* :: */[
                             x3,
-                            /* :: */[
-                              x1,
-                              /* [] */0
-                            ]
+                            /* [] */0
                           ]
                         ];
                 } else {
@@ -2480,13 +2498,15 @@ function sort_uniq(cmp, l) {
                           x3,
                           /* :: */[
                             x2,
-                            /* :: */[
-                              x1,
-                              /* [] */0
-                            ]
+                            /* [] */0
                           ]
                         ];
                 }
+              } else {
+                return /* :: */[
+                        x2,
+                        /* [] */0
+                      ];
               }
             }
           } else {
@@ -2495,6 +2515,8 @@ function sort_uniq(cmp, l) {
         } else {
           exit = 1;
         }
+      } else {
+        exit = 1;
       }
     } else if (l) {
       var match$2 = l[1];
@@ -2502,26 +2524,28 @@ function sort_uniq(cmp, l) {
         var x2$1 = match$2[0];
         var x1$1 = l[0];
         var c$6 = Curry._2(cmp, x1$1, x2$1);
-        if (c$6 === 0) {
+        if (c$6) {
+          if (c$6 < 0) {
+            return /* :: */[
+                    x1$1,
+                    /* :: */[
+                      x2$1,
+                      /* [] */0
+                    ]
+                  ];
+          } else {
+            return /* :: */[
+                    x2$1,
+                    /* :: */[
+                      x1$1,
+                      /* [] */0
+                    ]
+                  ];
+          }
+        } else {
           return /* :: */[
                   x1$1,
                   /* [] */0
-                ];
-        } else if (c$6 < 0) {
-          return /* :: */[
-                  x1$1,
-                  /* :: */[
-                    x2$1,
-                    /* [] */0
-                  ]
-                ];
-        } else {
-          return /* :: */[
-                  x2$1,
-                  /* :: */[
-                    x1$1,
-                    /* [] */0
-                  ]
                 ];
         }
       } else {
@@ -2550,29 +2574,31 @@ function sort_uniq(cmp, l) {
             var t1 = l1[1];
             var h1 = l1[0];
             var c$7 = Curry._2(cmp, h1, h2);
-            if (c$7 === 0) {
-              _accu = /* :: */[
-                h1,
-                accu
-              ];
-              _l2 = t2;
-              _l1 = t1;
-              continue ;
-              
-            } else if (c$7 > 0) {
-              _accu = /* :: */[
-                h1,
-                accu
-              ];
-              _l1 = t1;
-              continue ;
-              
+            if (c$7) {
+              if (c$7 > 0) {
+                _accu = /* :: */[
+                  h1,
+                  accu
+                ];
+                _l1 = t1;
+                continue ;
+                
+              } else {
+                _accu = /* :: */[
+                  h2,
+                  accu
+                ];
+                _l2 = t2;
+                continue ;
+                
+              }
             } else {
               _accu = /* :: */[
-                h2,
+                h1,
                 accu
               ];
               _l2 = t2;
+              _l1 = t1;
               continue ;
               
             }
@@ -2589,9 +2615,9 @@ function sort_uniq(cmp, l) {
   var rev_sort = function (n, l) {
     var exit = 0;
     if (n !== 2) {
-      if (n !== 3 || !l) {
+      if (n !== 3) {
         exit = 1;
-      } else {
+      } else if (l) {
         var match = l[1];
         if (match) {
           var match$1 = match[1];
@@ -2600,54 +2626,58 @@ function sort_uniq(cmp, l) {
             var x2 = match[0];
             var x1 = l[0];
             var c = Curry._2(cmp, x1, x2);
-            if (c === 0) {
-              var c$1 = Curry._2(cmp, x2, x3);
-              if (c$1 === 0) {
-                return /* :: */[
-                        x2,
-                        /* [] */0
-                      ];
-              } else if (c$1 > 0) {
-                return /* :: */[
-                        x2,
-                        /* :: */[
-                          x3,
-                          /* [] */0
-                        ]
-                      ];
-              } else {
-                return /* :: */[
-                        x3,
-                        /* :: */[
-                          x2,
-                          /* [] */0
-                        ]
-                      ];
-              }
-            } else if (c > 0) {
-              var c$2 = Curry._2(cmp, x2, x3);
-              if (c$2 === 0) {
-                return /* :: */[
-                        x1,
-                        /* :: */[
-                          x2,
-                          /* [] */0
-                        ]
-                      ];
-              } else if (c$2 > 0) {
-                return /* :: */[
-                        x1,
-                        /* :: */[
-                          x2,
-                          /* :: */[
-                            x3,
-                            /* [] */0
-                          ]
-                        ]
-                      ];
-              } else {
-                var c$3 = Curry._2(cmp, x1, x3);
-                if (c$3 === 0) {
+            if (c) {
+              if (c > 0) {
+                var c$1 = Curry._2(cmp, x2, x3);
+                if (c$1) {
+                  if (c$1 > 0) {
+                    return /* :: */[
+                            x1,
+                            /* :: */[
+                              x2,
+                              /* :: */[
+                                x3,
+                                /* [] */0
+                              ]
+                            ]
+                          ];
+                  } else {
+                    var c$2 = Curry._2(cmp, x1, x3);
+                    if (c$2) {
+                      if (c$2 > 0) {
+                        return /* :: */[
+                                x1,
+                                /* :: */[
+                                  x3,
+                                  /* :: */[
+                                    x2,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      } else {
+                        return /* :: */[
+                                x3,
+                                /* :: */[
+                                  x1,
+                                  /* :: */[
+                                    x2,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      }
+                    } else {
+                      return /* :: */[
+                              x1,
+                              /* :: */[
+                                x2,
+                                /* [] */0
+                              ]
+                            ];
+                    }
+                  }
+                } else {
                   return /* :: */[
                           x1,
                           /* :: */[
@@ -2655,70 +2685,76 @@ function sort_uniq(cmp, l) {
                             /* [] */0
                           ]
                         ];
-                } else if (c$3 > 0) {
-                  return /* :: */[
-                          x1,
-                          /* :: */[
-                            x3,
+                }
+              } else {
+                var c$3 = Curry._2(cmp, x1, x3);
+                if (c$3) {
+                  if (c$3 > 0) {
+                    return /* :: */[
+                            x2,
                             /* :: */[
-                              x2,
-                              /* [] */0
+                              x1,
+                              /* :: */[
+                                x3,
+                                /* [] */0
+                              ]
                             ]
-                          ]
-                        ];
+                          ];
+                  } else {
+                    var c$4 = Curry._2(cmp, x2, x3);
+                    if (c$4) {
+                      if (c$4 > 0) {
+                        return /* :: */[
+                                x2,
+                                /* :: */[
+                                  x3,
+                                  /* :: */[
+                                    x1,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      } else {
+                        return /* :: */[
+                                x3,
+                                /* :: */[
+                                  x2,
+                                  /* :: */[
+                                    x1,
+                                    /* [] */0
+                                  ]
+                                ]
+                              ];
+                      }
+                    } else {
+                      return /* :: */[
+                              x2,
+                              /* :: */[
+                                x1,
+                                /* [] */0
+                              ]
+                            ];
+                    }
+                  }
                 } else {
                   return /* :: */[
-                          x3,
+                          x2,
                           /* :: */[
                             x1,
-                            /* :: */[
-                              x2,
-                              /* [] */0
-                            ]
+                            /* [] */0
                           ]
                         ];
                 }
               }
             } else {
-              var c$4 = Curry._2(cmp, x1, x3);
-              if (c$4 === 0) {
-                return /* :: */[
-                        x2,
-                        /* :: */[
-                          x1,
-                          /* [] */0
-                        ]
-                      ];
-              } else if (c$4 > 0) {
-                return /* :: */[
-                        x2,
-                        /* :: */[
-                          x1,
-                          /* :: */[
-                            x3,
-                            /* [] */0
-                          ]
-                        ]
-                      ];
-              } else {
-                var c$5 = Curry._2(cmp, x2, x3);
-                if (c$5 === 0) {
-                  return /* :: */[
-                          x2,
-                          /* :: */[
-                            x1,
-                            /* [] */0
-                          ]
-                        ];
-                } else if (c$5 > 0) {
+              var c$5 = Curry._2(cmp, x2, x3);
+              if (c$5) {
+                if (c$5 > 0) {
                   return /* :: */[
                           x2,
                           /* :: */[
                             x3,
-                            /* :: */[
-                              x1,
-                              /* [] */0
-                            ]
+                            /* [] */0
                           ]
                         ];
                 } else {
@@ -2726,13 +2762,15 @@ function sort_uniq(cmp, l) {
                           x3,
                           /* :: */[
                             x2,
-                            /* :: */[
-                              x1,
-                              /* [] */0
-                            ]
+                            /* [] */0
                           ]
                         ];
                 }
+              } else {
+                return /* :: */[
+                        x2,
+                        /* [] */0
+                      ];
               }
             }
           } else {
@@ -2741,6 +2779,8 @@ function sort_uniq(cmp, l) {
         } else {
           exit = 1;
         }
+      } else {
+        exit = 1;
       }
     } else if (l) {
       var match$2 = l[1];
@@ -2748,26 +2788,28 @@ function sort_uniq(cmp, l) {
         var x2$1 = match$2[0];
         var x1$1 = l[0];
         var c$6 = Curry._2(cmp, x1$1, x2$1);
-        if (c$6 === 0) {
+        if (c$6) {
+          if (c$6 > 0) {
+            return /* :: */[
+                    x1$1,
+                    /* :: */[
+                      x2$1,
+                      /* [] */0
+                    ]
+                  ];
+          } else {
+            return /* :: */[
+                    x2$1,
+                    /* :: */[
+                      x1$1,
+                      /* [] */0
+                    ]
+                  ];
+          }
+        } else {
           return /* :: */[
                   x1$1,
                   /* [] */0
-                ];
-        } else if (c$6 > 0) {
-          return /* :: */[
-                  x1$1,
-                  /* :: */[
-                    x2$1,
-                    /* [] */0
-                  ]
-                ];
-        } else {
-          return /* :: */[
-                  x2$1,
-                  /* :: */[
-                    x1$1,
-                    /* [] */0
-                  ]
                 ];
         }
       } else {
@@ -2796,29 +2838,31 @@ function sort_uniq(cmp, l) {
             var t1 = l1[1];
             var h1 = l1[0];
             var c$7 = Curry._2(cmp, h1, h2);
-            if (c$7 === 0) {
-              _accu = /* :: */[
-                h1,
-                accu
-              ];
-              _l2 = t2;
-              _l1 = t1;
-              continue ;
-              
-            } else if (c$7 < 0) {
-              _accu = /* :: */[
-                h1,
-                accu
-              ];
-              _l1 = t1;
-              continue ;
-              
+            if (c$7) {
+              if (c$7 < 0) {
+                _accu = /* :: */[
+                  h1,
+                  accu
+                ];
+                _l1 = t1;
+                continue ;
+                
+              } else {
+                _accu = /* :: */[
+                  h2,
+                  accu
+                ];
+                _l2 = t2;
+                continue ;
+                
+              }
             } else {
               _accu = /* :: */[
-                h2,
+                h1,
                 accu
               ];
               _l2 = t2;
+              _l1 = t1;
               continue ;
               
             }
@@ -3121,11 +3165,7 @@ function caml_create_string(len) {
           "String.create"
         ];
   } else {
-    var result = new Array(len);
-    for(var i = 0 ,i_finish = len - 1 | 0; i <= i_finish; ++i){
-      result[i] = /* "\000" */0;
-    }
-    return result;
+    return new Array(len);
   }
 }
 
@@ -3382,15 +3422,16 @@ module.exports = invariant;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Generated by BUCKLESCRIPT VERSION 2.2.3, PLEASE EDIT WITH CARE
+// Generated by BUCKLESCRIPT VERSION 2.2.2, PLEASE EDIT WITH CARE
 
 
 var List = __webpack_require__(8);
-var Curry = __webpack_require__(2);
 var $$String = __webpack_require__(42);
-var Glamor = __webpack_require__(18);
+var Glamor = __webpack_require__(20);
 var Js_dict = __webpack_require__(70);
-var Js_mapperRt = __webpack_require__(71);
+var Js_option = __webpack_require__(71);
+var Pervasives = __webpack_require__(18);
+var Js_mapperRt = __webpack_require__(72);
 
 function join(separator, strings) {
   var _acc = "";
@@ -3415,17 +3456,9 @@ function join(separator, strings) {
   };
 }
 
-function mapOption(fn, param) {
-  if (param) {
-    return /* Some */[Curry._1(fn, param[0])];
-  } else {
-    return /* None */0;
-  }
-}
-
 ((
       function (styles) {
-          const glamor = __webpack_require__(18);
+          const glamor = __webpack_require__(20);
           return glamor.css.apply(glamor, styles)
       }
   ));
@@ -3476,7 +3509,7 @@ function $$global(selector, rules) {
 
 function keyframes(frames) {
   var addStop = function (dict, param) {
-    dict[String(param[0]) + "%"] = makeDict(param[1]);
+    dict[Pervasives.string_of_int(param[0]) + "%"] = makeDict(param[1]);
     return dict;
   };
   return Glamor.css.keyframes(List.fold_left(addStop, { }, frames));
@@ -3505,7 +3538,9 @@ function string_of_float(f) {
 }
 
 function important(v) {
-  if (typeof v === "number" || v[0] !== -434952966) {
+  if (typeof v === "number") {
+    return v;
+  } else if (v[0] !== -434952966) {
     return v;
   } else {
     var match = v[1];
@@ -3535,7 +3570,7 @@ function string_of_angle(param) {
     if (variant >= 5690837) {
       return string_of_float(param[1]) + "rad";
     } else {
-      return String(param[1]) + "deg";
+      return Pervasives.string_of_int(param[1]) + "deg";
     }
   } else if (variant >= -855250051) {
     return string_of_float(param[1]) + "turn";
@@ -3586,11 +3621,11 @@ function string_of_color(param) {
         if (variant >= 5692173) {
           var match = param[1];
           return "rgb(" + (join(", ", /* :: */[
-                        String(match[0]),
+                        Pervasives.string_of_int(match[0]),
                         /* :: */[
-                          String(match[1]),
+                          Pervasives.string_of_int(match[1]),
                           /* :: */[
-                            String(match[2]),
+                            Pervasives.string_of_int(match[2]),
                             /* [] */0
                           ]
                         ]
@@ -3598,11 +3633,11 @@ function string_of_color(param) {
         } else {
           var match$1 = param[1];
           return "hsl(" + (join(", ", /* :: */[
-                        String(match$1[0]),
+                        Pervasives.string_of_int(match$1[0]),
                         /* :: */[
-                          String(match$1[1]) + "%",
+                          Pervasives.string_of_int(match$1[1]) + "%",
                           /* :: */[
-                            String(match$1[2]) + "%",
+                            Pervasives.string_of_int(match$1[2]) + "%",
                             /* [] */0
                           ]
                         ]
@@ -3613,11 +3648,11 @@ function string_of_color(param) {
       } else {
         var match$2 = param[1];
         return "hsla(" + (join(", ", /* :: */[
-                      String(match$2[0]),
+                      Pervasives.string_of_int(match$2[0]),
                       /* :: */[
-                        String(match$2[1]) + "%",
+                        Pervasives.string_of_int(match$2[1]) + "%",
                         /* :: */[
-                          String(match$2[2]) + "%",
+                          Pervasives.string_of_int(match$2[2]) + "%",
                           /* :: */[
                             string_of_float(match$2[3]),
                             /* [] */0
@@ -3629,11 +3664,11 @@ function string_of_color(param) {
     } else {
       var match$3 = param[1];
       return "rgba(" + (join(", ", /* :: */[
-                    String(match$3[0]),
+                    Pervasives.string_of_int(match$3[0]),
                     /* :: */[
-                      String(match$3[1]),
+                      Pervasives.string_of_int(match$3[1]),
                       /* :: */[
-                        String(match$3[2]),
+                        Pervasives.string_of_int(match$3[2]),
                         /* :: */[
                           string_of_float(match$3[3]),
                           /* [] */0
@@ -3703,7 +3738,7 @@ function string_of_stops(stops) {
                     return join(" ", /* :: */[
                                 string_of_color(param[1]),
                                 /* :: */[
-                                  String(param[0]) + "%",
+                                  Pervasives.string_of_int(param[0]) + "%",
                                   /* [] */0
                                 ]
                               ]);
@@ -3760,11 +3795,11 @@ function string_of_length(param) {
         } else if (variant >= 26418) {
           return string_of_float(param[1]) + "vh";
         } else {
-          return String(param[1]) + "px";
+          return Pervasives.string_of_int(param[1]) + "px";
         }
       } else if (variant !== 24416) {
         if (variant >= 25092) {
-          return String(param[1]) + "pt";
+          return Pervasives.string_of_int(param[1]) + "pt";
         } else {
           return string_of_float(param[1]) + "ex";
         }
@@ -3824,6 +3859,13 @@ function em(x) {
 function ex(x) {
   return /* `ex */[
           22643,
+          x
+        ];
+}
+
+function fr(x) {
+  return /* `fr */[
+          22860,
           x
         ];
 }
@@ -4120,14 +4162,18 @@ function url(x) {
 }
 
 function display(x) {
-  return d("display", x >= -147785676 ? (
+  return d("display", x >= 53323314 ? (
                 x >= 423610969 ? (
                     x >= 888960333 ? "block" : "inline"
                   ) : (
-                    x >= 53323314 ? "inline-flex" : "inline-block"
+                    x >= 64712127 ? "inline-grid" : "inline-flex"
                   )
               ) : (
-                x >= -922086728 ? "none" : "flex"
+                x >= -922086728 ? (
+                    x >= -147785676 ? "inline-block" : "none"
+                  ) : (
+                    x >= -999565626 ? "grid" : "flex"
+                  )
               ));
 }
 
@@ -4158,15 +4204,15 @@ function right(x) {
 }
 
 function flex(x) {
-  return d("flex", String(x));
+  return d("flex", Pervasives.string_of_int(x));
 }
 
 function flexGrow(x) {
-  return d("flexGrow", String(x));
+  return d("flexGrow", Pervasives.string_of_int(x));
 }
 
 function flexShrink(x) {
-  return d("flexShrink", String(x));
+  return d("flexShrink", Pervasives.string_of_int(x));
 }
 
 function flexBasis(x) {
@@ -4190,11 +4236,11 @@ function flexBasis(x) {
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
             ) : (
-              variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
+              variant >= 26418 ? string_of_float(x[1]) + "vh" : Pervasives.string_of_int(x[1]) + "px"
             )
         ) : (
           variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
+              variant >= 25092 ? Pervasives.string_of_int(x[1]) + "pt" : string_of_float(x[1]) + "ex"
             ) : string_of_float(x[1]) + "mm"
         );
     } else if (variant >= -119887163) {
@@ -4232,7 +4278,7 @@ function flexWrap(x) {
 }
 
 function order(x) {
-  return d("order", String(x));
+  return d("order", Pervasives.string_of_int(x));
 }
 
 function string_of_margin(param) {
@@ -4255,11 +4301,11 @@ function string_of_margin(param) {
         } else if (variant >= 26418) {
           return string_of_float(param[1]) + "vh";
         } else {
-          return String(param[1]) + "px";
+          return Pervasives.string_of_int(param[1]) + "px";
         }
       } else if (variant !== 24416) {
         if (variant >= 25092) {
-          return String(param[1]) + "pt";
+          return Pervasives.string_of_int(param[1]) + "pt";
         } else {
           return string_of_float(param[1]) + "ex";
         }
@@ -4433,11 +4479,11 @@ function string_of_dimension(param) {
         } else if (variant >= 26418) {
           return string_of_float(param[1]) + "vh";
         } else {
-          return String(param[1]) + "px";
+          return Pervasives.string_of_int(param[1]) + "px";
         }
       } else if (variant !== 24416) {
         if (variant >= 25092) {
-          return String(param[1]) + "pt";
+          return Pervasives.string_of_int(param[1]) + "pt";
         } else {
           return string_of_float(param[1]) + "ex";
         }
@@ -4495,6 +4541,58 @@ function minHeight(x) {
 
 function maxHeight(x) {
   return d("maxHeight", string_of_dimension(x));
+}
+
+function string_of_dimensions(dimensions) {
+  return $$String.concat(" ", List.map(string_of_dimension, dimensions));
+}
+
+function gridTemplateColumns(dimensions) {
+  return d("gridTemplateColumns", string_of_dimensions(dimensions));
+}
+
+function gridTemplateRows(dimensions) {
+  return d("gridTemplateRows", string_of_dimensions(dimensions));
+}
+
+function gridAutoRows(dimensions) {
+  return d("gridAutoRows", string_of_dimension(dimensions));
+}
+
+function gridColumn(start, end$prime) {
+  return d("gridColumn", Pervasives.string_of_int(start) + (" / " + Pervasives.string_of_int(end$prime)));
+}
+
+function gridRow(start, end$prime) {
+  return d("gridRow", Pervasives.string_of_int(start) + (" / " + Pervasives.string_of_int(end$prime)));
+}
+
+function gridColumnStart(n) {
+  return d("gridColumnStart", Pervasives.string_of_int(n));
+}
+
+function gridColumnEnd(n) {
+  return d("gridColumnEnd", Pervasives.string_of_int(n));
+}
+
+function gridRowStart(n) {
+  return d("gridRowStart", Pervasives.string_of_int(n));
+}
+
+function gridRowEnd(n) {
+  return d("gridRowEnd", Pervasives.string_of_int(n));
+}
+
+function gridColumnGap(n) {
+  return d("gridColumnGap", string_of_length(n));
+}
+
+function gridRowGap(n) {
+  return d("gridRowGap", string_of_length(n));
+}
+
+function gridGap(n) {
+  return d("gridGap", string_of_length(n));
 }
 
 function string_of_align(param) {
@@ -4596,7 +4694,7 @@ function overflowY(x) {
 }
 
 function zIndex(i) {
-  return d("zIndex", String(i));
+  return d("zIndex", Pervasives.string_of_int(i));
 }
 
 function backfaceVisibility(x) {
@@ -4804,6 +4902,18 @@ function borderBottomRightRadius(i) {
   return d("borderBottomRightRadius", string_of_length(i));
 }
 
+function tableLayout(x) {
+  return d("tableLayout", x >= 10615156 ? "fixed" : "auto");
+}
+
+function borderCollapse(x) {
+  return d("borderCollapse", x >= 119283555 ? "separate" : "collapse");
+}
+
+function borderSpacing(i) {
+  return d("borderSpacing", string_of_length(i));
+}
+
 function background(x) {
   var tmp;
   if (typeof x === "number") {
@@ -4826,11 +4936,11 @@ function background(x) {
         } else {
           var match$1 = x[1];
           tmp = "hsl(" + (join(", ", /* :: */[
-                  String(match$1[0]),
+                  Pervasives.string_of_int(match$1[0]),
                   /* :: */[
-                    String(match$1[1]) + "%",
+                    Pervasives.string_of_int(match$1[1]) + "%",
                     /* :: */[
-                      String(match$1[2]) + "%",
+                      Pervasives.string_of_int(match$1[2]) + "%",
                       /* [] */0
                     ]
                   ]
@@ -4839,11 +4949,11 @@ function background(x) {
       } else {
         var match$2 = x[1];
         tmp = "rgb(" + (join(", ", /* :: */[
-                String(match$2[0]),
+                Pervasives.string_of_int(match$2[0]),
                 /* :: */[
-                  String(match$2[1]),
+                  Pervasives.string_of_int(match$2[1]),
                   /* :: */[
-                    String(match$2[2]),
+                    Pervasives.string_of_int(match$2[2]),
                     /* [] */0
                   ]
                 ]
@@ -4862,11 +4972,11 @@ function background(x) {
       } else {
         var match$4 = x[1];
         tmp = "hsla(" + (join(", ", /* :: */[
-                String(match$4[0]),
+                Pervasives.string_of_int(match$4[0]),
                 /* :: */[
-                  String(match$4[1]) + "%",
+                  Pervasives.string_of_int(match$4[1]) + "%",
                   /* :: */[
-                    String(match$4[2]) + "%",
+                    Pervasives.string_of_int(match$4[2]) + "%",
                     /* :: */[
                       string_of_float(match$4[3]),
                       /* [] */0
@@ -4878,11 +4988,11 @@ function background(x) {
     } else {
       var match$5 = x[1];
       tmp = "rgba(" + (join(", ", /* :: */[
-              String(match$5[0]),
+              Pervasives.string_of_int(match$5[0]),
               /* :: */[
-                String(match$5[1]),
+                Pervasives.string_of_int(match$5[1]),
                 /* :: */[
-                  String(match$5[2]),
+                  Pervasives.string_of_int(match$5[2]),
                   /* :: */[
                     string_of_float(match$5[3]),
                     /* [] */0
@@ -5026,7 +5136,7 @@ function string_of_listStyleType(param) {
     } else {
       return "upper-alpha";
     }
-  } else if (param !== -703761904) {
+  } else if (param >= -703761904) {
     if (param >= -655228771) {
       if (param >= -571131491) {
         return "lower-alpha";
@@ -5036,10 +5146,12 @@ function string_of_listStyleType(param) {
     } else if (param >= -699686657) {
       return "lower-greek";
     } else {
-      return "disc";
+      return "circle";
     }
+  } else if (param >= -922086728) {
+    return "none";
   } else {
-    return "circle";
+    return "disc";
   }
 }
 
@@ -5169,10 +5281,6 @@ var jsMapperConstantArray = /* array */[
   ]
 ];
 
-function fontStyleToJs(param) {
-  return Js_mapperRt.binarySearch(3, param, jsMapperConstantArray);
-}
-
 function color(x) {
   return d("color", string_of_color(x));
 }
@@ -5194,7 +5302,9 @@ function fontStyle(x) {
 }
 
 function fontFace(fontFamily, src, fontStyle, fontWeight, _) {
-  var fontStyle$1 = mapOption(fontStyleToJs, fontStyle);
+  var fontStyle$1 = Js_option.map((function (value) {
+          return Js_mapperRt.binarySearch(3, value, jsMapperConstantArray);
+        }), fontStyle);
   var src$1 = $$String.concat(", ", List.map((function (param) {
               if (param[0] >= 5843823) {
                 return "url(\"" + (String(param[1]) + "\")");
@@ -5216,7 +5326,7 @@ function fontFace(fontFamily, src, fontStyle, fontWeight, _) {
 }
 
 function fontWeight(x) {
-  return d("fontWeight", String(x));
+  return d("fontWeight", Pervasives.string_of_int(x));
 }
 
 function lineHeight(x) {
@@ -5236,11 +5346,11 @@ function letterSpacing(x) {
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
             ) : (
-              variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
+              variant >= 26418 ? string_of_float(x[1]) + "vh" : Pervasives.string_of_int(x[1]) + "px"
             )
         ) : (
           variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
+              variant >= 25092 ? Pervasives.string_of_int(x[1]) + "pt" : string_of_float(x[1]) + "ex"
             ) : string_of_float(x[1]) + "mm"
         );
     } else if (variant >= -119887163) {
@@ -5365,11 +5475,11 @@ function verticalAlign(x) {
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
             ) : (
-              variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
+              variant >= 26418 ? string_of_float(x[1]) + "vh" : Pervasives.string_of_int(x[1]) + "px"
             )
         ) : (
           variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
+              variant >= 25092 ? Pervasives.string_of_int(x[1]) + "pt" : string_of_float(x[1]) + "ex"
             ) : string_of_float(x[1]) + "mm"
         );
     } else if (variant >= -119887163) {
@@ -5421,11 +5531,11 @@ function wordSpacing(x) {
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
             ) : (
-              variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
+              variant >= 26418 ? string_of_float(x[1]) + "vh" : Pervasives.string_of_int(x[1]) + "px"
             )
         ) : (
           variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
+              variant >= 25092 ? Pervasives.string_of_int(x[1]) + "pt" : string_of_float(x[1]) + "ex"
             ) : string_of_float(x[1]) + "mm"
         );
     } else if (variant >= -119887163) {
@@ -5618,7 +5728,7 @@ function string_of_transform(param) {
               ]);
   } else {
     return func("perspective", /* :: */[
-                String(param[1]),
+                Pervasives.string_of_int(param[1]),
                 /* [] */0
               ]);
   }
@@ -5670,11 +5780,11 @@ function perspective(x) {
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
             ) : (
-              variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
+              variant >= 26418 ? string_of_float(x[1]) + "vh" : Pervasives.string_of_int(x[1]) + "px"
             )
         ) : (
           variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
+              variant >= 25092 ? Pervasives.string_of_int(x[1]) + "pt" : string_of_float(x[1]) + "ex"
             ) : string_of_float(x[1]) + "mm"
         );
     } else if (variant >= -119887163) {
@@ -5721,7 +5831,7 @@ function string_of_timingFunction(param) {
     var i = match[0];
     if (match[1] >= 67859554) {
       return func("steps", /* :: */[
-                  String(i),
+                  Pervasives.string_of_int(i),
                   /* :: */[
                     "start",
                     /* [] */0
@@ -5729,7 +5839,7 @@ function string_of_timingFunction(param) {
                 ]);
     } else {
       return func("steps", /* :: */[
-                  String(i),
+                  Pervasives.string_of_int(i),
                   /* :: */[
                     "end",
                     /* [] */0
@@ -5761,11 +5871,11 @@ function transition($staropt$star, $staropt$star$1, $staropt$star$2, property) {
   return /* `transition */[
           -659583595,
           join(" ", /* :: */[
-                String(duration) + "ms",
+                Pervasives.string_of_int(duration) + "ms",
                 /* :: */[
                   string_of_timingFunction(timingFunction),
                   /* :: */[
-                    String(delay) + "ms",
+                    Pervasives.string_of_int(delay) + "ms",
                     /* :: */[
                       property,
                       /* [] */0
@@ -5783,11 +5893,11 @@ function transitions(xs) {
 }
 
 function transitionDelay(i) {
-  return d("transitionDelay", String(i) + "ms");
+  return d("transitionDelay", Pervasives.string_of_int(i) + "ms");
 }
 
 function transitionDuration(i) {
-  return d("transitionDuration", String(i) + "ms");
+  return d("transitionDuration", Pervasives.string_of_int(i) + "ms");
 }
 
 function transitionTimingFunction(x) {
@@ -5840,7 +5950,7 @@ function string_of_animationIterationCount(param) {
   if (typeof param === "number") {
     return "infinite";
   } else {
-    return String(param[1]);
+    return Pervasives.string_of_int(param[1]);
   }
 }
 
@@ -5868,11 +5978,11 @@ function animation($staropt$star, $staropt$star$1, $staropt$star$2, $staropt$sta
           join(" ", /* :: */[
                 name,
                 /* :: */[
-                  String(duration) + "ms",
+                  Pervasives.string_of_int(duration) + "ms",
                   /* :: */[
                     string_of_timingFunction(timingFunction),
                     /* :: */[
-                      String(delay) + "ms",
+                      Pervasives.string_of_int(delay) + "ms",
                       /* :: */[
                         string_of_animationIterationCount(iterationCount),
                         /* :: */[
@@ -5902,7 +6012,7 @@ function animations(xs) {
 }
 
 function animationDelay(x) {
-  return d("animationDelay", String(x) + "ms");
+  return d("animationDelay", Pervasives.string_of_int(x) + "ms");
 }
 
 function animationDirection(x) {
@@ -5910,7 +6020,7 @@ function animationDirection(x) {
 }
 
 function animationDuration(x) {
-  return d("animationDuration", String(x) + "ms");
+  return d("animationDuration", Pervasives.string_of_int(x) + "ms");
 }
 
 function animationFillMode(x) {
@@ -6915,6 +7025,10 @@ var wrapReverse = /* wrapReverse */-463121288;
 
 var flexBox = /* flex */-1010954439;
 
+var grid = /* grid */-999565626;
+
+var inlineGrid = /* inlineGrid */64712127;
+
 var block = /* block */888960333;
 
 var inline = /* inline */423610969;
@@ -7236,6 +7350,7 @@ exports.ch = ch;
 exports.cm = cm;
 exports.em = em;
 exports.ex = ex;
+exports.fr = fr;
 exports.mm = mm;
 exports.pct = pct;
 exports.pt = pt;
@@ -7276,6 +7391,8 @@ exports.wrap = wrap;
 exports.nowrap = nowrap;
 exports.wrapReverse = wrapReverse;
 exports.flexBox = flexBox;
+exports.grid = grid;
+exports.inlineGrid = inlineGrid;
 exports.block = block;
 exports.inline = inline;
 exports.inlineBlock = inlineBlock;
@@ -7377,6 +7494,18 @@ exports.flexBasis = flexBasis;
 exports.flexDirection = flexDirection;
 exports.flexWrap = flexWrap;
 exports.order = order;
+exports.gridTemplateColumns = gridTemplateColumns;
+exports.gridTemplateRows = gridTemplateRows;
+exports.gridAutoRows = gridAutoRows;
+exports.gridColumn = gridColumn;
+exports.gridRow = gridRow;
+exports.gridColumnStart = gridColumnStart;
+exports.gridColumnEnd = gridColumnEnd;
+exports.gridRowStart = gridRowStart;
+exports.gridRowEnd = gridRowEnd;
+exports.gridColumnGap = gridColumnGap;
+exports.gridRowGap = gridRowGap;
+exports.gridGap = gridGap;
 exports.width = width;
 exports.minWidth = minWidth;
 exports.maxWidth = maxWidth;
@@ -7437,6 +7566,9 @@ exports.borderTopLeftRadius = borderTopLeftRadius;
 exports.borderTopRightRadius = borderTopRightRadius;
 exports.borderBottomLeftRadius = borderBottomLeftRadius;
 exports.borderBottomRightRadius = borderBottomRightRadius;
+exports.tableLayout = tableLayout;
+exports.borderCollapse = borderCollapse;
+exports.borderSpacing = borderSpacing;
 exports.boxShadow = boxShadow;
 exports.boxShadows = boxShadows;
 exports.background = background;
@@ -7550,7 +7682,128 @@ exports.SVG = SVG;
 "use strict";
 
 
-var Block = __webpack_require__(16);
+var Caml_builtin_exceptions = __webpack_require__(1);
+
+function caml_array_sub(x, offset, len) {
+  var result = new Array(len);
+  var j = 0;
+  var i = offset;
+  while(j < len) {
+    result[j] = x[i];
+    j = j + 1 | 0;
+    i = i + 1 | 0;
+  };
+  return result;
+}
+
+function len(_acc, _l) {
+  while(true) {
+    var l = _l;
+    var acc = _acc;
+    if (l) {
+      _l = l[1];
+      _acc = l[0].length + acc | 0;
+      continue ;
+      
+    } else {
+      return acc;
+    }
+  };
+}
+
+function fill(arr, _i, _l) {
+  while(true) {
+    var l = _l;
+    var i = _i;
+    if (l) {
+      var x = l[0];
+      var l$1 = x.length;
+      var k = i;
+      var j = 0;
+      while(j < l$1) {
+        arr[k] = x[j];
+        k = k + 1 | 0;
+        j = j + 1 | 0;
+      };
+      _l = l[1];
+      _i = k;
+      continue ;
+      
+    } else {
+      return /* () */0;
+    }
+  };
+}
+
+function caml_array_concat(l) {
+  var v = len(0, l);
+  var result = new Array(v);
+  fill(result, 0, l);
+  return result;
+}
+
+function caml_array_set(xs, index, newval) {
+  if (index < 0 || index >= xs.length) {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "index out of bounds"
+        ];
+  } else {
+    xs[index] = newval;
+    return /* () */0;
+  }
+}
+
+function caml_array_get(xs, index) {
+  if (index < 0 || index >= xs.length) {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "index out of bounds"
+        ];
+  } else {
+    return xs[index];
+  }
+}
+
+function caml_make_vect(len, init) {
+  var b = new Array(len);
+  for(var i = 0 ,i_finish = len - 1 | 0; i <= i_finish; ++i){
+    b[i] = init;
+  }
+  return b;
+}
+
+function caml_array_blit(a1, i1, a2, i2, len) {
+  if (i2 <= i1) {
+    for(var j = 0 ,j_finish = len - 1 | 0; j <= j_finish; ++j){
+      a2[j + i2 | 0] = a1[j + i1 | 0];
+    }
+    return /* () */0;
+  } else {
+    for(var j$1 = len - 1 | 0; j$1 >= 0; --j$1){
+      a2[j$1 + i2 | 0] = a1[j$1 + i1 | 0];
+    }
+    return /* () */0;
+  }
+}
+
+exports.caml_array_sub = caml_array_sub;
+exports.caml_array_concat = caml_array_concat;
+exports.caml_make_vect = caml_make_vect;
+exports.caml_array_blit = caml_array_blit;
+exports.caml_array_get = caml_array_get;
+exports.caml_array_set = caml_array_set;
+/* No side effect */
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Block = __webpack_require__(17);
 var Caml_primitive = __webpack_require__(9);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
@@ -7888,7 +8141,7 @@ exports.caml_max = caml_max;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7905,7 +8158,684 @@ exports.__ = __;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Curry = __webpack_require__(3);
+var Caml_io = __webpack_require__(35);
+var Caml_sys = __webpack_require__(36);
+var Caml_format = __webpack_require__(37);
+var Caml_string = __webpack_require__(11);
+var Caml_exceptions = __webpack_require__(39);
+var Caml_missing_polyfill = __webpack_require__(40);
+var Caml_builtin_exceptions = __webpack_require__(1);
+var CamlinternalFormatBasics = __webpack_require__(41);
+
+function failwith(s) {
+  throw [
+        Caml_builtin_exceptions.failure,
+        s
+      ];
+}
+
+function invalid_arg(s) {
+  throw [
+        Caml_builtin_exceptions.invalid_argument,
+        s
+      ];
+}
+
+var Exit = Caml_exceptions.create("Pervasives.Exit");
+
+function abs(x) {
+  if (x >= 0) {
+    return x;
+  } else {
+    return -x | 0;
+  }
+}
+
+function lnot(x) {
+  return x ^ -1;
+}
+
+var min_int = -2147483648;
+
+function char_of_int(n) {
+  if (n < 0 || n > 255) {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "char_of_int"
+        ];
+  } else {
+    return n;
+  }
+}
+
+function string_of_bool(b) {
+  if (b) {
+    return "true";
+  } else {
+    return "false";
+  }
+}
+
+function bool_of_string(param) {
+  switch (param) {
+    case "false" : 
+        return /* false */0;
+    case "true" : 
+        return /* true */1;
+    default:
+      throw [
+            Caml_builtin_exceptions.invalid_argument,
+            "bool_of_string"
+          ];
+  }
+}
+
+function string_of_int(param) {
+  return "" + param;
+}
+
+function valid_float_lexem(s) {
+  var l = s.length;
+  var _i = 0;
+  while(true) {
+    var i = _i;
+    if (i >= l) {
+      return s + ".";
+    } else {
+      var match = Caml_string.get(s, i);
+      if (match >= 48) {
+        if (match >= 58) {
+          return s;
+        } else {
+          _i = i + 1 | 0;
+          continue ;
+          
+        }
+      } else if (match !== 45) {
+        return s;
+      } else {
+        _i = i + 1 | 0;
+        continue ;
+        
+      }
+    }
+  };
+}
+
+function string_of_float(f) {
+  return valid_float_lexem(Caml_format.caml_format_float("%.12g", f));
+}
+
+function $at(l1, l2) {
+  if (l1) {
+    return /* :: */[
+            l1[0],
+            $at(l1[1], l2)
+          ];
+  } else {
+    return l2;
+  }
+}
+
+var stdin = Caml_io.stdin;
+
+var stdout = Caml_io.stdout;
+
+var stderr = Caml_io.stderr;
+
+function open_out_gen(_, _$1, _$2) {
+  return Caml_io.caml_ml_open_descriptor_out(Caml_missing_polyfill.not_implemented("caml_sys_open not implemented by bucklescript yet\n"));
+}
+
+function open_out(name) {
+  return open_out_gen(/* :: */[
+              /* Open_wronly */1,
+              /* :: */[
+                /* Open_creat */3,
+                /* :: */[
+                  /* Open_trunc */4,
+                  /* :: */[
+                    /* Open_text */7,
+                    /* [] */0
+                  ]
+                ]
+              ]
+            ], 438, name);
+}
+
+function open_out_bin(name) {
+  return open_out_gen(/* :: */[
+              /* Open_wronly */1,
+              /* :: */[
+                /* Open_creat */3,
+                /* :: */[
+                  /* Open_trunc */4,
+                  /* :: */[
+                    /* Open_binary */6,
+                    /* [] */0
+                  ]
+                ]
+              ]
+            ], 438, name);
+}
+
+function flush_all() {
+  var _param = Caml_io.caml_ml_out_channels_list(/* () */0);
+  while(true) {
+    var param = _param;
+    if (param) {
+      try {
+        Caml_io.caml_ml_flush(param[0]);
+      }
+      catch (exn){
+        
+      }
+      _param = param[1];
+      continue ;
+      
+    } else {
+      return /* () */0;
+    }
+  };
+}
+
+function output_bytes(oc, s) {
+  return Caml_io.caml_ml_output(oc, s, 0, s.length);
+}
+
+function output_string(oc, s) {
+  return Caml_io.caml_ml_output(oc, s, 0, s.length);
+}
+
+function output(oc, s, ofs, len) {
+  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "output"
+        ];
+  } else {
+    return Caml_io.caml_ml_output(oc, s, ofs, len);
+  }
+}
+
+function output_substring(oc, s, ofs, len) {
+  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "output_substring"
+        ];
+  } else {
+    return Caml_io.caml_ml_output(oc, s, ofs, len);
+  }
+}
+
+function output_value(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_output_value not implemented by bucklescript yet\n");
+}
+
+function close_out(oc) {
+  Caml_io.caml_ml_flush(oc);
+  return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
+}
+
+function close_out_noerr(oc) {
+  try {
+    Caml_io.caml_ml_flush(oc);
+  }
+  catch (exn){
+    
+  }
+  try {
+    return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
+  }
+  catch (exn$1){
+    return /* () */0;
+  }
+}
+
+function open_in_gen(_, _$1, _$2) {
+  return Caml_io.caml_ml_open_descriptor_in(Caml_missing_polyfill.not_implemented("caml_sys_open not implemented by bucklescript yet\n"));
+}
+
+function open_in(name) {
+  return open_in_gen(/* :: */[
+              /* Open_rdonly */0,
+              /* :: */[
+                /* Open_text */7,
+                /* [] */0
+              ]
+            ], 0, name);
+}
+
+function open_in_bin(name) {
+  return open_in_gen(/* :: */[
+              /* Open_rdonly */0,
+              /* :: */[
+                /* Open_binary */6,
+                /* [] */0
+              ]
+            ], 0, name);
+}
+
+function input(_, s, ofs, len) {
+  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "input"
+        ];
+  } else {
+    return Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
+  }
+}
+
+function unsafe_really_input(_, _$1, _ofs, _len) {
+  while(true) {
+    var len = _len;
+    var ofs = _ofs;
+    if (len <= 0) {
+      return /* () */0;
+    } else {
+      var r = Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
+      if (r) {
+        _len = len - r | 0;
+        _ofs = ofs + r | 0;
+        continue ;
+        
+      } else {
+        throw Caml_builtin_exceptions.end_of_file;
+      }
+    }
+  };
+}
+
+function really_input(ic, s, ofs, len) {
+  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "really_input"
+        ];
+  } else {
+    return unsafe_really_input(ic, s, ofs, len);
+  }
+}
+
+function really_input_string(ic, len) {
+  var s = Caml_string.caml_create_string(len);
+  really_input(ic, s, 0, len);
+  return Caml_string.bytes_to_string(s);
+}
+
+function input_line(chan) {
+  var build_result = function (buf, _pos, _param) {
+    while(true) {
+      var param = _param;
+      var pos = _pos;
+      if (param) {
+        var hd = param[0];
+        var len = hd.length;
+        Caml_string.caml_blit_bytes(hd, 0, buf, pos - len | 0, len);
+        _param = param[1];
+        _pos = pos - len | 0;
+        continue ;
+        
+      } else {
+        return buf;
+      }
+    };
+  };
+  var scan = function (_accu, _len) {
+    while(true) {
+      var len = _len;
+      var accu = _accu;
+      var n = Caml_missing_polyfill.not_implemented("caml_ml_input_scan_line not implemented by bucklescript yet\n");
+      if (n) {
+        if (n > 0) {
+          var res = Caml_string.caml_create_string(n - 1 | 0);
+          Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
+          Caml_io.caml_ml_input_char(chan);
+          if (accu) {
+            var len$1 = (len + n | 0) - 1 | 0;
+            return build_result(Caml_string.caml_create_string(len$1), len$1, /* :: */[
+                        res,
+                        accu
+                      ]);
+          } else {
+            return res;
+          }
+        } else {
+          var beg = Caml_string.caml_create_string(-n | 0);
+          Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
+          _len = len - n | 0;
+          _accu = /* :: */[
+            beg,
+            accu
+          ];
+          continue ;
+          
+        }
+      } else if (accu) {
+        return build_result(Caml_string.caml_create_string(len), len, accu);
+      } else {
+        throw Caml_builtin_exceptions.end_of_file;
+      }
+    };
+  };
+  return Caml_string.bytes_to_string(scan(/* [] */0, 0));
+}
+
+function close_in_noerr() {
+  try {
+    return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
+  }
+  catch (exn){
+    return /* () */0;
+  }
+}
+
+function print_char(c) {
+  return Caml_io.caml_ml_output_char(stdout, c);
+}
+
+function print_string(s) {
+  return output_string(stdout, s);
+}
+
+function print_bytes(s) {
+  return output_bytes(stdout, s);
+}
+
+function print_int(i) {
+  return output_string(stdout, "" + i);
+}
+
+function print_float(f) {
+  return output_string(stdout, valid_float_lexem(Caml_format.caml_format_float("%.12g", f)));
+}
+
+function print_endline(param) {
+  console.log(param);
+  return 0;
+}
+
+function print_newline() {
+  Caml_io.caml_ml_output_char(stdout, /* "\n" */10);
+  return Caml_io.caml_ml_flush(stdout);
+}
+
+function prerr_char(c) {
+  return Caml_io.caml_ml_output_char(stderr, c);
+}
+
+function prerr_string(s) {
+  return output_string(stderr, s);
+}
+
+function prerr_bytes(s) {
+  return output_bytes(stderr, s);
+}
+
+function prerr_int(i) {
+  return output_string(stderr, "" + i);
+}
+
+function prerr_float(f) {
+  return output_string(stderr, valid_float_lexem(Caml_format.caml_format_float("%.12g", f)));
+}
+
+function prerr_endline(param) {
+  console.error(param);
+  return 0;
+}
+
+function prerr_newline() {
+  Caml_io.caml_ml_output_char(stderr, /* "\n" */10);
+  return Caml_io.caml_ml_flush(stderr);
+}
+
+function read_line() {
+  Caml_io.caml_ml_flush(stdout);
+  return input_line(stdin);
+}
+
+function read_int() {
+  return Caml_format.caml_int_of_string((Caml_io.caml_ml_flush(stdout), input_line(stdin)));
+}
+
+function read_float() {
+  return Caml_format.caml_float_of_string((Caml_io.caml_ml_flush(stdout), input_line(stdin)));
+}
+
+function string_of_format(param) {
+  return param[1];
+}
+
+function $caret$caret(param, param$1) {
+  return /* Format */[
+          CamlinternalFormatBasics.concat_fmt(param[0], param$1[0]),
+          param[1] + ("%," + param$1[1])
+        ];
+}
+
+var exit_function = [flush_all];
+
+function at_exit(f) {
+  var g = exit_function[0];
+  exit_function[0] = (function () {
+      Curry._1(f, /* () */0);
+      return Curry._1(g, /* () */0);
+    });
+  return /* () */0;
+}
+
+function do_at_exit() {
+  return Curry._1(exit_function[0], /* () */0);
+}
+
+function exit(retcode) {
+  do_at_exit(/* () */0);
+  return Caml_sys.caml_sys_exit(retcode);
+}
+
+var max_int = 2147483647;
+
+var infinity = Infinity;
+
+var neg_infinity = -Infinity;
+
+var nan = NaN;
+
+var max_float = Number.MAX_VALUE;
+
+var min_float = Number.MIN_VALUE;
+
+var epsilon_float = 2.220446049250313e-16;
+
+var flush = Caml_io.caml_ml_flush;
+
+var output_char = Caml_io.caml_ml_output_char;
+
+var output_byte = Caml_io.caml_ml_output_char;
+
+function output_binary_int(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_ml_output_int not implemented by bucklescript yet\n");
+}
+
+function seek_out(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_ml_seek_out not implemented by bucklescript yet\n");
+}
+
+function pos_out() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_pos_out not implemented by bucklescript yet\n");
+}
+
+function out_channel_length() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size not implemented by bucklescript yet\n");
+}
+
+function set_binary_mode_out(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_ml_set_binary_mode not implemented by bucklescript yet\n");
+}
+
+var input_char = Caml_io.caml_ml_input_char;
+
+var input_byte = Caml_io.caml_ml_input_char;
+
+function input_binary_int() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_input_int not implemented by bucklescript yet\n");
+}
+
+function input_value() {
+  return Caml_missing_polyfill.not_implemented("caml_input_value not implemented by bucklescript yet\n");
+}
+
+function seek_in(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_ml_seek_in not implemented by bucklescript yet\n");
+}
+
+function pos_in() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_pos_in not implemented by bucklescript yet\n");
+}
+
+function in_channel_length() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size not implemented by bucklescript yet\n");
+}
+
+function close_in() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
+}
+
+function set_binary_mode_in(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_ml_set_binary_mode not implemented by bucklescript yet\n");
+}
+
+function LargeFile_000(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_ml_seek_out_64 not implemented by bucklescript yet\n");
+}
+
+function LargeFile_001() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_pos_out_64 not implemented by bucklescript yet\n");
+}
+
+function LargeFile_002() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size_64 not implemented by bucklescript yet\n");
+}
+
+function LargeFile_003(_, _$1) {
+  return Caml_missing_polyfill.not_implemented("caml_ml_seek_in_64 not implemented by bucklescript yet\n");
+}
+
+function LargeFile_004() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_pos_in_64 not implemented by bucklescript yet\n");
+}
+
+function LargeFile_005() {
+  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size_64 not implemented by bucklescript yet\n");
+}
+
+var LargeFile = [
+  LargeFile_000,
+  LargeFile_001,
+  LargeFile_002,
+  LargeFile_003,
+  LargeFile_004,
+  LargeFile_005
+];
+
+exports.invalid_arg = invalid_arg;
+exports.failwith = failwith;
+exports.Exit = Exit;
+exports.abs = abs;
+exports.max_int = max_int;
+exports.min_int = min_int;
+exports.lnot = lnot;
+exports.infinity = infinity;
+exports.neg_infinity = neg_infinity;
+exports.nan = nan;
+exports.max_float = max_float;
+exports.min_float = min_float;
+exports.epsilon_float = epsilon_float;
+exports.char_of_int = char_of_int;
+exports.string_of_bool = string_of_bool;
+exports.bool_of_string = bool_of_string;
+exports.string_of_int = string_of_int;
+exports.string_of_float = string_of_float;
+exports.$at = $at;
+exports.stdin = stdin;
+exports.stdout = stdout;
+exports.stderr = stderr;
+exports.print_char = print_char;
+exports.print_string = print_string;
+exports.print_bytes = print_bytes;
+exports.print_int = print_int;
+exports.print_float = print_float;
+exports.print_endline = print_endline;
+exports.print_newline = print_newline;
+exports.prerr_char = prerr_char;
+exports.prerr_string = prerr_string;
+exports.prerr_bytes = prerr_bytes;
+exports.prerr_int = prerr_int;
+exports.prerr_float = prerr_float;
+exports.prerr_endline = prerr_endline;
+exports.prerr_newline = prerr_newline;
+exports.read_line = read_line;
+exports.read_int = read_int;
+exports.read_float = read_float;
+exports.open_out = open_out;
+exports.open_out_bin = open_out_bin;
+exports.open_out_gen = open_out_gen;
+exports.flush = flush;
+exports.flush_all = flush_all;
+exports.output_char = output_char;
+exports.output_string = output_string;
+exports.output_bytes = output_bytes;
+exports.output = output;
+exports.output_substring = output_substring;
+exports.output_byte = output_byte;
+exports.output_binary_int = output_binary_int;
+exports.output_value = output_value;
+exports.seek_out = seek_out;
+exports.pos_out = pos_out;
+exports.out_channel_length = out_channel_length;
+exports.close_out = close_out;
+exports.close_out_noerr = close_out_noerr;
+exports.set_binary_mode_out = set_binary_mode_out;
+exports.open_in = open_in;
+exports.open_in_bin = open_in_bin;
+exports.open_in_gen = open_in_gen;
+exports.input_char = input_char;
+exports.input_line = input_line;
+exports.input = input;
+exports.really_input = really_input;
+exports.really_input_string = really_input_string;
+exports.input_byte = input_byte;
+exports.input_binary_int = input_binary_int;
+exports.input_value = input_value;
+exports.seek_in = seek_in;
+exports.pos_in = pos_in;
+exports.in_channel_length = in_channel_length;
+exports.close_in = close_in;
+exports.close_in_noerr = close_in_noerr;
+exports.set_binary_mode_in = set_binary_mode_in;
+exports.LargeFile = LargeFile;
+exports.string_of_format = string_of_format;
+exports.$caret$caret = $caret$caret;
+exports.exit = exit;
+exports.at_exit = at_exit;
+exports.valid_float_lexem = valid_float_lexem;
+exports.unsafe_really_input = unsafe_really_input;
+exports.do_at_exit = do_at_exit;
+/* No side effect */
+
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7943,7 +8873,7 @@ exports.repeat = repeat;
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8016,13 +8946,13 @@ exports.placeholder = placeholder;
 exports.cssFor = cssFor;
 exports.attribsFor = attribsFor;
 
-var _objectAssign = __webpack_require__(3);
+var _objectAssign = __webpack_require__(2);
 
 var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
 var _sheet = __webpack_require__(45);
 
-var _CSSPropertyOperations = __webpack_require__(19);
+var _CSSPropertyOperations = __webpack_require__(21);
 
 var _clean = __webpack_require__(51);
 
@@ -8962,7 +9892,7 @@ function attribsFor() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8974,7 +9904,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.processStyleName = undefined;
 exports.createMarkupForStyles = createMarkupForStyles;
 
-var _camelizeStyleName = __webpack_require__(20);
+var _camelizeStyleName = __webpack_require__(22);
 
 var _camelizeStyleName2 = _interopRequireDefault(_camelizeStyleName);
 
@@ -8982,7 +9912,7 @@ var _dangerousStyleValue = __webpack_require__(47);
 
 var _dangerousStyleValue2 = _interopRequireDefault(_dangerousStyleValue);
 
-var _hyphenateStyleName = __webpack_require__(21);
+var _hyphenateStyleName = __webpack_require__(23);
 
 var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
 
@@ -9131,7 +10061,7 @@ function createMarkupForStyles(styles, component) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9174,7 +10104,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9216,7 +10146,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9232,7 +10162,7 @@ function capitalizeString(str) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9248,7 +10178,7 @@ module.exports = exports["default"];
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(13);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(75);
+  var ReactPropTypesSecret = __webpack_require__(76);
   var loggedTypeFailures = {};
 }
 
@@ -9299,17 +10229,18 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Generated by BUCKLESCRIPT VERSION 2.2.2, PLEASE EDIT WITH CARE
 
 
 var List = __webpack_require__(8);
-var Curry = __webpack_require__(2);
+var Curry = __webpack_require__(3);
 var React = __webpack_require__(5);
 var Caml_builtin_exceptions = __webpack_require__(1);
-var ReasonReactOptimizedCreateClass = __webpack_require__(76);
+var ReasonReactOptimizedCreateClass = __webpack_require__(77);
 
 function createDomElement(s, props, children) {
   var vararg = /* array */[
@@ -9356,7 +10287,7 @@ function lifecycleReturnTrue() {
 }
 
 function willReceivePropsDefault(param) {
-  return param[/* state */2];
+  return param[/* state */4];
 }
 
 function renderDefault() {
@@ -9371,38 +10302,32 @@ function reducerDefault(_, _$1) {
   return /* NoUpdate */0;
 }
 
-function subscriptionsDefault() {
-  return /* [] */0;
-}
-
 function convertPropsIfTheyreFromJs(props, jsPropsToReason, debugName) {
   var match = props.reasonProps;
-  if (match == null) {
-    if (jsPropsToReason) {
-      return /* Element */[Curry._1(jsPropsToReason[0], props)];
-    } else {
-      throw [
-            Caml_builtin_exceptions.invalid_argument,
-            "A JS component called the Reason component " + (debugName + " which didn't implement the JS->Reason React props conversion.")
-          ];
-    }
-  } else {
+  if (match !== undefined) {
     return match;
+  } else if (jsPropsToReason) {
+    return /* Element */[Curry._1(jsPropsToReason[0], props)];
+  } else {
+    throw [
+          Caml_builtin_exceptions.invalid_argument,
+          "A JS component called the Reason component " + (debugName + " which didn't implement the JS->Reason React props conversion.")
+        ];
   }
 }
 
 function createClass(debugName) {
   return ReasonReactOptimizedCreateClass.createClass({
               displayName: debugName,
-              subscriptions: null,
               self: (function (state, retainedProps) {
                   var $$this = this ;
                   return /* record */[
                           /* handle */$$this.handleMethod,
+                          /* update */$$this.updateMethod,
+                          /* enqueue */$$this.enqueueMethod,
                           /* reduce */$$this.reduceMethod,
                           /* state */state,
-                          /* retainedProps */retainedProps,
-                          /* send */$$this.sendMethod
+                          /* retainedProps */retainedProps
                         ];
                 }),
               transitionNextTotalState: (function (curTotalState, reasonStateUpdate) {
@@ -9474,20 +10399,10 @@ function createClass(debugName) {
                   var thisJs = (this);
                   var convertedReasonProps = convertPropsIfTheyreFromJs(thisJs.props, thisJs.jsPropsToReason, debugName);
                   var component = convertedReasonProps[0];
-                  var curTotalState = thisJs.state;
-                  var curReasonState = curTotalState.reasonState;
-                  var self = $$this.self(curReasonState, component[/* retainedProps */11]);
-                  if (component[/* subscriptions */13] !== subscriptionsDefault) {
-                    var subscriptions = List.map((function (param) {
-                            var unsubscribe = param[1];
-                            var token = Curry._1(param[0], /* () */0);
-                            return (function () {
-                                return Curry._1(unsubscribe, token);
-                              });
-                          }), Curry._1(component[/* subscriptions */13], self));
-                    $$this.subscriptions = subscriptions;
-                  }
                   if (component[/* didMount */4] !== lifecycleNoUpdate) {
+                    var curTotalState = thisJs.state;
+                    var curReasonState = curTotalState.reasonState;
+                    var self = $$this.self(curReasonState, component[/* retainedProps */11]);
                     var reasonStateUpdate = Curry._1(component[/* didMount */4], self);
                     var nextTotalState = $$this.transitionNextTotalState(curTotalState, reasonStateUpdate);
                     if (nextTotalState.reasonStateVersion !== curTotalState.reasonStateVersion) {
@@ -9513,15 +10428,17 @@ function createClass(debugName) {
                     var prevReasonState = prevState.reasonState;
                     var newSelf = $$this.self(curReasonState, newComponent[/* retainedProps */11]);
                     var oldSelf_000 = /* handle */newSelf[/* handle */0];
-                    var oldSelf_001 = /* reduce */newSelf[/* reduce */1];
-                    var oldSelf_003 = /* retainedProps */oldConvertedReasonProps[0][/* retainedProps */11];
-                    var oldSelf_004 = /* send */newSelf[/* send */4];
+                    var oldSelf_001 = /* update */newSelf[/* update */1];
+                    var oldSelf_002 = /* enqueue */newSelf[/* enqueue */2];
+                    var oldSelf_003 = /* reduce */newSelf[/* reduce */3];
+                    var oldSelf_005 = /* retainedProps */oldConvertedReasonProps[0][/* retainedProps */11];
                     var oldSelf = /* record */[
                       oldSelf_000,
                       oldSelf_001,
-                      /* state */prevReasonState,
+                      oldSelf_002,
                       oldSelf_003,
-                      oldSelf_004
+                      /* state */prevReasonState,
+                      oldSelf_005
                     ];
                     return Curry._1(newComponent[/* didUpdate */5], /* record */[
                                 /* oldSelf */oldSelf,
@@ -9536,18 +10453,12 @@ function createClass(debugName) {
                   var thisJs = (this);
                   var convertedReasonProps = convertPropsIfTheyreFromJs(thisJs.props, thisJs.jsPropsToReason, debugName);
                   var component = convertedReasonProps[0];
-                  var curState = thisJs.state;
-                  var curReasonState = curState.reasonState;
                   if (component[/* willUnmount */6] !== lifecycleReturnUnit) {
-                    Curry._1(component[/* willUnmount */6], $$this.self(curReasonState, component[/* retainedProps */11]));
-                  }
-                  var match = $$this.subscriptions;
-                  if (match == null) {
-                    return /* () */0;
+                    var curState = thisJs.state;
+                    var curReasonState = curState.reasonState;
+                    return Curry._1(component[/* willUnmount */6], $$this.self(curReasonState, component[/* retainedProps */11]));
                   } else {
-                    return List.iter((function (unsubscribe) {
-                                  return Curry._1(unsubscribe, /* () */0);
-                                }), List.rev(match));
+                    return 0;
                   }
                 }),
               componentWillUpdate: (function (nextProps, nextState) {
@@ -9564,15 +10475,17 @@ function createClass(debugName) {
                     var nextReasonState = nextState.reasonState;
                     var newSelf = $$this.self(nextReasonState, newComponent[/* retainedProps */11]);
                     var oldSelf_000 = /* handle */newSelf[/* handle */0];
-                    var oldSelf_001 = /* reduce */newSelf[/* reduce */1];
-                    var oldSelf_003 = /* retainedProps */oldConvertedReasonProps[0][/* retainedProps */11];
-                    var oldSelf_004 = /* send */newSelf[/* send */4];
+                    var oldSelf_001 = /* update */newSelf[/* update */1];
+                    var oldSelf_002 = /* enqueue */newSelf[/* enqueue */2];
+                    var oldSelf_003 = /* reduce */newSelf[/* reduce */3];
+                    var oldSelf_005 = /* retainedProps */oldConvertedReasonProps[0][/* retainedProps */11];
                     var oldSelf = /* record */[
                       oldSelf_000,
                       oldSelf_001,
-                      /* state */curReasonState,
+                      oldSelf_002,
                       oldSelf_003,
-                      oldSelf_004
+                      /* state */curReasonState,
+                      oldSelf_005
                     ];
                     return Curry._1(newComponent[/* willUpdate */7], /* record */[
                                 /* oldSelf */oldSelf,
@@ -9634,15 +10547,17 @@ function createClass(debugName) {
                     var curState = thisJs.state;
                     var curReasonState = curState.reasonState;
                     var oldSelf_000 = /* handle */newSelf[/* handle */0];
-                    var oldSelf_001 = /* reduce */newSelf[/* reduce */1];
-                    var oldSelf_003 = /* retainedProps */oldConvertedReasonProps[0][/* retainedProps */11];
-                    var oldSelf_004 = /* send */newSelf[/* send */4];
+                    var oldSelf_001 = /* update */newSelf[/* update */1];
+                    var oldSelf_002 = /* enqueue */newSelf[/* enqueue */2];
+                    var oldSelf_003 = /* reduce */newSelf[/* reduce */3];
+                    var oldSelf_005 = /* retainedProps */oldConvertedReasonProps[0][/* retainedProps */11];
                     var oldSelf = /* record */[
                       oldSelf_000,
                       oldSelf_001,
-                      /* state */curReasonState,
+                      oldSelf_002,
                       oldSelf_003,
-                      oldSelf_004
+                      /* state */curReasonState,
+                      oldSelf_005
                     ];
                     ret = Curry._1(newComponent[/* shouldUpdate */8], /* record */[
                           /* oldSelf */oldSelf,
@@ -9657,37 +10572,36 @@ function createClass(debugName) {
                     List.iter((function (performSideEffects) {
                             return Curry._1(performSideEffects, newSelf);
                           }), nextSideEffects);
-                    thisJs.setState((function (futureTotalState, _) {
-                            var initialSegment = function (_acc, _n, _l) {
-                              while(true) {
-                                var l = _l;
-                                var n = _n;
-                                var acc = _acc;
-                                if (l && n > 0) {
-                                  _l = l[1];
-                                  _n = n - 1 | 0;
-                                  _acc = /* :: */[
-                                    l[0],
-                                    acc
-                                  ];
-                                  continue ;
-                                  
-                                } else {
-                                  return List.rev(acc);
-                                }
-                              };
-                            };
-                            var n = List.length(futureTotalState.sideEffects) - List.length(nextState.sideEffects) | 0;
-                            var newSideEffects = initialSegment(/* [] */0, n, futureTotalState.sideEffects);
-                            return {
-                                    reasonState: futureTotalState.reasonState,
-                                    reasonStateVersion: futureTotalState.reasonStateVersion,
-                                    reasonStateVersionUsedToComputeSubelements: futureTotalState.reasonStateVersionUsedToComputeSubelements,
-                                    sideEffects: newSideEffects
-                                  };
-                          }));
+                    var nextStateNoSideEffects = {
+                      reasonState: nextState.reasonState,
+                      reasonStateVersion: nextState.reasonStateVersion,
+                      reasonStateVersionUsedToComputeSubelements: nextReasonStateVersion,
+                      sideEffects: /* [] */0
+                    };
+                    thisJs.setState(nextStateNoSideEffects);
                   }
                   return ret;
+                }),
+              enqueueMethod: (function (callback) {
+                  var $$this = this ;
+                  var thisJs = (this);
+                  return (function ($$event) {
+                      var remainingCallback = Curry._1(callback, $$event);
+                      return thisJs.setState((function (curTotalState, _) {
+                                    var curReasonState = curTotalState.reasonState;
+                                    var reasonStateUpdate = Curry._1(remainingCallback, curReasonState);
+                                    if (reasonStateUpdate) {
+                                      var nextTotalState = $$this.transitionNextTotalState(curTotalState, reasonStateUpdate);
+                                      if (nextTotalState.reasonStateVersion !== curTotalState.reasonStateVersion) {
+                                        return nextTotalState;
+                                      } else {
+                                        return magicNull;
+                                      }
+                                    } else {
+                                      return magicNull;
+                                    }
+                                  }));
+                    });
                 }),
               handleMethod: (function (callback) {
                   var $$this = this ;
@@ -9707,46 +10621,44 @@ function createClass(debugName) {
                       var curReasonState = curTotalState.reasonState;
                       var convertedReasonProps = convertPropsIfTheyreFromJs(thisJs.props, thisJs.jsPropsToReason, debugName);
                       var reasonStateUpdate = Curry._2(callback, $$event, $$this.self(curReasonState, convertedReasonProps[0][/* retainedProps */11]));
-                      if (reasonStateUpdate === /* NoUpdate */0) {
-                        return magicNull;
-                      } else {
+                      if (reasonStateUpdate) {
                         var nextTotalState = $$this.transitionNextTotalState(curTotalState, reasonStateUpdate);
                         if (nextTotalState.reasonStateVersion !== curTotalState.reasonStateVersion) {
                           return thisJs.setState(nextTotalState);
                         } else {
                           return 0;
                         }
+                      } else {
+                        return magicNull;
                       }
                     });
                 }),
-              sendMethod: (function (action) {
+              reduceMethod: (function (callback) {
                   var $$this = this ;
                   var thisJs = (this);
-                  var convertedReasonProps = convertPropsIfTheyreFromJs(thisJs.props, thisJs.jsPropsToReason, debugName);
-                  var component = convertedReasonProps[0];
-                  if (component[/* reducer */12] !== reducerDefault) {
-                    var partialStateApplication = Curry._1(component[/* reducer */12], action);
-                    return thisJs.setState((function (curTotalState, _) {
-                                  var curReasonState = curTotalState.reasonState;
-                                  var reasonStateUpdate = Curry._1(partialStateApplication, curReasonState);
-                                  if (reasonStateUpdate === /* NoUpdate */0) {
-                                    return magicNull;
-                                  } else {
-                                    var nextTotalState = $$this.transitionNextTotalState(curTotalState, reasonStateUpdate);
-                                    if (nextTotalState.reasonStateVersion !== curTotalState.reasonStateVersion) {
-                                      return nextTotalState;
-                                    } else {
-                                      return magicNull;
-                                    }
-                                  }
-                                }));
-                  } else {
-                    return 0;
-                  }
-                }),
-              reduceMethod: (function (callback, payload) {
-                  var $$this = this ;
-                  return $$this.sendMethod(Curry._1(callback, payload));
+                  return (function ($$event) {
+                      var convertedReasonProps = convertPropsIfTheyreFromJs(thisJs.props, thisJs.jsPropsToReason, debugName);
+                      var component = convertedReasonProps[0];
+                      if (component[/* reducer */12] !== reducerDefault) {
+                        var action = Curry._1(callback, $$event);
+                        return thisJs.setState((function (curTotalState, _) {
+                                      var curReasonState = curTotalState.reasonState;
+                                      var reasonStateUpdate = Curry._2(component[/* reducer */12], action, curReasonState);
+                                      if (reasonStateUpdate) {
+                                        var nextTotalState = $$this.transitionNextTotalState(curTotalState, reasonStateUpdate);
+                                        if (nextTotalState.reasonStateVersion !== curTotalState.reasonStateVersion) {
+                                          return nextTotalState;
+                                        } else {
+                                          return magicNull;
+                                        }
+                                      } else {
+                                        return magicNull;
+                                      }
+                                    }));
+                      } else {
+                        return 0;
+                      }
+                    });
                 }),
               render: (function () {
                   var $$this = this ;
@@ -9775,12 +10687,15 @@ function basicComponent(debugName) {
           /* initialState */initialStateDefault,
           /* retainedProps : () */0,
           /* reducer */reducerDefault,
-          /* subscriptions */subscriptionsDefault,
           /* jsElementWrapped : None */0
         ];
 }
 
 var statelessComponent = basicComponent;
+
+var statefulComponent = basicComponent;
+
+var statefulComponentWithRetainedProps = basicComponent;
 
 var statelessComponentWithRetainedProps = basicComponent;
 
@@ -9792,7 +10707,7 @@ function element($staropt$star, $staropt$star$1, component) {
   var key = $staropt$star ? $staropt$star[0] : undefined;
   var ref = $staropt$star$1 ? $staropt$star$1[0] : undefined;
   var element$1 = /* Element */[component];
-  var match = component[/* jsElementWrapped */14];
+  var match = component[/* jsElementWrapped */13];
   if (match) {
     return Curry._2(match[0], key, ref);
   } else {
@@ -9810,7 +10725,7 @@ function wrapReasonForJs(component, jsPropsToReason) {
   return component[/* reactClassInternal */1];
 }
 
-var dummyInteropComponent = basicComponent("interop");
+var dummyInteropComponent = statefulComponent("interop");
 
 function wrapJsForReason(reactClass, props, children) {
   var jsElementWrapped = /* Some */[(function (param, param$1) {
@@ -9830,145 +10745,26 @@ function wrapJsForReason(reactClass, props, children) {
         return React.createElement.apply(null, varargs);
       })];
   var newrecord = dummyInteropComponent.slice();
-  newrecord[/* jsElementWrapped */14] = jsElementWrapped;
+  newrecord[/* jsElementWrapped */13] = jsElementWrapped;
   return newrecord;
 }
-
-function path() {
-  var match = typeof (window) === "undefined" ? undefined : (window);
-  if (match !== undefined) {
-    var raw = match.location.pathname;
-    switch (raw) {
-      case "" : 
-      case "/" : 
-          return /* [] */0;
-      default:
-        var raw$1 = raw.slice(1);
-        var match$1 = raw$1[raw$1.length - 1 | 0];
-        var raw$2 = match$1 === "/" ? raw$1.slice(0, -1) : raw$1;
-        var a = raw$2.split("/");
-        var _i = a.length - 1 | 0;
-        var _res = /* [] */0;
-        while(true) {
-          var res = _res;
-          var i = _i;
-          if (i < 0) {
-            return res;
-          } else {
-            _res = /* :: */[
-              a[i],
-              res
-            ];
-            _i = i - 1 | 0;
-            continue ;
-            
-          }
-        };
-    }
-  } else {
-    return /* [] */0;
-  }
-}
-
-function hash() {
-  var match = typeof (window) === "undefined" ? undefined : (window);
-  if (match !== undefined) {
-    var raw = match.location.hash;
-    switch (raw) {
-      case "" : 
-      case "#" : 
-          return "";
-      default:
-        return raw.slice(1);
-    }
-  } else {
-    return "";
-  }
-}
-
-function search() {
-  var match = typeof (window) === "undefined" ? undefined : (window);
-  if (match !== undefined) {
-    var raw = match.location.search;
-    switch (raw) {
-      case "" : 
-      case "?" : 
-          return "";
-      default:
-        return raw.slice(1);
-    }
-  } else {
-    return "";
-  }
-}
-
-function push(path) {
-  var match = typeof (history) === "undefined" ? undefined : (history);
-  var match$1 = typeof (window) === "undefined" ? undefined : (window);
-  if (match !== undefined && match$1 !== undefined) {
-    match.pushState((null), "", path);
-    match$1.dispatchEvent(new Event("popstate"));
-    return /* () */0;
-  } else {
-    return /* () */0;
-  }
-}
-
-function url() {
-  return /* record */[
-          /* path */path(/* () */0),
-          /* hash */hash(/* () */0),
-          /* search */search(/* () */0)
-        ];
-}
-
-function watchUrl(callback) {
-  var match = typeof (window) === "undefined" ? undefined : (window);
-  if (match !== undefined) {
-    var watcherID = function () {
-      return Curry._1(callback, url(/* () */0));
-    };
-    match.addEventListener("popstate", watcherID);
-    return watcherID;
-  } else {
-    return (function () {
-        return /* () */0;
-      });
-  }
-}
-
-function unwatchUrl(watcherID) {
-  var match = typeof (window) === "undefined" ? undefined : (window);
-  if (match !== undefined) {
-    match.removeEventListener("popstate", watcherID);
-    return /* () */0;
-  } else {
-    return /* () */0;
-  }
-}
-
-var Router = [
-  push,
-  watchUrl,
-  unwatchUrl,
-  url
-];
 
 exports.Callback = Callback;
 exports.statelessComponent = statelessComponent;
 exports.statelessComponentWithRetainedProps = statelessComponentWithRetainedProps;
 exports.reducerComponent = reducerComponent;
 exports.reducerComponentWithRetainedProps = reducerComponentWithRetainedProps;
+exports.statefulComponent = statefulComponent;
+exports.statefulComponentWithRetainedProps = statefulComponentWithRetainedProps;
 exports.element = element;
 exports.wrapReasonForJs = wrapReasonForJs;
 exports.createDomElement = createDomElement;
 exports.wrapJsForReason = wrapJsForReason;
-exports.Router = Router;
-/* magicNull Not a pure module */
+/* dummyInteropComponent Not a pure module */
 
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10007,7 +10803,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10088,7 +10884,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10130,7 +10926,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10201,7 +10997,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10216,7 +11012,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(80);
+var isTextNode = __webpack_require__(81);
 
 /*eslint-disable no-bitwise */
 
@@ -10244,7 +11040,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10274,25 +11070,25 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(32);
+module.exports = __webpack_require__(34);
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Generated by BUCKLESCRIPT VERSION 2.2.3, PLEASE EDIT WITH CARE
+// Generated by BUCKLESCRIPT VERSION 2.2.2, PLEASE EDIT WITH CARE
 
 
 var Css = __webpack_require__(14);
-var Test = __webpack_require__(72);
+var Test = __webpack_require__(73);
 var React = __webpack_require__(5);
-var ReactDOMRe = __webpack_require__(77);
-var ReasonReact = __webpack_require__(24);
+var ReactDOMRe = __webpack_require__(78);
+var ReasonReact = __webpack_require__(26);
 
 Css.$$global("html, body", /* :: */[
       Css.margin(Css.zero),
@@ -10405,788 +11201,13 @@ exports.Page = Page;
 
 
 /***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Caml_builtin_exceptions = __webpack_require__(1);
-
-function caml_array_sub(x, offset, len) {
-  var result = new Array(len);
-  var j = 0;
-  var i = offset;
-  while(j < len) {
-    result[j] = x[i];
-    j = j + 1 | 0;
-    i = i + 1 | 0;
-  };
-  return result;
-}
-
-function len(_acc, _l) {
-  while(true) {
-    var l = _l;
-    var acc = _acc;
-    if (l) {
-      _l = l[1];
-      _acc = l[0].length + acc | 0;
-      continue ;
-      
-    } else {
-      return acc;
-    }
-  };
-}
-
-function fill(arr, _i, _l) {
-  while(true) {
-    var l = _l;
-    var i = _i;
-    if (l) {
-      var x = l[0];
-      var l$1 = x.length;
-      var k = i;
-      var j = 0;
-      while(j < l$1) {
-        arr[k] = x[j];
-        k = k + 1 | 0;
-        j = j + 1 | 0;
-      };
-      _l = l[1];
-      _i = k;
-      continue ;
-      
-    } else {
-      return /* () */0;
-    }
-  };
-}
-
-function caml_array_concat(l) {
-  var v = len(0, l);
-  var result = new Array(v);
-  fill(result, 0, l);
-  return result;
-}
-
-function caml_array_set(xs, index, newval) {
-  if (index < 0 || index >= xs.length) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "index out of bounds"
-        ];
-  } else {
-    xs[index] = newval;
-    return /* () */0;
-  }
-}
-
-function caml_array_get(xs, index) {
-  if (index < 0 || index >= xs.length) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "index out of bounds"
-        ];
-  } else {
-    return xs[index];
-  }
-}
-
-function caml_make_vect(len, init) {
-  var b = new Array(len);
-  for(var i = 0 ,i_finish = len - 1 | 0; i <= i_finish; ++i){
-    b[i] = init;
-  }
-  return b;
-}
-
-function caml_make_float_vect(len) {
-  var b = new Array(len);
-  for(var i = 0 ,i_finish = len - 1 | 0; i <= i_finish; ++i){
-    b[i] = 0;
-  }
-  return b;
-}
-
-function caml_array_blit(a1, i1, a2, i2, len) {
-  if (i2 <= i1) {
-    for(var j = 0 ,j_finish = len - 1 | 0; j <= j_finish; ++j){
-      a2[j + i2 | 0] = a1[j + i1 | 0];
-    }
-    return /* () */0;
-  } else {
-    for(var j$1 = len - 1 | 0; j$1 >= 0; --j$1){
-      a2[j$1 + i2 | 0] = a1[j$1 + i1 | 0];
-    }
-    return /* () */0;
-  }
-}
-
-exports.caml_array_sub = caml_array_sub;
-exports.caml_array_concat = caml_array_concat;
-exports.caml_make_vect = caml_make_vect;
-exports.caml_make_float_vect = caml_make_float_vect;
-exports.caml_array_blit = caml_array_blit;
-exports.caml_array_get = caml_array_get;
-exports.caml_array_set = caml_array_set;
-/* No side effect */
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Curry = __webpack_require__(2);
-var Caml_io = __webpack_require__(35);
-var Caml_sys = __webpack_require__(36);
-var Caml_format = __webpack_require__(37);
-var Caml_string = __webpack_require__(11);
-var Caml_exceptions = __webpack_require__(39);
-var Caml_missing_polyfill = __webpack_require__(40);
-var Caml_builtin_exceptions = __webpack_require__(1);
-var CamlinternalFormatBasics = __webpack_require__(41);
-
-function failwith(s) {
-  throw [
-        Caml_builtin_exceptions.failure,
-        s
-      ];
-}
-
-function invalid_arg(s) {
-  throw [
-        Caml_builtin_exceptions.invalid_argument,
-        s
-      ];
-}
-
-var Exit = Caml_exceptions.create("Pervasives.Exit");
-
-function abs(x) {
-  if (x >= 0) {
-    return x;
-  } else {
-    return -x | 0;
-  }
-}
-
-function lnot(x) {
-  return x ^ -1;
-}
-
-var min_int = -2147483648;
-
-function char_of_int(n) {
-  if (n < 0 || n > 255) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "char_of_int"
-        ];
-  } else {
-    return n;
-  }
-}
-
-function string_of_bool(b) {
-  if (b) {
-    return "true";
-  } else {
-    return "false";
-  }
-}
-
-function bool_of_string(param) {
-  switch (param) {
-    case "false" : 
-        return /* false */0;
-    case "true" : 
-        return /* true */1;
-    default:
-      throw [
-            Caml_builtin_exceptions.invalid_argument,
-            "bool_of_string"
-          ];
-  }
-}
-
-function valid_float_lexem(s) {
-  var l = s.length;
-  var _i = 0;
-  while(true) {
-    var i = _i;
-    if (i >= l) {
-      return s + ".";
-    } else {
-      var match = Caml_string.get(s, i);
-      if (match >= 48) {
-        if (match >= 58) {
-          return s;
-        } else {
-          _i = i + 1 | 0;
-          continue ;
-          
-        }
-      } else if (match !== 45) {
-        return s;
-      } else {
-        _i = i + 1 | 0;
-        continue ;
-        
-      }
-    }
-  };
-}
-
-function string_of_float(f) {
-  return valid_float_lexem(Caml_format.caml_format_float("%.12g", f));
-}
-
-function $at(l1, l2) {
-  if (l1) {
-    return /* :: */[
-            l1[0],
-            $at(l1[1], l2)
-          ];
-  } else {
-    return l2;
-  }
-}
-
-var stdin = Caml_io.stdin;
-
-var stdout = Caml_io.stdout;
-
-var stderr = Caml_io.stderr;
-
-function open_out_gen(_, _$1, _$2) {
-  return Caml_io.caml_ml_open_descriptor_out(Caml_missing_polyfill.not_implemented("caml_sys_open not implemented by bucklescript yet\n"));
-}
-
-function open_out(name) {
-  return open_out_gen(/* :: */[
-              /* Open_wronly */1,
-              /* :: */[
-                /* Open_creat */3,
-                /* :: */[
-                  /* Open_trunc */4,
-                  /* :: */[
-                    /* Open_text */7,
-                    /* [] */0
-                  ]
-                ]
-              ]
-            ], 438, name);
-}
-
-function open_out_bin(name) {
-  return open_out_gen(/* :: */[
-              /* Open_wronly */1,
-              /* :: */[
-                /* Open_creat */3,
-                /* :: */[
-                  /* Open_trunc */4,
-                  /* :: */[
-                    /* Open_binary */6,
-                    /* [] */0
-                  ]
-                ]
-              ]
-            ], 438, name);
-}
-
-function flush_all() {
-  var _param = Caml_io.caml_ml_out_channels_list(/* () */0);
-  while(true) {
-    var param = _param;
-    if (param) {
-      try {
-        Caml_io.caml_ml_flush(param[0]);
-      }
-      catch (exn){
-        
-      }
-      _param = param[1];
-      continue ;
-      
-    } else {
-      return /* () */0;
-    }
-  };
-}
-
-function output_bytes(oc, s) {
-  return Caml_io.caml_ml_output(oc, s, 0, s.length);
-}
-
-function output_string(oc, s) {
-  return Caml_io.caml_ml_output(oc, s, 0, s.length);
-}
-
-function output(oc, s, ofs, len) {
-  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "output"
-        ];
-  } else {
-    return Caml_io.caml_ml_output(oc, s, ofs, len);
-  }
-}
-
-function output_substring(oc, s, ofs, len) {
-  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "output_substring"
-        ];
-  } else {
-    return Caml_io.caml_ml_output(oc, s, ofs, len);
-  }
-}
-
-function output_value(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_output_value not implemented by bucklescript yet\n");
-}
-
-function close_out(oc) {
-  Caml_io.caml_ml_flush(oc);
-  return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
-}
-
-function close_out_noerr(oc) {
-  try {
-    Caml_io.caml_ml_flush(oc);
-  }
-  catch (exn){
-    
-  }
-  try {
-    return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
-  }
-  catch (exn$1){
-    return /* () */0;
-  }
-}
-
-function open_in_gen(_, _$1, _$2) {
-  return Caml_io.caml_ml_open_descriptor_in(Caml_missing_polyfill.not_implemented("caml_sys_open not implemented by bucklescript yet\n"));
-}
-
-function open_in(name) {
-  return open_in_gen(/* :: */[
-              /* Open_rdonly */0,
-              /* :: */[
-                /* Open_text */7,
-                /* [] */0
-              ]
-            ], 0, name);
-}
-
-function open_in_bin(name) {
-  return open_in_gen(/* :: */[
-              /* Open_rdonly */0,
-              /* :: */[
-                /* Open_binary */6,
-                /* [] */0
-              ]
-            ], 0, name);
-}
-
-function input(_, s, ofs, len) {
-  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "input"
-        ];
-  } else {
-    return Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
-  }
-}
-
-function unsafe_really_input(_, _$1, _ofs, _len) {
-  while(true) {
-    var len = _len;
-    var ofs = _ofs;
-    if (len <= 0) {
-      return /* () */0;
-    } else {
-      var r = Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
-      if (r === 0) {
-        throw Caml_builtin_exceptions.end_of_file;
-      } else {
-        _len = len - r | 0;
-        _ofs = ofs + r | 0;
-        continue ;
-        
-      }
-    }
-  };
-}
-
-function really_input(ic, s, ofs, len) {
-  if (ofs < 0 || len < 0 || ofs > (s.length - len | 0)) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "really_input"
-        ];
-  } else {
-    return unsafe_really_input(ic, s, ofs, len);
-  }
-}
-
-function really_input_string(ic, len) {
-  var s = Caml_string.caml_create_string(len);
-  really_input(ic, s, 0, len);
-  return Caml_string.bytes_to_string(s);
-}
-
-function input_line(chan) {
-  var build_result = function (buf, _pos, _param) {
-    while(true) {
-      var param = _param;
-      var pos = _pos;
-      if (param) {
-        var hd = param[0];
-        var len = hd.length;
-        Caml_string.caml_blit_bytes(hd, 0, buf, pos - len | 0, len);
-        _param = param[1];
-        _pos = pos - len | 0;
-        continue ;
-        
-      } else {
-        return buf;
-      }
-    };
-  };
-  var scan = function (_accu, _len) {
-    while(true) {
-      var len = _len;
-      var accu = _accu;
-      var n = Caml_missing_polyfill.not_implemented("caml_ml_input_scan_line not implemented by bucklescript yet\n");
-      if (n === 0) {
-        if (accu) {
-          return build_result(Caml_string.caml_create_string(len), len, accu);
-        } else {
-          throw Caml_builtin_exceptions.end_of_file;
-        }
-      } else if (n > 0) {
-        var res = Caml_string.caml_create_string(n - 1 | 0);
-        Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
-        Caml_io.caml_ml_input_char(chan);
-        if (accu) {
-          var len$1 = (len + n | 0) - 1 | 0;
-          return build_result(Caml_string.caml_create_string(len$1), len$1, /* :: */[
-                      res,
-                      accu
-                    ]);
-        } else {
-          return res;
-        }
-      } else {
-        var beg = Caml_string.caml_create_string(-n | 0);
-        Caml_missing_polyfill.not_implemented("caml_ml_input not implemented by bucklescript yet\n");
-        _len = len - n | 0;
-        _accu = /* :: */[
-          beg,
-          accu
-        ];
-        continue ;
-        
-      }
-    };
-  };
-  return Caml_string.bytes_to_string(scan(/* [] */0, 0));
-}
-
-function close_in_noerr() {
-  try {
-    return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
-  }
-  catch (exn){
-    return /* () */0;
-  }
-}
-
-function print_char(c) {
-  return Caml_io.caml_ml_output_char(stdout, c);
-}
-
-function print_string(s) {
-  return output_string(stdout, s);
-}
-
-function print_bytes(s) {
-  return output_bytes(stdout, s);
-}
-
-function print_int(i) {
-  return output_string(stdout, String(i));
-}
-
-function print_float(f) {
-  return output_string(stdout, valid_float_lexem(Caml_format.caml_format_float("%.12g", f)));
-}
-
-function print_newline() {
-  Caml_io.caml_ml_output_char(stdout, /* "\n" */10);
-  return Caml_io.caml_ml_flush(stdout);
-}
-
-function prerr_char(c) {
-  return Caml_io.caml_ml_output_char(stderr, c);
-}
-
-function prerr_string(s) {
-  return output_string(stderr, s);
-}
-
-function prerr_bytes(s) {
-  return output_bytes(stderr, s);
-}
-
-function prerr_int(i) {
-  return output_string(stderr, String(i));
-}
-
-function prerr_float(f) {
-  return output_string(stderr, valid_float_lexem(Caml_format.caml_format_float("%.12g", f)));
-}
-
-function prerr_newline() {
-  Caml_io.caml_ml_output_char(stderr, /* "\n" */10);
-  return Caml_io.caml_ml_flush(stderr);
-}
-
-function read_line() {
-  Caml_io.caml_ml_flush(stdout);
-  return input_line(stdin);
-}
-
-function read_int() {
-  return Caml_format.caml_int_of_string((Caml_io.caml_ml_flush(stdout), input_line(stdin)));
-}
-
-function read_float() {
-  return Caml_format.caml_float_of_string((Caml_io.caml_ml_flush(stdout), input_line(stdin)));
-}
-
-function string_of_format(param) {
-  return param[1];
-}
-
-function $caret$caret(param, param$1) {
-  return /* Format */[
-          CamlinternalFormatBasics.concat_fmt(param[0], param$1[0]),
-          param[1] + ("%," + param$1[1])
-        ];
-}
-
-var exit_function = [flush_all];
-
-function at_exit(f) {
-  var g = exit_function[0];
-  exit_function[0] = (function () {
-      Curry._1(f, /* () */0);
-      return Curry._1(g, /* () */0);
-    });
-  return /* () */0;
-}
-
-function do_at_exit() {
-  return Curry._1(exit_function[0], /* () */0);
-}
-
-function exit(retcode) {
-  do_at_exit(/* () */0);
-  return Caml_sys.caml_sys_exit(retcode);
-}
-
-var max_int = 2147483647;
-
-var epsilon_float = 2.220446049250313e-16;
-
-var flush = Caml_io.caml_ml_flush;
-
-var output_char = Caml_io.caml_ml_output_char;
-
-var output_byte = Caml_io.caml_ml_output_char;
-
-function output_binary_int(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_ml_output_int not implemented by bucklescript yet\n");
-}
-
-function seek_out(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_ml_seek_out not implemented by bucklescript yet\n");
-}
-
-function pos_out() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_pos_out not implemented by bucklescript yet\n");
-}
-
-function out_channel_length() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size not implemented by bucklescript yet\n");
-}
-
-function set_binary_mode_out(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_ml_set_binary_mode not implemented by bucklescript yet\n");
-}
-
-var input_char = Caml_io.caml_ml_input_char;
-
-var input_byte = Caml_io.caml_ml_input_char;
-
-function input_binary_int() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_input_int not implemented by bucklescript yet\n");
-}
-
-function input_value() {
-  return Caml_missing_polyfill.not_implemented("caml_input_value not implemented by bucklescript yet\n");
-}
-
-function seek_in(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_ml_seek_in not implemented by bucklescript yet\n");
-}
-
-function pos_in() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_pos_in not implemented by bucklescript yet\n");
-}
-
-function in_channel_length() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size not implemented by bucklescript yet\n");
-}
-
-function close_in() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_close_channel not implemented by bucklescript yet\n");
-}
-
-function set_binary_mode_in(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_ml_set_binary_mode not implemented by bucklescript yet\n");
-}
-
-function LargeFile_000(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_ml_seek_out_64 not implemented by bucklescript yet\n");
-}
-
-function LargeFile_001() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_pos_out_64 not implemented by bucklescript yet\n");
-}
-
-function LargeFile_002() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size_64 not implemented by bucklescript yet\n");
-}
-
-function LargeFile_003(_, _$1) {
-  return Caml_missing_polyfill.not_implemented("caml_ml_seek_in_64 not implemented by bucklescript yet\n");
-}
-
-function LargeFile_004() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_pos_in_64 not implemented by bucklescript yet\n");
-}
-
-function LargeFile_005() {
-  return Caml_missing_polyfill.not_implemented("caml_ml_channel_size_64 not implemented by bucklescript yet\n");
-}
-
-var LargeFile = [
-  LargeFile_000,
-  LargeFile_001,
-  LargeFile_002,
-  LargeFile_003,
-  LargeFile_004,
-  LargeFile_005
-];
-
-exports.invalid_arg = invalid_arg;
-exports.failwith = failwith;
-exports.Exit = Exit;
-exports.abs = abs;
-exports.max_int = max_int;
-exports.min_int = min_int;
-exports.lnot = lnot;
-exports.epsilon_float = epsilon_float;
-exports.char_of_int = char_of_int;
-exports.string_of_bool = string_of_bool;
-exports.bool_of_string = bool_of_string;
-exports.string_of_float = string_of_float;
-exports.$at = $at;
-exports.stdin = stdin;
-exports.stdout = stdout;
-exports.stderr = stderr;
-exports.print_char = print_char;
-exports.print_string = print_string;
-exports.print_bytes = print_bytes;
-exports.print_int = print_int;
-exports.print_float = print_float;
-exports.print_newline = print_newline;
-exports.prerr_char = prerr_char;
-exports.prerr_string = prerr_string;
-exports.prerr_bytes = prerr_bytes;
-exports.prerr_int = prerr_int;
-exports.prerr_float = prerr_float;
-exports.prerr_newline = prerr_newline;
-exports.read_line = read_line;
-exports.read_int = read_int;
-exports.read_float = read_float;
-exports.open_out = open_out;
-exports.open_out_bin = open_out_bin;
-exports.open_out_gen = open_out_gen;
-exports.flush = flush;
-exports.flush_all = flush_all;
-exports.output_char = output_char;
-exports.output_string = output_string;
-exports.output_bytes = output_bytes;
-exports.output = output;
-exports.output_substring = output_substring;
-exports.output_byte = output_byte;
-exports.output_binary_int = output_binary_int;
-exports.output_value = output_value;
-exports.seek_out = seek_out;
-exports.pos_out = pos_out;
-exports.out_channel_length = out_channel_length;
-exports.close_out = close_out;
-exports.close_out_noerr = close_out_noerr;
-exports.set_binary_mode_out = set_binary_mode_out;
-exports.open_in = open_in;
-exports.open_in_bin = open_in_bin;
-exports.open_in_gen = open_in_gen;
-exports.input_char = input_char;
-exports.input_line = input_line;
-exports.input = input;
-exports.really_input = really_input;
-exports.really_input_string = really_input_string;
-exports.input_byte = input_byte;
-exports.input_binary_int = input_binary_int;
-exports.input_value = input_value;
-exports.seek_in = seek_in;
-exports.pos_in = pos_in;
-exports.in_channel_length = in_channel_length;
-exports.close_in = close_in;
-exports.close_in_noerr = close_in_noerr;
-exports.set_binary_mode_in = set_binary_mode_in;
-exports.LargeFile = LargeFile;
-exports.string_of_format = string_of_format;
-exports.$caret$caret = $caret$caret;
-exports.exit = exit;
-exports.at_exit = at_exit;
-exports.valid_float_lexem = valid_float_lexem;
-exports.unsafe_really_input = unsafe_really_input;
-exports.do_at_exit = do_at_exit;
-/* No side effect */
-
-
-/***/ }),
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var Curry = __webpack_require__(2);
+var Curry = __webpack_require__(3);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
 function $caret(prim, prim$1) {
@@ -11431,10 +11452,10 @@ exports.caml_sys_file_exists = caml_sys_file_exists;
 "use strict";
 
 
-var Curry = __webpack_require__(2);
+var Curry = __webpack_require__(3);
 var Caml_int32 = __webpack_require__(10);
 var Caml_int64 = __webpack_require__(38);
-var Caml_utils = __webpack_require__(17);
+var Caml_utils = __webpack_require__(19);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
 function caml_failwith(s) {
@@ -11923,12 +11944,14 @@ function finish_formatting(param, rawbuffer) {
     len = len + 1 | 0;
   }
   if (alternate) {
-    if (base === /* Oct */0) {
+    if (base) {
+      if (base === /* Hex */1) {
+        len = len + 2 | 0;
+      }
+      
+    } else {
       len = len + 1 | 0;
-    } else if (base === /* Hex */1) {
-      len = len + 2 | 0;
     }
-    
   }
   var buffer = "";
   if (justify === "+" && filter === " ") {
@@ -12238,7 +12261,7 @@ exports.caml_nativeint_of_string = caml_nativeint_of_string;
 
 
 var Caml_int32 = __webpack_require__(10);
-var Caml_utils = __webpack_require__(17);
+var Caml_utils = __webpack_require__(19);
 var Caml_primitive = __webpack_require__(9);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
@@ -12337,9 +12360,7 @@ function sub(x, y) {
 }
 
 function lsl_(x, numBits) {
-  if (numBits === 0) {
-    return x;
-  } else {
+  if (numBits) {
     var lo = x[/* lo */1];
     if (numBits >= 32) {
       return /* record */[
@@ -12353,41 +12374,43 @@ function lsl_(x, numBits) {
               /* lo */((lo << numBits) >>> 0)
             ];
     }
+  } else {
+    return x;
   }
 }
 
 function lsr_(x, numBits) {
-  if (numBits === 0) {
-    return x;
-  } else {
+  if (numBits) {
     var hi = x[/* hi */0];
     var offset = numBits - 32 | 0;
-    if (offset === 0) {
+    if (offset) {
+      if (offset > 0) {
+        var lo = (hi >>> offset);
+        return /* record */[
+                /* hi */0,
+                /* lo */(lo >>> 0)
+              ];
+      } else {
+        var hi$1 = (hi >>> numBits);
+        var lo$1 = (hi << (-offset | 0)) | (x[/* lo */1] >>> numBits);
+        return /* record */[
+                /* hi */hi$1,
+                /* lo */(lo$1 >>> 0)
+              ];
+      }
+    } else {
       return /* record */[
               /* hi */0,
               /* lo */(hi >>> 0)
             ];
-    } else if (offset > 0) {
-      var lo = (hi >>> offset);
-      return /* record */[
-              /* hi */0,
-              /* lo */(lo >>> 0)
-            ];
-    } else {
-      var hi$1 = (hi >>> numBits);
-      var lo$1 = (hi << (-offset | 0)) | (x[/* lo */1] >>> numBits);
-      return /* record */[
-              /* hi */hi$1,
-              /* lo */(lo$1 >>> 0)
-            ];
     }
+  } else {
+    return x;
   }
 }
 
 function asr_(x, numBits) {
-  if (numBits === 0) {
-    return x;
-  } else {
+  if (numBits) {
     var hi = x[/* hi */0];
     if (numBits < 32) {
       var hi$1 = (hi >> numBits);
@@ -12403,6 +12426,8 @@ function asr_(x, numBits) {
               /* lo */(lo$1 >>> 0)
             ];
     }
+  } else {
+    return x;
   }
 }
 
@@ -12424,20 +12449,26 @@ function mul(_this, _other) {
     var exit$1 = 0;
     var exit$2 = 0;
     var exit$3 = 0;
-    if (this_hi !== 0 || $$this[/* lo */1] !== 0) {
+    if (this_hi !== 0) {
+      exit$3 = 4;
+    } else if ($$this[/* lo */1] !== 0) {
       exit$3 = 4;
     } else {
       return zero;
     }
     if (exit$3 === 4) {
-      if (other[/* hi */0] !== 0 || other[/* lo */1] !== 0) {
+      if (other[/* hi */0] !== 0) {
+        exit$2 = 3;
+      } else if (other[/* lo */1] !== 0) {
         exit$2 = 3;
       } else {
         return zero;
       }
     }
     if (exit$2 === 3) {
-      if (this_hi !== -2147483648 || $$this[/* lo */1] !== 0) {
+      if (this_hi !== -2147483648) {
+        exit$1 = 2;
+      } else if ($$this[/* lo */1] !== 0) {
         exit$1 = 2;
       } else {
         lo = other[/* lo */1];
@@ -12448,7 +12479,9 @@ function mul(_this, _other) {
       var other_hi = other[/* hi */0];
       var lo$1 = $$this[/* lo */1];
       var exit$4 = 0;
-      if (other_hi !== -2147483648 || other[/* lo */1] !== 0) {
+      if (other_hi !== -2147483648) {
+        exit$4 = 3;
+      } else if (other[/* lo */1] !== 0) {
         exit$4 = 3;
       } else {
         lo = lo$1;
@@ -12628,14 +12661,18 @@ function div(_self, _other) {
     var self_hi = self[/* hi */0];
     var exit = 0;
     var exit$1 = 0;
-    if (other[/* hi */0] !== 0 || other[/* lo */1] !== 0) {
+    if (other[/* hi */0] !== 0) {
+      exit$1 = 2;
+    } else if (other[/* lo */1] !== 0) {
       exit$1 = 2;
     } else {
       throw Caml_builtin_exceptions.division_by_zero;
     }
     if (exit$1 === 2) {
       if (self_hi !== -2147483648) {
-        if (self_hi !== 0 || self[/* lo */1] !== 0) {
+        if (self_hi !== 0) {
+          exit = 1;
+        } else if (self[/* lo */1] !== 0) {
           exit = 1;
         } else {
           return zero;
@@ -12651,7 +12688,9 @@ function div(_self, _other) {
         var half_this = asr_(self, 1);
         var approx = lsl_(div(half_this, other), 1);
         var exit$2 = 0;
-        if (approx[/* hi */0] !== 0 || approx[/* lo */1] !== 0) {
+        if (approx[/* hi */0] !== 0) {
+          exit$2 = 3;
+        } else if (approx[/* lo */1] !== 0) {
           exit$2 = 3;
         } else if (other_hi < 0) {
           return one;
@@ -12669,7 +12708,9 @@ function div(_self, _other) {
     if (exit === 1) {
       var other_hi$1 = other[/* hi */0];
       var exit$3 = 0;
-      if (other_hi$1 !== -2147483648 || other[/* lo */1] !== 0) {
+      if (other_hi$1 !== -2147483648) {
+        exit$3 = 2;
+      } else if (other[/* lo */1] !== 0) {
         exit$3 = 2;
       } else {
         return zero;
@@ -12731,10 +12772,10 @@ function div_mod(self, other) {
 
 function compare(self, other) {
   var v = Caml_primitive.caml_nativeint_compare(self[/* hi */0], other[/* hi */0]);
-  if (v === 0) {
-    return Caml_primitive.caml_nativeint_compare(self[/* lo */1], other[/* lo */1]);
-  } else {
+  if (v) {
     return v;
+  } else {
+    return Caml_primitive.caml_nativeint_compare(self[/* lo */1], other[/* lo */1]);
   }
 }
 
@@ -12756,7 +12797,9 @@ function to_hex(x) {
   var match = x[/* hi */0];
   var match$1 = x[/* lo */1];
   var exit = 0;
-  if (match !== 0 || match$1 !== 0) {
+  if (match !== 0) {
+    exit = 1;
+  } else if (match$1 !== 0) {
     exit = 1;
   } else {
     return "0";
@@ -12936,7 +12979,7 @@ exports.not_implemented = not_implemented;
 "use strict";
 
 
-var Block = __webpack_require__(16);
+var Block = __webpack_require__(17);
 
 function erase_rel(param) {
   if (typeof param === "number") {
@@ -13383,8 +13426,8 @@ exports.compare = compare;
 
 var Char = __webpack_require__(44);
 var List = __webpack_require__(8);
-var Curry = __webpack_require__(2);
-var Caml_obj = __webpack_require__(15);
+var Curry = __webpack_require__(3);
+var Caml_obj = __webpack_require__(16);
 var Caml_int32 = __webpack_require__(10);
 var Caml_string = __webpack_require__(11);
 var Caml_primitive = __webpack_require__(9);
@@ -13530,13 +13573,8 @@ function concat(sep, l) {
   }
 }
 
-function cat(s1, s2) {
-  var l1 = s1.length;
-  var l2 = s2.length;
-  var r = Caml_string.caml_create_string(l1 + l2 | 0);
-  Caml_string.caml_blit_bytes(s1, 0, r, 0, l1);
-  Caml_string.caml_blit_bytes(s2, 0, r, l1, l2);
-  return r;
+function cat(a, b) {
+  return a.concat(b);
 }
 
 function is_space(param) {
@@ -13680,27 +13718,27 @@ function escaped(s) {
 
 function map(f, s) {
   var l = s.length;
-  if (l === 0) {
-    return s;
-  } else {
+  if (l) {
     var r = Caml_string.caml_create_string(l);
     for(var i = 0 ,i_finish = l - 1 | 0; i <= i_finish; ++i){
       r[i] = Curry._1(f, s[i]);
     }
     return r;
+  } else {
+    return s;
   }
 }
 
 function mapi(f, s) {
   var l = s.length;
-  if (l === 0) {
-    return s;
-  } else {
+  if (l) {
     var r = Caml_string.caml_create_string(l);
     for(var i = 0 ,i_finish = l - 1 | 0; i <= i_finish; ++i){
       r[i] = Curry._2(f, i, s[i]);
     }
     return r;
+  } else {
+    return s;
   }
 }
 
@@ -13713,12 +13751,12 @@ function lowercase(s) {
 }
 
 function apply1(f, s) {
-  if (s.length === 0) {
-    return s;
-  } else {
+  if (s.length) {
     var r = copy(s);
     r[0] = Curry._1(f, s[0]);
     return r;
+  } else {
+    return s;
   }
 }
 
@@ -13945,14 +13983,14 @@ function escaped(c) {
   }
   switch (exit) {
     case 1 : 
-        var s = Caml_string.caml_create_string(4);
+        var s = new Array(4);
         s[0] = /* "\\" */92;
         s[1] = 48 + (c / 100 | 0) | 0;
         s[2] = 48 + (c / 10 | 0) % 10 | 0;
         s[3] = 48 + c % 10 | 0;
         return Caml_string.bytes_to_string(s);
     case 2 : 
-        var s$1 = Caml_string.caml_create_string(1);
+        var s$1 = new Array(1);
         s$1[0] = c;
         return Caml_string.bytes_to_string(s$1);
     
@@ -13999,7 +14037,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.StyleSheet = StyleSheet;
 
-var _objectAssign = __webpack_require__(3);
+var _objectAssign = __webpack_require__(2);
 
 var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
@@ -14665,11 +14703,11 @@ exports.fallbacks = fallbacks;
 exports.contentWrap = contentWrap;
 exports.prefixes = prefixes;
 
-var _objectAssign = __webpack_require__(3);
+var _objectAssign = __webpack_require__(2);
 
 var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
-var _CSSPropertyOperations = __webpack_require__(19);
+var _CSSPropertyOperations = __webpack_require__(21);
 
 var _prefixer = __webpack_require__(53);
 
@@ -14883,7 +14921,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = prefixProperty;
 
-var _capitalizeString = __webpack_require__(22);
+var _capitalizeString = __webpack_require__(24);
 
 var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
 
@@ -15215,7 +15253,7 @@ var _isPrefixedValue = __webpack_require__(7);
 
 var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
 
-var _capitalizeString = __webpack_require__(22);
+var _capitalizeString = __webpack_require__(24);
 
 var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
 
@@ -15510,6 +15548,128 @@ exports.map = map;
 
 
 
+function some(x) {
+  return /* Some */[x];
+}
+
+function isSome(param) {
+  if (param) {
+    return /* true */1;
+  } else {
+    return /* false */0;
+  }
+}
+
+function isSomeValue(eq, v, x) {
+  if (x) {
+    return eq(v, x[0]);
+  } else {
+    return /* false */0;
+  }
+}
+
+function isNone(param) {
+  if (param) {
+    return /* false */0;
+  } else {
+    return /* true */1;
+  }
+}
+
+function getExn(x) {
+  if (x) {
+    return x[0];
+  } else {
+    throw new Error("getExn");
+  }
+}
+
+function equal(eq, a, b) {
+  if (a) {
+    if (b) {
+      return eq(a[0], b[0]);
+    } else {
+      return /* false */0;
+    }
+  } else {
+    return +(b === /* None */0);
+  }
+}
+
+function andThen(f, x) {
+  if (x) {
+    return f(x[0]);
+  } else {
+    return /* None */0;
+  }
+}
+
+function map(f, x) {
+  if (x) {
+    return /* Some */[f(x[0])];
+  } else {
+    return /* None */0;
+  }
+}
+
+function getWithDefault(a, x) {
+  if (x) {
+    return x[0];
+  } else {
+    return a;
+  }
+}
+
+function filter(f, x) {
+  if (x) {
+    var x$1 = x[0];
+    if (f(x$1)) {
+      return /* Some */[x$1];
+    } else {
+      return /* None */0;
+    }
+  } else {
+    return /* None */0;
+  }
+}
+
+function firstSome(a, b) {
+  if (a) {
+    return a;
+  } else if (b) {
+    return b;
+  } else {
+    return /* None */0;
+  }
+}
+
+var $$default = getWithDefault;
+
+exports.some = some;
+exports.isSome = isSome;
+exports.isSomeValue = isSomeValue;
+exports.isNone = isNone;
+exports.getExn = getExn;
+exports.equal = equal;
+exports.andThen = andThen;
+exports.map = map;
+exports.getWithDefault = getWithDefault;
+exports.$$default = $$default;
+exports.default = $$default;
+exports.__esModule = true;
+exports.filter = filter;
+exports.firstSome = firstSome;
+/* No side effect */
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
 function binarySearch(upper, id, array) {
   var _lower = 0;
   var _upper = upper;
@@ -15638,16 +15798,16 @@ exports.fromIntAssert = fromIntAssert;
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Generated by BUCKLESCRIPT VERSION 2.2.3, PLEASE EDIT WITH CARE
+// Generated by BUCKLESCRIPT VERSION 2.2.2, PLEASE EDIT WITH CARE
 
 
 var Css = __webpack_require__(14);
 var React = __webpack_require__(5);
-var ReasonReact = __webpack_require__(24);
+var ReasonReact = __webpack_require__(26);
 
 function text(prim) {
   return prim;
@@ -16201,7 +16361,149 @@ var tests = React.createElement("div", {
                           ]
                         ])
                   })
-            ])), ReasonReact.element(/* None */0, /* None */0, make("flexbox", /* array */[React.createElement("div", {
+            ])), ReasonReact.element(/* None */0, /* None */0, make("grid", /* array */[React.createElement("div", {
+                    className: Css.style(/* :: */[
+                          Css.width(Css.pct(100)),
+                          /* :: */[
+                            Css.height(Css.px(500)),
+                            /* :: */[
+                              Css.display(Css.grid),
+                              /* :: */[
+                                Css.gridTemplateColumns(/* :: */[
+                                      Css.px(150),
+                                      /* :: */[
+                                        Css.auto,
+                                        /* :: */[
+                                          Css.px(150),
+                                          /* [] */0
+                                        ]
+                                      ]
+                                    ]),
+                                /* :: */[
+                                  Css.gridTemplateRows(/* :: */[
+                                        Css.px(60),
+                                        /* :: */[
+                                          Css.auto,
+                                          /* [] */0
+                                        ]
+                                      ]),
+                                  /* [] */0
+                                ]
+                              ]
+                            ]
+                          ]
+                        ])
+                  }, React.createElement("div", {
+                        className: Css.style(/* :: */[
+                              Css.gridColumnStart(1),
+                              /* :: */[
+                                Css.gridColumnEnd(4),
+                                /* :: */[
+                                  Css.background(Css.red),
+                                  /* :: */[
+                                    Css.gridRowStart(1),
+                                    /* :: */[
+                                      Css.gridRowEnd(1),
+                                      /* [] */0
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ])
+                      }), React.createElement("div", {
+                        className: Css.style(/* :: */[
+                              Css.background(Css.blue),
+                              /* :: */[
+                                Css.gridColumn(1, 1),
+                                /* :: */[
+                                  Css.gridRow(2, 2),
+                                  /* [] */0
+                                ]
+                              ]
+                            ])
+                      }), React.createElement("div", {
+                        className: Css.style(/* :: */[
+                              Css.background(Css.green),
+                              /* :: */[
+                                Css.gridColumn(2, 2),
+                                /* :: */[
+                                  Css.gridRow(2, 2),
+                                  /* :: */[
+                                    Css.display(Css.inlineGrid),
+                                    /* :: */[
+                                      Css.gridTemplateColumns(/* :: */[
+                                            Css.px(50),
+                                            /* :: */[
+                                              Css.auto,
+                                              /* [] */0
+                                            ]
+                                          ]),
+                                      /* :: */[
+                                        Css.gridTemplateRows(/* :: */[
+                                              Css.px(40),
+                                              /* :: */[
+                                                Css.auto,
+                                                /* [] */0
+                                              ]
+                                            ]),
+                                        /* [] */0
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ])
+                      }, React.createElement("div", {
+                            className: Css.style(/* :: */[
+                                  Css.background(Css.yellow),
+                                  /* :: */[
+                                    Css.gridRow(1, 1),
+                                    /* :: */[
+                                      Css.gridColumn(2, 2),
+                                      /* [] */0
+                                    ]
+                                  ]
+                                ])
+                          }), React.createElement("div", {
+                            className: Css.style(/* :: */[
+                                  Css.background(Css.green),
+                                  /* :: */[
+                                    Css.gridRow(1, 2),
+                                    /* :: */[
+                                      Css.gridColumn(1, 1),
+                                      /* [] */0
+                                    ]
+                                  ]
+                                ])
+                          }), React.createElement("div", {
+                            className: Css.style(/* :: */[
+                                  Css.background(Css.purple),
+                                  /* :: */[
+                                    Css.gridRow(2, 2),
+                                    /* :: */[
+                                      Css.gridColumn(2, 2),
+                                      /* [] */0
+                                    ]
+                                  ]
+                                ])
+                          })), React.createElement("div", {
+                        className: Css.style(/* :: */[
+                              Css.gridColumnStart(3),
+                              /* :: */[
+                                Css.gridColumnEnd(3),
+                                /* :: */[
+                                  Css.background(Css.blue),
+                                  /* :: */[
+                                    Css.gridRowStart(2),
+                                    /* :: */[
+                                      Css.gridRowEnd(2),
+                                      /* [] */0
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ])
+                      }))])), ReasonReact.element(/* None */0, /* None */0, make("flexbox", /* array */[React.createElement("div", {
                     className: Css.style(/* :: */[
                           Css.flexDirection(Css.column),
                           /* :: */[
@@ -17061,7 +17363,7 @@ exports.tests = tests;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17074,7 +17376,7 @@ exports.tests = tests;
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(3),n=__webpack_require__(12),p=__webpack_require__(4),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(2),n=__webpack_require__(12),p=__webpack_require__(4),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -17089,7 +17391,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17110,12 +17412,12 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(3);
+var _assign = __webpack_require__(2);
 var emptyObject = __webpack_require__(12);
 var invariant = __webpack_require__(13);
 var warning = __webpack_require__(6);
 var emptyFunction = __webpack_require__(4);
-var checkPropTypes = __webpack_require__(23);
+var checkPropTypes = __webpack_require__(25);
 
 // TODO: this is special because it gets imported during build.
 
@@ -18454,7 +18756,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18473,10 +18775,11 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Generated by BUCKLESCRIPT VERSION 2.2.2, PLEASE EDIT WITH CARE
 
 
 var React = __webpack_require__(5);
@@ -19376,64 +19679,40 @@ exports.createClass = createClass;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Generated by BUCKLESCRIPT VERSION 2.2.2, PLEASE EDIT WITH CARE
 
 
-var ReactDom = __webpack_require__(78);
+var ReactDom = __webpack_require__(79);
+var Caml_array = __webpack_require__(15);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
 function renderToElementWithClassName(reactElement, className) {
   var elements = document.getElementsByClassName(className);
-  if (elements.length !== 0) {
-    ReactDom.render(reactElement, elements[0]);
+  if (elements.length) {
+    ReactDom.render(reactElement, Caml_array.caml_array_get(elements, 0));
     return /* () */0;
   } else {
     throw [
           Caml_builtin_exceptions.invalid_argument,
-          "ReactDOMRe.renderToElementWithClassName: no element of class " + (className + " found in the HTML.")
+          "ReactDOMRE.renderToElementWithClassName: no element of class " + (className + " found in the HTML.")
         ];
   }
 }
 
 function renderToElementWithId(reactElement, id) {
   var match = document.getElementById(id);
-  if (match == null) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "ReactDOMRe.renderToElementWithId : no element of id " + (id + " found in the HTML.")
-        ];
-  } else {
+  if (match !== null) {
     ReactDom.render(reactElement, match);
     return /* () */0;
-  }
-}
-
-function hydrateToElementWithClassName(reactElement, className) {
-  var elements = document.getElementsByClassName(className);
-  if (elements.length !== 0) {
-    ReactDom.hydrate(reactElement, elements[0]);
-    return /* () */0;
   } else {
     throw [
           Caml_builtin_exceptions.invalid_argument,
-          "ReactDOMRe.hydrateToElementWithClassName: no element of class " + (className + " found in the HTML.")
+          "ReactDOMRE.renderToElementWithId : no element of id " + (id + " found in the HTML.")
         ];
-  }
-}
-
-function hydrateToElementWithId(reactElement, id) {
-  var match = document.getElementById(id);
-  if (match == null) {
-    throw [
-          Caml_builtin_exceptions.invalid_argument,
-          "ReactDOMRe.hydrateToElementWithId : no element of id " + (id + " found in the HTML.")
-        ];
-  } else {
-    ReactDom.hydrate(reactElement, match);
-    return /* () */0;
   }
 }
 
@@ -19454,14 +19733,12 @@ var Style = /* module */[
 
 exports.renderToElementWithClassName = renderToElementWithClassName;
 exports.renderToElementWithId = renderToElementWithId;
-exports.hydrateToElementWithClassName = hydrateToElementWithClassName;
-exports.hydrateToElementWithId = hydrateToElementWithId;
 exports.Style = Style;
 /* react-dom Not a pure module */
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19499,15 +19776,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(79);
+  module.exports = __webpack_require__(80);
 } else {
-  module.exports = __webpack_require__(82);
+  module.exports = __webpack_require__(83);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19523,7 +19800,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(5),l=__webpack_require__(25),B=__webpack_require__(3),C=__webpack_require__(4),ba=__webpack_require__(26),da=__webpack_require__(27),ea=__webpack_require__(28),fa=__webpack_require__(29),ia=__webpack_require__(30),D=__webpack_require__(12);
+var aa=__webpack_require__(5),l=__webpack_require__(27),B=__webpack_require__(2),C=__webpack_require__(4),ba=__webpack_require__(28),da=__webpack_require__(29),ea=__webpack_require__(30),fa=__webpack_require__(31),ia=__webpack_require__(32),D=__webpack_require__(12);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -19743,7 +20020,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19758,7 +20035,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(81);
+var isNode = __webpack_require__(82);
 
 /**
  * @param {*} object The object to check.
@@ -19771,7 +20048,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19799,7 +20076,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19823,18 +20100,18 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(5);
 var invariant = __webpack_require__(13);
 var warning = __webpack_require__(6);
-var ExecutionEnvironment = __webpack_require__(25);
-var _assign = __webpack_require__(3);
+var ExecutionEnvironment = __webpack_require__(27);
+var _assign = __webpack_require__(2);
 var emptyFunction = __webpack_require__(4);
-var EventListener = __webpack_require__(26);
-var getActiveElement = __webpack_require__(27);
-var shallowEqual = __webpack_require__(28);
-var containsNode = __webpack_require__(29);
-var focusNode = __webpack_require__(30);
+var EventListener = __webpack_require__(28);
+var getActiveElement = __webpack_require__(29);
+var shallowEqual = __webpack_require__(30);
+var containsNode = __webpack_require__(31);
+var focusNode = __webpack_require__(32);
 var emptyObject = __webpack_require__(12);
-var checkPropTypes = __webpack_require__(23);
-var hyphenateStyleName = __webpack_require__(21);
-var camelizeStyleName = __webpack_require__(20);
+var checkPropTypes = __webpack_require__(25);
+var hyphenateStyleName = __webpack_require__(23);
+var camelizeStyleName = __webpack_require__(22);
 
 /**
  * WARNING: DO NOT manually require this module.

@@ -146,7 +146,18 @@ let tests = {
         ...box
       ])) />
   </Section>
-
+  <Section name="grid">
+    <div className=Css.(style([ width(pct(100.)), height(px(500)), display(grid), gridTemplateColumns([px(150), auto, px(150)]), gridTemplateRows([px(60), auto])]))>
+      <div className=Css.(style([ gridColumnStart(1), gridColumnEnd(4), background(red), gridRowStart(1), gridRowEnd(1)]))> </div>
+      <div className=Css.(style([ background(blue), gridColumn(1, 1), gridRow(2, 2)]))> </div>
+      <div className=Css.(style([ background(green), gridColumn(2, 2), gridRow(2, 2), display(inlineGrid), gridTemplateColumns([px(50), auto]), gridTemplateRows([px(40), auto])]))> 
+        <div className=Css.(style([background(yellow), gridRow(1, 1), gridColumn(2, 2) ]))> </div>
+        <div className=Css.(style([background(green), gridRow(1, 2), gridColumn(1, 1) ]))> </div>
+        <div className=Css.(style([background(purple), gridRow(2, 2), gridColumn(2, 2) ]))> </div>
+      </div>
+      <div className=Css.(style([ gridColumnStart(3), gridColumnEnd(3), background(blue), gridRowStart(2), gridRowEnd(2)]))> </div>
+    </div>
+  </Section>
   <Section name="flexbox">
     <div className=Css.(style([ flexDirection(column), flexGrow(1), alignItems(stretch), selector("& > *", [ marginBottom(px(10)), width(pct(100.)) ]) ]))>
       <div className=Css.(style([display(flexBox), flexDirection(row), background(gray), alignItems(flexStart), justifyContent(flexEnd)]))>
