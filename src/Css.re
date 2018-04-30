@@ -52,8 +52,8 @@ module Glamor = {
 };
 
 type declaration = [ | `declaration(string, string)];
-type rule = [ 
-  | `selector(string, list(rule)) 
+type rule = [
+  | `selector(string, list(rule))
   | `declaration(string, string)
   | `animation(string)
   | `transition(string)
@@ -96,8 +96,8 @@ let label = (label) => `declaration("label", label);
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-type angle = [ 
-  | `deg(int) 
+type angle = [
+  | `deg(int)
   | `rad(float)
   | `grad(float)
   | `turn(float)
@@ -366,6 +366,7 @@ let ch = x => `ch(x);
 let cm = x => `cm(x);
 let em = x => `em(x);
 let ex = x => `ex(x);
+let fr = x => `fr(x);
 let mm = x => `mm(x);
 let pct = x => `percent(x);
 let pt = x => `pt(x);
@@ -537,6 +538,8 @@ let display = x =>
     | `none => "none"
     | `flex => "flex"
     | `inlineFlex => "inline-flex"
+    | `grid => "grid"
+    | `inlineGrid => "inline-grid"
     });
 
 let position = x =>
@@ -661,6 +664,42 @@ let height = x => d("height", string_of_dimension(x));
 let minHeight = x => d("minHeight", string_of_dimension(x));
 let maxHeight = x => d("maxHeight", string_of_dimension(x));
 
+let string_of_dimensions = dimensions =>
+  dimensions
+  |> List.map(string_of_dimension)
+  |> String.concat(" ");
+
+let gridTemplateColumns = dimensions =>
+  d("gridTemplateColumns", string_of_dimensions(dimensions));
+
+let gridTemplateRows = dimensions =>
+  d("gridTemplateRows", string_of_dimensions(dimensions));
+
+let gridAutoRows = dimensions =>
+  d("gridAutoRows", string_of_dimension(dimensions));
+
+let gridColumnStart = n =>
+  d("gridColumnStart", string_of_int(n));
+
+let gridColumnEnd = n =>
+  d("gridColumnEnd", string_of_int(n));
+
+let gridRowStart = n =>
+  d("gridRowStart", string_of_int(n));
+
+let gridRowEnd = n =>
+  d("gridRowEnd", string_of_int(n));
+
+let gridColumnGap = n =>
+  d("gridColumnGap", string_of_length(n));
+
+let gridRowGap = n =>
+  d("gridRowGap", string_of_length(n));
+
+let gridGap = n =>
+  d("gridGap", string_of_length(n));
+
+
 let string_of_align =
   fun
   | `baseline => "baseline"
@@ -773,14 +812,14 @@ let borderLeft = (px, style, color) =>
 let borderLeftWidth = x => d("borderLeftWidth", string_of_length(x));
 let borderLeftStyle = x => d("borderLeftStyle", string_of_borderstyle(x));
 let borderLeftColor = x => d("borderLeftColor", string_of_color(x));
-  
+
 let borderRight = (px, style, color) =>
   d( "borderRight", join( " ", [
     string_of_length(px),
     string_of_borderstyle(style),
     string_of_color(color)
     ]));
-    
+
 let borderRightWidth = x => d("borderRightWidth", string_of_length(x));
 let borderRightColor = x => d("borderRightColor", string_of_color(x));
 let borderRightStyle = x => d("borderRightStyle", string_of_borderstyle(x));
@@ -1333,7 +1372,7 @@ let transition = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
     property
   ]));
 
-let transitions = xs => 
+let transitions = xs =>
   d("transition", xs |> List.map(fun | `transition(s) => s) |> join(", "));
 
 let transitionDelay = i => d("transitionDelay", string_of_int(i) ++ "ms");

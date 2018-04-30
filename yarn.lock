@@ -481,9 +481,9 @@ bs-jest@^0.1.0:
   dependencies:
     jest "^19.0.2"
 
-bs-platform@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-2.2.3.tgz#d905ae10a5f3621e6a739041dfa0b58483a2174f"
+bs-platform@3:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-3.0.0.tgz#38f200730db52fdea37819376b6ac3dfb20244c0"
 
 bser@1.0.2:
   version "1.0.2"
