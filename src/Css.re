@@ -342,6 +342,10 @@ type length = [
   | `zero
 ];
 
+type gridLength = [
+  length | `fr(float)
+];
+
 let rec string_of_length =
   fun
   | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
@@ -1537,13 +1541,3 @@ module SVG = {
   let stopColor = c => d("stopColor", string_of_color(c));
   let stopOpacity = o => d("stopOpacity", string_of_float(o));
 };
-
-
-
-
-
-
-
-
-
-

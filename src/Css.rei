@@ -226,6 +226,8 @@ type length = [
   | `zero
 ];
 
+type gridLength = [ length | `fr(float) ];
+
 let ch : float => [> | `ch(float)];
 let cm : float => [> | `cm(float)];
 let em : float => [> | `em(float)];
@@ -420,8 +422,8 @@ let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
 let order: int => rule;
 
-let gridTemplateColumns : list([ | length | `fr(float) | `auto]) => rule;
-let gridTemplateRows : list([ | length | `fr(float) | `auto]) => rule;
+let gridTemplateColumns : list([ | gridLength | `auto]) => rule;
+let gridTemplateRows : list([ | gridLength | `auto]) => rule;
 let gridAutoRows : [ | length | `auto] => rule;
 let gridColumn : (int, int) => rule;
 let gridRow : (int, int) => rule;
