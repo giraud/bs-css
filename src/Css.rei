@@ -420,8 +420,8 @@ let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
 let order: int => rule;
 
-let gridTemplateColumns : list([ | length | `auto]) => rule;
-let gridTemplateRows : list([ | length | `auto]) => rule;
+let gridTemplateColumns : list([ | length | `fr(float) | `auto]) => rule;
+let gridTemplateRows : list([ | length | `fr(float) | `auto]) => rule;
 let gridAutoRows : [ | length | `auto] => rule;
 let gridColumn : (int, int) => rule;
 let gridRow : (int, int) => rule;
@@ -775,4 +775,3 @@ module SVG: {
   let stopColor: color => rule;
   let stopOpacity: float => rule;
 };
-
