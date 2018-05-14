@@ -342,6 +342,10 @@ type length = [
   | `zero
 ];
 
+type gridLength = [
+  length | `fr(float)
+];
+
 let rec string_of_length =
   fun
   | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
@@ -658,6 +662,7 @@ let string_of_dimension = fun
   | `vmax(x) => string_of_float(x) ++ "vmax"
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
+  | `fr(x) => string_of_float(x) ++ "fr"
   | `zero => "0";
 let width = x => d("width", string_of_dimension(x));
 let maxWidth = x => d("maxWidth", string_of_dimension(x));
@@ -1536,13 +1541,3 @@ module SVG = {
   let stopColor = c => d("stopColor", string_of_color(c));
   let stopOpacity = o => d("stopOpacity", string_of_float(o));
 };
-
-
-
-
-
-
-
-
-
-
