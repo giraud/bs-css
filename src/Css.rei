@@ -552,6 +552,10 @@ let cursor : [
   | `zoomOut
   ] => rule;
 
+let clipPath : [
+  |`url(string)
+  ] =>
+  rule;
 
 type listStyleType = [
  | `disc

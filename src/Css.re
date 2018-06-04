@@ -968,6 +968,11 @@ let cursor = x =>
     | `zoomOut => "zoom-out"
     });
 
+let clipPath = x =>
+  d( "clipPath", switch x {
+    | `url(url) => "url(" ++ url ++ ")"
+    });
+
 type listStyleType = [
   | `disc
   | `circle
