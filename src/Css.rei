@@ -757,6 +757,7 @@ let target: list(rule) => rule;
 let firstLine: list(rule) => rule;
 let firstLetter: list(rule) => rule;
 let selection: list(rule) => rule;
+let placeholder: list(rule) => rule;
 
 let media: (string, list(rule)) => rule;
 

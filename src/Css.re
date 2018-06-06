@@ -1508,6 +1508,7 @@ let target = selector(":target");
 let firstLine = selector("::first-line");
 let firstLetter = selector("::first-letter");
 let selection = selector("::selection");
+let placeholder = selector("::placeholder");
 
 let media = (query, rules) => `selector("@media " ++ query, rules);
 
