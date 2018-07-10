@@ -31,6 +31,7 @@ type color = [
   | `hsla(int, int, int, float)
   | `transparent
   | `hex(string)
+  | `colorVariable(string)
   | `currentColor
 ];
 
@@ -224,6 +225,7 @@ type length = [
   | `vmin(float)
   | `vmax(float)
   | `vw(float)
+  | `lengthVariable(string)
   | `zero
 ];
 
@@ -868,3 +870,9 @@ module SVG: {
   let stopColor: color => rule;
   let stopOpacity: float => rule;
 };
+
+/**
+ * CSS Variables
+ */
+
+let setCssVariable: (~name: string, [ color | length]) => rule;

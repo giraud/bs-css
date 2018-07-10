@@ -116,9 +116,12 @@ type color = [
   | `hsl(int, int, int)
   | `hsla(int, int, int, float)
   | `hex(string)
+  | `colorVariable(string)
   | `transparent
   | `currentColor
 ];
+
+let string_of_css_var = s => "var(" ++ s ++ ")";
 
 let string_of_color =
   fun
@@ -162,6 +165,7 @@ let string_of_color =
        )
     ++ ")"
   | `hex(s) => "#" ++ s
+  | `colorVariable(s) => string_of_css_var(s)
   | `transparent => "transparent"
   | `currentColor => "currentColor";
 
@@ -383,6 +387,7 @@ type length = [
   | `vmax(float)
   | `vmin(float)
   | `vw(float)
+  | `lengthVariable(string)
   | `zero
 ];
 
@@ -407,6 +412,7 @@ let rec string_of_length =
   | `vmax(x) => string_of_float(x) ++ "vmax"
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
+  | `lengthVariable(s) => string_of_css_var(s)
   | `zero => "0";
 
 let ch = x => `ch(x);
@@ -629,6 +635,7 @@ let flexBasis = x =>
     | `vmax(x) => string_of_float(x) ++ "vmax"
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
     | `fill => "fill"
     | `maxContent => "max-content"
@@ -681,6 +688,7 @@ let string_of_margin =
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
   | `zero => "0"
+  | `lengthVariable(s) => string_of_css_var(s)
   | `auto => "auto";
 
 let margin = x => d("margin", string_of_margin(x));
@@ -737,6 +745,7 @@ let string_of_dimension =
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
   | `fr(x) => string_of_float(x) ++ "fr"
+  | `lengthVariable(s) => string_of_css_var(s)
   | `zero => "0";
 let width = x => d("width", string_of_dimension(x));
 let maxWidth = x => d("maxWidth", string_of_dimension(x));
@@ -1052,6 +1061,7 @@ let background = x =>
          )
       ++ ")"
     | `hex(s) => "#" ++ s
+    | `colorVariable(s) => string_of_css_var(s)
     | `transparent => "transparent"
     | `currentColor => "currentColor"
     | `linearGradient(angle, stops) =>
@@ -1363,6 +1373,7 @@ let letterSpacing = x =>
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
     },
   );
@@ -1481,6 +1492,7 @@ let verticalAlign = x =>
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
     },
   );
@@ -1530,6 +1542,7 @@ let wordSpacing = x =>
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
     },
   );
@@ -1654,6 +1667,7 @@ let perspective = x =>
     | `vmax(x) => string_of_float(x) ++ "vmax"
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
     },
   );
@@ -1895,3 +1909,13 @@ module SVG = {
   let stopColor = c => d("stopColor", string_of_color(c));
   let stopOpacity = o => d("stopOpacity", string_of_float(o));
 };
+
+/** Css Variables */
+let setCssVariable = (~name, value) =>
+  d(
+    name,
+    switch (value) {
+    | #color as x => string_of_color(x)
+    | #length as x => string_of_length(x)
+    },
+  );
