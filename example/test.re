@@ -1,4 +1,4 @@
-let text = ReasonReact.stringToElement;
+let text = ReasonReact.string;
 
 let arialNarrow =
   Css.(
@@ -63,7 +63,7 @@ module Section = {
   let component = ReasonReact.statelessComponent("Section");
   let make = (~name, children) => {
     ...component,
-    render: (_) =>
+    render: _ =>
       <section className=(Css.style(section))>
         <h1> (text(name)) </h1>
         (
