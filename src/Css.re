@@ -1,6 +1,6 @@
 let join = (separator, strings) => {
   let rec run = (acc, strings) =>
-    switch strings {
+    switch (strings) {
     | [] => acc
     | [x] => acc ++ x
     | [x, ...xs] => run(acc ++ x ++ separator, xs)
@@ -25,7 +25,7 @@ module Glamor = {
       ~fontFamily: string,
       ~src: string,
       ~fontStyle: string=?,
-      ~fontWeight: int=?,
+      ~fontWeight: int=?
     ) =>
     fontFace =
     "";
@@ -39,7 +39,7 @@ module Glamor = {
   ];
   let rec makeDict = ruleset => {
     let toJs = rule =>
-      switch rule {
+      switch (rule) {
       | `declaration(name, value) => (name, Js.Json.string(value))
       | `selector(name, ruleset) => (name, makeDict(ruleset))
       | `shadow(value) => ("boxShadow", Js.Json.string(value))
@@ -58,18 +58,19 @@ type rule = [
   | `animation(string)
   | `transition(string)
   | `shadow(string)
-  ];
+];
 type selector = [ | `selector(string, list(rule))];
 let empty = [];
 
 let merge = List.concat;
-let global = (selector, rules:list(rule)) => Glamor.makeGlobal(selector, Glamor.makeDict(rules));
+let global = (selector, rules: list(rule)) =>
+  Glamor.makeGlobal(selector, Glamor.makeDict(rules));
 
 type animation = string;
 
 let keyframes = frames => {
   let addStop = (dict, (stop, rules)) => {
-    Js.Dict.set(dict, (string_of_int(stop)++ "%"), Glamor.makeDict(rules));
+    Js.Dict.set(dict, string_of_int(stop) ++ "%", Glamor.makeDict(rules));
     dict;
   };
   Glamor.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
@@ -77,31 +78,24 @@ let keyframes = frames => {
 
 let style = rules => rules |> Glamor.make |> Glamor.className;
 
-
 let d = (property, value) => `declaration((property, value));
 
 let func = (name, args) => name ++ "(" ++ join(", ", args) ++ ")";
 
 let string_of_float = (f: float) => {j|$(f)|j};
 
-let important = (v) =>
-  switch v {
-  | `declaration(name, value) => `declaration(name, value ++ " !important")
+let important = v =>
+  switch (v) {
+  | `declaration(name, value) => `declaration((name, value ++ " !important"))
   | _ => v
   };
 
-let label = (label) => `declaration("label", label);
-
+let label = label => `declaration(("label", label));
 
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-type angle = [
-  | `deg(int)
-  | `rad(float)
-  | `grad(float)
-  | `turn(float)
-];
+type angle = [ | `deg(int) | `rad(float) | `grad(float) | `turn(float)];
 
 let string_of_angle =
   fun
@@ -122,17 +116,56 @@ type color = [
   | `hsl(int, int, int)
   | `hsla(int, int, int, float)
   | `hex(string)
+  | `colorVariable(string)
   | `transparent
   | `currentColor
 ];
 
+let string_of_css_var = s => "var(" ++ s ++ ")";
+
 let string_of_color =
   fun
-  | `rgb(r, g, b) => "rgb(" ++ join(", ", [string_of_int(r), string_of_int(g), string_of_int(b)]) ++ ")"
-  | `rgba(r, g, b, a) => "rgba(" ++ join( ", ", [ string_of_int(r), string_of_int(g), string_of_int(b), string_of_float(a) ]) ++ ")"
-  | `hsl(h, s, l) => "hsl(" ++ join(", ", [string_of_int(h), string_of_int(s) ++ "%", string_of_int(l) ++ "%"]) ++ ")"
-  | `hsla(h, s, l, a) => "hsla(" ++ join( ", ", [ string_of_int(h), string_of_int(s) ++ "%", string_of_int(l) ++ "%", string_of_float(a) ]) ++ ")"
+  | `rgb(r, g, b) =>
+    "rgb("
+    ++ join(", ", [string_of_int(r), string_of_int(g), string_of_int(b)])
+    ++ ")"
+  | `rgba(r, g, b, a) =>
+    "rgba("
+    ++ join(
+         ", ",
+         [
+           string_of_int(r),
+           string_of_int(g),
+           string_of_int(b),
+           string_of_float(a),
+         ],
+       )
+    ++ ")"
+  | `hsl(h, s, l) =>
+    "hsl("
+    ++ join(
+         ", ",
+         [
+           string_of_int(h),
+           string_of_int(s) ++ "%",
+           string_of_int(l) ++ "%",
+         ],
+       )
+    ++ ")"
+  | `hsla(h, s, l, a) =>
+    "hsla("
+    ++ join(
+         ", ",
+         [
+           string_of_int(h),
+           string_of_int(s) ++ "%",
+           string_of_int(l) ++ "%",
+           string_of_float(a),
+         ],
+       )
+    ++ ")"
   | `hex(s) => "#" ++ s
+  | `colorVariable(s) => string_of_css_var(s)
   | `transparent => "transparent"
   | `currentColor => "currentColor";
 
@@ -303,19 +336,34 @@ type gradient = [
 
 let string_of_stops = stops =>
   stops
-  |> List.map(((i, c)) => join(" ", [string_of_color(c), string_of_int(i) ++ "%"]))
+  |> List.map(((i, c)) =>
+       join(" ", [string_of_color(c), string_of_int(i) ++ "%"])
+     )
   |> join(", ");
 
 let string_of_gradient =
   fun
-  | `linearGradient(angle, stops) => "linear-gradient(" ++ string_of_angle(angle) ++ ", " ++ string_of_stops(stops) ++ ")"
-  | `repeatingLinearGradient(angle, stops) => "repeating-linear-gradient(" ++ string_of_angle(angle) ++ ", " ++ string_of_stops(stops) ++ ")"
-  | `radialGradient(stops) => "radial-gradient(" ++ string_of_stops(stops) ++ ")"
-  | `repeatingRadialGradient(stops) => "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")";
+  | `linearGradient(angle, stops) =>
+    "linear-gradient("
+    ++ string_of_angle(angle)
+    ++ ", "
+    ++ string_of_stops(stops)
+    ++ ")"
+  | `repeatingLinearGradient(angle, stops) =>
+    "repeating-linear-gradient("
+    ++ string_of_angle(angle)
+    ++ ", "
+    ++ string_of_stops(stops)
+    ++ ")"
+  | `radialGradient(stops) =>
+    "radial-gradient(" ++ string_of_stops(stops) ++ ")"
+  | `repeatingRadialGradient(stops) =>
+    "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")";
 
 let linearGradient = (angle, stops) => `linearGradient((angle, stops));
 
-let repeatingLinearGradient = (angle, stops) => `repeatingLinearGradient((angle, stops));
+let repeatingLinearGradient = (angle, stops) =>
+  `repeatingLinearGradient((angle, stops));
 
 let radialGradient = stops => `radialGradient(stops);
 
@@ -325,7 +373,7 @@ let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
  * Units
  */
 type length = [
-  | `calc([ |`add | `sub], length, length)
+  | `calc([ | `add | `sub], length, length)
   | `ch(float)
   | `cm(float)
   | `em(float)
@@ -339,17 +387,18 @@ type length = [
   | `vmax(float)
   | `vmin(float)
   | `vw(float)
+  | `lengthVariable(string)
   | `zero
 ];
 
-type gridLength = [
-  length | `fr(float)
-];
+type gridLength = [ length | `fr(float)];
 
 let rec string_of_length =
   fun
-  | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-  | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+  | `calc(`add, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+  | `calc(`sub, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
   | `ch(x) => string_of_float(x) ++ "ch"
   | `cm(x) => string_of_float(x) ++ "cm"
   | `em(x) => string_of_float(x) ++ "em"
@@ -363,8 +412,8 @@ let rec string_of_length =
   | `vmax(x) => string_of_float(x) ++ "vmax"
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
+  | `lengthVariable(s) => string_of_css_var(s)
   | `zero => "0";
-
 
 let ch = x => `ch(x);
 let cm = x => `cm(x);
@@ -382,10 +431,9 @@ let vmin = x => `vmin(x);
 let vw = x => `vw(x);
 let zero = `zero;
 
-
 module Calc = {
-  let (-) = (a, b) => `calc(`sub, a, b);
-  let (+) = (a, b) => `calc(`add, a, b);
+  let (-) = (a, b) => `calc((`sub, a, b));
+  let (+) = (a, b) => `calc((`add, a, b));
 };
 let size = (x, y) => `size((x, y));
 
@@ -406,9 +454,9 @@ let column = `column;
 let columnReverse = `columnReverse;
 let contain = `contain;
 let contentBox = `contentBox;
-let count = x =>  `count(x);
+let count = x => `count(x);
 let cover = `cover;
-let cubicBesier = (a, b, c, d) => `cubicBezier(a, b, c, d);
+let cubicBesier = (a, b, c, d) => `cubicBezier((a, b, c, d));
 let dashed = `dashed;
 let dotted = `dotted;
 let ease = `ease;
@@ -439,38 +487,38 @@ let relative = `relative;
 let repeat = `repeat;
 let repeatX = `repeatX;
 let repeatY = `repeatY;
-let rotate = (a) => `rotate(a);
-let rotate3d = (x, y, z, a) => `rotate3d(x, y, z, a);
-let rotateX = (a) => `rotateX(a);
-let rotateY = (a) => `rotateY(a);
-let rotateZ = (a) => `rotateZ(a);
+let rotate = a => `rotate(a);
+let rotate3d = (x, y, z, a) => `rotate3d((x, y, z, a));
+let rotateX = a => `rotateX(a);
+let rotateY = a => `rotateY(a);
+let rotateZ = a => `rotateZ(a);
 let row = `row;
 let rowReverse = `rowReverse;
 let running = `running;
-let scale = (x, y) => `scale(x, y);
-let scale3d = (x, y, z) => `scale3d(x, y, z);
-let scaleX = (x) => `scaleX(x);
-let scaleY = (x) => `scaleY(x);
+let scale = (x, y) => `scale((x, y));
+let scale3d = (x, y, z) => `scale3d((x, y, z));
+let scaleX = x => `scaleX(x);
+let scaleY = x => `scaleY(x);
 let scaleZ = x => `scaleZ(x);
 let scroll = `scroll;
-let skew = (x, y) => `skew(x, y);
-let skewX = (a) => `skewX(a);
-let skewY = (a) => `skewY(a);
+let skew = (x, y) => `skew((x, y));
+let skewX = a => `skewX(a);
+let skewY = a => `skewY(a);
 let solid = `solid;
 let spaceAround = `spaceAround;
 let spaceBetween = `spaceBetween;
 let static = `static;
 let stepEnd = `stepEnd;
-let steps = (i, dir) => `steps(i, dir);
+let steps = (i, dir) => `steps((i, dir));
 let stepStart = `stepStart;
 let sticky = `sticky;
 let stretch = `stretch;
 let text = `text;
-let translate  = (x, y) => `translate(x, y);
-let translate3d = (x, y, z) => `translate3d(x, y, z);
-let translateX = (x) => `translateX(x);
-let translateY = (y) => `translateY(y);
-let translateZ = (z) => `translateZ(z);
+let translate = (x, y) => `translate((x, y));
+let translate3d = (x, y, z) => `translate3d((x, y, z));
+let translateX = x => `translateX(x);
+let translateY = y => `translateY(y);
+let translateZ = z => `translateZ(z);
 let url = x => `url(x);
 let visible = `visible;
 let wrap = `wrap;
@@ -482,13 +530,11 @@ let outside = `outside;
 let italic = `italic;
 let oblique = `oblique;
 
-
 let underline = `underline;
 let overline = `overline;
 let lineThrough = `lineThough;
 let clip = `clip;
 let ellipsis = `ellipsis;
-
 
 let wavy = `wavy;
 let double = `double;
@@ -497,10 +543,9 @@ let uppercase = `uppercase;
 let lowercase = `lowercase;
 let capitalize = `capitalize;
 
-
 let sub = `sub;
 let super = `super;
-let textTop= `textTop;
+let textTop = `textTop;
 let textBottom = `textBottom;
 let middle = `middle;
 
@@ -514,13 +559,11 @@ let reverse = `reverse;
 let alternate = `alternate;
 let alternateReverse = `alternateReverse;
 
-
 let fill = `fill;
 let content = `content;
 let maxContent = `maxContent;
 let minContent = `minContent;
 let fitContent = `fitContent;
-
 
 let round = `round;
 let miter = `miter;
@@ -532,12 +575,14 @@ let square = `square;
  ******************** PROPERTIES ************************
  ********************************************************/
 
- let unsafe = d;
+let unsafe = d;
 /**
  * Layout
  **/
 let display = x =>
-  d( "display", switch x {
+  d(
+    "display",
+    switch (x) {
     | `block => "block"
     | `inline => "inline"
     | `inlineBlock => "inline-block"
@@ -546,16 +591,20 @@ let display = x =>
     | `inlineFlex => "inline-flex"
     | `grid => "grid"
     | `inlineGrid => "inline-grid"
-    });
+    },
+  );
 
 let position = x =>
-  d( "position", switch x {
+  d(
+    "position",
+    switch (x) {
     | `absolute => "absolute"
     | `static => "static"
     | `fixed => "fixed"
     | `relative => "relative"
     | `sticky => "sticky"
-  });
+    },
+  );
 
 let top = x => d("top", string_of_length(x));
 let bottom = x => d("bottom", string_of_length(x));
@@ -565,51 +614,66 @@ let right = x => d("right", string_of_length(x));
 let flex = x => d("flex", string_of_int(x));
 let flexGrow = x => d("flexGrow", string_of_int(x));
 let flexShrink = x => d("flexShrink", string_of_int(x));
-let flexBasis = x => d("flexBasis", switch x {
-  | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-  | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
-  | `ch(x) => string_of_float(x) ++ "ch"
-  | `cm(x) => string_of_float(x) ++ "cm"
-  | `em(x) => string_of_float(x) ++ "em"
-  | `ex(x) => string_of_float(x) ++ "ex"
-  | `mm(x) => string_of_float(x) ++ "mm"
-  | `percent(x) => string_of_float(x) ++ "%"
-  | `pt(x) => string_of_int(x) ++ "pt"
-  | `px(x) => string_of_int(x) ++ "px"
-  | `rem(x) => string_of_float(x) ++ "rem"
-  | `vh(x) => string_of_float(x) ++ "vh"
-  | `vmax(x) => string_of_float(x) ++ "vmax"
-  | `vmin(x) => string_of_float(x) ++ "vmin"
-  | `vw(x) => string_of_float(x) ++ "vw"
-  | `zero => "0"
-  | `fill => "fill"
-  | `maxContent => "max-content"
-  | `minContent => "min-content"
-  | `fitContent => "fit-content"
-  | `content => "content"
-  | `auto => "auto"
-});
+let flexBasis = x =>
+  d(
+    "flexBasis",
+    switch (x) {
+    | `calc(`add, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `ch(x) => string_of_float(x) ++ "ch"
+    | `cm(x) => string_of_float(x) ++ "cm"
+    | `em(x) => string_of_float(x) ++ "em"
+    | `ex(x) => string_of_float(x) ++ "ex"
+    | `mm(x) => string_of_float(x) ++ "mm"
+    | `percent(x) => string_of_float(x) ++ "%"
+    | `pt(x) => string_of_int(x) ++ "pt"
+    | `px(x) => string_of_int(x) ++ "px"
+    | `rem(x) => string_of_float(x) ++ "rem"
+    | `vh(x) => string_of_float(x) ++ "vh"
+    | `vmax(x) => string_of_float(x) ++ "vmax"
+    | `vmin(x) => string_of_float(x) ++ "vmin"
+    | `vw(x) => string_of_float(x) ++ "vw"
+    | `lengthVariable(s) => string_of_css_var(s)
+    | `zero => "0"
+    | `fill => "fill"
+    | `maxContent => "max-content"
+    | `minContent => "min-content"
+    | `fitContent => "fit-content"
+    | `content => "content"
+    | `auto => "auto"
+    },
+  );
 let flexDirection = x =>
-  d( "flexDirection", switch x {
+  d(
+    "flexDirection",
+    switch (x) {
     | `row => "row"
     | `column => "column"
     | `rowReverse => "row-reverse"
     | `columnReverse => "column-reverse"
-    });
+    },
+  );
 
 let flexWrap = x =>
-  d( "flexWrap", switch x {
+  d(
+    "flexWrap",
+    switch (x) {
     | `nowrap => "nowrap"
     | `wrap => "wrap"
     | `wrapReverse => "wrap-reverse"
-    });
+    },
+  );
 
 let order = x => d("order", string_of_int(x));
 
 let string_of_margin =
   fun
-  | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-  | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+  | `calc(`add, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+  | `calc(`sub, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
   | `ch(x) => string_of_float(x) ++ "ch"
   | `cm(x) => string_of_float(x) ++ "cm"
   | `em(x) => string_of_float(x) ++ "em"
@@ -624,31 +688,49 @@ let string_of_margin =
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
   | `zero => "0"
+  | `lengthVariable(s) => string_of_css_var(s)
   | `auto => "auto";
 
 let margin = x => d("margin", string_of_margin(x));
-let margin2 = (~v, ~h) => d("margin", [v, h] |> List.map(string_of_margin) |> join(" "));
-let margin3 = (~top, ~h, ~bottom) => d("margin", [top, h, bottom] |> List.map(string_of_margin) |> join(" "));
-let margin4 = (~top, ~right, ~bottom, ~left) => d("margin", [top, right, bottom, left] |> List.map(string_of_margin) |> join(" "));
+let margin2 = (~v, ~h) =>
+  d("margin", [v, h] |> List.map(string_of_margin) |> join(" "));
+let margin3 = (~top, ~h, ~bottom) =>
+  d("margin", [top, h, bottom] |> List.map(string_of_margin) |> join(" "));
+let margin4 = (~top, ~right, ~bottom, ~left) =>
+  d(
+    "margin",
+    [top, right, bottom, left] |> List.map(string_of_margin) |> join(" "),
+  );
 let marginLeft = x => d("marginLeft", string_of_margin(x));
 let marginRight = x => d("marginRight", string_of_margin(x));
 let marginTop = x => d("marginTop", string_of_margin(x));
 let marginBottom = x => d("marginBottom", string_of_margin(x));
 
 let padding = x => d("padding", string_of_length(x));
-let padding2 = (~v, ~h) => d("padding", [v, h] |> List.map(string_of_length) |> join(" "));
-let padding3 = (~top, ~h, ~bottom) => d("padding", [top, h, bottom] |> List.map(string_of_length) |> join(" "));
-let padding4 = (~top, ~right, ~bottom, ~left) => d("padding", [top, right, bottom, left] |> List.map(string_of_length) |> join(" "));
+let padding2 = (~v, ~h) =>
+  d("padding", [v, h] |> List.map(string_of_length) |> join(" "));
+let padding3 = (~top, ~h, ~bottom) =>
+  d(
+    "padding",
+    [top, h, bottom] |> List.map(string_of_length) |> join(" "),
+  );
+let padding4 = (~top, ~right, ~bottom, ~left) =>
+  d(
+    "padding",
+    [top, right, bottom, left] |> List.map(string_of_length) |> join(" "),
+  );
 let paddingLeft = x => d("paddingLeft", string_of_length(x));
 let paddingRight = x => d("paddingRight", string_of_length(x));
 let paddingTop = x => d("paddingTop", string_of_length(x));
 let paddingBottom = x => d("paddingBottom", string_of_length(x));
 
-
-let string_of_dimension = fun
+let string_of_dimension =
+  fun
   | `auto => "auto"
-  | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-  | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+  | `calc(`add, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+  | `calc(`sub, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
   | `ch(x) => string_of_float(x) ++ "ch"
   | `cm(x) => string_of_float(x) ++ "cm"
   | `em(x) => string_of_float(x) ++ "em"
@@ -663,6 +745,7 @@ let string_of_dimension = fun
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
   | `fr(x) => string_of_float(x) ++ "fr"
+  | `lengthVariable(s) => string_of_css_var(s)
   | `zero => "0";
 let width = x => d("width", string_of_dimension(x));
 let maxWidth = x => d("maxWidth", string_of_dimension(x));
@@ -672,9 +755,7 @@ let minHeight = x => d("minHeight", string_of_dimension(x));
 let maxHeight = x => d("maxHeight", string_of_dimension(x));
 
 let string_of_dimensions = dimensions =>
-  dimensions
-  |> List.map(string_of_dimension)
-  |> String.concat(" ");
+  dimensions |> List.map(string_of_dimension) |> String.concat(" ");
 
 let gridTemplateColumns = dimensions =>
   d("gridTemplateColumns", string_of_dimensions(dimensions));
@@ -685,31 +766,24 @@ let gridTemplateRows = dimensions =>
 let gridAutoRows = dimensions =>
   d("gridAutoRows", string_of_dimension(dimensions));
 
+let gridColumn = (start, end') =>
+  d("gridColumn", string_of_int(start) ++ " / " ++ string_of_int(end'));
 
-let gridColumn = (start, end') => d("gridColumn", string_of_int(start) ++ " / " ++ string_of_int(end'));
+let gridRow = (start, end') =>
+  d("gridRow", string_of_int(start) ++ " / " ++ string_of_int(end'));
+let gridColumnStart = n => d("gridColumnStart", string_of_int(n));
 
-let gridRow = (start, end') => d("gridRow", string_of_int(start) ++ " / " ++ string_of_int(end'));
-let gridColumnStart = n =>
-  d("gridColumnStart", string_of_int(n));
+let gridColumnEnd = n => d("gridColumnEnd", string_of_int(n));
 
-let gridColumnEnd = n =>
-  d("gridColumnEnd", string_of_int(n));
+let gridRowStart = n => d("gridRowStart", string_of_int(n));
 
-let gridRowStart = n =>
-  d("gridRowStart", string_of_int(n));
+let gridRowEnd = n => d("gridRowEnd", string_of_int(n));
 
-let gridRowEnd = n =>
-  d("gridRowEnd", string_of_int(n));
+let gridColumnGap = n => d("gridColumnGap", string_of_length(n));
 
-let gridColumnGap = n =>
-  d("gridColumnGap", string_of_length(n));
+let gridRowGap = n => d("gridRowGap", string_of_length(n));
 
-let gridRowGap = n =>
-  d("gridRowGap", string_of_length(n));
-
-let gridGap = n =>
-  d("gridGap", string_of_length(n));
-
+let gridGap = n => d("gridGap", string_of_length(n));
 
 let string_of_align =
   fun
@@ -734,24 +808,33 @@ let justifyContent = x => d("justifyContent", string_of_justify(x));
 let alignContent = x => d("alignContent", string_of_justify(x));
 
 let boxSizing = x =>
-  d( "boxSizing", switch x {
+  d(
+    "boxSizing",
+    switch (x) {
     | `contentBox => "content-box"
     | `borderBox => "border-box"
-    });
+    },
+  );
 
 let float = x =>
-  d( "float", switch x {
+  d(
+    "float",
+    switch (x) {
     | `left => "left"
     | `right => "right"
     | `none => "none"
-    });
+    },
+  );
 
 let clear = x =>
-  d( "clear", switch x {
+  d(
+    "clear",
+    switch (x) {
     | `left => "left"
     | `right => "right"
     | `both => "both"
-  });
+    },
+  );
 
 let string_of_overflow =
   fun
@@ -772,30 +855,44 @@ let zIndex = i => d("zIndex", string_of_int(i));
  * Style
 **/
 let backfaceVisibility = x =>
-  d( "backfaceVisibility", switch x {
+  d(
+    "backfaceVisibility",
+    switch (x) {
     | `hidden => "hidden"
     | `visible => "visible"
-  });
+    },
+  );
 
 let visibility = x =>
-  d( "visibility", switch x {
+  d(
+    "visibility",
+    switch (x) {
     | `hidden => "hidden"
     | `visible => "visible"
-  });
+    },
+  );
 
-let boxShadow = (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color) =>
-  `shadow(join( " ", [
-    string_of_length(x),
-    string_of_length(y),
-    string_of_length(blur),
-    string_of_length(spread),
-    string_of_color(color),
-    inset ? "inset" : "",
-  ]));
+let boxShadow =
+    (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color) =>
+  `shadow(
+    join(
+      " ",
+      [
+        string_of_length(x),
+        string_of_length(y),
+        string_of_length(blur),
+        string_of_length(spread),
+        string_of_color(color),
+        inset ? "inset" : "",
+      ],
+    ),
+  );
 
-let string_of_shadow = fun
-| `shadow(s) => s;
-let boxShadows = shadows => d("boxShadow", shadows |> List.map(string_of_shadow) |> join(", "));
+let string_of_shadow =
+  fun
+  | `shadow(s) => s;
+let boxShadows = shadows =>
+  d("boxShadow", shadows |> List.map(string_of_shadow) |> join(", "));
 
 let string_of_borderstyle =
   fun
@@ -805,71 +902,109 @@ let string_of_borderstyle =
   | `none => "none";
 
 let border = (px, style, color) =>
-  d( "border", join( " ", [
-    string_of_length(px),
-    string_of_borderstyle(style),
-    string_of_color(color)
-  ]));
+  d(
+    "border",
+    join(
+      " ",
+      [
+        string_of_length(px),
+        string_of_borderstyle(style),
+        string_of_color(color),
+      ],
+    ),
+  );
 let borderWidth = x => d("borderWidth", string_of_length(x));
 let borderStyle = x => d("borderStyle", string_of_borderstyle(x));
 let borderColor = x => d("borderColor", string_of_color(x));
 
 let borderLeft = (px, style, color) =>
-  d( "borderLeft", join( " ", [
-    string_of_length(px),
-    string_of_borderstyle(style),
-    string_of_color(color)
-  ]));
+  d(
+    "borderLeft",
+    join(
+      " ",
+      [
+        string_of_length(px),
+        string_of_borderstyle(style),
+        string_of_color(color),
+      ],
+    ),
+  );
 let borderLeftWidth = x => d("borderLeftWidth", string_of_length(x));
 let borderLeftStyle = x => d("borderLeftStyle", string_of_borderstyle(x));
 let borderLeftColor = x => d("borderLeftColor", string_of_color(x));
 
 let borderRight = (px, style, color) =>
-  d( "borderRight", join( " ", [
-    string_of_length(px),
-    string_of_borderstyle(style),
-    string_of_color(color)
-    ]));
+  d(
+    "borderRight",
+    join(
+      " ",
+      [
+        string_of_length(px),
+        string_of_borderstyle(style),
+        string_of_color(color),
+      ],
+    ),
+  );
 
 let borderRightWidth = x => d("borderRightWidth", string_of_length(x));
 let borderRightColor = x => d("borderRightColor", string_of_color(x));
 let borderRightStyle = x => d("borderRightStyle", string_of_borderstyle(x));
 let borderTop = (px, style, color) =>
-  d( "borderTop", join( " ", [
-      string_of_length(px),
-      string_of_borderstyle(style),
-      string_of_color(color)
-    ]));
+  d(
+    "borderTop",
+    join(
+      " ",
+      [
+        string_of_length(px),
+        string_of_borderstyle(style),
+        string_of_color(color),
+      ],
+    ),
+  );
 
 let borderTopWidth = x => d("borderTopWidth", string_of_length(x));
 let borderTopStyle = x => d("borderTopStyle", string_of_borderstyle(x));
 let borderTopColor = x => d("borderTopColor", string_of_color(x));
 
 let borderBottom = (px, style, color) =>
-  d( "borderBottom", join( " ", [
-    string_of_length(px),
-    string_of_borderstyle(style),
-    string_of_color(color)
-  ]));
+  d(
+    "borderBottom",
+    join(
+      " ",
+      [
+        string_of_length(px),
+        string_of_borderstyle(style),
+        string_of_color(color),
+      ],
+    ),
+  );
 let borderBottomWidth = x => d("borderBottomWidth", string_of_length(x));
-let borderBottomStyle = x => d("borderBottomStyle", string_of_borderstyle(x));
+let borderBottomStyle = x =>
+  d("borderBottomStyle", string_of_borderstyle(x));
 let borderBottomColor = x => d("borderBottomColor", string_of_color(x));
 
 let borderRadius = i => d("borderRadius", string_of_length(i));
 let borderTopLeftRadius = i => d("borderTopLeftRadius", string_of_length(i));
-let borderTopRightRadius = i => d("borderTopRightRadius", string_of_length(i));
-let borderBottomLeftRadius = i => d("borderBottomLeftRadius", string_of_length(i));
-let borderBottomRightRadius = i => d("borderBottomRightRadius", string_of_length(i));
+let borderTopRightRadius = i =>
+  d("borderTopRightRadius", string_of_length(i));
+let borderBottomLeftRadius = i =>
+  d("borderBottomLeftRadius", string_of_length(i));
+let borderBottomRightRadius = i =>
+  d("borderBottomRightRadius", string_of_length(i));
 
 let tableLayout = x =>
-  d("tableLayout", switch x {
+  d(
+    "tableLayout",
+    switch (x) {
     | `auto => "auto"
     | `fixed => "fixed"
     },
   );
 
 let borderCollapse = x =>
-  d("borderCollapse", switch x {
+  d(
+    "borderCollapse",
+    switch (x) {
     | `collapse => "collapse"
     | `separate => "separate"
     },
@@ -878,74 +1013,163 @@ let borderCollapse = x =>
 let borderSpacing = i => d("borderSpacing", string_of_length(i));
 
 let background = x =>
-  d( "background", switch x {
+  d(
+    "background",
+    switch (x) {
     | `none => "none"
     | `url(url) => "url(" ++ url ++ ")"
-    | `rgb(r, g, b) => "rgb(" ++ join(", ", [string_of_int(r), string_of_int(g), string_of_int(b)]) ++ ")"
-    | `rgba(r, g, b, a) => "rgba(" ++ join( ", ", [ string_of_int(r), string_of_int(g), string_of_int(b), string_of_float(a) ]) ++ ")"
-    | `hsl(h, s, l) => "hsl(" ++ join(", ", [string_of_int(h), string_of_int(s) ++ "%", string_of_int(l) ++ "%"]) ++ ")"
-    | `hsla(h, s, l, a) => "hsla(" ++ join( ", ", [ string_of_int(h), string_of_int(s) ++ "%", string_of_int(l) ++ "%", string_of_float(a) ]) ++ ")"
+    | `rgb(r, g, b) =>
+      "rgb("
+      ++ join(
+           ", ",
+           [string_of_int(r), string_of_int(g), string_of_int(b)],
+         )
+      ++ ")"
+    | `rgba(r, g, b, a) =>
+      "rgba("
+      ++ join(
+           ", ",
+           [
+             string_of_int(r),
+             string_of_int(g),
+             string_of_int(b),
+             string_of_float(a),
+           ],
+         )
+      ++ ")"
+    | `hsl(h, s, l) =>
+      "hsl("
+      ++ join(
+           ", ",
+           [
+             string_of_int(h),
+             string_of_int(s) ++ "%",
+             string_of_int(l) ++ "%",
+           ],
+         )
+      ++ ")"
+    | `hsla(h, s, l, a) =>
+      "hsla("
+      ++ join(
+           ", ",
+           [
+             string_of_int(h),
+             string_of_int(s) ++ "%",
+             string_of_int(l) ++ "%",
+             string_of_float(a),
+           ],
+         )
+      ++ ")"
     | `hex(s) => "#" ++ s
+    | `colorVariable(s) => string_of_css_var(s)
     | `transparent => "transparent"
     | `currentColor => "currentColor"
-    | `linearGradient(angle, stops) => "linear-gradient(" ++ string_of_angle(angle) ++ ", " ++ string_of_stops(stops) ++ ")"
-    | `repeatingLinearGradient(angle, stops) => "repeating-linear-gradient(" ++ string_of_angle(angle) ++ ", " ++ string_of_stops(stops) ++ ")"
-    | `radialGradient(stops) => "radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    | `repeatingRadialGradient(stops) => "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-  });
+    | `linearGradient(angle, stops) =>
+      "linear-gradient("
+      ++ string_of_angle(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `repeatingLinearGradient(angle, stops) =>
+      "repeating-linear-gradient("
+      ++ string_of_angle(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `radialGradient(stops) =>
+      "radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    | `repeatingRadialGradient(stops) =>
+      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    },
+  );
 let backgroundColor = x => d("backgroundColor", string_of_color(x));
 let backgroundImage = x =>
-  d( "backgroundImage", switch x {
+  d(
+    "backgroundImage",
+    switch (x) {
     | `none => "none"
     | `url(url) => "url(" ++ url ++ ")"
-    | `linearGradient(angle, stops) => "linear-gradient(" ++ string_of_angle(angle) ++ ", " ++ string_of_stops(stops) ++ ")"
-    | `repeatingLinearGradient(angle, stops) => "repeating-linear-gradient(" ++ string_of_angle(angle) ++ ", " ++ string_of_stops(stops) ++ ")"
-    | `radialGradient(stops) => "radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    | `repeatingRadialGradient(stops) => "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-  });
+    | `linearGradient(angle, stops) =>
+      "linear-gradient("
+      ++ string_of_angle(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `repeatingLinearGradient(angle, stops) =>
+      "repeating-linear-gradient("
+      ++ string_of_angle(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `radialGradient(stops) =>
+      "radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    | `repeatingRadialGradient(stops) =>
+      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    },
+  );
 
 let backgroundAttachment = x =>
-  d( "backgroundAttachment", switch x {
+  d(
+    "backgroundAttachment",
+    switch (x) {
     | `scroll => "scroll"
     | `fixed => "fixed"
     | `local => "local"
-  });
+    },
+  );
 
 let backgroundClip = x =>
-  d( "backgroundClip", switch x {
+  d(
+    "backgroundClip",
+    switch (x) {
     | `borderBox => "border-box"
     | `contentBox => "content-box"
     | `paddingBox => "padding-box"
-  });
+    },
+  );
 
 let backgroundOrigin = x =>
-  d( "backgroundOrigin", switch x {
+  d(
+    "backgroundOrigin",
+    switch (x) {
     | `borderBox => "border-box"
     | `contentBox => "content-box"
     | `paddingBox => "padding-box"
-  });
+    },
+  );
 
 let backgroundPosition = (x, y) =>
-  d("backgroundPosition", string_of_length(x) ++ " " ++ string_of_length(y));
+  d(
+    "backgroundPosition",
+    string_of_length(x) ++ " " ++ string_of_length(y),
+  );
 
 let backgroundRepeat = x =>
-  d( "backgroundRepeat", switch x {
+  d(
+    "backgroundRepeat",
+    switch (x) {
     | `repeat => "repeat"
     | `noRepeat => "no-repeat"
     | `repeatX => "repeat-x"
     | `repeatY => "repeat-y"
-  });
+    },
+  );
 
 let backgroundSize = x =>
-  d( "backgroundSize", switch x {
+  d(
+    "backgroundSize",
+    switch (x) {
     | `size(x, y) => string_of_length(x) ++ " " ++ string_of_length(y)
     | `auto => "auto"
     | `cover => "cover"
     | `contain => "contain"
-  });
+    },
+  );
 
 let cursor = x =>
-  d( "cursor", switch x {
+  d(
+    "cursor",
+    switch (x) {
     | `pointer => "pointer"
     | `alias => "alias"
     | `allScroll => "all-scroll"
@@ -966,12 +1190,16 @@ let cursor = x =>
     | `wait => "wait"
     | `zoomIn => "zoom-in"
     | `zoomOut => "zoom-out"
-    });
+    },
+  );
 
 let clipPath = x =>
-  d( "clipPath", switch x {
+  d(
+    "clipPath",
+    switch (x) {
     | `url(url) => "url(" ++ url ++ ")"
-    });
+    },
+  );
 
 type listStyleType = [
   | `disc
@@ -1014,7 +1242,15 @@ let stirng_of_listStyleImage =
   | `url(url) => func("url", [url]);
 
 let listStyle = (style, pos, img) =>
-  d( "listStyle", [ string_of_listStyleType(style), string_of_listStylePosition(pos), stirng_of_listStyleImage(img) ] |> join(" "));
+  d(
+    "listStyle",
+    [
+      string_of_listStyleType(style),
+      string_of_listStylePosition(pos),
+      stirng_of_listStyleImage(img),
+    ]
+    |> join(" "),
+  );
 
 let listStyleType = x => d("listStyleType", string_of_listStyleType(x));
 
@@ -1052,7 +1288,15 @@ let string_of_outlineStyle =
   | `outset => "outset";
 
 let outline = (size, style, color) =>
-  d( "outline", [ string_of_length(size), string_of_outlineStyle(style), string_of_color(color) ] |> join(" "));
+  d(
+    "outline",
+    [
+      string_of_length(size),
+      string_of_outlineStyle(style),
+      string_of_color(color),
+    ]
+    |> join(" "),
+  );
 
 let outlineStyle = x => d("outlineStyle", string_of_outlineStyle(x));
 
@@ -1075,17 +1319,20 @@ let fontFamily = x => d("fontFamily", x);
 
 let fontSize = x => d("fontSize", string_of_length(x));
 
-let fontVariant = x => d("fontVariant", switch x {
-| `normal => "normal"
-| `smallCaps => "small-caps"
-});
+let fontVariant = x =>
+  d(
+    "fontVariant",
+    switch (x) {
+    | `normal => "normal"
+    | `smallCaps => "small-caps"
+    },
+  );
 
-let fontStyle = x =>
-  d("fontStyle", fontStyleToJs(x));
+let fontStyle = x => d("fontStyle", fontStyleToJs(x));
 
-let fontFace =
-    (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
-  let fontStyle = Js.Option.map((. value) => fontStyleToJs(value), fontStyle);
+let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
+  let fontStyle =
+    Js.Option.map((. value) => fontStyleToJs(value), fontStyle);
   let src =
     src
     |> List.map(
@@ -1095,9 +1342,7 @@ let fontFace =
        )
     |> String.concat(", ");
   Glamor.(
-    makeFontFace(
-      fontFace(~fontFamily, ~src, ~fontStyle?, ~fontWeight?),
-    )
+    makeFontFace(fontFace(~fontFamily, ~src, ~fontStyle?, ~fontWeight?))
   );
 };
 
@@ -1106,10 +1351,14 @@ let fontWeight = x => d("fontWeight", string_of_int(x));
 let lineHeight = x => d("lineHeight", string_of_float(x));
 
 let letterSpacing = x =>
-  d( "letterSpacing", switch x {
+  d(
+    "letterSpacing",
+    switch (x) {
     | `normal => "normal"
-    | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-    | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `calc(`add, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -1124,71 +1373,99 @@ let letterSpacing = x =>
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
-  });
+    },
+  );
 
 let textAlign = x =>
-  d( "textAlign", switch x {
+  d(
+    "textAlign",
+    switch (x) {
     | `left => "left"
     | `right => "right"
     | `center => "center"
     | `justify => "justify"
-  });
+    },
+  );
 
 let textDecoration = x =>
-  d( "textDecoration", switch x {
+  d(
+    "textDecoration",
+    switch (x) {
     | `none => "none"
     | `underline => "underline"
     | `overline => "overline"
     | `lineThrough => "line-through"
-  });
+    },
+  );
 
 let textDecorationColor = x => d("textDecorationColor", string_of_color(x));
 
 let textDecorationStyle = x =>
-  d( "textDecorationStyle", switch x {
+  d(
+    "textDecorationStyle",
+    switch (x) {
     | `wavy => "wavy"
     | `solid => "solid"
     | `double => "double"
     | `dotted => "dotted"
     | `dashed => "dashed"
-  });
+    },
+  );
 
 let textIndent = x => d("textIndent", string_of_length(x));
 
 let textOverflow = x =>
-  d( "textOverflow", switch x {
+  d(
+    "textOverflow",
+    switch (x) {
     | `clip => "clip"
     | `ellipsis => "ellipsis"
     | `string(s) => s
-  });
+    },
+  );
 
 let textShadow = (~x=zero, ~y=zero, ~blur=zero, color) =>
-  d( "textShadow", join( " ", [
-    string_of_length(x),
-    string_of_length(y),
-    string_of_length(blur),
-    string_of_color(color)
-  ]));
+  d(
+    "textShadow",
+    join(
+      " ",
+      [
+        string_of_length(x),
+        string_of_length(y),
+        string_of_length(blur),
+        string_of_color(color),
+      ],
+    ),
+  );
 
 let textTransform = x =>
-  d( "textTransform", switch x {
+  d(
+    "textTransform",
+    switch (x) {
     | `uppercase => "uppercase"
     | `lowercase => "lowercase"
     | `capitalize => "capitalize"
     | `none => "none"
-  });
+    },
+  );
 
 let userSelect = x =>
-  d("userSelect", switch x {
+  d(
+    "userSelect",
+    switch (x) {
     | `auto => "auto"
     | `all => "all"
     | `text => "text"
     | `none => "none"
-  });
+    },
+  );
 
 let verticalAlign = x =>
-  d( "verticalAlign", switch x {
+  d(
+    "verticalAlign",
+    switch (x) {
     | `baseline => "baseline"
     | `sub => "sub"
     | `super => "super"
@@ -1197,8 +1474,10 @@ let verticalAlign = x =>
     | `middle => "middle"
     | `bottom => "bottom"
     | `textBottom => "text-bottom"
-    | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-    | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `calc(`add, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -1213,30 +1492,42 @@ let verticalAlign = x =>
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
-    });
+    },
+  );
 
 let whiteSpace = x =>
-  d( "whiteSpace", switch x {
+  d(
+    "whiteSpace",
+    switch (x) {
     | `normal => "normal"
     | `nowrap => "nowrap"
     | `pre => "pre"
     | `preLine => "pre-line"
     | `preWrap => "pre-wrap"
-  });
+    },
+  );
 
 let wordBreak = x =>
-  d( "wordBreak", switch x {
+  d(
+    "wordBreak",
+    switch (x) {
     | `breakAll => "break-all"
     | `keepAll => "keep-all"
     | `normal => "normal"
-  });
+    },
+  );
 
 let wordSpacing = x =>
-  d( "wordSpacing", switch x {
+  d(
+    "wordSpacing",
+    switch (x) {
     | `normal => "normal"
-    | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-    | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `calc(`add, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -1251,14 +1542,19 @@ let wordSpacing = x =>
     | `vmin(x) => string_of_float(x) ++ "vmin"
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
+    | `lengthVariable(s) => string_of_css_var(s)
     | `zero => "0"
-  });
+    },
+  );
 
 let wordWrap = x =>
-  d( "wordWrap", switch x {
+  d(
+    "wordWrap",
+    switch (x) {
     | `normal => "normal"
     | `breakWord => "break-word"
-  });
+    },
+  );
 
 let string_of_pointerEvents =
   fun
@@ -1266,7 +1562,6 @@ let string_of_pointerEvents =
   | `none => "none";
 
 let pointerEvents = x => d("pointerEvents", string_of_pointerEvents(x));
-
 
 /**
  * Transform
@@ -1295,18 +1590,30 @@ type transform = [
 
 let string_of_transform =
   fun
-  | `translate(x, y) => func("translate", [string_of_length(x), string_of_length(y)])
-  | `translate3d(x, y, z) => func("translate3d", List.map(string_of_length, [x, y, z]))
+  | `translate(x, y) =>
+    func("translate", [string_of_length(x), string_of_length(y)])
+  | `translate3d(x, y, z) =>
+    func("translate3d", List.map(string_of_length, [x, y, z]))
   | `translateX(x) => func("translateX", [string_of_length(x)])
   | `translateY(y) => func("translateY", [string_of_length(y)])
   | `translateZ(z) => func("translateZ", [string_of_length(z)])
   | `scale(x, y) => func("scale", List.map(string_of_float, [x, y]))
-  | `scale3d(x, y, z) => func("scale3d", List.map(string_of_float, [x, y, z]))
+  | `scale3d(x, y, z) =>
+    func("scale3d", List.map(string_of_float, [x, y, z]))
   | `scaleX(x) => func("scaleX", [string_of_float(x)])
   | `scaleY(y) => func("scaleY", [string_of_float(y)])
   | `scaleZ(z) => func("scaleZ", [string_of_float(z)])
   | `rotate(a) => func("rotate", [string_of_angle(a)])
-  | `rotate3d(x, y, z, a) => func( "rotate3d", [ string_of_float(x), string_of_float(y), string_of_float(z), string_of_angle(a) ])
+  | `rotate3d(x, y, z, a) =>
+    func(
+      "rotate3d",
+      [
+        string_of_float(x),
+        string_of_float(y),
+        string_of_float(z),
+        string_of_angle(a),
+      ],
+    )
   | `rotateX(a) => func("rotateX", [string_of_angle(a)])
   | `rotateY(a) => func("rotateY", [string_of_angle(a)])
   | `rotateZ(a) => func("rotateZ", [string_of_angle(a)])
@@ -1324,33 +1631,46 @@ let transformOrigin = (x, y) =>
   d("transformOrigin", [x, y] |> List.map(string_of_length) |> join(" "));
 
 let transformOrigin3d = (x, y, z) =>
-  d("transformOrigin", [x, y, z] |> List.map(string_of_length) |> join(" "));
+  d(
+    "transformOrigin",
+    [x, y, z] |> List.map(string_of_length) |> join(" "),
+  );
 
 let transformStyle = x =>
-  d( "transformStyle", switch x {
+  d(
+    "transformStyle",
+    switch (x) {
     | `preserve3d => "preserve-3d"
     | `flat => "flat"
-  });
+    },
+  );
 
-let perspective = x => d("parspective", switch x {
-| `none => "none"
-| `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-| `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
-| `ch(x) => string_of_float(x) ++ "ch"
-| `cm(x) => string_of_float(x) ++ "cm"
-| `em(x) => string_of_float(x) ++ "em"
-| `ex(x) => string_of_float(x) ++ "ex"
-| `mm(x) => string_of_float(x) ++ "mm"
-| `percent(x) => string_of_float(x) ++ "%"
-| `pt(x) => string_of_int(x) ++ "pt"
-| `px(x) => string_of_int(x) ++ "px"
-| `rem(x) => string_of_float(x) ++ "rem"
-| `vh(x) => string_of_float(x) ++ "vh"
-| `vmax(x) => string_of_float(x) ++ "vmax"
-| `vmin(x) => string_of_float(x) ++ "vmin"
-| `vw(x) => string_of_float(x) ++ "vw"
-| `zero => "0";
-});
+let perspective = x =>
+  d(
+    "parspective",
+    switch (x) {
+    | `none => "none"
+    | `calc(`add, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `ch(x) => string_of_float(x) ++ "ch"
+    | `cm(x) => string_of_float(x) ++ "cm"
+    | `em(x) => string_of_float(x) ++ "em"
+    | `ex(x) => string_of_float(x) ++ "ex"
+    | `mm(x) => string_of_float(x) ++ "mm"
+    | `percent(x) => string_of_float(x) ++ "%"
+    | `pt(x) => string_of_int(x) ++ "pt"
+    | `px(x) => string_of_int(x) ++ "px"
+    | `rem(x) => string_of_float(x) ++ "rem"
+    | `vh(x) => string_of_float(x) ++ "vh"
+    | `vmax(x) => string_of_float(x) ++ "vmax"
+    | `vmin(x) => string_of_float(x) ++ "vmin"
+    | `vw(x) => string_of_float(x) ++ "vw"
+    | `lengthVariable(s) => string_of_css_var(s)
+    | `zero => "0"
+    },
+  );
 
 /**
 * Transition
@@ -1378,18 +1698,32 @@ let string_of_timingFunction =
   | `stepEnd => "step-end"
   | `steps(i, `start) => func("steps", [string_of_int(i), "start"])
   | `steps(i, `end_) => func("steps", [string_of_int(i), "end"])
-  | `cubicBezier(a, b, c, d) => func("cubic-bezier", [a, b, c, d] |> List.map(string_of_float));
+  | `cubicBezier(a, b, c, d) =>
+    func("cubic-bezier", [a, b, c, d] |> List.map(string_of_float));
 
 let transition = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
-  `transition(join( " ", [
-    string_of_int(duration) ++ "ms",
-    string_of_timingFunction(timingFunction),
-    string_of_int(delay) ++ "ms",
-    property
-  ]));
+  `transition(
+    join(
+      " ",
+      [
+        string_of_int(duration) ++ "ms",
+        string_of_timingFunction(timingFunction),
+        string_of_int(delay) ++ "ms",
+        property,
+      ],
+    ),
+  );
 
 let transitions = xs =>
-  d("transition", xs |> List.map(fun | `transition(s) => s) |> join(", "));
+  d(
+    "transition",
+    xs
+    |> List.map(
+         fun
+         | `transition(s) => s,
+       )
+    |> join(", "),
+  );
 
 let transitionDelay = i => d("transitionDelay", string_of_int(i) ++ "ms");
 
@@ -1402,7 +1736,10 @@ let transitionTimingFunction = x =>
 let transitionProperty = x => d("transitionProperty", x);
 
 let perspectiveOrigin = (x, y) =>
-  d("perspectiveOrigin", [x, y] |> List.map(string_of_length) |> join(" "));
+  d(
+    "perspectiveOrigin",
+    [x, y] |> List.map(string_of_length) |> join(" "),
+  );
 
 /**
  * Animation
@@ -1445,7 +1782,8 @@ let string_of_animationPlayState =
   | `paused => "paused"
   | `running => "running";
 
-let animation = (
+let animation =
+    (
       ~duration=0,
       ~delay=0,
       ~direction=`normal,
@@ -1453,37 +1791,50 @@ let animation = (
       ~fillMode=`none,
       ~playState=`running,
       ~iterationCount=`count(1),
-      name
+      name,
     ) =>
-  `animation(join( " ", [
-    name,
-    string_of_int(duration) ++ "ms",
-    string_of_timingFunction(timingFunction),
-    string_of_int(delay) ++ "ms",
-    string_of_animationIterationCount(iterationCount),
-    string_of_animationDirection(direction),
-    string_of_animationFillMode(fillMode),
-    string_of_animationPlayState(playState)
-  ]));
+  `animation(
+    join(
+      " ",
+      [
+        name,
+        string_of_int(duration) ++ "ms",
+        string_of_timingFunction(timingFunction),
+        string_of_int(delay) ++ "ms",
+        string_of_animationIterationCount(iterationCount),
+        string_of_animationDirection(direction),
+        string_of_animationFillMode(fillMode),
+        string_of_animationPlayState(playState),
+      ],
+    ),
+  );
 
-let string_of_animation = fun
-| `animation(s) => s;
-let animations = xs => d("animation", xs |> List.map(string_of_animation) |> join(", "));
+let string_of_animation =
+  fun
+  | `animation(s) => s;
+let animations = xs =>
+  d("animation", xs |> List.map(string_of_animation) |> join(", "));
 
 let animationDelay = x => d("animationDelay", string_of_int(x) ++ "ms");
-let animationDirection = x => d("animationDirection", string_of_animationDirection(x));
-let animationDuration = x => d("animationDuration", string_of_int(x) ++ "ms");
-let animationFillMode = x => d("animationFillMode", string_of_animationFillMode(x));
-let animationIterationCount = x => d("animationIterationCount", string_of_animationIterationCount(x));
+let animationDirection = x =>
+  d("animationDirection", string_of_animationDirection(x));
+let animationDuration = x =>
+  d("animationDuration", string_of_int(x) ++ "ms");
+let animationFillMode = x =>
+  d("animationFillMode", string_of_animationFillMode(x));
+let animationIterationCount = x =>
+  d("animationIterationCount", string_of_animationIterationCount(x));
 let animationName = x => d("animationName", x);
-let animationPlayState = x => d("animationPlayState", string_of_animationPlayState(x));
-let animationTimingFunction = x => d("animationTimingFunction", string_of_timingFunction(x));
+let animationPlayState = x =>
+  d("animationPlayState", string_of_animationPlayState(x));
+let animationTimingFunction = x =>
+  d("animationTimingFunction", string_of_timingFunction(x));
 
 /**
  * Selectors
  */
 
-let selector = (selector, rules) => `selector(selector, rules);
+let selector = (selector, rules) => `selector((selector, rules));
 /* MEDIA */
 let active = selector(":active");
 let after = selector("::after");
@@ -1515,35 +1866,56 @@ let firstLetter = selector("::first-letter");
 let selection = selector("::selection");
 let placeholder = selector("::placeholder");
 
-let media = (query, rules) => `selector("@media " ++ query, rules);
-
+let media = (query, rules) => `selector(("@media " ++ query, rules));
 
 /**
  * SVG
  */
-
 module SVG = {
   let fill = color => d("fill", string_of_color(color));
   let fillOpacity = opacity => d("fillOpacity", string_of_float(opacity));
-  let fillRule = x => d("fillRule", switch x {
-    | `evenodd => "evenodd"
-    | `nonzero => "nonzero"
-  });
+  let fillRule = x =>
+    d(
+      "fillRule",
+      switch (x) {
+      | `evenodd => "evenodd"
+      | `nonzero => "nonzero"
+      },
+    );
   let stroke = color => d("stroke", string_of_color(color));
   let strokeWidth = length => d("strokeWidth", string_of_length(length));
-  let strokeOpacity = opacity => d("strokeOpacity", string_of_float(opacity));
+  let strokeOpacity = opacity =>
+    d("strokeOpacity", string_of_float(opacity));
   let strokeMiterlimit = x => d("strokeMiterlimit", string_of_float(x));
-  let strokeLinecap = x => d("strokeLinecap", switch x {
-  | `butt => "butt"
-  | `round => "round"
-  | `square => "square"
-  });
+  let strokeLinecap = x =>
+    d(
+      "strokeLinecap",
+      switch (x) {
+      | `butt => "butt"
+      | `round => "round"
+      | `square => "square"
+      },
+    );
 
-  let strokeLinejoin = x => d("strokeLinejoin", switch x {
-    | `miter => "miter"
-    | `round => "round"
-    | `bevel => "bevel"
-  });
+  let strokeLinejoin = x =>
+    d(
+      "strokeLinejoin",
+      switch (x) {
+      | `miter => "miter"
+      | `round => "round"
+      | `bevel => "bevel"
+      },
+    );
   let stopColor = c => d("stopColor", string_of_color(c));
   let stopOpacity = o => d("stopOpacity", string_of_float(o));
 };
+
+/** Css Variables */
+let setCssVariable = (~name, value) =>
+  d(
+    name,
+    switch (value) {
+    | #color as x => string_of_color(x)
+    | #length as x => string_of_length(x)
+    },
+  );
