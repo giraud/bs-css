@@ -463,7 +463,7 @@ let paddingBottom : length => rule;
 let alignContent : [ | `stretch | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule;
 let alignItems : [ | `stretch | `flexStart | `center | `flexEnd | `baseline ] => rule;
 let alignSelf : [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto ] => rule;
-let justifyContent : [ | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule;
+let justifyContent : [ | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround | `stretch] => rule;
 
 let boxSizing : [ | `borderBox | `contentBox] => rule;
 
