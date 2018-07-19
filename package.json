@@ -21,11 +21,11 @@
     "url": "git+https://github.com/SentiaAnalytics/bs-css.git"
   },
   "dependencies": {
+    "bs-platform": "^3.1.5",
     "glamor": "^2.0.0"
   },
   "devDependencies": {
     "bs-jest": "^0.1.0",
-    "bs-platform": "^3.1.5",
     "reason-react": "^0.4.2",
     "webpack": "^3.8.1"
   },
