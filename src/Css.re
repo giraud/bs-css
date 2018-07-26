@@ -343,7 +343,7 @@ type length = [
 ];
 
 type gridLength = [
-  length | `fr(float)
+  length | `fr(float) | `minContent | `maxContent
 ];
 
 let rec string_of_length =
