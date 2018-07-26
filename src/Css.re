@@ -663,7 +663,10 @@ let string_of_dimension = fun
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
   | `fr(x) => string_of_float(x) ++ "fr"
-  | `zero => "0";
+  | `zero => "0"
+  | `minContent => "min-content"
+  | `maxContent => "max-content";
+
 let width = x => d("width", string_of_dimension(x));
 let maxWidth = x => d("maxWidth", string_of_dimension(x));
 let minWidth = x => d("minWidth", string_of_dimension(x));
