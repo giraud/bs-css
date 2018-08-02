@@ -1106,7 +1106,28 @@ let fontFace =
 
 let fontWeight = x => d("fontWeight", string_of_int(x));
 
-let lineHeight = x => d("lineHeight", string_of_float(x));
+let lineHeight = x =>
+  d("lineHeight", switch x {
+    | `normal => "normal"
+    | `abs(x) => string_of_float(x)
+    | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `ch(x) => string_of_float(x) ++ "ch"
+    | `cm(x) => string_of_float(x) ++ "cm"
+    | `em(x) => string_of_float(x) ++ "em"
+    | `ex(x) => string_of_float(x) ++ "ex"
+    | `mm(x) => string_of_float(x) ++ "mm"
+    | `percent(x) => string_of_float(x) ++ "%"
+    | `pt(x) => string_of_int(x) ++ "pt"
+    | `px(x) => string_of_int(x) ++ "px"
+    | `rem(x) => string_of_float(x) ++ "rem"
+    | `vh(x) => string_of_float(x) ++ "vh"
+    | `vmax(x) => string_of_float(x) ++ "vmax"
+    | `vmin(x) => string_of_float(x) ++ "vmin"
+    | `vw(x) => string_of_float(x) ++ "vw"
+    | `auto => "auto"
+    | `zero => "0"
+  });
 
 let letterSpacing = x =>
   d( "letterSpacing", switch x {

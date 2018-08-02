@@ -19,7 +19,7 @@ module Styles = {
     ]);
 };
 
-let text = ReasonReact.stringToElement;
+let text = ReasonReact.string;
 
 module Page = {
   let component = ReasonReact.statelessComponent("Page");

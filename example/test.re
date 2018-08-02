@@ -1,4 +1,4 @@
-let text = ReasonReact.stringToElement;
+let text = ReasonReact.string;
 
 let arialNarrow =
   Css.(
@@ -757,7 +757,7 @@ let tests =
                       fontStyle(italic),
                       fontWeight(300),
                       letterSpacing(px(3)),
-                      lineHeight(2.),
+                      lineHeight(`abs(2.)),
                       textAlign(`left),
                       textDecoration(underline),
                       textDecorationColor(pink),
