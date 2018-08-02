@@ -1332,7 +1332,7 @@ let transformStyle = x =>
     | `flat => "flat"
   });
 
-let perspective = x => d("parspective", switch x {
+let perspective = x => d("perspective", switch x {
 | `none => "none"
 | `calc(`add, a, b) => "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
 | `calc(`sub, a, b) => "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
