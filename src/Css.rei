@@ -291,6 +291,7 @@ let inlineGrid : [> `inlineGrid ];
 let block : [> | `block];
 let inline : [> | `inline];
 let inlineBlock : [> | `inlineBlock];
+let inlineFlex : [> | `inlineFlex];
 
 let absolute : [> | `absolute];
 let relative : [> | `relative];
