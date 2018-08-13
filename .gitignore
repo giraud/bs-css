@@ -1,6 +1,8 @@
 .DS_Store
+.idea
 /node_modules*
-/lib/
+/lib/bs
+/lib/js/example
 npm-debug.log
 finalOutput/*.js
 .merlin
