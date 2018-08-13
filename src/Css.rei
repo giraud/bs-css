@@ -226,7 +226,7 @@ type length = [
   | `zero
 ];
 
-type gridLength = [ length | `fr(float) ];
+type gridLength = [ length | `fr(float) | `minContent | `maxContent ];
 
 let ch : float => [> | `ch(float)];
 let cm : float => [> | `cm(float)];
