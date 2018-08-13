@@ -2,7 +2,6 @@
   "name": "bs-css",
   "version": "7.0.1",
   "description": "BuckleScript bindings for glamor",
-  "main": "src/glamor.bs.js",
   "scripts": {
     "build": "bsb -make-world",
     "webpack": "webpack -w",
