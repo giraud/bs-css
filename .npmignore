@@ -1,2 +1,10 @@
 .merlin
+/.idea
+/.vscode
+.editorconfig
+*.tgz
+*.iml
+webpack.config.js
+/example
 /lib/bs
+/lib/js/example
