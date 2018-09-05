@@ -882,6 +882,7 @@ let overflowX = x => d("overflowX", string_of_overflow(x));
 let overflowY = x => d("overflowY", string_of_overflow(x));
 
 let zIndex = i => d("zIndex", string_of_int(i));
+let contentRule = s => d("content", s);
 
 /**
  * Style

@@ -477,6 +477,7 @@ let overflowX: [ | `hidden | `visible | `scroll | `auto] => rule;
 let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 
 let zIndex: int => rule;
+let contentRule: string => rule
 
 /**
  * Style

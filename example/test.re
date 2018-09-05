@@ -816,4 +816,20 @@ let tests =
         )
       />
     </Section>
+    <Section name="content">
+      <a
+        href="https://github.com/SentiaAnalytics/bs-css"
+        className=Css.(
+          style([
+            before([
+              contentRule("external "),
+              backgroundColor(red),
+              display(inlineBlock),
+              flexBasis(content /*for test*/),
+            ]),
+          ])
+        )>
+        {text("link")}
+      </a>
+    </Section>
   </div>;
