@@ -97,6 +97,11 @@ let label = label => `declaration(("label", label));
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
+type cascading = [ | `inherit_ | `unset];
+
+let inherit_ = `inherit_;
+let unset = `unset;
+
 type angle = [ | `deg(int) | `rad(float) | `grad(float) | `turn(float)];
 
 let string_of_angle =
@@ -412,6 +417,29 @@ let rec string_of_length =
   | `vw(x) => string_of_float(x) ++ "vw"
   | `zero => "0";
 
+let string_of_length_cascading =
+  fun
+  | `calc(`add, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+  | `calc(`sub, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+  | `ch(x) => string_of_float(x) ++ "ch"
+  | `cm(x) => string_of_float(x) ++ "cm"
+  | `em(x) => string_of_float(x) ++ "em"
+  | `ex(x) => string_of_float(x) ++ "ex"
+  | `mm(x) => string_of_float(x) ++ "mm"
+  | `percent(x) => string_of_float(x) ++ "%"
+  | `pt(x) => string_of_int(x) ++ "pt"
+  | `px(x) => string_of_int(x) ++ "px"
+  | `rem(x) => string_of_float(x) ++ "rem"
+  | `vh(x) => string_of_float(x) ++ "vh"
+  | `vmax(x) => string_of_float(x) ++ "vmax"
+  | `vmin(x) => string_of_float(x) ++ "vmin"
+  | `vw(x) => string_of_float(x) ++ "vw"
+  | `zero => "0"
+  | `inherit_ => "inherit"
+  | `unset => "unset";
+
 let ch = x => `ch(x);
 let cm = x => `cm(x);
 let em = x => `em(x);
@@ -585,11 +613,13 @@ let display = x =>
     | `block => "block"
     | `inline => "inline"
     | `inlineBlock => "inline-block"
-    | `none => "none"
     | `flex => "flex"
     | `inlineFlex => "inline-flex"
     | `grid => "grid"
     | `inlineGrid => "inline-grid"
+    | `none => "none"
+    | `inherit_ => "inherited"
+    | `unset => "unset"
     },
   );
 
@@ -602,6 +632,8 @@ let position = x =>
     | `fixed => "fixed"
     | `relative => "relative"
     | `sticky => "sticky"
+    | `inherit_ => "inherited"
+    | `unset => "unset"
     },
   );
 
@@ -1317,7 +1349,7 @@ let color = x => d("color", string_of_color(x));
 
 let fontFamily = x => d("fontFamily", x);
 
-let fontSize = x => d("fontSize", string_of_length(x));
+let fontSize = x => d("fontSize", string_of_length_cascading(x));
 
 let fontVariant = x =>
   d(
@@ -1373,6 +1405,8 @@ let lineHeight = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 

@@ -792,4 +792,28 @@ let tests =
         )
       />
     </Section>
+    <Section name="cascading">
+      {text("inherit")}
+      <div
+        className=Css.(
+          style([
+            display(inherit_),
+            position(inherit_),
+            fontSize(inherit_),
+            lineHeight(inherit_),
+          ])
+        )
+      />
+      {text("unset")}
+      <div
+        className=Css.(
+          style([
+            display(unset),
+            position(unset),
+            fontSize(unset),
+            lineHeight(unset),
+          ])
+        )
+      />
+    </Section>
   </div>;

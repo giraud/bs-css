@@ -17,6 +17,12 @@ let label: string => rule;
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
+
+type cascading = [ | `inherit_ | `unset];
+
+let inherit_: [> | `inherit_];
+let unset: [> | `unset];
+
 type angle = [ | `deg(int) | `rad(float) | `grad(float) | `turn(float)];
 
 let deg: int => [> | `deg(int)];
@@ -400,8 +406,8 @@ let unsafe: (string, string) => rule;
  * Layout
 */
 
-let display: [ | `flex | `block | `inline | `inlineBlock | `none | `inlineFlex | `grid | `inlineGrid] => rule;
-let position: [ | `absolute | `relative | `static | `fixed | `sticky] => rule;
+let display: [ | `flex | `block | `inline | `inlineBlock | `inlineFlex | `grid | `inlineGrid | `none | cascading] => rule;
+let position: [ | `absolute | `relative | `static | `fixed | `sticky | cascading] => rule;
 
 let top: [ length] => rule;
 let bottom: [ length] => rule;
@@ -598,12 +604,12 @@ let fontFace:
     unit
   ) =>
   string;
-let fontSize: length => rule;
+let fontSize: [ length | cascading ] => rule;
 let fontVariant: [ | `normal | `smallCaps] => rule;
 let fontStyle: fontStyle => rule;
 let fontWeight: int => rule;
 let letterSpacing: [ | `normal | length] => rule;
-let lineHeight: [ | `normal | `abs(float) | length] => rule;
+let lineHeight: [ | `normal | `abs(float) | length | cascading ] => rule;
 let textAlign: [ | `left | `center | `right | `justify] => rule;
 let textDecoration: [ | `none | `underline | `overline | `lineThrough] => rule;
 let textDecorationColor: color => rule;
