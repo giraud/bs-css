@@ -3462,6 +3462,11 @@ function $$global(selector, rules) {
   return /* () */0;
 }
 
+function insertRule(css) {
+  Glamor.css.insert(css);
+  return /* () */0;
+}
+
 function keyframes(frames) {
   var addStop = function (dict, param) {
     dict[String(param[0]) + "%"] = makeDict(param[1]);
@@ -7234,6 +7239,7 @@ exports.empty = empty;
 exports.merge = merge;
 exports.style = style;
 exports.$$global = $$global;
+exports.insertRule = insertRule;
 exports.important = important;
 exports.label = label;
 exports.inherit_ = inherit_;
@@ -16116,6 +16122,8 @@ function text(prim) {
   return prim;
 }
 
+Css.insertRule(".raw-css { display:block; background-color: green; width: 50px; height: 50px; }");
+
 var arialNarrow = Css.fontFace("Arial FontFace Test", /* :: */[
       Css.localUrl("Arial Narrow"),
       /* [] */0
@@ -17718,7 +17726,9 @@ var tests = React.createElement("div", {
                           /* [] */0
                         ]),
                     href: "https://github.com/SentiaAnalytics/bs-css"
-                  }, "link")])));
+                  }, "link")])), ReasonReact.element(undefined, undefined, make("insertRule, the ultimate escape hatch", /* array */[React.createElement("div", {
+                    className: "raw-css"
+                  })])));
 
 exports.text = text;
 exports.arialNarrow = arialNarrow;
@@ -17729,7 +17739,7 @@ exports.rowLayout = rowLayout;
 exports.section = section;
 exports.Section = Section;
 exports.tests = tests;
-/* arialNarrow Not a pure module */
+/*  Not a pure module */
 
 
 /***/ }),

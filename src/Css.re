@@ -16,6 +16,8 @@ module Glamor = {
   [@bs.scope "css"] [@bs.module "glamor"]
   external makeGlobal: (string, Js.Json.t) => unit = "global";
   [@bs.scope "css"] [@bs.module "glamor"]
+  external makeInsert: string => unit = "insert";
+  [@bs.scope "css"] [@bs.module "glamor"]
   external makeKeyFrames: Js.Dict.t(Js.Json.t) => string = "keyframes";
   [@bs.scope "css"] [@bs.module "glamor"]
   external makeFontFace: fontFace => string = "fontFace";
@@ -65,6 +67,7 @@ let empty = [];
 let merge = List.concat;
 let global = (selector, rules: list(rule)) =>
   Glamor.makeGlobal(selector, Glamor.makeDict(rules));
+let insertRule = css => Glamor.makeInsert(css);
 
 type animation = string;
 

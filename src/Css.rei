@@ -11,6 +11,8 @@ let merge: list(list(rule)) => list(rule);
 let style: list(rule) => string;
 
 let global: (string, list(rule)) => unit;
+let insertRule: string => unit;
+
 let important: rule => rule;
 let label: string => rule;
 

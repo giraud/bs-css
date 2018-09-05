@@ -1,5 +1,9 @@
 let text = ReasonReact.string;
 
+Css.insertRule(
+  ".raw-css { display:block; background-color: green; width: 50px; height: 50px; }",
+);
+
 let arialNarrow =
   Css.(
     fontFace(
@@ -831,5 +835,8 @@ let tests =
         )>
         {text("link")}
       </a>
+    </Section>
+    <Section name="insertRule, the ultimate escape hatch">
+      <div className="raw-css" />
     </Section>
   </div>;
