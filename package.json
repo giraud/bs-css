@@ -23,14 +23,8 @@
     "glamor": "^2.0.0"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.3",
     "bs-platform": "^4.0.4",
     "reason-react": "^0.5.3",
     "webpack": "^3.8.1"
-  },
-  "jest": {
-    "roots": [
-      "lib/js/src"
-    ]
   }
 }
