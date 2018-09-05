@@ -3386,7 +3386,6 @@ var $$String = __webpack_require__(42);
 var Glamor = __webpack_require__(18);
 var Js_dict = __webpack_require__(70);
 var Js_option = __webpack_require__(71);
-var Js_mapperRt = __webpack_require__(72);
 var Js_primitive = __webpack_require__(23);
 
 function join(separator, strings) {
@@ -5317,20 +5316,23 @@ function outlineOffset(x) {
   return d("outlineOffset", string_of_length(x));
 }
 
-var jsMapperConstantArray = /* array */[
-  /* tuple */[
-    107228912,
-    "italic"
-  ],
-  /* tuple */[
-    734792881,
-    "oblique"
-  ],
-  /* tuple */[
-    812216871,
-    "normal"
-  ]
-];
+function fontStyleToJs(param) {
+  if (param !== 107228912) {
+    if (param >= 734792881) {
+      if (param >= 812216871) {
+        return "normal";
+      } else {
+        return "oblique";
+      }
+    } else if (param >= 653193961) {
+      return "unset";
+    } else {
+      return "inherit";
+    }
+  } else {
+    return "italic";
+  }
+}
 
 function color(x) {
   return d("color", string_of_color(x));
@@ -5349,13 +5351,11 @@ function fontVariant(x) {
 }
 
 function fontStyle(x) {
-  return d("fontStyle", Js_mapperRt.binarySearch(3, x, jsMapperConstantArray));
+  return d("fontStyle", fontStyleToJs(x));
 }
 
 function fontFace(fontFamily, src, fontStyle, fontWeight, _) {
-  var fontStyle$1 = Js_option.map((function (value) {
-          return Js_mapperRt.binarySearch(3, value, jsMapperConstantArray);
-        }), fontStyle);
+  var fontStyle$1 = Js_option.map(fontStyleToJs, fontStyle);
   var src$1 = $$String.concat(", ", List.map((function (param) {
               if (param[0] >= 5843823) {
                 return "url(\"" + (String(param[1]) + "\")");
@@ -15977,135 +15977,7 @@ exports.firstSome = firstSome;
 
 
 /***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-
-function binarySearch(upper, id, array) {
-  var _lower = 0;
-  var _upper = upper;
-  var xs = array;
-  var k = id;
-  while(true) {
-    var upper$1 = _upper;
-    var lower = _lower;
-    if (lower >= upper$1) {
-      throw new Error("File \"js_mapperRt.ml\", line 35, characters 4-10");
-    }
-    var mid = (lower + upper$1 | 0) / 2 | 0;
-    var match = xs[mid];
-    var i = match[0];
-    if (i === k) {
-      return match[1];
-    } else if (i < k) {
-      _lower = mid + 1 | 0;
-      continue ;
-    } else {
-      _upper = mid;
-      continue ;
-    }
-  };
-}
-
-function revSearch(len, array, x) {
-  var _i = 0;
-  var len$1 = len;
-  var xs = array;
-  var k = x;
-  while(true) {
-    var i = _i;
-    if (i === len$1) {
-      return undefined;
-    } else {
-      var match = xs[i];
-      if (match[1] === k) {
-        return match[0];
-      } else {
-        _i = i + 1 | 0;
-        continue ;
-      }
-    }
-  };
-}
-
-function revSearchAssert(len, array, x) {
-  var len$1 = len;
-  var _i = 0;
-  var xs = array;
-  var k = x;
-  while(true) {
-    var i = _i;
-    if (i >= len$1) {
-      throw new Error("File \"js_mapperRt.ml\", line 64, characters 4-10");
-    }
-    var match = xs[i];
-    if (match[1] === k) {
-      return match[0];
-    } else {
-      _i = i + 1 | 0;
-      continue ;
-    }
-  };
-}
-
-function toInt(i, xs) {
-  return xs[i];
-}
-
-function fromInt(len, xs, $$enum) {
-  var $$enum$1 = $$enum;
-  var _i = 0;
-  var len$1 = len;
-  var xs$1 = xs;
-  while(true) {
-    var i = _i;
-    if (i === len$1) {
-      return undefined;
-    } else {
-      var k = xs$1[i];
-      if (k === $$enum$1) {
-        return i;
-      } else {
-        _i = i + 1 | 0;
-        continue ;
-      }
-    }
-  };
-}
-
-function fromIntAssert(len, xs, $$enum) {
-  var len$1 = len;
-  var $$enum$1 = $$enum;
-  var _i = 0;
-  var xs$1 = xs;
-  while(true) {
-    var i = _i;
-    if (i >= len$1) {
-      throw new Error("File \"js_mapperRt.ml\", line 88, characters 4-10");
-    }
-    var k = xs$1[i];
-    if (k === $$enum$1) {
-      return i;
-    } else {
-      _i = i + 1 | 0;
-      continue ;
-    }
-  };
-}
-
-exports.binarySearch = binarySearch;
-exports.revSearch = revSearch;
-exports.revSearchAssert = revSearchAssert;
-exports.toInt = toInt;
-exports.fromInt = fromInt;
-exports.fromIntAssert = fromIntAssert;
-/* No side effect */
-
-
-/***/ }),
+/* 72 */,
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17685,8 +17557,11 @@ var tests = React.createElement("div", {
                             /* :: */[
                               Css.fontSize(Css.inherit_),
                               /* :: */[
-                                Css.lineHeight(Css.inherit_),
-                                /* [] */0
+                                Css.fontStyle(Css.inherit_),
+                                /* :: */[
+                                  Css.lineHeight(Css.inherit_),
+                                  /* [] */0
+                                ]
                               ]
                             ]
                           ]
@@ -17701,8 +17576,11 @@ var tests = React.createElement("div", {
                             /* :: */[
                               Css.fontSize(Css.unset),
                               /* :: */[
-                                Css.lineHeight(Css.unset),
-                                /* [] */0
+                                Css.fontStyle(Css.unset),
+                                /* :: */[
+                                  Css.lineHeight(Css.unset),
+                                  /* [] */0
+                                ]
                               ]
                             ]
                           ]

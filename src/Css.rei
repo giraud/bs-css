@@ -607,12 +607,12 @@ let fontFace:
     unit
   ) =>
   string;
-let fontSize: [ length | cascading ] => rule;
+let fontSize: [ length | cascading] => rule;
 let fontVariant: [ | `normal | `smallCaps] => rule;
-let fontStyle: fontStyle => rule;
+let fontStyle: [ fontStyle | cascading] => rule;
 let fontWeight: int => rule;
 let letterSpacing: [ | `normal | length] => rule;
-let lineHeight: [ | `normal | `abs(float) | length | cascading ] => rule;
+let lineHeight: [ | `normal | `abs(float) | length | cascading] => rule;
 let textAlign: [ | `left | `center | `right | `justify] => rule;
 let textDecoration: [ | `none | `underline | `overline | `lineThrough] => rule;
 let textDecorationColor: color => rule;

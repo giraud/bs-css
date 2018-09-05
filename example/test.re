@@ -804,6 +804,7 @@ let tests =
             display(inherit_),
             position(inherit_),
             fontSize(inherit_),
+            fontStyle(inherit_),
             lineHeight(inherit_),
           ])
         )
@@ -815,6 +816,7 @@ let tests =
             display(unset),
             position(unset),
             fontSize(unset),
+            fontStyle(unset),
             lineHeight(unset),
           ])
         )

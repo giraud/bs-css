@@ -1346,8 +1346,14 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
  * Text
  */
 
-[@bs.deriving jsConverter]
 type fontStyle = [ | `normal | `italic | `oblique];
+let fontStyleToJs =
+  fun
+  | `normal => "normal"
+  | `italic => "italic"
+  | `oblique => "oblique"
+  | `inherit_ => "inherit"
+  | `unset => "unset";
 
 let color = x => d("color", string_of_color(x));
 
