@@ -57,11 +57,16 @@ type gradient = [
   | `repeatingRadialGradient(list((int, color)))
 ];
 
-let linearGradient: (angle, list((int, color))) => [> | `linearGradient(angle, list((int, color)))];
+let linearGradient:
+  (angle, list((int, color))) =>
+  [> | `linearGradient(angle, list((int, color)))];
 let repeatingLinearGradient:
-  (angle, list((int, color))) => [> | `repeatingLinearGradient(angle, list((int, color)))];
-let radialGradient: list((int, color)) => [> | `radialGradient(list((int, color)))];
-let repeatingRadialGradient: list((int, color)) => [> | `repeatingRadialGradient(list((int, color)))];
+  (angle, list((int, color))) =>
+  [> | `repeatingLinearGradient(angle, list((int, color)))];
+let radialGradient:
+  list((int, color)) => [> | `radialGradient(list((int, color)))];
+let repeatingRadialGradient:
+  list((int, color)) => [> | `repeatingRadialGradient(list((int, color)))];
 
 let aliceblue: [> | `hex(string)];
 let antiquewhite: [> | `hex(string)];
@@ -322,7 +327,8 @@ let inside: [> | `inside];
 let outside: [> | `outside];
 
 let translate: (length, length) => [> | `translate(length, length)];
-let translate3d: (length, length, length) => [> | `translate3d(length, length, length)];
+let translate3d:
+  (length, length, length) => [> | `translate3d(length, length, length)];
 let translateX: length => [> | `translateX(length)];
 let translateY: length => [> | `translateY(length)];
 let translateZ: length => [> | `translateZ(length)];
@@ -332,7 +338,8 @@ let scaleX: float => [> | `scaleX(float)];
 let scaleY: float => [> | `scaleY(float)];
 let scaleZ: float => [> | `scaleZ(float)];
 let rotate: angle => [> | `rotate(angle)];
-let rotate3d: (float, float, float, angle) => [> | `rotate3d(float, float, float, angle)];
+let rotate3d:
+  (float, float, float, angle) => [> | `rotate3d(float, float, float, angle)];
 let rotateX: angle => [> | `rotateX(angle)];
 let rotateY: angle => [> | `rotateY(angle)];
 let rotateZ: angle => [> | `rotateZ(angle)];
@@ -389,8 +396,11 @@ let easeOut: [> | `easeOut];
 let easeInOut: [> | `easeInOut];
 let stepStart: [> | `stepStart];
 let stepEnd: [> | `stepEnd];
-let steps: (int, [ | `start | `end_]) => [> | `steps(int, [ | `start | `end_])];
-let cubicBesier: (float, float, float, float) => [> | `cubicBezier(float, float, float, float)];
+let steps:
+  (int, [ | `start | `end_]) => [> | `steps(int, [ | `start | `end_])];
+let cubicBesier:
+  (float, float, float, float) =>
+  [> | `cubicBezier(float, float, float, float)];
 
 let round: [> | `round];
 let miter: [> | `miter];
@@ -408,18 +418,41 @@ let unsafe: (string, string) => rule;
  * Layout
 */
 
-let display: [ | `flex | `block | `inline | `inlineBlock | `inlineFlex | `grid | `inlineGrid | `none | cascading] => rule;
-let position: [ | `absolute | `relative | `static | `fixed | `sticky | cascading] => rule;
+let display:
+  [
+    | `flex
+    | `block
+    | `inline
+    | `inlineBlock
+    | `inlineFlex
+    | `grid
+    | `inlineGrid
+    | `none
+    | cascading
+  ] =>
+  rule;
+let position:
+  [ | `absolute | `relative | `static | `fixed | `sticky | cascading] => rule;
 
-let top: [ length] => rule;
-let bottom: [ length] => rule;
-let left: [ length] => rule;
-let right: [ length] => rule;
+let top: length => rule;
+let bottom: length => rule;
+let left: length => rule;
+let right: length => rule;
 
 let flex: int => rule;
 let flexGrow: int => rule;
 let flexShrink: int => rule;
-let flexBasis: [ length | `auto | `fill | `content | `maxContent | `minContent | `fitContent] => rule;
+let flexBasis:
+  [
+    length
+    | `auto
+    | `fill
+    | `content
+    | `maxContent
+    | `minContent
+    | `fitContent
+  ] =>
+  rule;
 
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
@@ -447,9 +480,21 @@ let maxHeight: [ length | `auto] => rule;
 
 let margin: [ length | `auto] => rule;
 let margin2: (~v: [ length | `auto], ~h: [ length | `auto]) => rule;
-let margin3: (~top: [ length | `auto], ~h: [ length | `auto], ~bottom: [ length | `auto]) => rule;
+let margin3:
+  (
+    ~top: [ length | `auto],
+    ~h: [ length | `auto],
+    ~bottom: [ length | `auto]
+  ) =>
+  rule;
 let margin4:
-  (~top: [ length | `auto], ~right: [ length | `auto], ~bottom: [ length | `auto], ~left: [ length | `auto]) => rule;
+  (
+    ~top: [ length | `auto],
+    ~right: [ length | `auto],
+    ~bottom: [ length | `auto],
+    ~left: [ length | `auto]
+  ) =>
+  rule;
 let marginLeft: [ length | `auto] => rule;
 let marginRight: [ length | `auto] => rule;
 let marginTop: [ length | `auto] => rule;
@@ -458,16 +503,37 @@ let marginBottom: [ length | `auto] => rule;
 let padding: length => rule;
 let padding2: (~v: length, ~h: length) => rule;
 let padding3: (~top: length, ~h: length, ~bottom: length) => rule;
-let padding4: (~top: length, ~right: length, ~bottom: length, ~left: length) => rule;
+let padding4:
+  (~top: length, ~right: length, ~bottom: length, ~left: length) => rule;
 let paddingLeft: length => rule;
 let paddingRight: length => rule;
 let paddingTop: length => rule;
 let paddingBottom: length => rule;
 
-let alignContent: [ | `stretch | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround] => rule;
-let alignItems: [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
-let alignSelf: [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
-let justifyContent: [ | `flexStart | `center | `flexEnd | `spaceBetween | `spaceAround | `stretch] => rule;
+let alignContent:
+  [
+    | `stretch
+    | `flexStart
+    | `center
+    | `flexEnd
+    | `spaceBetween
+    | `spaceAround
+  ] =>
+  rule;
+let alignItems:
+  [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
+let alignSelf:
+  [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
+let justifyContent:
+  [
+    | `flexStart
+    | `center
+    | `flexEnd
+    | `spaceBetween
+    | `spaceAround
+    | `stretch
+  ] =>
+  rule;
 
 let boxSizing: [ | `borderBox | `contentBox] => rule;
 
@@ -479,7 +545,7 @@ let overflowX: [ | `hidden | `visible | `scroll | `auto] => rule;
 let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 
 let zIndex: int => rule;
-let contentRule: string => rule
+let contentRule: string => rule;
 
 /**
  * Style
@@ -487,20 +553,24 @@ let contentRule: string => rule
 let backfaceVisibility: [ | `visible | `hidden] => rule;
 let visibility: [ | `visible | `hidden] => rule;
 
-let border: (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let border:
+  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
 let borderWidth: length => rule;
 let borderStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderColor: color => rule;
 
-let borderTop: (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let borderTop:
+  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
 let borderTopWidth: length => rule;
 let borderTopStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderTopColor: color => rule;
-let borderBottom: (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let borderBottom:
+  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
 let borderBottomWidth: length => rule;
 let borderBottomStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderBottomColor: color => rule;
-let borderLeft: (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let borderLeft:
+  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
 let borderLeftWidth: length => rule;
 let borderLeftStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderLeftColor: color => rule;
@@ -520,7 +590,15 @@ let borderCollapse: [ | `separate | `collapse] => rule;
 let borderSpacing: length => rule;
 
 let boxShadow:
-  (~x: length=?, ~y: length=?, ~blur: length=?, ~spread: length=?, ~inset: bool=?, color) => [> | `shadow(string)];
+  (
+    ~x: length=?,
+    ~y: length=?,
+    ~blur: length=?,
+    ~spread: length=?,
+    ~inset: bool=?,
+    color
+  ) =>
+  [> | `shadow(string)];
 let boxShadows: list([ | `shadow(string)]) => rule;
 
 let background: [ color | `url(string) | gradient | `none] => rule;
@@ -531,7 +609,8 @@ let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundPosition: ([ length], [ length]) => rule;
 let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
-let backgroundSize: [ | `size(length, length) | `auto | `cover | `contain] => rule;
+let backgroundSize:
+  [ | `size(length, length) | `auto | `cover | `contain] => rule;
 
 let cursor:
   [
@@ -574,14 +653,26 @@ type listStyleType = [
   | `upperRoman
   | `none
 ];
-let listStyle: (listStyleType, [ | `inside | `outside], [ | `none | `url(string)]) => rule;
+let listStyle:
+  (listStyleType, [ | `inside | `outside], [ | `none | `url(string)]) => rule;
 let listStyleType: listStyleType => rule;
 let listStylePosition: [ | `inside | `outside] => rule;
 let listStyleImage: [ | `none | `url(string)] => rule;
 
 let opacity: float => rule;
 
-type outlineStyle = [ | `none | `hidden | `dotted | `dashed | `solid | `double | `groove | `ridge | `inset | `outset];
+type outlineStyle = [
+  | `none
+  | `hidden
+  | `dotted
+  | `dashed
+  | `solid
+  | `double
+  | `groove
+  | `ridge
+  | `inset
+  | `outset
+];
 let outline: (length, outlineStyle, color) => rule;
 let outlineStyle: outlineStyle => rule;
 let outlineWidth: length => rule;
@@ -616,13 +707,26 @@ let lineHeight: [ | `normal | `abs(float) | length | cascading] => rule;
 let textAlign: [ | `left | `center | `right | `justify] => rule;
 let textDecoration: [ | `none | `underline | `overline | `lineThrough] => rule;
 let textDecorationColor: color => rule;
-let textDecorationStyle: [ | `wavy | `solid | `dotted | `dashed | `double] => rule;
+let textDecorationStyle:
+  [ | `wavy | `solid | `dotted | `dashed | `double] => rule;
 let textIndent: length => rule;
 let textOverflow: [ | `clip | `ellipsis | `string(string)] => rule;
 let textShadow: (~x: length=?, ~y: length=?, ~blur: length=?, color) => rule;
 let textTransform: [ | `uppercase | `lowercase | `capitalize | `none] => rule;
 let userSelect: [ | `auto | `all | `text | `none] => rule;
-let verticalAlign: [ | `baseline | length | `sub | `super | `top | `textTop | `middle | `bottom | `textBottom] => rule;
+let verticalAlign:
+  [
+    | `baseline
+    | length
+    | `sub
+    | `super
+    | `top
+    | `textTop
+    | `middle
+    | `bottom
+    | `textBottom
+  ] =>
+  rule;
 let whiteSpace: [ | `normal | `nowrap | `pre | `preLine | `preWrap] => rule;
 let wordBreak: [ | `breakAll | `keepAll | `normal] => rule;
 let wordSpacing: [ | `normal | length] => rule;
@@ -677,7 +781,13 @@ type timingFunction = [
   | `cubicBezier(float, float, float, float)
 ];
 let transition:
-  (~duration: int=?, ~delay: int=?, ~timingFunction: timingFunction=?, string) => [> | `transition(string)];
+  (
+    ~duration: int=?,
+    ~delay: int=?,
+    ~timingFunction: timingFunction=?,
+    string
+  ) =>
+  [> | `transition(string)];
 let transitions: list([ | `transition(string)]) => rule;
 let transitionDelay: int => rule;
 let transitionDuration: int => rule;
@@ -691,7 +801,12 @@ let transitionProperty: string => rule;
 type animation;
 let keyframes: list((int, list(rule))) => animation;
 
-type animationDirection = [ | `normal | `reverse | `alternate | `alternateReverse];
+type animationDirection = [
+  | `normal
+  | `reverse
+  | `alternate
+  | `alternateReverse
+];
 
 type animationFillMode = [ | `none | `forwards | `backwards | `both];
 type animationIterationCount = [ | `infinite | `count(int)];
