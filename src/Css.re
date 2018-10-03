@@ -734,6 +734,7 @@ let string_of_justify =
   | `spaceBetween => "space-between"
   | `stretch => "stretch";
 let justifyContent = x => d("justifyContent", string_of_justify(x));
+let justifySelf = x => d("justifySelf", string_of_justify(x));
 let alignContent = x => d("alignContent", string_of_justify(x));
 
 let boxSizing = x =>

@@ -524,6 +524,16 @@ let alignItems:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
 let alignSelf:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
+let justifySelf:
+  [
+    | `flexStart
+    | `center
+    | `flexEnd
+    | `spaceBetween
+    | `spaceAround
+    | `stretch
+  ] =>
+  rule;
 let justifyContent:
   [
     | `flexStart
