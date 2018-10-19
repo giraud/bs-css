@@ -602,6 +602,7 @@ let boxShadow:
 let boxShadows: list([ | `shadow(string)]) => rule;
 
 let background: [ color | `url(string) | gradient | `none] => rule;
+let backgrounds : list([ | color | `url(string) | gradient | `none] ) => rule;
 let backgroundColor: [ color] => rule;
 let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
