@@ -529,8 +529,6 @@ let justifySelf:
     | `flexStart
     | `center
     | `flexEnd
-    | `spaceBetween
-    | `spaceAround
     | `stretch
   ] =>
   rule;
