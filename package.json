@@ -1,8 +1,7 @@
 {
   "name": "bs-css",
-  "version": "7.0.1",
+  "version": "7.2.0",
   "description": "BuckleScript bindings for glamor",
-  "main": "src/glamor.re",
   "scripts": {
     "build": "bsb -make-world",
     "webpack": "webpack -w",
@@ -24,14 +23,8 @@
     "glamor": "^2.0.0"
   },
   "devDependencies": {
-    "bs-jest": "^0.1.0",
-    "bs-platform": "^3.1.5",
-    "reason-react": "^0.4.2",
+    "bs-platform": "^4.0.4",
+    "reason-react": "^0.5.3",
     "webpack": "^3.8.1"
-  },
-  "jest": {
-    "roots": [
-      "lib/js/src"
-    ]
   }
 }

@@ -19,13 +19,13 @@ module Styles = {
     ]);
 };
 
-let text = ReasonReact.stringToElement;
+let text = ReasonReact.string;
 
 module Page = {
   let component = ReasonReact.statelessComponent("Page");
-  let make = (_) => {
+  let make = _ => {
     ...component,
-    render: (_) => <div> <div className=Styles.page> Test.tests </div> </div>,
+    render: _ => <div> <div className=Styles.page> Test.tests </div> </div>,
   };
 };
 
