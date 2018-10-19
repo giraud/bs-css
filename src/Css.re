@@ -183,6 +183,73 @@ module Converter = {
     fun
     | `hidden => "hidden"
     | `visible => "visible";
+
+  let string_of_background = bg =>
+    switch (bg) {
+    | `none => "none"
+    | `url(url) => "url(" ++ url ++ ")"
+    | `rgb(r, g, b) =>
+      "rgb("
+      ++ join(
+           ", ",
+           [string_of_int(r), string_of_int(g), string_of_int(b)],
+         )
+      ++ ")"
+    | `rgba(r, g, b, a) =>
+      "rgba("
+      ++ join(
+           ", ",
+           [
+             string_of_int(r),
+             string_of_int(g),
+             string_of_int(b),
+             string_of_float(a),
+           ],
+         )
+      ++ ")"
+    | `hsl(h, s, l) =>
+      "hsl("
+      ++ join(
+           ", ",
+           [
+             string_of_int(h),
+             string_of_int(s) ++ "%",
+             string_of_int(l) ++ "%",
+           ],
+         )
+      ++ ")"
+    | `hsla(h, s, l, a) =>
+      "hsla("
+      ++ join(
+           ", ",
+           [
+             string_of_int(h),
+             string_of_int(s) ++ "%",
+             string_of_int(l) ++ "%",
+             string_of_float(a),
+           ],
+         )
+      ++ ")"
+    | `hex(s) => "#" ++ s
+    | `transparent => "transparent"
+    | `currentColor => "currentColor"
+    | `linearGradient(angle, stops) =>
+      "linear-gradient("
+      ++ string_of_angle(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `repeatingLinearGradient(angle, stops) =>
+      "repeating-linear-gradient("
+      ++ string_of_angle(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `radialGradient(stops) =>
+      "radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    | `repeatingRadialGradient(stops) =>
+      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    };
 };
 include Converter;
 
@@ -908,28 +975,9 @@ let borderCollapse = x =>
 
 let borderSpacing = i => d("borderSpacing", string_of_length(i));
 
-let background = x =>
-  d(
-    "background",
-    switch (x) {
-    | `none => "none"
-    | `url(url) => "url(" ++ url ++ ")"
-    | `rgb(r, g, b) => string_of_rgb(r, g, b)
-    | `rgba(r, g, b, a) => string_of_rgba(r, g, b, a)
-    | `hsl(h, s, l) => string_of_hsl(h, s, l)
-    | `hsla(h, s, l, a) => string_of_hsla(h, s, l, a)
-    | `hex(s) => "#" ++ s
-    | `transparent => "transparent"
-    | `currentColor => "currentColor"
-    | `linearGradient(angle, stops) => string_of_linearGradient(angle, stops)
-    | `repeatingLinearGradient(angle, stops) =>
-      string_of_repeatingLinearGradient(angle, stops)
-    | `radialGradient(stops) =>
-      "radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    | `repeatingRadialGradient(stops) =>
-      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    },
-  );
+let background = x => d("background", string_of_background(x));
+let backgrounds = bg =>
+  d("background", bg |> List.map(string_of_background) |> join(", "));
 let backgroundColor = x => d("backgroundColor", string_of_color(x));
 let backgroundImage = x =>
   d(

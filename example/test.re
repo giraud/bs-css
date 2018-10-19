@@ -748,6 +748,25 @@ let tests =
           ])
         )
       />
+      <div
+        className=Css.(
+          style([
+            backgrounds([
+              linearGradient(
+                deg(45),
+                [(0, rgba(0, 255, 0, 0.6)), (100, rgba(255, 0, 0, 0.6))],
+              ),
+              url("./img-29.jpg"),
+            ]),
+            backgroundAttachment(local),
+            backgroundClip(paddingBox),
+            backgroundOrigin(paddingBox),
+            backgroundRepeat(repeatX),
+            backgroundSize(cover),
+            ...box,
+          ])
+        )
+      />
     </Section>
     <Section name="cursor">
       <div className=Css.(style([cursor(`pointer), ...box])) />
