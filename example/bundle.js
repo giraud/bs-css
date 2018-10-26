@@ -3512,10 +3512,20 @@ function makeDict(ruleset) {
         }
       } else if (variant >= -434952966) {
         var match$1 = rule[1];
-        return /* tuple */[
-                match$1[0],
-                match$1[1]
-              ];
+        var value = match$1[1];
+        var name = match$1[0];
+        if (name === "content") {
+          var match$2 = value === "";
+          return /* tuple */[
+                  name,
+                  match$2 ? "\"\"" : value
+                ];
+        } else {
+          return /* tuple */[
+                  name,
+                  value
+                ];
+        }
       } else {
         return /* tuple */[
                 "animation",
@@ -18106,7 +18116,8 @@ var tests = React.createElement("div", {
                           ]
                         ])
                   })
-            ])), ReasonReact.element(undefined, undefined, make("content", /* array */[React.createElement("a", {
+            ])), ReasonReact.element(undefined, undefined, make("content", /* array */[
+              React.createElement("a", {
                     className: Css.style(/* :: */[
                           Css.before(/* :: */[
                                 Css.contentRule("external "),
@@ -18124,7 +18135,41 @@ var tests = React.createElement("div", {
                           /* [] */0
                         ]),
                     href: "https://github.com/SentiaAnalytics/bs-css"
-                  }, "link")])), ReasonReact.element(undefined, undefined, make("insertRule, the ultimate escape hatch", /* array */[React.createElement("div", {
+                  }, "link"),
+              React.createElement("div", {
+                    className: Css.style(/* :: */[
+                          Css.position(Css.relative),
+                          /* :: */[
+                            Css.marginLeft(Css.px(20)),
+                            /* :: */[
+                              Css.after(/* :: */[
+                                    Css.contentRule(""),
+                                    /* :: */[
+                                      Css.position(Css.absolute),
+                                      /* :: */[
+                                        Css.top(Css.zero),
+                                        /* :: */[
+                                          Css.left(Css.zero),
+                                          /* :: */[
+                                            Css.width(Css.pct(100)),
+                                            /* :: */[
+                                              Css.height(Css.pct(100)),
+                                              /* :: */[
+                                                Css.border(Css.px(1), Css.solid, Css.black),
+                                                /* [] */0
+                                              ]
+                                            ]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]),
+                              /* [] */0
+                            ]
+                          ]
+                        ])
+                  }, "empty content")
+            ])), ReasonReact.element(undefined, undefined, make("insertRule, the ultimate escape hatch", /* array */[React.createElement("div", {
                     className: "raw-css"
                   })])));
 

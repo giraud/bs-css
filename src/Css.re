@@ -34,6 +34,10 @@ module Glamor = {
   let rec makeDict = ruleset => {
     let toJs = rule =>
       switch (rule) {
+      | `declaration(name, value) when name == "content" => (
+          name,
+          Js.Json.string(value == "" ? "\"\"" : value),
+        )
       | `declaration(name, value) => (name, Js.Json.string(value))
       | `selector(name, ruleset) => (name, makeDict(ruleset))
       | `shadow(value) => ("boxShadow", Js.Json.string(value))

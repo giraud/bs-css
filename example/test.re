@@ -1095,6 +1095,24 @@ let tests =
         )>
         {text("link")}
       </a>
+      <div
+        className=Css.(
+          style([
+            position(relative),
+            marginLeft(px(20)),
+            after([
+              contentRule(""),
+              position(absolute),
+              top(zero),
+              left(zero),
+              width(pct(100.)),
+              height(pct(100.)),
+              border(px(1), solid, black),
+            ]),
+          ])
+        )>
+        {text("empty content")}
+      </div>
     </Section>
     <Section name="insertRule, the ultimate escape hatch">
       <div className="raw-css" />
