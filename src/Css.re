@@ -250,6 +250,46 @@ module Converter = {
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
     };
+
+  let string_of_cursor = x =>
+    switch (x) {
+    | `auto => "auto"
+    | `default => "default"
+    | `none => "none"
+    | `contextMenu => "context-menu"
+    | `help => "help"
+    | `pointer => "pointer"
+    | `progress => "progress"
+    | `wait => "wait"
+    | `cell => "cell"
+    | `crosshair => "crosshair"
+    | `text => "text"
+    | `verticalText => "vertical-text"
+    | `alias => "alias"
+    | `copy => "copy"
+    | `move => "move"
+    | `noDrop => "no-drop"
+    | `notAllowed => "not-allowed"
+    | `grab => "grab"
+    | `grabbing => "grabbing"
+    | `allScroll => "all-scroll"
+    | `colResize => "col-resize"
+    | `rowResize => "row-resize"
+    | `nResize => "n-resize"
+    | `eResize => "e-resize"
+    | `sResize => "s-resize"
+    | `wResize => "w-resize"
+    | `neResize => "ne-resize"
+    | `nwResize => "nw-resize"
+    | `seResize => "se-resize"
+    | `swResize => "sw-resize"
+    | `ewResize => "ew-resize"
+    | `nsResize => "ns-resize"
+    | `neswResize => "nesw-resize"
+    | `nwseResize => "nwse-resize"
+    | `zoomIn => "zoom-in"
+    | `zoomOut => "zoom-out"
+    };
 };
 include Converter;
 
@@ -1053,32 +1093,7 @@ let backgroundSize = x =>
     },
   );
 
-let cursor = x =>
-  d(
-    "cursor",
-    switch (x) {
-    | `pointer => "pointer"
-    | `alias => "alias"
-    | `allScroll => "all-scroll"
-    | `auto => "auto"
-    | `cell => "cell"
-    | `contextMenu => "context-menu"
-    | `default => "default"
-    | `none => "none"
-    | `crosshair => "crosshair"
-    | `copy => "copy"
-    | `grab => "grab"
-    | `grabbing => "grabbing"
-    | `help => "help"
-    | `move => "move"
-    | `notAllowed => "not-allowed"
-    | `progress => "progress"
-    | `text => "text"
-    | `wait => "wait"
-    | `zoomIn => "zoom-in"
-    | `zoomOut => "zoom-out"
-    },
-  );
+let cursor = x => d("cursor", string_of_cursor(x));
 
 let clipPath = x =>
   d(

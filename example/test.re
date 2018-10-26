@@ -748,47 +748,116 @@ let tests =
           ])
         )
       />
-      <div
-        className=Css.(
-          style([
-            backgrounds([
-              linearGradient(
-                deg(45),
-                [(0, rgba(0, 255, 0, 0.6)), (100, rgba(255, 0, 0, 0.6))],
-              ),
-              url("./img-29.jpg"),
-            ]),
-            backgroundAttachment(local),
-            backgroundClip(paddingBox),
-            backgroundOrigin(paddingBox),
-            backgroundRepeat(repeatX),
-            backgroundSize(cover),
-            ...box,
-          ])
-        )
-      />
     </Section>
     <Section name="cursor">
-      <div className=Css.(style([cursor(`pointer), ...box])) />
-      <div className=Css.(style([cursor(`alias), ...box])) />
-      <div className=Css.(style([cursor(`allScroll), ...box])) />
-      <div className=Css.(style([cursor(`auto), ...box])) />
-      <div className=Css.(style([cursor(`cell), ...box])) />
-      <div className=Css.(style([cursor(`contextMenu), ...box])) />
-      <div className=Css.(style([cursor(`default), ...box])) />
-      <div className=Css.(style([cursor(`none), ...box])) />
-      <div className=Css.(style([cursor(`crosshair), ...box])) />
-      <div className=Css.(style([cursor(`copy), ...box])) />
-      <div className=Css.(style([cursor(`grab), ...box])) />
-      <div className=Css.(style([cursor(`grabbing), ...box])) />
-      <div className=Css.(style([cursor(`help), ...box])) />
-      <div className=Css.(style([cursor(`move), ...box])) />
-      <div className=Css.(style([cursor(`notAllowed), ...box])) />
-      <div className=Css.(style([cursor(`progress), ...box])) />
-      <div className=Css.(style([cursor(`text), ...box])) />
-      <div className=Css.(style([cursor(`wait), ...box])) />
-      <div className=Css.(style([cursor(`zoomIn), ...box])) />
-      <div className=Css.(style([cursor(`zoomOut), ...box])) />
+      <div className=Css.(style([cursor(`auto), ...box]))>
+        {text("auto")}
+      </div>
+      <div className=Css.(style([cursor(`default), ...box]))>
+        {text("default")}
+      </div>
+      <div className=Css.(style([cursor(`none), ...box]))>
+        {text("none")}
+      </div>
+      <div className=Css.(style([cursor(`contextMenu), ...box]))>
+        {text("context menu")}
+      </div>
+      <div className=Css.(style([cursor(`help), ...box]))>
+        {text("help")}
+      </div>
+      <div className=Css.(style([cursor(`pointer), ...box]))>
+        {text("pointer")}
+      </div>
+      <div className=Css.(style([cursor(`progress), ...box]))>
+        {text("progress")}
+      </div>
+      <div className=Css.(style([cursor(`wait), ...box]))>
+        {text("wait")}
+      </div>
+      <div className=Css.(style([cursor(`cell), ...box]))>
+        {text("cell")}
+      </div>
+      <div className=Css.(style([cursor(`crosshair), ...box]))>
+        {text("crosshair")}
+      </div>
+      <div className=Css.(style([cursor(`text), ...box]))>
+        {text("text")}
+      </div>
+      <div className=Css.(style([cursor(`verticalText), ...box]))>
+        {text("vert text")}
+      </div>
+      <div className=Css.(style([cursor(`alias), ...box]))>
+        {text("alias")}
+      </div>
+      <div className=Css.(style([cursor(`copy), ...box]))>
+        {text("copy")}
+      </div>
+      <div className=Css.(style([cursor(`move), ...box]))>
+        {text("move")}
+      </div>
+      <div className=Css.(style([cursor(`noDrop), ...box]))>
+        {text("no drop")}
+      </div>
+      <div className=Css.(style([cursor(`notAllowed), ...box]))>
+        {text("not allowed")}
+      </div>
+      <div className=Css.(style([cursor(`grab), ...box]))>
+        {text("grab")}
+      </div>
+      <div className=Css.(style([cursor(`grabbing), ...box]))>
+        {text("grabbing")}
+      </div>
+      <div className=Css.(style([cursor(`allScroll), ...box]))>
+        {text("all scroll")}
+      </div>
+      <div className=Css.(style([cursor(`colResize), ...box]))>
+        {text("col resize")}
+      </div>
+      <div className=Css.(style([cursor(`rowResize), ...box]))>
+        {text("row resize")}
+      </div>
+      <div className=Css.(style([cursor(`nResize), ...box]))>
+        {text("n resize")}
+      </div>
+      <div className=Css.(style([cursor(`eResize), ...box]))>
+        {text("e resize")}
+      </div>
+      <div className=Css.(style([cursor(`sResize), ...box]))>
+        {text("s resize")}
+      </div>
+      <div className=Css.(style([cursor(`wResize), ...box]))>
+        {text("w resize")}
+      </div>
+      <div className=Css.(style([cursor(`neResize), ...box]))>
+        {text("ne resize")}
+      </div>
+      <div className=Css.(style([cursor(`nwResize), ...box]))>
+        {text("nw resize")}
+      </div>
+      <div className=Css.(style([cursor(`seResize), ...box]))>
+        {text("se resize")}
+      </div>
+      <div className=Css.(style([cursor(`swResize), ...box]))>
+        {text("sw resize")}
+      </div>
+      <div className=Css.(style([cursor(`ewResize), ...box]))>
+        {text("ew resize")}
+      </div>
+      <div className=Css.(style([cursor(`nsResize), ...box]))>
+        {text("ns resize")}
+      </div>
+      <div className=Css.(style([cursor(`neswResize), ...box]))>
+        {text("nesw resize")}
+      </div>
+      <div className=Css.(style([cursor(`nwseResize), ...box]))>
+        {text("nwse resize")}
+      </div>
+      <div className=Css.(style([cursor(`zoomIn), ...box]))>
+        {text("zoom in")}
+      </div>
+      <div className=Css.(style([cursor(`zoomOut), ...box]))>
+        {text("zoom out")}
+      </div>
     </Section>
     <Section name="list">
       <ul>

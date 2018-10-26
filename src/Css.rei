@@ -623,24 +623,40 @@ let backgroundSize:
 
 let cursor:
   [
-    | `pointer
-    | `alias
-    | `allScroll
     | `auto
-    | `cell
-    | `contextMenu
     | `default
     | `none
+    | `contextMenu
+    | `help
+    | `pointer
+    | `progress
+    | `wait
+    | `cell
     | `crosshair
+    | `text
+    | `verticalText
+    | `alias
     | `copy
+    | `move
+    | `noDrop
+    | `notAllowed
     | `grab
     | `grabbing
-    | `help
-    | `move
-    | `notAllowed
-    | `progress
-    | `text
-    | `wait
+    | `allScroll
+    | `colResize
+    | `rowResize
+    | `nResize
+    | `eResize
+    | `sResize
+    | `wResize
+    | `neResize
+    | `nwResize
+    | `seResize
+    | `swResize
+    | `ewResize
+    | `nsResize
+    | `neswResize
+    | `nwseResize
     | `zoomIn
     | `zoomOut
   ] =>
