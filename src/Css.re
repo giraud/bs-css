@@ -548,7 +548,7 @@ let oblique = `oblique;
 
 let underline = `underline;
 let overline = `overline;
-let lineThrough = `lineThough;
+let lineThrough = `lineThrough;
 let clip = `clip;
 let ellipsis = `ellipsis;
 
