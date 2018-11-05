@@ -45,7 +45,7 @@ module Styles = {
 
 <div className=Styles.card>
   <h1 className=Styles.title> (ReasonReact.stringToElement("Hello")) </h1>
-  <button className=Styles.actionbutton(false)>
+  <button className=Styles.actionButton(false)>
 </div>
 ```
 
