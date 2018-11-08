@@ -609,7 +609,7 @@ let display = x =>
     | `grid => "grid"
     | `inlineGrid => "inline-grid"
     | `none => "none"
-    | `inherit_ => "inherited"
+    | `inherit_ => "inherit"
     | `unset => "unset"
     },
   );
@@ -623,7 +623,7 @@ let position = x =>
     | `fixed => "fixed"
     | `relative => "relative"
     | `sticky => "sticky"
-    | `inherit_ => "inherited"
+    | `inherit_ => "inherit"
     | `unset => "unset"
     },
   );
@@ -854,6 +854,8 @@ let boxSizing = x =>
     switch (x) {
     | `contentBox => "content-box"
     | `borderBox => "border-box"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 

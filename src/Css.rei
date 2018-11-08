@@ -543,7 +543,7 @@ let justifyContent:
   ] =>
   rule;
 
-let boxSizing: [ | `borderBox | `contentBox] => rule;
+let boxSizing: [ | `borderBox | `contentBox | cascading] => rule;
 
 let float: [ | `left | `right | `none] => rule;
 let clear: [ | `left | `right | `both] => rule;

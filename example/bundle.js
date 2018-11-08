@@ -4509,7 +4509,7 @@ function display(x) {
               ) : (
                 x !== -999565626 ? (
                     x >= -601204732 ? (
-                        x >= -147785676 ? "inline-block" : "inherited"
+                        x >= -147785676 ? "inline-block" : "inherit"
                       ) : (
                         x >= -922086728 ? "none" : "flex"
                       )
@@ -4527,7 +4527,7 @@ function position(x) {
               ) : (
                 x !== -601204732 ? (
                     x >= 10615156 ? "fixed" : "absolute"
-                  ) : "inherited"
+                  ) : "inherit"
               ));
 }
 
@@ -4954,7 +4954,11 @@ function alignContent(x) {
 }
 
 function boxSizing(x) {
-  return d("boxSizing", x >= 9307263 ? "border-box" : "content-box");
+  return d("boxSizing", x >= 9307263 ? (
+                x >= 653193961 ? "unset" : "border-box"
+              ) : (
+                x >= -601204732 ? "inherit" : "content-box"
+              ));
 }
 
 function $$float(x) {
