@@ -555,6 +555,8 @@ let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 let zIndex: int => rule;
 let contentRule: string => rule;
 
+let columnCount: [ | `auto | `count(int) | cascading ] => rule;
+
 /**
  * Style
  */

@@ -4985,12 +4985,20 @@ function overflowY(x) {
   return d("overflowY", string_of_overflow(x));
 }
 
-function zIndex(i) {
-  return d("zIndex", String(i));
+function zIndex(x) {
+  return d("zIndex", String(x));
 }
 
-function contentRule(s) {
-  return d("content", s);
+function contentRule(x) {
+  return d("content", x);
+}
+
+function columnCount(x) {
+  return d("columnCount", typeof x === "number" ? (
+                x !== -601204732 ? (
+                    x >= 653193961 ? "unset" : "auto"
+                  ) : "inherit"
+              ) : String(x[1]));
 }
 
 function backfaceVisibility(x) {
@@ -7090,6 +7098,7 @@ exports.overflowX = overflowX;
 exports.overflowY = overflowY;
 exports.zIndex = zIndex;
 exports.contentRule = contentRule;
+exports.columnCount = columnCount;
 exports.backfaceVisibility = backfaceVisibility;
 exports.visibility = visibility;
 exports.border = border;
@@ -18120,7 +18129,12 @@ var tests = React.createElement("div", {
                           ]
                         ])
                   })
-            ])), ReasonReact.element(undefined, undefined, make("content", /* array */[
+            ])), ReasonReact.element(undefined, undefined, make("columns", /* array */[React.createElement("p", {
+                    className: Css.style(/* :: */[
+                          Css.columnCount(Css.count(10)),
+                          /* [] */0
+                        ])
+                  }, "This is a bunch of text split into columns\n             using the CSS `column-count` property. The text\n             is equally distributed over the columns.")])), ReasonReact.element(undefined, undefined, make("content", /* array */[
               React.createElement("a", {
                     className: Css.style(/* :: */[
                           Css.before(/* :: */[

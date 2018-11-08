@@ -1080,6 +1080,17 @@ let tests =
         )
       />
     </Section>
+    <Section name="columns">
+      <p className=Css.(style([columnCount(count(10))]))>
+        {
+          text(
+            "This is a bunch of text split into columns
+             using the CSS `column-count` property. The text
+             is equally distributed over the columns.",
+          )
+        }
+      </p>
+    </Section>
     <Section name="content">
       <a
         href="https://github.com/SentiaAnalytics/bs-css"

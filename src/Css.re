@@ -883,9 +883,20 @@ let overflow = x => d("overflow", string_of_overflow(x));
 let overflowX = x => d("overflowX", string_of_overflow(x));
 let overflowY = x => d("overflowY", string_of_overflow(x));
 
-let zIndex = i => d("zIndex", string_of_int(i));
+let zIndex = x => d("zIndex", string_of_int(x));
 
-let contentRule = s => d("content", s);
+let contentRule = x => d("content", x);
+
+let columnCount = x =>
+  d(
+    "columnCount",
+    switch (x) {
+    | `auto => "auto"
+    | `count(v) => string_of_int(v)
+    | `inherit_ => "inherit"
+    | `unset => "unset"
+    },
+  );
 
 /**
  * Style
