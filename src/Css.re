@@ -800,6 +800,19 @@ let height = x => d("height", string_of_dimension(x));
 let minHeight = x => d("minHeight", string_of_dimension(x));
 let maxHeight = x => d("maxHeight", string_of_dimension(x));
 
+[@bs.deriving jsConverter]
+type gridAutoDirection = [ 
+  | `column 
+  | `row 
+  | [@bs.as "column dense"] `columnDense 
+  | [@bs.as "row dense"] `rowDense 
+  | [@bs.as "inherit"] `inherit_
+  | `initial 
+  | `unset ];
+
+let gridAutoFlow = direction =>
+  d("gridAutoFlow", gridAutoDirectionToJs(direction));
+
 let string_of_dimensions = dimensions =>
   dimensions |> List.map(string_of_dimension) |> String.concat(" ");
 
