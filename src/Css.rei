@@ -227,6 +227,7 @@ type length = [
   | `percent(float)
   | `pt(int)
   | `px(int)
+  | `pxFloat(float)
   | `rem(float)
   | `vh(float)
   | `vmin(float)
@@ -246,6 +247,7 @@ let mm: float => [> | `mm(float)];
 let pct: float => [> | `percent(float)];
 let pt: int => [> | `pt(int)];
 let px: int => [> | `px(int)];
+let pxFloat: float => [> | `pxFloat(float)];
 let rem: float => [> | `rem(float)];
 let vh: float => [> | `vh(float)];
 let vmax: float => [> | `vmax(float)];
@@ -461,6 +463,14 @@ let order: int => rule;
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
 let gridAutoRows: [ length | `auto] => rule;
+let gridAutoFlow:  [ 
+  | `column 
+  | `row 
+  |  `columnDense 
+  |  `rowDense 
+  | `inherit_
+  | `initial 
+  | `unset ] => rule;
 let gridColumn: (int, int) => rule;
 let gridRow: (int, int) => rule;
 let gridColumnStart: int => rule;

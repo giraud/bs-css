@@ -2,7 +2,7 @@
 
 statically typed DSL for writing css in reason.
 
-Bs-css is a statically typed interface to [Glamor](https://github.com/threepointone/glamor)
+Bs-css is a statically typed interface to [Emotion](https://github.com/emotion-js/emotion)
 
 ## Installation
 
@@ -18,10 +18,10 @@ In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
 module Styles = {
   /*Open the Css module, so we can access the style properties below without prefixing them with Css.*/
   open Css;
-  
+
   let card = style([
     display(flexBox),
-    flexDirection(column), 
+    flexDirection(column),
     alignItems(stretch),
     backgroundColor(white),
     boxShadow(~y=px(3), ~blur=px(5), rgba(0, 0, 0, 0.3)),
@@ -100,6 +100,6 @@ Its on its way!
 until then you can check out [css.rei](./src/Css.rei).
 
 ## Thanks
-Thanks to [glamor](https://github.com/threepointone/glamor) which is doing all the heavi lifting.
+Thanks to [emotion](https://github.com/emotion-js/emotion) which is doing all the heavy lifting.
 Thanks to [bs-glamor](https://github.com/poeschko/bs-glamor) which this repo was forked from.
 Thanks to [elm-css](https://github.com/rtfeldman/elm-css) for dsl design inspiration.

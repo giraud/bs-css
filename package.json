@@ -1,14 +1,14 @@
 {
   "name": "bs-css",
-  "version": "7.4.0",
-  "description": "BuckleScript bindings for glamor",
+  "version": "8.0.0",
+  "description": "BuckleScript bindings for emotion",
   "scripts": {
     "build": "bsb -make-world",
     "webpack": "webpack -w",
     "start": "bsb -make-world -w"
   },
   "keywords": [
-    "glamor",
+    "emotion",
     "bucklescript",
     "reason",
     "css"
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/SentiaAnalytics/bs-css.git"
   },
   "dependencies": {
-    "glamor": "^2.0.0"
+    "emotion": "^9.2.12"
   },
   "devDependencies": {
     "bs-platform": "^4.0.4",

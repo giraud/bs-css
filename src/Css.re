@@ -1,36 +1,17 @@
 include Css_Colors;
 
-module Glamor = {
-  type css;
-  type fontFace;
-  [@bs.send] external className: css => string = "toString";
-  [@bs.module "glamor"] external _make: Js.Json.t => css = "css";
-  [@bs.scope "css"] [@bs.module "glamor"]
-  external makeGlobal: (string, Js.Json.t) => unit = "global";
-  [@bs.scope "css"] [@bs.module "glamor"]
-  external makeInsert: string => unit = "insert";
-  [@bs.scope "css"] [@bs.module "glamor"]
+module Emotion = {
+  type css = string;
+  [@bs.module "emotion"] external _make: Js.Json.t => css = "css";
+  [@bs.module "emotion"]
+  external injectGlobal: Js.Json.t => unit = "";
+  [@bs.module "emotion"]
+  external rawInjectGlobal: string => unit = "injectGlobal";
+  [@bs.module "emotion"]
   external makeKeyFrames: Js.Dict.t(Js.Json.t) => string = "keyframes";
-  [@bs.scope "css"] [@bs.module "glamor"]
-  external makeFontFace: fontFace => string = "fontFace";
-  [@bs.obj]
-  external fontFace:
-    (
-      ~fontFamily: string,
-      ~src: string,
-      ~fontStyle: string=?,
-      ~fontWeight: int=?
-    ) =>
-    fontFace =
-    "";
-  let merge: list(css) => css = [%bs.raw
-    {|
-      function (styles) {
-          const glamor = require('glamor');
-          return glamor.css.apply(glamor, styles)
-      }
-  |}
-  ];
+  [@bs.module "emotion"] [@bs.splice]
+  external merge: array(css) => css = "cx";
+  let merge: list(css) => css = classes => classes->Array.of_list->merge;
   let rec makeDict = ruleset => {
     let toJs = rule =>
       switch (rule) {
@@ -155,6 +136,7 @@ module Converter = {
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -309,21 +291,23 @@ type selector = [ | `selector(string, list(rule))];
 let empty = [];
 
 let merge = List.concat;
-let global = (selector, rules: list(rule)) =>
-  Glamor.makeGlobal(selector, Glamor.makeDict(rules));
-let insertRule = css => Glamor.makeInsert(css);
+let global = (selector, rules: list(rule)) => {
+  Emotion.injectGlobal([(selector, Emotion.makeDict(rules))]->Js.Dict.fromList->Js.Json.object_);
+}
+
+let insertRule = raw => Emotion.rawInjectGlobal(raw);
 
 type animation = string;
 
 let keyframes = frames => {
   let addStop = (dict, (stop, rules)) => {
-    Js.Dict.set(dict, string_of_int(stop) ++ "%", Glamor.makeDict(rules));
+    Js.Dict.set(dict, string_of_int(stop) ++ "%", Emotion.makeDict(rules));
     dict;
   };
-  Glamor.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
+  Emotion.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
 };
 
-let style = rules => rules |> Glamor.make |> Glamor.className;
+let style = rules => rules |> Emotion.make;
 
 let d = (property, value) => `declaration((property, value));
 
@@ -398,6 +382,7 @@ type length = [
   | `percent(float)
   | `pt(int)
   | `px(int)
+  | `pxFloat(float)
   | `rem(float)
   | `vh(float)
   | `vmax(float)
@@ -422,6 +407,7 @@ let string_of_length_cascading =
   | `percent(x) => string_of_float(x) ++ "%"
   | `pt(x) => string_of_int(x) ++ "pt"
   | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
   | `rem(x) => string_of_float(x) ++ "rem"
   | `vh(x) => string_of_float(x) ++ "vh"
   | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -440,6 +426,7 @@ let mm = x => `mm(x);
 let pct = x => `percent(x);
 let pt = x => `pt(x);
 let px = x => `px(x);
+let pxFloat = x => `pxFloat(x);
 let rem = x => `rem(x);
 let vh = x => `vh(x);
 let vmax = x => `vmax(x);
@@ -652,6 +639,7 @@ let flexBasis = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -704,6 +692,7 @@ let string_of_margin =
   | `percent(x) => string_of_float(x) ++ "%"
   | `pt(x) => string_of_int(x) ++ "pt"
   | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
   | `rem(x) => string_of_float(x) ++ "rem"
   | `vh(x) => string_of_float(x) ++ "vh"
   | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -783,6 +772,7 @@ let string_of_dimension =
   | `percent(x) => string_of_float(x) ++ "%"
   | `pt(x) => string_of_int(x) ++ "pt"
   | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
   | `rem(x) => string_of_float(x) ++ "rem"
   | `vh(x) => string_of_float(x) ++ "vh"
   | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -799,6 +789,28 @@ let minWidth = x => d("minWidth", string_of_dimension(x));
 let height = x => d("height", string_of_dimension(x));
 let minHeight = x => d("minHeight", string_of_dimension(x));
 let maxHeight = x => d("maxHeight", string_of_dimension(x));
+
+type gridAutoDirection = [
+  | `column
+  | `row
+  | `columnDense
+  | `rowDense
+  | `initial
+  | cascading
+];
+
+let gridAutoDirectionToJs =
+  fun
+  | `column => "column"
+  | `row => "row"
+  | `columnDense => "column dense"
+  | `rowDense => "row dense"
+  | `initial => "initial"
+  | `inherit_ => "inherit"
+  | `unset => "unset";
+
+let gridAutoFlow = direction =>
+  d("gridAutoFlow", gridAutoDirectionToJs(direction));
 
 let string_of_dimensions = dimensions =>
   dimensions |> List.map(string_of_dimension) |> String.concat(" ");
@@ -885,7 +897,7 @@ let overflowY = x => d("overflowY", string_of_overflow(x));
 
 let zIndex = x => d("zIndex", string_of_int(x));
 
-let contentRule = x => d("content", x);
+let contentRule = x => d("content", {j|"$x"|j});
 
 let columnCount = x =>
   d(
@@ -1227,6 +1239,7 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
  * Text
  */
 
+[@bs.deriving jsConverter]
 type fontStyle = [ | `normal | `italic | `oblique];
 let fontStyleToJs =
   fun
@@ -1252,6 +1265,7 @@ let fontVariant = x =>
   );
 
 let fontStyle = x => d("fontStyle", fontStyleToJs(x));
+let fontWeight = x => d("fontWeight", string_of_int(x));
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =
@@ -1264,12 +1278,24 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
          | `url(value) => {j|url("$(value)")|j},
        )
     |> String.concat(", ");
-  Glamor.(
-    makeFontFace(fontFace(~fontFamily, ~src, ~fontStyle?, ~fontWeight?))
-  );
-};
 
-let fontWeight = x => d("fontWeight", string_of_int(x));
+  let fontStyle =
+    Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ s);
+  let fontWeight =
+    Belt.Option.mapWithDefault(fontWeight, "", w =>
+      "font-weight: " ++ string_of_int(w)
+    );
+  let asString = {j|@font-face {
+    font-family: $fontFamily;
+    src: $src;
+    $(fontStyle);
+    $(fontWeight);
+}|j};
+
+  Emotion.rawInjectGlobal(asString);
+
+  fontFamily;
+};
 
 let lineHeight = x =>
   d(
@@ -1289,6 +1315,7 @@ let lineHeight = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1318,6 +1345,7 @@ let letterSpacing = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1434,6 +1462,7 @@ let verticalAlign = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1483,6 +1512,7 @@ let wordSpacing = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1620,6 +1650,7 @@ let perspective = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"

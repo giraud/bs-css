@@ -10,6 +10,7 @@ let arialNarrow =
       ~fontFamily="Arial FontFace Test",
       ~src=[localUrl("Arial Narrow")],
       ~fontStyle=normal,
+      ~fontWeight=500,
       (),
     )
   );
@@ -48,6 +49,23 @@ let miniBox =
   ];
 
 let rowLayout = Css.[display(flexBox), flexDirection(row), flexWrap(wrap)];
+
+/* https://github.com/SentiaAnalytics/bs-css/issues/86 */
+let mergedStyles = {
+  open Css;
+
+  let buttonStyles = [
+    padding(px(5)),
+    media("(min-width: 768px)", [padding(px(10))]),
+  ];
+
+  let typographyStyles = [
+    fontSize(px(14)),
+    media("(min-width: 768px)", [fontSize(px(16))]),
+  ];
+
+  style(merge([buttonStyles, typographyStyles]));
+};
 
 let section =
   Css.[
@@ -496,6 +514,20 @@ let tests =
             ])
           )
         />
+      </div>
+      <div
+        className=Css.(
+          style([
+            display(`grid),
+            gridAutoFlow(`row)
+          ])
+        )>
+        <div className=Css.(style([background(purple)]))>
+          {text("grid auto direction row")}
+        </div>
+        <div className=Css.(style([background(green)]))>
+          {text("grid auto direction row")}
+        </div>
       </div>
     </Section>
     <Section name="flexbox">
@@ -1128,4 +1160,6 @@ let tests =
     <Section name="insertRule, the ultimate escape hatch">
       <div className="raw-css" />
     </Section>
+    <Section name="merging styles"> <button className=mergedStyles >
+    {text("Merged")} </button> </Section>
   </div>;
