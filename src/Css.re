@@ -800,15 +800,24 @@ let height = x => d("height", string_of_dimension(x));
 let minHeight = x => d("minHeight", string_of_dimension(x));
 let maxHeight = x => d("maxHeight", string_of_dimension(x));
 
-[@bs.deriving jsConverter]
-type gridAutoDirection = [ 
-  | `column 
-  | `row 
-  | [@bs.as "column dense"] `columnDense 
-  | [@bs.as "row dense"] `rowDense 
-  | [@bs.as "inherit"] `inherit_
-  | `initial 
-  | `unset ];
+type gridAutoDirection = [
+  | `column
+  | `row
+  | `columnDense
+  | `rowDense
+  | `initial
+  | cascading
+];
+
+let gridAutoDirectionToJs =
+  fun
+  | `column => "column"
+  | `row => "row"
+  | `columnDense => "column dense"
+  | `rowDense => "row dense"
+  | `initial => "initial"
+  | `inherit_ => "inherit"
+  | `unset => "unset";
 
 let gridAutoFlow = direction =>
   d("gridAutoFlow", gridAutoDirectionToJs(direction));
