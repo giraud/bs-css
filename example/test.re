@@ -497,6 +497,20 @@ let tests =
           )
         />
       </div>
+      <div
+        className=Css.(
+          style([
+            display(`grid),
+            gridAutoFlow(`row)
+          ])
+        )>
+        <div className=Css.(style([background(purple)]))>
+          {text("grid auto direction row")}
+        </div>
+        <div className=Css.(style([background(green)]))>
+          {text("grid auto direction row")}
+        </div>
+      </div>
     </Section>
     <Section name="flexbox">
       <div

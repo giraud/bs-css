@@ -1104,9 +1104,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(74);
-} else {
   module.exports = __webpack_require__(75);
+} else {
+  module.exports = __webpack_require__(76);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -3484,6 +3484,7 @@ var Glamor = __webpack_require__(19);
 var Js_dict = __webpack_require__(70);
 var Js_option = __webpack_require__(71);
 var Css_Colors = __webpack_require__(72);
+var Js_mapperRt = __webpack_require__(73);
 var Js_primitive = __webpack_require__(14);
 
 ((
@@ -4839,6 +4840,41 @@ function minHeight(x) {
 
 function maxHeight(x) {
   return d("maxHeight", string_of_dimension(x));
+}
+
+var jsMapperConstantArray = /* array */[
+  /* tuple */[
+    -963948842,
+    "column"
+  ],
+  /* tuple */[
+    -878767996,
+    "initial"
+  ],
+  /* tuple */[
+    -601204732,
+    "inherit"
+  ],
+  /* tuple */[
+    -227605271,
+    "column dense"
+  ],
+  /* tuple */[
+    -15525083,
+    "row dense"
+  ],
+  /* tuple */[
+    5693978,
+    "row"
+  ],
+  /* tuple */[
+    653193961,
+    "unset"
+  ]
+];
+
+function gridAutoFlow(direction) {
+  return d("gridAutoFlow", Js_mapperRt.binarySearch(7, direction, jsMapperConstantArray));
 }
 
 function string_of_dimensions(dimensions) {
@@ -7054,6 +7090,7 @@ exports.order = order;
 exports.gridTemplateColumns = gridTemplateColumns;
 exports.gridTemplateRows = gridTemplateRows;
 exports.gridAutoRows = gridAutoRows;
+exports.gridAutoFlow = gridAutoFlow;
 exports.gridColumn = gridColumn;
 exports.gridRow = gridRow;
 exports.gridColumnStart = gridColumnStart;
@@ -9124,7 +9161,7 @@ module.exports = exports["default"];
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(9);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(76);
+  var ReactPropTypesSecret = __webpack_require__(77);
   var loggedTypeFailures = {};
 }
 
@@ -9182,7 +9219,7 @@ module.exports = checkPropTypes;
 
 
 var React = __webpack_require__(4);
-var ReactDom = __webpack_require__(80);
+var ReactDom = __webpack_require__(81);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
 function renderToElementWithClassName(reactElement, className) {
@@ -9437,7 +9474,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(82);
+var isTextNode = __webpack_require__(83);
 
 /*eslint-disable no-bitwise */
 
@@ -9474,7 +9511,7 @@ module.exports = containsNode;
 var Curry = __webpack_require__(2);
 var React = __webpack_require__(4);
 var Caml_builtin_exceptions = __webpack_require__(1);
-var ReasonReactOptimizedCreateClass = __webpack_require__(85);
+var ReasonReactOptimizedCreateClass = __webpack_require__(86);
 
 function createDomElement(s, props, children) {
   var vararg = /* array */[
@@ -10029,7 +10066,7 @@ module.exports = __webpack_require__(32);
 
 
 var Css = __webpack_require__(15);
-var Test = __webpack_require__(73);
+var Test = __webpack_require__(74);
 var React = __webpack_require__(4);
 var ReactDOMRe = __webpack_require__(25);
 var ReasonReact = __webpack_require__(30);
@@ -16253,12 +16290,141 @@ exports.yellowgreen = yellowgreen;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+
+function binarySearch(upper, id, array) {
+  var _lower = 0;
+  var _upper = upper;
+  var xs = array;
+  var k = id;
+  while(true) {
+    var upper$1 = _upper;
+    var lower = _lower;
+    if (lower >= upper$1) {
+      throw new Error("File \"js_mapperRt.ml\", line 35, characters 4-10");
+    }
+    var mid = (lower + upper$1 | 0) / 2 | 0;
+    var match = xs[mid];
+    var i = match[0];
+    if (i === k) {
+      return match[1];
+    } else if (i < k) {
+      _lower = mid + 1 | 0;
+      continue ;
+    } else {
+      _upper = mid;
+      continue ;
+    }
+  };
+}
+
+function revSearch(len, array, x) {
+  var _i = 0;
+  var len$1 = len;
+  var xs = array;
+  var k = x;
+  while(true) {
+    var i = _i;
+    if (i === len$1) {
+      return undefined;
+    } else {
+      var match = xs[i];
+      if (match[1] === k) {
+        return match[0];
+      } else {
+        _i = i + 1 | 0;
+        continue ;
+      }
+    }
+  };
+}
+
+function revSearchAssert(len, array, x) {
+  var len$1 = len;
+  var _i = 0;
+  var xs = array;
+  var k = x;
+  while(true) {
+    var i = _i;
+    if (i >= len$1) {
+      throw new Error("File \"js_mapperRt.ml\", line 64, characters 4-10");
+    }
+    var match = xs[i];
+    if (match[1] === k) {
+      return match[0];
+    } else {
+      _i = i + 1 | 0;
+      continue ;
+    }
+  };
+}
+
+function toInt(i, xs) {
+  return xs[i];
+}
+
+function fromInt(len, xs, $$enum) {
+  var $$enum$1 = $$enum;
+  var _i = 0;
+  var len$1 = len;
+  var xs$1 = xs;
+  while(true) {
+    var i = _i;
+    if (i === len$1) {
+      return undefined;
+    } else {
+      var k = xs$1[i];
+      if (k === $$enum$1) {
+        return i;
+      } else {
+        _i = i + 1 | 0;
+        continue ;
+      }
+    }
+  };
+}
+
+function fromIntAssert(len, xs, $$enum) {
+  var len$1 = len;
+  var $$enum$1 = $$enum;
+  var _i = 0;
+  var xs$1 = xs;
+  while(true) {
+    var i = _i;
+    if (i >= len$1) {
+      throw new Error("File \"js_mapperRt.ml\", line 88, characters 4-10");
+    }
+    var k = xs$1[i];
+    if (k === $$enum$1) {
+      return i;
+    } else {
+      _i = i + 1 | 0;
+      continue ;
+    }
+  };
+}
+
+exports.binarySearch = binarySearch;
+exports.revSearch = revSearch;
+exports.revSearchAssert = revSearchAssert;
+exports.toInt = toInt;
+exports.fromInt = fromInt;
+exports.fromIntAssert = fromIntAssert;
+/* No side effect */
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 // Generated by BUCKLESCRIPT VERSION 4.0.4, PLEASE EDIT WITH CARE
 
 
 var Css = __webpack_require__(15);
 var React = __webpack_require__(4);
-var Belt_Array = __webpack_require__(77);
+var Belt_Array = __webpack_require__(78);
 var ReactDOMRe = __webpack_require__(25);
 var ReasonReact = __webpack_require__(30);
 
@@ -17004,7 +17170,8 @@ var tests = React.createElement("div", {
                           ]
                         ])
                   })
-            ])), ReasonReact.element(undefined, undefined, make("grid", /* array */[React.createElement("div", {
+            ])), ReasonReact.element(undefined, undefined, make("grid", /* array */[
+              React.createElement("div", {
                     className: Css.style(/* :: */[
                           Css.width(Css.pct(100)),
                           /* :: */[
@@ -17146,7 +17313,27 @@ var tests = React.createElement("div", {
                                 ]
                               ]
                             ])
-                      }))])), ReasonReact.element(undefined, undefined, make("flexbox", /* array */[React.createElement("div", {
+                      })),
+              React.createElement("div", {
+                    className: Css.style(/* :: */[
+                          Css.display(/* grid */-999565626),
+                          /* :: */[
+                            Css.gridAutoFlow(/* row */5693978),
+                            /* [] */0
+                          ]
+                        ])
+                  }, React.createElement("div", {
+                        className: Css.style(/* :: */[
+                              Css.background(Css.purple),
+                              /* [] */0
+                            ])
+                      }, "grid auto direction row"), React.createElement("div", {
+                        className: Css.style(/* :: */[
+                              Css.background(Css.green),
+                              /* [] */0
+                            ])
+                      }, "grid auto direction row"))
+            ])), ReasonReact.element(undefined, undefined, make("flexbox", /* array */[React.createElement("div", {
                     className: Css.style(/* :: */[
                           Css.flexDirection(Css.column),
                           /* :: */[
@@ -18205,7 +18392,7 @@ exports.tests = tests;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18234,7 +18421,7 @@ assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default?Z.default:Z;
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19716,7 +19903,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19735,14 +19922,14 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Curry = __webpack_require__(2);
-var Js_math = __webpack_require__(78);
+var Js_math = __webpack_require__(79);
 var Js_primitive = __webpack_require__(14);
 var Caml_primitive = __webpack_require__(5);
 
@@ -20420,13 +20607,13 @@ exports.eq = eq;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Js_int = __webpack_require__(79);
+var Js_int = __webpack_require__(80);
 
 function unsafe_ceil(prim) {
   return Math.ceil(prim);
@@ -20475,7 +20662,7 @@ exports.random_int = random_int;
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20497,7 +20684,7 @@ exports.min = min;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20535,15 +20722,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(81);
+  module.exports = __webpack_require__(82);
 } else {
-  module.exports = __webpack_require__(84);
+  module.exports = __webpack_require__(85);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20788,7 +20975,7 @@ var vi={default:qi},wi=vi&&qi||vi;module.exports=wi.default?wi.default:wi;
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20803,7 +20990,7 @@ var vi={default:qi},wi=vi&&qi||vi;module.exports=wi.default?wi.default:wi;
  * @typechecks
  */
 
-var isNode = __webpack_require__(83);
+var isNode = __webpack_require__(84);
 
 /**
  * @param {*} object The object to check.
@@ -20816,7 +21003,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20844,7 +21031,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38158,7 +38345,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
