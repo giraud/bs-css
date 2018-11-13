@@ -155,6 +155,7 @@ module Converter = {
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -398,6 +399,7 @@ type length = [
   | `percent(float)
   | `pt(int)
   | `px(int)
+  | `pxFloat(float)
   | `rem(float)
   | `vh(float)
   | `vmax(float)
@@ -422,6 +424,7 @@ let string_of_length_cascading =
   | `percent(x) => string_of_float(x) ++ "%"
   | `pt(x) => string_of_int(x) ++ "pt"
   | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
   | `rem(x) => string_of_float(x) ++ "rem"
   | `vh(x) => string_of_float(x) ++ "vh"
   | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -440,6 +443,7 @@ let mm = x => `mm(x);
 let pct = x => `percent(x);
 let pt = x => `pt(x);
 let px = x => `px(x);
+let pxFloat = x => `pxFloat(x);
 let rem = x => `rem(x);
 let vh = x => `vh(x);
 let vmax = x => `vmax(x);
@@ -652,6 +656,7 @@ let flexBasis = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -704,6 +709,7 @@ let string_of_margin =
   | `percent(x) => string_of_float(x) ++ "%"
   | `pt(x) => string_of_int(x) ++ "pt"
   | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
   | `rem(x) => string_of_float(x) ++ "rem"
   | `vh(x) => string_of_float(x) ++ "vh"
   | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -783,6 +789,7 @@ let string_of_dimension =
   | `percent(x) => string_of_float(x) ++ "%"
   | `pt(x) => string_of_int(x) ++ "pt"
   | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
   | `rem(x) => string_of_float(x) ++ "rem"
   | `vh(x) => string_of_float(x) ++ "vh"
   | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1311,6 +1318,7 @@ let lineHeight = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1340,6 +1348,7 @@ let letterSpacing = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1456,6 +1465,7 @@ let verticalAlign = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1505,6 +1515,7 @@ let wordSpacing = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"
@@ -1642,6 +1653,7 @@ let perspective = x =>
     | `percent(x) => string_of_float(x) ++ "%"
     | `pt(x) => string_of_int(x) ++ "pt"
     | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
     | `rem(x) => string_of_float(x) ++ "rem"
     | `vh(x) => string_of_float(x) ++ "vh"
     | `vmax(x) => string_of_float(x) ++ "vmax"

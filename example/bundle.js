@@ -1104,9 +1104,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(75);
+  module.exports = __webpack_require__(74);
 } else {
-  module.exports = __webpack_require__(76);
+  module.exports = __webpack_require__(75);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -3484,7 +3484,6 @@ var Glamor = __webpack_require__(19);
 var Js_dict = __webpack_require__(70);
 var Js_option = __webpack_require__(71);
 var Css_Colors = __webpack_require__(72);
-var Js_mapperRt = __webpack_require__(73);
 var Js_primitive = __webpack_require__(14);
 
 ((
@@ -3654,7 +3653,7 @@ function string_of_length(param) {
     return "0";
   } else {
     var variant = param[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       if (variant >= 25096) {
         if (variant >= 26433) {
           if (variant >= 5691738) {
@@ -3667,30 +3666,32 @@ function string_of_length(param) {
         } else {
           return String(param[1]) + "px";
         }
-      } else if (variant !== 24416) {
+      } else if (variant >= 24416) {
         if (variant >= 25092) {
           return String(param[1]) + "pt";
         } else {
-          return string_of_float(param[1]) + "ex";
+          return string_of_float(param[1]) + "mm";
         }
+      } else if (variant >= 22643) {
+        return string_of_float(param[1]) + "ex";
       } else {
-        return string_of_float(param[1]) + "mm";
+        return string_of_float(param[1]) + "em";
       }
-    } else if (variant >= -119887163) {
-      if (variant >= 22186) {
-        if (variant >= 22632) {
-          return string_of_float(param[1]) + "em";
-        } else {
+    } else if (variant >= -833470756) {
+      if (variant >= 22181) {
+        if (variant >= 22186) {
           return string_of_float(param[1]) + "cm";
+        } else {
+          return string_of_float(param[1]) + "ch";
         }
-      } else if (variant >= 22181) {
-        return string_of_float(param[1]) + "ch";
-      } else {
+      } else if (variant >= -119887163) {
         return string_of_float(param[1]) + "%";
-      }
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
+      } else {
         return string_of_float(param[1]) + "vmin";
+      }
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        return string_of_float(param[1]) + "vmax";
       } else {
         var match = param[1];
         if (match[0] >= 5745024) {
@@ -3700,7 +3701,7 @@ function string_of_length(param) {
         }
       }
     } else {
-      return string_of_float(param[1]) + "vmax";
+      return string_of_float(param[1]) + "px";
     }
   }
 }
@@ -4121,7 +4122,7 @@ function string_of_length_cascading(param) {
     }
   } else {
     var variant = param[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       if (variant >= 25096) {
         if (variant >= 26433) {
           if (variant >= 5691738) {
@@ -4134,30 +4135,32 @@ function string_of_length_cascading(param) {
         } else {
           return String(param[1]) + "px";
         }
-      } else if (variant !== 24416) {
+      } else if (variant >= 24416) {
         if (variant >= 25092) {
           return String(param[1]) + "pt";
         } else {
-          return string_of_float(param[1]) + "ex";
+          return string_of_float(param[1]) + "mm";
         }
+      } else if (variant >= 22643) {
+        return string_of_float(param[1]) + "ex";
       } else {
-        return string_of_float(param[1]) + "mm";
+        return string_of_float(param[1]) + "em";
       }
-    } else if (variant >= -119887163) {
-      if (variant >= 22186) {
-        if (variant >= 22632) {
-          return string_of_float(param[1]) + "em";
-        } else {
+    } else if (variant >= -833470756) {
+      if (variant >= 22181) {
+        if (variant >= 22186) {
           return string_of_float(param[1]) + "cm";
+        } else {
+          return string_of_float(param[1]) + "ch";
         }
-      } else if (variant >= 22181) {
-        return string_of_float(param[1]) + "ch";
-      } else {
+      } else if (variant >= -119887163) {
         return string_of_float(param[1]) + "%";
-      }
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
+      } else {
         return string_of_float(param[1]) + "vmin";
+      }
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        return string_of_float(param[1]) + "vmax";
       } else {
         var match = param[1];
         if (match[0] >= 5745024) {
@@ -4167,7 +4170,7 @@ function string_of_length_cascading(param) {
         }
       }
     } else {
-      return string_of_float(param[1]) + "vmax";
+      return string_of_float(param[1]) + "px";
     }
   }
 }
@@ -4231,6 +4234,13 @@ function pt(x) {
 function px(x) {
   return /* `px */[
           25096,
+          x
+        ];
+}
+
+function pxFloat(x) {
+  return /* `pxFloat */[
+          -1040484748,
           x
         ];
 }
@@ -4576,7 +4586,7 @@ function flexBasis(x) {
       );
   } else {
     var variant = x[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       tmp = variant >= 25096 ? (
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
@@ -4584,25 +4594,27 @@ function flexBasis(x) {
               variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
             )
         ) : (
-          variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
-            ) : string_of_float(x[1]) + "mm"
+          variant >= 24416 ? (
+              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "mm"
+            ) : (
+              variant >= 22643 ? string_of_float(x[1]) + "ex" : string_of_float(x[1]) + "em"
+            )
         );
-    } else if (variant >= -119887163) {
-      tmp = variant >= 22186 ? (
-          variant >= 22632 ? string_of_float(x[1]) + "em" : string_of_float(x[1]) + "cm"
+    } else if (variant >= -833470756) {
+      tmp = variant >= 22181 ? (
+          variant >= 22186 ? string_of_float(x[1]) + "cm" : string_of_float(x[1]) + "ch"
         ) : (
-          variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
+          variant >= -119887163 ? string_of_float(x[1]) + "%" : string_of_float(x[1]) + "vmin"
         );
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
-        tmp = string_of_float(x[1]) + "vmin";
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        tmp = string_of_float(x[1]) + "vmax";
       } else {
         var match = x[1];
         tmp = match[0] >= 5745024 ? "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")"))) : "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
       }
     } else {
-      tmp = string_of_float(x[1]) + "vmax";
+      tmp = string_of_float(x[1]) + "px";
     }
   }
   return d("flexBasis", tmp);
@@ -4635,7 +4647,7 @@ function string_of_margin(param) {
     }
   } else {
     var variant = param[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       if (variant >= 25096) {
         if (variant >= 26433) {
           if (variant >= 5691738) {
@@ -4648,30 +4660,32 @@ function string_of_margin(param) {
         } else {
           return String(param[1]) + "px";
         }
-      } else if (variant !== 24416) {
+      } else if (variant >= 24416) {
         if (variant >= 25092) {
           return String(param[1]) + "pt";
         } else {
-          return string_of_float(param[1]) + "ex";
+          return string_of_float(param[1]) + "mm";
         }
+      } else if (variant >= 22643) {
+        return string_of_float(param[1]) + "ex";
       } else {
-        return string_of_float(param[1]) + "mm";
+        return string_of_float(param[1]) + "em";
       }
-    } else if (variant >= -119887163) {
-      if (variant >= 22186) {
-        if (variant >= 22632) {
-          return string_of_float(param[1]) + "em";
-        } else {
+    } else if (variant >= -833470756) {
+      if (variant >= 22181) {
+        if (variant >= 22186) {
           return string_of_float(param[1]) + "cm";
+        } else {
+          return string_of_float(param[1]) + "ch";
         }
-      } else if (variant >= 22181) {
-        return string_of_float(param[1]) + "ch";
-      } else {
+      } else if (variant >= -119887163) {
         return string_of_float(param[1]) + "%";
-      }
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
+      } else {
         return string_of_float(param[1]) + "vmin";
+      }
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        return string_of_float(param[1]) + "vmax";
       } else {
         var match = param[1];
         if (match[0] >= 5745024) {
@@ -4681,7 +4695,7 @@ function string_of_margin(param) {
         }
       }
     } else {
-      return string_of_float(param[1]) + "vmax";
+      return string_of_float(param[1]) + "px";
     }
   }
 }
@@ -4801,19 +4815,21 @@ function string_of_dimension(param) {
       } else {
         return string_of_float(param[1]) + "%";
       }
-    } else if (variant !== -833472530) {
+    } else if (variant >= -833472530) {
       if (variant >= -833470756) {
         return string_of_float(param[1]) + "vmin";
       } else {
-        var match = param[1];
-        if (match[0] >= 5745024) {
-          return "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")")));
-        } else {
-          return "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
-        }
+        return string_of_float(param[1]) + "vmax";
       }
+    } else if (variant >= -1040484748) {
+      return string_of_float(param[1]) + "px";
     } else {
-      return string_of_float(param[1]) + "vmax";
+      var match = param[1];
+      if (match[0] >= 5745024) {
+        return "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")")));
+      } else {
+        return "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
+      }
     }
   }
 }
@@ -4842,39 +4858,32 @@ function maxHeight(x) {
   return d("maxHeight", string_of_dimension(x));
 }
 
-var jsMapperConstantArray = /* array */[
-  /* tuple */[
-    -963948842,
-    "column"
-  ],
-  /* tuple */[
-    -878767996,
-    "initial"
-  ],
-  /* tuple */[
-    -601204732,
-    "inherit"
-  ],
-  /* tuple */[
-    -227605271,
-    "column dense"
-  ],
-  /* tuple */[
-    -15525083,
-    "row dense"
-  ],
-  /* tuple */[
-    5693978,
-    "row"
-  ],
-  /* tuple */[
-    653193961,
-    "unset"
-  ]
-];
+function gridAutoDirectionToJs(param) {
+  if (param >= -227605271) {
+    if (param >= 5693978) {
+      if (param >= 653193961) {
+        return "unset";
+      } else {
+        return "row";
+      }
+    } else if (param >= -15525083) {
+      return "row dense";
+    } else {
+      return "column dense";
+    }
+  } else if (param !== -878767996) {
+    if (param >= -601204732) {
+      return "inherit";
+    } else {
+      return "column";
+    }
+  } else {
+    return "initial";
+  }
+}
 
 function gridAutoFlow(direction) {
-  return d("gridAutoFlow", Js_mapperRt.binarySearch(7, direction, jsMapperConstantArray));
+  return d("gridAutoFlow", gridAutoDirectionToJs(direction));
 }
 
 function string_of_dimensions(dimensions) {
@@ -5505,15 +5514,13 @@ function lineHeight(x) {
         ) : (
           variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
         );
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
-        tmp = string_of_float(x[1]) + "vmin";
-      } else {
-        var match = x[1];
-        tmp = match[0] >= 5745024 ? "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")"))) : "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
-      }
+    } else if (variant >= -833472530) {
+      tmp = variant >= -833470756 ? string_of_float(x[1]) + "vmin" : string_of_float(x[1]) + "vmax";
+    } else if (variant >= -1040484748) {
+      tmp = string_of_float(x[1]) + "px";
     } else {
-      tmp = string_of_float(x[1]) + "vmax";
+      var match = x[1];
+      tmp = match[0] >= 5745024 ? "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")"))) : "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
     }
   }
   return d("lineHeight", tmp);
@@ -5527,7 +5534,7 @@ function letterSpacing(x) {
       ) : "0";
   } else {
     var variant = x[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       tmp = variant >= 25096 ? (
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
@@ -5535,25 +5542,27 @@ function letterSpacing(x) {
               variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
             )
         ) : (
-          variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
-            ) : string_of_float(x[1]) + "mm"
+          variant >= 24416 ? (
+              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "mm"
+            ) : (
+              variant >= 22643 ? string_of_float(x[1]) + "ex" : string_of_float(x[1]) + "em"
+            )
         );
-    } else if (variant >= -119887163) {
-      tmp = variant >= 22186 ? (
-          variant >= 22632 ? string_of_float(x[1]) + "em" : string_of_float(x[1]) + "cm"
+    } else if (variant >= -833470756) {
+      tmp = variant >= 22181 ? (
+          variant >= 22186 ? string_of_float(x[1]) + "cm" : string_of_float(x[1]) + "ch"
         ) : (
-          variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
+          variant >= -119887163 ? string_of_float(x[1]) + "%" : string_of_float(x[1]) + "vmin"
         );
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
-        tmp = string_of_float(x[1]) + "vmin";
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        tmp = string_of_float(x[1]) + "vmax";
       } else {
         var match = x[1];
         tmp = match[0] >= 5745024 ? "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")"))) : "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
       }
     } else {
-      tmp = string_of_float(x[1]) + "vmax";
+      tmp = string_of_float(x[1]) + "px";
     }
   }
   return d("letterSpacing", tmp);
@@ -5644,7 +5653,7 @@ function verticalAlign(x) {
       );
   } else {
     var variant = x[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       tmp = variant >= 25096 ? (
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
@@ -5652,25 +5661,27 @@ function verticalAlign(x) {
               variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
             )
         ) : (
-          variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
-            ) : string_of_float(x[1]) + "mm"
+          variant >= 24416 ? (
+              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "mm"
+            ) : (
+              variant >= 22643 ? string_of_float(x[1]) + "ex" : string_of_float(x[1]) + "em"
+            )
         );
-    } else if (variant >= -119887163) {
-      tmp = variant >= 22186 ? (
-          variant >= 22632 ? string_of_float(x[1]) + "em" : string_of_float(x[1]) + "cm"
+    } else if (variant >= -833470756) {
+      tmp = variant >= 22181 ? (
+          variant >= 22186 ? string_of_float(x[1]) + "cm" : string_of_float(x[1]) + "ch"
         ) : (
-          variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
+          variant >= -119887163 ? string_of_float(x[1]) + "%" : string_of_float(x[1]) + "vmin"
         );
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
-        tmp = string_of_float(x[1]) + "vmin";
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        tmp = string_of_float(x[1]) + "vmax";
       } else {
         var match = x[1];
         tmp = match[0] >= 5745024 ? "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")"))) : "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
       }
     } else {
-      tmp = string_of_float(x[1]) + "vmax";
+      tmp = string_of_float(x[1]) + "px";
     }
   }
   return d("verticalAlign", tmp);
@@ -5700,7 +5711,7 @@ function wordSpacing(x) {
       ) : "0";
   } else {
     var variant = x[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       tmp = variant >= 25096 ? (
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
@@ -5708,25 +5719,27 @@ function wordSpacing(x) {
               variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
             )
         ) : (
-          variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
-            ) : string_of_float(x[1]) + "mm"
+          variant >= 24416 ? (
+              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "mm"
+            ) : (
+              variant >= 22643 ? string_of_float(x[1]) + "ex" : string_of_float(x[1]) + "em"
+            )
         );
-    } else if (variant >= -119887163) {
-      tmp = variant >= 22186 ? (
-          variant >= 22632 ? string_of_float(x[1]) + "em" : string_of_float(x[1]) + "cm"
+    } else if (variant >= -833470756) {
+      tmp = variant >= 22181 ? (
+          variant >= 22186 ? string_of_float(x[1]) + "cm" : string_of_float(x[1]) + "ch"
         ) : (
-          variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
+          variant >= -119887163 ? string_of_float(x[1]) + "%" : string_of_float(x[1]) + "vmin"
         );
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
-        tmp = string_of_float(x[1]) + "vmin";
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        tmp = string_of_float(x[1]) + "vmax";
       } else {
         var match = x[1];
         tmp = match[0] >= 5745024 ? "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")"))) : "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
       }
     } else {
-      tmp = string_of_float(x[1]) + "vmax";
+      tmp = string_of_float(x[1]) + "px";
     }
   }
   return d("wordSpacing", tmp);
@@ -5852,7 +5865,7 @@ function perspective(x) {
     tmp = x >= -789508312 ? "0" : "none";
   } else {
     var variant = x[0];
-    if (variant >= 22643) {
+    if (variant >= 22632) {
       tmp = variant >= 25096 ? (
           variant >= 26433 ? (
               variant >= 5691738 ? string_of_float(x[1]) + "rem" : string_of_float(x[1]) + "vw"
@@ -5860,25 +5873,27 @@ function perspective(x) {
               variant >= 26418 ? string_of_float(x[1]) + "vh" : String(x[1]) + "px"
             )
         ) : (
-          variant !== 24416 ? (
-              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "ex"
-            ) : string_of_float(x[1]) + "mm"
+          variant >= 24416 ? (
+              variant >= 25092 ? String(x[1]) + "pt" : string_of_float(x[1]) + "mm"
+            ) : (
+              variant >= 22643 ? string_of_float(x[1]) + "ex" : string_of_float(x[1]) + "em"
+            )
         );
-    } else if (variant >= -119887163) {
-      tmp = variant >= 22186 ? (
-          variant >= 22632 ? string_of_float(x[1]) + "em" : string_of_float(x[1]) + "cm"
+    } else if (variant >= -833470756) {
+      tmp = variant >= 22181 ? (
+          variant >= 22186 ? string_of_float(x[1]) + "cm" : string_of_float(x[1]) + "ch"
         ) : (
-          variant >= 22181 ? string_of_float(x[1]) + "ch" : string_of_float(x[1]) + "%"
+          variant >= -119887163 ? string_of_float(x[1]) + "%" : string_of_float(x[1]) + "vmin"
         );
-    } else if (variant !== -833472530) {
-      if (variant >= -833470756) {
-        tmp = string_of_float(x[1]) + "vmin";
+    } else if (variant !== -1040484748) {
+      if (variant >= -833472530) {
+        tmp = string_of_float(x[1]) + "vmax";
       } else {
         var match = x[1];
         tmp = match[0] >= 5745024 ? "calc(" + (string_of_length(match[1]) + (" - " + (string_of_length(match[2]) + ")"))) : "calc(" + (string_of_length(match[1]) + (" + " + (string_of_length(match[2]) + ")")));
       }
     } else {
-      tmp = string_of_float(x[1]) + "vmax";
+      tmp = string_of_float(x[1]) + "px";
     }
   }
   return d("perspective", tmp);
@@ -6947,6 +6962,7 @@ exports.mm = mm;
 exports.pct = pct;
 exports.pt = pt;
 exports.px = px;
+exports.pxFloat = pxFloat;
 exports.rem = rem;
 exports.vh = vh;
 exports.vmax = vmax;
@@ -9161,7 +9177,7 @@ module.exports = exports["default"];
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(9);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(77);
+  var ReactPropTypesSecret = __webpack_require__(76);
   var loggedTypeFailures = {};
 }
 
@@ -9219,7 +9235,7 @@ module.exports = checkPropTypes;
 
 
 var React = __webpack_require__(4);
-var ReactDom = __webpack_require__(81);
+var ReactDom = __webpack_require__(80);
 var Caml_builtin_exceptions = __webpack_require__(1);
 
 function renderToElementWithClassName(reactElement, className) {
@@ -9474,7 +9490,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(83);
+var isTextNode = __webpack_require__(82);
 
 /*eslint-disable no-bitwise */
 
@@ -9511,7 +9527,7 @@ module.exports = containsNode;
 var Curry = __webpack_require__(2);
 var React = __webpack_require__(4);
 var Caml_builtin_exceptions = __webpack_require__(1);
-var ReasonReactOptimizedCreateClass = __webpack_require__(86);
+var ReasonReactOptimizedCreateClass = __webpack_require__(85);
 
 function createDomElement(s, props, children) {
   var vararg = /* array */[
@@ -10066,7 +10082,7 @@ module.exports = __webpack_require__(32);
 
 
 var Css = __webpack_require__(15);
-var Test = __webpack_require__(74);
+var Test = __webpack_require__(73);
 var React = __webpack_require__(4);
 var ReactDOMRe = __webpack_require__(25);
 var ReasonReact = __webpack_require__(30);
@@ -16290,141 +16306,12 @@ exports.yellowgreen = yellowgreen;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-
-function binarySearch(upper, id, array) {
-  var _lower = 0;
-  var _upper = upper;
-  var xs = array;
-  var k = id;
-  while(true) {
-    var upper$1 = _upper;
-    var lower = _lower;
-    if (lower >= upper$1) {
-      throw new Error("File \"js_mapperRt.ml\", line 35, characters 4-10");
-    }
-    var mid = (lower + upper$1 | 0) / 2 | 0;
-    var match = xs[mid];
-    var i = match[0];
-    if (i === k) {
-      return match[1];
-    } else if (i < k) {
-      _lower = mid + 1 | 0;
-      continue ;
-    } else {
-      _upper = mid;
-      continue ;
-    }
-  };
-}
-
-function revSearch(len, array, x) {
-  var _i = 0;
-  var len$1 = len;
-  var xs = array;
-  var k = x;
-  while(true) {
-    var i = _i;
-    if (i === len$1) {
-      return undefined;
-    } else {
-      var match = xs[i];
-      if (match[1] === k) {
-        return match[0];
-      } else {
-        _i = i + 1 | 0;
-        continue ;
-      }
-    }
-  };
-}
-
-function revSearchAssert(len, array, x) {
-  var len$1 = len;
-  var _i = 0;
-  var xs = array;
-  var k = x;
-  while(true) {
-    var i = _i;
-    if (i >= len$1) {
-      throw new Error("File \"js_mapperRt.ml\", line 64, characters 4-10");
-    }
-    var match = xs[i];
-    if (match[1] === k) {
-      return match[0];
-    } else {
-      _i = i + 1 | 0;
-      continue ;
-    }
-  };
-}
-
-function toInt(i, xs) {
-  return xs[i];
-}
-
-function fromInt(len, xs, $$enum) {
-  var $$enum$1 = $$enum;
-  var _i = 0;
-  var len$1 = len;
-  var xs$1 = xs;
-  while(true) {
-    var i = _i;
-    if (i === len$1) {
-      return undefined;
-    } else {
-      var k = xs$1[i];
-      if (k === $$enum$1) {
-        return i;
-      } else {
-        _i = i + 1 | 0;
-        continue ;
-      }
-    }
-  };
-}
-
-function fromIntAssert(len, xs, $$enum) {
-  var len$1 = len;
-  var $$enum$1 = $$enum;
-  var _i = 0;
-  var xs$1 = xs;
-  while(true) {
-    var i = _i;
-    if (i >= len$1) {
-      throw new Error("File \"js_mapperRt.ml\", line 88, characters 4-10");
-    }
-    var k = xs$1[i];
-    if (k === $$enum$1) {
-      return i;
-    } else {
-      _i = i + 1 | 0;
-      continue ;
-    }
-  };
-}
-
-exports.binarySearch = binarySearch;
-exports.revSearch = revSearch;
-exports.revSearchAssert = revSearchAssert;
-exports.toInt = toInt;
-exports.fromInt = fromInt;
-exports.fromIntAssert = fromIntAssert;
-/* No side effect */
-
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 // Generated by BUCKLESCRIPT VERSION 4.0.4, PLEASE EDIT WITH CARE
 
 
 var Css = __webpack_require__(15);
 var React = __webpack_require__(4);
-var Belt_Array = __webpack_require__(78);
+var Belt_Array = __webpack_require__(77);
 var ReactDOMRe = __webpack_require__(25);
 var ReasonReact = __webpack_require__(30);
 
@@ -18392,7 +18279,7 @@ exports.tests = tests;
 
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18421,7 +18308,7 @@ assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default?Z.default:Z;
 
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19903,7 +19790,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19922,14 +19809,14 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Curry = __webpack_require__(2);
-var Js_math = __webpack_require__(79);
+var Js_math = __webpack_require__(78);
 var Js_primitive = __webpack_require__(14);
 var Caml_primitive = __webpack_require__(5);
 
@@ -20607,13 +20494,13 @@ exports.eq = eq;
 
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Js_int = __webpack_require__(80);
+var Js_int = __webpack_require__(79);
 
 function unsafe_ceil(prim) {
   return Math.ceil(prim);
@@ -20662,7 +20549,7 @@ exports.random_int = random_int;
 
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20684,7 +20571,7 @@ exports.min = min;
 
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20722,15 +20609,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(82);
+  module.exports = __webpack_require__(81);
 } else {
-  module.exports = __webpack_require__(85);
+  module.exports = __webpack_require__(84);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20975,7 +20862,7 @@ var vi={default:qi},wi=vi&&qi||vi;module.exports=wi.default?wi.default:wi;
 
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20990,7 +20877,7 @@ var vi={default:qi},wi=vi&&qi||vi;module.exports=wi.default?wi.default:wi;
  * @typechecks
  */
 
-var isNode = __webpack_require__(84);
+var isNode = __webpack_require__(83);
 
 /**
  * @param {*} object The object to check.
@@ -21003,7 +20890,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21031,7 +20918,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38345,7 +38232,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

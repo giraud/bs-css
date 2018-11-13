@@ -227,6 +227,7 @@ type length = [
   | `percent(float)
   | `pt(int)
   | `px(int)
+  | `pxFloat(float)
   | `rem(float)
   | `vh(float)
   | `vmin(float)
@@ -246,6 +247,7 @@ let mm: float => [> | `mm(float)];
 let pct: float => [> | `percent(float)];
 let pt: int => [> | `pt(int)];
 let px: int => [> | `px(int)];
+let pxFloat: float => [> | `pxFloat(float)];
 let rem: float => [> | `rem(float)];
 let vh: float => [> | `vh(float)];
 let vmax: float => [> | `vmax(float)];
