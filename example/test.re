@@ -10,6 +10,7 @@ let arialNarrow =
       ~fontFamily="Arial FontFace Test",
       ~src=[localUrl("Arial Narrow")],
       ~fontStyle=normal,
+      ~fontWeight=500,
       (),
     )
   );
