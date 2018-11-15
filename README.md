@@ -51,7 +51,7 @@ module Styles = {
 
 **Global css**
 
- You can defined global css rules with `global`
+ You can define global css rules with `global`
 
  ```reason
  Css.(
