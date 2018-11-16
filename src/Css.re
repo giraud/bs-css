@@ -3,8 +3,7 @@ include Css_Colors;
 module Emotion = {
   type css = string;
   [@bs.module "emotion"] external _make: Js.Json.t => css = "css";
-  [@bs.module "emotion"]
-  external injectGlobal: Js.Json.t => unit = "";
+  [@bs.module "emotion"] external injectGlobal: Js.Json.t => unit = "";
   [@bs.module "emotion"]
   external rawInjectGlobal: string => unit = "injectGlobal";
   [@bs.module "emotion"]
@@ -27,7 +26,7 @@ module Emotion = {
       };
     ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_;
   };
-  let make = rules => rules |> List.rev |> makeDict |> _make;
+  let make = rules => rules |> makeDict |> _make;
 };
 
 let join = (separator, strings) => {
@@ -291,9 +290,12 @@ type selector = [ | `selector(string, list(rule))];
 let empty = [];
 
 let merge = List.concat;
-let global = (selector, rules: list(rule)) => {
-  Emotion.injectGlobal([(selector, Emotion.makeDict(rules))]->Js.Dict.fromList->Js.Json.object_);
-}
+let global = (selector, rules: list(rule)) =>
+  Emotion.injectGlobal(
+    [(selector, Emotion.makeDict(rules))]
+    ->Js.Dict.fromList
+    ->Js.Json.object_,
+  );
 
 let insertRule = raw => Emotion.rawInjectGlobal(raw);
 
