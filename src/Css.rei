@@ -7,7 +7,7 @@ type rule = [
 ];
 
 let empty: list(rule);
-let merge: list(list(rule)) => list(rule);
+let merge: list(string) => string;
 let style: list(rule) => string;
 
 let global: (string, list(rule)) => unit;

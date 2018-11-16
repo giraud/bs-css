@@ -48,6 +48,19 @@ let miniBox =
     margin(px(1)),
   ];
 
+/* https://github.com/SentiaAnalytics/bs-css/issues/86 */
+let mergedStyles =
+  Css.(
+    merge([
+      style([padding(px(0)), fontSize(px(1))]),
+      style([padding(px(20)), fontSize(px(24)), color(blue)]),
+      style([media("(max-width: 768px)", [padding(px(10))])]),
+      style([
+        media("(max-width: 768px)", [fontSize(px(16)), color(red)]),
+      ]),
+    ])
+  );
+
 let rowLayout = Css.[display(flexBox), flexDirection(row), flexWrap(wrap)];
 
 let section =
@@ -1142,5 +1155,8 @@ let tests =
     </Section>
     <Section name="insertRule, the ultimate escape hatch">
       <div className="raw-css" />
+    </Section>
+    <Section name="merging style names">
+      <button className=mergedStyles> {text("Merged")} </button>
     </Section>
   </div>;
