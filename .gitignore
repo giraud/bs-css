@@ -4,8 +4,9 @@
 /node_modules*
 /lib/bs
 /lib/js/example
-npm-debug.log
+/example/bundle*.js
 finalOutput/*.js
+npm-debug.log
 .merlin
 .bsb.lock
 *.log
