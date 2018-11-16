@@ -10,7 +10,7 @@ let arialNarrow =
       ~fontFamily="Arial FontFace Test",
       ~src=[localUrl("Arial Narrow")],
       ~fontStyle=normal,
-      ~fontWeight=500,
+      ~fontWeight=`num(500),
       (),
     )
   );
@@ -67,7 +67,7 @@ let section =
   Css.[
     selector(
       "& > h1",
-      [fontFamily(arialNarrow), fontSize(px(32)), fontWeight(300)],
+      [fontFamily(arialNarrow), fontSize(px(32)), fontWeight(`num(300))],
     ),
     position(relative),
     background(hex("f5f5f5")),
@@ -511,13 +511,7 @@ let tests =
           )
         />
       </div>
-      <div
-        className=Css.(
-          style([
-            display(`grid),
-            gridAutoFlow(`row)
-          ])
-        )>
+      <div className=Css.(style([display(`grid), gridAutoFlow(`row)]))>
         <div className=Css.(style([background(purple)]))>
           {text("grid auto direction row")}
         </div>
@@ -1008,7 +1002,7 @@ let tests =
             fontSize(pt(18)),
             fontVariant(`smallCaps),
             fontStyle(italic),
-            fontWeight(300),
+            fontWeight(`num(300)),
             letterSpacing(px(3)),
             lineHeight(`abs(2.)),
             textAlign(`left),
