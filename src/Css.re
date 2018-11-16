@@ -1284,6 +1284,7 @@ type fontWeight = [
   | `black
   | `lighter
   | `bolder
+  | cascading
 ];
 type fontStyle = [ | `normal | `italic | `oblique];
 
