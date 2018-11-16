@@ -51,6 +51,47 @@ module Styles = {
 </div>
 ```
 
+## Merging styles
+
+You should avoid trying to merge styles in the same list of rules or by concatinating lists. A list of rules is converted into a JS object before being passed to Emotion where every property becomes a key in the object. This means you lose any earlier rule if you have another rule with the same property later in the list. This is especially noticable [when writing sub-selectors and media queries](https://github.com/SentiaAnalytics/bs-css/issues/86)
+
+`bs-css` offers two options for merging styles:
+
+1. `mergeStyles` merges styles by name. Uses [Emotion’s `cx` method](https://emotion.sh/docs/cx).
+   Rules will overrride earlier rules in the list.
+
+```reason
+let mergedStyles =
+  Css.(
+    mergeStyles([
+      style([padding(px(0))]),
+      style([fontSize(px(1))]),
+      style([padding(px(20)), fontSize(px(24)), color(blue)]),
+      style([media("(max-width: 768px)", [padding(px(10))])]),
+      style([
+        media("(max-width: 768px)", [fontSize(px(16)), color(red)]),
+      ]),
+    ])
+  );
+```
+
+2. `styleList` takes a list of rule lists (`list(list(rule))`) and passes an array of JS objects to [Emotion’s primary `css` method](https://emotion.sh/docs/object-styles#arrays)
+   effectively combining the rules. Rules will overrride earlier rules in the list.
+
+```reason
+let combinedStyles =
+  Css.(
+    styleList([
+      [padding(px(0)), fontSize(px(1))],
+      [padding(px(20)), fontSize(px(24)), color(blue)],
+      [media("(max-width: 768px)", [padding(px(10))])],
+      [media("(max-width: 768px)", [fontSize(px(16)), color(red)])],
+    ])
+  );
+```
+
+Both these methods should produce the same results.
+
 **Global css**
 
  You can define global css rules with `global`
