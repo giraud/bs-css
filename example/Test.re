@@ -4,6 +4,13 @@ Css.insertRule(
   ".raw-css { display:block; background-color: green; width: 50px; height: 50px; }",
 );
 
+let fontItem =
+  Css.[
+    marginLeft(px(10)),
+    paddingRight(px(10)),
+    borderRight(px(1), solid, black),
+  ];
+
 let arialNarrow =
   Css.(
     fontFace(
@@ -67,12 +74,17 @@ let section =
   Css.[
     selector(
       "& > h1",
-      [fontFamily(arialNarrow), fontSize(px(32)), fontWeight(`num(300))],
+      [
+        fontFamily(arialNarrow),
+        fontSize(px(32)),
+        fontWeight(`num(300)),
+        marginTop(zero),
+      ],
     ),
     position(relative),
     background(hex("f5f5f5")),
     margin(px(20)),
-    padding(px(20)),
+    padding(px(10)),
     boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)),
     boxShadows([
       boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)),
@@ -1026,6 +1038,49 @@ let tests =
           )
         }
       </p>
+      <h2 className=Css.(style([width(pct(100.))]))>
+        {text("Named Font weights")}
+      </h2>
+      <span
+        className=Css.(
+          style([
+            fontWeight(thin),
+            paddingRight(px(10)),
+            borderRight(px(1), solid, black),
+          ])
+        )>
+        {text("thin")}
+      </span>
+      <span className=Css.(style([fontWeight(extraLight), ...fontItem]))>
+        {text("extra light")}
+      </span>
+      <span className=Css.(style([fontWeight(light), ...fontItem]))>
+        {text("light")}
+      </span>
+      <span className=Css.(style([fontWeight(normal), ...fontItem]))>
+        {text("normal")}
+      </span>
+      <span className=Css.(style([fontWeight(medium), ...fontItem]))>
+        {text("medium")}
+      </span>
+      <span className=Css.(style([fontWeight(semiBold), ...fontItem]))>
+        {text("semiBold")}
+      </span>
+      <span className=Css.(style([fontWeight(bold), ...fontItem]))>
+        {text("bold")}
+      </span>
+      <span className=Css.(style([fontWeight(extraBold), ...fontItem]))>
+        {text("extra bold")}
+      </span>
+      <span className=Css.(style([fontWeight(`black), ...fontItem]))>
+        {text("black")}
+      </span>
+      <span className=Css.(style([fontWeight(lighter), ...fontItem]))>
+        {text("lighter")}
+      </span>
+      <span className=Css.(style([fontWeight(bolder), ...fontItem]))>
+        {text("bolder")}
+      </span>
     </Section>
     <Section name="animation">
       <div

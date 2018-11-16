@@ -735,6 +735,16 @@ type fontWeight = [
 ];
 type fontStyle = [ | `italic | `normal | `oblique];
 
+let thin: [> | `thin];
+let extraLight: [> | `extraLight];
+let light: [> | `light];
+let medium: [> | `medium];
+let semiBold: [> | `semiBold];
+let bold: [> | `bold];
+let extraBold: [> | `extraBold];
+let lighter: [> | `lighter];
+let bolder: [> | `bolder];
+
 let color: color => rule;
 let fontFamily: string => rule;
 let fontFace:

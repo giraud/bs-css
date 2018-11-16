@@ -1287,6 +1287,16 @@ type fontWeight = [
 ];
 type fontStyle = [ | `normal | `italic | `oblique];
 
+let thin = `thin;
+let extraLight = `extraLight;
+let light = `light;
+let medium = `medium;
+let semiBold = `semiBold;
+let bold = `bold;
+let extraBold = `extraBold;
+let lighter = `lighter;
+let bolder = `bolder;
+
 let color = x => d("color", string_of_color(x));
 
 let fontFamily = x => d("fontFamily", x);
