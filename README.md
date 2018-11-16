@@ -34,7 +34,7 @@ module Styles = {
     color(Theme.textColor),
     marginBottom(Theme.basePadding)
   ]);
-  
+
   let actionButton = disabled =>
     style([
       background(disabled ? darkgray : white),
@@ -88,6 +88,113 @@ let styles = Css.(style([
   (ReasonReact.stringToElement("bounce!"))
 </div>
 ```
+
+### Merging styles
+
+You should avoid trying to merge styles in the same list of rules or by concatinating lists. A list of rules is converted into a JS object before being passed to Emotion where every property becomes a key in the object. This means you lose any earlier rule if you have another rule with the same property later in the list. This is especially noticable [when writing sub-selectors and media queries](https://github.com/SentiaAnalytics/bs-css/issues/86)
+
+Trying to merge styles by just using `List.concat` can result in unexpected results.
+
+This example:
+
+```reason
+let base = Css.[
+  padding(px(0)),
+  fontSize(px(1))
+];
+let overrides = Css.[
+  padding(px(20)),
+  fontSize(px(24)),
+  color(blue)
+];
+let media1 = Css.[
+  media("(max-width: 768px)", [
+    padding(px(10))
+  ])
+];
+let media2 = Css.[
+  media("(max-width: 768px)", [
+    fontSize(px(16)),
+    color(red)
+  ])
+];
+let mergedStyles = [base, overrides, media1, media2]->List.concat->Css.style;
+```
+
+generates the following:
+
+```css
+.css-1nuk4bg {
+  padding: 20px;
+  font-size: 24px;
+  color: #0000ff;
+}
+@media (max-width: 768px) {
+  .css-1nuk4bg {
+    font-size: 16px;
+    color: #ff0000;
+  }
+}
+```
+
+As you can see both properties from `base` are overwritten (as opposed to overridden in css) and the media query in `media1` is also lost because the media query from `media2` overwrites it.
+
+#### The `merge` method
+
+`merge` safely merges styles by name. Uses [Emotion’s `cx` method](https://emotion.sh/docs/cx).
+
+```reason
+let mergedStyles =
+  Css.(
+    merge([
+      style([
+        padding(px(0)),
+        fontSize(px(1))
+      ]),
+      style([
+        padding(px(20)),
+        fontSize(px(24)),
+        color(blue)
+      ]),
+      style([
+        media("(max-width: 768px)", [
+          padding(px(10))
+        ])
+      ]),
+      style([
+        media("(max-width: 768px)", [
+          fontSize(px(16)),
+          color(red)
+        ]),
+      ]),
+    ])
+  );
+```
+
+Generates the following:
+
+```css
+.css-q0lkhz {
+  padding: 0px;
+  font-size: 1px;
+  padding: 20px;
+  font-size: 24px;
+  color: #0000ff;
+}
+@media (max-width: 768px) {
+  .css-q0lkhz {
+    padding: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .css-q0lkhz {
+    font-size: 16px;
+    color: #ff0000;
+  }
+}
+```
+
+Nothing is lost and everything ends up in the final stylesheet where normal overrides apply.
 
 ## Development
 
