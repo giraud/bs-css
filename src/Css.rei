@@ -8,7 +8,9 @@ type rule = [
 
 let empty: list(rule);
 let merge: list(list(rule)) => list(rule);
+let mergeStyles: list(string) => string;
 let style: list(rule) => string;
+let styleList: list(list(rule)) => string;
 
 let global: (string, list(rule)) => unit;
 let insertRule: string => unit;

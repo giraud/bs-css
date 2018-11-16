@@ -3,14 +3,15 @@ include Css_Colors;
 module Emotion = {
   type css = string;
   [@bs.module "emotion"] external _make: Js.Json.t => css = "css";
+  [@bs.module "emotion"] external _makeArray: array(Js.Json.t) => css = "css";
   [@bs.module "emotion"] external injectGlobal: Js.Json.t => unit = "";
   [@bs.module "emotion"]
   external rawInjectGlobal: string => unit = "injectGlobal";
   [@bs.module "emotion"]
   external makeKeyFrames: Js.Dict.t(Js.Json.t) => string = "keyframes";
-  [@bs.module "emotion"] [@bs.splice]
-  external merge: array(css) => css = "cx";
-  let merge: list(css) => css = classes => classes->Array.of_list->merge;
+  [@bs.module "emotion"] external cx: array(css) => css = "cx";
+  let mergeStyles: list(css) => css = classes => classes->Array.of_list->cx;
+
   let rec makeDict = ruleset => {
     let toJs = rule =>
       switch (rule) {
@@ -27,6 +28,8 @@ module Emotion = {
     ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_;
   };
   let make = rules => rules |> makeDict |> _make;
+  let makeList = rulelist =>
+    rulelist |> List.map(makeDict) |> Array.of_list |> _makeArray;
 };
 
 let join = (separator, strings) => {
@@ -290,6 +293,7 @@ type selector = [ | `selector(string, list(rule))];
 let empty = [];
 
 let merge = List.concat;
+let mergeStyles = Emotion.mergeStyles;
 let global = (selector, rules: list(rule)) =>
   Emotion.injectGlobal(
     [(selector, Emotion.makeDict(rules))]
@@ -309,7 +313,8 @@ let keyframes = frames => {
   Emotion.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
 };
 
-let style = rules => rules |> Emotion.make;
+let style = Emotion.make;
+let styleList = Emotion.makeList;
 
 let d = (property, value) => `declaration((property, value));
 
