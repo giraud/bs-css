@@ -276,6 +276,34 @@ module Converter = {
     | `zoomIn => "zoom-in"
     | `zoomOut => "zoom-out"
     };
+
+  let string_of_fontWeight = x =>
+    switch (x) {
+    | `num(n) => string_of_int(n)
+    | `thin => "100"
+    | `extraLight => "200"
+    | `light => "300"
+    | `normal => "400"
+    | `medium => "500"
+    | `semiBold => "600"
+    | `bold => "700"
+    | `extraBold => "800"
+    | `black => "900"
+    | `lighter => "lighter"
+    | `bolder => "bolder"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
+    };
+
+  let string_of_fontStyle =
+    fun
+    | `normal => "normal"
+    | `italic => "italic"
+    | `oblique => "oblique"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset";
 };
 include Converter;
 
@@ -1242,15 +1270,32 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
  * Text
  */
 
-[@bs.deriving jsConverter]
+/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+type fontWeight = [
+  | `num(int)
+  | `thin
+  | `extraLight
+  | `light
+  | `normal
+  | `medium
+  | `semiBold
+  | `bold
+  | `extraBold
+  | `black
+  | `lighter
+  | `bolder
+];
 type fontStyle = [ | `normal | `italic | `oblique];
-let fontStyleToJs =
-  fun
-  | `normal => "normal"
-  | `italic => "italic"
-  | `oblique => "oblique"
-  | `inherit_ => "inherit"
-  | `unset => "unset";
+
+let thin = `thin;
+let extraLight = `extraLight;
+let light = `light;
+let medium = `medium;
+let semiBold = `semiBold;
+let bold = `bold;
+let extraBold = `extraBold;
+let lighter = `lighter;
+let bolder = `bolder;
 
 let color = x => d("color", string_of_color(x));
 
@@ -1264,15 +1309,18 @@ let fontVariant = x =>
     switch (x) {
     | `normal => "normal"
     | `smallCaps => "small-caps"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
-let fontStyle = x => d("fontStyle", fontStyleToJs(x));
-let fontWeight = x => d("fontWeight", string_of_int(x));
+let fontStyle = x => d("fontStyle", string_of_fontStyle(x));
+let fontWeight = x => d("fontWeight", string_of_fontWeight(x));
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =
-    Js.Option.map((. value) => fontStyleToJs(value), fontStyle);
+    Js.Option.map((. value) => string_of_fontStyle(value), fontStyle);
   let src =
     src
     |> List.map(
@@ -1286,7 +1334,7 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
     Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ s);
   let fontWeight =
     Belt.Option.mapWithDefault(fontWeight, "", w =>
-      "font-weight: " ++ string_of_int(w)
+      "font-weight: " ++ string_of_fontWeight(w)
     );
   let asString = {j|@font-face {
     font-family: $fontFamily;
@@ -1326,6 +1374,7 @@ let lineHeight = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -1356,6 +1405,9 @@ let letterSpacing = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1367,6 +1419,9 @@ let textAlign = x =>
     | `right => "right"
     | `center => "center"
     | `justify => "justify"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1378,6 +1433,9 @@ let textDecoration = x =>
     | `underline => "underline"
     | `overline => "overline"
     | `lineThrough => "line-through"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1392,6 +1450,9 @@ let textDecorationStyle = x =>
     | `double => "double"
     | `dotted => "dotted"
     | `dashed => "dashed"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1404,6 +1465,9 @@ let textOverflow = x =>
     | `clip => "clip"
     | `ellipsis => "ellipsis"
     | `string(s) => s
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1427,6 +1491,9 @@ let textTransform = x =>
     | `lowercase => "lowercase"
     | `capitalize => "capitalize"
     | `none => "none"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1438,6 +1505,9 @@ let userSelect = x =>
     | `all => "all"
     | `text => "text"
     | `none => "none"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1473,6 +1543,9 @@ let verticalAlign = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1485,6 +1558,9 @@ let whiteSpace = x =>
     | `pre => "pre"
     | `preLine => "pre-line"
     | `preWrap => "pre-wrap"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1495,6 +1571,9 @@ let wordBreak = x =>
     | `breakAll => "break-all"
     | `keepAll => "keep-all"
     | `normal => "normal"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1523,6 +1602,9 @@ let wordSpacing = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1532,6 +1614,9 @@ let wordWrap = x =>
     switch (x) {
     | `normal => "normal"
     | `breakWord => "break-word"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 

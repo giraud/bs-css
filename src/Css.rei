@@ -463,14 +463,17 @@ let order: int => rule;
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
 let gridAutoRows: [ length | `auto] => rule;
-let gridAutoFlow:  [ 
-  | `column 
-  | `row 
-  |  `columnDense 
-  |  `rowDense 
-  | `inherit_
-  | `initial 
-  | `unset ] => rule;
+let gridAutoFlow:
+  [
+    | `column
+    | `row
+    | `columnDense
+    | `rowDense
+    | `inherit_
+    | `initial
+    | `unset
+  ] =>
+  rule;
 let gridColumn: (int, int) => rule;
 let gridRow: (int, int) => rule;
 let gridColumnStart: int => rule;
@@ -534,14 +537,7 @@ let alignItems:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
 let alignSelf:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
-let justifySelf:
-  [
-    | `flexStart
-    | `center
-    | `flexEnd
-    | `stretch
-  ] =>
-  rule;
+let justifySelf: [ | `flexStart | `center | `flexEnd | `stretch] => rule;
 let justifyContent:
   [
     | `flexStart
@@ -565,7 +561,7 @@ let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 let zIndex: int => rule;
 let contentRule: string => rule;
 
-let columnCount: [ | `auto | `count(int) | cascading ] => rule;
+let columnCount: [ | `auto | `count(int) | cascading] => rule;
 
 /**
  * Style
@@ -622,7 +618,7 @@ let boxShadow:
 let boxShadows: list([ | `shadow(string)]) => rule;
 
 let background: [ color | `url(string) | gradient | `none] => rule;
-let backgrounds : list([ | color | `url(string) | gradient | `none] ) => rule;
+let backgrounds: list([ color | `url(string) | gradient | `none]) => rule;
 let backgroundColor: [ color] => rule;
 let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
@@ -722,7 +718,32 @@ let pointerEvents: [ | `auto | `none] => rule;
  * Text
  */
 
+/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+type fontWeight = [
+  | `num(int)
+  | `thin
+  | `extraLight
+  | `light
+  | `normal
+  | `medium
+  | `semiBold
+  | `bold
+  | `extraBold
+  | `black
+  | `lighter
+  | `bolder
+];
 type fontStyle = [ | `italic | `normal | `oblique];
+
+let thin: [> | `thin];
+let extraLight: [> | `extraLight];
+let light: [> | `light];
+let medium: [> | `medium];
+let semiBold: [> | `semiBold];
+let bold: [> | `bold];
+let extraBold: [> | `extraBold];
+let lighter: [> | `lighter];
+let bolder: [> | `bolder];
 
 let color: color => rule;
 let fontFamily: string => rule;
@@ -731,30 +752,32 @@ let fontFace:
     ~fontFamily: string,
     ~src: list([< | `localUrl(string) | `url(string)]),
     ~fontStyle: fontStyle=?,
-    ~fontWeight: int=?,
+    ~fontWeight: [ fontWeight | cascading]=?,
     unit
   ) =>
   string;
 let fontSize: [ length | cascading] => rule;
-let fontVariant: [ | `normal | `smallCaps] => rule;
+let fontVariant: [ | `normal | `smallCaps | cascading] => rule;
 let fontStyle: [ fontStyle | cascading] => rule;
-let fontWeight: int => rule;
-let letterSpacing: [ | `normal | length] => rule;
+let fontWeight: [ fontWeight | cascading] => rule;
+let letterSpacing: [ | `normal | length | cascading] => rule;
 let lineHeight: [ | `normal | `abs(float) | length | cascading] => rule;
-let textAlign: [ | `left | `center | `right | `justify] => rule;
-let textDecoration: [ | `none | `underline | `overline | `lineThrough] => rule;
+let textAlign: [ | `left | `center | `right | `justify | cascading] => rule;
+let textDecoration:
+  [ | `none | `underline | `overline | `lineThrough | cascading] => rule;
 let textDecorationColor: color => rule;
 let textDecorationStyle:
-  [ | `wavy | `solid | `dotted | `dashed | `double] => rule;
+  [ | `wavy | `solid | `dotted | `dashed | `double | cascading] => rule;
 let textIndent: length => rule;
-let textOverflow: [ | `clip | `ellipsis | `string(string)] => rule;
+let textOverflow:
+  [ | `clip | `ellipsis | `string(string) | cascading] => rule;
 let textShadow: (~x: length=?, ~y: length=?, ~blur: length=?, color) => rule;
-let textTransform: [ | `uppercase | `lowercase | `capitalize | `none] => rule;
-let userSelect: [ | `auto | `all | `text | `none] => rule;
+let textTransform:
+  [ | `uppercase | `lowercase | `capitalize | `none | cascading] => rule;
+let userSelect: [ | `auto | `all | `text | `none | cascading] => rule;
 let verticalAlign:
   [
     | `baseline
-    | length
     | `sub
     | `super
     | `top
@@ -762,12 +785,15 @@ let verticalAlign:
     | `middle
     | `bottom
     | `textBottom
+    | length
+    | cascading
   ] =>
   rule;
-let whiteSpace: [ | `normal | `nowrap | `pre | `preLine | `preWrap] => rule;
-let wordBreak: [ | `breakAll | `keepAll | `normal] => rule;
-let wordSpacing: [ | `normal | length] => rule;
-let wordWrap: [ | `normal | `breakWord] => rule;
+let whiteSpace:
+  [ | `normal | `nowrap | `pre | `preLine | `preWrap | cascading] => rule;
+let wordBreak: [ | `breakAll | `keepAll | `normal | cascading] => rule;
+let wordSpacing: [ | `normal | length | cascading] => rule;
+let wordWrap: [ | `normal | `breakWord | cascading] => rule;
 
 /**
  * Transform
