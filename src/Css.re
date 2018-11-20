@@ -353,8 +353,9 @@ let label = label => `declaration(("label", label));
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-type cascading = [ | `inherit_ | `unset];
+type cascading = [ | `initial | `inherit_ | `unset];
 
+let initial = `initial;
 let inherit_ = `inherit_;
 let unset = `unset;
 
@@ -445,6 +446,7 @@ let string_of_length_cascading =
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
   | `zero => "0"
+  | `initial => "initial"
   | `inherit_ => "inherit"
   | `unset => "unset";
 
@@ -627,6 +629,7 @@ let display = x =>
     | `grid => "grid"
     | `inlineGrid => "inline-grid"
     | `none => "none"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -641,6 +644,7 @@ let position = x =>
     | `fixed => "fixed"
     | `relative => "relative"
     | `sticky => "sticky"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -897,6 +901,7 @@ let boxSizing = x =>
     switch (x) {
     | `contentBox => "content-box"
     | `borderBox => "border-box"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -936,6 +941,7 @@ let columnCount = x =>
     switch (x) {
     | `auto => "auto"
     | `count(v) => string_of_int(v)
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },

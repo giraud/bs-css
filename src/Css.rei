@@ -20,8 +20,9 @@ let label: string => rule;
  ************************ VALUES ************************
  ********************************************************/
 
-type cascading = [ | `inherit_ | `unset];
+type cascading = [ | `initial | `inherit_ | `unset];
 
+let initial: [> | `initial];
 let inherit_: [> | `inherit_];
 let unset: [> | `unset];
 
