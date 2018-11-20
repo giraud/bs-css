@@ -732,7 +732,6 @@ type fontWeight = [
   | `black
   | `lighter
   | `bolder
-  | cascading
 ];
 type fontStyle = [ | `italic | `normal | `oblique];
 
@@ -758,25 +757,27 @@ let fontFace:
   ) =>
   string;
 let fontSize: [ length | cascading] => rule;
-let fontVariant: [ | `normal | `smallCaps] => rule;
+let fontVariant: [ | `normal | `smallCaps | cascading] => rule;
 let fontStyle: [ fontStyle | cascading] => rule;
 let fontWeight: [ fontWeight | cascading] => rule;
-let letterSpacing: [ | `normal | length] => rule;
+let letterSpacing: [ | `normal | length | cascading] => rule;
 let lineHeight: [ | `normal | `abs(float) | length | cascading] => rule;
-let textAlign: [ | `left | `center | `right | `justify] => rule;
-let textDecoration: [ | `none | `underline | `overline | `lineThrough] => rule;
+let textAlign: [ | `left | `center | `right | `justify | cascading] => rule;
+let textDecoration:
+  [ | `none | `underline | `overline | `lineThrough | cascading] => rule;
 let textDecorationColor: color => rule;
 let textDecorationStyle:
-  [ | `wavy | `solid | `dotted | `dashed | `double] => rule;
+  [ | `wavy | `solid | `dotted | `dashed | `double | cascading] => rule;
 let textIndent: length => rule;
-let textOverflow: [ | `clip | `ellipsis | `string(string)] => rule;
+let textOverflow:
+  [ | `clip | `ellipsis | `string(string) | cascading] => rule;
 let textShadow: (~x: length=?, ~y: length=?, ~blur: length=?, color) => rule;
-let textTransform: [ | `uppercase | `lowercase | `capitalize | `none] => rule;
-let userSelect: [ | `auto | `all | `text | `none] => rule;
+let textTransform:
+  [ | `uppercase | `lowercase | `capitalize | `none | cascading] => rule;
+let userSelect: [ | `auto | `all | `text | `none | cascading] => rule;
 let verticalAlign:
   [
     | `baseline
-    | length
     | `sub
     | `super
     | `top
@@ -784,12 +785,15 @@ let verticalAlign:
     | `middle
     | `bottom
     | `textBottom
+    | length
+    | cascading
   ] =>
   rule;
-let whiteSpace: [ | `normal | `nowrap | `pre | `preLine | `preWrap] => rule;
-let wordBreak: [ | `breakAll | `keepAll | `normal] => rule;
-let wordSpacing: [ | `normal | length] => rule;
-let wordWrap: [ | `normal | `breakWord] => rule;
+let whiteSpace:
+  [ | `normal | `nowrap | `pre | `preLine | `preWrap | cascading] => rule;
+let wordBreak: [ | `breakAll | `keepAll | `normal | cascading] => rule;
+let wordSpacing: [ | `normal | length | cascading] => rule;
+let wordWrap: [ | `normal | `breakWord | cascading] => rule;
 
 /**
  * Transform

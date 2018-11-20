@@ -1284,7 +1284,6 @@ type fontWeight = [
   | `black
   | `lighter
   | `bolder
-  | cascading
 ];
 type fontStyle = [ | `normal | `italic | `oblique];
 
@@ -1310,6 +1309,9 @@ let fontVariant = x =>
     switch (x) {
     | `normal => "normal"
     | `smallCaps => "small-caps"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1372,6 +1374,7 @@ let lineHeight = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -1402,6 +1405,9 @@ let letterSpacing = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1413,6 +1419,9 @@ let textAlign = x =>
     | `right => "right"
     | `center => "center"
     | `justify => "justify"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1424,6 +1433,9 @@ let textDecoration = x =>
     | `underline => "underline"
     | `overline => "overline"
     | `lineThrough => "line-through"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1438,6 +1450,9 @@ let textDecorationStyle = x =>
     | `double => "double"
     | `dotted => "dotted"
     | `dashed => "dashed"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1450,6 +1465,9 @@ let textOverflow = x =>
     | `clip => "clip"
     | `ellipsis => "ellipsis"
     | `string(s) => s
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1473,6 +1491,9 @@ let textTransform = x =>
     | `lowercase => "lowercase"
     | `capitalize => "capitalize"
     | `none => "none"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1484,6 +1505,9 @@ let userSelect = x =>
     | `all => "all"
     | `text => "text"
     | `none => "none"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1519,6 +1543,9 @@ let verticalAlign = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1531,6 +1558,9 @@ let whiteSpace = x =>
     | `pre => "pre"
     | `preLine => "pre-line"
     | `preWrap => "pre-wrap"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1541,6 +1571,9 @@ let wordBreak = x =>
     | `breakAll => "break-all"
     | `keepAll => "keep-all"
     | `normal => "normal"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1569,6 +1602,9 @@ let wordSpacing = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1578,6 +1614,9 @@ let wordWrap = x =>
     switch (x) {
     | `normal => "normal"
     | `breakWord => "break-word"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
