@@ -20,5 +20,12 @@ Given that it is a major version, we also changed some functions in the API, esp
 
 #### Migration
 
-- fontWeight number must now use the `num constructor: from  ```fontWeight(300)``` to ```fontWeight(num(300))```
-- todo merge ...
+- `fontWeight` number must now use the `num` constructor: you must change `fontWeight(300)` to `fontWeight(num(300))`.
+The benefit is that you can transform your absolute numbers to font names, see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping. 
+- `merge` was really a `concat` function and could lead to problems as seen in #86. This is why it has been changed to use 
+the internal library (emotion) and its signature is now : `list(string) => string`. If you want to keep the same functionality
+than before, you can use `List.concat` instead.
+
+#### Contributors
+
+Big thanks to @baldurh and @wegry for their work on emotion.
