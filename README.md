@@ -2,7 +2,7 @@
 
 statically typed DSL for writing css in reason.
 
-:boom: NEXT VERSION WILL BE A MAJOR VERSION (8.0) AND WILL SWAP GLAMOR TO EMOTION, but it's not yet released :boom:
+:boom: NEXT VERSION WILL BE A MAJOR VERSION (8.0) AND WILL SWAP GLAMOR TO EMOTION, you can test it now with ```npm install bs-css@beta``` :boom:
 
 Bs-css is a statically typed interface to [Emotion](https://github.com/emotion-js/emotion)
 
