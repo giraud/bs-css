@@ -25,6 +25,7 @@ The benefit is that you can transform your absolute numbers to font names, see h
 - `merge` was really a `concat` function and could lead to problems as seen in #86. This is why it has been changed to use 
 the internal library (emotion) and its signature is now : `list(string) => string`. If you want to keep the same functionality
 than before, you can use `List.concat` instead.
+- if you are mixin reason/js, you need to change your dependency and replace `glamor` with `emotion`
 
 #### Contributors
 
