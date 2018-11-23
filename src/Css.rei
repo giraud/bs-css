@@ -236,7 +236,9 @@ type length = [
   | `zero
 ];
 
-type gridLength = [ length | `fr(float) | `minContent | `maxContent];
+type repeatValue = [ | `autoFill | `autoFit | `n(int)];
+type trackLength = [ length | `fr(float) | `minContent | `maxContent];
+type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
 let ch: float => [> | `ch(float)];
 let cm: float => [> | `cm(float)];
@@ -463,14 +465,17 @@ let order: int => rule;
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
 let gridAutoRows: [ length | `auto] => rule;
-let gridAutoFlow:  [ 
-  | `column 
-  | `row 
-  |  `columnDense 
-  |  `rowDense 
-  | `inherit_
-  | `initial 
-  | `unset ] => rule;
+let gridAutoFlow:
+  [
+    | `column
+    | `row
+    | `columnDense
+    | `rowDense
+    | `inherit_
+    | `initial
+    | `unset
+  ] =>
+  rule;
 let gridColumn: (int, int) => rule;
 let gridRow: (int, int) => rule;
 let gridColumnStart: int => rule;
@@ -534,14 +539,7 @@ let alignItems:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
 let alignSelf:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
-let justifySelf:
-  [
-    | `flexStart
-    | `center
-    | `flexEnd
-    | `stretch
-  ] =>
-  rule;
+let justifySelf: [ | `flexStart | `center | `flexEnd | `stretch] => rule;
 let justifyContent:
   [
     | `flexStart
@@ -565,7 +563,7 @@ let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 let zIndex: int => rule;
 let contentRule: string => rule;
 
-let columnCount: [ | `auto | `count(int) | cascading ] => rule;
+let columnCount: [ | `auto | `count(int) | cascading] => rule;
 
 /**
  * Style
@@ -622,7 +620,7 @@ let boxShadow:
 let boxShadows: list([ | `shadow(string)]) => rule;
 
 let background: [ color | `url(string) | gradient | `none] => rule;
-let backgrounds : list([ | color | `url(string) | gradient | `none] ) => rule;
+let backgrounds: list([ color | `url(string) | gradient | `none]) => rule;
 let backgroundColor: [ color] => rule;
 let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
