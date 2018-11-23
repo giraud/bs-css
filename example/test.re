@@ -512,6 +512,23 @@ let tests =
           {text("grid auto direction row")}
         </div>
       </div>
+            <div
+        className=Css.(
+          style([
+            display(`grid),
+            gridTemplateColumns([100->px, `repeat(`n(2), 60->px)])
+          ])
+        )>
+        <div className=Css.(style([background(purple)]))>
+          {text("Grid track repeat")}
+        </div>
+        <div className=Css.(style([background(green)]))>
+          {text("two times")}
+        </div>
+        <div className=Css.(style([background(red)]))>
+          {text("three times")}
+        </div>
+      </div>
     </Section>
     <Section name="flexbox">
       <div
