@@ -5,7 +5,7 @@
 /lib/bs
 /lib/js/example
 npm-debug.log
-finalOutput/*.js
+*.js
 .merlin
 .bsb.lock
 *.log
