@@ -812,12 +812,12 @@ let gridAutoDirectionToJs =
 let gridAutoFlow = direction =>
   d("gridAutoFlow", gridAutoDirectionToJs(direction));
 
-type repeatValue = [ | `autoFill | `autoFit | `n(int)];
+type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 let repeatValueToJs =
   fun
   | `autoFill => "auto-fill"
   | `autoFit => "auto-fit"
-  | `n(x) => x->string_of_int;
+  | `num(x) => x->string_of_int;
 
 type trackLength = [ length | `fr(float) | `minContent | `maxContent];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
@@ -847,10 +847,11 @@ let gridLengthToJs =
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content"
-  | `repeat(n, x) => "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")";
+  | `repeat(n, x) =>
+    "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")";
 
 let string_of_dimensions = dimensions =>
-  dimensions |> List.map( gridLengthToJs ) |> String.concat(" ");
+  dimensions |> List.map(gridLengthToJs) |> String.concat(" ");
 
 let gridTemplateColumns = dimensions =>
   d("gridTemplateColumns", string_of_dimensions(dimensions));

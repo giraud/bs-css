@@ -498,13 +498,7 @@ let tests =
           )
         />
       </div>
-      <div
-        className=Css.(
-          style([
-            display(`grid),
-            gridAutoFlow(`row)
-          ])
-        )>
+      <div className=Css.(style([display(`grid), gridAutoFlow(`row)]))>
         <div className=Css.(style([background(purple)]))>
           {text("grid auto direction row")}
         </div>
@@ -516,7 +510,7 @@ let tests =
         className=Css.(
           style([
             display(`grid),
-            gridTemplateColumns([100->px, `repeat(`n(2), 60->px)])
+            gridTemplateColumns([100->px, `repeat((`num(2), 60->px))]),
           ])
         )>
         <div className=Css.(style([background(purple)]))>
