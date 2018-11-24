@@ -506,13 +506,13 @@ let tests =
           ])
         )>
         <div className=Css.(style([background(purple)]))>
-          {text("grid auto direction row")}
+          {text("grid auto direction row 1")}
         </div>
         <div className=Css.(style([background(green)]))>
-          {text("grid auto direction row")}
+          {text("grid auto direction row 2")}
         </div>
       </div>
-            <div
+      <div
         className=Css.(
           style([
             display(`grid),
@@ -527,6 +527,23 @@ let tests =
         </div>
         <div className=Css.(style([background(red)]))>
           {text("three times")}
+        </div>
+      </div>
+      <div
+        className=Css.(
+          style([
+            display(`grid),
+            gridAutoColumns(100->px)
+          ])
+        )>
+        <div className=Css.(style([background(purple)]))>
+          {text("Grid auto columns (100px)")}
+        </div>
+        <div className=Css.(style([background(green)]))>
+          {text("100px")}
+        </div>
+        <div className=Css.(style([background(blue)]))>
+          {text("100px")}
         </div>
       </div>
     </Section>

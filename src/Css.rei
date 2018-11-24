@@ -464,6 +464,7 @@ let order: int => rule;
 
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
+let gridAutoColumns: [ length | `auto] => rule;
 let gridAutoRows: [ length | `auto] => rule;
 let gridAutoFlow:
   [

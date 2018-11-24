@@ -847,16 +847,20 @@ let gridLengthToJs =
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content"
-  | `repeat(n, x) => "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")";
+  | `repeat(n, x) =>
+    "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")";
 
 let string_of_dimensions = dimensions =>
-  dimensions |> List.map( gridLengthToJs ) |> String.concat(" ");
+  dimensions |> List.map(gridLengthToJs) |> String.concat(" ");
 
 let gridTemplateColumns = dimensions =>
   d("gridTemplateColumns", string_of_dimensions(dimensions));
 
 let gridTemplateRows = dimensions =>
   d("gridTemplateRows", string_of_dimensions(dimensions));
+
+let gridAutoColumns = dimensions =>
+  d("gridAutoColumns", string_of_dimension(dimensions));
 
 let gridAutoRows = dimensions =>
   d("gridAutoRows", string_of_dimension(dimensions));
