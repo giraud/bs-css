@@ -7,6 +7,7 @@
 /example/bundle*.js
 finalOutput/*.js
 npm-debug.log
+*.js
 .merlin
 .bsb.lock
 *.log

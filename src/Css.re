@@ -423,8 +423,6 @@ type length = [
   | `zero
 ];
 
-type gridLength = [ length | `fr(float) | `minContent | `maxContent];
-
 let string_of_length_cascading =
   fun
   | `calc(`add, a, b) =>
@@ -847,14 +845,55 @@ let gridAutoDirectionToJs =
 let gridAutoFlow = direction =>
   d("gridAutoFlow", gridAutoDirectionToJs(direction));
 
+type repeatValue = [ | `autoFill | `autoFit | `n(int)];
+let repeatValueToJs =
+  fun
+  | `autoFill => "auto-fill"
+  | `autoFit => "auto-fit"
+  | `n(x) => x->string_of_int;
+
+type trackLength = [ length | `fr(float) | `minContent | `maxContent];
+type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
+
+let gridLengthToJs =
+  fun
+  | `auto => "auto"
+  | `calc(`add, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+  | `calc(`sub, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+  | `ch(x) => string_of_float(x) ++ "ch"
+  | `cm(x) => string_of_float(x) ++ "cm"
+  | `em(x) => string_of_float(x) ++ "em"
+  | `ex(x) => string_of_float(x) ++ "ex"
+  | `mm(x) => string_of_float(x) ++ "mm"
+  | `percent(x) => string_of_float(x) ++ "%"
+  | `pt(x) => string_of_int(x) ++ "pt"
+  | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
+  | `rem(x) => string_of_float(x) ++ "rem"
+  | `vh(x) => string_of_float(x) ++ "vh"
+  | `vmax(x) => string_of_float(x) ++ "vmax"
+  | `vmin(x) => string_of_float(x) ++ "vmin"
+  | `vw(x) => string_of_float(x) ++ "vw"
+  | `fr(x) => string_of_float(x) ++ "fr"
+  | `zero => "0"
+  | `minContent => "min-content"
+  | `maxContent => "max-content"
+  | `repeat(n, x) =>
+    "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")";
+
 let string_of_dimensions = dimensions =>
-  dimensions |> List.map(string_of_dimension) |> String.concat(" ");
+  dimensions |> List.map(gridLengthToJs) |> String.concat(" ");
 
 let gridTemplateColumns = dimensions =>
   d("gridTemplateColumns", string_of_dimensions(dimensions));
 
 let gridTemplateRows = dimensions =>
   d("gridTemplateRows", string_of_dimensions(dimensions));
+
+let gridAutoColumns = dimensions =>
+  d("gridAutoColumns", string_of_dimension(dimensions));
 
 let gridAutoRows = dimensions =>
   d("gridAutoRows", string_of_dimension(dimensions));

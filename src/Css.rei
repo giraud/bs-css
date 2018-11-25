@@ -237,7 +237,9 @@ type length = [
   | `zero
 ];
 
-type gridLength = [ length | `fr(float) | `minContent | `maxContent];
+type repeatValue = [ | `autoFill | `autoFit | `n(int)];
+type trackLength = [ length | `fr(float) | `minContent | `maxContent];
+type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
 let ch: float => [> | `ch(float)];
 let cm: float => [> | `cm(float)];
@@ -463,6 +465,7 @@ let order: int => rule;
 
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
+let gridAutoColumns: [ length | `auto] => rule;
 let gridAutoRows: [ length | `auto] => rule;
 let gridAutoFlow:
   [

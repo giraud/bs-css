@@ -525,10 +525,44 @@ let tests =
       </div>
       <div className=Css.(style([display(`grid), gridAutoFlow(`row)]))>
         <div className=Css.(style([background(purple)]))>
-          {text("grid auto direction row")}
+          {text("grid auto direction row 1")}
         </div>
         <div className=Css.(style([background(green)]))>
-          {text("grid auto direction row")}
+          {text("grid auto direction row 2")}
+        </div>
+      </div>
+      <div
+        className=Css.(
+          style([
+            display(`grid),
+            gridTemplateColumns([100->px, `repeat(`n(2), 60->px)])
+          ])
+        )>
+        <div className=Css.(style([background(purple)]))>
+          {text("Grid track repeat")}
+        </div>
+        <div className=Css.(style([background(green)]))>
+          {text("two times")}
+        </div>
+        <div className=Css.(style([background(red)]))>
+          {text("three times")}
+        </div>
+      </div>
+      <div
+        className=Css.(
+          style([
+            display(`grid),
+            gridAutoColumns(100->px)
+          ])
+        )>
+        <div className=Css.(style([background(purple)]))>
+          {text("Grid auto columns (100px)")}
+        </div>
+        <div className=Css.(style([background(green)]))>
+          {text("100px")}
+        </div>
+        <div className=Css.(style([background(blue)]))>
+          {text("100px")}
         </div>
       </div>
     </Section>
