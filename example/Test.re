@@ -535,7 +535,7 @@ let tests =
         className=Css.(
           style([
             display(`grid),
-            gridTemplateColumns([100->px, `repeat(`n(2), 60->px)])
+            gridTemplateColumns([100->px, `repeat(`num(2), 60->px)])
           ])
         )>
         <div className=Css.(style([background(purple)]))>

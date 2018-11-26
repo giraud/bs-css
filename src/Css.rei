@@ -237,7 +237,7 @@ type length = [
   | `zero
 ];
 
-type repeatValue = [ | `autoFill | `autoFit | `n(int)];
+type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 type trackLength = [ length | `fr(float) | `minContent | `maxContent];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
