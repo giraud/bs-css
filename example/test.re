@@ -552,7 +552,7 @@ let tests =
         className=Css.(
           style([
             flexDirection(column),
-            flexGrow(1),
+            flexGrow(1.),
             alignItems(stretch),
             selector("& > *", [marginBottom(px(10)), width(pct(100.))]),
           ])
@@ -571,7 +571,7 @@ let tests =
             className=Css.(
               style([
                 order(1),
-                flexGrow(1),
+                flexGrow(1.),
                 flexShrink(1),
                 flexBasis(auto),
                 ...box,

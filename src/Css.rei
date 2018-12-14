@@ -444,7 +444,7 @@ let left: length => rule;
 let right: length => rule;
 
 let flex: int => rule;
-let flexGrow: int => rule;
+let flexGrow: float => rule;
 let flexShrink: int => rule;
 let flexBasis:
   [
