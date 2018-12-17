@@ -164,166 +164,164 @@ let tests =
       />
     </Section>
     <Section name="Named colors">
-      {
-        ReasonReact.array(
-          Css.(
-            [|
-              aliceblue,
-              antiquewhite,
-              aqua,
-              aquamarine,
-              azure,
-              beige,
-              bisque,
-              black,
-              blanchedalmond,
-              blue,
-              blueviolet,
-              brown,
-              burlywood,
-              cadetblue,
-              chartreuse,
-              chocolate,
-              coral,
-              cornflowerblue,
-              cornsilk,
-              crimson,
-              cyan,
-              darkblue,
-              darkcyan,
-              darkgoldenrod,
-              darkgray,
-              darkgreen,
-              darkgrey,
-              darkkhaki,
-              darkmagenta,
-              darkolivegreen,
-              darkorange,
-              darkorchid,
-              darkred,
-              darksalmon,
-              darkseagreen,
-              darkslateblue,
-              darkslategray,
-              darkslategrey,
-              darkturquoise,
-              darkviolet,
-              deeppink,
-              deepskyblue,
-              dimgray,
-              dimgrey,
-              dodgerblue,
-              firebrick,
-              floralwhite,
-              forestgreen,
-              fuchsia,
-              gainsboro,
-              ghostwhite,
-              gold,
-              goldenrod,
-              gray,
-              green,
-              greenyellow,
-              grey,
-              honeydew,
-              hotpink,
-              indianred,
-              indigo,
-              ivory,
-              khaki,
-              lavender,
-              lavenderblush,
-              lawngreen,
-              lemonchiffon,
-              lightblue,
-              lightcoral,
-              lightcyan,
-              lightgoldenrodyellow,
-              lightgray,
-              lightgreen,
-              lightgrey,
-              lightpink,
-              lightsalmon,
-              lightseagreen,
-              lightskyblue,
-              lightslategray,
-              lightslategrey,
-              lightsteelblue,
-              lightyellow,
-              lime,
-              limegreen,
-              linen,
-              magenta,
-              maroon,
-              mediumaquamarine,
-              mediumblue,
-              mediumorchid,
-              mediumpurple,
-              mediumseagreen,
-              mediumslateblue,
-              mediumspringgreen,
-              mediumturquoise,
-              mediumvioletred,
-              midnightblue,
-              mintcream,
-              mistyrose,
-              moccasin,
-              navajowhite,
-              navy,
-              oldlace,
-              olive,
-              olivedrab,
-              orange,
-              orangered,
-              orchid,
-              palegoldenrod,
-              palegreen,
-              paleturquoise,
-              palevioletred,
-              papayawhip,
-              peachpuff,
-              peru,
-              pink,
-              plum,
-              powderblue,
-              purple,
-              rebeccapurple,
-              red,
-              rosybrown,
-              royalblue,
-              saddlebrown,
-              salmon,
-              sandybrown,
-              seagreen,
-              seashell,
-              sienna,
-              silver,
-              skyblue,
-              slateblue,
-              slategray,
-              slategrey,
-              snow,
-              springgreen,
-              steelblue,
-              tan,
-              teal,
-              thistle,
-              tomato,
-              transparent,
-              turquoise,
-              violet,
-              wheat,
-              white,
-              whitesmoke,
-              yellow,
-              yellowgreen,
-            |]
-          )
-          ->Belt.Array.map(c =>
-              <div className=Css.(style([background(c), ...miniBox])) />
-            ),
-        )
-      }
+      {ReasonReact.array(
+         Css.(
+           [|
+             aliceblue,
+             antiquewhite,
+             aqua,
+             aquamarine,
+             azure,
+             beige,
+             bisque,
+             black,
+             blanchedalmond,
+             blue,
+             blueviolet,
+             brown,
+             burlywood,
+             cadetblue,
+             chartreuse,
+             chocolate,
+             coral,
+             cornflowerblue,
+             cornsilk,
+             crimson,
+             cyan,
+             darkblue,
+             darkcyan,
+             darkgoldenrod,
+             darkgray,
+             darkgreen,
+             darkgrey,
+             darkkhaki,
+             darkmagenta,
+             darkolivegreen,
+             darkorange,
+             darkorchid,
+             darkred,
+             darksalmon,
+             darkseagreen,
+             darkslateblue,
+             darkslategray,
+             darkslategrey,
+             darkturquoise,
+             darkviolet,
+             deeppink,
+             deepskyblue,
+             dimgray,
+             dimgrey,
+             dodgerblue,
+             firebrick,
+             floralwhite,
+             forestgreen,
+             fuchsia,
+             gainsboro,
+             ghostwhite,
+             gold,
+             goldenrod,
+             gray,
+             green,
+             greenyellow,
+             grey,
+             honeydew,
+             hotpink,
+             indianred,
+             indigo,
+             ivory,
+             khaki,
+             lavender,
+             lavenderblush,
+             lawngreen,
+             lemonchiffon,
+             lightblue,
+             lightcoral,
+             lightcyan,
+             lightgoldenrodyellow,
+             lightgray,
+             lightgreen,
+             lightgrey,
+             lightpink,
+             lightsalmon,
+             lightseagreen,
+             lightskyblue,
+             lightslategray,
+             lightslategrey,
+             lightsteelblue,
+             lightyellow,
+             lime,
+             limegreen,
+             linen,
+             magenta,
+             maroon,
+             mediumaquamarine,
+             mediumblue,
+             mediumorchid,
+             mediumpurple,
+             mediumseagreen,
+             mediumslateblue,
+             mediumspringgreen,
+             mediumturquoise,
+             mediumvioletred,
+             midnightblue,
+             mintcream,
+             mistyrose,
+             moccasin,
+             navajowhite,
+             navy,
+             oldlace,
+             olive,
+             olivedrab,
+             orange,
+             orangered,
+             orchid,
+             palegoldenrod,
+             palegreen,
+             paleturquoise,
+             palevioletred,
+             papayawhip,
+             peachpuff,
+             peru,
+             pink,
+             plum,
+             powderblue,
+             purple,
+             rebeccapurple,
+             red,
+             rosybrown,
+             royalblue,
+             saddlebrown,
+             salmon,
+             sandybrown,
+             seagreen,
+             seashell,
+             sienna,
+             silver,
+             skyblue,
+             slateblue,
+             slategray,
+             slategrey,
+             snow,
+             springgreen,
+             steelblue,
+             tan,
+             teal,
+             thistle,
+             tomato,
+             transparent,
+             turquoise,
+             violet,
+             wheat,
+             white,
+             whitesmoke,
+             yellow,
+             yellowgreen,
+           |]
+         )
+         ->Belt.Array.map(c =>
+             <div className=Css.(style([background(c), ...miniBox])) />
+           ),
+       )}
     </Section>
     <Section name="gradients">
       <div
@@ -597,7 +595,7 @@ let tests =
         className=Css.(
           style([
             flexDirection(column),
-            flexGrow(1),
+            flexGrow(1.),
             alignItems(stretch),
             selector("& > *", [marginBottom(px(10)), width(pct(100.))]),
           ])
@@ -616,7 +614,7 @@ let tests =
             className=Css.(
               style(
                 box
-                @ [order(1), flexGrow(1), flexShrink(1), flexBasis(auto)],
+                @ [order(1), flexGrow(1.), flexShrink(1), flexBasis(auto)],
               )
             )
           />
@@ -779,65 +777,80 @@ let tests =
       />
       <div
         className=Css.(
-          style(box @[
-            borderRightWidth(px(5)),
-            borderRightStyle(solid),
-            borderRightColor(blue),
-          ])
+          style(
+            box
+            @ [
+              borderRightWidth(px(5)),
+              borderRightStyle(solid),
+              borderRightColor(blue),
+            ],
+          )
         )
       />
     </Section>
     <Section name="background">
       <div
         className=Css.(
-          style(box @[
-            background(red),
-            backgroundAttachment(scroll),
-            backgroundClip(borderBox),
-            backgroundOrigin(borderBox),
-            backgroundPosition(pct(50.), pct(50.)),
-            backgroundRepeat(noRepeat),
-            backgroundSize(size(px(100), px(100))),
-          ])
+          style(
+            box
+            @ [
+              background(red),
+              backgroundAttachment(scroll),
+              backgroundClip(borderBox),
+              backgroundOrigin(borderBox),
+              backgroundPosition(pct(50.), pct(50.)),
+              backgroundRepeat(noRepeat),
+              backgroundSize(size(px(100), px(100))),
+            ],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            background(radialGradient([(0, red), (10, blue)])),
-            backgroundAttachment(fixed),
-            backgroundClip(contentBox),
-            backgroundOrigin(contentBox),
-            backgroundRepeat(repeat),
-            backgroundSize(auto),
-          ])
+          style(
+            box
+            @ [
+              background(radialGradient([(0, red), (10, blue)])),
+              backgroundAttachment(fixed),
+              backgroundClip(contentBox),
+              backgroundOrigin(contentBox),
+              backgroundRepeat(repeat),
+              backgroundSize(auto),
+            ],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            background(url("./img-29.jpg")),
-            backgroundAttachment(local),
-            backgroundClip(paddingBox),
-            backgroundOrigin(paddingBox),
-            backgroundRepeat(repeatX),
-            backgroundSize(cover),
-          ])
+          style(
+            box
+            @ [
+              background(url("./img-29.jpg")),
+              backgroundAttachment(local),
+              backgroundClip(paddingBox),
+              backgroundOrigin(paddingBox),
+              backgroundRepeat(repeatX),
+              backgroundSize(cover),
+            ],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            backgroundColor(rgb(0, 0, 255)),
-            backgroundImage(
-              linearGradient(
-                deg(45),
-                [(0, green), (50, red), (100, yellow)],
+          style(
+            box
+            @ [
+              backgroundColor(rgb(0, 0, 255)),
+              backgroundImage(
+                linearGradient(
+                  deg(45),
+                  [(0, green), (50, red), (100, yellow)],
+                ),
               ),
-            ),
-            backgroundRepeat(repeatY),
-            backgroundSize(contain),
-          ])
+              backgroundRepeat(repeatY),
+              backgroundSize(contain),
+            ],
+          )
         )
       />
     </Section>
@@ -979,12 +992,15 @@ let tests =
       <div className=Css.(style(box @ [outline(px(5), `double, green)])) />
       <div
         className=Css.(
-          style(box @[
-            outlineStyle(solid),
-            outlineWidth(px(5)),
-            outlineColor(green),
-            outlineOffset(px(5)),
-          ])
+          style(
+            box
+            @ [
+              outlineStyle(solid),
+              outlineWidth(px(5)),
+              outlineColor(green),
+              outlineOffset(px(5)),
+            ],
+          )
         )
       />
       <div className=Css.(style(box @ [outline(px(5), `double, red)])) />
@@ -994,63 +1010,77 @@ let tests =
       <div className=Css.(style(box @ [opacity(0.5)])) />
       <div
         className=Css.(
-          style(box @[
-            perspective(px(500)),
-            transform(rotate(deg(10))),
-          ])
+          style(
+            box @ [perspective(px(500)), transform(rotate(deg(10)))],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            transforms([
-              translate(px(10), pct(10.)),
-              skew(deg(10), deg(10)),
-            ]),
-          ])
+          style(
+            box
+            @ [
+              transforms([
+                translate(px(10), pct(10.)),
+                skew(deg(10), deg(10)),
+              ]),
+            ],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            transform(rotate(deg(19))),
-            transformOrigin(pct(50.), pct(50.)),
-            transformStyle(`preserve3d),
-            perspective(px(900)),
-            perspectiveOrigin(pct(10.), pct(10.)),
-          ])
+          style(
+            box
+            @ [
+              transform(rotate(deg(19))),
+              transformOrigin(pct(50.), pct(50.)),
+              transformStyle(`preserve3d),
+              perspective(px(900)),
+              perspectiveOrigin(pct(10.), pct(10.)),
+            ],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            transform(translate(px(10), pct(10.))),
-            transformOrigin3d(px(10), px(10), px(10)),
-          ])
+          style(
+            box
+            @ [
+              transform(translate(px(10), pct(10.))),
+              transformOrigin3d(px(10), px(10), px(10)),
+            ],
+          )
         )
       />
     </Section>
     <Section name="transition">
       <div
         className=Css.(
-          style(box @[
-            transition(
-              ~duration=300,
-              ~delay=300,
-              ~timingFunction=easeInOut,
-              "transform",
-            ),
-          ])
+          style(
+            box
+            @ [
+              transition(
+                ~duration=300,
+                ~delay=300,
+                ~timingFunction=easeInOut,
+                "transform",
+              ),
+            ],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            transitionProperty("height"),
-            transitionDelay(300),
-            transitionDuration(300),
-            transitionTimingFunction(linear),
-          ])
+          style(
+            box
+            @ [
+              transitionProperty("height"),
+              transitionDelay(300),
+              transitionDuration(300),
+              transitionTimingFunction(linear),
+            ],
+          )
         )
       />
     </Section>
@@ -1081,11 +1111,9 @@ let tests =
             wordWrap(breakWord),
           ])
         )>
-        {
-          text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-          )
-        }
+        {text(
+           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+         )}
       </p>
       <h2 className=Css.(style([width(pct(100.))]))>
         {text("Named Font weights")}
@@ -1134,46 +1162,55 @@ let tests =
     <Section name="animation">
       <div
         className=Css.(
-          style(box @[
-            animation(
-              ~duration=300,
-              ~delay=300,
-              ~direction=reverse,
-              ~timingFunction=linear,
-              ~fillMode=forwards,
-              ~playState=running,
-              ~iterationCount=infinite,
-              spin,
-            ),
-          ])
-        )
-      />
-      <div
-        className=Css.(
-          style(box @[
-            animations([
-              animation(~duration=300, ~iterationCount=infinite, spin),
+          style(
+            box
+            @ [
               animation(
                 ~duration=300,
+                ~delay=300,
+                ~direction=reverse,
+                ~timingFunction=linear,
+                ~fillMode=forwards,
+                ~playState=running,
                 ~iterationCount=infinite,
-                scaleAnimation,
+                spin,
               ),
-            ]),
-          ])
+            ],
+          )
         )
       />
       <div
         className=Css.(
-          style(box @[
-            animationName(spin),
-            animationTimingFunction(easeIn),
-            animationDuration(300),
-            animationDelay(300),
-            animationDirection(normal),
-            animationFillMode(backwards),
-            animationPlayState(paused),
-            animationIterationCount(count(5)),
-          ])
+          style(
+            box
+            @ [
+              animations([
+                animation(~duration=300, ~iterationCount=infinite, spin),
+                animation(
+                  ~duration=300,
+                  ~iterationCount=infinite,
+                  scaleAnimation,
+                ),
+              ]),
+            ],
+          )
+        )
+      />
+      <div
+        className=Css.(
+          style(
+            box
+            @ [
+              animationName(spin),
+              animationTimingFunction(easeIn),
+              animationDuration(300),
+              animationDelay(300),
+              animationDirection(normal),
+              animationFillMode(backwards),
+              animationPlayState(paused),
+              animationIterationCount(count(5)),
+            ],
+          )
         )
       />
     </Section>
@@ -1205,13 +1242,11 @@ let tests =
     </Section>
     <Section name="columns">
       <p className=Css.(style([columnCount(count(10))]))>
-        {
-          text(
-            "This is a bunch of text split into columns
+        {text(
+           "This is a bunch of text split into columns
              using the CSS `column-count` property. The text
              is equally distributed over the columns.",
-          )
-        }
+         )}
       </p>
     </Section>
     <Section name="content">
