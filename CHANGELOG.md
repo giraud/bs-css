@@ -1,4 +1,4 @@
-## 8.0.0 - 2018-11-??
+## 8.0.0 - 2018-12-18
 
 - :rocket: [#76](https://github.com/SentiaAnalytics/bs-css/issues/76) - Add support for commonly used name for font weight
 - :bug: [#86](https://github.com/SentiaAnalytics/bs-css/issues/86) - Losing styles when merging nested selectors
