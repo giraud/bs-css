@@ -4,6 +4,8 @@
 /node_modules*
 /lib/bs
 /lib/js/example
+/example/bundle*.js
+finalOutput/*.js
 npm-debug.log
 *.js
 .merlin

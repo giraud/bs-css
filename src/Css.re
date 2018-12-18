@@ -1,16 +1,17 @@
 include Css_Colors;
 
 module Emotion = {
-  type css = string;
-  [@bs.module "emotion"] external _make: Js.Json.t => css = "css";
+  type stylename = string;
+  [@bs.module "emotion"] external _make: Js.Json.t => stylename = "css";
   [@bs.module "emotion"] external injectGlobal: Js.Json.t => unit = "";
   [@bs.module "emotion"]
   external rawInjectGlobal: string => unit = "injectGlobal";
   [@bs.module "emotion"]
   external makeKeyFrames: Js.Dict.t(Js.Json.t) => string = "keyframes";
-  [@bs.module "emotion"] [@bs.splice]
-  external merge: array(css) => css = "cx";
-  let merge: list(css) => css = classes => classes->Array.of_list->merge;
+  [@bs.module "emotion"] external cx: array(stylename) => stylename = "cx";
+  let mergeStyles: list(stylename) => stylename =
+    stylenames => stylenames |> Array.of_list |> cx;
+
   let rec makeDict = ruleset => {
     let toJs = rule =>
       switch (rule) {
@@ -275,6 +276,34 @@ module Converter = {
     | `zoomIn => "zoom-in"
     | `zoomOut => "zoom-out"
     };
+
+  let string_of_fontWeight = x =>
+    switch (x) {
+    | `num(n) => string_of_int(n)
+    | `thin => "100"
+    | `extraLight => "200"
+    | `light => "300"
+    | `normal => "400"
+    | `medium => "500"
+    | `semiBold => "600"
+    | `bold => "700"
+    | `extraBold => "800"
+    | `black => "900"
+    | `lighter => "lighter"
+    | `bolder => "bolder"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
+    };
+
+  let string_of_fontStyle =
+    fun
+    | `normal => "normal"
+    | `italic => "italic"
+    | `oblique => "oblique"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset";
 };
 include Converter;
 
@@ -289,7 +318,7 @@ type rule = [
 type selector = [ | `selector(string, list(rule))];
 let empty = [];
 
-let merge = List.concat;
+let merge = Emotion.mergeStyles;
 let global = (selector, rules: list(rule)) =>
   Emotion.injectGlobal(
     [(selector, Emotion.makeDict(rules))]
@@ -309,7 +338,7 @@ let keyframes = frames => {
   Emotion.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
 };
 
-let style = rules => rules |> Emotion.make;
+let style = Emotion.make;
 
 let d = (property, value) => `declaration((property, value));
 
@@ -324,8 +353,9 @@ let label = label => `declaration(("label", label));
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-type cascading = [ | `inherit_ | `unset];
+type cascading = [ | `initial | `inherit_ | `unset];
 
+let initial = `initial;
 let inherit_ = `inherit_;
 let unset = `unset;
 
@@ -414,6 +444,7 @@ let string_of_length_cascading =
   | `vmin(x) => string_of_float(x) ++ "vmin"
   | `vw(x) => string_of_float(x) ++ "vw"
   | `zero => "0"
+  | `initial => "initial"
   | `inherit_ => "inherit"
   | `unset => "unset";
 
@@ -596,6 +627,7 @@ let display = x =>
     | `grid => "grid"
     | `inlineGrid => "inline-grid"
     | `none => "none"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -610,6 +642,7 @@ let position = x =>
     | `fixed => "fixed"
     | `relative => "relative"
     | `sticky => "sticky"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -621,7 +654,7 @@ let left = x => d("left", string_of_length(x));
 let right = x => d("right", string_of_length(x));
 
 let flex = x => d("flex", string_of_int(x));
-let flexGrow = x => d("flexGrow", string_of_int(x));
+let flexGrow = x => d("flexGrow", string_of_float(x));
 let flexShrink = x => d("flexShrink", string_of_int(x));
 let flexBasis = x =>
   d(
@@ -812,12 +845,12 @@ let gridAutoDirectionToJs =
 let gridAutoFlow = direction =>
   d("gridAutoFlow", gridAutoDirectionToJs(direction));
 
-type repeatValue = [ | `autoFill | `autoFit | `n(int)];
+type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 let repeatValueToJs =
   fun
   | `autoFill => "auto-fill"
   | `autoFit => "auto-fit"
-  | `n(x) => x->string_of_int;
+  | `num(x) => x->string_of_int;
 
 type trackLength = [ length | `fr(float) | `minContent | `maxContent];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
@@ -907,6 +940,7 @@ let boxSizing = x =>
     switch (x) {
     | `contentBox => "content-box"
     | `borderBox => "border-box"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -946,6 +980,7 @@ let columnCount = x =>
     switch (x) {
     | `auto => "auto"
     | `count(v) => string_of_int(v)
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -1280,15 +1315,32 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
  * Text
  */
 
-[@bs.deriving jsConverter]
+/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+type fontWeight = [
+  | `num(int)
+  | `thin
+  | `extraLight
+  | `light
+  | `normal
+  | `medium
+  | `semiBold
+  | `bold
+  | `extraBold
+  | `black
+  | `lighter
+  | `bolder
+];
 type fontStyle = [ | `normal | `italic | `oblique];
-let fontStyleToJs =
-  fun
-  | `normal => "normal"
-  | `italic => "italic"
-  | `oblique => "oblique"
-  | `inherit_ => "inherit"
-  | `unset => "unset";
+
+let thin = `thin;
+let extraLight = `extraLight;
+let light = `light;
+let medium = `medium;
+let semiBold = `semiBold;
+let bold = `bold;
+let extraBold = `extraBold;
+let lighter = `lighter;
+let bolder = `bolder;
 
 let color = x => d("color", string_of_color(x));
 
@@ -1302,15 +1354,18 @@ let fontVariant = x =>
     switch (x) {
     | `normal => "normal"
     | `smallCaps => "small-caps"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
-let fontStyle = x => d("fontStyle", fontStyleToJs(x));
-let fontWeight = x => d("fontWeight", string_of_int(x));
+let fontStyle = x => d("fontStyle", string_of_fontStyle(x));
+let fontWeight = x => d("fontWeight", string_of_fontWeight(x));
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =
-    Js.Option.map((. value) => fontStyleToJs(value), fontStyle);
+    Js.Option.map((. value) => string_of_fontStyle(value), fontStyle);
   let src =
     src
     |> List.map(
@@ -1324,7 +1379,7 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
     Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ s);
   let fontWeight =
     Belt.Option.mapWithDefault(fontWeight, "", w =>
-      "font-weight: " ++ string_of_int(w)
+      "font-weight: " ++ string_of_fontWeight(w)
     );
   let asString = {j|@font-face {
     font-family: $fontFamily;
@@ -1364,6 +1419,7 @@ let lineHeight = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
@@ -1394,6 +1450,9 @@ let letterSpacing = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1405,6 +1464,9 @@ let textAlign = x =>
     | `right => "right"
     | `center => "center"
     | `justify => "justify"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1416,6 +1478,9 @@ let textDecoration = x =>
     | `underline => "underline"
     | `overline => "overline"
     | `lineThrough => "line-through"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1430,6 +1495,9 @@ let textDecorationStyle = x =>
     | `double => "double"
     | `dotted => "dotted"
     | `dashed => "dashed"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1442,6 +1510,9 @@ let textOverflow = x =>
     | `clip => "clip"
     | `ellipsis => "ellipsis"
     | `string(s) => s
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1465,6 +1536,9 @@ let textTransform = x =>
     | `lowercase => "lowercase"
     | `capitalize => "capitalize"
     | `none => "none"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1476,6 +1550,9 @@ let userSelect = x =>
     | `all => "all"
     | `text => "text"
     | `none => "none"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1511,6 +1588,9 @@ let verticalAlign = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1523,6 +1603,9 @@ let whiteSpace = x =>
     | `pre => "pre"
     | `preLine => "pre-line"
     | `preWrap => "pre-wrap"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1533,6 +1616,9 @@ let wordBreak = x =>
     | `breakAll => "break-all"
     | `keepAll => "keep-all"
     | `normal => "normal"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1561,6 +1647,9 @@ let wordSpacing = x =>
     | `vw(x) => string_of_float(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -1570,6 +1659,9 @@ let wordWrap = x =>
     switch (x) {
     | `normal => "normal"
     | `breakWord => "break-word"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
