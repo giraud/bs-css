@@ -25,6 +25,8 @@ module Styles = {
     alignItems(stretch),
     backgroundColor(white),
     boxShadow(~y=px(3), ~blur=px(5), rgba(0, 0, 0, 0.3)),
+    /* You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments. */
+    unsafe("-webkit-overflow-scrolling", "touch"),
     /* You can place all your theme styles in Theme.re and access as normal Reason module */
     padding(Theme.basePadding)
   ]);
