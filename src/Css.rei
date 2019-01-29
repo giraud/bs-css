@@ -422,14 +422,30 @@ let unsafe: (string, string) => rule;
 
 let display:
   [
-    | `flex
-    | `block
+    | `unset
     | `inline
+    | `block
+    | `contents
+    | `flex
+    | `grid
     | `inlineBlock
     | `inlineFlex
-    | `grid
     | `inlineGrid
+    | `inlineTable
+    | `listItem
+    | `runIn
+    | `table
+    | `tableCaption
+    | `tableColumnGroup
+    | `tableHeaderGroup
+    | `tableFooterGroup
+    | `tableRowGroup
+    | `tableCell
+    | `tableColumn
+    | `tableRow
     | `none
+    | `initial
+    | `inherit_
     | cascading
   ] =>
   rule;
