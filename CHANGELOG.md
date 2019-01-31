@@ -1,3 +1,8 @@
+## 8.0.1 - 2019-01-31
+
+- :bug: [#108](https://github.com/SentiaAnalytics/bs-css/issues/108) - Wrong value for minWidth/maxWidth
+- :rocket: [#111](https://github.com/SentiaAnalytics/bs-css/pull/111) - Fill all allowed display values
+
 ## 8.0.0 - 2018-12-18
 
 - :rocket: [#76](https://github.com/SentiaAnalytics/bs-css/issues/76) - Add support for commonly used name for font weight
