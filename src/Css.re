@@ -825,6 +825,7 @@ let paddingBottom = x => d("paddingBottom", string_of_length(x));
 let string_of_dimension =
   fun
   | `auto => "auto"
+  | `none => "none"
   | `calc(`add, a, b) =>
     "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
   | `calc(`sub, a, b) =>
@@ -849,9 +850,9 @@ let string_of_dimension =
   | `maxContent => "max-content";
 
 let width = x => d("width", string_of_dimension(x));
-let maxWidth = x => d("maxWidth", string_of_dimension(x));
-let minWidth = x => d("minWidth", string_of_dimension(x));
 let height = x => d("height", string_of_dimension(x));
+let minWidth = x => d("minWidth", string_of_dimension(x));
+let maxWidth = x => d("maxWidth", string_of_dimension(x));
 let minHeight = x => d("minHeight", string_of_dimension(x));
 let maxHeight = x => d("maxHeight", string_of_dimension(x));
 

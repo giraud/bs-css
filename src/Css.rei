@@ -515,11 +515,11 @@ let gridRowGap: length => rule;
 let gridGap: length => rule;
 
 let width: [ length | `auto] => rule;
-let minWidth: [ length | `auto] => rule;
-let maxWidth: [ length | `auto] => rule;
 let height: [ length | `auto] => rule;
+let minWidth: [ length | `auto] => rule;
+let maxWidth: [ length | `none] => rule;
 let minHeight: [ length | `auto] => rule;
-let maxHeight: [ length | `auto] => rule;
+let maxHeight: [ length | `none] => rule;
 
 let margin: [ length | `auto] => rule;
 let margin2: (~v: [ length | `auto], ~h: [ length | `auto]) => rule;
