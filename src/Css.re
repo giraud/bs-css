@@ -619,17 +619,30 @@ let display = x =>
   d(
     "display",
     switch (x) {
-    | `block => "block"
+    | `unset => "unset"
     | `inline => "inline"
-    | `inlineBlock => "inline-block"
+    | `block => "block"
+    | `contents => "contents"
     | `flex => "flex"
-    | `inlineFlex => "inline-flex"
     | `grid => "grid"
+    | `inlineBlock => "inline-block"
+    | `inlineFlex => "inline-flex"
     | `inlineGrid => "inline-grid"
+    | `inlineTable => "inline-table"
+    | `listItem => "list-item"
+    | `runIn => "run-in"
+    | `table => "table"
+    | `tableCaption => "table-caption"
+    | `tableColumnGroup => "table-column-group"
+    | `tableHeaderGroup => "table-header-group"
+    | `tableFooterGroup => "table-footer-group"
+    | `tableRowGroup => "table-row-group"
+    | `tableCell => "table-cell"
+    | `tableColumn => "table-column"
+    | `tableRow => "table-row"
     | `none => "none"
     | `initial => "initial"
     | `inherit_ => "inherit"
-    | `unset => "unset"
     },
   );
 
