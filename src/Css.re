@@ -506,9 +506,28 @@ let flexStart = `flexStart;
 let forwards = `forwards;
 let hidden = `hidden;
 let infinite = `infinite;
+
 let inline = `inline;
+let block = `block;
+let contents = `contents;
+let flexBox = `flex;
+let grid = `grid;
 let inlineBlock = `inlineBlock;
 let inlineFlex = `inlineFlex;
+let inlineGrid = `inlineGrid;
+let inlineTable = `inlineTable;
+let listItem = `listItem;
+let runIn = `runIn;
+let table = `table;
+let tableCaption = `tableCaption;
+let tableColumnGroup = `tableColumnGroup;
+let tableHeaderGroup = `tableHeaderGroup;
+let tableFooterGroup = `tableFooterGroup;
+let tableRowGroup = `tableRowGroup;
+let tableCell = `tableCell;
+let tableColumn = `tableColumn;
+let tableRow = `tableRow;
+
 let linear = `linear;
 let local = `local;
 let localUrl = x => `localUrl(x);

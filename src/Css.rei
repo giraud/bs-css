@@ -298,13 +298,26 @@ let wrap: [> | `wrap];
 let nowrap: [> | `nowrap];
 let wrapReverse: [> | `wrapReverse];
 
+let inline: [> | `inline];
+let block: [> | `block];
+let contents: [> | `contents];
 let flexBox: [> | `flex];
 let grid: [> | `grid];
-let inlineGrid: [> | `inlineGrid];
-let block: [> | `block];
-let inline: [> | `inline];
 let inlineBlock: [> | `inlineBlock];
 let inlineFlex: [> | `inlineFlex];
+let inlineGrid: [> | `inlineGrid];
+let inlineTable: [> | `inlineTable];
+let listItem: [> | `listItem];
+let runIn: [> | `runIn];
+let table: [> | `table];
+let tableCaption: [> | `tableCaption];
+let tableColumnGroup: [> | `tableColumnGroup];
+let tableHeaderGroup: [> | `tableHeaderGroup];
+let tableFooterGroup: [> | `tableFooterGroup];
+let tableRowGroup: [> | `tableRowGroup];
+let tableCell: [> | `tableCell];
+let tableColumn: [> | `tableColumn];
+let tableRow: [> | `tableRow];
 
 let absolute: [> | `absolute];
 let relative: [> | `relative];
@@ -425,7 +438,6 @@ let unsafe: (string, string) => rule;
 
 let display:
   [
-    | `unset
     | `inline
     | `block
     | `contents
@@ -447,8 +459,6 @@ let display:
     | `tableColumn
     | `tableRow
     | `none
-    | `initial
-    | `inherit_
     | cascading
   ] =>
   rule;
