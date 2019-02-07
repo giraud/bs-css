@@ -847,7 +847,9 @@ let string_of_dimension =
   | `fr(x) => string_of_float(x) ++ "fr"
   | `zero => "0"
   | `minContent => "min-content"
-  | `maxContent => "max-content";
+  | `maxContent => "max-content"
+  | `minmax(a, b) =>
+    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(a) ++ ")";
 
 let width = x => d("width", string_of_dimension(x));
 let height = x => d("height", string_of_dimension(x));
