@@ -886,10 +886,7 @@ type trackLength = [
   | `fr(float)
   | `minContent
   | `maxContent
-  | `minmax(
-      [ length | `minContent | `maxContent],
-      [ length | `minContent | `maxContent],
-    )
+  | `minmax(length, length)
 ];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
