@@ -353,6 +353,7 @@ let label = label => `declaration(("label", label));
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
+
 type cascading = [ | `initial | `inherit_ | `unset];
 
 let initial = `initial;
@@ -538,6 +539,7 @@ let paddingBox = `paddingBox;
 let paused = `paused;
 let relative = `relative;
 let repeat = `repeat;
+let minmax = `minmax;
 let repeatX = `repeatX;
 let repeatY = `repeatY;
 let rotate = a => `rotate(a);
@@ -847,7 +849,9 @@ let string_of_dimension =
   | `fr(x) => string_of_float(x) ++ "fr"
   | `zero => "0"
   | `minContent => "min-content"
-  | `maxContent => "max-content";
+  | `maxContent => "max-content"
+  | `minmax(a, b) =>
+    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(b) ++ ")";
 
 let width = x => d("width", string_of_dimension(x));
 let height = x => d("height", string_of_dimension(x));
@@ -885,7 +889,13 @@ let repeatValueToJs =
   | `autoFit => "auto-fit"
   | `num(x) => x->string_of_int;
 
-type trackLength = [ length | `fr(float) | `minContent | `maxContent];
+type trackLength = [
+  length
+  | `fr(float)
+  | `minContent
+  | `maxContent
+  | `minmax(length, length)
+];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
 let gridLengthToJs =
@@ -914,7 +924,9 @@ let gridLengthToJs =
   | `minContent => "min-content"
   | `maxContent => "max-content"
   | `repeat(n, x) =>
-    "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")";
+    "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")"
+  | `minmax(a, b) =>
+    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(b) ++ ")";
 
 let string_of_dimensions = dimensions =>
   dimensions |> List.map(gridLengthToJs) |> String.concat(" ");
@@ -1346,9 +1358,8 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
 
 /**
  * Text
- */
+ */ /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 type fontWeight = [
   | `num(int)
   | `thin
@@ -1991,9 +2002,7 @@ let animationTimingFunction = x =>
  * Selectors
  */
 
-let selector = (selector, rules) => `selector((selector, rules));
-
-/* MEDIA */
+let selector = (selector, rules) => `selector((selector, rules)) /* MEDIA */;
 
 let active = selector(":active");
 let after = selector("::after");
