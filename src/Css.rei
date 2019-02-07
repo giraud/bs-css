@@ -287,6 +287,7 @@ let contentBox: [> | `contentBox];
 
 let noRepeat: [> | `noRepeat];
 let repeat: [> | `repeat];
+let minmax: [> | `minmax];
 let repeatX: [> | `repeatX];
 let repeatY: [> | `repeatY];
 let contain: [> | `contain];

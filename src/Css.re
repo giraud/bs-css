@@ -535,6 +535,7 @@ let paddingBox = `paddingBox;
 let paused = `paused;
 let relative = `relative;
 let repeat = `repeat;
+let minmax = `minmax;
 let repeatX = `repeatX;
 let repeatY = `repeatY;
 let rotate = a => `rotate(a);
