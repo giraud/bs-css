@@ -886,7 +886,10 @@ type trackLength = [
   | `fr(float)
   | `minContent
   | `maxContent
-  | `minmax(length, length)
+  | `minmax(
+      [ length | `minContent | `maxContent],
+      [ length | `minContent | `maxContent],
+    )
 ];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
@@ -918,7 +921,7 @@ let gridLengthToJs =
   | `repeat(n, x) =>
     "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")"
   | `minmax(a, b) =>
-    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(a) ++ ")";
+    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(b) ++ ")";
 
 let string_of_dimensions = dimensions =>
   dimensions |> List.map(gridLengthToJs) |> String.concat(" ");
