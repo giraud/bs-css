@@ -842,7 +842,7 @@ let string_of_dimension =
   | `minContent => "min-content"
   | `maxContent => "max-content"
   | `minmax(a, b) =>
-    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(a) ++ ")";
+    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(b) ++ ")";
 
 let width = x => d("width", string_of_dimension(x));
 let height = x => d("height", string_of_dimension(x));
