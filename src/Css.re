@@ -353,6 +353,7 @@ let label = label => `declaration(("label", label));
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
+
 type cascading = [ | `initial | `inherit_ | `unset];
 
 let initial = `initial;
@@ -1357,9 +1358,8 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
 
 /**
  * Text
- */
+ */ /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 type fontWeight = [
   | `num(int)
   | `thin
@@ -2002,9 +2002,7 @@ let animationTimingFunction = x =>
  * Selectors
  */
 
-let selector = (selector, rules) => `selector((selector, rules));
-
-/* MEDIA */
+let selector = (selector, rules) => `selector((selector, rules)) /* MEDIA */;
 
 let active = selector(":active");
 let after = selector("::after");

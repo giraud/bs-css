@@ -305,26 +305,13 @@ let wrap: [> | `wrap];
 let nowrap: [> | `nowrap];
 let wrapReverse: [> | `wrapReverse];
 
-let inline: [> | `inline];
-let block: [> | `block];
-let contents: [> | `contents];
 let flexBox: [> | `flex];
 let grid: [> | `grid];
+let inlineGrid: [> | `inlineGrid];
+let block: [> | `block];
+let inline: [> | `inline];
 let inlineBlock: [> | `inlineBlock];
 let inlineFlex: [> | `inlineFlex];
-let inlineGrid: [> | `inlineGrid];
-let inlineTable: [> | `inlineTable];
-let listItem: [> | `listItem];
-let runIn: [> | `runIn];
-let table: [> | `table];
-let tableCaption: [> | `tableCaption];
-let tableColumnGroup: [> | `tableColumnGroup];
-let tableHeaderGroup: [> | `tableHeaderGroup];
-let tableFooterGroup: [> | `tableFooterGroup];
-let tableRowGroup: [> | `tableRowGroup];
-let tableCell: [> | `tableCell];
-let tableColumn: [> | `tableColumn];
-let tableRow: [> | `tableRow];
 
 let absolute: [> | `absolute];
 let relative: [> | `relative];
@@ -445,26 +432,13 @@ let unsafe: (string, string) => rule;
 
 let display:
   [
-    | `inline
-    | `block
-    | `contents
     | `flex
-    | `grid
+    | `block
+    | `inline
     | `inlineBlock
     | `inlineFlex
+    | `grid
     | `inlineGrid
-    | `inlineTable
-    | `listItem
-    | `runIn
-    | `table
-    | `tableCaption
-    | `tableColumnGroup
-    | `tableHeaderGroup
-    | `tableFooterGroup
-    | `tableRowGroup
-    | `tableCell
-    | `tableColumn
-    | `tableRow
     | `none
     | cascading
   ] =>
@@ -522,11 +496,11 @@ let gridRowGap: length => rule;
 let gridGap: length => rule;
 
 let width: [ length | `auto] => rule;
-let height: [ length | `auto] => rule;
 let minWidth: [ length | `auto] => rule;
-let maxWidth: [ length | `none] => rule;
+let maxWidth: [ length | `auto] => rule;
+let height: [ length | `auto] => rule;
 let minHeight: [ length | `auto] => rule;
-let maxHeight: [ length | `none] => rule;
+let maxHeight: [ length | `auto] => rule;
 
 let margin: [ length | `auto] => rule;
 let margin2: (~v: [ length | `auto], ~h: [ length | `auto]) => rule;
@@ -753,9 +727,8 @@ let pointerEvents: [ | `auto | `none] => rule;
 
 /**
  * Text
- */
+ */ /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 type fontWeight = [
   | `num(int)
   | `thin
