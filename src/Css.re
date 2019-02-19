@@ -2,7 +2,9 @@ include Css_Colors;
 
 module Emotion = {
   type stylename = string;
+  type cache;
   [@bs.module "emotion"] external _make: Js.Json.t => stylename = "css";
+  [@bs.module "emotion"] external cache: cache = "";
   [@bs.module "emotion"] external injectGlobal: Js.Json.t => unit = "";
   [@bs.module "emotion"]
   external rawInjectGlobal: string => unit = "injectGlobal";
@@ -320,8 +322,10 @@ type rule = [
   | `shadow(string)
 ];
 type selector = [ | `selector(string, list(rule))];
-let empty = [];
+type cache = Emotion.cache;
 
+let empty = [];
+let cache = Emotion.cache;
 let merge = Emotion.mergeStyles;
 let global = (selector, rules: list(rule)) =>
   Emotion.injectGlobal(
