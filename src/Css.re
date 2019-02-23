@@ -2004,7 +2004,6 @@ let animationTimingFunction = x =>
 /**
  * Selectors
  */
-
 let selector = (selector: string, rules: list(rule)) =>
   `selector((selector, rules));
 
@@ -2043,8 +2042,9 @@ let firstLetter = selector("::first-letter");
 let selection = selector("::selection");
 let placeholder = selector("::placeholder");
 
-/* MEDIA */
-
+/**
+ * Media
+ */
 let media = (query, rules) => `selector(("@media " ++ query, rules));
 
 /**
