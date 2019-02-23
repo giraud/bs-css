@@ -973,6 +973,7 @@ let string_of_justify =
   | `center => "center"
   | `spaceAround => "space-around"
   | `spaceBetween => "space-between"
+  | `spaceEvenly => "space-evenly"
   | `stretch => "stretch";
 let justifyContent = x => d("justifyContent", string_of_justify(x));
 let justifySelf = x => d("justifySelf", string_of_justify(x));
