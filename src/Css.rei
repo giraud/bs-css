@@ -568,6 +568,7 @@ let alignContent:
     | `flexEnd
     | `spaceBetween
     | `spaceAround
+    | `spaceEvenly
   ] =>
   rule;
 let alignItems:
@@ -582,6 +583,7 @@ let justifyContent:
     | `flexEnd
     | `spaceBetween
     | `spaceAround
+    | `spaceEvenly
     | `stretch
   ] =>
   rule;
