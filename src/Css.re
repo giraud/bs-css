@@ -1360,7 +1360,9 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
  * Text
  */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+/**
+ * see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
+ */
 type fontWeight = [
   | `num(int)
   | `thin
@@ -2003,9 +2005,8 @@ let animationTimingFunction = x =>
  * Selectors
  */
 
-let selector = (selector, rules) => `selector((selector, rules));
-
-/* MEDIA */
+let selector = (selector: string, rules: list(rule)) =>
+  `selector((selector, rules));
 
 let active = selector(":active");
 let after = selector("::after");
@@ -2026,6 +2027,8 @@ let required = selector(":required");
 let visited = selector(":visited");
 let enabled = selector(":enabled");
 let noContent = selector(":empty");
+let nthChild = (pattern, rules) =>
+  selector(":nth-child(" ++ pattern ++ ")", rules);
 let default = selector(":default");
 let anyLink = selector(":any-link");
 let onlyChild = selector(":only-child");
@@ -2039,6 +2042,8 @@ let firstLine = selector("::first-line");
 let firstLetter = selector("::first-letter");
 let selection = selector("::selection");
 let placeholder = selector("::placeholder");
+
+/* MEDIA */
 
 let media = (query, rules) => `selector(("@media " ++ query, rules));
 

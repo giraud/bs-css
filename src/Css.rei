@@ -757,7 +757,9 @@ let pointerEvents: [ | `auto | `none] => rule;
  * Text
  */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+/**
+ * see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
+ */
 type fontWeight = [
   | `num(int)
   | `thin
@@ -938,9 +940,10 @@ let animationPlayState: [ | `paused | `running] => rule;
 let animationTimingFunction: timingFunction => rule;
 
 /**
- * selectors
+ * Selectors
  */
 let selector: (string, list(rule)) => rule;
+
 let active: list(rule) => rule;
 let after: list(rule) => rule;
 let before: list(rule) => rule;
@@ -960,6 +963,7 @@ let required: list(rule) => rule;
 let visited: list(rule) => rule;
 let enabled: list(rule) => rule;
 let noContent: list(rule) => rule;
+let nthChild: (string, list(rule)) => rule;
 let default: list(rule) => rule;
 let anyLink: list(rule) => rule;
 let onlyChild: list(rule) => rule;
@@ -974,12 +978,14 @@ let firstLetter: list(rule) => rule;
 let selection: list(rule) => rule;
 let placeholder: list(rule) => rule;
 
+/**
+ * Media
+ */
 let media: (string, list(rule)) => rule;
 
 /**
  * SVG
  */
-
 module SVG: {
   let fill: color => rule;
   let fillRule: [ | `nonzero | `evenodd] => rule;
