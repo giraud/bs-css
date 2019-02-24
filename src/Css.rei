@@ -270,6 +270,19 @@ module Calc: {
 };
 
 let size: (length, length) => [> | `size(length, length)];
+let resize:
+  [
+    | `none
+    | `both
+    | `horizontal
+    | `vertical
+    | `block
+    | `inline
+    | cascading
+  ] =>
+  rule;
+let horizontal: [> | `horizontal];
+let vertical: [> | `vertical];
 
 let solid: [> | `solid];
 let dotted: [> | `dotted];

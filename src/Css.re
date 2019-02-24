@@ -471,6 +471,25 @@ module Calc = {
 };
 let size = (x, y) => `size((x, y));
 
+let resize = x =>
+  d(
+    "resize",
+    switch (x) {
+    | `none => "none"
+    | `both => "both"
+    | `horizontal => "horizontal"
+    | `vertical => "vertical"
+    | `block => "block"
+    | `inline => "inline"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
+    },
+  );
+
+let horizontal = `horizontal;
+let vertical = `vertical;
+
 /**
  * Misc
  */
