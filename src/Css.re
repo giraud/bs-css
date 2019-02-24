@@ -12,23 +12,27 @@ module Emotion = {
   let mergeStyles: list(stylename) => stylename =
     stylenames => stylenames |> Array.of_list |> cx;
 
-  let rec makeDict = ruleset => {
-    let toJs = rule =>
-      switch (rule) {
-      | `declaration(name, value) when name == "content" => (
-          name,
-          Js.Json.string(value == "" ? "\"\"" : value),
-        )
-      | `declaration(name, value) => (name, Js.Json.string(value))
-      | `selector(name, ruleset) => (name, makeDict(ruleset))
-      | `shadow(value) => ("boxShadow", Js.Json.string(value))
-      | `transition(value) => ("transition", Js.Json.string(value))
-      | `animation(value) => ("animation", Js.Json.string(value))
-      };
-    ruleset |> List.map(toJs) |> Js.Dict.fromList |> Js.Json.object_;
-  };
-  let make = rules => rules |> makeDict |> _make;
+  let rec ruleToJs = rule =>
+    switch (rule) {
+    | `declaration(name, value) when name == "content" => (
+        name,
+        Js.Json.string(value == "" ? "\"\"" : value),
+      )
+    | `declaration(name, value) => (name, Js.Json.string(value))
+    | `selector(name, ruleset) => (name, makeJson(ruleset))
+    | `shadow(value) => ("boxShadow", Js.Json.string(value))
+    | `transition(value) => ("transition", Js.Json.string(value))
+    | `animation(value) => ("animation", Js.Json.string(value))
+    }
+
+  and makeJson = rules =>
+    List.map(ruleToJs, rules)->Js.Dict.fromList->Js.Json.object_;
+
+  let make = rules => rules->makeJson->_make;
 };
+
+let toJson = Emotion.makeJson;
+let style = Emotion.make;
 
 let join = (separator, strings) => {
   let rec run = (acc, strings) =>
@@ -321,7 +325,7 @@ let empty = [];
 let merge = Emotion.mergeStyles;
 let global = (selector, rules: list(rule)) =>
   Emotion.injectGlobal(
-    [(selector, Emotion.makeDict(rules))]
+    [(selector, Emotion.makeJson(rules))]
     ->Js.Dict.fromList
     ->Js.Json.object_,
   );
@@ -332,13 +336,11 @@ type animation = string;
 
 let keyframes = frames => {
   let addStop = (dict, (stop, rules)) => {
-    Js.Dict.set(dict, string_of_int(stop) ++ "%", Emotion.makeDict(rules));
+    Js.Dict.set(dict, string_of_int(stop) ++ "%", Emotion.makeJson(rules));
     dict;
   };
   Emotion.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
 };
-
-let style = Emotion.make;
 
 let d = (property, value) => `declaration((property, value));
 

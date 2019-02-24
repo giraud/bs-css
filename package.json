@@ -5,7 +5,9 @@
   "scripts": {
     "build": "bsb -make-world",
     "webpack": "webpack -w",
-    "start": "bsb -make-world -w"
+    "start": "bsb -make-world -w",
+    "test": "jest",
+    "testw": "jest --watchAll"
   },
   "keywords": [
     "emotion",
@@ -23,7 +25,9 @@
     "emotion": "^9.2.12"
   },
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.7",
     "bs-platform": "^4.0.14",
+    "jest": "^24.1.0",
     "reason-react": "^0.5.3",
     "webpack": "^3.12.0"
   }
