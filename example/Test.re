@@ -1249,6 +1249,27 @@ let tests =
          )}
       </p>
     </Section>
+    <Section name="resize">
+      <textarea className=Css.(style([resize(none)]))>
+        "Can't resize textarea"->text
+      </textarea>
+      <div
+        className=Css.(
+          style([
+            marginLeft(px(20)),
+            overflow(scroll),
+            resize(horizontal),
+          ])
+        )>
+        "Resizable div (horizontal)"->text
+      </div>
+      <div
+        className=Css.(
+          style([marginLeft(px(20)), overflow(scroll), resize(vertical)])
+        )>
+        "Resizable div (vertical)"->text
+      </div>
+    </Section>
     <Section name="content">
       <a
         href="https://github.com/SentiaAnalytics/bs-css"
