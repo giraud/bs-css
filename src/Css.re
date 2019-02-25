@@ -580,6 +580,7 @@ let skewY = a => `skewY(a);
 let solid = `solid;
 let spaceAround = `spaceAround;
 let spaceBetween = `spaceBetween;
+let spaceEvenly = `spaceEvenly;
 let static = `static;
 let stepEnd = `stepEnd;
 let steps = (i, dir) => `steps((i, dir));

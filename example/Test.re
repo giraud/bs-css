@@ -683,6 +683,22 @@ let tests =
           />
           <div className={Css.style(box)} />
         </div>
+        <div
+          className=Css.(
+            style([
+              display(flexBox),
+              flexDirection(row),
+              background(gray),
+              alignItems(stretch),
+              justifyContent(spaceEvenly),
+            ])
+          )>
+          <div className={Css.style(box)} />
+          <div
+            className=Css.(style(box @ [height(px(50)), width(px(50))]))
+          />
+          <div className={Css.style(box)} />
+        </div>
       </div>
     </Section>
     <Section name="float">

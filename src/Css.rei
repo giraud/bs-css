@@ -351,6 +351,7 @@ let center: [> | `center];
 let stretch: [> | `stretch];
 let spaceBetween: [> | `spaceBetween];
 let spaceAround: [> | `spaceAround];
+let spaceEvenly: [> | `spaceEvenly];
 let baseline: [> | `baseline];
 
 let forwards: [> | `forwards];
