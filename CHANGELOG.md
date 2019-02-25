@@ -1,3 +1,9 @@
+## 8.0.2 - 2019-02-25
+
+- :rocket: [#119](https://github.com/SentiaAnalytics/bs-css/issues/119) - Missing resize attribute
+- :rocket: [#117](https://github.com/SentiaAnalytics/bs-css/issues/117) - Add `spaceEvenly` for justifyContent and alignContent
+- :rocket: [#113](https://github.com/SentiaAnalytics/bs-css/pull/113) - Minmax in grid implementation
+
 ## 8.0.1 - 2019-01-31
 
 - :bug: [#108](https://github.com/SentiaAnalytics/bs-css/issues/108) - Wrong value for minWidth/maxWidth
