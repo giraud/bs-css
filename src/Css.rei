@@ -238,12 +238,13 @@ type length = [
 ];
 
 type repeatValue = [ | `autoFill | `autoFit | `num(int)];
+type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
 type trackLength = [
   length
   | `fr(float)
   | `minContent
   | `maxContent
-  | `minmax(length, length)
+  | `minmax(minmax, minmax)
 ];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
