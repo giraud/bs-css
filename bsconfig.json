@@ -5,7 +5,7 @@
   },
   "refmt": 3,
   "bs-dev-dependencies": [
-    "reason-react"
+    "reason-react", "@glennsl/bs-jest"
   ],
   "bsc-flags": [
     "-bs-super-errors",
@@ -20,6 +20,10 @@
     },
     {
       "dir": "example",
+      "type": "dev"
+    },
+    {
+      "dir": "__tests__",
       "type": "dev"
     }
   ]
