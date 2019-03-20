@@ -1,3 +1,8 @@
+## 8.0.3 - 2019-03-20
+
+- :rocket: [#118](https://github.com/SentiaAnalytics/bs-css/issues/118) - Minmax should allow fr
+- :rocket: Add a toJson function to convert a list of rules to a json object
+
 ## 8.0.2 - 2019-02-25
 
 - :rocket: [#119](https://github.com/SentiaAnalytics/bs-css/issues/119) - Missing resize attribute
