@@ -843,6 +843,32 @@ let paddingRight = x => d("paddingRight", string_of_length(x));
 let paddingTop = x => d("paddingTop", string_of_length(x));
 let paddingBottom = x => d("paddingBottom", string_of_length(x));
 
+let string_of_minmax =
+  fun
+  | `auto => "auto"
+  | `calc(`add, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+  | `calc(`sub, a, b) =>
+    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+  | `ch(x) => string_of_float(x) ++ "ch"
+  | `cm(x) => string_of_float(x) ++ "cm"
+  | `em(x) => string_of_float(x) ++ "em"
+  | `ex(x) => string_of_float(x) ++ "ex"
+  | `mm(x) => string_of_float(x) ++ "mm"
+  | `percent(x) => string_of_float(x) ++ "%"
+  | `pt(x) => string_of_int(x) ++ "pt"
+  | `px(x) => string_of_int(x) ++ "px"
+  | `pxFloat(x) => string_of_float(x) ++ "px"
+  | `rem(x) => string_of_float(x) ++ "rem"
+  | `vh(x) => string_of_float(x) ++ "vh"
+  | `vmax(x) => string_of_float(x) ++ "vmax"
+  | `vmin(x) => string_of_float(x) ++ "vmin"
+  | `vw(x) => string_of_float(x) ++ "vw"
+  | `fr(x) => string_of_float(x) ++ "fr"
+  | `zero => "0"
+  | `minContent => "min-content"
+  | `maxContent => "max-content";
+
 let string_of_dimension =
   fun
   | `auto => "auto"
@@ -870,7 +896,7 @@ let string_of_dimension =
   | `minContent => "min-content"
   | `maxContent => "max-content"
   | `minmax(a, b) =>
-    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(b) ++ ")";
+    "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
 
 let width = x => d("width", string_of_dimension(x));
 let height = x => d("height", string_of_dimension(x));
@@ -908,12 +934,14 @@ let repeatValueToJs =
   | `autoFit => "auto-fit"
   | `num(x) => x->string_of_int;
 
+type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
+
 type trackLength = [
   length
   | `fr(float)
   | `minContent
   | `maxContent
-  | `minmax(length, length)
+  | `minmax(minmax, minmax)
 ];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
@@ -945,7 +973,7 @@ let gridLengthToJs =
   | `repeat(n, x) =>
     "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")"
   | `minmax(a, b) =>
-    "minmax(" ++ string_of_length(a) ++ "," ++ string_of_length(b) ++ ")";
+    "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
 
 let string_of_dimensions = dimensions =>
   dimensions |> List.map(gridLengthToJs) |> String.concat(" ");
