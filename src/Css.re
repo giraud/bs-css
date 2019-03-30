@@ -21,6 +21,7 @@ module Emotion = {
     | `declaration(name, value) => (name, Js.Json.string(value))
     | `selector(name, ruleset) => (name, makeJson(ruleset))
     | `shadow(value) => ("boxShadow", Js.Json.string(value))
+    | `textShadow(value) => ("textShadow", Js.Json.string(value))
     | `transition(value) => ("transition", Js.Json.string(value))
     | `animation(value) => ("animation", Js.Json.string(value))
     }
@@ -318,6 +319,7 @@ type rule = [
   | `animation(string)
   | `transition(string)
   | `shadow(string)
+  | `textShadow(string)
 ];
 type selector = [ | `selector(string, list(rule))];
 let empty = [];
@@ -1611,9 +1613,9 @@ let textOverflow = x =>
     },
   );
 
-let textShadow = (~x=zero, ~y=zero, ~blur=zero, color) =>
-  d(
-    "textShadow",
+let textShadow =
+    (~x=zero, ~y=zero, ~blur=zero, color) =>
+  `textShadow(
     string_of_length(x)
     ++ " "
     ++ string_of_length(y)
@@ -1622,6 +1624,12 @@ let textShadow = (~x=zero, ~y=zero, ~blur=zero, color) =>
     ++ " "
     ++ string_of_color(color),
   );
+
+let string_of_textShadow =
+  fun
+  | `textShadow(s) => s;
+let textShadows = textShadows =>
+  d("textShadow", textShadows |> List.map(string_of_textShadow) |> join(", "));
 
 let textTransform = x =>
   d(
