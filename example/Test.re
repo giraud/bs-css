@@ -55,7 +55,7 @@ let miniBox =
     margin(px(1)),
   ];
 
-/* https://github.com/SentiaAnalytics/bs-css/issues/86 */
+// https://github.com/SentiaAnalytics/bs-css/issues/86
 let mergedStyles =
   Css.(
     merge([

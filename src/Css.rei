@@ -774,7 +774,7 @@ let pointerEvents: [ | `auto | `none] => rule;
  * Text
  */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+// see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
 type fontWeight = [
   | `num(int)
   | `thin
