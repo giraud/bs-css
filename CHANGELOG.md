@@ -1,3 +1,10 @@
+## 8.0.4 - 2019-04-04
+
+- :rocket: [#125](https://github.com/SentiaAnalytics/bs-css/pull/125) - Add textShadows
+- :house: webpack is replaced by parcel, zero config local server
+
+contributors: [@Freddy03h](https://github.com/Freddy03h)
+
 ## 8.0.3 - 2019-03-20
 
 - :rocket: [#118](https://github.com/SentiaAnalytics/bs-css/issues/118) - Minmax should allow fr
