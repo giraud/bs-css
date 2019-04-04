@@ -4,6 +4,7 @@ type rule = [
   | `animation(string)
   | `transition(string)
   | `shadow(string)
+  | `textShadow(string)
 ];
 
 let empty: list(rule);
@@ -773,7 +774,7 @@ let pointerEvents: [ | `auto | `none] => rule;
  * Text
  */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+// see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
 type fontWeight = [
   | `num(int)
   | `thin
@@ -826,7 +827,17 @@ let textDecorationStyle:
 let textIndent: length => rule;
 let textOverflow:
   [ | `clip | `ellipsis | `string(string) | cascading] => rule;
-let textShadow: (~x: length=?, ~y: length=?, ~blur: length=?, color) => rule;
+
+let textShadow:
+  (
+    ~x: length=?,
+    ~y: length=?,
+    ~blur: length=?,
+    color
+  ) =>
+  [> | `textShadow(string)];
+let textShadows: list([ | `textShadow(string)]) => rule;
+
 let textTransform:
   [ | `uppercase | `lowercase | `capitalize | `none | cascading] => rule;
 let userSelect: [ | `auto | `all | `text | `none | cascading] => rule;

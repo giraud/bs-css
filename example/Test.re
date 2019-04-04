@@ -55,7 +55,7 @@ let miniBox =
     margin(px(1)),
   ];
 
-/* https://github.com/SentiaAnalytics/bs-css/issues/86 */
+// https://github.com/SentiaAnalytics/bs-css/issues/86
 let mergedStyles =
   Css.(
     merge([
@@ -1119,6 +1119,10 @@ let tests =
             textIndent(px(10)),
             textOverflow(clip),
             textShadow(~y=px(3), ~blur=px(2), black),
+            textShadows([
+              textShadow(~y=px(3), ~blur=px(2), black),
+              textShadow(~x=px(3), green),
+            ]),
             textTransform(capitalize),
             verticalAlign(sub),
             whiteSpace(normal),
