@@ -11,17 +11,6 @@ let fontItem =
     borderRight(px(1), solid, black),
   ];
 
-let arialNarrow =
-  Css.(
-    fontFace(
-      ~fontFamily="Arial FontFace Test",
-      ~src=[localUrl("Arial Narrow")],
-      ~fontStyle=normal,
-      ~fontWeight=`num(500),
-      (),
-    )
-  );
-
 let spin =
   Css.(
     keyframes([
@@ -67,47 +56,6 @@ let mergedStyles =
       ]),
     ])
   );
-
-let rowLayout = Css.[display(flexBox), flexDirection(row), flexWrap(wrap)];
-
-let section =
-  Css.[
-    selector(
-      "& > h1",
-      [
-        fontFamily(arialNarrow),
-        fontSize(px(32)),
-        fontWeight(`num(300)),
-        marginTop(zero),
-      ],
-    ),
-    position(relative),
-    background(hex("f5f5f5")),
-    margin(px(20)),
-    padding(px(10)),
-    boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)),
-    boxShadows([
-      boxShadow(~y=px(1), ~blur=px(5), rgba(0, 0, 0, 0.3)),
-      boxShadow(
-        ~y=px(1),
-        ~blur=px(10),
-        ~inset=true,
-        rgba(255, 255, 255, 0.5),
-      ),
-    ]),
-  ];
-
-module Section = {
-  let component = ReasonReact.statelessComponent("Section");
-  let make = (~name, children) => {
-    ...component,
-    render: _ =>
-      <section className={Css.style(section)}>
-        <h1> {text(name)} </h1>
-        <div className={Css.style(rowLayout)}> ...children </div>
-      </section>,
-  };
-};
 
 let differentHeightLengths =
   Css.(
