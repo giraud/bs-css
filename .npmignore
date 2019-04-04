@@ -1,5 +1,6 @@
 .merlin
 /.idea
+/.cache
 /.vscode
 .editorconfig
 *.tgz
@@ -8,3 +9,4 @@ webpack.config.js
 /example
 /lib/bs
 /lib/js/example
+/dist

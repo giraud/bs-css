@@ -4,7 +4,8 @@
   "description": "BuckleScript bindings for emotion",
   "scripts": {
     "build": "bsb -make-world",
-    "webpack": "webpack -w",
+    "predev": "npm run build",
+    "dev": "parcel example/index.html",
     "start": "bsb -make-world -w",
     "test": "jest",
     "testw": "jest --watchAll"
@@ -28,7 +29,7 @@
     "@glennsl/bs-jest": "^0.4.8",
     "bs-platform": "^5.0.0",
     "jest": "^24.7.1",
-    "reason-react": "^0.6.0",
-    "webpack": "^3.12.0"
+    "parcel-bundler": "^1.12.3",
+    "reason-react": "^0.6.0"
   }
 }
