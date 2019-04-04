@@ -1412,7 +1412,7 @@ let outlineOffset = x => d("outlineOffset", string_of_length(x));
  * Text
  */
 
-// see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
+/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 type fontWeight = [
   | `num(int)
   | `thin
@@ -1613,8 +1613,7 @@ let textOverflow = x =>
     },
   );
 
-let textShadow =
-    (~x=zero, ~y=zero, ~blur=zero, color) =>
+let textShadow = (~x=zero, ~y=zero, ~blur=zero, color) =>
   `textShadow(
     string_of_length(x)
     ++ " "
@@ -1629,7 +1628,10 @@ let string_of_textShadow =
   fun
   | `textShadow(s) => s;
 let textShadows = textShadows =>
-  d("textShadow", textShadows |> List.map(string_of_textShadow) |> join(", "));
+  d(
+    "textShadow",
+    textShadows |> List.map(string_of_textShadow) |> join(", "),
+  );
 
 let textTransform = x =>
   d(

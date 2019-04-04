@@ -774,7 +774,7 @@ let pointerEvents: [ | `auto | `none] => rule;
  * Text
  */
 
-// see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
+/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
 type fontWeight = [
   | `num(int)
   | `thin
@@ -829,12 +829,7 @@ let textOverflow:
   [ | `clip | `ellipsis | `string(string) | cascading] => rule;
 
 let textShadow:
-  (
-    ~x: length=?,
-    ~y: length=?,
-    ~blur: length=?,
-    color
-  ) =>
+  (~x: length=?, ~y: length=?, ~blur: length=?, color) =>
   [> | `textShadow(string)];
 let textShadows: list([ | `textShadow(string)]) => rule;
 
