@@ -562,7 +562,7 @@ let tests =
             className=Css.(
               style(
                 box
-                @ [order(1), flexGrow(1.), flexShrink(1), flexBasis(auto)],
+                @ [order(1), flexGrow(1.), flexShrink(1.0), flexBasis(auto)],
               )
             )
           />

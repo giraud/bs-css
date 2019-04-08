@@ -496,7 +496,7 @@ let right: length => rule;
 
 let flex: int => rule;
 let flexGrow: float => rule;
-let flexShrink: int => rule;
+let flexShrink: float => rule;
 let flexBasis:
   [
     length

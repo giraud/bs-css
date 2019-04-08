@@ -712,7 +712,7 @@ let right = x => d("right", string_of_length(x));
 
 let flex = x => d("flex", string_of_int(x));
 let flexGrow = x => d("flexGrow", string_of_float(x));
-let flexShrink = x => d("flexShrink", string_of_int(x));
+let flexShrink = x => d("flexShrink", string_of_float(x));
 let flexBasis = x =>
   d(
     "flexBasis",
