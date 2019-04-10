@@ -309,6 +309,40 @@ module Converter = {
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset";
+
+  let string_of_flex =
+    fun
+    | `auto => "auto"
+    | `initial => "initial"
+    | `none => "none"
+    | `num(n) => string_of_float(n);
+  let string_of_flexBasis =
+    fun
+    | `calc(`add, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `ch(x) => string_of_float(x) ++ "ch"
+    | `cm(x) => string_of_float(x) ++ "cm"
+    | `em(x) => string_of_float(x) ++ "em"
+    | `ex(x) => string_of_float(x) ++ "ex"
+    | `mm(x) => string_of_float(x) ++ "mm"
+    | `percent(x) => string_of_float(x) ++ "%"
+    | `pt(x) => string_of_int(x) ++ "pt"
+    | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
+    | `rem(x) => string_of_float(x) ++ "rem"
+    | `vh(x) => string_of_float(x) ++ "vh"
+    | `vmax(x) => string_of_float(x) ++ "vmax"
+    | `vmin(x) => string_of_float(x) ++ "vmin"
+    | `vw(x) => string_of_float(x) ++ "vw"
+    | `zero => "0"
+    | `auto => "auto"
+    | `fill => "fill"
+    | `content => "content"
+    | `maxContent => "max-content"
+    | `minContent => "min-content"
+    | `fitContent => "fit-content";
 };
 include Converter;
 
@@ -710,40 +744,19 @@ let bottom = x => d("bottom", string_of_length(x));
 let left = x => d("left", string_of_length(x));
 let right = x => d("right", string_of_length(x));
 
-let flex = x => d("flex", string_of_int(x));
-let flexGrow = x => d("flexGrow", string_of_float(x));
-let flexShrink = x => d("flexShrink", string_of_int(x));
-let flexBasis = x =>
+let flex = x => d("flex", string_of_flex(x));
+let flex3 = (~grow, ~shrink, ~basis) =>
   d(
-    "flexBasis",
-    switch (x) {
-    | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
-    | `zero => "0"
-    | `auto => "auto"
-    | `fill => "fill"
-    | `content => "content"
-    | `maxContent => "max-content"
-    | `minContent => "min-content"
-    | `fitContent => "fit-content"
-    },
+    "flex",
+    string_of_float(grow)
+    ++ " "
+    ++ string_of_float(shrink)
+    ++ " "
+    ++ string_of_flexBasis(basis),
   );
+let flexGrow = x => d("flexGrow", string_of_float(x));
+let flexShrink = x => d("flexShrink", string_of_float(x));
+let flexBasis = x => d("flexBasis", string_of_flexBasis(x));
 
 let flexDirection = x =>
   d(

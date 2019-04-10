@@ -494,9 +494,24 @@ let bottom: length => rule;
 let left: length => rule;
 let right: length => rule;
 
-let flex: int => rule;
+let flex: [ | `auto | `initial | `none | `num(float)] => rule;
+let flex3:
+  (
+    ~grow: float,
+    ~shrink: float,
+    ~basis: [
+              length
+              | `auto
+              | `fill
+              | `content
+              | `maxContent
+              | `minContent
+              | `fitContent
+            ]
+  ) =>
+  rule;
 let flexGrow: float => rule;
-let flexShrink: int => rule;
+let flexShrink: float => rule;
 let flexBasis:
   [
     length
