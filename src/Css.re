@@ -1,5 +1,17 @@
 include Css_Colors;
 
+type rule = [
+  | `selector(string, list(rule))
+  | `declaration(string, string)
+  | `animation(string)
+  | `transition(string)
+  | `shadow(string)
+  | `textShadow(string)
+];
+
+type selector = [ | `selector(string, list(rule))];
+type declaration = [ | `declaration(string, string)];
+
 module Emotion = {
   type stylename = string;
   type cache;
@@ -314,16 +326,6 @@ module Converter = {
 };
 include Converter;
 
-type declaration = [ | `declaration(string, string)];
-type rule = [
-  | `selector(string, list(rule))
-  | `declaration(string, string)
-  | `animation(string)
-  | `transition(string)
-  | `shadow(string)
-  | `textShadow(string)
-];
-type selector = [ | `selector(string, list(rule))];
 type cache = Emotion.cache;
 
 let empty = [];
