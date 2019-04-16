@@ -201,7 +201,7 @@ Nothing is lost and everything ends up in the final stylesheet where normal over
 ## Development
 
 ```sh
-npm run start
+npm run dev
 ```
 
 ## Where is the documentation?

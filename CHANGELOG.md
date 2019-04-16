@@ -1,7 +1,16 @@
+## 8.0.4 - 2019-04-04
+
+- :rocket: [#125](https://github.com/SentiaAnalytics/bs-css/pull/125) - Add textShadows
+- :house: webpack is replaced by parcel, zero config local server
+
+contributors: [@Freddy03h](https://github.com/Freddy03h)
+
 ## 8.0.3 - 2019-03-20
 
 - :rocket: [#118](https://github.com/SentiaAnalytics/bs-css/issues/118) - Minmax should allow fr
 - :rocket: Add a toJson function to convert a list of rules to a json object
+
+contributors: [@JakubMarkiewicz](https://github.com/JakubMarkiewicz) 
 
 ## 8.0.2 - 2019-02-25
 
@@ -9,10 +18,14 @@
 - :rocket: [#117](https://github.com/SentiaAnalytics/bs-css/issues/117) - Add `spaceEvenly` for justifyContent and alignContent
 - :rocket: [#113](https://github.com/SentiaAnalytics/bs-css/pull/113) - Minmax in grid implementation
 
+contributors: [@JakubMarkiewicz](https://github.com/JakubMarkiewicz), [@lucasweng](https://github.com/lucasweng), [@wegry](https://github.com/wegry) 
+
 ## 8.0.1 - 2019-01-31
 
 - :bug: [#108](https://github.com/SentiaAnalytics/bs-css/issues/108) - Wrong value for minWidth/maxWidth
 - :rocket: [#111](https://github.com/SentiaAnalytics/bs-css/pull/111) - Fill all allowed display values
+
+contributors: [@sean-clayton](https://github.com/sean-clayton), [@c19](https://github.com/c19)
 
 ## 8.0.0 - 2018-12-18
 
@@ -47,4 +60,4 @@ than before, you can use `List.concat` instead or `@` operator.
 
 #### Contributors
 
-Big thanks to @baldurh and @wegry for their work on emotion.
+Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
