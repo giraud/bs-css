@@ -23,7 +23,7 @@
     "url": "git+https://github.com/SentiaAnalytics/bs-css.git"
   },
   "dependencies": {
-    "emotion": "^9.2.12"
+    "emotion": "^10.0.7"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.8",

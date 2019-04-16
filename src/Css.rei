@@ -7,10 +7,13 @@ type rule = [
   | `textShadow(string)
 ];
 
+type cache;
+
 let empty: list(rule);
 let merge: list(string) => string;
 let style: list(rule) => string;
 let toJson: list(rule) => Js.Json.t;
+let cache: cache;
 
 let global: (string, list(rule)) => unit;
 let insertRule: string => unit;
