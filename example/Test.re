@@ -1326,5 +1326,9 @@ let tests =
           )
         )
       />
+      <svg height="0" className=Css.(style([display(`none)]))>
+        <filter id="f1"> <feGaussianBlur stdDeviation="3" /> </filter>
+      </svg>
+      <div className=Css.(style(box @ [filter([`url("#f1")])])) />
     </Section>
   </div>;

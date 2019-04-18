@@ -1100,6 +1100,9 @@ type filter = [
   | `opacity(float)
   | `saturate(float)
   | `sepia(float)
+  | `url(string)
+  | `none
+  | cascading
 ];
 
 let string_of_filter =
@@ -1122,7 +1125,12 @@ let string_of_filter =
   | `invert(v) => "invert(" ++ string_of_float(v) ++ "%)"
   | `opacity(v) => "opacity(" ++ string_of_float(v) ++ "%)"
   | `saturate(v) => "saturate(" ++ string_of_float(v) ++ "%)"
-  | `sepia(v) => "sepia(" ++ string_of_float(v) ++ "%)";
+  | `sepia(v) => "sepia(" ++ string_of_float(v) ++ "%)"
+  | `url(v) => "url(" ++ v ++ ")"
+  | `initial => "initial"
+  | `inherit_ => "inherit"
+  | `unset => "unset"
+  | `none => "none";
 
 let filter = x => d("filter", x |> List.map(string_of_filter) |> join(" "));
 /**

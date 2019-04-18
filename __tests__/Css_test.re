@@ -54,6 +54,11 @@ describe("Filter", () =>
         ),
         r(Css.filter([`grayscale(10.), `hueRotate(`deg(180))])),
         r(Css.filter([`saturate(10.), `sepia(100.)])),
+        r(Css.filter([`none])),
+        r(Css.filter([`inherit_])),
+        r(Css.filter([`initial])),
+        r(Css.filter([`unset])),
+        r(Css.filter([`url("myurl")])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -63,6 +68,11 @@ describe("Filter", () =>
          {"filter": "contrast(30%) drop-shadow(5px 6px 7px rgb(255, 0, 0))"},
          {"filter": "grayscale(10%) hue-rotate(180deg)"},
          {"filter": "saturate(10%) sepia(100%)"},
+         {"filter": "none"},
+         {"filter": "inherit"},
+         {"filter": "initial"},
+         {"filter": "unset"},
+         {"filter": "url(myurl)"},
        ))
   )
 );

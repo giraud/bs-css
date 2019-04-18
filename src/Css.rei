@@ -784,6 +784,9 @@ type filter = [
   | `opacity(float)
   | `saturate(float)
   | `sepia(float)
+  | `url(string)
+  | `none
+  | cascading
 ];
 
 let filter: list(filter) => rule;
