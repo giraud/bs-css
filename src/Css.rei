@@ -773,6 +773,21 @@ let outlineOffset: length => rule;
 
 let pointerEvents: [ | `auto | `none] => rule;
 
+type filter = [
+  | `blur(length)
+  | `brightness(float)
+  | `contrast(float)
+  | `dropShadow(length, length, length, color)
+  | `grayscale(float)
+  | `hueRotate(angle)
+  | `invert(float)
+  | `opacity(float)
+  | `saturate(float)
+  | `sepia(float)
+];
+
+let filter: list(filter) => rule;
+
 /**
  * Text
  */

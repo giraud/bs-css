@@ -1278,4 +1278,53 @@ let tests =
     <Section name="merging style names">
       <button className=mergedStyles> {text("Merged")} </button>
     </Section>
+    <Section name="filter">
+      <div className=Css.(style(box @ [filter([`blur(`px(10))])])) />
+      <div className=Css.(style(box @ [filter([`brightness(50.)])])) />
+      <div className=Css.(style(box @ [filter([`contrast(50.)])])) />
+      <div
+        className=Css.(
+          style(
+            box
+            @ [
+              filter([
+                `dropShadow((
+                  `px(3),
+                  `px(3),
+                  `px(3),
+                  `rgb((200, 100, 100)),
+                )),
+              ]),
+            ],
+          )
+        )
+      />
+      <div className=Css.(style(box @ [filter([`grayscale(50.)])])) />
+      <div
+        className=Css.(style(box @ [filter([`hueRotate(`deg(180))])]))
+      />
+      <div className=Css.(style(box @ [filter([`invert(50.)])])) />
+      <div className=Css.(style(box @ [filter([`opacity(50.)])])) />
+      <div className=Css.(style(box @ [filter([`saturate(50.)])])) />
+      <div className=Css.(style(box @ [filter([`sepia(50.)])])) />
+      <div
+        className=Css.(
+          style(
+            box
+            @ [
+              filter([
+                `sepia(50.),
+                `saturate(50.),
+                `dropShadow((
+                  `px(3),
+                  `px(3),
+                  `px(3),
+                  `rgb((200, 100, 100)),
+                )),
+              ]),
+            ],
+          )
+        )
+      />
+    </Section>
   </div>;

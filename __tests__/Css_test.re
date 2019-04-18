@@ -39,3 +39,30 @@ describe("Label", () => {
     expect(style([label("theName")])) |> toContainString("theName")
   );
 });
+
+describe("Filter", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(Css.filter([`opacity(10.), `invert(20.)])),
+        r(Css.filter([`blur(`px(20)), `brightness(20.)])),
+        r(
+          Css.filter([
+            `contrast(30.),
+            `dropShadow((`px(5), `px(6), `px(7), `rgb((255, 0, 0)))),
+          ]),
+        ),
+        r(Css.filter([`grayscale(10.), `hueRotate(`deg(180))])),
+        r(Css.filter([`saturate(10.), `sepia(100.)])),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"filter": "opacity(10%) invert(20%)"},
+         {"filter": "blur(20px) brightness(20%)"},
+         {"filter": "contrast(30%) drop-shadow(5px 6px 7px rgb(255, 0, 0))"},
+         {"filter": "grayscale(10%) hue-rotate(180deg)"},
+         {"filter": "saturate(10%) sepia(100%)"},
+       ))
+  )
+);
