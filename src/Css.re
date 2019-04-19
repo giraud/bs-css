@@ -1089,6 +1089,50 @@ let columnCount = x =>
     },
   );
 
+type filter = [
+  | `blur(length)
+  | `brightness(float)
+  | `contrast(float)
+  | `dropShadow(length, length, length, color)
+  | `grayscale(float)
+  | `hueRotate(angle)
+  | `invert(float)
+  | `opacity(float)
+  | `saturate(float)
+  | `sepia(float)
+  | `url(string)
+  | `none
+  | cascading
+];
+
+let string_of_filter =
+  fun
+  | `blur(v) => "blur(" ++ string_of_length(v) ++ ")"
+  | `brightness(v) => "brightness(" ++ string_of_float(v) ++ "%)"
+  | `contrast(v) => "contrast(" ++ string_of_float(v) ++ "%)"
+  | `dropShadow(a, b, c, d) =>
+    "drop-shadow("
+    ++ string_of_length(a)
+    ++ " "
+    ++ string_of_length(b)
+    ++ " "
+    ++ string_of_length(c)
+    ++ " "
+    ++ Converter.string_of_color(d)
+    ++ ")"
+  | `grayscale(v) => "grayscale(" ++ string_of_float(v) ++ "%)"
+  | `hueRotate(v) => "hue-rotate(" ++ Converter.string_of_angle(v) ++ ")"
+  | `invert(v) => "invert(" ++ string_of_float(v) ++ "%)"
+  | `opacity(v) => "opacity(" ++ string_of_float(v) ++ "%)"
+  | `saturate(v) => "saturate(" ++ string_of_float(v) ++ "%)"
+  | `sepia(v) => "sepia(" ++ string_of_float(v) ++ "%)"
+  | `url(v) => "url(" ++ v ++ ")"
+  | `initial => "initial"
+  | `inherit_ => "inherit"
+  | `unset => "unset"
+  | `none => "none";
+
+let filter = x => d("filter", x |> List.map(string_of_filter) |> join(" "));
 /**
  * Style
  */
