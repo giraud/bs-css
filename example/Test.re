@@ -562,7 +562,21 @@ let tests =
             className=Css.(
               style(
                 box
-                @ [order(1), flexGrow(1.), flexShrink(1), flexBasis(auto)],
+                @ [
+                  order(1),
+                  flexGrow(1.),
+                  flexShrink(1.),
+                  flexBasis(auto),
+                ],
+              )
+            )
+          />
+          <div className=Css.(style(box @ [flex(none)])) />
+          <div
+            className=Css.(
+              style(
+                box
+                @ [order(1), flex3(~grow=1.5, ~shrink=0.8, ~basis=100->px)],
               )
             )
           />
