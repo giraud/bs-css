@@ -31,9 +31,9 @@ let initial: [> | `initial];
 let inherit_: [> | `inherit_];
 let unset: [> | `unset];
 
-type angle = [ | `deg(int) | `rad(float) | `grad(float) | `turn(float)];
+type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
 
-let deg: int => [> | `deg(int)];
+let deg: float => [> | `deg(float)];
 let rad: float => [> | `rad(float)];
 let grad: float => [> | `grad(float)];
 let turn: float => [> | `turn(float)];

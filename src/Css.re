@@ -65,7 +65,7 @@ let string_of_int = Js.Int.toString;
 module Converter = {
   let string_of_angle =
     fun
-    | `deg(x) => string_of_int(x) ++ "deg"
+    | `deg(x) => string_of_float(x) ++ "deg"
     | `rad(x) => string_of_float(x) ++ "rad"
     | `grad(x) => string_of_float(x) ++ "grad"
     | `turn(x) => string_of_float(x) ++ "turn";
@@ -404,7 +404,7 @@ let initial = `initial;
 let inherit_ = `inherit_;
 let unset = `unset;
 
-type angle = [ | `deg(int) | `rad(float) | `grad(float) | `turn(float)];
+type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
 
 let deg = x => `deg(x);
 let rad = x => `rad(x);

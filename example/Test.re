@@ -14,8 +14,8 @@ let fontItem =
 let spin =
   Css.(
     keyframes([
-      (0, [transform(rotate(deg(0)))]),
-      (100, [transform(rotate(deg(360)))]),
+      (0, [transform(rotate(deg(0.)))]),
+      (100, [transform(rotate(deg(360.)))]),
     ])
   );
 
@@ -84,7 +84,7 @@ let differentHeightLengths =
 let tests =
   <div className=Css.(style([background(hex("f5f5f5"))]))>
     <Section name="angles">
-      <div className=Css.(style(box @ [transform(rotate(deg(45)))])) />
+      <div className=Css.(style(box @ [transform(rotate(deg(45.)))])) />
       <div
         className=Css.(style(box @ [transform(rotate(rad(3.1415)))]))
       />
@@ -278,7 +278,7 @@ let tests =
             box
             @ [
               background(
-                linearGradient(deg(45), [(0, red), (100, blue)]),
+                linearGradient(deg(45.), [(0, red), (100, blue)]),
               ),
             ],
           )
@@ -290,7 +290,7 @@ let tests =
             box
             @ [
               background(
-                repeatingLinearGradient(deg(45), [(0, red), (10, blue)]),
+                repeatingLinearGradient(deg(45.), [(0, red), (10, blue)]),
               ),
             ],
           )
@@ -821,7 +821,7 @@ let tests =
               backgroundColor(rgb(0, 0, 255)),
               backgroundImage(
                 linearGradient(
-                  deg(45),
+                  deg(45.),
                   [(0, green), (50, red), (100, yellow)],
                 ),
               ),
@@ -989,7 +989,7 @@ let tests =
       <div
         className=Css.(
           style(
-            box @ [perspective(px(500)), transform(rotate(deg(10)))],
+            box @ [perspective(px(500)), transform(rotate(deg(10.)))],
           )
         )
       />
@@ -1000,7 +1000,7 @@ let tests =
             @ [
               transforms([
                 translate(px(10), pct(10.)),
-                skew(deg(10), deg(10)),
+                skew(deg(10.), deg(10.)),
               ]),
             ],
           )
@@ -1011,7 +1011,7 @@ let tests =
           style(
             box
             @ [
-              transform(rotate(deg(19))),
+              transform(rotate(deg(19.))),
               transformOrigin(pct(50.), pct(50.)),
               transformStyle(`preserve3d),
               perspective(px(900)),
@@ -1315,7 +1315,7 @@ let tests =
       />
       <div className=Css.(style(box @ [filter([`grayscale(50.)])])) />
       <div
-        className=Css.(style(box @ [filter([`hueRotate(`deg(180))])]))
+        className=Css.(style(box @ [filter([`hueRotate(`deg(180.))])]))
       />
       <div className=Css.(style(box @ [filter([`invert(50.)])])) />
       <div className=Css.(style(box @ [filter([`opacity(50.)])])) />

@@ -52,7 +52,7 @@ describe("Filter", () =>
             `dropShadow((`px(5), `px(6), `px(7), `rgb((255, 0, 0)))),
           ]),
         ),
-        r(Css.filter([`grayscale(10.), `hueRotate(`deg(180))])),
+        r(Css.filter([`grayscale(10.), `hueRotate(`deg(180.))])),
         r(Css.filter([`saturate(10.), `sepia(100.)])),
         r(Css.filter([`none])),
         r(Css.filter([`inherit_])),
@@ -73,6 +73,26 @@ describe("Filter", () =>
          {"filter": "initial"},
          {"filter": "unset"},
          {"filter": "url(myurl)"},
+       ))
+  )
+);
+
+describe("Angle", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(transform(rotate(deg(1.)))),
+        r(transform(rotate(rad(6.28)))),
+        r(transform(rotate(grad(38.8)))),
+        r(transform(rotate(turn(0.25)))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"transform": "rotate(1deg)"},
+         {"transform": "rotate(6.28rad)"},
+         {"transform": "rotate(38.8grad)"},
+         {"transform": "rotate(0.25turn)"},
        ))
   )
 );
