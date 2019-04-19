@@ -59,7 +59,8 @@ let join = (separator, strings) => {
   run("", strings);
 };
 
-let string_of_float = (f: float) => {j|$(f)|j};
+let string_of_float = Js.Float.toString;
+let string_of_int = Js.Int.toString;
 
 module Converter = {
   let string_of_angle =
