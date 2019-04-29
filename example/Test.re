@@ -1345,4 +1345,30 @@ let tests =
       </svg>
       <div className=Css.(style(box @ [filter([`url("#f1")])])) />
     </Section>
+    <Section name="direction">
+      <Section name="ltr">
+        <div className=Css.(style([direction(`ltr), display(`flex)]))>
+          <div className=Css.(style(box))> {"1" |> text} </div>
+          <div className=Css.(style(box))> {"2" |> text} </div>
+          <div className=Css.(style(box))> {"3" |> text} </div>
+          <div className=Css.(style(box))> {"4" |> text} </div>
+        </div>
+      </Section>
+      <Section name="rtl">
+        <div className=Css.(style([direction(`rtl), display(`flex)]))>
+          <div className=Css.(style(box))> {"1" |> text} </div>
+          <div className=Css.(style(box))> {"2" |> text} </div>
+          <div className=Css.(style(box))> {"3" |> text} </div>
+          <div className=Css.(style(box))> {"4" |> text} </div>
+        </div>
+      </Section>
+      <Section name="unset">
+        <div className=Css.(style([direction(`unset), display(`flex)]))>
+          <div className=Css.(style(box))> {"1" |> text} </div>
+          <div className=Css.(style(box))> {"2" |> text} </div>
+          <div className=Css.(style(box))> {"3" |> text} </div>
+          <div className=Css.(style(box))> {"4" |> text} </div>
+        </div>
+      </Section>
+    </Section>
   </div>;

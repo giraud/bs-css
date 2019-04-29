@@ -404,6 +404,9 @@ let initial = `initial;
 let inherit_ = `inherit_;
 let unset = `unset;
 
+let rtl = `rtl;
+let ltr = `ltr;
+
 type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
 
 let deg = x => `deg(x);
@@ -1097,6 +1100,18 @@ let columnCount = x =>
     switch (x) {
     | `auto => "auto"
     | `count(v) => string_of_int(v)
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
+    },
+  );
+
+let direction = x =>
+  d(
+    "direction",
+    switch (x) {
+    | `ltr => "ltr"
+    | `rtl => "rtl"
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
