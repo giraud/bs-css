@@ -31,6 +31,9 @@ let initial: [> | `initial];
 let inherit_: [> | `inherit_];
 let unset: [> | `unset];
 
+let rtl: [> | `rtl];
+let ltr: [> | `ltr];
+
 type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
 
 let deg: float => [> | `deg(float)];
@@ -636,6 +639,8 @@ let zIndex: int => rule;
 let contentRule: string => rule;
 
 let columnCount: [ | `auto | `count(int) | cascading] => rule;
+
+let direction: [ | `ltr | `rtl | cascading] => rule;
 
 /**
  * Style

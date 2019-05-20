@@ -96,3 +96,24 @@ describe("Angle", () =>
        ))
   )
 );
+describe("Direction", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(Css.direction(`ltr)),
+        r(Css.direction(`rtl)),
+        r(Css.direction(`inherit_)),
+        r(Css.direction(`unset)),
+        r(Css.direction(`initial)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"direction": "ltr"},
+         {"direction": "rtl"},
+         {"direction": "inherit"},
+         {"direction": "unset"},
+         {"direction": "initial"},
+       ))
+  )
+);
