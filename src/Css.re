@@ -63,6 +63,28 @@ let string_of_float = Js.Float.toString;
 let string_of_int = Js.Int.toString;
 
 module Converter = {
+  let rec string_of_length =
+    fun
+    | `calc(`add, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    | `calc(`sub, a, b) =>
+      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    | `ch(x) => string_of_float(x) ++ "ch"
+    | `cm(x) => string_of_float(x) ++ "cm"
+    | `em(x) => string_of_float(x) ++ "em"
+    | `ex(x) => string_of_float(x) ++ "ex"
+    | `mm(x) => string_of_float(x) ++ "mm"
+    | `percent(x) => string_of_float(x) ++ "%"
+    | `pt(x) => string_of_int(x) ++ "pt"
+    | `px(x) => string_of_int(x) ++ "px"
+    | `pxFloat(x) => string_of_float(x) ++ "px"
+    | `rem(x) => string_of_float(x) ++ "rem"
+    | `vh(x) => string_of_float(x) ++ "vh"
+    | `vmax(x) => string_of_float(x) ++ "vmax"
+    | `vmin(x) => string_of_float(x) ++ "vmin"
+    | `vw(x) => string_of_float(x) ++ "vw"
+    | `zero => "0";
+
   let string_of_angle =
     fun
     | `deg(x) => string_of_float(x) ++ "deg"
@@ -123,8 +145,8 @@ module Converter = {
 
   let string_of_stops = stops =>
     stops
-    |> List.map(((i, c)) =>
-         join(" ", [string_of_color(c), string_of_int(i) ++ "%"])
+    |> List.map(((l, c)) =>
+         join(" ", [string_of_color(c), string_of_length(l)])
        )
     |> join(", ");
 
@@ -141,28 +163,6 @@ module Converter = {
     ++ ", "
     ++ string_of_stops(stops)
     ++ ")";
-
-  let rec string_of_length =
-    fun
-    | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
-    | `zero => "0";
 
   let string_of_translate3d = (x, y, z) =>
     "translate3d("
@@ -407,6 +407,25 @@ let unset = `unset;
 let rtl = `rtl;
 let ltr = `ltr;
 
+type length = [
+  | `calc([ | `add | `sub], length, length)
+  | `ch(float)
+  | `cm(float)
+  | `em(float)
+  | `ex(float)
+  | `mm(float)
+  | `percent(float)
+  | `pt(int)
+  | `px(int)
+  | `pxFloat(float)
+  | `rem(float)
+  | `vh(float)
+  | `vmax(float)
+  | `vmin(float)
+  | `vw(float)
+  | `zero
+];
+
 type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
 
 let deg = x => `deg(x);
@@ -433,10 +452,10 @@ let hex = x => `hex(x);
 let currentColor = `currentColor;
 
 type gradient = [
-  | `linearGradient(angle, list((int, color)))
-  | `repeatingLinearGradient(angle, list((int, color)))
-  | `radialGradient(list((int, color)))
-  | `repeatingRadialGradient(list((int, color)))
+  | `linearGradient(angle, list((length, color)))
+  | `repeatingLinearGradient(angle, list((length, color)))
+  | `radialGradient(list((length, color)))
+  | `repeatingRadialGradient(list((length, color)))
 ];
 
 let linearGradient = (angle, stops) => `linearGradient((angle, stops));
@@ -451,25 +470,6 @@ let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
 /**
  * Units
  */
-
-type length = [
-  | `calc([ | `add | `sub], length, length)
-  | `ch(float)
-  | `cm(float)
-  | `em(float)
-  | `ex(float)
-  | `mm(float)
-  | `percent(float)
-  | `pt(int)
-  | `px(int)
-  | `pxFloat(float)
-  | `rem(float)
-  | `vh(float)
-  | `vmax(float)
-  | `vmin(float)
-  | `vw(float)
-  | `zero
-];
 
 let string_of_length_cascading =
   fun

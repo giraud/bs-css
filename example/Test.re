@@ -278,7 +278,7 @@ let tests =
             box
             @ [
               background(
-                linearGradient(deg(45.), [(0, red), (100, blue)]),
+                linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]),
               ),
             ],
           )
@@ -290,7 +290,7 @@ let tests =
             box
             @ [
               background(
-                repeatingLinearGradient(deg(45.), [(0, red), (10, blue)]),
+                repeatingLinearGradient(deg(45.), [(zero, red), (pct(10.), blue)]),
               ),
             ],
           )
@@ -299,7 +299,7 @@ let tests =
       <div
         className=Css.(
           style(
-            box @ [background(radialGradient([(0, red), (100, blue)]))],
+            box @ [background(radialGradient([(zero, red), (pct(100.), blue)]))],
           )
         )
       />
@@ -308,7 +308,7 @@ let tests =
           style(
             box
             @ [
-              background(repeatingRadialGradient([(0, red), (10, blue)])),
+              background(repeatingRadialGradient([(zero, red), (pct(10.), blue)])),
             ],
           )
         )
@@ -788,7 +788,7 @@ let tests =
           style(
             box
             @ [
-              background(radialGradient([(0, red), (10, blue)])),
+              background(radialGradient([(zero, red), (pct(10.), blue)])),
               backgroundAttachment(fixed),
               backgroundClip(contentBox),
               backgroundOrigin(contentBox),
@@ -822,7 +822,7 @@ let tests =
               backgroundImage(
                 linearGradient(
                   deg(45.),
-                  [(0, green), (50, red), (100, yellow)],
+                  [(zero, green), (pct(50.), red), (pct(100.), yellow)],
                 ),
               ),
               backgroundRepeat(repeatY),
