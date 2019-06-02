@@ -30,6 +30,6 @@
     "bs-platform": "^5.0.0",
     "jest": "^24.7.1",
     "parcel-bundler": "^1.12.3",
-    "reason-react": "^0.6.0"
+    "reason-react": "^0.7.0"
   }
 }
