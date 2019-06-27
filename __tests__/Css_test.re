@@ -117,3 +117,23 @@ describe("Direction", () =>
        ))
   )
 );
+
+describe("Gradient background", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(background(linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]))),
+        r(background(repeatingLinearGradient(deg(45.), [(zero, red), (px(10), blue)]))),
+        r(background(radialGradient([(zero, red), (pct(100.), blue)]))),
+        r(background(repeatingRadialGradient([(zero, red), (Calc.(pct(20.) + px(5)), blue)]))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"background": "linear-gradient(45deg, #FF0000 0, #0000FF 100%)"},
+         {"background": "repeating-linear-gradient(45deg, #FF0000 0, #0000FF 10px)"},
+         {"background": "radial-gradient(#FF0000 0, #0000FF 100%)"},
+         {"background": "repeating-radial-gradient(#FF0000 0, #0000FF calc(20% + 5px))"},
+       ))
+  )
+);

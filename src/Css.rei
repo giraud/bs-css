@@ -34,6 +34,25 @@ let unset: [> | `unset];
 let rtl: [> | `rtl];
 let ltr: [> | `ltr];
 
+type length = [
+  | `calc([ | `add | `sub], length, length)
+  | `ch(float)
+  | `cm(float)
+  | `em(float)
+  | `ex(float)
+  | `mm(float)
+  | `percent(float)
+  | `pt(int)
+  | `px(int)
+  | `pxFloat(float)
+  | `rem(float)
+  | `vh(float)
+  | `vmin(float)
+  | `vmax(float)
+  | `vw(float)
+  | `zero
+];
+
 type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
 
 let deg: float => [> | `deg(float)];
@@ -60,22 +79,22 @@ let transparent: [> | `transparent];
 let currentColor: [> | `currentColor];
 
 type gradient = [
-  | `linearGradient(angle, list((int, color)))
-  | `repeatingLinearGradient(angle, list((int, color)))
-  | `radialGradient(list((int, color)))
-  | `repeatingRadialGradient(list((int, color)))
+  | `linearGradient(angle, list((length, color)))
+  | `repeatingLinearGradient(angle, list((length, color)))
+  | `radialGradient(list((length, color)))
+  | `repeatingRadialGradient(list((length, color)))
 ];
 
 let linearGradient:
-  (angle, list((int, color))) =>
-  [> | `linearGradient(angle, list((int, color)))];
+  (angle, list((length, color))) =>
+  [> | `linearGradient(angle, list((length, color)))];
 let repeatingLinearGradient:
-  (angle, list((int, color))) =>
-  [> | `repeatingLinearGradient(angle, list((int, color)))];
+  (angle, list((length, color))) =>
+  [> | `repeatingLinearGradient(angle, list((length, color)))];
 let radialGradient:
-  list((int, color)) => [> | `radialGradient(list((int, color)))];
+  list((length, color)) => [> | `radialGradient(list((length, color)))];
 let repeatingRadialGradient:
-  list((int, color)) => [> | `repeatingRadialGradient(list((int, color)))];
+  list((length, color)) => [> | `repeatingRadialGradient(list((length, color)))];
 
 let aliceblue: [> | `hex(string)];
 let antiquewhite: [> | `hex(string)];
@@ -225,25 +244,6 @@ let white: [> | `hex(string)];
 let whitesmoke: [> | `hex(string)];
 let yellow: [> | `hex(string)];
 let yellowgreen: [> | `hex(string)];
-
-type length = [
-  | `calc([ | `add | `sub], length, length)
-  | `ch(float)
-  | `cm(float)
-  | `em(float)
-  | `ex(float)
-  | `mm(float)
-  | `percent(float)
-  | `pt(int)
-  | `px(int)
-  | `pxFloat(float)
-  | `rem(float)
-  | `vh(float)
-  | `vmin(float)
-  | `vmax(float)
-  | `vw(float)
-  | `zero
-];
 
 type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
