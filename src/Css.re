@@ -112,25 +112,33 @@ module Converter = {
     ++ string_of_float(a)
     ++ ")";
 
+  let string_of_percent =
+    fun
+    | `percent(x) => Js.Float.toString(x) ++ "%";
+
   let string_of_hsl = (h, s, l) =>
     "hsl("
-    ++ string_of_int(h)
+    ++ string_of_angle(h)
     ++ ", "
-    ++ string_of_int(s)
-    ++ "%, "
-    ++ string_of_int(l)
-    ++ "%"
+    ++ string_of_percent(s)
+    ++ ", "
+    ++ string_of_percent(l)
     ++ ")";
+
+  let string_of_alpha =
+    fun
+    | `num(f) => Js.Float.toString(f)
+    | `percent(p) => Js.Float.toString(p) ++ "%";
 
   let string_of_hsla = (h, s, l, a) =>
     "hsla("
-    ++ string_of_int(h)
+    ++ string_of_angle(h)
     ++ ", "
-    ++ string_of_int(s)
-    ++ "%, "
-    ++ string_of_int(l)
-    ++ "%, "
-    ++ string_of_float(a)
+    ++ string_of_percent(s)
+    ++ ", "
+    ++ string_of_percent(l)
+    ++ ", "
+    ++ string_of_alpha(a)
     ++ ")";
 
   let string_of_color =
@@ -213,29 +221,8 @@ module Converter = {
            ],
          )
       ++ ")"
-    | `hsl(h, s, l) =>
-      "hsl("
-      ++ join(
-           ", ",
-           [
-             string_of_int(h),
-             string_of_int(s) ++ "%",
-             string_of_int(l) ++ "%",
-           ],
-         )
-      ++ ")"
-    | `hsla(h, s, l, a) =>
-      "hsla("
-      ++ join(
-           ", ",
-           [
-             string_of_int(h),
-             string_of_int(s) ++ "%",
-             string_of_int(l) ++ "%",
-             string_of_float(a),
-           ],
-         )
-      ++ ")"
+    | `hsl(h, s, l) => string_of_hsl(h, s, l)
+    | `hsla(h, s, l, a) => string_of_hsla(h, s, l, a)
     | `hex(s) => "#" ++ s
     | `transparent => "transparent"
     | `currentColor => "currentColor"
@@ -433,11 +420,18 @@ let rad = x => `rad(x);
 let grad = x => `grad(x);
 let turn = x => `turn(x);
 
+let pct = x => `percent(x);
+
 type color = [
   | `rgb(int, int, int)
   | `rgba(int, int, int, float)
-  | `hsl(int, int, int)
-  | `hsla(int, int, int, float)
+  | `hsl(angle, [ | `percent(float)], [ | `percent(float)])
+  | `hsla(
+      angle,
+      [ | `percent(float)],
+      [ | `percent(float)],
+      [ | `num(float) | `percent(float)],
+    )
   | `hex(string)
   | `transparent
   | `currentColor
@@ -445,8 +439,8 @@ type color = [
 
 let rgb = (r, g, b) => `rgb((r, g, b));
 let rgba = (r, g, b, a) => `rgba((r, g, b, a));
-let hsl = (h, s, l) => `hsl((h, s, l));
-let hsla = (h, s, l, a) => `hsla((h, s, l, a));
+let hsl = (h, s, l) => `hsl((h, pct(s), pct(l)));
+let hsla = (h, s, l, a) => `hsla((h, pct(s), pct(l), a));
 let hex = x => `hex(x);
 
 let currentColor = `currentColor;
@@ -502,7 +496,6 @@ let em = x => `em(x);
 let ex = x => `ex(x);
 let fr = x => `fr(x);
 let mm = x => `mm(x);
-let pct = x => `percent(x);
 let pt = x => `pt(x);
 let px = x => `px(x);
 let pxFloat = x => `pxFloat(x);

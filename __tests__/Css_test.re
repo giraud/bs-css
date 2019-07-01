@@ -11,8 +11,9 @@ describe("Color style", () =>
       (
         r(color(rgb(1, 2, 3))),
         r(color(rgba(4, 5, 6, 0.3))),
-        r(color(hsl(7, 8, 9))),
-        r(color(hsla(10, 11, 12, 0.5))),
+        r(color(hsl(deg(7.), 8., 9.))),
+        r(color(hsla(deg(10.), 11., 12., `num(0.5)))),
+        r(color(hsla(rad(4.7), 11., 12., pct(50.)))),
         r(color(transparent)),
         r(color(hex("FFF"))),
         r(color(currentColor)),
@@ -22,8 +23,9 @@ describe("Color style", () =>
     |> toBeJson((
          {"color": "rgb(1, 2, 3)"},
          {"color": "rgba(4, 5, 6, 0.3)"},
-         {"color": "hsl(7, 8%, 9%)"},
-         {"color": "hsla(10, 11%, 12%, 0.5)"},
+         {"color": "hsl(7deg, 8%, 9%)"},
+         {"color": "hsla(10deg, 11%, 12%, 0.5)"},
+         {"color": "hsla(4.7rad, 11%, 12%, 50%)"},
          {"color": "transparent"},
          {"color": "#FFF"},
          {"color": "currentColor"},
@@ -122,18 +124,40 @@ describe("Gradient background", () =>
   test("test values", () =>
     expect(
       (
-        r(background(linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]))),
-        r(background(repeatingLinearGradient(deg(45.), [(zero, red), (px(10), blue)]))),
+        r(
+          background(
+            linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]),
+          ),
+        ),
+        r(
+          background(
+            repeatingLinearGradient(
+              deg(45.),
+              [(zero, red), (px(10), blue)],
+            ),
+          ),
+        ),
         r(background(radialGradient([(zero, red), (pct(100.), blue)]))),
-        r(background(repeatingRadialGradient([(zero, red), (Calc.(pct(20.) + px(5)), blue)]))),
+        r(
+          background(
+            repeatingRadialGradient([
+              (zero, red),
+              (Calc.(pct(20.) + px(5)), blue),
+            ]),
+          ),
+        ),
       )
       ->Js.Json.stringifyAny,
     )
     |> toBeJson((
          {"background": "linear-gradient(45deg, #FF0000 0, #0000FF 100%)"},
-         {"background": "repeating-linear-gradient(45deg, #FF0000 0, #0000FF 10px)"},
+         {
+           "background": "repeating-linear-gradient(45deg, #FF0000 0, #0000FF 10px)",
+         },
          {"background": "radial-gradient(#FF0000 0, #0000FF 100%)"},
-         {"background": "repeating-radial-gradient(#FF0000 0, #0000FF calc(20% + 5px))"},
+         {
+           "background": "repeating-radial-gradient(#FF0000 0, #0000FF calc(20% + 5px))",
+         },
        ))
   )
 );

@@ -63,8 +63,13 @@ let turn: float => [> | `turn(float)];
 type color = [
   | `rgb(int, int, int)
   | `rgba(int, int, int, float)
-  | `hsl(int, int, int)
-  | `hsla(int, int, int, float)
+  | `hsl(angle, [ | `percent(float)], [ | `percent(float)])
+  | `hsla(
+      angle,
+      [ | `percent(float)],
+      [ | `percent(float)],
+      [ | `num(float) | `percent(float)],
+    )
   | `transparent
   | `hex(string)
   | `currentColor
@@ -72,8 +77,19 @@ type color = [
 
 let rgb: (int, int, int) => [> | `rgb(int, int, int)];
 let rgba: (int, int, int, float) => [> | `rgba(int, int, int, float)];
-let hsl: (int, int, int) => [> | `hsl(int, int, int)];
-let hsla: (int, int, int, float) => [> | `hsla(int, int, int, float)];
+let hsl:
+  (angle, float, float) =>
+  [> | `hsl(angle, [> | `percent(float)], [> | `percent(float)])];
+let hsla:
+  (angle, float, float, [ | `num(float) | `percent(float)]) =>
+  [>
+    | `hsla(
+        angle,
+        [> | `percent(float)],
+        [> | `percent(float)],
+        [ | `num(float) | `percent(float)],
+      )
+  ];
 let hex: string => [> | `hex(string)];
 let transparent: [> | `transparent];
 let currentColor: [> | `currentColor];
@@ -94,7 +110,8 @@ let repeatingLinearGradient:
 let radialGradient:
   list((length, color)) => [> | `radialGradient(list((length, color)))];
 let repeatingRadialGradient:
-  list((length, color)) => [> | `repeatingRadialGradient(list((length, color)))];
+  list((length, color)) =>
+  [> | `repeatingRadialGradient(list((length, color)))];
 
 let aliceblue: [> | `hex(string)];
 let antiquewhite: [> | `hex(string)];

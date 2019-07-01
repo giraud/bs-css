@@ -100,9 +100,17 @@ let make = () =>
       <div
         className=Css.(style(box @ [background(rgba(255, 0, 0, 0.5))]))
       />
-      <div className=Css.(style(box @ [background(hsl(255, 100, 50))])) />
       <div
-        className=Css.(style(box @ [background(hsla(255, 100, 50, 0.5))]))
+        className=Css.(
+          style(box @ [background(hsl(deg(255.), 100., 50.))])
+        )
+      />
+      <div
+        className=Css.(
+          style(
+            box @ [background(hsla(deg(255.), 100., 50., `num(0.5)))],
+          )
+        )
       />
       <div className=Css.(style(box @ [background(hex("FF0000"))])) />
       <div className=Css.(style(box @ [background(transparent)])) />
