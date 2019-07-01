@@ -1,5 +1,7 @@
 ## 9.0.1 - 2019-07-01
 
+This is a major release: bs-css now depend on emotion 10.x instead of 9.x (see [#114](https://github.com/SentiaAnalytics/bs-css/pull/114)).
+
 - :bug: [#139](https://github.com/SentiaAnalytics/bs-css/issues/139) - Units for hsl(a)
 - :bug: [#138](https://github.com/SentiaAnalytics/bs-css/issues/138) - (top, bottom, left, right) properties should also belong to the 'cascading' type
 - :bug: [#133](https://github.com/SentiaAnalytics/bs-css/issues/133) - Support pixel units for gradient color stops
