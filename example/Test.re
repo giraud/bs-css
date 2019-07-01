@@ -1,4 +1,4 @@
-let text = ReasonReact.string;
+let text = React.string;
 
 Css.insertRule(
   ".raw-css { display:block; background-color: green; width: 50px; height: 50px; }",
@@ -79,9 +79,10 @@ let differentHeightLengths =
          <div className key=className />;
        })
   )
-  ->ReasonReact.array;
+  ->React.array;
 
-let tests =
+[@react.component]
+let make = () =>
   <div className=Css.(style([background(hex("f5f5f5"))]))>
     <Section name="angles">
       <div className=Css.(style(box @ [transform(rotate(deg(45.)))])) />
@@ -112,7 +113,7 @@ let tests =
       />
     </Section>
     <Section name="Named colors">
-      {ReasonReact.array(
+      {React.array(
          Css.(
            [|
              aliceblue,
@@ -278,7 +279,10 @@ let tests =
             box
             @ [
               background(
-                linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]),
+                linearGradient(
+                  deg(45.),
+                  [(zero, red), (pct(100.), blue)],
+                ),
               ),
             ],
           )
@@ -290,7 +294,10 @@ let tests =
             box
             @ [
               background(
-                repeatingLinearGradient(deg(45.), [(zero, red), (pct(10.), blue)]),
+                repeatingLinearGradient(
+                  deg(45.),
+                  [(zero, red), (pct(10.), blue)],
+                ),
               ),
             ],
           )
@@ -299,7 +306,12 @@ let tests =
       <div
         className=Css.(
           style(
-            box @ [background(radialGradient([(zero, red), (pct(100.), blue)]))],
+            box
+            @ [
+              background(
+                radialGradient([(zero, red), (pct(100.), blue)]),
+              ),
+            ],
           )
         )
       />
@@ -308,7 +320,9 @@ let tests =
           style(
             box
             @ [
-              background(repeatingRadialGradient([(zero, red), (pct(10.), blue)])),
+              background(
+                repeatingRadialGradient([(zero, red), (pct(10.), blue)]),
+              ),
             ],
           )
         )

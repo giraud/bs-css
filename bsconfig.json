@@ -1,7 +1,7 @@
 {
   "name": "bs-css",
   "reason": {
-    "react-jsx": 2
+    "react-jsx": 3
   },
   "refmt": 3,
   "bs-dev-dependencies": [

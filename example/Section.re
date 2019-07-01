@@ -41,13 +41,9 @@ module Styles = {
     style([display(flexBox), flexDirection(row), flexWrap(wrap)]);
 };
 
-let component = ReasonReact.statelessComponent(__MODULE__);
-
-let make = (~name, children) => {
-  ...component,
-  render: _ =>
-    <section className=Styles.section>
-      <h1> name->ReasonReact.string </h1>
-      <div className=Styles.rowLayout> ...children </div>
-    </section>,
-};
+[@react.component]
+let make = (~name, ~children) =>
+  <section className=Styles.section>
+    <h1> name->ReasonReact.string </h1>
+    <div className=Styles.rowLayout> children </div>
+  </section>;
