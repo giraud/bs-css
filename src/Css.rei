@@ -512,10 +512,10 @@ let display:
 let position:
   [ | `absolute | `relative | `static | `fixed | `sticky | cascading] => rule;
 
-let top: length => rule;
-let bottom: length => rule;
-let left: length => rule;
-let right: length => rule;
+let top: [ length | cascading] => rule;
+let bottom: [ length | cascading] => rule;
+let left: [ length | cascading] => rule;
+let right: [ length | cascading] => rule;
 
 let flex: [ | `auto | `initial | `none | `num(float)] => rule;
 let flex3:

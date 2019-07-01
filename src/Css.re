@@ -742,10 +742,10 @@ let position = x =>
     },
   );
 
-let top = x => d("top", string_of_length(x));
-let bottom = x => d("bottom", string_of_length(x));
-let left = x => d("left", string_of_length(x));
-let right = x => d("right", string_of_length(x));
+let top = x => d("top", string_of_length_cascading(x));
+let bottom = x => d("bottom", string_of_length_cascading(x));
+let left = x => d("left", string_of_length_cascading(x));
+let right = x => d("right", string_of_length_cascading(x));
 
 let flex = x => d("flex", string_of_flex(x));
 let flex3 = (~grow, ~shrink, ~basis) =>

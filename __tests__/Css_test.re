@@ -98,6 +98,7 @@ describe("Angle", () =>
        ))
   )
 );
+
 describe("Direction", () =>
   test("test values", () =>
     expect(
@@ -161,3 +162,40 @@ describe("Gradient background", () =>
        ))
   )
 );
+
+describe("Position", () => {
+  test("should use length", () =>
+    expect(
+      (
+        r(Css.top(px(10))),
+        r(Css.right(rem(1.))),
+        r(Css.bottom(pct(20.))),
+        r(Css.left(vh(4.))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"top": "10px"},
+         {"right": "1rem"},
+         {"bottom": "20%"},
+         {"left": "4vh"},
+       ))
+  );
+  test("should allow cascading", () =>
+    expect(
+      (
+        r(Css.top(initial)),
+        r(Css.right(inherit_)),
+        r(Css.bottom(unset)),
+        r(Css.left(initial)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"top": "initial"},
+         {"right": "inherit"},
+         {"bottom": "unset"},
+         {"left": "initial"},
+       ))
+  );
+});
