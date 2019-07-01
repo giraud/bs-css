@@ -8,6 +8,8 @@ This is a major release: bs-css now depend on emotion 10.x instead of 9.x (see [
 - :rocket: [#131](https://github.com/SentiaAnalytics/bs-css/issues/131) - Support for "direction" property
 - :bug: [#109](https://github.com/SentiaAnalytics/bs-css/issues/109) - flexShrink and flex should accept a float instead of a int
 
+contributors: [@simonkberg](https://github.com/simonkberg), [@JakubMarkiewicz](https://github.com/JakubMarkiewicz), [@remitbri](https://github.com/remitbri), [@lucasweng](https://github.com/lucasweng) 
+
 ## 8.0.4 - 2019-04-04
 
 - :rocket: [#125](https://github.com/SentiaAnalytics/bs-css/pull/125) - Add textShadows
