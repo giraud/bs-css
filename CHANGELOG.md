@@ -1,3 +1,11 @@
+## 9.0.1 - 2019-07-01
+
+- :bug: [#139](https://github.com/SentiaAnalytics/bs-css/issues/139) - Units for hsl(a)
+- :bug: [#138](https://github.com/SentiaAnalytics/bs-css/issues/138) - (top, bottom, left, right) properties should also belong to the 'cascading' type
+- :bug: [#133](https://github.com/SentiaAnalytics/bs-css/issues/133) - Support pixel units for gradient color stops
+- :rocket: [#131](https://github.com/SentiaAnalytics/bs-css/issues/131) - Support for "direction" property
+- :bug: [#109](https://github.com/SentiaAnalytics/bs-css/issues/109) - flexShrink and flex should accept a float instead of a int
+
 ## 8.0.4 - 2019-04-04
 
 - :rocket: [#125](https://github.com/SentiaAnalytics/bs-css/pull/125) - Add textShadows
