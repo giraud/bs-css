@@ -16,8 +16,9 @@ module Emotion = {
   type stylename = string;
   type cache;
   [@bs.module "emotion"] external _make: Js.Json.t => stylename = "css";
-  [@bs.module "emotion"] external cache: cache = "";
-  [@bs.module "emotion"] external injectGlobal: Js.Json.t => unit = "";
+  [@bs.module "emotion"] external cache: cache = "cache";
+  [@bs.module "emotion"]
+  external injectGlobal: Js.Json.t => unit = "injectGlobal";
   [@bs.module "emotion"]
   external rawInjectGlobal: string => unit = "injectGlobal";
   [@bs.module "emotion"]
