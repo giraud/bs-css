@@ -1393,4 +1393,14 @@ let make = () =>
         </div>
       </Section>
     </Section>
+    <Section name="object-fit">
+      <img className=Css.(style(box @ [objectFit(`fill)])) src="./img-29.jpg" />
+      <img className=Css.(style(box @ [objectFit(`contain)])) src="./img-29.jpg" />
+      <img className=Css.(style(box @ [objectFit(`cover)])) src="./img-29.jpg" />
+      <img className=Css.(style(box @ [objectFit(`none)])) src="./img-29.jpg" />
+      <img className=Css.(style(box @ [objectFit(`scaleDown)])) src="./img-29.jpg" />
+      <img className=Css.(style(box @ [objectFit(`inherit_)])) src="./img-29.jpg" />
+      <img className=Css.(style(box @ [objectFit(`initial)])) src="./img-29.jpg" />
+      <img className=Css.(style(box @ [objectFit(`unset)])) src="./img-29.jpg" />
+    </Section>
   </div>;
