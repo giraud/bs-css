@@ -4,6 +4,12 @@ module Cascading = {
   let initial = `initial;
   let inherit_ = `inherit_;
   let unset = `unset;
+
+  let toString =
+    fun
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset";
 };
 
 module Angle = {
@@ -20,4 +26,16 @@ module Angle = {
     | `rad(x) => Js.Float.toString(x) ++ "rad"
     | `grad(x) => Js.Float.toString(x) ++ "grad"
     | `turn(x) => Js.Float.toString(x) ++ "turn";
+};
+
+module Direction = {
+  type t = [ | `ltr | `rtl];
+
+  let rtl = `rtl;
+  let ltr = `ltr;
+
+  let toString =
+    fun
+    | `rtl => "rtl"
+    | `ltr => "ltr";
 };

@@ -385,9 +385,6 @@ let initial = `initial;
 let inherit_ = `inherit_;
 let unset = `unset;
 
-let rtl = `rtl;
-let ltr = `ltr;
-
 type length = [
   | `calc([ | `add | `sub], length, length)
   | `ch(float)
@@ -1097,13 +1094,15 @@ let direction = x =>
   d(
     "direction",
     switch (x) {
-    | `ltr => "ltr"
-    | `rtl => "rtl"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
+    | `ltr => Css_Types.Direction.toString(`ltr)
+    | `rtl => Css_Types.Direction.toString(`rtl)
+    | `initial => Css_Types.Cascading.toString(`initial)
+    | `inherit_ => Css_Types.Cascading.toString(`inherit_)
+    | `unset => Css_Types.Cascading.toString(`unset)
     },
   );
+let rtl = Css_Types.Direction.rtl;
+let ltr = Css_Types.Direction.ltr;
 
 type filter = [
   | `blur(length)

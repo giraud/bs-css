@@ -33,9 +33,6 @@ let initial: [> | `initial];
 let inherit_: [> | `inherit_];
 let unset: [> | `unset];
 
-let rtl: [> | `rtl];
-let ltr: [> | `ltr];
-
 type length = [
   | `calc([ | `add | `sub], length, length)
   | `ch(float)
@@ -659,7 +656,9 @@ let contentRule: string => rule;
 
 let columnCount: [ | `auto | `count(int) | cascading] => rule;
 
-let direction: [ | `ltr | `rtl | cascading] => rule;
+let direction: [ Direction.t | Cascading.t] => rule;
+let rtl: Direction.t;
+let ltr: Direction.t;
 
 /**
  * Style
