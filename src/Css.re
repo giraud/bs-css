@@ -86,13 +86,6 @@ module Converter = {
     | `vw(x) => string_of_float(x) ++ "vw"
     | `zero => "0";
 
-  let string_of_angle =
-    fun
-    | `deg(x) => string_of_float(x) ++ "deg"
-    | `rad(x) => string_of_float(x) ++ "rad"
-    | `grad(x) => string_of_float(x) ++ "grad"
-    | `turn(x) => string_of_float(x) ++ "turn";
-
   let string_of_rgb = (r, g, b) =>
     "rgb("
     ++ string_of_int(r)
@@ -119,7 +112,7 @@ module Converter = {
 
   let string_of_hsl = (h, s, l) =>
     "hsl("
-    ++ string_of_angle(h)
+    ++ Css_Types.Angle.toString(h)
     ++ ", "
     ++ string_of_percent(s)
     ++ ", "
@@ -133,7 +126,7 @@ module Converter = {
 
   let string_of_hsla = (h, s, l, a) =>
     "hsla("
-    ++ string_of_angle(h)
+    ++ Css_Types.Angle.toString(h)
     ++ ", "
     ++ string_of_percent(s)
     ++ ", "
@@ -161,14 +154,14 @@ module Converter = {
 
   let string_of_linearGradient = (angle, stops) =>
     "linear-gradient("
-    ++ string_of_angle(angle)
+    ++ Css_Types.Angle.toString(angle)
     ++ ", "
     ++ string_of_stops(stops)
     ++ ")";
 
   let string_of_repeatingLinearGradient = (angle, stops) =>
     "repeating-linear-gradient("
-    ++ string_of_angle(angle)
+    ++ Css_Types.Angle.toString(angle)
     ++ ", "
     ++ string_of_stops(stops)
     ++ ")";
@@ -229,13 +222,13 @@ module Converter = {
     | `currentColor => "currentColor"
     | `linearGradient(angle, stops) =>
       "linear-gradient("
-      ++ string_of_angle(angle)
+      ++ Css_Types.Angle.toString(angle)
       ++ ", "
       ++ string_of_stops(stops)
       ++ ")"
     | `repeatingLinearGradient(angle, stops) =>
       "repeating-linear-gradient("
-      ++ string_of_angle(angle)
+      ++ Css_Types.Angle.toString(angle)
       ++ ", "
       ++ string_of_stops(stops)
       ++ ")"
@@ -414,12 +407,12 @@ type length = [
   | `zero
 ];
 
-type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
+type angle = Css_Types.Angle.t;
 
-let deg = x => `deg(x);
-let rad = x => `rad(x);
-let grad = x => `grad(x);
-let turn = x => `turn(x);
+let deg = Css_Types.Angle.deg;
+let rad = Css_Types.Angle.rad;
+let grad = Css_Types.Angle.grad;
+let turn = Css_Types.Angle.turn;
 
 let pct = x => `percent(x);
 
@@ -1144,7 +1137,7 @@ let string_of_filter =
     ++ Converter.string_of_color(d)
     ++ ")"
   | `grayscale(v) => "grayscale(" ++ string_of_float(v) ++ "%)"
-  | `hueRotate(v) => "hue-rotate(" ++ Converter.string_of_angle(v) ++ ")"
+  | `hueRotate(v) => "hue-rotate(" ++ Css_Types.Angle.toString(v) ++ ")"
   | `invert(v) => "invert(" ++ string_of_float(v) ++ "%)"
   | `opacity(v) => "opacity(" ++ string_of_float(v) ++ "%)"
   | `saturate(v) => "saturate(" ++ string_of_float(v) ++ "%)"
@@ -1896,7 +1889,7 @@ let string_of_transform =
   | `scaleX(x) => "scaleX(" ++ string_of_float(x) ++ ")"
   | `scaleY(y) => "scaleY(" ++ string_of_float(y) ++ ")"
   | `scaleZ(z) => "scaleZ(" ++ string_of_float(z) ++ ")"
-  | `rotate(a) => "rotate(" ++ string_of_angle(a) ++ ")"
+  | `rotate(a) => "rotate(" ++ Css_Types.Angle.toString(a) ++ ")"
   | `rotate3d(x, y, z, a) =>
     "rotate3d("
     ++ string_of_float(x)
@@ -1905,15 +1898,19 @@ let string_of_transform =
     ++ ", "
     ++ string_of_float(z)
     ++ ", "
-    ++ string_of_angle(a)
+    ++ Css_Types.Angle.toString(a)
     ++ ")"
-  | `rotateX(a) => "rotateX(" ++ string_of_angle(a) ++ ")"
-  | `rotateY(a) => "rotateY(" ++ string_of_angle(a) ++ ")"
-  | `rotateZ(a) => "rotateZ(" ++ string_of_angle(a) ++ ")"
+  | `rotateX(a) => "rotateX(" ++ Css_Types.Angle.toString(a) ++ ")"
+  | `rotateY(a) => "rotateY(" ++ Css_Types.Angle.toString(a) ++ ")"
+  | `rotateZ(a) => "rotateZ(" ++ Css_Types.Angle.toString(a) ++ ")"
   | `skew(x, y) =>
-    "skew(" ++ string_of_angle(x) ++ ", " ++ string_of_angle(y) ++ ")"
-  | `skewX(a) => "skewX(" ++ string_of_angle(a) ++ ")"
-  | `skewY(a) => "skewY(" ++ string_of_angle(a) ++ ")"
+    "skew("
+    ++ Css_Types.Angle.toString(x)
+    ++ ", "
+    ++ Css_Types.Angle.toString(y)
+    ++ ")"
+  | `skewX(a) => "skewX(" ++ Css_Types.Angle.toString(a) ++ ")"
+  | `skewY(a) => "skewY(" ++ Css_Types.Angle.toString(a) ++ ")"
   | `perspective(x) => "perspective(" ++ string_of_int(x) ++ ")";
 
 let transform = x => d("transform", string_of_transform(x));

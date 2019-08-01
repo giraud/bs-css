@@ -1,3 +1,5 @@
+open Css_Types;
+
 type rule = [
   | `selector(string, list(rule))
   | `declaration(string, string)
@@ -25,7 +27,7 @@ let label: string => rule;
  ************************ VALUES ************************
  ********************************************************/
 
-type cascading = [ | `initial | `inherit_ | `unset];
+type cascading = Cascading.t;
 
 let initial: [> | `initial];
 let inherit_: [> | `inherit_];
@@ -53,12 +55,12 @@ type length = [
   | `zero
 ];
 
-type angle = [ | `deg(float) | `rad(float) | `grad(float) | `turn(float)];
+type angle = Angle.t;
 
-let deg: float => [> | `deg(float)];
-let rad: float => [> | `rad(float)];
-let grad: float => [> | `grad(float)];
-let turn: float => [> | `turn(float)];
+let deg: float => Angle.t;
+let rad: float => Angle.t;
+let grad: float => Angle.t;
+let turn: float => Angle.t;
 
 type color = [
   | `rgb(int, int, int)
