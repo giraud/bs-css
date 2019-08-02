@@ -376,14 +376,57 @@ let important = v =>
 
 let label = label => `declaration(("label", label));
 
+/* Properties */
+
+let direction = x =>
+  `declaration((
+    "direction",
+    switch (x) {
+    | `ltr
+    | `rtl => Css_Types.Direction.toString(x)
+    | `initial
+    | `inherit_
+    | `unset => Css_Types.Cascading.toString(x)
+    },
+  ));
+
+let position = x =>
+  `declaration((
+    "position",
+    switch (x) {
+    | `absolute
+    | `static
+    | `fixed
+    | `relative
+    | `sticky => Css_Types.Position.toString(x)
+    | `initial
+    | `inherit_
+    | `unset => Css_Types.Cascading.toString(x)
+    },
+  ));
+
+/* Type aliasing */
+
+type cascading = Css_Types.Cascading.t;
+type angle = Css_Types.Angle.t;
+
+/* Constructor aliases */
+
+let initial = Css_Types.Cascading.initial;
+let inherit_ = Css_Types.Cascading.inherit_;
+let unset = Css_Types.Cascading.unset;
+
+let deg = Css_Types.Angle.deg;
+let rad = Css_Types.Angle.rad;
+let grad = Css_Types.Angle.grad;
+let turn = Css_Types.Angle.turn;
+
+let ltr = Css_Types.Direction.ltr;
+let rtl = Css_Types.Direction.rtl;
+
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-type cascading = [ | `initial | `inherit_ | `unset];
-
-let initial = `initial;
-let inherit_ = `inherit_;
-let unset = `unset;
 
 type length = [
   | `calc([ | `add | `sub], length, length)
@@ -403,13 +446,6 @@ type length = [
   | `vw(float)
   | `zero
 ];
-
-type angle = Css_Types.Angle.t;
-
-let deg = Css_Types.Angle.deg;
-let rad = Css_Types.Angle.rad;
-let grad = Css_Types.Angle.grad;
-let turn = Css_Types.Angle.turn;
 
 let pct = x => `percent(x);
 
@@ -717,21 +753,6 @@ let display = x =>
     | `inherit_ => "inherit"
     },
   );
-
-let position = x =>
-  `declaration((
-    "position",
-    switch (x) {
-    | `absolute => Css_Types.Position.toString(`absolute)
-    | `static => Css_Types.Position.toString(`static)
-    | `fixed => Css_Types.Position.toString(`fixed)
-    | `relative => Css_Types.Position.toString(`relative)
-    | `sticky => Css_Types.Position.toString(`sticky)
-    | `initial => Css_Types.Cascading.toString(`initial)
-    | `inherit_ => Css_Types.Cascading.toString(`inherit_)
-    | `unset => Css_Types.Cascading.toString(`unset)
-    },
-  ));
 
 let top = x => d("top", string_of_length_cascading(x));
 let bottom = x => d("bottom", string_of_length_cascading(x));
@@ -1089,20 +1110,6 @@ let columnCount = x =>
     | `unset => "unset"
     },
   );
-
-let direction = x =>
-  d(
-    "direction",
-    switch (x) {
-    | `ltr => Css_Types.Direction.toString(`ltr)
-    | `rtl => Css_Types.Direction.toString(`rtl)
-    | `initial => Css_Types.Cascading.toString(`initial)
-    | `inherit_ => Css_Types.Cascading.toString(`inherit_)
-    | `unset => Css_Types.Cascading.toString(`unset)
-    },
-  );
-let rtl = Css_Types.Direction.rtl;
-let ltr = Css_Types.Direction.ltr;
 
 type filter = [
   | `blur(length)

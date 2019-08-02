@@ -3,11 +3,11 @@
 module Cascading: {
   type t = [ | `initial | `inherit_ | `unset];
 
-  let initial: t;
-  let inherit_: t;
-  let unset: t;
+  let initial: [> t];
+  let inherit_: [> t];
+  let unset: [> t];
 
-  let toString: t => string;
+  let toString: [> t] => string;
 };
 
 module Angle: {
@@ -34,11 +34,11 @@ module Direction: {
   type t = [ | `ltr | `rtl];
 
   /** Text and other elements go from left to right. This is the default value. */
-  let ltr: t;
+  let ltr: [> t];
   /** Text and other elements go from right to left. */
-  let rtl: t;
+  let rtl: [> t];
 
-  let toString: t => string;
+  let toString: [> t] => string;
 };
 
 module Position: {
@@ -48,5 +48,5 @@ module Position: {
    */
   type t = [ | `absolute | `relative | `static | `fixed | `sticky];
 
-  let toString: t => string;
+  let toString: [> t] => string;
 };

@@ -104,6 +104,7 @@ describe("Direction", () =>
     expect(
       (
         r(Css.direction(`ltr)),
+        r(Css.direction(ltr)),
         r(Css.direction(`rtl)),
         r(Css.direction(`inherit_)),
         r(Css.direction(`unset)),
@@ -112,6 +113,7 @@ describe("Direction", () =>
       ->Js.Json.stringifyAny,
     )
     |> toBeJson((
+         {"direction": "ltr"},
          {"direction": "ltr"},
          {"direction": "rtl"},
          {"direction": "inherit"},

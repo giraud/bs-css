@@ -23,36 +23,42 @@ let insertRule: string => unit;
 let important: rule => rule;
 let label: string => rule;
 
-/* *************************************
- Type aliases for backward compatibility
- *************************************** */
-
-type angle = Angle.t;
-type cascading = Cascading.t;
-
-/* **************************************************
- Constructor aliases, for ease of use.
- Refer to the equivalent function in the type module.
- **************************************************** */
-
-let initial: [> | `initial];
-let inherit_: [> | `inherit_];
-let unset: [> | `unset];
-
-let deg: float => Angle.t;
-let rad: float => Angle.t;
-let grad: float => Angle.t;
-let turn: float => Angle.t;
-
-let rtl: Direction.t;
-let ltr: Direction.t;
-
 /* ********
  Properties
  ********** */
 
 let direction: [ Direction.t | Cascading.t] => rule;
 let position: [ Position.t | Cascading.t] => rule;
+
+/* *************************************
+ Type aliases for backward compatibility
+ *************************************** */
+
+type cascading = Cascading.t;
+type angle = Angle.t;
+
+/* **************************************************
+ Constructor aliases, for ease of use.
+ Refer to the equivalent function in the type module.
+ **************************************************** */
+
+let initial: [> Cascading.t];
+let inherit_: [> Cascading.t];
+let unset: [> Cascading.t];
+
+let deg: float => Angle.t;
+let rad: float => Angle.t;
+let grad: float => Angle.t;
+let turn: float => Angle.t;
+
+let ltr: [> Direction.t];
+let rtl: [> Direction.t];
+
+let absolute: [> | `absolute];
+let relative: [> | `relative];
+let static: [> | `static];
+let fixed: [> | `fixed];
+let sticky: [> | `sticky];
 
 /********************************************************
  ************************ VALUES ************************
@@ -232,12 +238,6 @@ let tableRowGroup: [> | `tableRowGroup];
 let tableCell: [> | `tableCell];
 let tableColumn: [> | `tableColumn];
 let tableRow: [> | `tableRow];
-
-let absolute: [> | `absolute];
-let relative: [> | `relative];
-let static: [> | `static];
-let fixed: [> | `fixed];
-let sticky: [> | `sticky];
 
 let flexStart: [> | `flexStart];
 let flexEnd: [> | `flexEnd];

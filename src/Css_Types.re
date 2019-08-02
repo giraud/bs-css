@@ -9,7 +9,8 @@ module Cascading = {
     fun
     | `initial => "initial"
     | `inherit_ => "inherit"
-    | `unset => "unset";
+    | `unset => "unset"
+    | _ => "";
 };
 
 module Angle = {
@@ -37,7 +38,8 @@ module Direction = {
   let toString =
     fun
     | `ltr => "ltr"
-    | `rtl => "rtl";
+    | `rtl => "rtl"
+    | _ => "";
 };
 
 module Position = {
@@ -49,5 +51,6 @@ module Position = {
     | `relative => "relative"
     | `static => "static"
     | `fixed => "fixed"
-    | `sticky => "sticky";
+    | `sticky => "sticky"
+    | _ => "";
 };
