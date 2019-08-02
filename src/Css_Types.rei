@@ -40,3 +40,13 @@ module Direction: {
 
   let toString: t => string;
 };
+
+module Position: {
+  /**
+   The position CSS property sets how an element is positioned in a document.
+   The top, right, bottom, and left properties determine the final location of positioned elements.
+   */
+  type t = [ | `absolute | `relative | `static | `fixed | `sticky];
+
+  let toString: t => string;
+};

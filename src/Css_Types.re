@@ -31,11 +31,23 @@ module Angle = {
 module Direction = {
   type t = [ | `ltr | `rtl];
 
-  let rtl = `rtl;
   let ltr = `ltr;
+  let rtl = `rtl;
 
   let toString =
     fun
-    | `rtl => "rtl"
-    | `ltr => "ltr";
+    | `ltr => "ltr"
+    | `rtl => "rtl";
+};
+
+module Position = {
+  type t = [ | `absolute | `relative | `static | `fixed | `sticky];
+
+  let toString =
+    fun
+    | `absolute => "absolute"
+    | `relative => "relative"
+    | `static => "static"
+    | `fixed => "fixed"
+    | `sticky => "sticky";
 };

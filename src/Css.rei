@@ -52,8 +52,7 @@ let ltr: Direction.t;
  ********** */
 
 let direction: [ Direction.t | Cascading.t] => rule;
-let position:
-  [ | `absolute | `relative | `static | `fixed | `sticky | cascading] => rule;
+let position: [ Position.t | Cascading.t] => rule;
 
 /********************************************************
  ************************ VALUES ************************

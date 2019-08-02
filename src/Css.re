@@ -719,19 +719,19 @@ let display = x =>
   );
 
 let position = x =>
-  d(
+  `declaration((
     "position",
     switch (x) {
-    | `absolute => "absolute"
-    | `static => "static"
-    | `fixed => "fixed"
-    | `relative => "relative"
-    | `sticky => "sticky"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
+    | `absolute => Css_Types.Position.toString(`absolute)
+    | `static => Css_Types.Position.toString(`static)
+    | `fixed => Css_Types.Position.toString(`fixed)
+    | `relative => Css_Types.Position.toString(`relative)
+    | `sticky => Css_Types.Position.toString(`sticky)
+    | `initial => Css_Types.Cascading.toString(`initial)
+    | `inherit_ => Css_Types.Cascading.toString(`inherit_)
+    | `unset => Css_Types.Cascading.toString(`unset)
     },
-  );
+  ));
 
 let top = x => d("top", string_of_length_cascading(x));
 let bottom = x => d("bottom", string_of_length_cascading(x));
