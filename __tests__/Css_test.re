@@ -105,10 +105,10 @@ describe("Direction", () =>
       (
         r(Css.direction(`ltr)),
         r(Css.direction(ltr)),
-        r(Css.direction(`rtl)),
-        r(Css.direction(`inherit_)),
-        r(Css.direction(`unset)),
-        r(Css.direction(`initial)),
+        r(Css.direction(rtl)),
+        r(Css.direction(inherit_)),
+        r(Css.direction(unset)),
+        r(Css.direction(initial)),
       )
       ->Js.Json.stringifyAny,
     )
@@ -119,6 +119,36 @@ describe("Direction", () =>
          {"direction": "inherit"},
          {"direction": "unset"},
          {"direction": "initial"},
+       ))
+  )
+);
+
+describe("Resize", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(Css.resize(none)),
+        r(Css.resize(both)),
+        r(Css.resize(horizontal)),
+        r(Css.resize(vertical)),
+        r(Css.resize(block)),
+        r(Css.resize(inline)),
+        r(Css.resize(inherit_)),
+        r(Css.resize(unset)),
+        r(Css.resize(initial)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"resize": "none"},
+         {"resize": "both"},
+         {"resize": "horizontal"},
+         {"resize": "vertical"},
+         {"resize": "block"},
+         {"resize": "inline"},
+         {"resize": "inherit"},
+         {"resize": "unset"},
+         {"resize": "initial"},
        ))
   )
 );

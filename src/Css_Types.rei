@@ -50,3 +50,26 @@ module Position: {
 
   let toString: [> t] => string;
 };
+
+module Resize: {
+  /**
+   The resize CSS property sets whether an element is resizable, and if so,
+   in which directions.
+   */
+  type t = [ | `none | `both | `horizontal | `vertical | `block | `inline];
+
+  /** The element offers no user-controllable method for resizing it */
+  let none: [> t];
+  /** The element displays a mechanism for allowing the user to resize it, which may be resized both horizontally and vertically */
+  let both: [> t];
+  /** The element displays a mechanism for allowing the user to resize it in the horizontal direction */
+  let horizontal: [> t];
+  /** The element displays a mechanism for allowing the user to resize it in the vertical direction */
+  let vertical: [> t];
+  /** The element displays a mechanism for allowing the user to resize it in the block direction (either horizontally or vertically, depending on the writing-mode and direction value) */
+  let block: [> t];
+  /** The element displays a mechanism for allowing the user to resize it in the inline direction (either horizontally or vertically, depending on the writing-mode and direction value) */
+  let inline: [> t];
+
+  let toString: [> t] => string;
+};

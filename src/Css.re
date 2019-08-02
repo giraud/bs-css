@@ -405,6 +405,22 @@ let position = x =>
     },
   ));
 
+let resize = x =>
+  `declaration((
+    "resize",
+    switch (x) {
+    | `none
+    | `both
+    | `horizontal
+    | `vertical
+    | `block
+    | `inline => Css_Types.Resize.toString(x)
+    | `initial
+    | `inherit_
+    | `unset => Css_Types.Cascading.toString(x)
+    },
+  ));
+
 /* Type aliasing */
 
 type cascading = Css_Types.Cascading.t;
@@ -423,6 +439,13 @@ let turn = Css_Types.Angle.turn;
 
 let ltr = Css_Types.Direction.ltr;
 let rtl = Css_Types.Direction.rtl;
+
+//let none = Css_Types.Resize.none;
+//let both = Css_Types.Resize.both;
+let horizontal = Css_Types.Resize.horizontal;
+let vertical = Css_Types.Resize.vertical;
+//let block = Css_Types.Resize.block;
+//let inline = Css_Types.Resize.inline;
 
 /********************************************************
  ************************ VALUES ************************
@@ -538,25 +561,6 @@ module Calc = {
   let (+) = (a, b) => `calc((`add, a, b));
 };
 let size = (x, y) => `size((x, y));
-
-let resize = x =>
-  d(
-    "resize",
-    switch (x) {
-    | `none => "none"
-    | `both => "both"
-    | `horizontal => "horizontal"
-    | `vertical => "vertical"
-    | `block => "block"
-    | `inline => "inline"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
-let horizontal = `horizontal;
-let vertical = `vertical;
 
 /**
  * Misc

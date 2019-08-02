@@ -29,6 +29,7 @@ let label: string => rule;
 
 let direction: [ Direction.t | Cascading.t] => rule;
 let position: [ Position.t | Cascading.t] => rule;
+let resize: [ Resize.t | Cascading.t] => rule;
 
 /* *************************************
  Type aliases for backward compatibility
@@ -59,6 +60,9 @@ let relative: [> | `relative];
 let static: [> | `static];
 let fixed: [> | `fixed];
 let sticky: [> | `sticky];
+
+let horizontal: [> Resize.t];
+let vertical: [> Resize.t];
 
 /********************************************************
  ************************ VALUES ************************
@@ -170,19 +174,6 @@ module Calc: {
 };
 
 let size: (length, length) => [> | `size(length, length)];
-let resize:
-  [
-    | `none
-    | `both
-    | `horizontal
-    | `vertical
-    | `block
-    | `inline
-    | cascading
-  ] =>
-  rule;
-let horizontal: [> | `horizontal];
-let vertical: [> | `vertical];
 
 let solid: [> | `solid];
 let dotted: [> | `dotted];

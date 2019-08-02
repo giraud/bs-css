@@ -54,3 +54,24 @@ module Position = {
     | `sticky => "sticky"
     | _ => "";
 };
+
+module Resize = {
+  type t = [ | `none | `both | `horizontal | `vertical | `block | `inline];
+
+  let none = `none;
+  let both = `both;
+  let horizontal = `horizontal;
+  let vertical = `vertical;
+  let block = `block;
+  let inline = `inline;
+
+  let toString =
+    fun
+    | `none => "none"
+    | `both => "both"
+    | `horizontal => "horizontal"
+    | `vertical => "vertical"
+    | `block => "block"
+    | `inline => "inline"
+    | _ => "";
+};
