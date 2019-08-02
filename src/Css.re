@@ -1,4 +1,5 @@
 include Css_Colors;
+module Types = Css_Types;
 
 type rule = [
   | `selector(string, list(rule))
@@ -378,6 +379,9 @@ let label = label => `declaration(("label", label));
 
 /* Properties */
 
+let unsafe = d;
+let zIndex = x => `declaration(("zIndex", Js.Int.toString(x)));
+
 let direction = x =>
   `declaration((
     "direction",
@@ -421,6 +425,20 @@ let resize = x =>
     },
   ));
 
+let fontFamily = x => `declaration(("fontFamily", x));
+
+let fontVariant = x =>
+  `declaration((
+    "fontVariant",
+    switch (x) {
+    | `normal => "normal"
+    | `smallCaps => "small-caps"
+    | `initial
+    | `inherit_
+    | `unset => Css_Types.Cascading.toString(x)
+    },
+  ));
+
 /* Type aliasing */
 
 type cascading = Css_Types.Cascading.t;
@@ -446,6 +464,8 @@ let horizontal = Css_Types.Resize.horizontal;
 let vertical = Css_Types.Resize.vertical;
 //let block = Css_Types.Resize.block;
 //let inline = Css_Types.Resize.inline;
+
+let smallCaps = Css_Types.FontVariant.smallCaps;
 
 /********************************************************
  ************************ VALUES ************************
@@ -720,8 +740,6 @@ let square = `square;
 /********************************************************
  ******************** PROPERTIES ************************
  ********************************************************/
-
-let unsafe = d;
 
 /**
  * Layout
@@ -1098,8 +1116,6 @@ let clear = x =>
 let overflow = x => d("overflow", string_of_overflow(x));
 let overflowX = x => d("overflowX", string_of_overflow(x));
 let overflowY = x => d("overflowY", string_of_overflow(x));
-
-let zIndex = x => d("zIndex", string_of_int(x));
 
 let contentRule = x => d("content", {j|"$x"|j});
 
@@ -1517,21 +1533,7 @@ let bolder = `bolder;
 
 let color = x => d("color", string_of_color(x));
 
-let fontFamily = x => d("fontFamily", x);
-
 let fontSize = x => d("fontSize", string_of_length_cascading(x));
-
-let fontVariant = x =>
-  d(
-    "fontVariant",
-    switch (x) {
-    | `normal => "normal"
-    | `smallCaps => "small-caps"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
 
 let fontStyle = x => d("fontStyle", string_of_fontStyle(x));
 let fontWeight = x => d("fontWeight", string_of_fontWeight(x));

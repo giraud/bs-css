@@ -1,4 +1,4 @@
-open Css_Types;
+module Types = Css_Types;
 
 type rule = [
   | `selector(string, list(rule))
@@ -27,33 +27,39 @@ let label: string => rule;
  Properties
  ********** */
 
-let direction: [ Direction.t | Cascading.t] => rule;
-let position: [ Position.t | Cascading.t] => rule;
-let resize: [ Resize.t | Cascading.t] => rule;
+let unsafe: (string, string) => rule;
+let zIndex: int => rule;
+
+let direction: [ Types.Direction.t | Types.Cascading.t] => rule;
+let position: [ Types.Position.t | Types.Cascading.t] => rule;
+let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
+
+let fontFamily: string => rule;
+let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 
 /* *************************************
  Type aliases for backward compatibility
  *************************************** */
 
-type cascading = Cascading.t;
-type angle = Angle.t;
+type cascading = Types.Cascading.t;
+type angle = Types.Angle.t;
 
 /* **************************************************
  Constructor aliases, for ease of use.
  Refer to the equivalent function in the type module.
  **************************************************** */
 
-let initial: [> Cascading.t];
-let inherit_: [> Cascading.t];
-let unset: [> Cascading.t];
+let initial: [> Types.Cascading.t];
+let inherit_: [> Types.Cascading.t];
+let unset: [> Types.Cascading.t];
 
-let deg: float => Angle.t;
-let rad: float => Angle.t;
-let grad: float => Angle.t;
-let turn: float => Angle.t;
+let deg: float => Types.Angle.t;
+let rad: float => Types.Angle.t;
+let grad: float => Types.Angle.t;
+let turn: float => Types.Angle.t;
 
-let ltr: [> Direction.t];
-let rtl: [> Direction.t];
+let ltr: [> Types.Direction.t];
+let rtl: [> Types.Direction.t];
 
 let absolute: [> | `absolute];
 let relative: [> | `relative];
@@ -61,8 +67,10 @@ let static: [> | `static];
 let fixed: [> | `fixed];
 let sticky: [> | `sticky];
 
-let horizontal: [> Resize.t];
-let vertical: [> Resize.t];
+let horizontal: [> Types.Resize.t];
+let vertical: [> Types.Resize.t];
+
+let smallCaps: [> Types.FontVariant.t];
 
 /********************************************************
  ************************ VALUES ************************
@@ -336,8 +344,6 @@ let square: [> | `square];
  ******************** PROPERTIES ************************
  ********************************************************/
 
-let unsafe: (string, string) => rule;
-
 /**
  * Layout
 */
@@ -509,7 +515,6 @@ let overflow: [ | `hidden | `visible | `scroll | `auto] => rule;
 let overflowX: [ | `hidden | `visible | `scroll | `auto] => rule;
 let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 
-let zIndex: int => rule;
 let contentRule: string => rule;
 
 let columnCount: [ | `auto | `count(int) | cascading] => rule;
@@ -715,7 +720,6 @@ let lighter: [> | `lighter];
 let bolder: [> | `bolder];
 
 let color: color => rule;
-let fontFamily: string => rule;
 let fontFace:
   (
     ~fontFamily: string,
@@ -726,7 +730,6 @@ let fontFace:
   ) =>
   string;
 let fontSize: [ length | cascading] => rule;
-let fontVariant: [ | `normal | `smallCaps | cascading] => rule;
 let fontStyle: [ fontStyle | cascading] => rule;
 let fontWeight: [ fontWeight | cascading] => rule;
 let letterSpacing: [ | `normal | length | cascading] => rule;

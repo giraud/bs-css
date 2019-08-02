@@ -75,3 +75,16 @@ module Resize = {
     | `inline => "inline"
     | _ => "";
 };
+
+module FontVariant = {
+  type t = [ | `normal | `smallCaps];
+
+  let normal = `normal;
+  let smallCaps = `smallCaps;
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `smallCaps => "smallCaps"
+    | _ => "";
+};
