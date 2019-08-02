@@ -23,15 +23,41 @@ let insertRule: string => unit;
 let important: rule => rule;
 let label: string => rule;
 
-/********************************************************
- ************************ VALUES ************************
- ********************************************************/
+/* *************************************
+ Type aliases for backward compatibility
+ *************************************** */
 
+type angle = Angle.t;
 type cascading = Cascading.t;
+
+/* **************************************************
+ Constructor aliases, for ease of use.
+ Refer to the equivalent function in the type module.
+ **************************************************** */
 
 let initial: [> | `initial];
 let inherit_: [> | `inherit_];
 let unset: [> | `unset];
+
+let deg: float => Angle.t;
+let rad: float => Angle.t;
+let grad: float => Angle.t;
+let turn: float => Angle.t;
+
+let rtl: Direction.t;
+let ltr: Direction.t;
+
+/* ********
+ Properties
+ ********** */
+
+let direction: [ Direction.t | Cascading.t] => rule;
+let position:
+  [ | `absolute | `relative | `static | `fixed | `sticky | cascading] => rule;
+
+/********************************************************
+ ************************ VALUES ************************
+ ********************************************************/
 
 type length = [
   | `calc([ | `add | `sub], length, length)
@@ -51,13 +77,6 @@ type length = [
   | `vw(float)
   | `zero
 ];
-
-type angle = Angle.t;
-
-let deg: float => Angle.t;
-let rad: float => Angle.t;
-let grad: float => Angle.t;
-let turn: float => Angle.t;
 
 type color = [
   | `rgb(int, int, int)
@@ -111,155 +130,6 @@ let radialGradient:
 let repeatingRadialGradient:
   list((length, color)) =>
   [> | `repeatingRadialGradient(list((length, color)))];
-
-let aliceblue: [> | `hex(string)];
-let antiquewhite: [> | `hex(string)];
-let aqua: [> | `hex(string)];
-let aquamarine: [> | `hex(string)];
-let azure: [> | `hex(string)];
-let beige: [> | `hex(string)];
-let bisque: [> | `hex(string)];
-let black: [> | `hex(string)];
-let blanchedalmond: [> | `hex(string)];
-let blue: [> | `hex(string)];
-let blueviolet: [> | `hex(string)];
-let brown: [> | `hex(string)];
-let burlywood: [> | `hex(string)];
-let cadetblue: [> | `hex(string)];
-let chartreuse: [> | `hex(string)];
-let chocolate: [> | `hex(string)];
-let coral: [> | `hex(string)];
-let cornflowerblue: [> | `hex(string)];
-let cornsilk: [> | `hex(string)];
-let crimson: [> | `hex(string)];
-let cyan: [> | `hex(string)];
-let darkblue: [> | `hex(string)];
-let darkcyan: [> | `hex(string)];
-let darkgoldenrod: [> | `hex(string)];
-let darkgray: [> | `hex(string)];
-let darkgrey: [> | `hex(string)];
-let darkgreen: [> | `hex(string)];
-let darkkhaki: [> | `hex(string)];
-let darkmagenta: [> | `hex(string)];
-let darkolivegreen: [> | `hex(string)];
-let darkorange: [> | `hex(string)];
-let darkorchid: [> | `hex(string)];
-let darkred: [> | `hex(string)];
-let darksalmon: [> | `hex(string)];
-let darkseagreen: [> | `hex(string)];
-let darkslateblue: [> | `hex(string)];
-let darkslategray: [> | `hex(string)];
-let darkslategrey: [> | `hex(string)];
-let darkturquoise: [> | `hex(string)];
-let darkviolet: [> | `hex(string)];
-let deeppink: [> | `hex(string)];
-let deepskyblue: [> | `hex(string)];
-let dimgray: [> | `hex(string)];
-let dimgrey: [> | `hex(string)];
-let dodgerblue: [> | `hex(string)];
-let firebrick: [> | `hex(string)];
-let floralwhite: [> | `hex(string)];
-let forestgreen: [> | `hex(string)];
-let fuchsia: [> | `hex(string)];
-let gainsboro: [> | `hex(string)];
-let ghostwhite: [> | `hex(string)];
-let gold: [> | `hex(string)];
-let goldenrod: [> | `hex(string)];
-let gray: [> | `hex(string)];
-let grey: [> | `hex(string)];
-let green: [> | `hex(string)];
-let greenyellow: [> | `hex(string)];
-let honeydew: [> | `hex(string)];
-let hotpink: [> | `hex(string)];
-let indianred: [> | `hex(string)];
-let indigo: [> | `hex(string)];
-let ivory: [> | `hex(string)];
-let khaki: [> | `hex(string)];
-let lavender: [> | `hex(string)];
-let lavenderblush: [> | `hex(string)];
-let lawngreen: [> | `hex(string)];
-let lemonchiffon: [> | `hex(string)];
-let lightblue: [> | `hex(string)];
-let lightcoral: [> | `hex(string)];
-let lightcyan: [> | `hex(string)];
-let lightgoldenrodyellow: [> | `hex(string)];
-let lightgray: [> | `hex(string)];
-let lightgrey: [> | `hex(string)];
-let lightgreen: [> | `hex(string)];
-let lightpink: [> | `hex(string)];
-let lightsalmon: [> | `hex(string)];
-let lightseagreen: [> | `hex(string)];
-let lightskyblue: [> | `hex(string)];
-let lightslategray: [> | `hex(string)];
-let lightslategrey: [> | `hex(string)];
-let lightsteelblue: [> | `hex(string)];
-let lightyellow: [> | `hex(string)];
-let lime: [> | `hex(string)];
-let limegreen: [> | `hex(string)];
-let linen: [> | `hex(string)];
-let magenta: [> | `hex(string)];
-let maroon: [> | `hex(string)];
-let mediumaquamarine: [> | `hex(string)];
-let mediumblue: [> | `hex(string)];
-let mediumorchid: [> | `hex(string)];
-let mediumpurple: [> | `hex(string)];
-let mediumseagreen: [> | `hex(string)];
-let mediumslateblue: [> | `hex(string)];
-let mediumspringgreen: [> | `hex(string)];
-let mediumturquoise: [> | `hex(string)];
-let mediumvioletred: [> | `hex(string)];
-let midnightblue: [> | `hex(string)];
-let mintcream: [> | `hex(string)];
-let mistyrose: [> | `hex(string)];
-let moccasin: [> | `hex(string)];
-let navajowhite: [> | `hex(string)];
-let navy: [> | `hex(string)];
-let oldlace: [> | `hex(string)];
-let olive: [> | `hex(string)];
-let olivedrab: [> | `hex(string)];
-let orange: [> | `hex(string)];
-let orangered: [> | `hex(string)];
-let orchid: [> | `hex(string)];
-let palegoldenrod: [> | `hex(string)];
-let palegreen: [> | `hex(string)];
-let paleturquoise: [> | `hex(string)];
-let palevioletred: [> | `hex(string)];
-let papayawhip: [> | `hex(string)];
-let peachpuff: [> | `hex(string)];
-let peru: [> | `hex(string)];
-let pink: [> | `hex(string)];
-let plum: [> | `hex(string)];
-let powderblue: [> | `hex(string)];
-let purple: [> | `hex(string)];
-let rebeccapurple: [> | `hex(string)];
-let red: [> | `hex(string)];
-let rosybrown: [> | `hex(string)];
-let royalblue: [> | `hex(string)];
-let saddlebrown: [> | `hex(string)];
-let salmon: [> | `hex(string)];
-let sandybrown: [> | `hex(string)];
-let seagreen: [> | `hex(string)];
-let seashell: [> | `hex(string)];
-let sienna: [> | `hex(string)];
-let silver: [> | `hex(string)];
-let skyblue: [> | `hex(string)];
-let slateblue: [> | `hex(string)];
-let slategray: [> | `hex(string)];
-let slategrey: [> | `hex(string)];
-let snow: [> | `hex(string)];
-let springgreen: [> | `hex(string)];
-let steelblue: [> | `hex(string)];
-let tan: [> | `hex(string)];
-let teal: [> | `hex(string)];
-let thistle: [> | `hex(string)];
-let tomato: [> | `hex(string)];
-let turquoise: [> | `hex(string)];
-let violet: [> | `hex(string)];
-let wheat: [> | `hex(string)];
-let white: [> | `hex(string)];
-let whitesmoke: [> | `hex(string)];
-let yellow: [> | `hex(string)];
-let yellowgreen: [> | `hex(string)];
 
 type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
@@ -508,8 +378,6 @@ let display:
     | cascading
   ] =>
   rule;
-let position:
-  [ | `absolute | `relative | `static | `fixed | `sticky | cascading] => rule;
 
 let top: [ length | cascading] => rule;
 let bottom: [ length | cascading] => rule;
@@ -655,10 +523,6 @@ let zIndex: int => rule;
 let contentRule: string => rule;
 
 let columnCount: [ | `auto | `count(int) | cascading] => rule;
-
-let direction: [ Direction.t | Cascading.t] => rule;
-let rtl: Direction.t;
-let ltr: Direction.t;
 
 /**
  * Style
@@ -1074,3 +938,156 @@ module SVG: {
   let stopColor: color => rule;
   let stopOpacity: float => rule;
 };
+
+/* ****
+ Colors
+ ****** */
+
+let aliceblue: [> | `hex(string)];
+let antiquewhite: [> | `hex(string)];
+let aqua: [> | `hex(string)];
+let aquamarine: [> | `hex(string)];
+let azure: [> | `hex(string)];
+let beige: [> | `hex(string)];
+let bisque: [> | `hex(string)];
+let black: [> | `hex(string)];
+let blanchedalmond: [> | `hex(string)];
+let blue: [> | `hex(string)];
+let blueviolet: [> | `hex(string)];
+let brown: [> | `hex(string)];
+let burlywood: [> | `hex(string)];
+let cadetblue: [> | `hex(string)];
+let chartreuse: [> | `hex(string)];
+let chocolate: [> | `hex(string)];
+let coral: [> | `hex(string)];
+let cornflowerblue: [> | `hex(string)];
+let cornsilk: [> | `hex(string)];
+let crimson: [> | `hex(string)];
+let cyan: [> | `hex(string)];
+let darkblue: [> | `hex(string)];
+let darkcyan: [> | `hex(string)];
+let darkgoldenrod: [> | `hex(string)];
+let darkgray: [> | `hex(string)];
+let darkgrey: [> | `hex(string)];
+let darkgreen: [> | `hex(string)];
+let darkkhaki: [> | `hex(string)];
+let darkmagenta: [> | `hex(string)];
+let darkolivegreen: [> | `hex(string)];
+let darkorange: [> | `hex(string)];
+let darkorchid: [> | `hex(string)];
+let darkred: [> | `hex(string)];
+let darksalmon: [> | `hex(string)];
+let darkseagreen: [> | `hex(string)];
+let darkslateblue: [> | `hex(string)];
+let darkslategray: [> | `hex(string)];
+let darkslategrey: [> | `hex(string)];
+let darkturquoise: [> | `hex(string)];
+let darkviolet: [> | `hex(string)];
+let deeppink: [> | `hex(string)];
+let deepskyblue: [> | `hex(string)];
+let dimgray: [> | `hex(string)];
+let dimgrey: [> | `hex(string)];
+let dodgerblue: [> | `hex(string)];
+let firebrick: [> | `hex(string)];
+let floralwhite: [> | `hex(string)];
+let forestgreen: [> | `hex(string)];
+let fuchsia: [> | `hex(string)];
+let gainsboro: [> | `hex(string)];
+let ghostwhite: [> | `hex(string)];
+let gold: [> | `hex(string)];
+let goldenrod: [> | `hex(string)];
+let gray: [> | `hex(string)];
+let grey: [> | `hex(string)];
+let green: [> | `hex(string)];
+let greenyellow: [> | `hex(string)];
+let honeydew: [> | `hex(string)];
+let hotpink: [> | `hex(string)];
+let indianred: [> | `hex(string)];
+let indigo: [> | `hex(string)];
+let ivory: [> | `hex(string)];
+let khaki: [> | `hex(string)];
+let lavender: [> | `hex(string)];
+let lavenderblush: [> | `hex(string)];
+let lawngreen: [> | `hex(string)];
+let lemonchiffon: [> | `hex(string)];
+let lightblue: [> | `hex(string)];
+let lightcoral: [> | `hex(string)];
+let lightcyan: [> | `hex(string)];
+let lightgoldenrodyellow: [> | `hex(string)];
+let lightgray: [> | `hex(string)];
+let lightgrey: [> | `hex(string)];
+let lightgreen: [> | `hex(string)];
+let lightpink: [> | `hex(string)];
+let lightsalmon: [> | `hex(string)];
+let lightseagreen: [> | `hex(string)];
+let lightskyblue: [> | `hex(string)];
+let lightslategray: [> | `hex(string)];
+let lightslategrey: [> | `hex(string)];
+let lightsteelblue: [> | `hex(string)];
+let lightyellow: [> | `hex(string)];
+let lime: [> | `hex(string)];
+let limegreen: [> | `hex(string)];
+let linen: [> | `hex(string)];
+let magenta: [> | `hex(string)];
+let maroon: [> | `hex(string)];
+let mediumaquamarine: [> | `hex(string)];
+let mediumblue: [> | `hex(string)];
+let mediumorchid: [> | `hex(string)];
+let mediumpurple: [> | `hex(string)];
+let mediumseagreen: [> | `hex(string)];
+let mediumslateblue: [> | `hex(string)];
+let mediumspringgreen: [> | `hex(string)];
+let mediumturquoise: [> | `hex(string)];
+let mediumvioletred: [> | `hex(string)];
+let midnightblue: [> | `hex(string)];
+let mintcream: [> | `hex(string)];
+let mistyrose: [> | `hex(string)];
+let moccasin: [> | `hex(string)];
+let navajowhite: [> | `hex(string)];
+let navy: [> | `hex(string)];
+let oldlace: [> | `hex(string)];
+let olive: [> | `hex(string)];
+let olivedrab: [> | `hex(string)];
+let orange: [> | `hex(string)];
+let orangered: [> | `hex(string)];
+let orchid: [> | `hex(string)];
+let palegoldenrod: [> | `hex(string)];
+let palegreen: [> | `hex(string)];
+let paleturquoise: [> | `hex(string)];
+let palevioletred: [> | `hex(string)];
+let papayawhip: [> | `hex(string)];
+let peachpuff: [> | `hex(string)];
+let peru: [> | `hex(string)];
+let pink: [> | `hex(string)];
+let plum: [> | `hex(string)];
+let powderblue: [> | `hex(string)];
+let purple: [> | `hex(string)];
+let rebeccapurple: [> | `hex(string)];
+let red: [> | `hex(string)];
+let rosybrown: [> | `hex(string)];
+let royalblue: [> | `hex(string)];
+let saddlebrown: [> | `hex(string)];
+let salmon: [> | `hex(string)];
+let sandybrown: [> | `hex(string)];
+let seagreen: [> | `hex(string)];
+let seashell: [> | `hex(string)];
+let sienna: [> | `hex(string)];
+let silver: [> | `hex(string)];
+let skyblue: [> | `hex(string)];
+let slateblue: [> | `hex(string)];
+let slategray: [> | `hex(string)];
+let slategrey: [> | `hex(string)];
+let snow: [> | `hex(string)];
+let springgreen: [> | `hex(string)];
+let steelblue: [> | `hex(string)];
+let tan: [> | `hex(string)];
+let teal: [> | `hex(string)];
+let thistle: [> | `hex(string)];
+let tomato: [> | `hex(string)];
+let turquoise: [> | `hex(string)];
+let violet: [> | `hex(string)];
+let wheat: [> | `hex(string)];
+let white: [> | `hex(string)];
+let whitesmoke: [> | `hex(string)];
+let yellow: [> | `hex(string)];
+let yellowgreen: [> | `hex(string)];
