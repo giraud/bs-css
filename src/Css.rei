@@ -576,7 +576,7 @@ let gridColumnGap: length => rule;
 let gridRowGap: length => rule;
 let gridGap: length => rule;
 
-let width: [ length | `auto] => rule;
+let width: [ length | `auto | `fitContent] => rule;
 let height: [ length | `auto] => rule;
 let minWidth: [ length | `auto] => rule;
 let maxWidth: [ length | `none] => rule;

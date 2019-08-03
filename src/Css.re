@@ -914,6 +914,7 @@ let string_of_dimension =
   | `vw(x) => string_of_float(x) ++ "vw"
   | `fr(x) => string_of_float(x) ++ "fr"
   | `zero => "0"
+  | `fitContent => "fit-content"
   | `minContent => "min-content"
   | `maxContent => "max-content"
   | `minmax(a, b) =>
