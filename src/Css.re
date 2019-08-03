@@ -1112,6 +1112,21 @@ let direction = x =>
     },
   );
 
+let objectFit = x =>
+  d(
+    "objectFit",
+    switch (x) {
+    | `fill => "fill"
+    | `contain => "contain"
+    | `cover => "cover"
+    | `none => "none"
+    | `scaleDown => "scale-down"
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset"
+    },
+  );
+
 type filter = [
   | `blur(length)
   | `brightness(float)

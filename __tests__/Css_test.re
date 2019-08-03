@@ -199,3 +199,31 @@ describe("Position", () => {
        ))
   );
 });
+
+describe("object-fit", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(Css.objectFit(`fill)),
+        r(Css.objectFit(`contain)),
+        r(Css.objectFit(`cover)),
+        r(Css.objectFit(`none)),
+        r(Css.objectFit(`scaleDown)),
+        r(Css.objectFit(`inherit_)),
+        r(Css.objectFit(`initial)),
+        r(Css.objectFit(`unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"objectFit": "fill"},
+         {"objectFit": "contain"},
+         {"objectFit": "cover"},
+         {"objectFit": "none"},
+         {"objectFit": "scale-down"},
+         {"objectFit": "inherit"},
+         {"objectFit": "initial"},
+         {"objectFit": "unset"},
+       ))
+  )
+);

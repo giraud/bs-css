@@ -659,6 +659,8 @@ let columnCount: [ | `auto | `count(int) | cascading] => rule;
 
 let direction: [ | `ltr | `rtl | cascading] => rule;
 
+let objectFit: [ | `fill | `contain | `cover | `none | `scaleDown | cascading] => rule;
+
 /**
  * Style
  */
