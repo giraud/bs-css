@@ -1150,7 +1150,7 @@ let columnCount = x =>
   ));
 
 let objectFit = x =>
-  d(
+  `declaration((
     "objectFit",
     switch (x) {
     | `fill => "fill"
@@ -1162,7 +1162,7 @@ let objectFit = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  );
+  ));
 
 type filter = [
   | `blur(length)
