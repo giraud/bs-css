@@ -10,6 +10,43 @@ module Cascading: {
   let toString: t => string;
 };
 
+module Length: {
+  type t = [
+    | `calc([ | `add | `sub], t, t)
+    | `ch(float)
+    | `cm(float)
+    | `em(float)
+    | `ex(float)
+    | `mm(float)
+    | `percent(float)
+    | `pt(int)
+    | `px(int)
+    | `pxFloat(float)
+    | `rem(float)
+    | `vh(float)
+    | `vmin(float)
+    | `vmax(float)
+    | `vw(float)
+    | `zero
+  ];
+
+  let ch: float => [> | `ch(float)];
+  let cm: float => [> | `cm(float)];
+  let em: float => [> | `em(float)];
+  let ex: float => [> | `ex(float)];
+  let mm: float => [> | `mm(float)];
+  let pt: int => [> | `pt(int)];
+  let px: int => [> | `px(int)];
+  let pxFloat: float => [> | `pxFloat(float)];
+  let rem: float => [> | `rem(float)];
+  let vh: float => [> | `vh(float)];
+  let vmin: float => [> | `vmin(float)];
+  let vmax: float => [> | `vmax(float)];
+  let zero: [> | `zero];
+
+  let toString: t => string;
+};
+
 module Angle: {
   /**
    The angle CSS data type represents an angle value expressed in degrees, gradians, radians, or turns.

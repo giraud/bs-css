@@ -27,16 +27,19 @@ let label: string => rule;
  Properties
  ********** */
 
-let unsafe: (string, string) => rule;
-let zIndex: int => rule;
-
+let bottom: [ Types.Length.t | Types.Cascading.t] => rule;
 let direction: [< Types.Direction.t | Types.Cascading.t] => rule;
+let fontFamily: string => rule;
+let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
+let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
+let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
+let left: [ Types.Length.t | Types.Cascading.t] => rule;
 let position: [ Types.Position.t | Types.Cascading.t] => rule;
 let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
-
-let fontFamily: string => rule;
-let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
-let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
+let right: [ Types.Length.t | Types.Cascading.t] => rule;
+let top: [ Types.Length.t | Types.Cascading.t] => rule;
+let unsafe: (string, string) => rule;
+let zIndex: int => rule;
 
 /* *************************************
  Type aliases for backward compatibility
@@ -45,6 +48,7 @@ let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 type cascading = Types.Cascading.t;
 type angle = Types.Angle.t;
 type fontStyle = Types.FontStyle.t;
+type length = Types.Length.t;
 
 /* **************************************************
  Constructor aliases, for ease of use.
@@ -54,6 +58,20 @@ type fontStyle = Types.FontStyle.t;
 let initial: [> Types.Cascading.t];
 let inherit_: [> Types.Cascading.t];
 let unset: [> Types.Cascading.t];
+
+let ch: float => [> | `ch(float)];
+let cm: float => [> | `cm(float)];
+let em: float => [> | `em(float)];
+let ex: float => [> | `ex(float)];
+let mm: float => [> | `mm(float)];
+let pt: int => [> | `pt(int)];
+let px: int => [> | `px(int)];
+let pxFloat: float => [> | `pxFloat(float)];
+let rem: float => [> | `rem(float)];
+let vh: float => [> | `vh(float)];
+let vmin: float => [> | `vmin(float)];
+let vmax: float => [> | `vmax(float)];
+let zero: [> | `zero];
 
 let deg: float => Types.Angle.t;
 let rad: float => Types.Angle.t;
@@ -81,25 +99,6 @@ let oblique: [> Types.FontStyle.t];
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-
-type length = [
-  | `calc([ | `add | `sub], length, length)
-  | `ch(float)
-  | `cm(float)
-  | `em(float)
-  | `ex(float)
-  | `mm(float)
-  | `percent(float)
-  | `pt(int)
-  | `px(int)
-  | `pxFloat(float)
-  | `rem(float)
-  | `vh(float)
-  | `vmin(float)
-  | `vmax(float)
-  | `vw(float)
-  | `zero
-];
 
 type color = [
   | `rgb(int, int, int)
@@ -136,28 +135,35 @@ let transparent: [> | `transparent];
 let currentColor: [> | `currentColor];
 
 type gradient = [
-  | `linearGradient(angle, list((length, color)))
-  | `repeatingLinearGradient(angle, list((length, color)))
-  | `radialGradient(list((length, color)))
-  | `repeatingRadialGradient(list((length, color)))
+  | `linearGradient(angle, list((Types.Length.t, color)))
+  | `repeatingLinearGradient(angle, list((Types.Length.t, color)))
+  | `radialGradient(list((Types.Length.t, color)))
+  | `repeatingRadialGradient(list((Types.Length.t, color)))
 ];
 
 let linearGradient:
-  (angle, list((length, color))) =>
-  [> | `linearGradient(angle, list((length, color)))];
+  (angle, list((Types.Length.t, color))) =>
+  [> | `linearGradient(angle, list((Types.Length.t, color)))];
 let repeatingLinearGradient:
-  (angle, list((length, color))) =>
-  [> | `repeatingLinearGradient(angle, list((length, color)))];
+  (angle, list((Types.Length.t, color))) =>
+  [> | `repeatingLinearGradient(angle, list((Types.Length.t, color)))];
 let radialGradient:
-  list((length, color)) => [> | `radialGradient(list((length, color)))];
+  list((Types.Length.t, color)) =>
+  [> | `radialGradient(list((Types.Length.t, color)))];
 let repeatingRadialGradient:
-  list((length, color)) =>
-  [> | `repeatingRadialGradient(list((length, color)))];
+  list((Types.Length.t, color)) =>
+  [> | `repeatingRadialGradient(list((Types.Length.t, color)))];
 
 type repeatValue = [ | `autoFill | `autoFit | `num(int)];
-type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
+type minmax = [
+  | `fr(float)
+  | `minContent
+  | `maxContent
+  | `auto
+  | Types.Length.t
+];
 type trackLength = [
-  length
+  Types.Length.t
   | `fr(float)
   | `minContent
   | `maxContent
@@ -165,29 +171,18 @@ type trackLength = [
 ];
 type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
 
-let ch: float => [> | `ch(float)];
-let cm: float => [> | `cm(float)];
-let em: float => [> | `em(float)];
-let ex: float => [> | `ex(float)];
 let fr: float => [> | `fr(float)];
-let mm: float => [> | `mm(float)];
 let pct: float => [> | `percent(float)];
-let pt: int => [> | `pt(int)];
-let px: int => [> | `px(int)];
-let pxFloat: float => [> | `pxFloat(float)];
-let rem: float => [> | `rem(float)];
-let vh: float => [> | `vh(float)];
-let vmax: float => [> | `vmax(float)];
-let vmin: float => [> | `vmin(float)];
 let vw: float => [> | `vw(float)];
-let zero: [> | `zero];
 
 module Calc: {
-  let (-): (length, length) => [> length];
-  let (+): (length, length) => [> length];
+  let (-): (Types.Length.t, Types.Length.t) => [> Types.Length.t];
+  let (+): (Types.Length.t, Types.Length.t) => [> Types.Length.t];
 };
 
-let size: (length, length) => [> | `size(length, length)];
+let size:
+  (Types.Length.t, Types.Length.t) =>
+  [> | `size(Types.Length.t, Types.Length.t)];
 
 let solid: [> | `solid];
 let dotted: [> | `dotted];
@@ -264,12 +259,15 @@ let running: [> | `running];
 let inside: [> | `inside];
 let outside: [> | `outside];
 
-let translate: (length, length) => [> | `translate(length, length)];
+let translate:
+  (Types.Length.t, Types.Length.t) =>
+  [> | `translate(Types.Length.t, Types.Length.t)];
 let translate3d:
-  (length, length, length) => [> | `translate3d(length, length, length)];
-let translateX: length => [> | `translateX(length)];
-let translateY: length => [> | `translateY(length)];
-let translateZ: length => [> | `translateZ(length)];
+  (Types.Length.t, Types.Length.t, Types.Length.t) =>
+  [> | `translate3d(Types.Length.t, Types.Length.t, Types.Length.t)];
+let translateX: Types.Length.t => [> | `translateX(Types.Length.t)];
+let translateY: Types.Length.t => [> | `translateY(Types.Length.t)];
+let translateZ: Types.Length.t => [> | `translateZ(Types.Length.t)];
 let scale: (float, float) => [> | `scale(float, float)];
 let scale3d: (float, float, float) => [> | `scale3d(float, float, float)];
 let scaleX: float => [> | `scaleX(float)];
@@ -374,14 +372,9 @@ let display:
     | `tableColumn
     | `tableRow
     | `none
-    | cascading
+    | Types.Cascading.t
   ] =>
   rule;
-
-let top: [ length | cascading] => rule;
-let bottom: [ length | cascading] => rule;
-let left: [ length | cascading] => rule;
-let right: [ length | cascading] => rule;
 
 let flex: [ | `auto | `initial | `none | `num(float)] => rule;
 let flex3:
@@ -389,7 +382,7 @@ let flex3:
     ~grow: float,
     ~shrink: float,
     ~basis: [
-              length
+              Types.Length.t
               | `auto
               | `fill
               | `content
@@ -403,7 +396,7 @@ let flexGrow: float => rule;
 let flexShrink: float => rule;
 let flexBasis:
   [
-    length
+    Types.Length.t
     | `auto
     | `fill
     | `content
@@ -419,8 +412,8 @@ let order: int => rule;
 
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
-let gridAutoColumns: [ length | `auto] => rule;
-let gridAutoRows: [ length | `auto] => rule;
+let gridAutoColumns: [ Types.Length.t | `auto] => rule;
+let gridAutoRows: [ Types.Length.t | `auto] => rule;
 let gridAutoFlow:
   [
     | `column
@@ -438,48 +431,56 @@ let gridColumnStart: int => rule;
 let gridColumnEnd: int => rule;
 let gridRowStart: int => rule;
 let gridRowEnd: int => rule;
-let gridColumnGap: length => rule;
-let gridRowGap: length => rule;
-let gridGap: length => rule;
+let gridColumnGap: Types.Length.t => rule;
+let gridRowGap: Types.Length.t => rule;
+let gridGap: Types.Length.t => rule;
 
-let width: [ length | `auto] => rule;
-let height: [ length | `auto] => rule;
-let minWidth: [ length | `auto] => rule;
-let maxWidth: [ length | `none] => rule;
-let minHeight: [ length | `auto] => rule;
-let maxHeight: [ length | `none] => rule;
+let width: [ Types.Length.t | `auto] => rule;
+let height: [ Types.Length.t | `auto] => rule;
+let minWidth: [ Types.Length.t | `auto] => rule;
+let maxWidth: [ Types.Length.t | `none] => rule;
+let minHeight: [ Types.Length.t | `auto] => rule;
+let maxHeight: [ Types.Length.t | `none] => rule;
 
-let margin: [ length | `auto] => rule;
-let margin2: (~v: [ length | `auto], ~h: [ length | `auto]) => rule;
+let margin: [ Types.Length.t | `auto] => rule;
+let margin2:
+  (~v: [ Types.Length.t | `auto], ~h: [ Types.Length.t | `auto]) => rule;
 let margin3:
   (
-    ~top: [ length | `auto],
-    ~h: [ length | `auto],
-    ~bottom: [ length | `auto]
+    ~top: [ Types.Length.t | `auto],
+    ~h: [ Types.Length.t | `auto],
+    ~bottom: [ Types.Length.t | `auto]
   ) =>
   rule;
 let margin4:
   (
-    ~top: [ length | `auto],
-    ~right: [ length | `auto],
-    ~bottom: [ length | `auto],
-    ~left: [ length | `auto]
+    ~top: [ Types.Length.t | `auto],
+    ~right: [ Types.Length.t | `auto],
+    ~bottom: [ Types.Length.t | `auto],
+    ~left: [ Types.Length.t | `auto]
   ) =>
   rule;
-let marginLeft: [ length | `auto] => rule;
-let marginRight: [ length | `auto] => rule;
-let marginTop: [ length | `auto] => rule;
-let marginBottom: [ length | `auto] => rule;
+let marginLeft: [ Types.Length.t | `auto] => rule;
+let marginRight: [ Types.Length.t | `auto] => rule;
+let marginTop: [ Types.Length.t | `auto] => rule;
+let marginBottom: [ Types.Length.t | `auto] => rule;
 
-let padding: length => rule;
-let padding2: (~v: length, ~h: length) => rule;
-let padding3: (~top: length, ~h: length, ~bottom: length) => rule;
+let padding: Types.Length.t => rule;
+let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
+let padding3:
+  (~top: Types.Length.t, ~h: Types.Length.t, ~bottom: Types.Length.t) => rule;
 let padding4:
-  (~top: length, ~right: length, ~bottom: length, ~left: length) => rule;
-let paddingLeft: length => rule;
-let paddingRight: length => rule;
-let paddingTop: length => rule;
-let paddingBottom: length => rule;
+  (
+    ~top: Types.Length.t,
+    ~right: Types.Length.t,
+    ~bottom: Types.Length.t,
+    ~left: Types.Length.t
+  ) =>
+  rule;
+let paddingLeft: Types.Length.t => rule;
+let paddingRight: Types.Length.t => rule;
+let paddingTop: Types.Length.t => rule;
+let paddingBottom: Types.Length.t => rule;
 
 let alignContent:
   [
@@ -509,7 +510,7 @@ let justifyContent:
   ] =>
   rule;
 
-let boxSizing: [ | `borderBox | `contentBox | cascading] => rule;
+let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 
 let float: [ | `left | `right | `none] => rule;
 let clear: [ | `left | `right | `both] => rule;
@@ -520,7 +521,7 @@ let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 
 let contentRule: string => rule;
 
-let columnCount: [ | `auto | `count(int) | cascading] => rule;
+let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 
 /**
  * Style
@@ -529,47 +530,48 @@ let backfaceVisibility: [ | `visible | `hidden] => rule;
 let visibility: [ | `visible | `hidden] => rule;
 
 let border:
-  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderWidth: length => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let borderWidth: Types.Length.t => rule;
 let borderStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderColor: color => rule;
 
 let borderTop:
-  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderTopWidth: length => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let borderTopWidth: Types.Length.t => rule;
 let borderTopStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderTopColor: color => rule;
 let borderBottom:
-  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderBottomWidth: length => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let borderBottomWidth: Types.Length.t => rule;
 let borderBottomStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderBottomColor: color => rule;
 let borderLeft:
-  (length, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderLeftWidth: length => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+let borderLeftWidth: Types.Length.t => rule;
 let borderLeftStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderLeftColor: color => rule;
-let borderRight: (length, [ | `solid | `dashed | `dotted], [ color]) => rule;
-let borderRightWidth: length => rule;
+let borderRight:
+  (Types.Length.t, [ | `solid | `dashed | `dotted], [ color]) => rule;
+let borderRightWidth: Types.Length.t => rule;
 let borderRightStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderRightColor: color => rule;
 
-let borderRadius: length => rule;
-let borderTopLeftRadius: length => rule;
-let borderTopRightRadius: length => rule;
-let borderBottomLeftRadius: length => rule;
-let borderBottomRightRadius: length => rule;
+let borderRadius: Types.Length.t => rule;
+let borderTopLeftRadius: Types.Length.t => rule;
+let borderTopRightRadius: Types.Length.t => rule;
+let borderBottomLeftRadius: Types.Length.t => rule;
+let borderBottomRightRadius: Types.Length.t => rule;
 
 let tableLayout: [ | `auto | `fixed] => rule;
 let borderCollapse: [ | `separate | `collapse] => rule;
-let borderSpacing: length => rule;
+let borderSpacing: Types.Length.t => rule;
 
 let boxShadow:
   (
-    ~x: length=?,
-    ~y: length=?,
-    ~blur: length=?,
-    ~spread: length=?,
+    ~x: Types.Length.t=?,
+    ~y: Types.Length.t=?,
+    ~blur: Types.Length.t=?,
+    ~spread: Types.Length.t=?,
     ~inset: bool=?,
     color
   ) =>
@@ -583,10 +585,11 @@ let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
 let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
-let backgroundPosition: ([ length], [ length]) => rule;
+let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
 let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
 let backgroundSize:
-  [ | `size(length, length) | `auto | `cover | `contain] => rule;
+  [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
+  rule;
 
 let cursor:
   [
@@ -665,19 +668,19 @@ type outlineStyle = [
   | `inset
   | `outset
 ];
-let outline: (length, outlineStyle, color) => rule;
+let outline: (Types.Length.t, outlineStyle, color) => rule;
 let outlineStyle: outlineStyle => rule;
-let outlineWidth: length => rule;
+let outlineWidth: Types.Length.t => rule;
 let outlineColor: color => rule;
-let outlineOffset: length => rule;
+let outlineOffset: Types.Length.t => rule;
 
 let pointerEvents: [ | `auto | `none] => rule;
 
 type filter = [
-  | `blur(length)
+  | `blur(Types.Length.t)
   | `brightness(float)
   | `contrast(float)
-  | `dropShadow(length, length, length, color)
+  | `dropShadow(Types.Length.t, Types.Length.t, Types.Length.t, color)
   | `grayscale(float)
   | `hueRotate(angle)
   | `invert(float)
@@ -686,7 +689,7 @@ type filter = [
   | `sepia(float)
   | `url(string)
   | `none
-  | cascading
+  | Types.Cascading.t
 ];
 
 let filter: list(filter) => rule;
@@ -727,32 +730,40 @@ let fontFace:
     ~fontFamily: string,
     ~src: list([< | `localUrl(string) | `url(string)]),
     ~fontStyle: fontStyle=?,
-    ~fontWeight: [ fontWeight | cascading]=?,
+    ~fontWeight: [ fontWeight | Types.Cascading.t]=?,
     unit
   ) =>
   string;
-let fontSize: [ length | cascading] => rule;
-let fontWeight: [ fontWeight | cascading] => rule;
-let letterSpacing: [ | `normal | length | cascading] => rule;
-let lineHeight: [ | `normal | `abs(float) | length | cascading] => rule;
-let textAlign: [ | `left | `center | `right | `justify | cascading] => rule;
+let fontWeight: [ fontWeight | Types.Cascading.t] => rule;
+let letterSpacing: [ | `normal | Types.Length.t | Types.Cascading.t] => rule;
+let lineHeight:
+  [ | `normal | `abs(float) | Types.Length.t | Types.Cascading.t] => rule;
+let textAlign:
+  [ | `left | `center | `right | `justify | Types.Cascading.t] => rule;
 let textDecoration:
-  [ | `none | `underline | `overline | `lineThrough | cascading] => rule;
+  [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
+  rule;
 let textDecorationColor: color => rule;
 let textDecorationStyle:
-  [ | `wavy | `solid | `dotted | `dashed | `double | cascading] => rule;
-let textIndent: length => rule;
+  [ | `wavy | `solid | `dotted | `dashed | `double | Types.Cascading.t] => rule;
+let textIndent: Types.Length.t => rule;
 let textOverflow:
-  [ | `clip | `ellipsis | `string(string) | cascading] => rule;
+  [ | `clip | `ellipsis | `string(string) | Types.Cascading.t] => rule;
 
 let textShadow:
-  (~x: length=?, ~y: length=?, ~blur: length=?, color) =>
+  (
+    ~x: Types.Length.t=?,
+    ~y: Types.Length.t=?,
+    ~blur: Types.Length.t=?,
+    color
+  ) =>
   [> | `textShadow(string)];
 let textShadows: list([ | `textShadow(string)]) => rule;
 
 let textTransform:
-  [ | `uppercase | `lowercase | `capitalize | `none | cascading] => rule;
-let userSelect: [ | `auto | `all | `text | `none | cascading] => rule;
+  [ | `uppercase | `lowercase | `capitalize | `none | Types.Cascading.t] =>
+  rule;
+let userSelect: [ | `auto | `all | `text | `none | Types.Cascading.t] => rule;
 let verticalAlign:
   [
     | `baseline
@@ -763,26 +774,27 @@ let verticalAlign:
     | `middle
     | `bottom
     | `textBottom
-    | length
-    | cascading
+    | Types.Length.t
+    | Types.Cascading.t
   ] =>
   rule;
 let whiteSpace:
-  [ | `normal | `nowrap | `pre | `preLine | `preWrap | cascading] => rule;
-let wordBreak: [ | `breakAll | `keepAll | `normal | cascading] => rule;
-let wordSpacing: [ | `normal | length | cascading] => rule;
-let wordWrap: [ | `normal | `breakWord | cascading] => rule;
+  [ | `normal | `nowrap | `pre | `preLine | `preWrap | Types.Cascading.t] =>
+  rule;
+let wordBreak: [ | `breakAll | `keepAll | `normal | Types.Cascading.t] => rule;
+let wordSpacing: [ | `normal | Types.Length.t | Types.Cascading.t] => rule;
+let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 
 /**
  * Transform
  */
 
 type transform = [
-  | `translate(length, length)
-  | `translate3d(length, length, length)
-  | `translateX(length)
-  | `translateY(length)
-  | `translateZ(length)
+  | `translate(Types.Length.t, Types.Length.t)
+  | `translate3d(Types.Length.t, Types.Length.t, Types.Length.t)
+  | `translateX(Types.Length.t)
+  | `translateY(Types.Length.t)
+  | `translateZ(Types.Length.t)
   | `scale(float, float)
   | `scale3d(float, float, float)
   | `scaleX(float)
@@ -801,11 +813,12 @@ type transform = [
 
 let transform: transform => rule;
 let transforms: list(transform) => rule;
-let transformOrigin: (length, length) => rule;
-let transformOrigin3d: (length, length, length) => rule;
+let transformOrigin: (Types.Length.t, Types.Length.t) => rule;
+let transformOrigin3d:
+  (Types.Length.t, Types.Length.t, Types.Length.t) => rule;
 let transformStyle: [ | `preserve3d | `flat] => rule;
-let perspective: [ | `none | length] => rule;
-let perspectiveOrigin: (length, length) => rule;
+let perspective: [ | `none | Types.Length.t] => rule;
+let perspectiveOrigin: (Types.Length.t, Types.Length.t) => rule;
 
 /**
   * Transition
@@ -927,7 +940,7 @@ module SVG: {
   let strokeLinecap: [ | `butt | `round | `square] => rule;
   let strokeLinejoin: [ | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;
-  let strokeWidth: length => rule;
+  let strokeWidth: Types.Length.t => rule;
   let strokeOpacity: float => rule;
   let stopColor: color => rule;
   let stopOpacity: float => rule;

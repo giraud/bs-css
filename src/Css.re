@@ -65,28 +65,6 @@ let string_of_float = Js.Float.toString;
 let string_of_int = Js.Int.toString;
 
 module Converter = {
-  let rec string_of_length =
-    fun
-    | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
-    | `zero => "0";
-
   let string_of_rgb = (r, g, b) =>
     "rgb("
     ++ string_of_int(r)
@@ -149,7 +127,7 @@ module Converter = {
   let string_of_stops = stops =>
     stops
     |> List.map(((l, c)) =>
-         join(" ", [string_of_color(c), string_of_length(l)])
+         join(" ", [string_of_color(c), Types.Length.toString(l)])
        )
     |> join(", ");
 
@@ -169,11 +147,11 @@ module Converter = {
 
   let string_of_translate3d = (x, y, z) =>
     "translate3d("
-    ++ string_of_length(x)
+    ++ Types.Length.toString(x)
     ++ ", "
-    ++ string_of_length(y)
+    ++ Types.Length.toString(y)
     ++ ", "
-    ++ string_of_length(z)
+    ++ Types.Length.toString(z)
     ++ ")";
 
   let string_of_scale = (x, y) =>
@@ -307,9 +285,17 @@ module Converter = {
   let string_of_flexBasis =
     fun
     | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " + "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " - "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -370,14 +356,58 @@ let label = label => `declaration(("label", label));
 
 /* Properties */
 
-let unsafe = d;
-let zIndex = x => `declaration(("zIndex", Js.Int.toString(x)));
+let bottom = x =>
+  `declaration((
+    "bottom",
+    switch (x) {
+    | #Types.Length.t as l => Types.Length.toString(l)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
 
 let direction = x =>
   `declaration((
     "direction",
     switch (x) {
     | #Types.Direction.t as d => Types.Direction.toString(d)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
+let fontFamily = x => `declaration(("fontFamily", x));
+
+let fontSize = x =>
+  `declaration((
+    "fontSize",
+    switch (x) {
+    | #Types.Length.t as l => Types.Length.toString(l)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
+let fontStyle = x =>
+  `declaration((
+    "fontStyle",
+    switch (x) {
+    | #Types.FontStyle.t as f => Types.FontStyle.toString(f)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
+let fontVariant = x =>
+  `declaration((
+    "fontVariant",
+    switch (x) {
+    | #Types.FontVariant.t as f => Types.FontVariant.toString(f)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
+let left = x =>
+  `declaration((
+    "left",
+    switch (x) {
+    | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   ));
@@ -400,29 +430,32 @@ let resize = x =>
     },
   ));
 
-let fontFamily = x => `declaration(("fontFamily", x));
-
-let fontVariant = x =>
+let right = x =>
   `declaration((
-    "fontVariant",
+    "right",
     switch (x) {
-    | #Types.FontVariant.t as f => Types.FontVariant.toString(f)
+    | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   ));
 
-let fontStyle = x =>
-  `declaration((
-    "fontStyle",
+let top = x =>
+  d(
+    "top",
     switch (x) {
-    | #Types.FontStyle.t as f => Types.FontStyle.toString(f)
+    | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
+
+let unsafe = d;
+
+let zIndex = x => `declaration(("zIndex", Js.Int.toString(x)));
 
 /* Type aliasing */
 
 type cascading = Types.Cascading.t;
+type length = Types.Length.t;
 type angle = Types.Angle.t;
 type fontStyle = Types.FontStyle.t;
 
@@ -431,6 +464,20 @@ type fontStyle = Types.FontStyle.t;
 let initial = Types.Cascading.initial;
 let inherit_ = Types.Cascading.inherit_;
 let unset = Types.Cascading.unset;
+
+let ch = Types.Length.ch;
+let cm = Types.Length.cm;
+let em = Types.Length.em;
+let ex = Types.Length.ex;
+let mm = Types.Length.mm;
+let pt = Types.Length.pt;
+let px = Types.Length.px;
+let pxFloat = Types.Length.pxFloat;
+let rem = Types.Length.rem;
+let vh = Types.Length.vh;
+let vmin = Types.Length.vmin;
+let vmax = Types.Length.vmax;
+let zero = Types.Length.zero;
 
 let deg = Types.Angle.deg;
 let rad = Types.Angle.rad;
@@ -462,25 +509,6 @@ let oblique = Types.FontStyle.oblique;
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-
-type length = [
-  | `calc([ | `add | `sub], length, length)
-  | `ch(float)
-  | `cm(float)
-  | `em(float)
-  | `ex(float)
-  | `mm(float)
-  | `percent(float)
-  | `pt(int)
-  | `px(int)
-  | `pxFloat(float)
-  | `rem(float)
-  | `vh(float)
-  | `vmax(float)
-  | `vmin(float)
-  | `vw(float)
-  | `zero
-];
 
 let pct = x => `percent(x);
 
@@ -527,46 +555,8 @@ let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
  * Units
  */
 
-let string_of_length_cascading =
-  fun
-  | `calc(`add, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
-  | `calc(`sub, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
-  | `ch(x) => string_of_float(x) ++ "ch"
-  | `cm(x) => string_of_float(x) ++ "cm"
-  | `em(x) => string_of_float(x) ++ "em"
-  | `ex(x) => string_of_float(x) ++ "ex"
-  | `mm(x) => string_of_float(x) ++ "mm"
-  | `percent(x) => string_of_float(x) ++ "%"
-  | `pt(x) => string_of_int(x) ++ "pt"
-  | `px(x) => string_of_int(x) ++ "px"
-  | `pxFloat(x) => string_of_float(x) ++ "px"
-  | `rem(x) => string_of_float(x) ++ "rem"
-  | `vh(x) => string_of_float(x) ++ "vh"
-  | `vmax(x) => string_of_float(x) ++ "vmax"
-  | `vmin(x) => string_of_float(x) ++ "vmin"
-  | `vw(x) => string_of_float(x) ++ "vw"
-  | `zero => "0"
-  | `initial => "initial"
-  | `inherit_ => "inherit"
-  | `unset => "unset";
-
-let ch = x => `ch(x);
-let cm = x => `cm(x);
-let em = x => `em(x);
-let ex = x => `ex(x);
-let fr = x => `fr(x);
-let mm = x => `mm(x);
-let pt = x => `pt(x);
-let px = x => `px(x);
-let pxFloat = x => `pxFloat(x);
-let rem = x => `rem(x);
-let vh = x => `vh(x);
-let vmax = x => `vmax(x);
-let vmin = x => `vmin(x);
 let vw = x => `vw(x);
-let zero = `zero;
+let fr = x => `fr(x);
 
 module Calc = {
   let (-) = (a, b) => `calc((`sub, a, b));
@@ -760,11 +750,6 @@ let display = x =>
     },
   );
 
-let top = x => d("top", string_of_length_cascading(x));
-let bottom = x => d("bottom", string_of_length_cascading(x));
-let left = x => d("left", string_of_length_cascading(x));
-let right = x => d("right", string_of_length_cascading(x));
-
 let flex = x => d("flex", string_of_flex(x));
 let flex3 = (~grow, ~shrink, ~basis) =>
   d(
@@ -805,9 +790,17 @@ let order = x => d("order", string_of_int(x));
 let string_of_margin =
   fun
   | `calc(`add, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " + "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `calc(`sub, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " - "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `ch(x) => string_of_float(x) ++ "ch"
   | `cm(x) => string_of_float(x) ++ "cm"
   | `em(x) => string_of_float(x) ++ "em"
@@ -853,41 +846,49 @@ let marginRight = x => d("marginRight", string_of_margin(x));
 let marginTop = x => d("marginTop", string_of_margin(x));
 let marginBottom = x => d("marginBottom", string_of_margin(x));
 
-let padding = x => d("padding", string_of_length(x));
+let padding = x => d("padding", Types.Length.toString(x));
 let padding2 = (~v, ~h) =>
-  d("padding", string_of_length(v) ++ " " ++ string_of_length(h));
+  d("padding", Types.Length.toString(v) ++ " " ++ Types.Length.toString(h));
 let padding3 = (~top, ~h, ~bottom) =>
   d(
     "padding",
-    string_of_length(top)
+    Types.Length.toString(top)
     ++ " "
-    ++ string_of_length(h)
+    ++ Types.Length.toString(h)
     ++ " "
-    ++ string_of_length(bottom),
+    ++ Types.Length.toString(bottom),
   );
 let padding4 = (~top, ~right, ~bottom, ~left) =>
   d(
     "padding",
-    string_of_length(top)
+    Types.Length.toString(top)
     ++ " "
-    ++ string_of_length(right)
+    ++ Types.Length.toString(right)
     ++ " "
-    ++ string_of_length(bottom)
+    ++ Types.Length.toString(bottom)
     ++ " "
-    ++ string_of_length(left),
+    ++ Types.Length.toString(left),
   );
-let paddingLeft = x => d("paddingLeft", string_of_length(x));
-let paddingRight = x => d("paddingRight", string_of_length(x));
-let paddingTop = x => d("paddingTop", string_of_length(x));
-let paddingBottom = x => d("paddingBottom", string_of_length(x));
+let paddingLeft = x => d("paddingLeft", Types.Length.toString(x));
+let paddingRight = x => d("paddingRight", Types.Length.toString(x));
+let paddingTop = x => d("paddingTop", Types.Length.toString(x));
+let paddingBottom = x => d("paddingBottom", Types.Length.toString(x));
 
 let string_of_minmax =
   fun
   | `auto => "auto"
   | `calc(`add, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " + "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `calc(`sub, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " - "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `ch(x) => string_of_float(x) ++ "ch"
   | `cm(x) => string_of_float(x) ++ "cm"
   | `em(x) => string_of_float(x) ++ "em"
@@ -912,9 +913,17 @@ let string_of_dimension =
   | `auto => "auto"
   | `none => "none"
   | `calc(`add, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " + "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `calc(`sub, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " - "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `ch(x) => string_of_float(x) ++ "ch"
   | `cm(x) => string_of_float(x) ++ "cm"
   | `em(x) => string_of_float(x) ++ "em"
@@ -987,9 +996,17 @@ let gridLengthToJs =
   fun
   | `auto => "auto"
   | `calc(`add, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " + "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `calc(`sub, a, b) =>
-    "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+    "calc("
+    ++ Types.Length.toString(a)
+    ++ " - "
+    ++ Types.Length.toString(b)
+    ++ ")"
   | `ch(x) => string_of_float(x) ++ "ch"
   | `cm(x) => string_of_float(x) ++ "cm"
   | `em(x) => string_of_float(x) ++ "em"
@@ -1037,9 +1054,9 @@ let gridColumnStart = n => d("gridColumnStart", string_of_int(n));
 let gridColumnEnd = n => d("gridColumnEnd", string_of_int(n));
 let gridRowStart = n => d("gridRowStart", string_of_int(n));
 let gridRowEnd = n => d("gridRowEnd", string_of_int(n));
-let gridColumnGap = n => d("gridColumnGap", string_of_length(n));
-let gridRowGap = n => d("gridRowGap", string_of_length(n));
-let gridGap = n => d("gridGap", string_of_length(n));
+let gridColumnGap = n => d("gridColumnGap", Types.Length.toString(n));
+let gridRowGap = n => d("gridRowGap", Types.Length.toString(n));
+let gridGap = n => d("gridGap", Types.Length.toString(n));
 
 let string_of_align =
   fun
@@ -1133,16 +1150,16 @@ type filter = [
 
 let string_of_filter =
   fun
-  | `blur(v) => "blur(" ++ string_of_length(v) ++ ")"
+  | `blur(v) => "blur(" ++ Types.Length.toString(v) ++ ")"
   | `brightness(v) => "brightness(" ++ string_of_float(v) ++ "%)"
   | `contrast(v) => "contrast(" ++ string_of_float(v) ++ "%)"
   | `dropShadow(a, b, c, d) =>
     "drop-shadow("
-    ++ string_of_length(a)
+    ++ Types.Length.toString(a)
     ++ " "
-    ++ string_of_length(b)
+    ++ Types.Length.toString(b)
     ++ " "
-    ++ string_of_length(c)
+    ++ Types.Length.toString(c)
     ++ " "
     ++ Converter.string_of_color(d)
     ++ ")"
@@ -1171,13 +1188,13 @@ let visibility = x => d("visibility", string_of_visibility(x));
 let boxShadow =
     (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color) =>
   `shadow(
-    string_of_length(x)
+    Types.Length.toString(x)
     ++ " "
-    ++ string_of_length(y)
+    ++ Types.Length.toString(y)
     ++ " "
-    ++ string_of_length(blur)
+    ++ Types.Length.toString(blur)
     ++ " "
-    ++ string_of_length(spread)
+    ++ Types.Length.toString(spread)
     ++ " "
     ++ string_of_color(color)
     ++ " "
@@ -1200,78 +1217,80 @@ let string_of_borderstyle =
 let border = (px, style, color) =>
   d(
     "border",
-    string_of_length(px)
+    Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
   );
-let borderWidth = x => d("borderWidth", string_of_length(x));
+let borderWidth = x => d("borderWidth", Types.Length.toString(x));
 let borderStyle = x => d("borderStyle", string_of_borderstyle(x));
 let borderColor = x => d("borderColor", string_of_color(x));
 
 let borderLeft = (px, style, color) =>
   d(
     "borderLeft",
-    string_of_length(px)
+    Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
   );
-let borderLeftWidth = x => d("borderLeftWidth", string_of_length(x));
+let borderLeftWidth = x => d("borderLeftWidth", Types.Length.toString(x));
 let borderLeftStyle = x => d("borderLeftStyle", string_of_borderstyle(x));
 let borderLeftColor = x => d("borderLeftColor", string_of_color(x));
 
 let borderRight = (px, style, color) =>
   d(
     "borderRight",
-    string_of_length(px)
+    Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
   );
 
-let borderRightWidth = x => d("borderRightWidth", string_of_length(x));
+let borderRightWidth = x => d("borderRightWidth", Types.Length.toString(x));
 let borderRightColor = x => d("borderRightColor", string_of_color(x));
 let borderRightStyle = x => d("borderRightStyle", string_of_borderstyle(x));
 let borderTop = (px, style, color) =>
   d(
     "borderTop",
-    string_of_length(px)
+    Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
   );
 
-let borderTopWidth = x => d("borderTopWidth", string_of_length(x));
+let borderTopWidth = x => d("borderTopWidth", Types.Length.toString(x));
 let borderTopStyle = x => d("borderTopStyle", string_of_borderstyle(x));
 let borderTopColor = x => d("borderTopColor", string_of_color(x));
 
 let borderBottom = (px, style, color) =>
   d(
     "borderBottom",
-    string_of_length(px)
+    Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
   );
-let borderBottomWidth = x => d("borderBottomWidth", string_of_length(x));
+let borderBottomWidth = x =>
+  d("borderBottomWidth", Types.Length.toString(x));
 let borderBottomStyle = x =>
   d("borderBottomStyle", string_of_borderstyle(x));
 let borderBottomColor = x => d("borderBottomColor", string_of_color(x));
 
-let borderRadius = i => d("borderRadius", string_of_length(i));
-let borderTopLeftRadius = i => d("borderTopLeftRadius", string_of_length(i));
+let borderRadius = i => d("borderRadius", Types.Length.toString(i));
+let borderTopLeftRadius = i =>
+  d("borderTopLeftRadius", Types.Length.toString(i));
 let borderTopRightRadius = i =>
-  d("borderTopRightRadius", string_of_length(i));
+  d("borderTopRightRadius", Types.Length.toString(i));
 let borderBottomLeftRadius = i =>
-  d("borderBottomLeftRadius", string_of_length(i));
+  d("borderBottomLeftRadius", Types.Length.toString(i));
 let borderBottomRightRadius = i =>
-  d("borderBottomRightRadius", string_of_length(i));
+  d("borderBottomRightRadius", Types.Length.toString(i));
 
 let tableLayout = x =>
   d(
@@ -1291,7 +1310,7 @@ let borderCollapse = x =>
     },
   );
 
-let borderSpacing = i => d("borderSpacing", string_of_length(i));
+let borderSpacing = i => d("borderSpacing", Types.Length.toString(i));
 
 let background = x => d("background", string_of_background(x));
 let backgrounds = bg =>
@@ -1346,7 +1365,7 @@ let backgroundOrigin = x =>
 let backgroundPosition = (x, y) =>
   d(
     "backgroundPosition",
-    string_of_length(x) ++ " " ++ string_of_length(y),
+    Types.Length.toString(x) ++ " " ++ Types.Length.toString(y),
   );
 
 let backgroundRepeat = x =>
@@ -1364,7 +1383,8 @@ let backgroundSize = x =>
   d(
     "backgroundSize",
     switch (x) {
-    | `size(x, y) => string_of_length(x) ++ " " ++ string_of_length(y)
+    | `size(x, y) =>
+      Types.Length.toString(x) ++ " " ++ Types.Length.toString(y)
     | `auto => "auto"
     | `cover => "cover"
     | `contain => "contain"
@@ -1469,7 +1489,7 @@ let string_of_outlineStyle =
 let outline = (size, style, color) =>
   d(
     "outline",
-    string_of_length(size)
+    Types.Length.toString(size)
     ++ " "
     ++ string_of_outlineStyle(style)
     ++ " "
@@ -1478,11 +1498,11 @@ let outline = (size, style, color) =>
 
 let outlineStyle = x => d("outlineStyle", string_of_outlineStyle(x));
 
-let outlineWidth = x => d("outlineWidth", string_of_length(x));
+let outlineWidth = x => d("outlineWidth", Types.Length.toString(x));
 
 let outlineColor = x => d("outlineColor", string_of_color(x));
 
-let outlineOffset = x => d("outlineOffset", string_of_length(x));
+let outlineOffset = x => d("outlineOffset", Types.Length.toString(x));
 
 /**
  * Text
@@ -1515,8 +1535,6 @@ let lighter = `lighter;
 let bolder = `bolder;
 
 let color = x => d("color", string_of_color(x));
-
-let fontSize = x => d("fontSize", string_of_length_cascading(x));
 
 let fontWeight = x => d("fontWeight", string_of_fontWeight(x));
 
@@ -1557,9 +1575,17 @@ let lineHeight = x =>
     | `normal => "normal"
     | `abs(x) => string_of_float(x)
     | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " + "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " - "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -1588,9 +1614,17 @@ let letterSpacing = x =>
     switch (x) {
     | `normal => "normal"
     | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " + "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " - "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -1658,7 +1692,7 @@ let textDecorationStyle = x =>
     },
   );
 
-let textIndent = x => d("textIndent", string_of_length(x));
+let textIndent = x => d("textIndent", Types.Length.toString(x));
 
 let textOverflow = x =>
   d(
@@ -1675,11 +1709,11 @@ let textOverflow = x =>
 
 let textShadow = (~x=zero, ~y=zero, ~blur=zero, color) =>
   `textShadow(
-    string_of_length(x)
+    Types.Length.toString(x)
     ++ " "
-    ++ string_of_length(y)
+    ++ Types.Length.toString(y)
     ++ " "
-    ++ string_of_length(blur)
+    ++ Types.Length.toString(blur)
     ++ " "
     ++ string_of_color(color),
   );
@@ -1734,9 +1768,17 @@ let verticalAlign = x =>
     | `bottom => "bottom"
     | `textBottom => "text-bottom"
     | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " + "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " - "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -1793,9 +1835,17 @@ let wordSpacing = x =>
     switch (x) {
     | `normal => "normal"
     | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " + "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " - "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -1866,11 +1916,15 @@ type transform = [
 let string_of_transform =
   fun
   | `translate(x, y) =>
-    "translate(" ++ string_of_length(x) ++ ", " ++ string_of_length(y) ++ ")"
+    "translate("
+    ++ Types.Length.toString(x)
+    ++ ", "
+    ++ Types.Length.toString(y)
+    ++ ")"
   | `translate3d(x, y, z) => string_of_translate3d(x, y, z)
-  | `translateX(x) => "translateX(" ++ string_of_length(x) ++ ")"
-  | `translateY(y) => "translateY(" ++ string_of_length(y) ++ ")"
-  | `translateZ(z) => "translateZ(" ++ string_of_length(z) ++ ")"
+  | `translateX(x) => "translateX(" ++ Types.Length.toString(x) ++ ")"
+  | `translateY(y) => "translateY(" ++ Types.Length.toString(y) ++ ")"
+  | `translateZ(z) => "translateZ(" ++ Types.Length.toString(z) ++ ")"
   | `scale(x, y) => string_of_scale(x, y)
   | `scale3d(x, y, z) =>
     "scale3d("
@@ -1913,16 +1967,19 @@ let transforms = xs =>
   d("transform", xs |> List.map(string_of_transform) |> join(" "));
 
 let transformOrigin = (x, y) =>
-  d("transformOrigin", string_of_length(x) ++ " " ++ string_of_length(y));
+  d(
+    "transformOrigin",
+    Types.Length.toString(x) ++ " " ++ Types.Length.toString(y),
+  );
 
 let transformOrigin3d = (x, y, z) =>
   d(
     "transformOrigin",
-    string_of_length(x)
+    Types.Length.toString(x)
     ++ " "
-    ++ string_of_length(y)
+    ++ Types.Length.toString(y)
     ++ " "
-    ++ string_of_length(z)
+    ++ Types.Length.toString(z)
     ++ " ",
   );
 
@@ -1941,9 +1998,17 @@ let perspective = x =>
     switch (x) {
     | `none => "none"
     | `calc(`add, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " + " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " + "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `calc(`sub, a, b) =>
-      "calc(" ++ string_of_length(a) ++ " - " ++ string_of_length(b) ++ ")"
+      "calc("
+      ++ Types.Length.toString(a)
+      ++ " - "
+      ++ Types.Length.toString(b)
+      ++ ")"
     | `ch(x) => string_of_float(x) ++ "ch"
     | `cm(x) => string_of_float(x) ++ "cm"
     | `em(x) => string_of_float(x) ++ "em"
@@ -2031,7 +2096,10 @@ let transitionTimingFunction = x =>
 let transitionProperty = x => d("transitionProperty", x);
 
 let perspectiveOrigin = (x, y) =>
-  d("perspectiveOrigin", string_of_length(x) ++ " " ++ string_of_length(y));
+  d(
+    "perspectiveOrigin",
+    Types.Length.toString(x) ++ " " ++ Types.Length.toString(y),
+  );
 
 /**
  * Animation
@@ -2181,7 +2249,8 @@ module SVG = {
       },
     );
   let stroke = color => d("stroke", string_of_color(color));
-  let strokeWidth = length => d("strokeWidth", string_of_length(length));
+  let strokeWidth = length =>
+    d("strokeWidth", Types.Length.toString(length));
   let strokeOpacity = opacity =>
     d("strokeOpacity", string_of_float(opacity));
   let strokeMiterlimit = x => d("strokeMiterlimit", string_of_float(x));
