@@ -36,6 +36,7 @@ let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 
 let fontFamily: string => rule;
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
+let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 
 /* *************************************
  Type aliases for backward compatibility
@@ -43,6 +44,7 @@ let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 
 type cascading = Types.Cascading.t;
 type angle = Types.Angle.t;
+type fontStyle = Types.FontStyle.t;
 
 /* **************************************************
  Constructor aliases, for ease of use.
@@ -71,6 +73,10 @@ let horizontal: [> Types.Resize.t];
 let vertical: [> Types.Resize.t];
 
 let smallCaps: [> Types.FontVariant.t];
+
+/* let normal: [> | Types.FontStyle.t]*/
+let italic: [> Types.FontStyle.t];
+let oblique: [> Types.FontStyle.t];
 
 /********************************************************
  ************************ VALUES ************************
@@ -278,9 +284,6 @@ let rotateZ: angle => [> | `rotateZ(angle)];
 let skew: (angle, angle) => [> | `skew(angle, angle)];
 let skewX: angle => [> | `skewX(angle)];
 let skewY: angle => [> | `skewY(angle)];
-
-let italic: [> | `italic];
-let oblique: [> | `oblique];
 
 let underline: [> | `underline];
 let overline: [> | `overline];
@@ -707,7 +710,6 @@ type fontWeight = [
   | `lighter
   | `bolder
 ];
-type fontStyle = [ | `italic | `normal | `oblique];
 
 let thin: [> | `thin];
 let extraLight: [> | `extraLight];
@@ -730,7 +732,6 @@ let fontFace:
   ) =>
   string;
 let fontSize: [ length | cascading] => rule;
-let fontStyle: [ fontStyle | cascading] => rule;
 let fontWeight: [ fontWeight | cascading] => rule;
 let letterSpacing: [ | `normal | length | cascading] => rule;
 let lineHeight: [ | `normal | `abs(float) | length | cascading] => rule;

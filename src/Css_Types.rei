@@ -7,8 +7,7 @@ module Cascading: {
   let inherit_: [> t];
   let unset: [> t];
 
-  let toString: [> t] => string;
-  let toString2: t => string;
+  let toString: t => string;
 };
 
 module Angle: {
@@ -49,6 +48,12 @@ module Position: {
    */
   type t = [ | `absolute | `relative | `static | `fixed | `sticky];
 
+  let absolute: [> t];
+  let relative: [> t];
+  let static: [> t];
+  let fixed: [> t];
+  let sticky: [> t];
+
   let toString: t => string;
 };
 
@@ -85,6 +90,16 @@ module FontVariant: {
 
   let normal: [> t];
   let smallCaps: [> t];
+
+  let toString: t => string;
+};
+
+module FontStyle: {
+  type t = [ | `normal | `italic | `oblique];
+
+  let normal: [> t];
+  let italic: [> t];
+  let oblique: [> t];
 
   let toString: t => string;
 };

@@ -113,7 +113,7 @@ module Converter = {
 
   let string_of_hsl = (h, s, l) =>
     "hsl("
-    ++ Css_Types.Angle.toString(h)
+    ++ Types.Angle.toString(h)
     ++ ", "
     ++ string_of_percent(s)
     ++ ", "
@@ -127,7 +127,7 @@ module Converter = {
 
   let string_of_hsla = (h, s, l, a) =>
     "hsla("
-    ++ Css_Types.Angle.toString(h)
+    ++ Types.Angle.toString(h)
     ++ ", "
     ++ string_of_percent(s)
     ++ ", "
@@ -155,14 +155,14 @@ module Converter = {
 
   let string_of_linearGradient = (angle, stops) =>
     "linear-gradient("
-    ++ Css_Types.Angle.toString(angle)
+    ++ Types.Angle.toString(angle)
     ++ ", "
     ++ string_of_stops(stops)
     ++ ")";
 
   let string_of_repeatingLinearGradient = (angle, stops) =>
     "repeating-linear-gradient("
-    ++ Css_Types.Angle.toString(angle)
+    ++ Types.Angle.toString(angle)
     ++ ", "
     ++ string_of_stops(stops)
     ++ ")";
@@ -223,13 +223,13 @@ module Converter = {
     | `currentColor => "currentColor"
     | `linearGradient(angle, stops) =>
       "linear-gradient("
-      ++ Css_Types.Angle.toString(angle)
+      ++ Types.Angle.toString(angle)
       ++ ", "
       ++ string_of_stops(stops)
       ++ ")"
     | `repeatingLinearGradient(angle, stops) =>
       "repeating-linear-gradient("
-      ++ Css_Types.Angle.toString(angle)
+      ++ Types.Angle.toString(angle)
       ++ ", "
       ++ string_of_stops(stops)
       ++ ")"
@@ -297,15 +297,6 @@ module Converter = {
     | `inherit_ => "inherit"
     | `unset => "unset"
     };
-
-  let string_of_fontStyle =
-    fun
-    | `normal => "normal"
-    | `italic => "italic"
-    | `oblique => "oblique"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset";
 
   let string_of_flex =
     fun
@@ -386,8 +377,8 @@ let direction = x =>
   `declaration((
     "direction",
     switch (x) {
-    | #Css_Types.Direction.t as d => Css_Types.Direction.toString(d)
-    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString2(c)
+    | #Types.Direction.t as d => Types.Direction.toString(d)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   ));
 
@@ -395,8 +386,8 @@ let position = x =>
   `declaration((
     "position",
     switch (x) {
-    | #Css_Types.Position.t as p => Css_Types.Position.toString(p)
-    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString(c)
+    | #Types.Position.t as p => Types.Position.toString(p)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   ));
 
@@ -404,8 +395,8 @@ let resize = x =>
   `declaration((
     "resize",
     switch (x) {
-    | #Css_Types.Resize.t as r => Css_Types.Resize.toString(r)
-    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString(c)
+    | #Types.Resize.t as r => Types.Resize.toString(r)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   ));
 
@@ -415,38 +406,58 @@ let fontVariant = x =>
   `declaration((
     "fontVariant",
     switch (x) {
-    | #Css_Types.FontVariant.t as f => Css_Types.FontVariant.toString(f)
-    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString(c)
+    | #Types.FontVariant.t as f => Types.FontVariant.toString(f)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
+let fontStyle = x =>
+  `declaration((
+    "fontStyle",
+    switch (x) {
+    | #Types.FontStyle.t as f => Types.FontStyle.toString(f)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   ));
 
 /* Type aliasing */
 
-type cascading = Css_Types.Cascading.t;
-type angle = Css_Types.Angle.t;
+type cascading = Types.Cascading.t;
+type angle = Types.Angle.t;
+type fontStyle = Types.FontStyle.t;
 
 /* Constructor aliases */
 
-let initial = Css_Types.Cascading.initial;
-let inherit_ = Css_Types.Cascading.inherit_;
-let unset = Css_Types.Cascading.unset;
+let initial = Types.Cascading.initial;
+let inherit_ = Types.Cascading.inherit_;
+let unset = Types.Cascading.unset;
 
-let deg = Css_Types.Angle.deg;
-let rad = Css_Types.Angle.rad;
-let grad = Css_Types.Angle.grad;
-let turn = Css_Types.Angle.turn;
+let deg = Types.Angle.deg;
+let rad = Types.Angle.rad;
+let grad = Types.Angle.grad;
+let turn = Types.Angle.turn;
 
-let ltr = Css_Types.Direction.ltr;
-let rtl = Css_Types.Direction.rtl;
+let ltr = Types.Direction.ltr;
+let rtl = Types.Direction.rtl;
 
-//let none = Css_Types.Resize.none;
-//let both = Css_Types.Resize.both;
-let horizontal = Css_Types.Resize.horizontal;
-let vertical = Css_Types.Resize.vertical;
-//let block = Css_Types.Resize.block;
-//let inline = Css_Types.Resize.inline;
+let absolute = Types.Position.absolute;
+let relative = Types.Position.relative;
+let static = Types.Position.static;
+let fixed = `fixed;
+let sticky = Types.Position.sticky;
 
-let smallCaps = Css_Types.FontVariant.smallCaps;
+//let none = Types.Resize.none;
+//let both = Types.Resize.both;
+let horizontal = Types.Resize.horizontal;
+let vertical = Types.Resize.vertical;
+//let block = Types.Resize.block;
+//let inline = Types.Resize.inline;
+
+let smallCaps = Types.FontVariant.smallCaps;
+
+//let normal = `normal;
+let italic = Types.FontStyle.italic;
+let oblique = Types.FontStyle.oblique;
 
 /********************************************************
  ************************ VALUES ************************
@@ -567,7 +578,6 @@ let size = (x, y) => `size((x, y));
  * Misc
  */
 
-let absolute = `absolute;
 let all = `all;
 let auto = `auto;
 let backwards = `backwards;
@@ -589,7 +599,6 @@ let ease = `ease;
 let easeIn = `easeIn;
 let easeInOut = `easeInOut;
 let easeOut = `easeOut;
-let fixed = `fixed;
 let flexBox = `flex;
 let grid = `grid;
 let inlineGrid = `inlineGrid;
@@ -628,7 +637,6 @@ let noRepeat = `noRepeat;
 let nowrap = `nowrap;
 let paddingBox = `paddingBox;
 let paused = `paused;
-let relative = `relative;
 let repeat = `repeat;
 let minmax = `minmax;
 let repeatX = `repeatX;
@@ -654,11 +662,9 @@ let solid = `solid;
 let spaceAround = `spaceAround;
 let spaceBetween = `spaceBetween;
 let spaceEvenly = `spaceEvenly;
-let static = `static;
 let stepEnd = `stepEnd;
 let steps = (i, dir) => `steps((i, dir));
 let stepStart = `stepStart;
-let sticky = `sticky;
 let stretch = `stretch;
 let text = `text;
 let translate = (x, y) => `translate((x, y));
@@ -673,9 +679,6 @@ let wrapReverse = `wrapReverse;
 
 let inside = `inside;
 let outside = `outside;
-
-let italic = `italic;
-let oblique = `oblique;
 
 let underline = `underline;
 let overline = `overline;
@@ -1144,7 +1147,7 @@ let string_of_filter =
     ++ Converter.string_of_color(d)
     ++ ")"
   | `grayscale(v) => "grayscale(" ++ string_of_float(v) ++ "%)"
-  | `hueRotate(v) => "hue-rotate(" ++ Css_Types.Angle.toString(v) ++ ")"
+  | `hueRotate(v) => "hue-rotate(" ++ Types.Angle.toString(v) ++ ")"
   | `invert(v) => "invert(" ++ string_of_float(v) ++ "%)"
   | `opacity(v) => "opacity(" ++ string_of_float(v) ++ "%)"
   | `saturate(v) => "saturate(" ++ string_of_float(v) ++ "%)"
@@ -1500,7 +1503,6 @@ type fontWeight = [
   | `lighter
   | `bolder
 ];
-type fontStyle = [ | `normal | `italic | `oblique];
 
 let thin = `thin;
 let extraLight = `extraLight;
@@ -1516,12 +1518,11 @@ let color = x => d("color", string_of_color(x));
 
 let fontSize = x => d("fontSize", string_of_length_cascading(x));
 
-let fontStyle = x => d("fontStyle", string_of_fontStyle(x));
 let fontWeight = x => d("fontWeight", string_of_fontWeight(x));
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =
-    Js.Option.map((. value) => string_of_fontStyle(value), fontStyle);
+    Js.Option.map((. value) => Types.FontStyle.toString(value), fontStyle);
   let src =
     src
     |> List.map(
@@ -1882,7 +1883,7 @@ let string_of_transform =
   | `scaleX(x) => "scaleX(" ++ string_of_float(x) ++ ")"
   | `scaleY(y) => "scaleY(" ++ string_of_float(y) ++ ")"
   | `scaleZ(z) => "scaleZ(" ++ string_of_float(z) ++ ")"
-  | `rotate(a) => "rotate(" ++ Css_Types.Angle.toString(a) ++ ")"
+  | `rotate(a) => "rotate(" ++ Types.Angle.toString(a) ++ ")"
   | `rotate3d(x, y, z, a) =>
     "rotate3d("
     ++ string_of_float(x)
@@ -1891,19 +1892,19 @@ let string_of_transform =
     ++ ", "
     ++ string_of_float(z)
     ++ ", "
-    ++ Css_Types.Angle.toString(a)
+    ++ Types.Angle.toString(a)
     ++ ")"
-  | `rotateX(a) => "rotateX(" ++ Css_Types.Angle.toString(a) ++ ")"
-  | `rotateY(a) => "rotateY(" ++ Css_Types.Angle.toString(a) ++ ")"
-  | `rotateZ(a) => "rotateZ(" ++ Css_Types.Angle.toString(a) ++ ")"
+  | `rotateX(a) => "rotateX(" ++ Types.Angle.toString(a) ++ ")"
+  | `rotateY(a) => "rotateY(" ++ Types.Angle.toString(a) ++ ")"
+  | `rotateZ(a) => "rotateZ(" ++ Types.Angle.toString(a) ++ ")"
   | `skew(x, y) =>
     "skew("
-    ++ Css_Types.Angle.toString(x)
+    ++ Types.Angle.toString(x)
     ++ ", "
-    ++ Css_Types.Angle.toString(y)
+    ++ Types.Angle.toString(y)
     ++ ")"
-  | `skewX(a) => "skewX(" ++ Css_Types.Angle.toString(a) ++ ")"
-  | `skewY(a) => "skewY(" ++ Css_Types.Angle.toString(a) ++ ")"
+  | `skewX(a) => "skewX(" ++ Types.Angle.toString(a) ++ ")"
+  | `skewY(a) => "skewY(" ++ Types.Angle.toString(a) ++ ")"
   | `perspective(x) => "perspective(" ++ string_of_int(x) ++ ")";
 
 let transform = x => d("transform", string_of_transform(x));

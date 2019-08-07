@@ -9,12 +9,6 @@ module Cascading = {
     fun
     | `initial => "initial"
     | `inherit_ => "inherit"
-    | `unset => "unset"
-    | _ => "";
-  let toString2 =
-    fun
-    | `initial => "initial"
-    | `inherit_ => "inherit"
     | `unset => "unset";
 };
 
@@ -48,6 +42,12 @@ module Direction = {
 
 module Position = {
   type t = [ | `absolute | `relative | `static | `fixed | `sticky];
+
+  let absolute = `absolute;
+  let relative = `relative;
+  let static = `static;
+  let fixed = `fixed;
+  let sticky = `sticky;
 
   let toString =
     fun
@@ -88,4 +88,18 @@ module FontVariant = {
     fun
     | `normal => "normal"
     | `smallCaps => "smallCaps";
+};
+
+module FontStyle = {
+  type t = [ | `normal | `italic | `oblique];
+
+  let normal = `normal;
+  let italic = `italic;
+  let oblique = `oblique;
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `italic => "italic"
+    | `oblique => "oblique";
 };
