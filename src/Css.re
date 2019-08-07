@@ -386,11 +386,8 @@ let direction = x =>
   `declaration((
     "direction",
     switch (x) {
-    | `ltr
-    | `rtl => Css_Types.Direction.toString(x)
-    | `initial
-    | `inherit_
-    | `unset => Css_Types.Cascading.toString(x)
+    | #Css_Types.Direction.t as d => Css_Types.Direction.toString(d)
+    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString2(c)
     },
   ));
 
@@ -398,14 +395,8 @@ let position = x =>
   `declaration((
     "position",
     switch (x) {
-    | `absolute
-    | `static
-    | `fixed
-    | `relative
-    | `sticky => Css_Types.Position.toString(x)
-    | `initial
-    | `inherit_
-    | `unset => Css_Types.Cascading.toString(x)
+    | #Css_Types.Position.t as p => Css_Types.Position.toString(p)
+    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString(c)
     },
   ));
 
@@ -413,15 +404,8 @@ let resize = x =>
   `declaration((
     "resize",
     switch (x) {
-    | `none
-    | `both
-    | `horizontal
-    | `vertical
-    | `block
-    | `inline => Css_Types.Resize.toString(x)
-    | `initial
-    | `inherit_
-    | `unset => Css_Types.Cascading.toString(x)
+    | #Css_Types.Resize.t as r => Css_Types.Resize.toString(r)
+    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString(c)
     },
   ));
 
@@ -431,11 +415,8 @@ let fontVariant = x =>
   `declaration((
     "fontVariant",
     switch (x) {
-    | `normal => "normal"
-    | `smallCaps => "small-caps"
-    | `initial
-    | `inherit_
-    | `unset => Css_Types.Cascading.toString(x)
+    | #Css_Types.FontVariant.t as f => Css_Types.FontVariant.toString(f)
+    | #Css_Types.Cascading.t as c => Css_Types.Cascading.toString(c)
     },
   ));
 

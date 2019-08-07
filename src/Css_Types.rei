@@ -8,6 +8,7 @@ module Cascading: {
   let unset: [> t];
 
   let toString: [> t] => string;
+  let toString2: t => string;
 };
 
 module Angle: {
@@ -38,7 +39,7 @@ module Direction: {
   /** Text and other elements go from right to left. */
   let rtl: [> t];
 
-  let toString: [> t] => string;
+  let toString: t => string;
 };
 
 module Position: {
@@ -48,7 +49,7 @@ module Position: {
    */
   type t = [ | `absolute | `relative | `static | `fixed | `sticky];
 
-  let toString: [> t] => string;
+  let toString: t => string;
 };
 
 module Resize: {
@@ -71,7 +72,7 @@ module Resize: {
   /** The element displays a mechanism for allowing the user to resize it in the inline direction (either horizontally or vertically, depending on the writing-mode and direction value) */
   let inline: [> t];
 
-  let toString: [> t] => string;
+  let toString: t => string;
 };
 
 module FontVariant: {
@@ -85,5 +86,5 @@ module FontVariant: {
   let normal: [> t];
   let smallCaps: [> t];
 
-  let toString: [> t] => string;
+  let toString: t => string;
 };

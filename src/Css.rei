@@ -30,7 +30,7 @@ let label: string => rule;
 let unsafe: (string, string) => rule;
 let zIndex: int => rule;
 
-let direction: [ Types.Direction.t | Types.Cascading.t] => rule;
+let direction: [< Types.Direction.t | Types.Cascading.t] => rule;
 let position: [ Types.Position.t | Types.Cascading.t] => rule;
 let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 
@@ -61,11 +61,11 @@ let turn: float => Types.Angle.t;
 let ltr: [> Types.Direction.t];
 let rtl: [> Types.Direction.t];
 
-let absolute: [> | `absolute];
-let relative: [> | `relative];
-let static: [> | `static];
+let absolute: [> Types.Position.t];
+let relative: [> Types.Position.t];
+let static: [> Types.Position.t];
 let fixed: [> | `fixed];
-let sticky: [> | `sticky];
+let sticky: [> Types.Position.t];
 
 let horizontal: [> Types.Resize.t];
 let vertical: [> Types.Resize.t];

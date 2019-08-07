@@ -11,6 +11,11 @@ module Cascading = {
     | `inherit_ => "inherit"
     | `unset => "unset"
     | _ => "";
+  let toString2 =
+    fun
+    | `initial => "initial"
+    | `inherit_ => "inherit"
+    | `unset => "unset";
 };
 
 module Angle = {
@@ -38,8 +43,7 @@ module Direction = {
   let toString =
     fun
     | `ltr => "ltr"
-    | `rtl => "rtl"
-    | _ => "";
+    | `rtl => "rtl";
 };
 
 module Position = {
@@ -51,8 +55,7 @@ module Position = {
     | `relative => "relative"
     | `static => "static"
     | `fixed => "fixed"
-    | `sticky => "sticky"
-    | _ => "";
+    | `sticky => "sticky";
 };
 
 module Resize = {
@@ -72,8 +75,7 @@ module Resize = {
     | `horizontal => "horizontal"
     | `vertical => "vertical"
     | `block => "block"
-    | `inline => "inline"
-    | _ => "";
+    | `inline => "inline";
 };
 
 module FontVariant = {
@@ -85,6 +87,5 @@ module FontVariant = {
   let toString =
     fun
     | `normal => "normal"
-    | `smallCaps => "smallCaps"
-    | _ => "";
+    | `smallCaps => "smallCaps";
 };
