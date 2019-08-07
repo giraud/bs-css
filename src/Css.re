@@ -61,28 +61,25 @@ let join = (separator, strings) => {
   run("", strings);
 };
 
-let string_of_float = Js.Float.toString;
-let string_of_int = Js.Int.toString;
-
 module Converter = {
   let string_of_rgb = (r, g, b) =>
     "rgb("
-    ++ string_of_int(r)
+    ++ Js.Int.toString(r)
     ++ ", "
-    ++ string_of_int(g)
+    ++ Js.Int.toString(g)
     ++ ", "
-    ++ string_of_int(b)
+    ++ Js.Int.toString(b)
     ++ ")";
 
   let string_of_rgba = (r, g, b, a) =>
     "rgba("
-    ++ string_of_int(r)
+    ++ Js.Int.toString(r)
     ++ ", "
-    ++ string_of_int(g)
+    ++ Js.Int.toString(g)
     ++ ", "
-    ++ string_of_int(b)
+    ++ Js.Int.toString(b)
     ++ ", "
-    ++ string_of_float(a)
+    ++ Js.Float.toString(a)
     ++ ")";
 
   let string_of_percent =
@@ -155,9 +152,9 @@ module Converter = {
     ++ ")";
 
   let string_of_scale = (x, y) =>
-    "scale(" ++ string_of_float(x) ++ ", " ++ string_of_float(y) ++ ")";
+    "scale(" ++ Js.Float.toString(x) ++ ", " ++ Js.Float.toString(y) ++ ")";
 
-  let string_of_time = t => string_of_int(t) ++ "ms";
+  let string_of_time = t => Js.Int.toString(t) ++ "ms";
 
   let string_of_overflow =
     fun
@@ -179,7 +176,7 @@ module Converter = {
       "rgb("
       ++ join(
            ", ",
-           [string_of_int(r), string_of_int(g), string_of_int(b)],
+           [Js.Int.toString(r), Js.Int.toString(g), Js.Int.toString(b)],
          )
       ++ ")"
     | `rgba(r, g, b, a) =>
@@ -187,10 +184,10 @@ module Converter = {
       ++ join(
            ", ",
            [
-             string_of_int(r),
-             string_of_int(g),
-             string_of_int(b),
-             string_of_float(a),
+             Js.Int.toString(r),
+             Js.Int.toString(g),
+             Js.Int.toString(b),
+             Js.Float.toString(a),
            ],
          )
       ++ ")"
@@ -259,7 +256,7 @@ module Converter = {
 
   let string_of_fontWeight = x =>
     switch (x) {
-    | `num(n) => string_of_int(n)
+    | `num(n) => Js.Int.toString(n)
     | `thin => "100"
     | `extraLight => "200"
     | `light => "300"
@@ -281,7 +278,7 @@ module Converter = {
     | `auto => "auto"
     | `initial => "initial"
     | `none => "none"
-    | `num(n) => string_of_float(n);
+    | `num(n) => Js.Float.toString(n);
   let string_of_flexBasis =
     fun
     | `calc(`add, a, b) =>
@@ -296,20 +293,20 @@ module Converter = {
       ++ " - "
       ++ Types.Length.toString(b)
       ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `percent(x) => Js.Float.toString(x) ++ "%"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
     | `zero => "0"
     | `auto => "auto"
     | `fill => "fill"
@@ -338,7 +335,11 @@ type animation = string;
 
 let keyframes = frames => {
   let addStop = (dict, (stop, rules)) => {
-    Js.Dict.set(dict, string_of_int(stop) ++ "%", Emotion.makeJson(rules));
+    Js.Dict.set(
+      dict,
+      Js.Int.toString(stop) ++ "%",
+      Emotion.makeJson(rules),
+    );
     dict;
   };
   Emotion.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
@@ -409,6 +410,44 @@ let left = x =>
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   ));
+
+let padding = x => `declaration(("padding", Types.Length.toString(x)));
+let padding2 = (~v, ~h) =>
+  `declaration((
+    "padding",
+    Types.Length.toString(v) ++ " " ++ Types.Length.toString(h),
+  ));
+let padding3 = (~top, ~h, ~bottom) =>
+  `declaration((
+    "padding",
+    Types.Length.toString(top)
+    ++ " "
+    ++ Types.Length.toString(h)
+    ++ " "
+    ++ Types.Length.toString(bottom),
+  ));
+let padding4 = (~top, ~right, ~bottom, ~left) =>
+  `declaration((
+    "padding",
+    Types.Length.toString(top)
+    ++ " "
+    ++ Types.Length.toString(right)
+    ++ " "
+    ++ Types.Length.toString(bottom)
+    ++ " "
+    ++ Types.Length.toString(left),
+  ));
+
+let paddingBottom = x =>
+  `declaration(("paddingBottom", Types.Length.toString(x)));
+
+let paddingLeft = x =>
+  `declaration(("paddingLeft", Types.Length.toString(x)));
+
+let paddingRight = x =>
+  `declaration(("paddingRight", Types.Length.toString(x)));
+
+let paddingTop = x => `declaration(("paddingTop", Types.Length.toString(x)));
 
 let position = x =>
   `declaration((
@@ -752,14 +791,14 @@ let flex = x => `declaration(("flex", string_of_flex(x)));
 let flex3 = (~grow, ~shrink, ~basis) =>
   `declaration((
     "flex",
-    string_of_float(grow)
+    Js.Float.toString(grow)
     ++ " "
-    ++ string_of_float(shrink)
+    ++ Js.Float.toString(shrink)
     ++ " "
     ++ string_of_flexBasis(basis),
   ));
-let flexGrow = x => `declaration(("flexGrow", string_of_float(x)));
-let flexShrink = x => `declaration(("flexShrink", string_of_float(x)));
+let flexGrow = x => `declaration(("flexGrow", Js.Float.toString(x)));
+let flexShrink = x => `declaration(("flexShrink", Js.Float.toString(x)));
 let flexBasis = x => `declaration(("flexBasis", string_of_flexBasis(x)));
 
 let flexDirection = x =>
@@ -783,7 +822,7 @@ let flexWrap = x =>
     },
   ));
 
-let order = x => `declaration(("order", string_of_int(x)));
+let order = x => `declaration(("order", Js.Int.toString(x)));
 
 let string_of_margin =
   fun
@@ -799,20 +838,20 @@ let string_of_margin =
     ++ " - "
     ++ Types.Length.toString(b)
     ++ ")"
-  | `ch(x) => string_of_float(x) ++ "ch"
-  | `cm(x) => string_of_float(x) ++ "cm"
-  | `em(x) => string_of_float(x) ++ "em"
-  | `ex(x) => string_of_float(x) ++ "ex"
-  | `mm(x) => string_of_float(x) ++ "mm"
-  | `percent(x) => string_of_float(x) ++ "%"
-  | `pt(x) => string_of_int(x) ++ "pt"
-  | `px(x) => string_of_int(x) ++ "px"
-  | `pxFloat(x) => string_of_float(x) ++ "px"
-  | `rem(x) => string_of_float(x) ++ "rem"
-  | `vh(x) => string_of_float(x) ++ "vh"
-  | `vmax(x) => string_of_float(x) ++ "vmax"
-  | `vmin(x) => string_of_float(x) ++ "vmin"
-  | `vw(x) => string_of_float(x) ++ "vw"
+  | `ch(x) => Js.Float.toString(x) ++ "ch"
+  | `cm(x) => Js.Float.toString(x) ++ "cm"
+  | `em(x) => Js.Float.toString(x) ++ "em"
+  | `ex(x) => Js.Float.toString(x) ++ "ex"
+  | `mm(x) => Js.Float.toString(x) ++ "mm"
+  | `percent(x) => Js.Float.toString(x) ++ "%"
+  | `pt(x) => Js.Int.toString(x) ++ "pt"
+  | `px(x) => Js.Int.toString(x) ++ "px"
+  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+  | `rem(x) => Js.Float.toString(x) ++ "rem"
+  | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+  | `vw(x) => Js.Float.toString(x) ++ "vw"
   | `zero => "0"
   | `auto => "auto";
 
@@ -847,40 +886,6 @@ let marginRight = x => `declaration(("marginRight", string_of_margin(x)));
 let marginTop = x => `declaration(("marginTop", string_of_margin(x)));
 let marginBottom = x => `declaration(("marginBottom", string_of_margin(x)));
 
-let padding = x => `declaration(("padding", Types.Length.toString(x)));
-let padding2 = (~v, ~h) =>
-  `declaration((
-    "padding",
-    Types.Length.toString(v) ++ " " ++ Types.Length.toString(h),
-  ));
-let padding3 = (~top, ~h, ~bottom) =>
-  `declaration((
-    "padding",
-    Types.Length.toString(top)
-    ++ " "
-    ++ Types.Length.toString(h)
-    ++ " "
-    ++ Types.Length.toString(bottom),
-  ));
-let padding4 = (~top, ~right, ~bottom, ~left) =>
-  `declaration((
-    "padding",
-    Types.Length.toString(top)
-    ++ " "
-    ++ Types.Length.toString(right)
-    ++ " "
-    ++ Types.Length.toString(bottom)
-    ++ " "
-    ++ Types.Length.toString(left),
-  ));
-let paddingLeft = x =>
-  `declaration(("paddingLeft", Types.Length.toString(x)));
-let paddingRight = x =>
-  `declaration(("paddingRight", Types.Length.toString(x)));
-let paddingTop = x => `declaration(("paddingTop", Types.Length.toString(x)));
-let paddingBottom = x =>
-  `declaration(("paddingBottom", Types.Length.toString(x)));
-
 let string_of_minmax =
   fun
   | `auto => "auto"
@@ -896,21 +901,21 @@ let string_of_minmax =
     ++ " - "
     ++ Types.Length.toString(b)
     ++ ")"
-  | `ch(x) => string_of_float(x) ++ "ch"
-  | `cm(x) => string_of_float(x) ++ "cm"
-  | `em(x) => string_of_float(x) ++ "em"
-  | `ex(x) => string_of_float(x) ++ "ex"
-  | `mm(x) => string_of_float(x) ++ "mm"
-  | `percent(x) => string_of_float(x) ++ "%"
-  | `pt(x) => string_of_int(x) ++ "pt"
-  | `px(x) => string_of_int(x) ++ "px"
-  | `pxFloat(x) => string_of_float(x) ++ "px"
-  | `rem(x) => string_of_float(x) ++ "rem"
-  | `vh(x) => string_of_float(x) ++ "vh"
-  | `vmax(x) => string_of_float(x) ++ "vmax"
-  | `vmin(x) => string_of_float(x) ++ "vmin"
-  | `vw(x) => string_of_float(x) ++ "vw"
-  | `fr(x) => string_of_float(x) ++ "fr"
+  | `ch(x) => Js.Float.toString(x) ++ "ch"
+  | `cm(x) => Js.Float.toString(x) ++ "cm"
+  | `em(x) => Js.Float.toString(x) ++ "em"
+  | `ex(x) => Js.Float.toString(x) ++ "ex"
+  | `mm(x) => Js.Float.toString(x) ++ "mm"
+  | `percent(x) => Js.Float.toString(x) ++ "%"
+  | `pt(x) => Js.Int.toString(x) ++ "pt"
+  | `px(x) => Js.Int.toString(x) ++ "px"
+  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+  | `rem(x) => Js.Float.toString(x) ++ "rem"
+  | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+  | `vw(x) => Js.Float.toString(x) ++ "vw"
+  | `fr(x) => Js.Float.toString(x) ++ "fr"
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content";
@@ -931,21 +936,21 @@ let string_of_dimension =
     ++ " - "
     ++ Types.Length.toString(b)
     ++ ")"
-  | `ch(x) => string_of_float(x) ++ "ch"
-  | `cm(x) => string_of_float(x) ++ "cm"
-  | `em(x) => string_of_float(x) ++ "em"
-  | `ex(x) => string_of_float(x) ++ "ex"
-  | `mm(x) => string_of_float(x) ++ "mm"
-  | `percent(x) => string_of_float(x) ++ "%"
-  | `pt(x) => string_of_int(x) ++ "pt"
-  | `px(x) => string_of_int(x) ++ "px"
-  | `pxFloat(x) => string_of_float(x) ++ "px"
-  | `rem(x) => string_of_float(x) ++ "rem"
-  | `vh(x) => string_of_float(x) ++ "vh"
-  | `vmax(x) => string_of_float(x) ++ "vmax"
-  | `vmin(x) => string_of_float(x) ++ "vmin"
-  | `vw(x) => string_of_float(x) ++ "vw"
-  | `fr(x) => string_of_float(x) ++ "fr"
+  | `ch(x) => Js.Float.toString(x) ++ "ch"
+  | `cm(x) => Js.Float.toString(x) ++ "cm"
+  | `em(x) => Js.Float.toString(x) ++ "em"
+  | `ex(x) => Js.Float.toString(x) ++ "ex"
+  | `mm(x) => Js.Float.toString(x) ++ "mm"
+  | `percent(x) => Js.Float.toString(x) ++ "%"
+  | `pt(x) => Js.Int.toString(x) ++ "pt"
+  | `px(x) => Js.Int.toString(x) ++ "px"
+  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+  | `rem(x) => Js.Float.toString(x) ++ "rem"
+  | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+  | `vw(x) => Js.Float.toString(x) ++ "vw"
+  | `fr(x) => Js.Float.toString(x) ++ "fr"
   | `zero => "0"
   | `fitContent => "fit-content"
   | `minContent => "min-content"
@@ -987,7 +992,7 @@ let repeatValueToJs =
   fun
   | `autoFill => "auto-fill"
   | `autoFit => "auto-fit"
-  | `num(x) => x->string_of_int;
+  | `num(x) => x->Js.Int.toString;
 
 type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
 
@@ -1015,21 +1020,21 @@ let gridLengthToJs =
     ++ " - "
     ++ Types.Length.toString(b)
     ++ ")"
-  | `ch(x) => string_of_float(x) ++ "ch"
-  | `cm(x) => string_of_float(x) ++ "cm"
-  | `em(x) => string_of_float(x) ++ "em"
-  | `ex(x) => string_of_float(x) ++ "ex"
-  | `mm(x) => string_of_float(x) ++ "mm"
-  | `percent(x) => string_of_float(x) ++ "%"
-  | `pt(x) => string_of_int(x) ++ "pt"
-  | `px(x) => string_of_int(x) ++ "px"
-  | `pxFloat(x) => string_of_float(x) ++ "px"
-  | `rem(x) => string_of_float(x) ++ "rem"
-  | `vh(x) => string_of_float(x) ++ "vh"
-  | `vmax(x) => string_of_float(x) ++ "vmax"
-  | `vmin(x) => string_of_float(x) ++ "vmin"
-  | `vw(x) => string_of_float(x) ++ "vw"
-  | `fr(x) => string_of_float(x) ++ "fr"
+  | `ch(x) => Js.Float.toString(x) ++ "ch"
+  | `cm(x) => Js.Float.toString(x) ++ "cm"
+  | `em(x) => Js.Float.toString(x) ++ "em"
+  | `ex(x) => Js.Float.toString(x) ++ "ex"
+  | `mm(x) => Js.Float.toString(x) ++ "mm"
+  | `percent(x) => Js.Float.toString(x) ++ "%"
+  | `pt(x) => Js.Int.toString(x) ++ "pt"
+  | `px(x) => Js.Int.toString(x) ++ "px"
+  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+  | `rem(x) => Js.Float.toString(x) ++ "rem"
+  | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+  | `vw(x) => Js.Float.toString(x) ++ "vw"
+  | `fr(x) => Js.Float.toString(x) ++ "fr"
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content"
@@ -1056,19 +1061,19 @@ let gridAutoRows = dimensions =>
 let gridColumn = (start, end') =>
   `declaration((
     "gridColumn",
-    string_of_int(start) ++ " / " ++ string_of_int(end'),
+    Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
   ));
 
 let gridRow = (start, end') =>
   `declaration((
     "gridRow",
-    string_of_int(start) ++ " / " ++ string_of_int(end'),
+    Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
   ));
 let gridColumnStart = n =>
-  `declaration(("gridColumnStart", string_of_int(n)));
-let gridColumnEnd = n => `declaration(("gridColumnEnd", string_of_int(n)));
-let gridRowStart = n => `declaration(("gridRowStart", string_of_int(n)));
-let gridRowEnd = n => `declaration(("gridRowEnd", string_of_int(n)));
+  `declaration(("gridColumnStart", Js.Int.toString(n)));
+let gridColumnEnd = n => `declaration(("gridColumnEnd", Js.Int.toString(n)));
+let gridRowStart = n => `declaration(("gridRowStart", Js.Int.toString(n)));
+let gridRowEnd = n => `declaration(("gridRowEnd", Js.Int.toString(n)));
 let gridColumnGap = n =>
   `declaration(("gridColumnGap", Types.Length.toString(n)));
 let gridRowGap = n => `declaration(("gridRowGap", Types.Length.toString(n)));
@@ -1142,7 +1147,7 @@ let columnCount = x =>
     "columnCount",
     switch (x) {
     | `auto => "auto"
-    | `count(v) => string_of_int(v)
+    | `count(v) => Js.Int.toString(v)
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
@@ -1183,8 +1188,8 @@ type filter = [
 let string_of_filter =
   fun
   | `blur(v) => "blur(" ++ Types.Length.toString(v) ++ ")"
-  | `brightness(v) => "brightness(" ++ string_of_float(v) ++ "%)"
-  | `contrast(v) => "contrast(" ++ string_of_float(v) ++ "%)"
+  | `brightness(v) => "brightness(" ++ Js.Float.toString(v) ++ "%)"
+  | `contrast(v) => "contrast(" ++ Js.Float.toString(v) ++ "%)"
   | `dropShadow(a, b, c, d) =>
     "drop-shadow("
     ++ Types.Length.toString(a)
@@ -1195,12 +1200,12 @@ let string_of_filter =
     ++ " "
     ++ Converter.string_of_color(d)
     ++ ")"
-  | `grayscale(v) => "grayscale(" ++ string_of_float(v) ++ "%)"
+  | `grayscale(v) => "grayscale(" ++ Js.Float.toString(v) ++ "%)"
   | `hueRotate(v) => "hue-rotate(" ++ Types.Angle.toString(v) ++ ")"
-  | `invert(v) => "invert(" ++ string_of_float(v) ++ "%)"
-  | `opacity(v) => "opacity(" ++ string_of_float(v) ++ "%)"
-  | `saturate(v) => "saturate(" ++ string_of_float(v) ++ "%)"
-  | `sepia(v) => "sepia(" ++ string_of_float(v) ++ "%)"
+  | `invert(v) => "invert(" ++ Js.Float.toString(v) ++ "%)"
+  | `opacity(v) => "opacity(" ++ Js.Float.toString(v) ++ "%)"
+  | `saturate(v) => "saturate(" ++ Js.Float.toString(v) ++ "%)"
+  | `sepia(v) => "sepia(" ++ Js.Float.toString(v) ++ "%)"
   | `url(v) => "url(" ++ v ++ ")"
   | `initial => "initial"
   | `inherit_ => "inherit"
@@ -1514,7 +1519,7 @@ let listStylePosition = x =>
 let listStyleImage = x =>
   `declaration(("listStyleImage", string_of_listStyleImage(x)));
 
-let opacity = x => `declaration(("opacity", string_of_float(x)));
+let opacity = x => `declaration(("opacity", Js.Float.toString(x)));
 
 type outlineStyle = [
   | `none
@@ -1632,7 +1637,7 @@ let lineHeight = x =>
     "lineHeight",
     switch (x) {
     | `normal => "normal"
-    | `abs(x) => string_of_float(x)
+    | `abs(x) => Js.Float.toString(x)
     | `calc(`add, a, b) =>
       "calc("
       ++ Types.Length.toString(a)
@@ -1645,20 +1650,20 @@ let lineHeight = x =>
       ++ " - "
       ++ Types.Length.toString(b)
       ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `percent(x) => Js.Float.toString(x) ++ "%"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
     | `initial => "initial"
@@ -1684,20 +1689,20 @@ let letterSpacing = x =>
       ++ " - "
       ++ Types.Length.toString(b)
       ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `percent(x) => Js.Float.toString(x) ++ "%"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
     | `initial => "initial"
@@ -1839,20 +1844,20 @@ let verticalAlign = x =>
       ++ " - "
       ++ Types.Length.toString(b)
       ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `percent(x) => Js.Float.toString(x) ++ "%"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
     | `initial => "initial"
@@ -1906,20 +1911,20 @@ let wordSpacing = x =>
       ++ " - "
       ++ Types.Length.toString(b)
       ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `percent(x) => Js.Float.toString(x) ++ "%"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
     | `auto => "auto"
     | `zero => "0"
     | `initial => "initial"
@@ -1989,23 +1994,23 @@ let string_of_transform =
   | `scale(x, y) => string_of_scale(x, y)
   | `scale3d(x, y, z) =>
     "scale3d("
-    ++ string_of_float(x)
+    ++ Js.Float.toString(x)
     ++ ", "
-    ++ string_of_float(y)
+    ++ Js.Float.toString(y)
     ++ ", "
-    ++ string_of_float(z)
+    ++ Js.Float.toString(z)
     ++ ")"
-  | `scaleX(x) => "scaleX(" ++ string_of_float(x) ++ ")"
-  | `scaleY(y) => "scaleY(" ++ string_of_float(y) ++ ")"
-  | `scaleZ(z) => "scaleZ(" ++ string_of_float(z) ++ ")"
+  | `scaleX(x) => "scaleX(" ++ Js.Float.toString(x) ++ ")"
+  | `scaleY(y) => "scaleY(" ++ Js.Float.toString(y) ++ ")"
+  | `scaleZ(z) => "scaleZ(" ++ Js.Float.toString(z) ++ ")"
   | `rotate(a) => "rotate(" ++ Types.Angle.toString(a) ++ ")"
   | `rotate3d(x, y, z, a) =>
     "rotate3d("
-    ++ string_of_float(x)
+    ++ Js.Float.toString(x)
     ++ ", "
-    ++ string_of_float(y)
+    ++ Js.Float.toString(y)
     ++ ", "
-    ++ string_of_float(z)
+    ++ Js.Float.toString(z)
     ++ ", "
     ++ Types.Angle.toString(a)
     ++ ")"
@@ -2020,7 +2025,7 @@ let string_of_transform =
     ++ ")"
   | `skewX(a) => "skewX(" ++ Types.Angle.toString(a) ++ ")"
   | `skewY(a) => "skewY(" ++ Types.Angle.toString(a) ++ ")"
-  | `perspective(x) => "perspective(" ++ string_of_int(x) ++ ")";
+  | `perspective(x) => "perspective(" ++ Js.Int.toString(x) ++ ")";
 
 let transform = x => `declaration(("transform", string_of_transform(x)));
 
@@ -2073,20 +2078,20 @@ let perspective = x =>
       ++ " - "
       ++ Types.Length.toString(b)
       ++ ")"
-    | `ch(x) => string_of_float(x) ++ "ch"
-    | `cm(x) => string_of_float(x) ++ "cm"
-    | `em(x) => string_of_float(x) ++ "em"
-    | `ex(x) => string_of_float(x) ++ "ex"
-    | `mm(x) => string_of_float(x) ++ "mm"
-    | `percent(x) => string_of_float(x) ++ "%"
-    | `pt(x) => string_of_int(x) ++ "pt"
-    | `px(x) => string_of_int(x) ++ "px"
-    | `pxFloat(x) => string_of_float(x) ++ "px"
-    | `rem(x) => string_of_float(x) ++ "rem"
-    | `vh(x) => string_of_float(x) ++ "vh"
-    | `vmax(x) => string_of_float(x) ++ "vmax"
-    | `vmin(x) => string_of_float(x) ++ "vmin"
-    | `vw(x) => string_of_float(x) ++ "vw"
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `percent(x) => Js.Float.toString(x) ++ "%"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
     | `zero => "0"
     },
   ));
@@ -2115,17 +2120,17 @@ let string_of_timingFunction =
   | `easeInOut => "ease-in-out"
   | `stepStart => "step-start"
   | `stepEnd => "step-end"
-  | `steps(i, `start) => "steps(" ++ string_of_int(i) ++ ", start)"
-  | `steps(i, `end_) => "steps(" ++ string_of_int(i) ++ ", end)"
+  | `steps(i, `start) => "steps(" ++ Js.Int.toString(i) ++ ", start)"
+  | `steps(i, `end_) => "steps(" ++ Js.Int.toString(i) ++ ", end)"
   | `cubicBezier(a, b, c, d) =>
     "cubic-bezier("
-    ++ string_of_float(a)
+    ++ Js.Float.toString(a)
     ++ ", "
-    ++ string_of_float(b)
+    ++ Js.Float.toString(b)
     ++ ", "
-    ++ string_of_float(c)
+    ++ Js.Float.toString(c)
     ++ ", "
-    ++ string_of_float(d)
+    ++ Js.Float.toString(d)
     ++ ")";
 
 let transition = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
@@ -2199,7 +2204,7 @@ type animationIterationCount = [ | `infinite | `count(int)];
 let string_of_animationIterationCount =
   fun
   | `infinite => "infinite"
-  | `count(x) => string_of_int(x);
+  | `count(x) => Js.Int.toString(x);
 
 type animationPlayState = [ | `paused | `running];
 
@@ -2314,7 +2319,7 @@ let media = (query, rules) => `selector(("@media " ++ query, rules));
 module SVG = {
   let fill = color => `declaration(("fill", string_of_color(color)));
   let fillOpacity = opacity =>
-    `declaration(("fillOpacity", string_of_float(opacity)));
+    `declaration(("fillOpacity", Js.Float.toString(opacity)));
   let fillRule = x =>
     `declaration((
       "fillRule",
@@ -2327,9 +2332,9 @@ module SVG = {
   let strokeWidth = length =>
     `declaration(("strokeWidth", Types.Length.toString(length)));
   let strokeOpacity = opacity =>
-    `declaration(("strokeOpacity", string_of_float(opacity)));
+    `declaration(("strokeOpacity", Js.Float.toString(opacity)));
   let strokeMiterlimit = x =>
-    `declaration(("strokeMiterlimit", string_of_float(x)));
+    `declaration(("strokeMiterlimit", Js.Float.toString(x)));
   let strokeLinecap = x =>
     `declaration((
       "strokeLinecap",
@@ -2350,5 +2355,5 @@ module SVG = {
       },
     ));
   let stopColor = c => `declaration(("stopColor", string_of_color(c)));
-  let stopOpacity = o => `declaration(("stopOpacity", string_of_float(o)));
+  let stopOpacity = o => `declaration(("stopOpacity", Js.Float.toString(o)));
 };

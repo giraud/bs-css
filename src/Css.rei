@@ -34,6 +34,22 @@ let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
+let padding: Types.Length.t => rule;
+let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
+let padding3:
+  (~top: Types.Length.t, ~h: Types.Length.t, ~bottom: Types.Length.t) => rule;
+let padding4:
+  (
+    ~top: Types.Length.t,
+    ~right: Types.Length.t,
+    ~bottom: Types.Length.t,
+    ~left: Types.Length.t
+  ) =>
+  rule;
+let paddingLeft: Types.Length.t => rule;
+let paddingRight: Types.Length.t => rule;
+let paddingTop: Types.Length.t => rule;
+let paddingBottom: Types.Length.t => rule;
 let position: [ Types.Position.t | Types.Cascading.t] => rule;
 let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 let right: [ Types.Length.t | Types.Cascading.t] => rule;
@@ -103,9 +119,9 @@ let oblique: [> Types.FontStyle.t];
 type color = [
   | `rgb(int, int, int)
   | `rgba(int, int, int, float)
-  | `hsl(angle, [ | `percent(float)], [ | `percent(float)])
+  | `hsl(Types.Angle.t, [ | `percent(float)], [ | `percent(float)])
   | `hsla(
-      angle,
+      Types.Angle.t,
       [ | `percent(float)],
       [ | `percent(float)],
       [ | `num(float) | `percent(float)],
@@ -118,13 +134,13 @@ type color = [
 let rgb: (int, int, int) => [> | `rgb(int, int, int)];
 let rgba: (int, int, int, float) => [> | `rgba(int, int, int, float)];
 let hsl:
-  (angle, float, float) =>
-  [> | `hsl(angle, [> | `percent(float)], [> | `percent(float)])];
+  (Types.Angle.t, float, float) =>
+  [> | `hsl(Types.Angle.t, [> | `percent(float)], [> | `percent(float)])];
 let hsla:
-  (angle, float, float, [ | `num(float) | `percent(float)]) =>
+  (Types.Angle.t, float, float, [ | `num(float) | `percent(float)]) =>
   [>
     | `hsla(
-        angle,
+        Types.Angle.t,
         [> | `percent(float)],
         [> | `percent(float)],
         [ | `num(float) | `percent(float)],
@@ -135,18 +151,20 @@ let transparent: [> | `transparent];
 let currentColor: [> | `currentColor];
 
 type gradient = [
-  | `linearGradient(angle, list((Types.Length.t, color)))
-  | `repeatingLinearGradient(angle, list((Types.Length.t, color)))
+  | `linearGradient(Types.Angle.t, list((Types.Length.t, color)))
+  | `repeatingLinearGradient(Types.Angle.t, list((Types.Length.t, color)))
   | `radialGradient(list((Types.Length.t, color)))
   | `repeatingRadialGradient(list((Types.Length.t, color)))
 ];
 
 let linearGradient:
-  (angle, list((Types.Length.t, color))) =>
-  [> | `linearGradient(angle, list((Types.Length.t, color)))];
+  (Types.Angle.t, list((Types.Length.t, color))) =>
+  [> | `linearGradient(Types.Angle.t, list((Types.Length.t, color)))];
 let repeatingLinearGradient:
-  (angle, list((Types.Length.t, color))) =>
-  [> | `repeatingLinearGradient(angle, list((Types.Length.t, color)))];
+  (Types.Angle.t, list((Types.Length.t, color))) =>
+  [>
+    | `repeatingLinearGradient(Types.Angle.t, list((Types.Length.t, color)))
+  ];
 let radialGradient:
   list((Types.Length.t, color)) =>
   [> | `radialGradient(list((Types.Length.t, color)))];
@@ -273,15 +291,17 @@ let scale3d: (float, float, float) => [> | `scale3d(float, float, float)];
 let scaleX: float => [> | `scaleX(float)];
 let scaleY: float => [> | `scaleY(float)];
 let scaleZ: float => [> | `scaleZ(float)];
-let rotate: angle => [> | `rotate(angle)];
+let rotate: Types.Angle.t => [> | `rotate(Types.Angle.t)];
 let rotate3d:
-  (float, float, float, angle) => [> | `rotate3d(float, float, float, angle)];
-let rotateX: angle => [> | `rotateX(angle)];
-let rotateY: angle => [> | `rotateY(angle)];
-let rotateZ: angle => [> | `rotateZ(angle)];
-let skew: (angle, angle) => [> | `skew(angle, angle)];
-let skewX: angle => [> | `skewX(angle)];
-let skewY: angle => [> | `skewY(angle)];
+  (float, float, float, Types.Angle.t) =>
+  [> | `rotate3d(float, float, float, Types.Angle.t)];
+let rotateX: Types.Angle.t => [> | `rotateX(Types.Angle.t)];
+let rotateY: Types.Angle.t => [> | `rotateY(Types.Angle.t)];
+let rotateZ: Types.Angle.t => [> | `rotateZ(Types.Angle.t)];
+let skew:
+  (Types.Angle.t, Types.Angle.t) => [> | `skew(Types.Angle.t, Types.Angle.t)];
+let skewX: Types.Angle.t => [> | `skewX(Types.Angle.t)];
+let skewY: Types.Angle.t => [> | `skewY(Types.Angle.t)];
 
 let underline: [> | `underline];
 let overline: [> | `overline];
@@ -464,23 +484,6 @@ let marginLeft: [ Types.Length.t | `auto] => rule;
 let marginRight: [ Types.Length.t | `auto] => rule;
 let marginTop: [ Types.Length.t | `auto] => rule;
 let marginBottom: [ Types.Length.t | `auto] => rule;
-
-let padding: Types.Length.t => rule;
-let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
-let padding3:
-  (~top: Types.Length.t, ~h: Types.Length.t, ~bottom: Types.Length.t) => rule;
-let padding4:
-  (
-    ~top: Types.Length.t,
-    ~right: Types.Length.t,
-    ~bottom: Types.Length.t,
-    ~left: Types.Length.t
-  ) =>
-  rule;
-let paddingLeft: Types.Length.t => rule;
-let paddingRight: Types.Length.t => rule;
-let paddingTop: Types.Length.t => rule;
-let paddingBottom: Types.Length.t => rule;
 
 let alignContent:
   [
@@ -685,7 +688,7 @@ type filter = [
   | `contrast(float)
   | `dropShadow(Types.Length.t, Types.Length.t, Types.Length.t, color)
   | `grayscale(float)
-  | `hueRotate(angle)
+  | `hueRotate(Types.Angle.t)
   | `invert(float)
   | `opacity(float)
   | `saturate(float)
@@ -803,14 +806,14 @@ type transform = [
   | `scaleX(float)
   | `scaleY(float)
   | `scaleZ(float)
-  | `rotate(angle)
-  | `rotate3d(float, float, float, angle)
-  | `rotateX(angle)
-  | `rotateY(angle)
-  | `rotateZ(angle)
-  | `skew(angle, angle)
-  | `skewX(angle)
-  | `skewY(angle)
+  | `rotate(Types.Angle.t)
+  | `rotate3d(float, float, float, Types.Angle.t)
+  | `rotateX(Types.Angle.t)
+  | `rotateY(Types.Angle.t)
+  | `rotateZ(Types.Angle.t)
+  | `skew(Types.Angle.t, Types.Angle.t)
+  | `skewX(Types.Angle.t)
+  | `skewY(Types.Angle.t)
   | `perspective(int)
 ];
 
