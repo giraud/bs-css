@@ -34,6 +34,9 @@ let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
+let overflow: [ Types.Overflow.t] => rule;
+let overflowX: [ Types.Overflow.t] => rule;
+let overflowY: [ Types.Overflow.t] => rule;
 let padding: Types.Length.t => rule;
 let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
 let padding3:
@@ -111,6 +114,11 @@ let smallCaps: [> Types.FontVariant.t];
 /* let normal: [> | Types.FontStyle.t]*/
 let italic: [> Types.FontStyle.t];
 let oblique: [> Types.FontStyle.t];
+
+let hidden: [> | `hidden];
+let visible: [> | `visible];
+let scroll: [> | `scroll];
+let auto: [> | `auto];
 
 /********************************************************
  ************************ VALUES ************************
@@ -210,11 +218,7 @@ let localUrl: string => [> | `localUrl(string)];
 let url: string => [> | `url(string)];
 
 let none: [> | `none];
-let auto: [> | `auto];
-let hidden: [> | `hidden];
-let visible: [> | `visible];
 let local: [> | `local];
-let scroll: [> | `scroll];
 
 let paddingBox: [> | `paddingBox];
 let borderBox: [> | `borderBox];
@@ -499,10 +503,6 @@ let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 
 let float: [ | `left | `right | `none] => rule;
 let clear: [ | `left | `right | `both] => rule;
-
-let overflow: [ | `hidden | `visible | `scroll | `auto] => rule;
-let overflowX: [ | `hidden | `visible | `scroll | `auto] => rule;
-let overflowY: [ | `hidden | `visible | `scroll | `auto] => rule;
 
 let contentRule: string => rule;
 

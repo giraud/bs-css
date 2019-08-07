@@ -159,3 +159,14 @@ module FlexBasis: {
 
   let toString: t => string;
 };
+
+module Overflow: {
+  type t = [ | `hidden | `visible | `scroll | `auto];
+
+  let hidden: [> t];
+  let visible: [> t];
+  let scroll: [> t];
+  let auto: [> t];
+
+  let toString: t => string;
+};

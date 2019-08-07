@@ -186,3 +186,19 @@ module FlexBasis = {
     | `minContent => "min-content"
     | `fitContent => "fit-content";
 };
+
+module Overflow = {
+  type t = [ | `hidden | `visible | `scroll | `auto];
+
+  let hidden = `hidden;
+  let visible = `visible;
+  let scroll = `scroll;
+  let auto = `auto;
+
+  let toString =
+    fun
+    | `hidden => "hidden"
+    | `visible => "visible"
+    | `scroll => "scroll"
+    | `auto => "auto";
+};

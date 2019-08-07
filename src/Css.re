@@ -156,13 +156,6 @@ module Converter = {
 
   let string_of_time = t => Js.Int.toString(t) ++ "ms";
 
-  let string_of_overflow =
-    fun
-    | `auto => "auto"
-    | `scroll => "scroll"
-    | `hidden => "hidden"
-    | `visible => "visible";
-
   let string_of_visibility =
     fun
     | `hidden => "hidden"
@@ -376,6 +369,10 @@ let left = x =>
     },
   ));
 
+let overflow = x => `declaration(("overflow", Types.Overflow.toString(x)));
+let overflowX = x => `declaration(("overflowX", Types.Overflow.toString(x)));
+let overflowY = x => `declaration(("overflowY", Types.Overflow.toString(x)));
+
 let padding = x => `declaration(("padding", Types.Length.toString(x)));
 let padding2 = (~v, ~h) =>
   `declaration((
@@ -508,6 +505,11 @@ let smallCaps = Types.FontVariant.smallCaps;
 let italic = Types.FontStyle.italic;
 let oblique = Types.FontStyle.oblique;
 
+let hidden = `hidden;
+let visible = `visible;
+let scroll = `scroll;
+let auto = `auto;
+
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
@@ -571,7 +573,6 @@ let size = (x, y) => `size((x, y));
  */
 
 let all = `all;
-let auto = `auto;
 let backwards = `backwards;
 let baseline = `baseline;
 let block = `block;
@@ -597,7 +598,6 @@ let inlineGrid = `inlineGrid;
 let flexEnd = `flexEnd;
 let flexStart = `flexStart;
 let forwards = `forwards;
-let hidden = `hidden;
 let infinite = `infinite;
 
 let inline = `inline;
@@ -646,7 +646,6 @@ let scale3d = (x, y, z) => `scale3d((x, y, z));
 let scaleX = x => `scaleX(x);
 let scaleY = x => `scaleY(x);
 let scaleZ = x => `scaleZ(x);
-let scroll = `scroll;
 let skew = (x, y) => `skew((x, y));
 let skewX = a => `skewX(a);
 let skewY = a => `skewY(a);
@@ -665,7 +664,6 @@ let translateX = x => `translateX(x);
 let translateY = y => `translateY(y);
 let translateZ = z => `translateZ(z);
 let url = x => `url(x);
-let visible = `visible;
 let wrap = `wrap;
 let wrapReverse = `wrapReverse;
 
@@ -1112,10 +1110,6 @@ let clear = x =>
     | `both => "both"
     },
   ));
-
-let overflow = x => `declaration(("overflow", string_of_overflow(x)));
-let overflowX = x => `declaration(("overflowX", string_of_overflow(x)));
-let overflowY = x => `declaration(("overflowY", string_of_overflow(x)));
 
 let contentRule = x => `declaration(("content", {j|"$x"|j}));
 
