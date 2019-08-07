@@ -279,41 +279,6 @@ module Converter = {
     | `initial => "initial"
     | `none => "none"
     | `num(n) => Js.Float.toString(n);
-  let string_of_flexBasis =
-    fun
-    | `calc(`add, a, b) =>
-      "calc("
-      ++ Types.Length.toString(a)
-      ++ " + "
-      ++ Types.Length.toString(b)
-      ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc("
-      ++ Types.Length.toString(a)
-      ++ " - "
-      ++ Types.Length.toString(b)
-      ++ ")"
-    | `ch(x) => Js.Float.toString(x) ++ "ch"
-    | `cm(x) => Js.Float.toString(x) ++ "cm"
-    | `em(x) => Js.Float.toString(x) ++ "em"
-    | `ex(x) => Js.Float.toString(x) ++ "ex"
-    | `mm(x) => Js.Float.toString(x) ++ "mm"
-    | `percent(x) => Js.Float.toString(x) ++ "%"
-    | `pt(x) => Js.Int.toString(x) ++ "pt"
-    | `px(x) => Js.Int.toString(x) ++ "px"
-    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-    | `rem(x) => Js.Float.toString(x) ++ "rem"
-    | `vh(x) => Js.Float.toString(x) ++ "vh"
-    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-    | `vw(x) => Js.Float.toString(x) ++ "vw"
-    | `zero => "0"
-    | `auto => "auto"
-    | `fill => "fill"
-    | `content => "content"
-    | `maxContent => "max-content"
-    | `minContent => "min-content"
-    | `fitContent => "fit-content";
 };
 include Converter;
 
@@ -795,11 +760,23 @@ let flex3 = (~grow, ~shrink, ~basis) =>
     ++ " "
     ++ Js.Float.toString(shrink)
     ++ " "
-    ++ string_of_flexBasis(basis),
+    ++ (
+      switch (basis) {
+      | #Types.FlexBasis.t as b => Types.FlexBasis.toString(b)
+      | #Types.Length.t as l => Types.Length.toString(l)
+      }
+    ),
   ));
 let flexGrow = x => `declaration(("flexGrow", Js.Float.toString(x)));
 let flexShrink = x => `declaration(("flexShrink", Js.Float.toString(x)));
-let flexBasis = x => `declaration(("flexBasis", string_of_flexBasis(x)));
+let flexBasis = x =>
+  `declaration((
+    "flexBasis",
+    switch (x) {
+    | #Types.FlexBasis.t as b => Types.FlexBasis.toString(b)
+    | #Types.Length.t as l => Types.Length.toString(l)
+    },
+  ));
 
 let flexDirection = x =>
   `declaration((

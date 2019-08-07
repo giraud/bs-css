@@ -401,30 +401,12 @@ let flex3:
   (
     ~grow: float,
     ~shrink: float,
-    ~basis: [
-              Types.Length.t
-              | `auto
-              | `fill
-              | `content
-              | `maxContent
-              | `minContent
-              | `fitContent
-            ]
+    ~basis: [ Types.Length.t | Types.FlexBasis.t]
   ) =>
   rule;
 let flexGrow: float => rule;
 let flexShrink: float => rule;
-let flexBasis:
-  [
-    Types.Length.t
-    | `auto
-    | `fill
-    | `content
-    | `maxContent
-    | `minContent
-    | `fitContent
-  ] =>
-  rule;
+let flexBasis: [ Types.Length.t | Types.FlexBasis.t] => rule;
 
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;

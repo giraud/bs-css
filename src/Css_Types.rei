@@ -140,3 +140,22 @@ module FontStyle: {
 
   let toString: t => string;
 };
+
+module FlexBasis: {
+  type t = [
+    | `auto
+    | `fill
+    | `content
+    | `maxContent
+    | `minContent
+    | `fitContent
+  ];
+
+  let fill: [> t];
+  let content: [> t];
+  let maxContent: [> t];
+  let minContent: [> t];
+  let fitContent: [> t];
+
+  let toString: t => string;
+};

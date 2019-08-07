@@ -160,3 +160,29 @@ module FontStyle = {
     | `italic => "italic"
     | `oblique => "oblique";
 };
+
+module FlexBasis = {
+  type t = [
+    | `auto
+    | `fill
+    | `content
+    | `maxContent
+    | `minContent
+    | `fitContent
+  ];
+
+  let fill = `fill;
+  let content = `content;
+  let maxContent = `maxContent;
+  let minContent = `minContent;
+  let fitContent = `fitContent;
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `fill => "fill"
+    | `content => "content"
+    | `maxContent => "max-content"
+    | `minContent => "min-content"
+    | `fitContent => "fit-content";
+};
