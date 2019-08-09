@@ -94,6 +94,8 @@ let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 let right: [ Types.Length.t | Types.Cascading.t] => rule;
 let top: [ Types.Length.t | Types.Cascading.t] => rule;
 let unsafe: (string, string) => rule;
+let verticalAlign:
+  [ Types.VerticalAlign.t | Types.Length.t | Types.Cascading.t] => rule;
 let zIndex: int => rule;
 
 /* *************************************
@@ -745,20 +747,6 @@ let textTransform:
   [ | `uppercase | `lowercase | `capitalize | `none | Types.Cascading.t] =>
   rule;
 let userSelect: [ | `auto | `all | `text | `none | Types.Cascading.t] => rule;
-let verticalAlign:
-  [
-    | `baseline
-    | `sub
-    | `super
-    | `top
-    | `textTop
-    | `middle
-    | `bottom
-    | `textBottom
-    | Types.Length.t
-    | Types.Cascading.t
-  ] =>
-  rule;
 let whiteSpace:
   [ | `normal | `nowrap | `pre | `preLine | `preWrap | Types.Cascading.t] =>
   rule;

@@ -520,6 +520,16 @@ let top = x =>
 
 let unsafe = (property, value) => `declaration((property, value));
 
+let verticalAlign = x =>
+  `declaration((
+    "verticalAlign",
+    switch (x) {
+    | #Types.VerticalAlign.t as v => Types.VerticalAlign.toString(v)
+    | #Types.Length.t as l => Types.Length.toString(l)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
 let zIndex = x => `declaration(("zIndex", Js.Int.toString(x)));
 
 /* Type aliasing */
@@ -1751,52 +1761,6 @@ let userSelect = x =>
     | `all => "all"
     | `text => "text"
     | `none => "none"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  ));
-
-let verticalAlign = x =>
-  `declaration((
-    "verticalAlign",
-    switch (x) {
-    | `baseline => "baseline"
-    | `sub => "sub"
-    | `super => "super"
-    | `top => "top"
-    | `textTop => "text-top"
-    | `middle => "middle"
-    | `bottom => "bottom"
-    | `textBottom => "text-bottom"
-    | `calc(`add, a, b) =>
-      "calc("
-      ++ Types.Length.toString(a)
-      ++ " + "
-      ++ Types.Length.toString(b)
-      ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc("
-      ++ Types.Length.toString(a)
-      ++ " - "
-      ++ Types.Length.toString(b)
-      ++ ")"
-    | `ch(x) => Js.Float.toString(x) ++ "ch"
-    | `cm(x) => Js.Float.toString(x) ++ "cm"
-    | `em(x) => Js.Float.toString(x) ++ "em"
-    | `ex(x) => Js.Float.toString(x) ++ "ex"
-    | `mm(x) => Js.Float.toString(x) ++ "mm"
-    | `percent(x) => Js.Float.toString(x) ++ "%"
-    | `pt(x) => Js.Int.toString(x) ++ "pt"
-    | `px(x) => Js.Int.toString(x) ++ "px"
-    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-    | `rem(x) => Js.Float.toString(x) ++ "rem"
-    | `vh(x) => Js.Float.toString(x) ++ "vh"
-    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-    | `vw(x) => Js.Float.toString(x) ++ "vw"
-    | `auto => "auto"
-    | `zero => "0"
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"

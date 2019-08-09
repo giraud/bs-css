@@ -184,3 +184,18 @@ module GridAutoFlow: {
 
   let toString: t => string;
 };
+
+module VerticalAlign: {
+  type t = [
+    | `baseline
+    | `sub
+    | `super
+    | `top
+    | `textTop
+    | `middle
+    | `bottom
+    | `textBottom
+  ];
+
+  let toString: t => string;
+};

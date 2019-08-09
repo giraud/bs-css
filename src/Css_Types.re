@@ -223,3 +223,27 @@ module GridAutoFlow = {
     | `columnDense => "column dense"
     | `rowDense => "row dense";
 };
+
+module VerticalAlign = {
+  type t = [
+    | `baseline
+    | `sub
+    | `super
+    | `top
+    | `textTop
+    | `middle
+    | `bottom
+    | `textBottom
+  ];
+
+  let toString =
+    fun
+    | `baseline => "baseline"
+    | `sub => "sub"
+    | `super => "super"
+    | `top => "top"
+    | `textTop => "text-top"
+    | `middle => "middle"
+    | `bottom => "bottom"
+    | `textBottom => "text-bottom";
+};
