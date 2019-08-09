@@ -170,3 +170,11 @@ module Overflow: {
 
   let toString: t => string;
 };
+
+module Margin: {
+  type t = [ | `auto];
+
+  let auto: [> t];
+
+  let toString: t => string;
+};

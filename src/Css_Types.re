@@ -202,3 +202,13 @@ module Overflow = {
     | `scroll => "scroll"
     | `auto => "auto";
 };
+
+module Margin = {
+  type t = [ | `auto];
+
+  let auto = `auto;
+
+  let toString =
+    fun
+    | `auto => "auto";
+};

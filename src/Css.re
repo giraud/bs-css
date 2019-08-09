@@ -369,6 +369,40 @@ let left = x =>
     },
   ));
 
+let marginToString = x =>
+  switch (x) {
+  | #Types.Length.t as l => Types.Length.toString(l)
+  | #Types.Margin.t as m => Types.Margin.toString(m)
+  };
+
+let margin = x => `declaration(("margin", marginToString(x)));
+let margin2 = (~v, ~h) =>
+  `declaration(("margin", marginToString(v) ++ " " ++ marginToString(h)));
+let margin3 = (~top, ~h, ~bottom) =>
+  `declaration((
+    "margin",
+    marginToString(top)
+    ++ " "
+    ++ marginToString(h)
+    ++ " "
+    ++ marginToString(bottom),
+  ));
+let margin4 = (~top, ~right, ~bottom, ~left) =>
+  `declaration((
+    "margin",
+    marginToString(top)
+    ++ " "
+    ++ marginToString(right)
+    ++ " "
+    ++ marginToString(bottom)
+    ++ " "
+    ++ marginToString(left),
+  ));
+let marginLeft = x => `declaration(("marginLeft", marginToString(x)));
+let marginRight = x => `declaration(("marginRight", marginToString(x)));
+let marginTop = x => `declaration(("marginTop", marginToString(x)));
+let marginBottom = x => `declaration(("marginBottom", marginToString(x)));
+
 let overflow = x => `declaration(("overflow", Types.Overflow.toString(x)));
 let overflowX = x => `declaration(("overflowX", Types.Overflow.toString(x)));
 let overflowY = x => `declaration(("overflowY", Types.Overflow.toString(x)));
@@ -798,68 +832,6 @@ let flexWrap = x =>
   ));
 
 let order = x => `declaration(("order", Js.Int.toString(x)));
-
-let string_of_margin =
-  fun
-  | `calc(`add, a, b) =>
-    "calc("
-    ++ Types.Length.toString(a)
-    ++ " + "
-    ++ Types.Length.toString(b)
-    ++ ")"
-  | `calc(`sub, a, b) =>
-    "calc("
-    ++ Types.Length.toString(a)
-    ++ " - "
-    ++ Types.Length.toString(b)
-    ++ ")"
-  | `ch(x) => Js.Float.toString(x) ++ "ch"
-  | `cm(x) => Js.Float.toString(x) ++ "cm"
-  | `em(x) => Js.Float.toString(x) ++ "em"
-  | `ex(x) => Js.Float.toString(x) ++ "ex"
-  | `mm(x) => Js.Float.toString(x) ++ "mm"
-  | `percent(x) => Js.Float.toString(x) ++ "%"
-  | `pt(x) => Js.Int.toString(x) ++ "pt"
-  | `px(x) => Js.Int.toString(x) ++ "px"
-  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-  | `rem(x) => Js.Float.toString(x) ++ "rem"
-  | `vh(x) => Js.Float.toString(x) ++ "vh"
-  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-  | `vw(x) => Js.Float.toString(x) ++ "vw"
-  | `zero => "0"
-  | `auto => "auto";
-
-let margin = x => `declaration(("margin", string_of_margin(x)));
-let margin2 = (~v, ~h) =>
-  `declaration((
-    "margin",
-    string_of_margin(v) ++ " " ++ string_of_margin(h),
-  ));
-let margin3 = (~top, ~h, ~bottom) =>
-  `declaration((
-    "margin",
-    string_of_margin(top)
-    ++ " "
-    ++ string_of_margin(h)
-    ++ " "
-    ++ string_of_margin(bottom),
-  ));
-let margin4 = (~top, ~right, ~bottom, ~left) =>
-  `declaration((
-    "margin",
-    string_of_margin(top)
-    ++ " "
-    ++ string_of_margin(right)
-    ++ " "
-    ++ string_of_margin(bottom)
-    ++ " "
-    ++ string_of_margin(left),
-  ));
-let marginLeft = x => `declaration(("marginLeft", string_of_margin(x)));
-let marginRight = x => `declaration(("marginRight", string_of_margin(x)));
-let marginTop = x => `declaration(("marginTop", string_of_margin(x)));
-let marginBottom = x => `declaration(("marginBottom", string_of_margin(x)));
 
 let string_of_minmax =
   fun

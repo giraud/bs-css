@@ -34,6 +34,32 @@ let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
+let margin: [ Types.Length.t | Types.Margin.t] => rule;
+let margin2:
+  (
+    ~v: [ Types.Length.t | Types.Margin.t],
+    ~h: [ Types.Length.t | Types.Margin.t]
+  ) =>
+  rule;
+let margin3:
+  (
+    ~top: [ Types.Length.t | Types.Margin.t],
+    ~h: [ Types.Length.t | Types.Margin.t],
+    ~bottom: [ Types.Length.t | Types.Margin.t]
+  ) =>
+  rule;
+let margin4:
+  (
+    ~top: [ Types.Length.t | Types.Margin.t],
+    ~right: [ Types.Length.t | Types.Margin.t],
+    ~bottom: [ Types.Length.t | Types.Margin.t],
+    ~left: [ Types.Length.t | Types.Margin.t]
+  ) =>
+  rule;
+let marginLeft: [ Types.Length.t | Types.Margin.t] => rule;
+let marginRight: [ Types.Length.t | Types.Margin.t] => rule;
+let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
+let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
 let overflow: [ Types.Overflow.t] => rule;
 let overflowX: [ Types.Overflow.t] => rule;
 let overflowY: [ Types.Overflow.t] => rule;
@@ -447,29 +473,6 @@ let minWidth: [ Types.Length.t | `auto] => rule;
 let maxWidth: [ Types.Length.t | `none] => rule;
 let minHeight: [ Types.Length.t | `auto] => rule;
 let maxHeight: [ Types.Length.t | `none] => rule;
-
-let margin: [ Types.Length.t | `auto] => rule;
-let margin2:
-  (~v: [ Types.Length.t | `auto], ~h: [ Types.Length.t | `auto]) => rule;
-let margin3:
-  (
-    ~top: [ Types.Length.t | `auto],
-    ~h: [ Types.Length.t | `auto],
-    ~bottom: [ Types.Length.t | `auto]
-  ) =>
-  rule;
-let margin4:
-  (
-    ~top: [ Types.Length.t | `auto],
-    ~right: [ Types.Length.t | `auto],
-    ~bottom: [ Types.Length.t | `auto],
-    ~left: [ Types.Length.t | `auto]
-  ) =>
-  rule;
-let marginLeft: [ Types.Length.t | `auto] => rule;
-let marginRight: [ Types.Length.t | `auto] => rule;
-let marginTop: [ Types.Length.t | `auto] => rule;
-let marginBottom: [ Types.Length.t | `auto] => rule;
 
 let alignContent:
   [
