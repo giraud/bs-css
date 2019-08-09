@@ -178,3 +178,9 @@ module Margin: {
 
   let toString: t => string;
 };
+
+module GridAutoFlow: {
+  type t = [ | `column | `row | `columnDense | `rowDense];
+
+  let toString: t => string;
+};

@@ -360,6 +360,43 @@ let fontVariant = x =>
     },
   ));
 
+let gridAutoFlow = x =>
+  `declaration((
+    "gridAutoFlow",
+    switch (x) {
+    | #Types.GridAutoFlow.t as f => Types.GridAutoFlow.toString(f)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
+let gridColumn = (start, end') =>
+  `declaration((
+    "gridColumn",
+    Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
+  ));
+
+let gridColumnGap = n =>
+  `declaration(("gridColumnGap", Types.Length.toString(n)));
+
+let gridColumnStart = n =>
+  `declaration(("gridColumnStart", Js.Int.toString(n)));
+
+let gridColumnEnd = n => `declaration(("gridColumnEnd", Js.Int.toString(n)));
+
+let gridRow = (start, end') =>
+  `declaration((
+    "gridRow",
+    Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
+  ));
+
+let gridGap = n => `declaration(("gridGap", Types.Length.toString(n)));
+
+let gridRowGap = n => `declaration(("gridRowGap", Types.Length.toString(n)));
+
+let gridRowEnd = n => `declaration(("gridRowEnd", Js.Int.toString(n)));
+
+let gridRowStart = n => `declaration(("gridRowStart", Js.Int.toString(n)));
+
 let left = x =>
   `declaration((
     "left",
@@ -912,28 +949,6 @@ let maxWidth = x => `declaration(("maxWidth", string_of_dimension(x)));
 let minHeight = x => `declaration(("minHeight", string_of_dimension(x)));
 let maxHeight = x => `declaration(("maxHeight", string_of_dimension(x)));
 
-type gridAutoDirection = [
-  | `column
-  | `row
-  | `columnDense
-  | `rowDense
-  | `initial
-  | cascading
-];
-
-let gridAutoDirectionToJs =
-  fun
-  | `column => "column"
-  | `row => "row"
-  | `columnDense => "column dense"
-  | `rowDense => "row dense"
-  | `initial => "initial"
-  | `inherit_ => "inherit"
-  | `unset => "unset";
-
-let gridAutoFlow = direction =>
-  `declaration(("gridAutoFlow", gridAutoDirectionToJs(direction)));
-
 type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 let repeatValueToJs =
   fun
@@ -1004,27 +1019,6 @@ let gridAutoColumns = dimensions =>
 
 let gridAutoRows = dimensions =>
   `declaration(("gridAutoRows", string_of_dimension(dimensions)));
-
-let gridColumn = (start, end') =>
-  `declaration((
-    "gridColumn",
-    Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
-  ));
-
-let gridRow = (start, end') =>
-  `declaration((
-    "gridRow",
-    Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
-  ));
-let gridColumnStart = n =>
-  `declaration(("gridColumnStart", Js.Int.toString(n)));
-let gridColumnEnd = n => `declaration(("gridColumnEnd", Js.Int.toString(n)));
-let gridRowStart = n => `declaration(("gridRowStart", Js.Int.toString(n)));
-let gridRowEnd = n => `declaration(("gridRowEnd", Js.Int.toString(n)));
-let gridColumnGap = n =>
-  `declaration(("gridColumnGap", Types.Length.toString(n)));
-let gridRowGap = n => `declaration(("gridRowGap", Types.Length.toString(n)));
-let gridGap = n => `declaration(("gridGap", Types.Length.toString(n)));
 
 let string_of_align =
   fun

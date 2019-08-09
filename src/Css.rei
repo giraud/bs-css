@@ -33,6 +33,16 @@ let fontFamily: string => rule;
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
+let gridAutoFlow: [ Types.GridAutoFlow.t | Types.Cascading.t] => rule;
+let gridColumn: (int, int) => rule;
+let gridColumnEnd: int => rule;
+let gridColumnGap: Types.Length.t => rule;
+let gridColumnStart: int => rule;
+let gridRow: (int, int) => rule;
+let gridRowEnd: int => rule;
+let gridRowGap: Types.Length.t => rule;
+let gridRowStart: int => rule;
+let gridGap: Types.Length.t => rule;
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
 let margin: [ Types.Length.t | Types.Margin.t] => rule;
 let margin2:
@@ -446,26 +456,6 @@ let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
-let gridAutoFlow:
-  [
-    | `column
-    | `row
-    | `columnDense
-    | `rowDense
-    | `inherit_
-    | `initial
-    | `unset
-  ] =>
-  rule;
-let gridColumn: (int, int) => rule;
-let gridRow: (int, int) => rule;
-let gridColumnStart: int => rule;
-let gridColumnEnd: int => rule;
-let gridRowStart: int => rule;
-let gridRowEnd: int => rule;
-let gridColumnGap: Types.Length.t => rule;
-let gridRowGap: Types.Length.t => rule;
-let gridGap: Types.Length.t => rule;
 
 let width: [ Types.Length.t | `auto | `fitContent] => rule;
 let height: [ Types.Length.t | `auto] => rule;

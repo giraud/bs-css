@@ -212,3 +212,14 @@ module Margin = {
     fun
     | `auto => "auto";
 };
+
+module GridAutoFlow = {
+  type t = [ | `column | `row | `columnDense | `rowDense];
+
+  let toString =
+    fun
+    | `column => "column"
+    | `row => "row"
+    | `columnDense => "column dense"
+    | `rowDense => "row dense";
+};
