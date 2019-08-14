@@ -1170,9 +1170,37 @@ let backfaceVisibility = x =>
 
 let visibility = x => `declaration(("visibility", string_of_visibility(x)));
 
-let boxShadow =
-    (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color) =>
-  `shadow(
+module Shadow: {
+  type t('a);
+  type box;
+  type text;
+
+  let box:
+    (
+      ~x: Types.Length.t=?,
+      ~y: Types.Length.t=?,
+      ~blur: Types.Length.t=?,
+      ~spread: Types.Length.t=?,
+      ~inset: bool=?,
+      color
+    ) =>
+    t(box);
+  let text:
+    (
+      ~x: Types.Length.t=?,
+      ~y: Types.Length.t=?,
+      ~blur: Types.Length.t=?,
+      color
+    ) =>
+    t(text);
+
+  let toString: t('a) => string;
+} = {
+  type t('a) = string;
+  type box;
+  type text;
+
+  let box = (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color) =>
     Types.Length.toString(x)
     ++ " "
     ++ Types.Length.toString(y)
@@ -1182,17 +1210,33 @@ let boxShadow =
     ++ Types.Length.toString(spread)
     ++ " "
     ++ string_of_color(color)
+    ++ (inset ? " inset" : "");
+
+  let text = (~x=zero, ~y=zero, ~blur=zero, color) =>
+    Types.Length.toString(x)
     ++ " "
-    ++ (inset ? "inset" : ""),
-  );
+    ++ Types.Length.toString(y)
+    ++ " "
+    ++ Types.Length.toString(blur)
+    ++ " "
+    ++ string_of_color(color);
+
+  let toString: t('a) => string = d => d;
+};
 
 let string_of_shadow =
   fun
   | `shadow(s) => s;
+
+let boxShadow = (~x=?, ~y=?, ~blur=?, ~spread=?, ~inset=?, color) =>
+  `shadow(
+    Shadow.box(~x?, ~y?, ~blur?, ~spread?, ~inset?, color)->Shadow.toString,
+  );
+
 let boxShadows = shadows =>
   `declaration((
     "boxShadow",
-    shadows |> List.map(string_of_shadow) |> join(", "),
+    shadows |> List.map(string_of_shadow) |> join(","),
   ));
 
 let string_of_borderstyle =
@@ -1719,24 +1763,17 @@ let textOverflow = x =>
     },
   ));
 
-let textShadow = (~x=zero, ~y=zero, ~blur=zero, color) =>
-  `textShadow(
-    Types.Length.toString(x)
-    ++ " "
-    ++ Types.Length.toString(y)
-    ++ " "
-    ++ Types.Length.toString(blur)
-    ++ " "
-    ++ string_of_color(color),
-  );
+let textShadow = (~x=?, ~y=?, ~blur=?, color) =>
+  `textShadow(Shadow.text(~x?, ~y?, ~blur?, color)->Shadow.toString);
 
 let string_of_textShadow =
   fun
   | `textShadow(s) => s;
+
 let textShadows = textShadows =>
   `declaration((
     "textShadow",
-    textShadows |> List.map(string_of_textShadow) |> join(", "),
+    textShadows |> List.map(string_of_textShadow) |> join(","),
   ));
 
 let textTransform = x =>

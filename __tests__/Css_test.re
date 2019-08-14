@@ -259,3 +259,73 @@ describe("object-fit", () =>
        ))
   )
 );
+
+describe("box-shadow", () => {
+  test("should allow single or list definition", () =>
+    expect(
+      (
+        r(Css.boxShadow(Css.green)),
+        r(
+          Css.boxShadows([
+            Css.boxShadow(Css.yellow),
+            Css.boxShadow(Css.red),
+          ]),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"boxShadow": "0 0 0 0 #008000"},
+         {"boxShadow": "0 0 0 0 #FFFF00,0 0 0 0 #FF0000"},
+       ))
+  );
+
+  test("should use options when present", () =>
+    expect(
+      (
+        r(Css.boxShadow(~x=Css.px(1), ~y=Css.px(2), Css.red)),
+        r(Css.boxShadow(~inset=true, Css.red)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"boxShadow": "1px 2px 0 0 #FF0000"},
+         {"boxShadow": "0 0 0 0 #FF0000 inset"},
+       ))
+  );
+});
+
+describe("text-shadow", () => {
+  test("should allow single or list definition", () =>
+    expect(
+      (
+        r(Css.textShadow(Css.green)),
+        r(
+          Css.textShadows([
+            Css.textShadow(Css.yellow),
+            Css.textShadow(Css.red),
+          ]),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"textShadow": "0 0 0 #008000"},
+         {"textShadow": "0 0 0 #FFFF00,0 0 0 #FF0000"},
+       ))
+  );
+
+  test("should use options when present", () =>
+    expect(
+      (
+        r(Css.textShadow(~x=Css.px(1), ~y=Css.px(2), Css.red)),
+        r(Css.textShadow(~blur=Css.vh(1.), Css.red)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"textShadow": "1px 2px 0 #FF0000"},
+         {"textShadow": "0 0 1vh #FF0000"},
+       ))
+  );
+});
