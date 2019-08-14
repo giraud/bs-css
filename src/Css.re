@@ -6,8 +6,6 @@ type rule = [
   | `declaration(string, string)
   | `animation(string)
   | `transition(string)
-  | `shadow(string)
-  | `textShadow(string)
 ];
 
 type selector = [ | `selector(string, list(rule))];
@@ -36,8 +34,6 @@ module Emotion = {
       )
     | `declaration(name, value) => (name, Js.Json.string(value))
     | `selector(name, ruleset) => (name, makeJson(ruleset))
-    | `shadow(value) => ("boxShadow", Js.Json.string(value))
-    | `textShadow(value) => ("textShadow", Js.Json.string(value))
     | `transition(value) => ("transition", Js.Json.string(value))
     | `animation(value) => ("animation", Js.Json.string(value))
     }
@@ -51,7 +47,16 @@ module Emotion = {
 let toJson = Emotion.makeJson;
 let style = Emotion.make;
 
-let join = (separator, strings) => {
+let join = (strings, separator) => {
+  let rec run = (strings, acc) =>
+    switch (strings) {
+    | [] => acc
+    | [x] => acc ++ x
+    | [x, ...xs] => run(xs, acc ++ x ++ separator)
+    };
+  run(strings, "");
+};
+let joinLast = (separator, strings) => {
   let rec run = (acc, strings) =>
     switch (strings) {
     | [] => acc
@@ -124,9 +129,9 @@ module Converter = {
   let string_of_stops = stops =>
     stops
     |> List.map(((l, c)) =>
-         join(" ", [string_of_color(c), Types.Length.toString(l)])
+         joinLast(" ", [string_of_color(c), Types.Length.toString(l)])
        )
-    |> join(", ");
+    |> joinLast(", ");
 
   let string_of_linearGradient = (angle, stops) =>
     "linear-gradient("
@@ -167,14 +172,14 @@ module Converter = {
     | `url(url) => "url(" ++ url ++ ")"
     | `rgb(r, g, b) =>
       "rgb("
-      ++ join(
+      ++ joinLast(
            ", ",
            [Js.Int.toString(r), Js.Int.toString(g), Js.Int.toString(b)],
          )
       ++ ")"
     | `rgba(r, g, b, a) =>
       "rgba("
-      ++ join(
+      ++ joinLast(
            ", ",
            [
              Js.Int.toString(r),
@@ -1160,7 +1165,10 @@ let string_of_filter =
   | `none => "none";
 
 let filter = x =>
-  `declaration(("filter", x |> List.map(string_of_filter) |> join(" ")));
+  `declaration((
+    "filter",
+    x |> List.map(string_of_filter) |> joinLast(" "),
+  ));
 /**
  * Style
  */
@@ -1170,74 +1178,54 @@ let backfaceVisibility = x =>
 
 let visibility = x => `declaration(("visibility", string_of_visibility(x)));
 
-module Shadow: {
-  type t('a);
+module Shadow = {
+  type value('a) = string;
   type box;
   type text;
-
-  let box:
-    (
-      ~x: Types.Length.t=?,
-      ~y: Types.Length.t=?,
-      ~blur: Types.Length.t=?,
-      ~spread: Types.Length.t=?,
-      ~inset: bool=?,
-      color
-    ) =>
-    t(box);
-  let text:
-    (
-      ~x: Types.Length.t=?,
-      ~y: Types.Length.t=?,
-      ~blur: Types.Length.t=?,
-      color
-    ) =>
-    t(text);
-
-  let toString: t('a) => string;
-} = {
-  type t('a) = string;
-  type box;
-  type text;
+  type t('a) = [ | `shadow(value('a)) | `none];
 
   let box = (~x=zero, ~y=zero, ~blur=zero, ~spread=zero, ~inset=false, color) =>
-    Types.Length.toString(x)
-    ++ " "
-    ++ Types.Length.toString(y)
-    ++ " "
-    ++ Types.Length.toString(blur)
-    ++ " "
-    ++ Types.Length.toString(spread)
-    ++ " "
-    ++ string_of_color(color)
-    ++ (inset ? " inset" : "");
+    `shadow(
+      Types.Length.toString(x)
+      ++ " "
+      ++ Types.Length.toString(y)
+      ++ " "
+      ++ Types.Length.toString(blur)
+      ++ " "
+      ++ Types.Length.toString(spread)
+      ++ " "
+      ++ string_of_color(color)
+      ++ (inset ? " inset" : ""),
+    );
 
   let text = (~x=zero, ~y=zero, ~blur=zero, color) =>
-    Types.Length.toString(x)
-    ++ " "
-    ++ Types.Length.toString(y)
-    ++ " "
-    ++ Types.Length.toString(blur)
-    ++ " "
-    ++ string_of_color(color);
+    `shadow(
+      Types.Length.toString(x)
+      ++ " "
+      ++ Types.Length.toString(y)
+      ++ " "
+      ++ Types.Length.toString(blur)
+      ++ " "
+      ++ string_of_color(color),
+    );
 
-  let toString: t('a) => string = d => d;
+  let toString: t('a) => string =
+    fun
+    | `shadow(x) => x
+    | `none => "none";
 };
 
-let string_of_shadow =
-  fun
-  | `shadow(s) => s;
-
-let boxShadow = (~x=?, ~y=?, ~blur=?, ~spread=?, ~inset=?, color) =>
-  `shadow(
-    Shadow.box(~x?, ~y?, ~blur?, ~spread?, ~inset?, color)->Shadow.toString,
-  );
-
-let boxShadows = shadows =>
+let boxShadow = x =>
   `declaration((
     "boxShadow",
-    shadows |> List.map(string_of_shadow) |> join(","),
+    switch (x) {
+    | #Shadow.t as s => Shadow.toString(s)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
   ));
+
+let boxShadows = x =>
+  `declaration(("boxShadow", x->Belt.List.map(Shadow.toString)->join(",")));
 
 let string_of_borderstyle =
   fun
@@ -1362,7 +1350,7 @@ let background = x => `declaration(("background", string_of_background(x)));
 let backgrounds = bg =>
   `declaration((
     "background",
-    bg |> List.map(string_of_background) |> join(", "),
+    bg |> List.map(string_of_background) |> joinLast(", "),
   ));
 let backgroundColor = x =>
   `declaration(("backgroundColor", string_of_color(x)));
@@ -1763,17 +1751,19 @@ let textOverflow = x =>
     },
   ));
 
-let textShadow = (~x=?, ~y=?, ~blur=?, color) =>
-  `textShadow(Shadow.text(~x?, ~y?, ~blur?, color)->Shadow.toString);
-
-let string_of_textShadow =
-  fun
-  | `textShadow(s) => s;
-
-let textShadows = textShadows =>
+let textShadow = x =>
   `declaration((
     "textShadow",
-    textShadows |> List.map(string_of_textShadow) |> join(","),
+    switch (x) {
+    | #Shadow.t as s => Shadow.toString(s)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  ));
+
+let textShadows = x =>
+  `declaration((
+    "textShadow",
+    x->Belt.List.map(Shadow.toString)->join(","),
   ));
 
 let textTransform = x =>
@@ -1970,7 +1960,7 @@ let transform = x => `declaration(("transform", string_of_transform(x)));
 let transforms = xs =>
   `declaration((
     "transform",
-    xs |> List.map(string_of_transform) |> join(" "),
+    xs |> List.map(string_of_transform) |> joinLast(" "),
   ));
 
 let transformOrigin = (x, y) =>
@@ -2090,7 +2080,7 @@ let transitions = xs =>
          fun
          | `transition(s) => s,
        )
-    |> join(", "),
+    |> joinLast(", "),
   ));
 
 let transitionDelay = i =>
@@ -2186,7 +2176,7 @@ let string_of_animation =
 let animations = xs =>
   `declaration((
     "animation",
-    xs |> List.map(string_of_animation) |> join(", "),
+    xs |> List.map(string_of_animation) |> joinLast(", "),
   ));
 
 let animationDelay = x =>

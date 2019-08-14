@@ -5,8 +5,6 @@ type rule = [
   | `declaration(string, string)
   | `animation(string)
   | `transition(string)
-  | `shadow(string)
-  | `textShadow(string)
 ];
 
 type cache;
@@ -195,6 +193,36 @@ let hsla:
 let hex: string => [> | `hex(string)];
 let transparent: [> | `transparent];
 let currentColor: [> | `currentColor];
+
+module Shadow: {
+  type value('a);
+  type box;
+  type text;
+
+  type t('a) = [ | `shadow(value('a)) | `none];
+
+  let box:
+    (
+      ~x: Types.Length.t=?,
+      ~y: Types.Length.t=?,
+      ~blur: Types.Length.t=?,
+      ~spread: Types.Length.t=?,
+      ~inset: bool=?,
+      color
+    ) =>
+    [> t(box)];
+
+  let text:
+    (
+      ~x: Types.Length.t=?,
+      ~y: Types.Length.t=?,
+      ~blur: Types.Length.t=?,
+      color
+    ) =>
+    [> t(text)];
+
+  let toString: t('a) => string;
+};
 
 type gradient = [
   | `linearGradient(Types.Angle.t, list((Types.Length.t, color)))
@@ -549,17 +577,8 @@ let tableLayout: [ | `auto | `fixed] => rule;
 let borderCollapse: [ | `separate | `collapse] => rule;
 let borderSpacing: Types.Length.t => rule;
 
-let boxShadow:
-  (
-    ~x: Types.Length.t=?,
-    ~y: Types.Length.t=?,
-    ~blur: Types.Length.t=?,
-    ~spread: Types.Length.t=?,
-    ~inset: bool=?,
-    color
-  ) =>
-  [> | `shadow(string)];
-let boxShadows: list([ | `shadow(string)]) => rule;
+let boxShadow: [ Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
+let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
 
 let background: [ color | `url(string) | gradient | `none] => rule;
 let backgrounds: list([ color | `url(string) | gradient | `none]) => rule;
@@ -733,15 +752,8 @@ let textIndent: Types.Length.t => rule;
 let textOverflow:
   [ | `clip | `ellipsis | `string(string) | Types.Cascading.t] => rule;
 
-let textShadow:
-  (
-    ~x: Types.Length.t=?,
-    ~y: Types.Length.t=?,
-    ~blur: Types.Length.t=?,
-    color
-  ) =>
-  [> | `textShadow(string)];
-let textShadows: list([ | `textShadow(string)]) => rule;
+let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
+let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
 
 let textTransform:
   [ | `uppercase | `lowercase | `capitalize | `none | Types.Cascading.t] =>
