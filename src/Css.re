@@ -2,8 +2,8 @@ include Css_Colors;
 module Types = Css_Types;
 
 type rule =
-  | Selector(string, list(rule))
-  | Declaration(string, string);
+  | Selector(string, list(rule)) // Selector
+  | Declaration(string, string); // Declaration
 
 module Emotion = {
   type stylename = string;
@@ -108,20 +108,10 @@ module Converter = {
     ++ string_of_alpha(a)
     ++ ")";
 
-  let string_of_color =
-    fun
-    | `rgb(r, g, b) => string_of_rgb(r, g, b)
-    | `rgba(r, g, b, a) => string_of_rgba(r, g, b, a)
-    | `hsl(h, s, l) => string_of_hsl(h, s, l)
-    | `hsla(h, s, l, a) => string_of_hsla(h, s, l, a)
-    | `hex(s) => "#" ++ s
-    | `transparent => "transparent"
-    | `currentColor => "currentColor";
-
   let string_of_stops = stops =>
     stops
     |> List.map(((l, c)) =>
-         joinLast(" ", [string_of_color(c), Types.Length.toString(l)])
+         joinLast(" ", [Types.Color.toString(c), Types.Length.toString(l)])
        )
     |> joinLast(", ");
 
@@ -239,6 +229,73 @@ let label = label => Declaration("label", label);
 
 /* Properties */
 
+let animationDelay = x => Declaration("animationDelay", string_of_time(x));
+
+let animationDirection = x =>
+  Declaration("animationDirection", Types.AnimationDirection.toString(x));
+
+let animationDuration = x =>
+  Declaration("animationDuration", string_of_time(x));
+
+let animationFillMode = x =>
+  Declaration("animationFillMode", Types.AnimationFillMode.toString(x));
+
+let animationIterationCount = x =>
+  Declaration(
+    "animationIterationCount",
+    Types.AnimationIterationCount.toString(x),
+  );
+
+let animationPlayState = x =>
+  Declaration("animationPlayState", Types.AnimationPlayState.toString(x));
+
+let animationTimingFunction = x =>
+  Declaration("animationTimingFunction", Types.TimingFunction.toString(x));
+
+let backgroundColor = x =>
+  Declaration("backgroundColor", Types.Color.toString(x));
+
+let borderBottomColor = x =>
+  Declaration("borderBottomColor", Types.Color.toString(x));
+
+let borderBottomLeftRadius = x =>
+  Declaration("borderBottomLeftRadius", Types.Length.toString(x));
+
+let borderBottomRightRadius = x =>
+  Declaration("borderBottomRightRadius", Types.Length.toString(x));
+
+let borderBottomWidth = x =>
+  Declaration("borderBottomWidth", Types.Length.toString(x));
+
+let borderLeftColor = x =>
+  Declaration("borderLeftColor", Types.Color.toString(x));
+
+let borderLeftWidth = x =>
+  Declaration("borderLeftWidth", Types.Length.toString(x));
+
+let borderRadius = x =>
+  Declaration("borderRadius", Types.Length.toString(x));
+
+let borderRightColor = x =>
+  Declaration("borderRightColor", Types.Color.toString(x));
+
+let borderRightWidth = x =>
+  Declaration("borderRightWidth", Types.Length.toString(x));
+
+let borderTopColor = x =>
+  Declaration("borderTopColor", Types.Color.toString(x));
+
+let borderTopLeftRadius = x =>
+  Declaration("borderTopLeftRadius", Types.Length.toString(x));
+
+let borderTopRightRadius = x =>
+  Declaration("borderTopRightRadius", Types.Length.toString(x));
+
+let borderTopWidth = x =>
+  Declaration("borderTopWidth", Types.Length.toString(x));
+
+let borderWidth = x => Declaration("borderWidth", Types.Length.toString(x));
+
 let bottom = x =>
   Declaration(
     "bottom",
@@ -258,6 +315,10 @@ let direction = x =>
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   );
+
+let flexGrow = x => Declaration("flexGrow", Js.Float.toString(x));
+
+let flexShrink = x => Declaration("flexShrink", Js.Float.toString(x));
 
 let fontFamily = x => Declaration("fontFamily", x);
 
@@ -461,19 +522,20 @@ let zIndex = x => Declaration("zIndex", Js.Int.toString(x));
 
 /* Type aliasing */
 
-type cascading = Types.Cascading.t;
-type length = Types.Length.t;
 type angle = Types.Angle.t;
-type fontStyle = Types.FontStyle.t;
-type repeatValue = Types.RepeatValue.t;
-type listStyleType = Types.ListStyleType.t;
-type outlineStyle = Types.OutlineStyle.t;
-type fontWeight = Types.FontWeight.t;
-type transform = Types.Transform.t;
 type animationDirection = Types.AnimationDirection.t;
 type animationFillMode = Types.AnimationFillMode.t;
 type animationIterationCount = Types.AnimationIterationCount.t;
 type animationPlayState = Types.AnimationPlayState.t;
+type cascading = Types.Cascading.t;
+type color = Types.Color.t;
+type fontStyle = Types.FontStyle.t;
+type fontWeight = Types.FontWeight.t;
+type length = Types.Length.t;
+type listStyleType = Types.ListStyleType.t;
+type repeatValue = Types.RepeatValue.t;
+type outlineStyle = Types.OutlineStyle.t;
+type transform = Types.Transform.t;
 
 /* Constructor aliases */
 
@@ -527,34 +589,19 @@ let visible = `visible;
 let scroll = `scroll;
 let auto = `auto;
 
+let rgb = Types.Color.rgb;
+let rgba = Types.Color.rgba;
+let hsl = Types.Color.hsl;
+let hsla = Types.Color.hsla;
+let hex = Types.Color.hex;
+let currentColor = Types.Color.currentColor;
+let transparent = Types.Color.transparent;
+
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
 
 let pct = x => `percent(x);
-
-type color = [
-  | `rgb(int, int, int)
-  | `rgba(int, int, int, float)
-  | `hsl(angle, [ | `percent(float)], [ | `percent(float)])
-  | `hsla(
-      angle,
-      [ | `percent(float)],
-      [ | `percent(float)],
-      [ | `num(float) | `percent(float)],
-    )
-  | `hex(string)
-  | `transparent
-  | `currentColor
-];
-
-let rgb = (r, g, b) => `rgb((r, g, b));
-let rgba = (r, g, b, a) => `rgba((r, g, b, a));
-let hsl = (h, s, l) => `hsl((h, pct(s), pct(l)));
-let hsla = (h, s, l, a) => `hsla((h, pct(s), pct(l), a));
-let hex = x => `hex(x);
-
-let currentColor = `currentColor;
 
 type gradient = [
   | `linearGradient(angle, list((length, color)))
@@ -782,8 +829,6 @@ let flex3 = (~grow, ~shrink, ~basis) =>
       }
     ),
   );
-let flexGrow = x => Declaration("flexGrow", Js.Float.toString(x));
-let flexShrink = x => Declaration("flexShrink", Js.Float.toString(x));
 let flexBasis = x =>
   Declaration(
     "flexBasis",
@@ -1078,7 +1123,7 @@ let string_of_filter =
     ++ " "
     ++ Types.Length.toString(c)
     ++ " "
-    ++ Converter.string_of_color(d)
+    ++ Types.Color.toString(d)
     ++ ")"
   | `grayscale(v) => "grayscale(" ++ Js.Float.toString(v) ++ "%)"
   | `hueRotate(v) => "hue-rotate(" ++ Types.Angle.toString(v) ++ ")"
@@ -1119,7 +1164,7 @@ module Shadow = {
       ++ " "
       ++ Types.Length.toString(spread)
       ++ " "
-      ++ string_of_color(color)
+      ++ Types.Color.toString(color)
       ++ (inset ? " inset" : ""),
     );
 
@@ -1131,7 +1176,7 @@ module Shadow = {
       ++ " "
       ++ Types.Length.toString(blur)
       ++ " "
-      ++ string_of_color(color),
+      ++ Types.Color.toString(color),
     );
 
   let toString: t('a) => string =
@@ -1166,11 +1211,10 @@ let border = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ string_of_color(color),
+    ++ Types.Color.toString(color),
   );
-let borderWidth = x => Declaration("borderWidth", Types.Length.toString(x));
 let borderStyle = x => Declaration("borderStyle", string_of_borderstyle(x));
-let borderColor = x => Declaration("borderColor", string_of_color(x));
+let borderColor = x => Declaration("borderColor", Types.Color.toString(x));
 
 let borderLeft = (px, style, color) =>
   Declaration(
@@ -1179,14 +1223,10 @@ let borderLeft = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ string_of_color(color),
+    ++ Types.Color.toString(color),
   );
-let borderLeftWidth = x =>
-  Declaration("borderLeftWidth", Types.Length.toString(x));
 let borderLeftStyle = x =>
   Declaration("borderLeftStyle", string_of_borderstyle(x));
-let borderLeftColor = x =>
-  Declaration("borderLeftColor", string_of_color(x));
 
 let borderRight = (px, style, color) =>
   Declaration(
@@ -1195,13 +1235,9 @@ let borderRight = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ string_of_color(color),
+    ++ Types.Color.toString(color),
   );
 
-let borderRightWidth = x =>
-  Declaration("borderRightWidth", Types.Length.toString(x));
-let borderRightColor = x =>
-  Declaration("borderRightColor", string_of_color(x));
 let borderRightStyle = x =>
   Declaration("borderRightStyle", string_of_borderstyle(x));
 let borderTop = (px, style, color) =>
@@ -1211,14 +1247,11 @@ let borderTop = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ string_of_color(color),
+    ++ Types.Color.toString(color),
   );
 
-let borderTopWidth = x =>
-  Declaration("borderTopWidth", Types.Length.toString(x));
 let borderTopStyle = x =>
   Declaration("borderTopStyle", string_of_borderstyle(x));
-let borderTopColor = x => Declaration("borderTopColor", string_of_color(x));
 
 let borderBottom = (px, style, color) =>
   Declaration(
@@ -1227,25 +1260,11 @@ let borderBottom = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ string_of_color(color),
+    ++ Types.Color.toString(color),
   );
-let borderBottomWidth = x =>
-  Declaration("borderBottomWidth", Types.Length.toString(x));
+
 let borderBottomStyle = x =>
   Declaration("borderBottomStyle", string_of_borderstyle(x));
-let borderBottomColor = x =>
-  Declaration("borderBottomColor", string_of_color(x));
-
-let borderRadius = i =>
-  Declaration("borderRadius", Types.Length.toString(i));
-let borderTopLeftRadius = i =>
-  Declaration("borderTopLeftRadius", Types.Length.toString(i));
-let borderTopRightRadius = i =>
-  Declaration("borderTopRightRadius", Types.Length.toString(i));
-let borderBottomLeftRadius = i =>
-  Declaration("borderBottomLeftRadius", Types.Length.toString(i));
-let borderBottomRightRadius = i =>
-  Declaration("borderBottomRightRadius", Types.Length.toString(i));
 
 let tableLayout = x =>
   Declaration(
@@ -1274,8 +1293,6 @@ let backgrounds = bg =>
     "background",
     bg->Belt.List.map(string_of_background)->join(", "),
   );
-let backgroundColor = x =>
-  Declaration("backgroundColor", string_of_color(x));
 let backgroundImage = x =>
   Declaration(
     "backgroundImage",
@@ -1397,7 +1414,7 @@ let outline = (size, style, color) =>
     ++ " "
     ++ Types.OutlineStyle.toString(style)
     ++ " "
-    ++ string_of_color(color),
+    ++ Types.Color.toString(color),
   );
 
 let outlineStyle = x =>
@@ -1406,7 +1423,7 @@ let outlineStyle = x =>
 let outlineWidth = x =>
   Declaration("outlineWidth", Types.Length.toString(x));
 
-let outlineColor = x => Declaration("outlineColor", string_of_color(x));
+let outlineColor = x => Declaration("outlineColor", Types.Color.toString(x));
 
 let outlineOffset = x =>
   Declaration("outlineOffset", Types.Length.toString(x));
@@ -1425,7 +1442,7 @@ let extraBold = `extraBold;
 let lighter = `lighter;
 let bolder = `bolder;
 
-let color = x => Declaration("color", string_of_color(x));
+let color = x => Declaration("color", Types.Color.toString(x));
 
 let fontWeight = x =>
   Declaration(
@@ -1580,7 +1597,7 @@ let textDecoration = x =>
   );
 
 let textDecorationColor = x =>
-  Declaration("textDecorationColor", string_of_color(x));
+  Declaration("textDecorationColor", Types.Color.toString(x));
 
 let textDecorationStyle = x =>
   Declaration(
@@ -1936,23 +1953,7 @@ let animations = x =>
     x->Belt.List.map(Animation.toString)->join(", "),
   );
 
-let animationDelay = x => Declaration("animationDelay", string_of_time(x));
-let animationDirection = x =>
-  Declaration("animationDirection", Types.AnimationDirection.toString(x));
-let animationDuration = x =>
-  Declaration("animationDuration", string_of_time(x));
-let animationFillMode = x =>
-  Declaration("animationFillMode", Types.AnimationFillMode.toString(x));
-let animationIterationCount = x =>
-  Declaration(
-    "animationIterationCount",
-    Types.AnimationIterationCount.toString(x),
-  );
 let animationName = x => Declaration("animationName", x);
-let animationPlayState = x =>
-  Declaration("animationPlayState", Types.AnimationPlayState.toString(x));
-let animationTimingFunction = x =>
-  Declaration("animationTimingFunction", Types.TimingFunction.toString(x));
 
 /**
  * Selectors
@@ -2001,7 +2002,7 @@ let media = (query, rules) => Selector("@media " ++ query, rules);
  * SVG
  */
 module SVG = {
-  let fill = color => Declaration("fill", string_of_color(color));
+  let fill = color => Declaration("fill", Types.Color.toString(color));
   let fillOpacity = opacity =>
     Declaration("fillOpacity", Js.Float.toString(opacity));
   let fillRule = x =>
@@ -2012,7 +2013,7 @@ module SVG = {
       | `nonzero => "nonzero"
       },
     );
-  let stroke = color => Declaration("stroke", string_of_color(color));
+  let stroke = color => Declaration("stroke", Types.Color.toString(color));
   let strokeWidth = length =>
     Declaration("strokeWidth", Types.Length.toString(length));
   let strokeOpacity = opacity =>
@@ -2038,6 +2039,6 @@ module SVG = {
       | `bevel => "bevel"
       },
     );
-  let stopColor = c => Declaration("stopColor", string_of_color(c));
-  let stopOpacity = o => Declaration("stopOpacity", Js.Float.toString(o));
+  let stopColor = x => Declaration("stopColor", Types.Color.toString(x));
+  let stopOpacity = x => Declaration("stopOpacity", Js.Float.toString(x));
 };

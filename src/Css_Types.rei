@@ -370,3 +370,31 @@ module Cursor: {
 
   let toString: t => string;
 };
+
+module Color: {
+  type t = [
+    | `rgb(int, int, int)
+    | `rgba(int, int, int, float)
+    | `hsl(Angle.t, [ | `percent(float)], [ | `percent(float)])
+    | `hsla(
+        Angle.t,
+        [ | `percent(float)],
+        [ | `percent(float)],
+        [ | `num(float) | `percent(float)],
+      )
+    | `hex(string)
+    | `transparent
+    | `currentColor
+  ];
+
+  let rgb: (int, int, int) => [> t];
+  let rgba: (int, int, int, float) => [> t];
+  let hsl: (Angle.t, float, float) => [> t];
+  let hsla:
+    (Angle.t, float, float, [ | `num(float) | `percent(float)]) => [> t];
+  let hex: string => [> t];
+  let transparent: [> t];
+  let currentColor: [> t];
+
+  let toString: t => string;
+};

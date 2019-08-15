@@ -583,3 +583,79 @@ module Cursor = {
     | `zoomOut => "zoom-out"
     };
 };
+
+module Color = {
+  type t = [
+    | `rgb(int, int, int)
+    | `rgba(int, int, int, float)
+    | `hsl(Angle.t, [ | `percent(float)], [ | `percent(float)])
+    | `hsla(
+        Angle.t,
+        [ | `percent(float)],
+        [ | `percent(float)],
+        [ | `num(float) | `percent(float)],
+      )
+    | `hex(string)
+    | `transparent
+    | `currentColor
+  ];
+
+  let rgb = (r, g, b) => `rgb((r, g, b));
+  let rgba = (r, g, b, a) => `rgba((r, g, b, a));
+  let hsl = (h, s, l) => `hsl((h, `percent(s), `percent(l)));
+  let hsla = (h, s, l, a) => `hsla((h, `percent(s), `percent(l), a));
+  let hex = x => `hex(x);
+  let transparent = `transparent;
+  let currentColor = `currentColor;
+
+  let string_of_alpha =
+    fun
+    | `num(f) => Js.Float.toString(f)
+    | `percent(p) => Js.Float.toString(p) ++ "%";
+
+  let string_of_percent =
+    fun
+    | `percent(x) => Js.Float.toString(x) ++ "%";
+
+  let toString =
+    fun
+    | `rgb(r, g, b) =>
+      "rgb("
+      ++ Js.Int.toString(r)
+      ++ ", "
+      ++ Js.Int.toString(g)
+      ++ ", "
+      ++ Js.Int.toString(b)
+      ++ ")"
+    | `rgba(r, g, b, a) =>
+      "rgba("
+      ++ Js.Int.toString(r)
+      ++ ", "
+      ++ Js.Int.toString(g)
+      ++ ", "
+      ++ Js.Int.toString(b)
+      ++ ", "
+      ++ Js.Float.toString(a)
+      ++ ")"
+    | `hsl(h, s, l) =>
+      "hsl("
+      ++ Angle.toString(h)
+      ++ ", "
+      ++ string_of_percent(s)
+      ++ ", "
+      ++ string_of_percent(l)
+      ++ ")"
+    | `hsla(h, s, l, a) =>
+      "hsla("
+      ++ Angle.toString(h)
+      ++ ", "
+      ++ string_of_percent(s)
+      ++ ", "
+      ++ string_of_percent(l)
+      ++ ", "
+      ++ string_of_alpha(a)
+      ++ ")"
+    | `hex(s) => "#" ++ s
+    | `transparent => "transparent"
+    | `currentColor => "currentColor";
+};

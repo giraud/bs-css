@@ -16,13 +16,73 @@ let insertRule: string => unit;
 let important: rule => rule;
 let label: string => rule;
 
+module Shadow: {
+  type value('a);
+  type box;
+  type text;
+
+  type t('a) = [ | `shadow(value('a)) | `none];
+
+  let box:
+    (
+      ~x: Types.Length.t=?,
+      ~y: Types.Length.t=?,
+      ~blur: Types.Length.t=?,
+      ~spread: Types.Length.t=?,
+      ~inset: bool=?,
+      Types.Color.t
+    ) =>
+    [> t(box)];
+
+  let text:
+    (
+      ~x: Types.Length.t=?,
+      ~y: Types.Length.t=?,
+      ~blur: Types.Length.t=?,
+      Types.Color.t
+    ) =>
+    [> t(text)];
+
+  let toString: t('a) => string;
+};
+
 /* ********
  Properties
  ********** */
 
+let animationDelay: int => rule;
+let animationDirection: Types.AnimationDirection.t => rule;
+let animationDuration: int => rule;
+let animationFillMode: Types.AnimationFillMode.t => rule;
+let animationIterationCount: Types.AnimationIterationCount.t => rule;
+let animationPlayState: Types.AnimationPlayState.t => rule;
+let animationTimingFunction: Types.TimingFunction.t => rule;
+let backgroundColor: Types.Color.t => rule;
+let borderBottomColor: Types.Color.t => rule;
+let borderBottomLeftRadius: Types.Length.t => rule;
+let borderBottomRightRadius: Types.Length.t => rule;
+let borderBottomWidth: Types.Length.t => rule;
+let borderColor: Types.Color.t => rule;
+let borderLeftColor: Types.Color.t => rule;
+let borderLeftWidth: Types.Length.t => rule;
+let borderRightColor: Types.Color.t => rule;
+let borderRightWidth: Types.Length.t => rule;
+let borderRadius: Types.Length.t => rule;
+let borderSpacing: Types.Length.t => rule;
+let borderTopColor: Types.Color.t => rule;
+let borderTopLeftRadius: Types.Length.t => rule;
+let borderTopRightRadius: Types.Length.t => rule;
+let borderTopWidth: Types.Length.t => rule;
+let borderWidth: Types.Length.t => rule;
 let bottom: [ Types.Length.t | Types.Cascading.t] => rule;
+let boxShadow: [ Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
+let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
+let color: Types.Color.t => rule;
+let contentRule: string => rule;
 let cursor: Types.Cursor.t => rule;
-let direction: [< Types.Direction.t | Types.Cascading.t] => rule;
+let direction: [ Types.Direction.t | Types.Cascading.t] => rule;
+let flexGrow: float => rule;
+let flexShrink: float => rule;
 let fontFamily: string => rule;
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
@@ -64,6 +124,11 @@ let marginLeft: [ Types.Length.t | Types.Margin.t] => rule;
 let marginRight: [ Types.Length.t | Types.Margin.t] => rule;
 let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
 let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
+let opacity: float => rule;
+let order: int => rule;
+let outlineColor: Types.Color.t => rule;
+let outlineOffset: Types.Length.t => rule;
+let outlineWidth: Types.Length.t => rule;
 let overflow: [ Types.Overflow.t] => rule;
 let overflowX: [ Types.Overflow.t] => rule;
 let overflowY: [ Types.Overflow.t] => rule;
@@ -83,32 +148,83 @@ let paddingLeft: Types.Length.t => rule;
 let paddingRight: Types.Length.t => rule;
 let paddingTop: Types.Length.t => rule;
 let paddingBottom: Types.Length.t => rule;
+let perspectiveOrigin: (Types.Length.t, Types.Length.t) => rule;
 let position: [ Types.Position.t | Types.Cascading.t] => rule;
 let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 let right: [ Types.Length.t | Types.Cascading.t] => rule;
+let textDecorationColor: Types.Color.t => rule;
+let textIndent: Types.Length.t => rule;
 let top: [ Types.Length.t | Types.Cascading.t] => rule;
+let transform: Types.Transform.t => rule;
+let transforms: list(Types.Transform.t) => rule;
+let transformOrigin: (Types.Length.t, Types.Length.t) => rule;
+let transitionDelay: int => rule;
+let transitionDuration: int => rule;
+let transitionProperty: string => rule;
+let transitionTimingFunction: Types.TimingFunction.t => rule;
 let unsafe: (string, string) => rule;
 let verticalAlign:
   [ Types.VerticalAlign.t | Types.Length.t | Types.Cascading.t] => rule;
 let zIndex: int => rule;
 
+/* *******
+ selectors
+ ******* */
+
+let selector: (string, list(rule)) => rule;
+let active: list(rule) => rule;
+let after: list(rule) => rule;
+let before: list(rule) => rule;
+let checked: list(rule) => rule;
+let children: list(rule) => rule;
+let directSibling: list(rule) => rule;
+let disabled: list(rule) => rule;
+let firstChild: list(rule) => rule;
+let firstOfType: list(rule) => rule;
+let focus: list(rule) => rule;
+let hover: list(rule) => rule;
+let lastChild: list(rule) => rule;
+let lastOfType: list(rule) => rule;
+let link: list(rule) => rule;
+let readOnly: list(rule) => rule;
+let required: list(rule) => rule;
+let visited: list(rule) => rule;
+let enabled: list(rule) => rule;
+let noContent: list(rule) => rule;
+let default: list(rule) => rule;
+let anyLink: list(rule) => rule;
+let onlyChild: list(rule) => rule;
+let onlyOfType: list(rule) => rule;
+let optional: list(rule) => rule;
+let invalid: list(rule) => rule;
+let outOfRange: list(rule) => rule;
+let siblings: list(rule) => rule;
+let target: list(rule) => rule;
+let firstLine: list(rule) => rule;
+let firstLetter: list(rule) => rule;
+let selection: list(rule) => rule;
+let placeholder: list(rule) => rule;
+
+let media: (string, list(rule)) => rule;
+
 /* *************************************
  Type aliases for backward compatibility
  *************************************** */
 
-type cascading = Types.Cascading.t;
 type angle = Types.Angle.t;
-type fontStyle = Types.FontStyle.t;
-type length = Types.Length.t;
-type repeatValue = Types.RepeatValue.t;
-type listStyleType = Types.ListStyleType.t;
-type outlineStyle = Types.OutlineStyle.t;
-type fontWeight = Types.FontWeight.t;
-type transform = Types.Transform.t;
 type animationDirection = Types.AnimationDirection.t;
 type animationFillMode = Types.AnimationFillMode.t;
 type animationIterationCount = Types.AnimationIterationCount.t;
 type animationPlayState = Types.AnimationPlayState.t;
+type cascading = Types.Cascading.t;
+type color = Types.Color.t;
+type fontStyle = Types.FontStyle.t;
+type fontWeight = Types.FontWeight.t;
+type length = Types.Length.t;
+type listStyleType = Types.ListStyleType.t;
+type repeatValue = Types.RepeatValue.t;
+type outlineStyle = Types.OutlineStyle.t;
+type transform = Types.Transform.t;
 
 /* **************************************************
  Constructor aliases, for ease of use.
@@ -161,73 +277,19 @@ let visible: [> | `visible];
 let scroll: [> | `scroll];
 let auto: [> | `auto];
 
+let rgb: (int, int, int) => [> Types.Color.t];
+let rgba: (int, int, int, float) => [> Types.Color.t];
+let hsl: (Types.Angle.t, float, float) => [> Types.Color.t];
+let hsla:
+  (Types.Angle.t, float, float, [ | `num(float) | `percent(float)]) =>
+  [> Types.Color.t];
+let hex: string => [> Types.Color.t];
+let transparent: [> Types.Color.t];
+let currentColor: [> Types.Color.t];
+
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-
-type color = [
-  | `rgb(int, int, int)
-  | `rgba(int, int, int, float)
-  | `hsl(Types.Angle.t, [ | `percent(float)], [ | `percent(float)])
-  | `hsla(
-      Types.Angle.t,
-      [ | `percent(float)],
-      [ | `percent(float)],
-      [ | `num(float) | `percent(float)],
-    )
-  | `transparent
-  | `hex(string)
-  | `currentColor
-];
-
-let rgb: (int, int, int) => [> | `rgb(int, int, int)];
-let rgba: (int, int, int, float) => [> | `rgba(int, int, int, float)];
-let hsl:
-  (Types.Angle.t, float, float) =>
-  [> | `hsl(Types.Angle.t, [> | `percent(float)], [> | `percent(float)])];
-let hsla:
-  (Types.Angle.t, float, float, [ | `num(float) | `percent(float)]) =>
-  [>
-    | `hsla(
-        Types.Angle.t,
-        [> | `percent(float)],
-        [> | `percent(float)],
-        [ | `num(float) | `percent(float)],
-      )
-  ];
-let hex: string => [> | `hex(string)];
-let transparent: [> | `transparent];
-let currentColor: [> | `currentColor];
-
-module Shadow: {
-  type value('a);
-  type box;
-  type text;
-
-  type t('a) = [ | `shadow(value('a)) | `none];
-
-  let box:
-    (
-      ~x: Types.Length.t=?,
-      ~y: Types.Length.t=?,
-      ~blur: Types.Length.t=?,
-      ~spread: Types.Length.t=?,
-      ~inset: bool=?,
-      color
-    ) =>
-    [> t(box)];
-
-  let text:
-    (
-      ~x: Types.Length.t=?,
-      ~y: Types.Length.t=?,
-      ~blur: Types.Length.t=?,
-      color
-    ) =>
-    [> t(text)];
-
-  let toString: t('a) => string;
-};
 
 type gradient = [
   | `linearGradient(Types.Angle.t, list((Types.Length.t, color)))
@@ -478,13 +540,10 @@ let flex3:
     ~basis: [ Types.Length.t | Types.FlexBasis.t]
   ) =>
   rule;
-let flexGrow: float => rule;
-let flexShrink: float => rule;
 let flexBasis: [ Types.Length.t | Types.FlexBasis.t] => rule;
 
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
-let order: int => rule;
 
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
@@ -531,8 +590,6 @@ let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 let float: [ | `left | `right | `none] => rule;
 let clear: [ | `left | `right | `both] => rule;
 
-let contentRule: string => rule;
-
 let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 
 let objectFit:
@@ -546,47 +603,26 @@ let visibility: [ | `visible | `hidden] => rule;
 
 let border:
   (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderWidth: Types.Length.t => rule;
 let borderStyle: [ | `solid | `dashed | `dotted | `none] => rule;
-let borderColor: color => rule;
 
 let borderTop:
   (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderTopWidth: Types.Length.t => rule;
 let borderTopStyle: [ | `solid | `dashed | `dotted | `none] => rule;
-let borderTopColor: color => rule;
 let borderBottom:
   (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderBottomWidth: Types.Length.t => rule;
 let borderBottomStyle: [ | `solid | `dashed | `dotted | `none] => rule;
-let borderBottomColor: color => rule;
 let borderLeft:
   (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
-let borderLeftWidth: Types.Length.t => rule;
 let borderLeftStyle: [ | `solid | `dashed | `dotted | `none] => rule;
-let borderLeftColor: color => rule;
 let borderRight:
   (Types.Length.t, [ | `solid | `dashed | `dotted], [ color]) => rule;
-let borderRightWidth: Types.Length.t => rule;
 let borderRightStyle: [ | `solid | `dashed | `dotted | `none] => rule;
-let borderRightColor: color => rule;
-
-let borderRadius: Types.Length.t => rule;
-let borderTopLeftRadius: Types.Length.t => rule;
-let borderTopRightRadius: Types.Length.t => rule;
-let borderBottomLeftRadius: Types.Length.t => rule;
-let borderBottomRightRadius: Types.Length.t => rule;
 
 let tableLayout: [ | `auto | `fixed] => rule;
 let borderCollapse: [ | `separate | `collapse] => rule;
-let borderSpacing: Types.Length.t => rule;
-
-let boxShadow: [ Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
-let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
 
 let background: [ color | `url(string) | gradient | `none] => rule;
 let backgrounds: list([ color | `url(string) | gradient | `none]) => rule;
-let backgroundColor: [ color] => rule;
 let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
 let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
@@ -605,13 +641,8 @@ let listStyleType: listStyleType => rule;
 let listStylePosition: [ | `inside | `outside] => rule;
 let listStyleImage: [ | `none | `url(string)] => rule;
 
-let opacity: float => rule;
-
 let outline: (Types.Length.t, outlineStyle, color) => rule;
 let outlineStyle: outlineStyle => rule;
-let outlineWidth: Types.Length.t => rule;
-let outlineColor: color => rule;
-let outlineOffset: Types.Length.t => rule;
 
 let pointerEvents: [ | `auto | `none] => rule;
 
@@ -647,7 +678,6 @@ let extraBold: [> | `extraBold];
 let lighter: [> | `lighter];
 let bolder: [> | `bolder];
 
-let color: color => rule;
 let fontFace:
   (
     ~fontFamily: string,
@@ -666,10 +696,8 @@ let textAlign:
 let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
-let textDecorationColor: color => rule;
 let textDecorationStyle:
   [ | `wavy | `solid | `dotted | `dashed | `double | Types.Cascading.t] => rule;
-let textIndent: Types.Length.t => rule;
 let textOverflow:
   [ | `clip | `ellipsis | `string(string) | Types.Cascading.t] => rule;
 
@@ -691,14 +719,10 @@ let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
  * Transform
  */
 
-let transform: transform => rule;
-let transforms: list(transform) => rule;
-let transformOrigin: (Types.Length.t, Types.Length.t) => rule;
 let transformOrigin3d:
   (Types.Length.t, Types.Length.t, Types.Length.t) => rule;
 let transformStyle: [ | `preserve3d | `flat] => rule;
 let perspective: [ | `none | Types.Length.t] => rule;
-let perspectiveOrigin: (Types.Length.t, Types.Length.t) => rule;
 
 /**
   * Transition
@@ -731,11 +755,6 @@ let transition:
   ) =>
   rule;
 let transitions: list([ Transition.t]) => rule;
-
-let transitionDelay: int => rule;
-let transitionDuration: int => rule;
-let transitionTimingFunction: Types.TimingFunction.t => rule;
-let transitionProperty: string => rule;
 
 /**
  * Animation
@@ -778,53 +797,7 @@ let animation:
   rule;
 let animations: list([ Animation.t]) => rule;
 
-let animationDelay: int => rule;
-let animationDirection: animationDirection => rule;
-let animationDuration: int => rule;
-let animationFillMode: animationFillMode => rule;
-let animationIterationCount: [ | `infinite | `count(int)] => rule;
 let animationName: animationName => rule;
-let animationPlayState: [ | `paused | `running] => rule;
-let animationTimingFunction: Types.TimingFunction.t => rule;
-
-/**
- * selectors
- */
-let selector: (string, list(rule)) => rule;
-let active: list(rule) => rule;
-let after: list(rule) => rule;
-let before: list(rule) => rule;
-let checked: list(rule) => rule;
-let children: list(rule) => rule;
-let directSibling: list(rule) => rule;
-let disabled: list(rule) => rule;
-let firstChild: list(rule) => rule;
-let firstOfType: list(rule) => rule;
-let focus: list(rule) => rule;
-let hover: list(rule) => rule;
-let lastChild: list(rule) => rule;
-let lastOfType: list(rule) => rule;
-let link: list(rule) => rule;
-let readOnly: list(rule) => rule;
-let required: list(rule) => rule;
-let visited: list(rule) => rule;
-let enabled: list(rule) => rule;
-let noContent: list(rule) => rule;
-let default: list(rule) => rule;
-let anyLink: list(rule) => rule;
-let onlyChild: list(rule) => rule;
-let onlyOfType: list(rule) => rule;
-let optional: list(rule) => rule;
-let invalid: list(rule) => rule;
-let outOfRange: list(rule) => rule;
-let siblings: list(rule) => rule;
-let target: list(rule) => rule;
-let firstLine: list(rule) => rule;
-let firstLetter: list(rule) => rule;
-let selection: list(rule) => rule;
-let placeholder: list(rule) => rule;
-
-let media: (string, list(rule)) => rule;
 
 /**
  * SVG
