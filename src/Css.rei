@@ -59,20 +59,45 @@ let animationPlayState: Types.AnimationPlayState.t => rule;
 let animationTimingFunction: Types.TimingFunction.t => rule;
 let backgroundColor: Types.Color.t => rule;
 let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
+let borderBottom:
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
+  rule;
 let borderBottomColor: Types.Color.t => rule;
 let borderBottomLeftRadius: Types.Length.t => rule;
 let borderBottomRightRadius: Types.Length.t => rule;
+let borderBottomStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderBottomWidth: Types.Length.t => rule;
 let borderColor: Types.Color.t => rule;
+let borderLeft:
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
+  rule;
 let borderLeftColor: Types.Color.t => rule;
+let borderLeftStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderLeftWidth: Types.Length.t => rule;
+let borderRight:
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
+  rule;
 let borderRightColor: Types.Color.t => rule;
+let borderRightStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderRightWidth: Types.Length.t => rule;
 let borderRadius: Types.Length.t => rule;
 let borderSpacing: Types.Length.t => rule;
 let borderTopColor: Types.Color.t => rule;
 let borderTopLeftRadius: Types.Length.t => rule;
 let borderTopRightRadius: Types.Length.t => rule;
+let borderTopStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderTopWidth: Types.Length.t => rule;
 let borderWidth: Types.Length.t => rule;
 let bottom: [ Types.Length.t | Types.Cascading.t] => rule;
@@ -81,6 +106,11 @@ let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
 let color: Types.Color.t => rule;
 let contentRule: string => rule;
 let cursor: Types.Cursor.t => rule;
+/**
+ The direction CSS property sets the direction of text, table columns, and horizontal overflow.
+ Use rtl for languages written from right to left (like Hebrew or Arabic),
+ and ltr for those written from left to right (like English and most other languages).
+ */
 let direction: [ Types.Direction.t | Types.Cascading.t] => rule;
 let flexGrow: float => rule;
 let flexShrink: float => rule;
@@ -100,6 +130,9 @@ let gridRowGap: Types.Length.t => rule;
 let gridRowStart: int => rule;
 let gridGap: Types.Length.t => rule;
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
+/** The letter-spacing CSS property sets the spacing behavior between text characters */
+let letterSpacing:
+  [ Types.LetterSpacing.t | Types.Length.t | Types.Cascading.t] => rule;
 let listStyleType: Types.ListStyleType.t => rule;
 let margin: [ Types.Length.t | Types.Margin.t] => rule;
 let margin2:
@@ -154,6 +187,8 @@ let paddingRight: Types.Length.t => rule;
 let paddingTop: Types.Length.t => rule;
 let paddingBottom: Types.Length.t => rule;
 let perspectiveOrigin: (Types.Length.t, Types.Length.t) => rule;
+/** The pointer-events CSS property sets under what circumstances (if any) a particular graphic element can become the target of pointer events. */
+let pointerEvents: [ Types.PointerEvents.t | Types.Cascading.t] => rule;
 let position: [ Types.Position.t | Types.Cascading.t] => rule;
 let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 let right: [ Types.Length.t | Types.Cascading.t] => rule;
@@ -624,32 +659,6 @@ let borderTop:
   ) =>
   rule;
 
-let borderTopStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
-let borderBottom:
-  (
-    Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
-  ) =>
-  rule;
-let borderBottomStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
-let borderLeft:
-  (
-    Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
-  ) =>
-  rule;
-let borderLeftStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
-let borderRight:
-  (
-    Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
-  ) =>
-  rule;
-let borderRightStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
-
 let tableLayout: [ | `auto | `fixed] => rule;
 let borderCollapse: [ | `separate | `collapse] => rule;
 
@@ -676,8 +685,6 @@ let listStyle:
   rule;
 let listStylePosition: [ | `inside | `outside] => rule;
 let listStyleImage: [ | `none | `url(string)] => rule;
-
-let pointerEvents: [ | `auto | `none] => rule;
 
 type filter = [
   | `blur(Types.Length.t)
@@ -720,7 +727,6 @@ let fontFace:
     unit
   ) =>
   string;
-let letterSpacing: [ | `normal | Types.Length.t | Types.Cascading.t] => rule;
 let lineHeight:
   [ | `normal | `abs(float) | Types.Length.t | Types.Cascading.t] => rule;
 let textAlign:
@@ -853,151 +859,151 @@ module SVG: {
  Colors
  ****** */
 
-let aliceblue: [> | `hex(string)];
-let antiquewhite: [> | `hex(string)];
-let aqua: [> | `hex(string)];
-let aquamarine: [> | `hex(string)];
-let azure: [> | `hex(string)];
-let beige: [> | `hex(string)];
-let bisque: [> | `hex(string)];
-let black: [> | `hex(string)];
-let blanchedalmond: [> | `hex(string)];
-let blue: [> | `hex(string)];
-let blueviolet: [> | `hex(string)];
-let brown: [> | `hex(string)];
-let burlywood: [> | `hex(string)];
-let cadetblue: [> | `hex(string)];
-let chartreuse: [> | `hex(string)];
-let chocolate: [> | `hex(string)];
-let coral: [> | `hex(string)];
-let cornflowerblue: [> | `hex(string)];
-let cornsilk: [> | `hex(string)];
-let crimson: [> | `hex(string)];
-let cyan: [> | `hex(string)];
-let darkblue: [> | `hex(string)];
-let darkcyan: [> | `hex(string)];
-let darkgoldenrod: [> | `hex(string)];
-let darkgray: [> | `hex(string)];
-let darkgrey: [> | `hex(string)];
-let darkgreen: [> | `hex(string)];
-let darkkhaki: [> | `hex(string)];
-let darkmagenta: [> | `hex(string)];
-let darkolivegreen: [> | `hex(string)];
-let darkorange: [> | `hex(string)];
-let darkorchid: [> | `hex(string)];
-let darkred: [> | `hex(string)];
-let darksalmon: [> | `hex(string)];
-let darkseagreen: [> | `hex(string)];
-let darkslateblue: [> | `hex(string)];
-let darkslategray: [> | `hex(string)];
-let darkslategrey: [> | `hex(string)];
-let darkturquoise: [> | `hex(string)];
-let darkviolet: [> | `hex(string)];
-let deeppink: [> | `hex(string)];
-let deepskyblue: [> | `hex(string)];
-let dimgray: [> | `hex(string)];
-let dimgrey: [> | `hex(string)];
-let dodgerblue: [> | `hex(string)];
-let firebrick: [> | `hex(string)];
-let floralwhite: [> | `hex(string)];
-let forestgreen: [> | `hex(string)];
-let fuchsia: [> | `hex(string)];
-let gainsboro: [> | `hex(string)];
-let ghostwhite: [> | `hex(string)];
-let gold: [> | `hex(string)];
-let goldenrod: [> | `hex(string)];
-let gray: [> | `hex(string)];
-let grey: [> | `hex(string)];
-let green: [> | `hex(string)];
-let greenyellow: [> | `hex(string)];
-let honeydew: [> | `hex(string)];
-let hotpink: [> | `hex(string)];
-let indianred: [> | `hex(string)];
-let indigo: [> | `hex(string)];
-let ivory: [> | `hex(string)];
-let khaki: [> | `hex(string)];
-let lavender: [> | `hex(string)];
-let lavenderblush: [> | `hex(string)];
-let lawngreen: [> | `hex(string)];
-let lemonchiffon: [> | `hex(string)];
-let lightblue: [> | `hex(string)];
-let lightcoral: [> | `hex(string)];
-let lightcyan: [> | `hex(string)];
-let lightgoldenrodyellow: [> | `hex(string)];
-let lightgray: [> | `hex(string)];
-let lightgrey: [> | `hex(string)];
-let lightgreen: [> | `hex(string)];
-let lightpink: [> | `hex(string)];
-let lightsalmon: [> | `hex(string)];
-let lightseagreen: [> | `hex(string)];
-let lightskyblue: [> | `hex(string)];
-let lightslategray: [> | `hex(string)];
-let lightslategrey: [> | `hex(string)];
-let lightsteelblue: [> | `hex(string)];
-let lightyellow: [> | `hex(string)];
-let lime: [> | `hex(string)];
-let limegreen: [> | `hex(string)];
-let linen: [> | `hex(string)];
-let magenta: [> | `hex(string)];
-let maroon: [> | `hex(string)];
-let mediumaquamarine: [> | `hex(string)];
-let mediumblue: [> | `hex(string)];
-let mediumorchid: [> | `hex(string)];
-let mediumpurple: [> | `hex(string)];
-let mediumseagreen: [> | `hex(string)];
-let mediumslateblue: [> | `hex(string)];
-let mediumspringgreen: [> | `hex(string)];
-let mediumturquoise: [> | `hex(string)];
-let mediumvioletred: [> | `hex(string)];
-let midnightblue: [> | `hex(string)];
-let mintcream: [> | `hex(string)];
-let mistyrose: [> | `hex(string)];
-let moccasin: [> | `hex(string)];
-let navajowhite: [> | `hex(string)];
-let navy: [> | `hex(string)];
-let oldlace: [> | `hex(string)];
-let olive: [> | `hex(string)];
-let olivedrab: [> | `hex(string)];
-let orange: [> | `hex(string)];
-let orangered: [> | `hex(string)];
-let orchid: [> | `hex(string)];
-let palegoldenrod: [> | `hex(string)];
-let palegreen: [> | `hex(string)];
-let paleturquoise: [> | `hex(string)];
-let palevioletred: [> | `hex(string)];
-let papayawhip: [> | `hex(string)];
-let peachpuff: [> | `hex(string)];
-let peru: [> | `hex(string)];
-let pink: [> | `hex(string)];
-let plum: [> | `hex(string)];
-let powderblue: [> | `hex(string)];
-let purple: [> | `hex(string)];
-let rebeccapurple: [> | `hex(string)];
-let red: [> | `hex(string)];
-let rosybrown: [> | `hex(string)];
-let royalblue: [> | `hex(string)];
-let saddlebrown: [> | `hex(string)];
-let salmon: [> | `hex(string)];
-let sandybrown: [> | `hex(string)];
-let seagreen: [> | `hex(string)];
-let seashell: [> | `hex(string)];
-let sienna: [> | `hex(string)];
-let silver: [> | `hex(string)];
-let skyblue: [> | `hex(string)];
-let slateblue: [> | `hex(string)];
-let slategray: [> | `hex(string)];
-let slategrey: [> | `hex(string)];
-let snow: [> | `hex(string)];
-let springgreen: [> | `hex(string)];
-let steelblue: [> | `hex(string)];
-let tan: [> | `hex(string)];
-let teal: [> | `hex(string)];
-let thistle: [> | `hex(string)];
-let tomato: [> | `hex(string)];
-let turquoise: [> | `hex(string)];
-let violet: [> | `hex(string)];
-let wheat: [> | `hex(string)];
-let white: [> | `hex(string)];
-let whitesmoke: [> | `hex(string)];
-let yellow: [> | `hex(string)];
-let yellowgreen: [> | `hex(string)];
+let aliceblue: [> Types.Color.t];
+let antiquewhite: [> Types.Color.t];
+let aqua: [> Types.Color.t];
+let aquamarine: [> Types.Color.t];
+let azure: [> Types.Color.t];
+let beige: [> Types.Color.t];
+let bisque: [> Types.Color.t];
+let black: [> Types.Color.t];
+let blanchedalmond: [> Types.Color.t];
+let blue: [> Types.Color.t];
+let blueviolet: [> Types.Color.t];
+let brown: [> Types.Color.t];
+let burlywood: [> Types.Color.t];
+let cadetblue: [> Types.Color.t];
+let chartreuse: [> Types.Color.t];
+let chocolate: [> Types.Color.t];
+let coral: [> Types.Color.t];
+let cornflowerblue: [> Types.Color.t];
+let cornsilk: [> Types.Color.t];
+let crimson: [> Types.Color.t];
+let cyan: [> Types.Color.t];
+let darkblue: [> Types.Color.t];
+let darkcyan: [> Types.Color.t];
+let darkgoldenrod: [> Types.Color.t];
+let darkgray: [> Types.Color.t];
+let darkgrey: [> Types.Color.t];
+let darkgreen: [> Types.Color.t];
+let darkkhaki: [> Types.Color.t];
+let darkmagenta: [> Types.Color.t];
+let darkolivegreen: [> Types.Color.t];
+let darkorange: [> Types.Color.t];
+let darkorchid: [> Types.Color.t];
+let darkred: [> Types.Color.t];
+let darksalmon: [> Types.Color.t];
+let darkseagreen: [> Types.Color.t];
+let darkslateblue: [> Types.Color.t];
+let darkslategray: [> Types.Color.t];
+let darkslategrey: [> Types.Color.t];
+let darkturquoise: [> Types.Color.t];
+let darkviolet: [> Types.Color.t];
+let deeppink: [> Types.Color.t];
+let deepskyblue: [> Types.Color.t];
+let dimgray: [> Types.Color.t];
+let dimgrey: [> Types.Color.t];
+let dodgerblue: [> Types.Color.t];
+let firebrick: [> Types.Color.t];
+let floralwhite: [> Types.Color.t];
+let forestgreen: [> Types.Color.t];
+let fuchsia: [> Types.Color.t];
+let gainsboro: [> Types.Color.t];
+let ghostwhite: [> Types.Color.t];
+let gold: [> Types.Color.t];
+let goldenrod: [> Types.Color.t];
+let gray: [> Types.Color.t];
+let grey: [> Types.Color.t];
+let green: [> Types.Color.t];
+let greenyellow: [> Types.Color.t];
+let honeydew: [> Types.Color.t];
+let hotpink: [> Types.Color.t];
+let indianred: [> Types.Color.t];
+let indigo: [> Types.Color.t];
+let ivory: [> Types.Color.t];
+let khaki: [> Types.Color.t];
+let lavender: [> Types.Color.t];
+let lavenderblush: [> Types.Color.t];
+let lawngreen: [> Types.Color.t];
+let lemonchiffon: [> Types.Color.t];
+let lightblue: [> Types.Color.t];
+let lightcoral: [> Types.Color.t];
+let lightcyan: [> Types.Color.t];
+let lightgoldenrodyellow: [> Types.Color.t];
+let lightgray: [> Types.Color.t];
+let lightgrey: [> Types.Color.t];
+let lightgreen: [> Types.Color.t];
+let lightpink: [> Types.Color.t];
+let lightsalmon: [> Types.Color.t];
+let lightseagreen: [> Types.Color.t];
+let lightskyblue: [> Types.Color.t];
+let lightslategray: [> Types.Color.t];
+let lightslategrey: [> Types.Color.t];
+let lightsteelblue: [> Types.Color.t];
+let lightyellow: [> Types.Color.t];
+let lime: [> Types.Color.t];
+let limegreen: [> Types.Color.t];
+let linen: [> Types.Color.t];
+let magenta: [> Types.Color.t];
+let maroon: [> Types.Color.t];
+let mediumaquamarine: [> Types.Color.t];
+let mediumblue: [> Types.Color.t];
+let mediumorchid: [> Types.Color.t];
+let mediumpurple: [> Types.Color.t];
+let mediumseagreen: [> Types.Color.t];
+let mediumslateblue: [> Types.Color.t];
+let mediumspringgreen: [> Types.Color.t];
+let mediumturquoise: [> Types.Color.t];
+let mediumvioletred: [> Types.Color.t];
+let midnightblue: [> Types.Color.t];
+let mintcream: [> Types.Color.t];
+let mistyrose: [> Types.Color.t];
+let moccasin: [> Types.Color.t];
+let navajowhite: [> Types.Color.t];
+let navy: [> Types.Color.t];
+let oldlace: [> Types.Color.t];
+let olive: [> Types.Color.t];
+let olivedrab: [> Types.Color.t];
+let orange: [> Types.Color.t];
+let orangered: [> Types.Color.t];
+let orchid: [> Types.Color.t];
+let palegoldenrod: [> Types.Color.t];
+let palegreen: [> Types.Color.t];
+let paleturquoise: [> Types.Color.t];
+let palevioletred: [> Types.Color.t];
+let papayawhip: [> Types.Color.t];
+let peachpuff: [> Types.Color.t];
+let peru: [> Types.Color.t];
+let pink: [> Types.Color.t];
+let plum: [> Types.Color.t];
+let powderblue: [> Types.Color.t];
+let purple: [> Types.Color.t];
+let rebeccapurple: [> Types.Color.t];
+let red: [> Types.Color.t];
+let rosybrown: [> Types.Color.t];
+let royalblue: [> Types.Color.t];
+let saddlebrown: [> Types.Color.t];
+let salmon: [> Types.Color.t];
+let sandybrown: [> Types.Color.t];
+let seagreen: [> Types.Color.t];
+let seashell: [> Types.Color.t];
+let sienna: [> Types.Color.t];
+let silver: [> Types.Color.t];
+let skyblue: [> Types.Color.t];
+let slateblue: [> Types.Color.t];
+let slategray: [> Types.Color.t];
+let slategrey: [> Types.Color.t];
+let snow: [> Types.Color.t];
+let springgreen: [> Types.Color.t];
+let steelblue: [> Types.Color.t];
+let tan: [> Types.Color.t];
+let teal: [> Types.Color.t];
+let thistle: [> Types.Color.t];
+let tomato: [> Types.Color.t];
+let turquoise: [> Types.Color.t];
+let violet: [> Types.Color.t];
+let wheat: [> Types.Color.t];
+let white: [> Types.Color.t];
+let whitesmoke: [> Types.Color.t];
+let yellow: [> Types.Color.t];
+let yellowgreen: [> Types.Color.t];

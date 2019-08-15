@@ -63,11 +63,6 @@ module Angle: {
 };
 
 module Direction: {
-  /**
-   The direction CSS property sets the direction of text, table columns, and horizontal overflow.
-   Use rtl for languages written from right to left (like Hebrew or Arabic),
-   and ltr for those written from left to right (like English and most other languages).
-   */
   type t = [ | `ltr | `rtl];
 
   /** Text and other elements go from left to right. This is the default value. */
@@ -412,6 +407,24 @@ module BorderStyle: {
     | `inset
     | `outset
   ];
+
+  let toString: t => string;
+};
+
+module PointerEvents: {
+  type t = [ | `auto | `none];
+
+  let toString: t => string;
+};
+
+module LetterSpacing: {
+  type t = [ | `normal];
+
+  /**
+   The normal letter spacing for the current font.
+   Unlike a value of 0, this keyword allows the user agent to alter the space between characters in order to justify text.
+   */
+  let normal: [> t];
 
   let toString: t => string;
 };

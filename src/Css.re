@@ -396,6 +396,16 @@ let left = x =>
     },
   );
 
+let letterSpacing = x =>
+  D(
+    "letterSpacing",
+    switch (x) {
+    | #LetterSpacing.t as s => LetterSpacing.toString(s)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let marginToString = x =>
   switch (x) {
   | #Length.t as l => Length.toString(l)
@@ -481,6 +491,15 @@ let paddingLeft = x => D("paddingLeft", Length.toString(x));
 let paddingRight = x => D("paddingRight", Length.toString(x));
 
 let paddingTop = x => D("paddingTop", Length.toString(x));
+
+let pointerEvents = x =>
+  D(
+    "pointerEvents",
+    switch (x) {
+    | #PointerEvents.t as p => PointerEvents.toString(p)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 let position = x =>
   D(
@@ -1497,37 +1516,6 @@ let lineHeight = x =>
     },
   );
 
-let letterSpacing = x =>
-  D(
-    "letterSpacing",
-    switch (x) {
-    | `normal => "normal"
-    | `calc(`add, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-    | `ch(x) => Js.Float.toString(x) ++ "ch"
-    | `cm(x) => Js.Float.toString(x) ++ "cm"
-    | `em(x) => Js.Float.toString(x) ++ "em"
-    | `ex(x) => Js.Float.toString(x) ++ "ex"
-    | `mm(x) => Js.Float.toString(x) ++ "mm"
-    | `percent(x) => Js.Float.toString(x) ++ "%"
-    | `pt(x) => Js.Int.toString(x) ++ "pt"
-    | `px(x) => Js.Int.toString(x) ++ "px"
-    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-    | `rem(x) => Js.Float.toString(x) ++ "rem"
-    | `vh(x) => Js.Float.toString(x) ++ "vh"
-    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-    | `vw(x) => Js.Float.toString(x) ++ "vw"
-    | `auto => "auto"
-    | `zero => "0"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
 let textAlign = x =>
   D(
     "textAlign",
@@ -1696,13 +1684,6 @@ let wordWrap = x =>
     | `unset => "unset"
     },
   );
-
-let string_of_pointerEvents =
-  fun
-  | `auto => "auto"
-  | `none => "none";
-
-let pointerEvents = x => D("pointerEvents", string_of_pointerEvents(x));
 
 /**
  * Transform

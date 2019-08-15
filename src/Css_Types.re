@@ -687,3 +687,22 @@ module BorderStyle = {
     | `inset => "inset"
     | `outset => "outset";
 };
+
+module PointerEvents = {
+  type t = [ | `auto | `none];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `none => "none";
+};
+
+module LetterSpacing = {
+  type t = [ | `normal];
+
+  let normal = `normal;
+
+  let toString =
+    fun
+    | `normal => "normal";
+};
