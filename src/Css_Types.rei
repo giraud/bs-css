@@ -10,6 +10,19 @@ module Cascading: {
   let toString: t => string;
 };
 
+module Time: {
+  /**
+   The <time> CSS data type represents a time value expressed in seconds or milliseconds.
+   It is used in animation, transition, and related properties
+   */
+  type t = [ | `s(float) | `ms(float)];
+
+  let s: float => [> | `s(float)];
+  let ms: float => [> | `ms(float)];
+
+  let toString: t => string;
+};
+
 module Percentage: {
   /**
    The <percentage> CSS data type represents a percentage value.

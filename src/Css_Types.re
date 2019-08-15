@@ -12,6 +12,18 @@ module Cascading = {
     | `unset => "unset";
 };
 
+module Time = {
+  type t = [ | `s(float) | `ms(float)];
+
+  let s = x => `s(x);
+  let ms = x => `ms(x);
+
+  let toString =
+    fun
+    | `s(v) => Js.Float.toString(v) ++ "s"
+    | `ms(v) => Js.Float.toString(v) ++ "ms";
+};
+
 module Percentage = {
   type t = [ | `percent(float)];
 
