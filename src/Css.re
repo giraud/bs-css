@@ -252,6 +252,9 @@ let animationTimingFunction = x =>
 
 let backgroundColor = x => D("backgroundColor", Color.toString(x));
 
+let backgroundPosition = (x, y) =>
+  D("backgroundPosition", Length.toString(x) ++ " " ++ Length.toString(y));
+
 let borderBottomColor = x => D("borderBottomColor", Color.toString(x));
 
 let borderBottomLeftRadius = x =>
@@ -262,9 +265,13 @@ let borderBottomRightRadius = x =>
 
 let borderBottomWidth = x => D("borderBottomWidth", Length.toString(x));
 
+let borderColor = x => D("borderColor", Color.toString(x));
+
 let borderLeftColor = x => D("borderLeftColor", Color.toString(x));
 
 let borderLeftWidth = x => D("borderLeftWidth", Length.toString(x));
+
+let borderSpacing = x => D("borderSpacing", Length.toString(x));
 
 let borderRadius = x => D("borderRadius", Length.toString(x));
 
@@ -291,6 +298,10 @@ let bottom = x =>
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
+
+let color = x => D("color", Color.toString(x));
+
+let contentRule = x => D("content", {j|"$x"|j});
 
 let cursor = x => D("cursor", Cursor.toString(x));
 
@@ -336,6 +347,15 @@ let fontVariant = x =>
     },
   );
 
+let fontWeight = x =>
+  D(
+    "fontWeight",
+    switch (x) {
+    | #FontWeight.t as f => FontWeight.toString(f)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let gridAutoFlow = x =>
   D(
     "gridAutoFlow",
@@ -364,6 +384,8 @@ let gridRowGap = n => D("gridRowGap", Length.toString(n));
 let gridRowEnd = n => D("gridRowEnd", Js.Int.toString(n));
 
 let gridRowStart = n => D("gridRowStart", Js.Int.toString(n));
+
+let listStyleType = x => D("listStyleType", ListStyleType.toString(x));
 
 let left = x =>
   D(
@@ -407,6 +429,22 @@ let marginLeft = x => D("marginLeft", marginToString(x));
 let marginRight = x => D("marginRight", marginToString(x));
 let marginTop = x => D("marginTop", marginToString(x));
 let marginBottom = x => D("marginBottom", marginToString(x));
+
+let opacity = x => D("opacity", Js.Float.toString(x));
+
+let outline = (size, style, color) =>
+  D(
+    "outline",
+    Length.toString(size)
+    ++ " "
+    ++ OutlineStyle.toString(style)
+    ++ " "
+    ++ Color.toString(color),
+  );
+let outlineColor = x => D("outlineColor", Color.toString(x));
+let outlineOffset = x => D("outlineOffset", Length.toString(x));
+let outlineStyle = x => D("outlineStyle", OutlineStyle.toString(x));
+let outlineWidth = x => D("outlineWidth", Length.toString(x));
 
 let overflow = x => D("overflow", Overflow.toString(x));
 let overflowX = x => D("overflowX", Overflow.toString(x));
@@ -471,6 +509,8 @@ let right = x =>
     },
   );
 
+let textIndent = x => D("textIndent", Length.toString(x));
+
 let top = x =>
   D(
     "top",
@@ -479,6 +519,14 @@ let top = x =>
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
+
+let transform = x => D("transform", Transform.toString(x));
+
+let transforms = x =>
+  D("transform", x->Belt.List.map(Transform.toString)->join(" "));
+
+let transformOrigin = (x, y) =>
+  D("transformOrigin", Length.toString(x) ++ " " ++ Length.toString(y));
 
 let unsafe = (property, value) => D(property, value);
 
@@ -1052,8 +1100,6 @@ let clear = x =>
     },
   );
 
-let contentRule = x => D("content", {j|"$x"|j});
-
 let columnCount = x =>
   D(
     "columnCount",
@@ -1182,7 +1228,7 @@ let boxShadow = x =>
   );
 
 let boxShadows = x =>
-  D("boxShadow", x->Belt.List.map(Shadow.toString)->join(","));
+  D("boxShadow", x->Belt.List.map(Shadow.toString)->join(", "));
 
 let string_of_borderstyle =
   fun
@@ -1201,7 +1247,6 @@ let border = (px, style, color) =>
     ++ Color.toString(color),
   );
 let borderStyle = x => D("borderStyle", string_of_borderstyle(x));
-let borderColor = x => D("borderColor", Color.toString(x));
 
 let borderLeft = (px, style, color) =>
   D(
@@ -1268,8 +1313,6 @@ let borderCollapse = x =>
     },
   );
 
-let borderSpacing = i => D("borderSpacing", Length.toString(i));
-
 let background = x => D("background", string_of_background(x));
 let backgrounds = bg =>
   D("background", bg->Belt.List.map(string_of_background)->join(", "));
@@ -1318,9 +1361,6 @@ let backgroundOrigin = x =>
     | `paddingBox => "padding-box"
     },
   );
-
-let backgroundPosition = (x, y) =>
-  D("backgroundPosition", Length.toString(x) ++ " " ++ Length.toString(y));
 
 let backgroundRepeat = x =>
   D(
@@ -1372,32 +1412,10 @@ let listStyle = (style, pos, img) =>
     ++ string_of_listStyleImage(img),
   );
 
-let listStyleType = x => D("listStyleType", ListStyleType.toString(x));
-
 let listStylePosition = x =>
   D("listStylePosition", string_of_listStylePosition(x));
 
 let listStyleImage = x => D("listStyleImage", string_of_listStyleImage(x));
-
-let opacity = x => D("opacity", Js.Float.toString(x));
-
-let outline = (size, style, color) =>
-  D(
-    "outline",
-    Length.toString(size)
-    ++ " "
-    ++ OutlineStyle.toString(style)
-    ++ " "
-    ++ Color.toString(color),
-  );
-
-let outlineStyle = x => D("outlineStyle", OutlineStyle.toString(x));
-
-let outlineWidth = x => D("outlineWidth", Length.toString(x));
-
-let outlineColor = x => D("outlineColor", Color.toString(x));
-
-let outlineOffset = x => D("outlineOffset", Length.toString(x));
 
 /**
  * Text
@@ -1412,17 +1430,6 @@ let bold = `bold;
 let extraBold = `extraBold;
 let lighter = `lighter;
 let bolder = `bolder;
-
-let color = x => D("color", Color.toString(x));
-
-let fontWeight = x =>
-  D(
-    "fontWeight",
-    switch (x) {
-    | #FontWeight.t as f => FontWeight.toString(f)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =
@@ -1568,8 +1575,6 @@ let textDecorationStyle = x =>
     },
   );
 
-let textIndent = x => D("textIndent", Length.toString(x));
-
 let textOverflow = x =>
   D(
     "textOverflow",
@@ -1593,7 +1598,7 @@ let textShadow = x =>
   );
 
 let textShadows = x =>
-  D("textShadow", x->Belt.List.map(Shadow.toString)->join(","));
+  D("textShadow", x->Belt.List.map(Shadow.toString)->join(", "));
 
 let textTransform = x =>
   D(
@@ -1704,14 +1709,6 @@ let pointerEvents = x => D("pointerEvents", string_of_pointerEvents(x));
 /**
  * Transform
  */
-
-let transform = x => D("transform", Transform.toString(x));
-
-let transforms = xs =>
-  D("transform", xs->Belt.List.map(Transform.toString)->join(" "));
-
-let transformOrigin = (x, y) =>
-  D("transformOrigin", Length.toString(x) ++ " " ++ Length.toString(y));
 
 let transformOrigin3d = (x, y, z) =>
   D(

@@ -273,7 +273,7 @@ describe("box-shadow", () => {
     )
     |> toBeJson((
          {"boxShadow": "0 0 0 0 #008000"},
-         {"boxShadow": "0 0 0 0 #FFFF00,0 0 0 0 #FF0000"},
+         {"boxShadow": "0 0 0 0 #FFFF00, 0 0 0 0 #FF0000"},
        ))
   );
 
@@ -323,7 +323,7 @@ describe("text-shadow", () => {
     )
     |> toBeJson((
          {"textShadow": "0 0 0 #008000"},
-         {"textShadow": "0 0 0 #FFFF00,0 0 0 #FF0000"},
+         {"textShadow": "0 0 0 #FFFF00, 0 0 0 #FF0000"},
        ))
   );
 

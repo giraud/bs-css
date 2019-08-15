@@ -58,6 +58,7 @@ let animationIterationCount: Types.AnimationIterationCount.t => rule;
 let animationPlayState: Types.AnimationPlayState.t => rule;
 let animationTimingFunction: Types.TimingFunction.t => rule;
 let backgroundColor: Types.Color.t => rule;
+let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
 let borderBottomColor: Types.Color.t => rule;
 let borderBottomLeftRadius: Types.Length.t => rule;
 let borderBottomRightRadius: Types.Length.t => rule;
@@ -87,6 +88,7 @@ let fontFamily: string => rule;
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
+let fontWeight: [ Types.FontWeight.t | Types.Cascading.t] => rule;
 let gridAutoFlow: [ Types.GridAutoFlow.t | Types.Cascading.t] => rule;
 let gridColumn: (int, int) => rule;
 let gridColumnEnd: int => rule;
@@ -98,6 +100,7 @@ let gridRowGap: Types.Length.t => rule;
 let gridRowStart: int => rule;
 let gridGap: Types.Length.t => rule;
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
+let listStyleType: Types.ListStyleType.t => rule;
 let margin: [ Types.Length.t | Types.Margin.t] => rule;
 let margin2:
   (
@@ -126,8 +129,10 @@ let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
 let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
 let opacity: float => rule;
 let order: int => rule;
+let outline: (Types.Length.t, Types.OutlineStyle.t, Types.Color.t) => rule;
 let outlineColor: Types.Color.t => rule;
 let outlineOffset: Types.Length.t => rule;
+let outlineStyle: Types.OutlineStyle.t => rule;
 let outlineWidth: Types.Length.t => rule;
 let overflow: [ Types.Overflow.t] => rule;
 let overflowX: [ Types.Overflow.t] => rule;
@@ -627,7 +632,6 @@ let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
 let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
-let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
 let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
 let backgroundSize:
   [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
@@ -636,13 +640,14 @@ let backgroundSize:
 let clipPath: [ | `url(string)] => rule;
 
 let listStyle:
-  (listStyleType, [ | `inside | `outside], [ | `none | `url(string)]) => rule;
-let listStyleType: listStyleType => rule;
+  (
+    Types.ListStyleType.t,
+    [ | `inside | `outside],
+    [ | `none | `url(string)]
+  ) =>
+  rule;
 let listStylePosition: [ | `inside | `outside] => rule;
 let listStyleImage: [ | `none | `url(string)] => rule;
-
-let outline: (Types.Length.t, outlineStyle, color) => rule;
-let outlineStyle: outlineStyle => rule;
 
 let pointerEvents: [ | `auto | `none] => rule;
 
@@ -687,7 +692,6 @@ let fontFace:
     unit
   ) =>
   string;
-let fontWeight: [ fontWeight | Types.Cascading.t] => rule;
 let letterSpacing: [ | `normal | Types.Length.t | Types.Cascading.t] => rule;
 let lineHeight:
   [ | `normal | `abs(float) | Types.Length.t | Types.Cascading.t] => rule;
