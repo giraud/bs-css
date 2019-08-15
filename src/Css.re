@@ -1,13 +1,9 @@
 include Css_Colors;
 module Types = Css_Types;
 
-type rule = [
-  | `selector(string, list(rule))
-  | `declaration(string, string)
-];
-
-type selector = [ | `selector(string, list(rule))];
-type declaration = [ | `declaration(string, string)];
+type rule =
+  | Selector(string, list(rule))
+  | Declaration(string, string);
 
 module Emotion = {
   type stylename = string;
@@ -26,12 +22,12 @@ module Emotion = {
 
   let rec ruleToJs = rule =>
     switch (rule) {
-    | `declaration(name, value) when name == "content" => (
+    | Declaration(name, value) when name == "content" => (
         name,
         Js.Json.string(value == "" ? "\"\"" : value),
       )
-    | `declaration(name, value) => (name, Js.Json.string(value))
-    | `selector(name, ruleset) => (name, makeJson(ruleset))
+    | Declaration(name, value) => (name, Js.Json.string(value))
+    | Selector(name, ruleset) => (name, makeJson(ruleset))
     }
 
   and makeJson = rules =>
@@ -306,106 +302,106 @@ let keyframes = frames => {
 
 let important = v =>
   switch (v) {
-  | `declaration(name, value) => `declaration((name, value ++ " !important"))
+  | Declaration(name, value) => Declaration(name, value ++ " !important")
   | _ => v
   };
 
-let label = label => `declaration(("label", label));
+let label = label => Declaration("label", label);
 
 /* Properties */
 
 let bottom = x =>
-  `declaration((
+  Declaration(
     "bottom",
     switch (x) {
     | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let direction = x =>
-  `declaration((
+  Declaration(
     "direction",
     switch (x) {
     | #Types.Direction.t as d => Types.Direction.toString(d)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
-let fontFamily = x => `declaration(("fontFamily", x));
+let fontFamily = x => Declaration("fontFamily", x);
 
 let fontSize = x =>
-  `declaration((
+  Declaration(
     "fontSize",
     switch (x) {
     | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let fontStyle = x =>
-  `declaration((
+  Declaration(
     "fontStyle",
     switch (x) {
     | #Types.FontStyle.t as f => Types.FontStyle.toString(f)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let fontVariant = x =>
-  `declaration((
+  Declaration(
     "fontVariant",
     switch (x) {
     | #Types.FontVariant.t as f => Types.FontVariant.toString(f)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let gridAutoFlow = x =>
-  `declaration((
+  Declaration(
     "gridAutoFlow",
     switch (x) {
     | #Types.GridAutoFlow.t as f => Types.GridAutoFlow.toString(f)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let gridColumn = (start, end') =>
-  `declaration((
+  Declaration(
     "gridColumn",
     Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
-  ));
+  );
 
 let gridColumnGap = n =>
-  `declaration(("gridColumnGap", Types.Length.toString(n)));
+  Declaration("gridColumnGap", Types.Length.toString(n));
 
 let gridColumnStart = n =>
-  `declaration(("gridColumnStart", Js.Int.toString(n)));
+  Declaration("gridColumnStart", Js.Int.toString(n));
 
-let gridColumnEnd = n => `declaration(("gridColumnEnd", Js.Int.toString(n)));
+let gridColumnEnd = n => Declaration("gridColumnEnd", Js.Int.toString(n));
 
 let gridRow = (start, end') =>
-  `declaration((
+  Declaration(
     "gridRow",
     Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'),
-  ));
+  );
 
-let gridGap = n => `declaration(("gridGap", Types.Length.toString(n)));
+let gridGap = n => Declaration("gridGap", Types.Length.toString(n));
 
-let gridRowGap = n => `declaration(("gridRowGap", Types.Length.toString(n)));
+let gridRowGap = n => Declaration("gridRowGap", Types.Length.toString(n));
 
-let gridRowEnd = n => `declaration(("gridRowEnd", Js.Int.toString(n)));
+let gridRowEnd = n => Declaration("gridRowEnd", Js.Int.toString(n));
 
-let gridRowStart = n => `declaration(("gridRowStart", Js.Int.toString(n)));
+let gridRowStart = n => Declaration("gridRowStart", Js.Int.toString(n));
 
 let left = x =>
-  `declaration((
+  Declaration(
     "left",
     switch (x) {
     | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let marginToString = x =>
   switch (x) {
@@ -413,20 +409,20 @@ let marginToString = x =>
   | #Types.Margin.t as m => Types.Margin.toString(m)
   };
 
-let margin = x => `declaration(("margin", marginToString(x)));
+let margin = x => Declaration("margin", marginToString(x));
 let margin2 = (~v, ~h) =>
-  `declaration(("margin", marginToString(v) ++ " " ++ marginToString(h)));
+  Declaration("margin", marginToString(v) ++ " " ++ marginToString(h));
 let margin3 = (~top, ~h, ~bottom) =>
-  `declaration((
+  Declaration(
     "margin",
     marginToString(top)
     ++ " "
     ++ marginToString(h)
     ++ " "
     ++ marginToString(bottom),
-  ));
+  );
 let margin4 = (~top, ~right, ~bottom, ~left) =>
-  `declaration((
+  Declaration(
     "margin",
     marginToString(top)
     ++ " "
@@ -435,33 +431,33 @@ let margin4 = (~top, ~right, ~bottom, ~left) =>
     ++ marginToString(bottom)
     ++ " "
     ++ marginToString(left),
-  ));
-let marginLeft = x => `declaration(("marginLeft", marginToString(x)));
-let marginRight = x => `declaration(("marginRight", marginToString(x)));
-let marginTop = x => `declaration(("marginTop", marginToString(x)));
-let marginBottom = x => `declaration(("marginBottom", marginToString(x)));
+  );
+let marginLeft = x => Declaration("marginLeft", marginToString(x));
+let marginRight = x => Declaration("marginRight", marginToString(x));
+let marginTop = x => Declaration("marginTop", marginToString(x));
+let marginBottom = x => Declaration("marginBottom", marginToString(x));
 
-let overflow = x => `declaration(("overflow", Types.Overflow.toString(x)));
-let overflowX = x => `declaration(("overflowX", Types.Overflow.toString(x)));
-let overflowY = x => `declaration(("overflowY", Types.Overflow.toString(x)));
+let overflow = x => Declaration("overflow", Types.Overflow.toString(x));
+let overflowX = x => Declaration("overflowX", Types.Overflow.toString(x));
+let overflowY = x => Declaration("overflowY", Types.Overflow.toString(x));
 
-let padding = x => `declaration(("padding", Types.Length.toString(x)));
+let padding = x => Declaration("padding", Types.Length.toString(x));
 let padding2 = (~v, ~h) =>
-  `declaration((
+  Declaration(
     "padding",
     Types.Length.toString(v) ++ " " ++ Types.Length.toString(h),
-  ));
+  );
 let padding3 = (~top, ~h, ~bottom) =>
-  `declaration((
+  Declaration(
     "padding",
     Types.Length.toString(top)
     ++ " "
     ++ Types.Length.toString(h)
     ++ " "
     ++ Types.Length.toString(bottom),
-  ));
+  );
 let padding4 = (~top, ~right, ~bottom, ~left) =>
-  `declaration((
+  Declaration(
     "padding",
     Types.Length.toString(top)
     ++ " "
@@ -470,68 +466,67 @@ let padding4 = (~top, ~right, ~bottom, ~left) =>
     ++ Types.Length.toString(bottom)
     ++ " "
     ++ Types.Length.toString(left),
-  ));
+  );
 
 let paddingBottom = x =>
-  `declaration(("paddingBottom", Types.Length.toString(x)));
+  Declaration("paddingBottom", Types.Length.toString(x));
 
-let paddingLeft = x =>
-  `declaration(("paddingLeft", Types.Length.toString(x)));
+let paddingLeft = x => Declaration("paddingLeft", Types.Length.toString(x));
 
 let paddingRight = x =>
-  `declaration(("paddingRight", Types.Length.toString(x)));
+  Declaration("paddingRight", Types.Length.toString(x));
 
-let paddingTop = x => `declaration(("paddingTop", Types.Length.toString(x)));
+let paddingTop = x => Declaration("paddingTop", Types.Length.toString(x));
 
 let position = x =>
-  `declaration((
+  Declaration(
     "position",
     switch (x) {
     | #Types.Position.t as p => Types.Position.toString(p)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let resize = x =>
-  `declaration((
+  Declaration(
     "resize",
     switch (x) {
     | #Types.Resize.t as r => Types.Resize.toString(r)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let right = x =>
-  `declaration((
+  Declaration(
     "right",
     switch (x) {
     | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let top = x =>
-  `declaration((
+  Declaration(
     "top",
     switch (x) {
     | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
-let unsafe = (property, value) => `declaration((property, value));
+let unsafe = (property, value) => Declaration(property, value);
 
 let verticalAlign = x =>
-  `declaration((
+  Declaration(
     "verticalAlign",
     switch (x) {
     | #Types.VerticalAlign.t as v => Types.VerticalAlign.toString(v)
     | #Types.Length.t as l => Types.Length.toString(l)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
-let zIndex = x => `declaration(("zIndex", Js.Int.toString(x)));
+let zIndex = x => Declaration("zIndex", Js.Int.toString(x));
 
 /* Type aliasing */
 
@@ -802,7 +797,7 @@ let square = `square;
  */
 
 let display = x =>
-  `declaration((
+  Declaration(
     "display",
     switch (x) {
     | `unset => "unset"
@@ -830,11 +825,11 @@ let display = x =>
     | `initial => "initial"
     | `inherit_ => "inherit"
     },
-  ));
+  );
 
-let flex = x => `declaration(("flex", string_of_flex(x)));
+let flex = x => Declaration("flex", string_of_flex(x));
 let flex3 = (~grow, ~shrink, ~basis) =>
-  `declaration((
+  Declaration(
     "flex",
     Js.Float.toString(grow)
     ++ " "
@@ -846,20 +841,20 @@ let flex3 = (~grow, ~shrink, ~basis) =>
       | #Types.Length.t as l => Types.Length.toString(l)
       }
     ),
-  ));
-let flexGrow = x => `declaration(("flexGrow", Js.Float.toString(x)));
-let flexShrink = x => `declaration(("flexShrink", Js.Float.toString(x)));
+  );
+let flexGrow = x => Declaration("flexGrow", Js.Float.toString(x));
+let flexShrink = x => Declaration("flexShrink", Js.Float.toString(x));
 let flexBasis = x =>
-  `declaration((
+  Declaration(
     "flexBasis",
     switch (x) {
     | #Types.FlexBasis.t as b => Types.FlexBasis.toString(b)
     | #Types.Length.t as l => Types.Length.toString(l)
     },
-  ));
+  );
 
 let flexDirection = x =>
-  `declaration((
+  Declaration(
     "flexDirection",
     switch (x) {
     | `row => "row"
@@ -867,19 +862,19 @@ let flexDirection = x =>
     | `rowReverse => "row-reverse"
     | `columnReverse => "column-reverse"
     },
-  ));
+  );
 
 let flexWrap = x =>
-  `declaration((
+  Declaration(
     "flexWrap",
     switch (x) {
     | `nowrap => "nowrap"
     | `wrap => "wrap"
     | `wrapReverse => "wrap-reverse"
     },
-  ));
+  );
 
-let order = x => `declaration(("order", Js.Int.toString(x)));
+let order = x => Declaration("order", Js.Int.toString(x));
 
 let string_of_minmax =
   fun
@@ -953,12 +948,12 @@ let string_of_dimension =
   | `minmax(a, b) =>
     "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
 
-let width = x => `declaration(("width", string_of_dimension(x)));
-let height = x => `declaration(("height", string_of_dimension(x)));
-let minWidth = x => `declaration(("minWidth", string_of_dimension(x)));
-let maxWidth = x => `declaration(("maxWidth", string_of_dimension(x)));
-let minHeight = x => `declaration(("minHeight", string_of_dimension(x)));
-let maxHeight = x => `declaration(("maxHeight", string_of_dimension(x)));
+let width = x => Declaration("width", string_of_dimension(x));
+let height = x => Declaration("height", string_of_dimension(x));
+let minWidth = x => Declaration("minWidth", string_of_dimension(x));
+let maxWidth = x => Declaration("maxWidth", string_of_dimension(x));
+let minHeight = x => Declaration("minHeight", string_of_dimension(x));
+let maxHeight = x => Declaration("maxHeight", string_of_dimension(x));
 
 type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 let repeatValueToJs =
@@ -1020,16 +1015,16 @@ let string_of_dimensions = dimensions =>
   dimensions |> List.map(gridLengthToJs) |> String.concat(" ");
 
 let gridTemplateColumns = dimensions =>
-  `declaration(("gridTemplateColumns", string_of_dimensions(dimensions)));
+  Declaration("gridTemplateColumns", string_of_dimensions(dimensions));
 
 let gridTemplateRows = dimensions =>
-  `declaration(("gridTemplateRows", string_of_dimensions(dimensions)));
+  Declaration("gridTemplateRows", string_of_dimensions(dimensions));
 
 let gridAutoColumns = dimensions =>
-  `declaration(("gridAutoColumns", string_of_dimension(dimensions)));
+  Declaration("gridAutoColumns", string_of_dimension(dimensions));
 
 let gridAutoRows = dimensions =>
-  `declaration(("gridAutoRows", string_of_dimension(dimensions)));
+  Declaration("gridAutoRows", string_of_dimension(dimensions));
 
 let string_of_align =
   fun
@@ -1039,8 +1034,8 @@ let string_of_align =
   | `center => "center"
   | `auto => "auto"
   | `stretch => "stretch";
-let alignItems = x => `declaration(("alignItems", string_of_align(x)));
-let alignSelf = x => `declaration(("alignSelf", string_of_align(x)));
+let alignItems = x => Declaration("alignItems", string_of_align(x));
+let alignSelf = x => Declaration("alignSelf", string_of_align(x));
 
 let string_of_justify =
   fun
@@ -1052,12 +1047,12 @@ let string_of_justify =
   | `spaceEvenly => "space-evenly"
   | `stretch => "stretch";
 let justifyContent = x =>
-  `declaration(("justifyContent", string_of_justify(x)));
-let justifySelf = x => `declaration(("justifySelf", string_of_justify(x)));
-let alignContent = x => `declaration(("alignContent", string_of_justify(x)));
+  Declaration("justifyContent", string_of_justify(x));
+let justifySelf = x => Declaration("justifySelf", string_of_justify(x));
+let alignContent = x => Declaration("alignContent", string_of_justify(x));
 
 let boxSizing = x =>
-  `declaration((
+  Declaration(
     "boxSizing",
     switch (x) {
     | `contentBox => "content-box"
@@ -1066,32 +1061,32 @@ let boxSizing = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let float = x =>
-  `declaration((
+  Declaration(
     "float",
     switch (x) {
     | `left => "left"
     | `right => "right"
     | `none => "none"
     },
-  ));
+  );
 
 let clear = x =>
-  `declaration((
+  Declaration(
     "clear",
     switch (x) {
     | `left => "left"
     | `right => "right"
     | `both => "both"
     },
-  ));
+  );
 
-let contentRule = x => `declaration(("content", {j|"$x"|j}));
+let contentRule = x => Declaration("content", {j|"$x"|j});
 
 let columnCount = x =>
-  `declaration((
+  Declaration(
     "columnCount",
     switch (x) {
     | `auto => "auto"
@@ -1100,10 +1095,10 @@ let columnCount = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let objectFit = x =>
-  `declaration((
+  Declaration(
     "objectFit",
     switch (x) {
     | `fill => "fill"
@@ -1115,7 +1110,7 @@ let objectFit = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 type filter = [
   | `blur(length)
@@ -1161,18 +1156,15 @@ let string_of_filter =
   | `none => "none";
 
 let filter = x =>
-  `declaration((
-    "filter",
-    x |> List.map(string_of_filter) |> joinLast(" "),
-  ));
+  Declaration("filter", x |> List.map(string_of_filter) |> joinLast(" "));
 /**
  * Style
  */
 
 let backfaceVisibility = x =>
-  `declaration(("backfaceVisibility", string_of_visibility(x)));
+  Declaration("backfaceVisibility", string_of_visibility(x));
 
-let visibility = x => `declaration(("visibility", string_of_visibility(x)));
+let visibility = x => Declaration("visibility", string_of_visibility(x));
 
 module Shadow = {
   type value('a) = string;
@@ -1212,16 +1204,16 @@ module Shadow = {
 };
 
 let boxShadow = x =>
-  `declaration((
+  Declaration(
     "boxShadow",
     switch (x) {
     | #Shadow.t as s => Shadow.toString(s)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let boxShadows = x =>
-  `declaration(("boxShadow", x->Belt.List.map(Shadow.toString)->join(",")));
+  Declaration("boxShadow", x->Belt.List.map(Shadow.toString)->join(","));
 
 let string_of_borderstyle =
   fun
@@ -1231,127 +1223,124 @@ let string_of_borderstyle =
   | `none => "none";
 
 let border = (px, style, color) =>
-  `declaration((
+  Declaration(
     "border",
     Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
-  ));
-let borderWidth = x =>
-  `declaration(("borderWidth", Types.Length.toString(x)));
-let borderStyle = x =>
-  `declaration(("borderStyle", string_of_borderstyle(x)));
-let borderColor = x => `declaration(("borderColor", string_of_color(x)));
+  );
+let borderWidth = x => Declaration("borderWidth", Types.Length.toString(x));
+let borderStyle = x => Declaration("borderStyle", string_of_borderstyle(x));
+let borderColor = x => Declaration("borderColor", string_of_color(x));
 
 let borderLeft = (px, style, color) =>
-  `declaration((
+  Declaration(
     "borderLeft",
     Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
-  ));
+  );
 let borderLeftWidth = x =>
-  `declaration(("borderLeftWidth", Types.Length.toString(x)));
+  Declaration("borderLeftWidth", Types.Length.toString(x));
 let borderLeftStyle = x =>
-  `declaration(("borderLeftStyle", string_of_borderstyle(x)));
+  Declaration("borderLeftStyle", string_of_borderstyle(x));
 let borderLeftColor = x =>
-  `declaration(("borderLeftColor", string_of_color(x)));
+  Declaration("borderLeftColor", string_of_color(x));
 
 let borderRight = (px, style, color) =>
-  `declaration((
+  Declaration(
     "borderRight",
     Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
-  ));
+  );
 
 let borderRightWidth = x =>
-  `declaration(("borderRightWidth", Types.Length.toString(x)));
+  Declaration("borderRightWidth", Types.Length.toString(x));
 let borderRightColor = x =>
-  `declaration(("borderRightColor", string_of_color(x)));
+  Declaration("borderRightColor", string_of_color(x));
 let borderRightStyle = x =>
-  `declaration(("borderRightStyle", string_of_borderstyle(x)));
+  Declaration("borderRightStyle", string_of_borderstyle(x));
 let borderTop = (px, style, color) =>
-  `declaration((
+  Declaration(
     "borderTop",
     Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
-  ));
+  );
 
 let borderTopWidth = x =>
-  `declaration(("borderTopWidth", Types.Length.toString(x)));
+  Declaration("borderTopWidth", Types.Length.toString(x));
 let borderTopStyle = x =>
-  `declaration(("borderTopStyle", string_of_borderstyle(x)));
-let borderTopColor = x =>
-  `declaration(("borderTopColor", string_of_color(x)));
+  Declaration("borderTopStyle", string_of_borderstyle(x));
+let borderTopColor = x => Declaration("borderTopColor", string_of_color(x));
 
 let borderBottom = (px, style, color) =>
-  `declaration((
+  Declaration(
     "borderBottom",
     Types.Length.toString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
     ++ string_of_color(color),
-  ));
+  );
 let borderBottomWidth = x =>
-  `declaration(("borderBottomWidth", Types.Length.toString(x)));
+  Declaration("borderBottomWidth", Types.Length.toString(x));
 let borderBottomStyle = x =>
-  `declaration(("borderBottomStyle", string_of_borderstyle(x)));
+  Declaration("borderBottomStyle", string_of_borderstyle(x));
 let borderBottomColor = x =>
-  `declaration(("borderBottomColor", string_of_color(x)));
+  Declaration("borderBottomColor", string_of_color(x));
 
 let borderRadius = i =>
-  `declaration(("borderRadius", Types.Length.toString(i)));
+  Declaration("borderRadius", Types.Length.toString(i));
 let borderTopLeftRadius = i =>
-  `declaration(("borderTopLeftRadius", Types.Length.toString(i)));
+  Declaration("borderTopLeftRadius", Types.Length.toString(i));
 let borderTopRightRadius = i =>
-  `declaration(("borderTopRightRadius", Types.Length.toString(i)));
+  Declaration("borderTopRightRadius", Types.Length.toString(i));
 let borderBottomLeftRadius = i =>
-  `declaration(("borderBottomLeftRadius", Types.Length.toString(i)));
+  Declaration("borderBottomLeftRadius", Types.Length.toString(i));
 let borderBottomRightRadius = i =>
-  `declaration(("borderBottomRightRadius", Types.Length.toString(i)));
+  Declaration("borderBottomRightRadius", Types.Length.toString(i));
 
 let tableLayout = x =>
-  `declaration((
+  Declaration(
     "tableLayout",
     switch (x) {
     | `auto => "auto"
     | `fixed => "fixed"
     },
-  ));
+  );
 
 let borderCollapse = x =>
-  `declaration((
+  Declaration(
     "borderCollapse",
     switch (x) {
     | `collapse => "collapse"
     | `separate => "separate"
     },
-  ));
+  );
 
 let borderSpacing = i =>
-  `declaration(("borderSpacing", Types.Length.toString(i)));
+  Declaration("borderSpacing", Types.Length.toString(i));
 
-let background = x => `declaration(("background", string_of_background(x)));
+let background = x => Declaration("background", string_of_background(x));
 let backgrounds = bg =>
-  `declaration((
+  Declaration(
     "background",
     bg |> List.map(string_of_background) |> joinLast(", "),
-  ));
+  );
 let backgroundColor = x =>
-  `declaration(("backgroundColor", string_of_color(x)));
+  Declaration("backgroundColor", string_of_color(x));
 let backgroundImage = x =>
-  `declaration((
+  Declaration(
     "backgroundImage",
     switch (x) {
     | `none => "none"
@@ -1364,46 +1353,46 @@ let backgroundImage = x =>
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
     },
-  ));
+  );
 
 let backgroundAttachment = x =>
-  `declaration((
+  Declaration(
     "backgroundAttachment",
     switch (x) {
     | `scroll => "scroll"
     | `fixed => "fixed"
     | `local => "local"
     },
-  ));
+  );
 
 let backgroundClip = x =>
-  `declaration((
+  Declaration(
     "backgroundClip",
     switch (x) {
     | `borderBox => "border-box"
     | `contentBox => "content-box"
     | `paddingBox => "padding-box"
     },
-  ));
+  );
 
 let backgroundOrigin = x =>
-  `declaration((
+  Declaration(
     "backgroundOrigin",
     switch (x) {
     | `borderBox => "border-box"
     | `contentBox => "content-box"
     | `paddingBox => "padding-box"
     },
-  ));
+  );
 
 let backgroundPosition = (x, y) =>
-  `declaration((
+  Declaration(
     "backgroundPosition",
     Types.Length.toString(x) ++ " " ++ Types.Length.toString(y),
-  ));
+  );
 
 let backgroundRepeat = x =>
-  `declaration((
+  Declaration(
     "backgroundRepeat",
     switch (x) {
     | `repeat => "repeat"
@@ -1411,10 +1400,10 @@ let backgroundRepeat = x =>
     | `repeatX => "repeat-x"
     | `repeatY => "repeat-y"
     },
-  ));
+  );
 
 let backgroundSize = x =>
-  `declaration((
+  Declaration(
     "backgroundSize",
     switch (x) {
     | `size(x, y) =>
@@ -1423,17 +1412,17 @@ let backgroundSize = x =>
     | `cover => "cover"
     | `contain => "contain"
     },
-  ));
+  );
 
-let cursor = x => `declaration(("cursor", string_of_cursor(x)));
+let cursor = x => Declaration("cursor", string_of_cursor(x));
 
 let clipPath = x =>
-  `declaration((
+  Declaration(
     "clipPath",
     switch (x) {
     | `url(url) => "url(" ++ url ++ ")"
     },
-  ));
+  );
 
 type listStyleType = [
   | `disc
@@ -1476,25 +1465,25 @@ let string_of_listStyleImage =
   | `url(url) => "url(" ++ url ++ ")";
 
 let listStyle = (style, pos, img) =>
-  `declaration((
+  Declaration(
     "listStyle",
     string_of_listStyleType(style)
     ++ " "
     ++ string_of_listStylePosition(pos)
     ++ " "
     ++ string_of_listStyleImage(img),
-  ));
+  );
 
 let listStyleType = x =>
-  `declaration(("listStyleType", string_of_listStyleType(x)));
+  Declaration("listStyleType", string_of_listStyleType(x));
 
 let listStylePosition = x =>
-  `declaration(("listStylePosition", string_of_listStylePosition(x)));
+  Declaration("listStylePosition", string_of_listStylePosition(x));
 
 let listStyleImage = x =>
-  `declaration(("listStyleImage", string_of_listStyleImage(x)));
+  Declaration("listStyleImage", string_of_listStyleImage(x));
 
-let opacity = x => `declaration(("opacity", Js.Float.toString(x)));
+let opacity = x => Declaration("opacity", Js.Float.toString(x));
 
 type outlineStyle = [
   | `none
@@ -1523,25 +1512,25 @@ let string_of_outlineStyle =
   | `outset => "outset";
 
 let outline = (size, style, color) =>
-  `declaration((
+  Declaration(
     "outline",
     Types.Length.toString(size)
     ++ " "
     ++ string_of_outlineStyle(style)
     ++ " "
     ++ string_of_color(color),
-  ));
+  );
 
 let outlineStyle = x =>
-  `declaration(("outlineStyle", string_of_outlineStyle(x)));
+  Declaration("outlineStyle", string_of_outlineStyle(x));
 
 let outlineWidth = x =>
-  `declaration(("outlineWidth", Types.Length.toString(x)));
+  Declaration("outlineWidth", Types.Length.toString(x));
 
-let outlineColor = x => `declaration(("outlineColor", string_of_color(x)));
+let outlineColor = x => Declaration("outlineColor", string_of_color(x));
 
 let outlineOffset = x =>
-  `declaration(("outlineOffset", Types.Length.toString(x)));
+  Declaration("outlineOffset", Types.Length.toString(x));
 
 /**
  * Text
@@ -1573,9 +1562,9 @@ let extraBold = `extraBold;
 let lighter = `lighter;
 let bolder = `bolder;
 
-let color = x => `declaration(("color", string_of_color(x)));
+let color = x => Declaration("color", string_of_color(x));
 
-let fontWeight = x => `declaration(("fontWeight", string_of_fontWeight(x)));
+let fontWeight = x => Declaration("fontWeight", string_of_fontWeight(x));
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =
@@ -1608,7 +1597,7 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
 };
 
 let lineHeight = x =>
-  `declaration((
+  Declaration(
     "lineHeight",
     switch (x) {
     | `normal => "normal"
@@ -1645,10 +1634,10 @@ let lineHeight = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let letterSpacing = x =>
-  `declaration((
+  Declaration(
     "letterSpacing",
     switch (x) {
     | `normal => "normal"
@@ -1684,10 +1673,10 @@ let letterSpacing = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let textAlign = x =>
-  `declaration((
+  Declaration(
     "textAlign",
     switch (x) {
     | `left => "left"
@@ -1698,10 +1687,10 @@ let textAlign = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let textDecoration = x =>
-  `declaration((
+  Declaration(
     "textDecoration",
     switch (x) {
     | `none => "none"
@@ -1712,13 +1701,13 @@ let textDecoration = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let textDecorationColor = x =>
-  `declaration(("textDecorationColor", string_of_color(x)));
+  Declaration("textDecorationColor", string_of_color(x));
 
 let textDecorationStyle = x =>
-  `declaration((
+  Declaration(
     "textDecorationStyle",
     switch (x) {
     | `wavy => "wavy"
@@ -1730,12 +1719,12 @@ let textDecorationStyle = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
-let textIndent = x => `declaration(("textIndent", Types.Length.toString(x)));
+let textIndent = x => Declaration("textIndent", Types.Length.toString(x));
 
 let textOverflow = x =>
-  `declaration((
+  Declaration(
     "textOverflow",
     switch (x) {
     | `clip => "clip"
@@ -1745,25 +1734,22 @@ let textOverflow = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let textShadow = x =>
-  `declaration((
+  Declaration(
     "textShadow",
     switch (x) {
     | #Shadow.t as s => Shadow.toString(s)
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
-  ));
+  );
 
 let textShadows = x =>
-  `declaration((
-    "textShadow",
-    x->Belt.List.map(Shadow.toString)->join(","),
-  ));
+  Declaration("textShadow", x->Belt.List.map(Shadow.toString)->join(","));
 
 let textTransform = x =>
-  `declaration((
+  Declaration(
     "textTransform",
     switch (x) {
     | `uppercase => "uppercase"
@@ -1774,10 +1760,10 @@ let textTransform = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let userSelect = x =>
-  `declaration((
+  Declaration(
     "userSelect",
     switch (x) {
     | `auto => "auto"
@@ -1788,10 +1774,10 @@ let userSelect = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let whiteSpace = x =>
-  `declaration((
+  Declaration(
     "whiteSpace",
     switch (x) {
     | `normal => "normal"
@@ -1803,10 +1789,10 @@ let whiteSpace = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let wordBreak = x =>
-  `declaration((
+  Declaration(
     "wordBreak",
     switch (x) {
     | `breakAll => "break-all"
@@ -1816,10 +1802,10 @@ let wordBreak = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let wordSpacing = x =>
-  `declaration((
+  Declaration(
     "wordSpacing",
     switch (x) {
     | `normal => "normal"
@@ -1855,10 +1841,10 @@ let wordSpacing = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let wordWrap = x =>
-  `declaration((
+  Declaration(
     "wordWrap",
     switch (x) {
     | `normal => "normal"
@@ -1867,7 +1853,7 @@ let wordWrap = x =>
     | `inherit_ => "inherit"
     | `unset => "unset"
     },
-  ));
+  );
 
 let string_of_pointerEvents =
   fun
@@ -1875,7 +1861,7 @@ let string_of_pointerEvents =
   | `none => "none";
 
 let pointerEvents = x =>
-  `declaration(("pointerEvents", string_of_pointerEvents(x)));
+  Declaration("pointerEvents", string_of_pointerEvents(x));
 
 /**
  * Transform
@@ -1951,22 +1937,22 @@ let string_of_transform =
   | `skewY(a) => "skewY(" ++ Types.Angle.toString(a) ++ ")"
   | `perspective(x) => "perspective(" ++ Js.Int.toString(x) ++ ")";
 
-let transform = x => `declaration(("transform", string_of_transform(x)));
+let transform = x => Declaration("transform", string_of_transform(x));
 
 let transforms = xs =>
-  `declaration((
+  Declaration(
     "transform",
     xs |> List.map(string_of_transform) |> joinLast(" "),
-  ));
+  );
 
 let transformOrigin = (x, y) =>
-  `declaration((
+  Declaration(
     "transformOrigin",
     Types.Length.toString(x) ++ " " ++ Types.Length.toString(y),
-  ));
+  );
 
 let transformOrigin3d = (x, y, z) =>
-  `declaration((
+  Declaration(
     "transformOrigin",
     Types.Length.toString(x)
     ++ " "
@@ -1974,19 +1960,19 @@ let transformOrigin3d = (x, y, z) =>
     ++ " "
     ++ Types.Length.toString(z)
     ++ " ",
-  ));
+  );
 
 let transformStyle = x =>
-  `declaration((
+  Declaration(
     "transformStyle",
     switch (x) {
     | `preserve3d => "preserve-3d"
     | `flat => "flat"
     },
-  ));
+  );
 
 let perspective = x =>
-  `declaration((
+  Declaration(
     "perspective",
     switch (x) {
     | `none => "none"
@@ -2018,7 +2004,7 @@ let perspective = x =>
     | `vw(x) => Js.Float.toString(x) ++ "vw"
     | `zero => "0"
     },
-  ));
+  );
 
 /**
 * Transition
@@ -2042,14 +2028,13 @@ module Transition = {
     | `value(v) => v;
 };
 
-let transitionValue = x =>
-  `declaration(("transition", x->Transition.toString));
+let transitionValue = x => Declaration("transition", x->Transition.toString);
 
 let transitionList = x =>
-  `declaration((
+  Declaration(
     "transition",
     x->Belt.List.map(Transition.toString)->join(", "),
-  ));
+  );
 let transitions = transitionList;
 
 let transition = (~duration=?, ~delay=?, ~timingFunction=?, property) =>
@@ -2057,25 +2042,21 @@ let transition = (~duration=?, ~delay=?, ~timingFunction=?, property) =>
     Transition.shorthand(~duration?, ~delay?, ~timingFunction?, property),
   );
 
-let transitionDelay = i =>
-  `declaration(("transitionDelay", string_of_time(i)));
+let transitionDelay = i => Declaration("transitionDelay", string_of_time(i));
 
 let transitionDuration = i =>
-  `declaration(("transitionDuration", string_of_time(i)));
+  Declaration("transitionDuration", string_of_time(i));
 
 let transitionTimingFunction = x =>
-  `declaration((
-    "transitionTimingFunction",
-    x->Types.TimingFunction.toString,
-  ));
+  Declaration("transitionTimingFunction", x->Types.TimingFunction.toString);
 
-let transitionProperty = x => `declaration(("transitionProperty", x));
+let transitionProperty = x => Declaration("transitionProperty", x);
 
 let perspectiveOrigin = (x, y) =>
-  `declaration((
+  Declaration(
     "perspectiveOrigin",
     Types.Length.toString(x) ++ " " ++ Types.Length.toString(y),
-  ));
+  );
 
 /**
  * Animation
@@ -2155,7 +2136,7 @@ module Animation = {
     | `value(v) => v;
 };
 
-let animationValue = x => `declaration(("animation", x->Animation.toString));
+let animationValue = x => Declaration("animation", x->Animation.toString);
 
 let animation =
     (
@@ -2182,35 +2163,34 @@ let animation =
   );
 
 let animations = x =>
-  `declaration((
+  Declaration(
     "animation",
     x->Belt.List.map(Animation.toString)->join(", "),
-  ));
+  );
 
-let animationDelay = x =>
-  `declaration(("animationDelay", string_of_time(x)));
+let animationDelay = x => Declaration("animationDelay", string_of_time(x));
 let animationDirection = x =>
-  `declaration(("animationDirection", string_of_animationDirection(x)));
+  Declaration("animationDirection", string_of_animationDirection(x));
 let animationDuration = x =>
-  `declaration(("animationDuration", string_of_time(x)));
+  Declaration("animationDuration", string_of_time(x));
 let animationFillMode = x =>
-  `declaration(("animationFillMode", string_of_animationFillMode(x)));
+  Declaration("animationFillMode", string_of_animationFillMode(x));
 let animationIterationCount = x =>
-  `declaration((
+  Declaration(
     "animationIterationCount",
     string_of_animationIterationCount(x),
-  ));
-let animationName = x => `declaration(("animationName", x));
+  );
+let animationName = x => Declaration("animationName", x);
 let animationPlayState = x =>
-  `declaration(("animationPlayState", string_of_animationPlayState(x)));
+  Declaration("animationPlayState", string_of_animationPlayState(x));
 let animationTimingFunction = x =>
-  `declaration(("animationTimingFunction", x->Types.TimingFunction.toString));
+  Declaration("animationTimingFunction", x->Types.TimingFunction.toString);
 
 /**
  * Selectors
  */
 
-let selector = (selector, rules) => `selector((selector, rules));
+let selector = (selector, rules) => Selector(selector, rules);
 
 /* MEDIA */
 
@@ -2247,49 +2227,49 @@ let firstLetter = selector("::first-letter");
 let selection = selector("::selection");
 let placeholder = selector("::placeholder");
 
-let media = (query, rules) => `selector(("@media " ++ query, rules));
+let media = (query, rules) => Selector("@media " ++ query, rules);
 
 /**
  * SVG
  */
 module SVG = {
-  let fill = color => `declaration(("fill", string_of_color(color)));
+  let fill = color => Declaration("fill", string_of_color(color));
   let fillOpacity = opacity =>
-    `declaration(("fillOpacity", Js.Float.toString(opacity)));
+    Declaration("fillOpacity", Js.Float.toString(opacity));
   let fillRule = x =>
-    `declaration((
+    Declaration(
       "fillRule",
       switch (x) {
       | `evenodd => "evenodd"
       | `nonzero => "nonzero"
       },
-    ));
-  let stroke = color => `declaration(("stroke", string_of_color(color)));
+    );
+  let stroke = color => Declaration("stroke", string_of_color(color));
   let strokeWidth = length =>
-    `declaration(("strokeWidth", Types.Length.toString(length)));
+    Declaration("strokeWidth", Types.Length.toString(length));
   let strokeOpacity = opacity =>
-    `declaration(("strokeOpacity", Js.Float.toString(opacity)));
+    Declaration("strokeOpacity", Js.Float.toString(opacity));
   let strokeMiterlimit = x =>
-    `declaration(("strokeMiterlimit", Js.Float.toString(x)));
+    Declaration("strokeMiterlimit", Js.Float.toString(x));
   let strokeLinecap = x =>
-    `declaration((
+    Declaration(
       "strokeLinecap",
       switch (x) {
       | `butt => "butt"
       | `round => "round"
       | `square => "square"
       },
-    ));
+    );
 
   let strokeLinejoin = x =>
-    `declaration((
+    Declaration(
       "strokeLinejoin",
       switch (x) {
       | `miter => "miter"
       | `round => "round"
       | `bevel => "bevel"
       },
-    ));
-  let stopColor = c => `declaration(("stopColor", string_of_color(c)));
-  let stopOpacity = o => `declaration(("stopOpacity", Js.Float.toString(o)));
+    );
+  let stopColor = c => Declaration("stopColor", string_of_color(c));
+  let stopOpacity = o => Declaration("stopOpacity", Js.Float.toString(o));
 };

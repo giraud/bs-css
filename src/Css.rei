@@ -1,9 +1,6 @@
 module Types = Css_Types;
 
-type rule = [
-  | `selector(string, list(rule))
-  | `declaration(string, string)
-];
+type rule;
 
 type cache;
 
