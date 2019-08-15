@@ -436,3 +436,23 @@ describe("animation", () => {
        })
   );
 });
+
+describe("Word spacing", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(wordSpacing(`normal)),
+        r(wordSpacing(vh(1.))),
+        r(wordSpacing(pct(50.))),
+        r(wordSpacing(inherit_)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"wordSpacing": "normal"},
+         {"wordSpacing": "1vh"},
+         {"wordSpacing": "50%"},
+         {"wordSpacing": "inherit"},
+       ))
+  )
+);

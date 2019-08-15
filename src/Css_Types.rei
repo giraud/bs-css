@@ -10,38 +10,77 @@ module Cascading: {
   let toString: t => string;
 };
 
+module Percentage: {
+  /**
+   The <percentage> CSS data type represents a percentage value.
+   It is often used to define a size as relative to an element's parent object
+   */
+  type t = [ | `percent(float)];
+
+  let pct: float => [> t];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/length.
+ Note: calc is not a type
+ */
 module Length: {
+  // calc/percent are incorrect
+
+  /** The <length> CSS data type represents a distance value. */
   type t = [
-    | `calc([ | `add | `sub], t, t)
     | `ch(float)
-    | `cm(float)
     | `em(float)
     | `ex(float)
-    | `mm(float)
-    | `percent(float)
-    | `pt(int)
-    | `px(int)
-    | `pxFloat(float)
     | `rem(float)
     | `vh(float)
+    | `vw(float)
     | `vmin(float)
     | `vmax(float)
-    | `vw(float)
+    | `px(int)
+    | `pxFloat(float)
+    | `cm(float)
+    | `mm(float)
+    | `inch(float)
+    | `pc(float)
+    | `pt(int)
     | `zero
+    | `calc([ | `add | `sub], t, t)
+    | `percent(float)
   ];
 
+  /** Represents the width, or more precisely the advance measure, of the glyph "0" (zero, the Unicode character U+0030) in the element's font. */
   let ch: float => [> | `ch(float)];
-  let cm: float => [> | `cm(float)];
+  /** Represents the calculated font-size of the element. If used on the font-size property itself, it represents the inherited font-size of the element */
   let em: float => [> | `em(float)];
+  /** Represents the x-height of the element's font. On fonts with the "x" letter, this is generally the height of lowercase letters in the font; 1ex ≈ 0.5em in many fonts */
   let ex: float => [> | `ex(float)];
-  let mm: float => [> | `mm(float)];
-  let pt: int => [> | `pt(int)];
+  /** Represents the font-size of the root element (typically <html>). When used within the root element font-size, it represents its initial value (a common browser default is 16px, but user-defined preferences may modify this) */
+  let rem: float => [> | `rem(float)];
+  /** Equal to 1% of the height of the viewport's initial containing block */
+  let vh: float => [> | `vh(float)];
+  /** Equal to 1% of the width of the viewport's initial containing block */
+  let vw: float => [> | `vw(float)];
+  /** Equal to the smaller of vw and vh */
+  let vmin: float => [> | `vmin(float)];
+  /** Equal to the larger of vw and vh */
+  let vmax: float => [> | `vmax(float)];
+  /** One pixel. For screen displays, it traditionally represents one device pixel (dot). However, for printers and high-resolution screens, one CSS pixel implies multiple device pixels. 1px = 1/96th of 1in */
   let px: int => [> | `px(int)];
   let pxFloat: float => [> | `pxFloat(float)];
-  let rem: float => [> | `rem(float)];
-  let vh: float => [> | `vh(float)];
-  let vmin: float => [> | `vmin(float)];
-  let vmax: float => [> | `vmax(float)];
+  /** One centimeter. 1cm = 96px/2.54 */
+  let cm: float => [> | `cm(float)];
+  /** One millimeter. 1mm = 1/10th of 1cm */
+  let mm: float => [> | `mm(float)];
+  /** One inch. 1in = 2.54cm = 96px */
+  let inch: float => [> | `inch(float)];
+  /** One pica. 1pc = 12pt = 1/6th of 1in */
+  let pc: float => [> | `pc(float)];
+  /** One point. 1pt = 1/72nd of 1in */
+  let pt: int => [> | `pt(int)];
+  /** The value 0 */
   let zero: [> | `zero];
 
   let toString: t => string;
@@ -74,10 +113,6 @@ module Direction: {
 };
 
 module Position: {
-  /**
-   The position CSS property sets how an element is positioned in a document.
-   The top, right, bottom, and left properties determine the final location of positioned elements.
-   */
   type t = [ | `absolute | `relative | `static | `fixed | `sticky];
 
   let absolute: [> t];
@@ -90,10 +125,6 @@ module Position: {
 };
 
 module Resize: {
-  /**
-   The resize CSS property sets whether an element is resizable, and if so,
-   in which directions.
-   */
   type t = [ | `none | `both | `horizontal | `vertical | `block | `inline];
 
   /** The element offers no user-controllable method for resizing it */
@@ -113,11 +144,6 @@ module Resize: {
 };
 
 module FontVariant: {
-  /**
-   The font-variant CSS property is a shorthand for the longhand properties font-variant-caps, font-variant-numeric,
-   font-variant-alternates, font-variant-ligatures, and font-variant-east-asian.
-   You can also set the CSS Level 2 (Revision 1) values of font-variant, (that is, normal or small-caps),
-   by using the font shorthand */
   type t = [ | `normal | `smallCaps];
 
   let normal: [> t];
@@ -417,6 +443,12 @@ module PointerEvents: {
   let toString: t => string;
 };
 
+module Perspective: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};
+
 module LetterSpacing: {
   type t = [ | `normal];
 
@@ -425,6 +457,18 @@ module LetterSpacing: {
    Unlike a value of 0, this keyword allows the user agent to alter the space between characters in order to justify text.
    */
   let normal: [> t];
+
+  let toString: t => string;
+};
+
+module LineHeight: {
+  type t = [ | `normal | `abs(float)];
+
+  let toString: t => string;
+};
+
+module WordSpacing: {
+  type t = [ | `normal];
 
   let toString: t => string;
 };

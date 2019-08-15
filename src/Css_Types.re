@@ -12,61 +12,79 @@ module Cascading = {
     | `unset => "unset";
 };
 
+module Percentage = {
+  type t = [ | `percent(float)];
+
+  let pct = x => `percent(x);
+
+  let toString =
+    fun
+    | `percent(x) => Js.Float.toString(x) ++ "%";
+};
+
 module Length = {
   type t = [
-    | `calc([ | `add | `sub], t, t)
     | `ch(float)
-    | `cm(float)
     | `em(float)
     | `ex(float)
-    | `mm(float)
-    | `percent(float)
-    | `pt(int)
-    | `px(int)
-    | `pxFloat(float)
     | `rem(float)
     | `vh(float)
+    | `vw(float)
     | `vmin(float)
     | `vmax(float)
-    | `vw(float)
+    | `px(int)
+    | `pxFloat(float)
+    | `cm(float)
+    | `mm(float)
+    | `inch(float)
+    | `pc(float)
+    | `pt(int)
     | `zero
+    | `calc([ | `add | `sub], t, t)
+    | `percent(float)
   ];
 
   let ch = x => `ch(x);
-  let cm = x => `cm(x);
   let em = x => `em(x);
   let ex = x => `ex(x);
-  let mm = x => `mm(x);
-  let pt = x => `pt(x);
-  let px = x => `px(x);
-  let pxFloat = x => `pxFloat(x);
   let rem = x => `rem(x);
   let vh = x => `vh(x);
+  let vw = x => `vw(x);
   let vmin = x => `vmin(x);
   let vmax = x => `vmax(x);
+  let px = x => `px(x);
+  let pxFloat = x => `pxFloat(x);
+  let cm = x => `cm(x);
+  let mm = x => `mm(x);
+  let inch = x => `inch(x);
+  let pc = x => `pc(x);
+  let pt = x => `pt(x);
   let zero = `zero;
 
   let rec toString =
     fun
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `inch(x) => Js.Float.toString(x) ++ "in"
+    | `pc(x) => Js.Float.toString(x) ++ "pc"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
+    | `zero => "0"
+
     | `calc(`add, a, b) =>
       "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
     | `calc(`sub, a, b) =>
       "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
-    | `ch(x) => Js.Float.toString(x) ++ "ch"
-    | `cm(x) => Js.Float.toString(x) ++ "cm"
-    | `em(x) => Js.Float.toString(x) ++ "em"
-    | `ex(x) => Js.Float.toString(x) ++ "ex"
-    | `mm(x) => Js.Float.toString(x) ++ "mm"
-    | `percent(x) => Js.Float.toString(x) ++ "%"
-    | `pt(x) => Js.Int.toString(x) ++ "pt"
-    | `px(x) => Js.Int.toString(x) ++ "px"
-    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-    | `rem(x) => Js.Float.toString(x) ++ "rem"
-    | `vh(x) => Js.Float.toString(x) ++ "vh"
-    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-    | `vw(x) => Js.Float.toString(x) ++ "vw"
-    | `zero => "0";
+    | `percent(x) => Js.Float.toString(x) ++ "%";
 };
 
 module Angle = {
@@ -697,10 +715,35 @@ module PointerEvents = {
     | `none => "none";
 };
 
+module Perspective = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
+};
+
 module LetterSpacing = {
   type t = [ | `normal];
 
   let normal = `normal;
+
+  let toString =
+    fun
+    | `normal => "normal";
+};
+
+module LineHeight = {
+  type t = [ | `normal | `abs(float)];
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `abs(x) => Js.Float.toString(x);
+};
+
+module WordSpacing = {
+  type t = [ | `normal];
 
   let toString =
     fun

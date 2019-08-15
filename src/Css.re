@@ -406,6 +406,16 @@ let letterSpacing = x =>
     },
   );
 
+let lineHeight = x =>
+  D(
+    "lineHeight",
+    switch (x) {
+    | #LineHeight.t as h => LineHeight.toString(h)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let marginToString = x =>
   switch (x) {
   | #Length.t as l => Length.toString(l)
@@ -492,6 +502,16 @@ let paddingRight = x => D("paddingRight", Length.toString(x));
 
 let paddingTop = x => D("paddingTop", Length.toString(x));
 
+let perspective = x =>
+  D(
+    "perspective",
+    switch (x) {
+    | #Perspective.t as p => Perspective.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let pointerEvents = x =>
   D(
     "pointerEvents",
@@ -559,6 +579,17 @@ let verticalAlign = x =>
     },
   );
 
+let wordSpacing = x =>
+  D(
+    "wordSpacing",
+    switch (x) {
+    | #WordSpacing.t as w => WordSpacing.toString(w)
+    | #Length.t as l => Length.toString(l)
+    //| #Percentage.t as p => Percentage.toString(p)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let zIndex = x => D("zIndex", Js.Int.toString(x));
 
 /* Selectors */
@@ -622,6 +653,8 @@ let initial = Cascading.initial;
 let inherit_ = Cascading.inherit_;
 let unset = Cascading.unset;
 
+let pct = Percentage.pct;
+
 let ch = Length.ch;
 let cm = Length.cm;
 let em = Length.em;
@@ -679,8 +712,6 @@ let transparent = Color.transparent;
 /********************************************************
  ************************ VALUES ************************
  ********************************************************/
-
-let pct = x => `percent(x);
 
 type gradient = [
   | `linearGradient(angle, list((Length.t, Color.t)))
@@ -962,6 +993,8 @@ let string_of_minmax =
   | `vmin(x) => Js.Float.toString(x) ++ "vmin"
   | `vw(x) => Js.Float.toString(x) ++ "vw"
   | `fr(x) => Js.Float.toString(x) ++ "fr"
+  | `inch(x) => Js.Float.toString(x) ++ "in"
+  | `pc(x) => Js.Float.toString(x) ++ "pc"
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content";
@@ -989,6 +1022,8 @@ let string_of_dimension =
   | `vmin(x) => Js.Float.toString(x) ++ "vmin"
   | `vw(x) => Js.Float.toString(x) ++ "vw"
   | `fr(x) => Js.Float.toString(x) ++ "fr"
+  | `inch(x) => Js.Float.toString(x) ++ "in"
+  | `pc(x) => Js.Float.toString(x) ++ "pc"
   | `zero => "0"
   | `fitContent => "fit-content"
   | `minContent => "min-content"
@@ -1032,6 +1067,8 @@ let gridLengthToJs =
   | `pxFloat(x) => Js.Float.toString(x) ++ "px"
   | `rem(x) => Js.Float.toString(x) ++ "rem"
   | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `inch(x) => Js.Float.toString(x) ++ "in"
+  | `pc(x) => Js.Float.toString(x) ++ "pc"
   | `vmax(x) => Js.Float.toString(x) ++ "vmax"
   | `vmin(x) => Js.Float.toString(x) ++ "vmin"
   | `vw(x) => Js.Float.toString(x) ++ "vw"
@@ -1484,38 +1521,6 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   fontFamily;
 };
 
-let lineHeight = x =>
-  D(
-    "lineHeight",
-    switch (x) {
-    | `normal => "normal"
-    | `abs(x) => Js.Float.toString(x)
-    | `calc(`add, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-    | `ch(x) => Js.Float.toString(x) ++ "ch"
-    | `cm(x) => Js.Float.toString(x) ++ "cm"
-    | `em(x) => Js.Float.toString(x) ++ "em"
-    | `ex(x) => Js.Float.toString(x) ++ "ex"
-    | `mm(x) => Js.Float.toString(x) ++ "mm"
-    | `percent(x) => Js.Float.toString(x) ++ "%"
-    | `pt(x) => Js.Int.toString(x) ++ "pt"
-    | `px(x) => Js.Int.toString(x) ++ "px"
-    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-    | `rem(x) => Js.Float.toString(x) ++ "rem"
-    | `vh(x) => Js.Float.toString(x) ++ "vh"
-    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-    | `vw(x) => Js.Float.toString(x) ++ "vw"
-    | `auto => "auto"
-    | `zero => "0"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
 let textAlign = x =>
   D(
     "textAlign",
@@ -1642,37 +1647,6 @@ let wordBreak = x =>
     },
   );
 
-let wordSpacing = x =>
-  D(
-    "wordSpacing",
-    switch (x) {
-    | `normal => "normal"
-    | `calc(`add, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-    | `ch(x) => Js.Float.toString(x) ++ "ch"
-    | `cm(x) => Js.Float.toString(x) ++ "cm"
-    | `em(x) => Js.Float.toString(x) ++ "em"
-    | `ex(x) => Js.Float.toString(x) ++ "ex"
-    | `mm(x) => Js.Float.toString(x) ++ "mm"
-    | `percent(x) => Js.Float.toString(x) ++ "%"
-    | `pt(x) => Js.Int.toString(x) ++ "pt"
-    | `px(x) => Js.Int.toString(x) ++ "px"
-    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-    | `rem(x) => Js.Float.toString(x) ++ "rem"
-    | `vh(x) => Js.Float.toString(x) ++ "vh"
-    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-    | `vw(x) => Js.Float.toString(x) ++ "vw"
-    | `auto => "auto"
-    | `zero => "0"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
 let wordWrap = x =>
   D(
     "wordWrap",
@@ -1706,33 +1680,6 @@ let transformStyle = x =>
     switch (x) {
     | `preserve3d => "preserve-3d"
     | `flat => "flat"
-    },
-  );
-
-let perspective = x =>
-  D(
-    "perspective",
-    switch (x) {
-    | `none => "none"
-    | `calc(`add, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
-    | `calc(`sub, a, b) =>
-      "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-    | `ch(x) => Js.Float.toString(x) ++ "ch"
-    | `cm(x) => Js.Float.toString(x) ++ "cm"
-    | `em(x) => Js.Float.toString(x) ++ "em"
-    | `ex(x) => Js.Float.toString(x) ++ "ex"
-    | `mm(x) => Js.Float.toString(x) ++ "mm"
-    | `percent(x) => Js.Float.toString(x) ++ "%"
-    | `pt(x) => Js.Int.toString(x) ++ "pt"
-    | `px(x) => Js.Int.toString(x) ++ "px"
-    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-    | `rem(x) => Js.Float.toString(x) ++ "rem"
-    | `vh(x) => Js.Float.toString(x) ++ "vh"
-    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-    | `vw(x) => Js.Float.toString(x) ++ "vw"
-    | `zero => "0"
     },
   );
 

@@ -50,15 +50,27 @@ module Shadow: {
  Properties
  ********** */
 
+/** If nothing works, use this - unsafe - escape hatch */
+let unsafe: (string, string) => rule;
+
 let animationDelay: int => rule;
+
 let animationDirection: Types.AnimationDirection.t => rule;
+
 let animationDuration: int => rule;
+
 let animationFillMode: Types.AnimationFillMode.t => rule;
+
 let animationIterationCount: Types.AnimationIterationCount.t => rule;
+
 let animationPlayState: Types.AnimationPlayState.t => rule;
+
 let animationTimingFunction: Types.TimingFunction.t => rule;
+
 let backgroundColor: Types.Color.t => rule;
+
 let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
+
 let borderBottom:
   (
     Types.Length.t,
@@ -66,12 +78,19 @@ let borderBottom:
     Types.Color.t
   ) =>
   rule;
+
 let borderBottomColor: Types.Color.t => rule;
+
 let borderBottomLeftRadius: Types.Length.t => rule;
+
 let borderBottomRightRadius: Types.Length.t => rule;
+
 let borderBottomStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+
 let borderBottomWidth: Types.Length.t => rule;
+
 let borderColor: Types.Color.t => rule;
+
 let borderLeft:
   (
     Types.Length.t,
@@ -79,9 +98,13 @@ let borderLeft:
     Types.Color.t
   ) =>
   rule;
+
 let borderLeftColor: Types.Color.t => rule;
+
 let borderLeftStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+
 let borderLeftWidth: Types.Length.t => rule;
+
 let borderRight:
   (
     Types.Length.t,
@@ -89,51 +112,106 @@ let borderRight:
     Types.Color.t
   ) =>
   rule;
+
 let borderRightColor: Types.Color.t => rule;
+
 let borderRightStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+
 let borderRightWidth: Types.Length.t => rule;
+
 let borderRadius: Types.Length.t => rule;
+
 let borderSpacing: Types.Length.t => rule;
+
 let borderTopColor: Types.Color.t => rule;
+
 let borderTopLeftRadius: Types.Length.t => rule;
+
 let borderTopRightRadius: Types.Length.t => rule;
+
 let borderTopStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+
 let borderTopWidth: Types.Length.t => rule;
+
 let borderWidth: Types.Length.t => rule;
+
 let bottom: [ Types.Length.t | Types.Cascading.t] => rule;
+
 let boxShadow: [ Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
+
 let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
+
 let color: Types.Color.t => rule;
+
 let contentRule: string => rule;
+
 let cursor: Types.Cursor.t => rule;
+
 /**
  The direction CSS property sets the direction of text, table columns, and horizontal overflow.
  Use rtl for languages written from right to left (like Hebrew or Arabic),
  and ltr for those written from left to right (like English and most other languages).
  */
 let direction: [ Types.Direction.t | Types.Cascading.t] => rule;
+
 let flexGrow: float => rule;
+
 let flexShrink: float => rule;
+
 let fontFamily: string => rule;
+
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
+
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
+
+/**
+ The font-variant CSS property is a shorthand for the longhand properties font-variant-caps, font-variant-numeric,
+ font-variant-alternates, font-variant-ligatures, and font-variant-east-asian.
+ You can also set the CSS Level 2 (Revision 1) values of font-variant, (that is, normal or small-caps),
+ by using the font shorthand
+ */
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
+
 let fontWeight: [ Types.FontWeight.t | Types.Cascading.t] => rule;
+
 let gridAutoFlow: [ Types.GridAutoFlow.t | Types.Cascading.t] => rule;
+
 let gridColumn: (int, int) => rule;
+
 let gridColumnEnd: int => rule;
+
 let gridColumnGap: Types.Length.t => rule;
+
 let gridColumnStart: int => rule;
+
 let gridRow: (int, int) => rule;
+
 let gridRowEnd: int => rule;
+
 let gridRowGap: Types.Length.t => rule;
+
 let gridRowStart: int => rule;
+
 let gridGap: Types.Length.t => rule;
+
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
-/** The letter-spacing CSS property sets the spacing behavior between text characters */
+
+/**
+ The letter-spacing CSS property sets the spacing behavior between text characters
+ */
 let letterSpacing:
   [ Types.LetterSpacing.t | Types.Length.t | Types.Cascading.t] => rule;
+
+/**
+ The line-height CSS property sets the height of a line box. It's commonly used to set the distance between lines of text.
+ On block-level elements, it specifies the minimum height of line boxes within the element.
+ On non-replaced inline elements, it specifies the height that is used to calculate line box height.
+ */
+let lineHeight:
+  [ Types.LineHeight.t | Types.Length.t | Types.Cascading.t] => rule;
+
 let listStyleType: Types.ListStyleType.t => rule;
+
 let margin: [ Types.Length.t | Types.Margin.t] => rule;
 let margin2:
   (
@@ -156,20 +234,35 @@ let margin4:
     ~left: [ Types.Length.t | Types.Margin.t]
   ) =>
   rule;
+
 let marginLeft: [ Types.Length.t | Types.Margin.t] => rule;
+
 let marginRight: [ Types.Length.t | Types.Margin.t] => rule;
+
 let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
+
 let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
+
 let opacity: float => rule;
+
 let order: int => rule;
+
 let outline: (Types.Length.t, Types.OutlineStyle.t, Types.Color.t) => rule;
+
 let outlineColor: Types.Color.t => rule;
+
 let outlineOffset: Types.Length.t => rule;
+
 let outlineStyle: Types.OutlineStyle.t => rule;
+
 let outlineWidth: Types.Length.t => rule;
+
 let overflow: [ Types.Overflow.t] => rule;
+
 let overflowX: [ Types.Overflow.t] => rule;
+
 let overflowY: [ Types.Overflow.t] => rule;
+
 let padding: Types.Length.t => rule;
 let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
 let padding3:
@@ -182,29 +275,78 @@ let padding4:
     ~left: Types.Length.t
   ) =>
   rule;
+
 let paddingLeft: Types.Length.t => rule;
+
 let paddingRight: Types.Length.t => rule;
+
 let paddingTop: Types.Length.t => rule;
+
 let paddingBottom: Types.Length.t => rule;
+
 let perspectiveOrigin: (Types.Length.t, Types.Length.t) => rule;
-/** The pointer-events CSS property sets under what circumstances (if any) a particular graphic element can become the target of pointer events. */
+
+/**
+ The pointer-events CSS property sets under what circumstances (if any) a particular graphic element can become the target of pointer events.
+ */
 let pointerEvents: [ Types.PointerEvents.t | Types.Cascading.t] => rule;
+
+/**
+ The position CSS property sets how an element is positioned in a document.
+ The top, right, bottom, and left properties determine the final location of positioned elements.
+ */
 let position: [ Types.Position.t | Types.Cascading.t] => rule;
+
+/**
+ The resize CSS property sets whether an element is resizable, and if so,
+ in which directions.
+ */
 let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
+
 let right: [ Types.Length.t | Types.Cascading.t] => rule;
+
 let textDecorationColor: Types.Color.t => rule;
+
 let textIndent: Types.Length.t => rule;
+
 let top: [ Types.Length.t | Types.Cascading.t] => rule;
+
 let transform: Types.Transform.t => rule;
+
 let transforms: list(Types.Transform.t) => rule;
+
 let transformOrigin: (Types.Length.t, Types.Length.t) => rule;
+
 let transitionDelay: int => rule;
+
 let transitionDuration: int => rule;
+
 let transitionProperty: string => rule;
+
 let transitionTimingFunction: Types.TimingFunction.t => rule;
-let unsafe: (string, string) => rule;
+
+/**
+ The vertical-align CSS property sets vertical alignment of an inline or table-cell box.
+ */
 let verticalAlign:
   [ Types.VerticalAlign.t | Types.Length.t | Types.Cascading.t] => rule;
+
+/**
+ The word-spacing CSS property sets the length of space between words and between tags
+ */
+let wordSpacing:
+  [
+    Types.WordSpacing.t
+    | Types.Length.t
+    | Types.Percentage.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
+ The z-index CSS property sets the z-order of a positioned element and its descendants or flex items.
+ Overlapping elements with a larger z-index cover those with a smaller one
+ */
 let zIndex: int => rule;
 
 /* *******
@@ -274,6 +416,8 @@ type transform = Types.Transform.t;
 let initial: [> Types.Cascading.t];
 let inherit_: [> Types.Cascading.t];
 let unset: [> Types.Cascading.t];
+
+let pct: float => [> Types.Percentage.t];
 
 let ch: float => [> | `ch(float)];
 let cm: float => [> | `cm(float)];
@@ -378,7 +522,6 @@ type trackLength = [
 type gridLength = [ trackLength | `repeat(Types.RepeatValue.t, trackLength)];
 
 let fr: float => [> | `fr(float)];
-let pct: float => [> | `percent(float)];
 let vw: float => [> | `vw(float)];
 
 module Calc: {
@@ -580,7 +723,7 @@ let flex3:
     ~basis: [ Types.Length.t | Types.FlexBasis.t]
   ) =>
   rule;
-let flexBasis: [ Types.Length.t | Types.FlexBasis.t] => rule;
+let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
 
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
@@ -727,8 +870,6 @@ let fontFace:
     unit
   ) =>
   string;
-let lineHeight:
-  [ | `normal | `abs(float) | Types.Length.t | Types.Cascading.t] => rule;
 let textAlign:
   [ | `left | `center | `right | `justify | Types.Cascading.t] => rule;
 let textDecoration:
@@ -750,7 +891,6 @@ let whiteSpace:
   [ | `normal | `nowrap | `pre | `preLine | `preWrap | Types.Cascading.t] =>
   rule;
 let wordBreak: [ | `breakAll | `keepAll | `normal | Types.Cascading.t] => rule;
-let wordSpacing: [ | `normal | Types.Length.t | Types.Cascading.t] => rule;
 let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 
 /**
@@ -760,7 +900,8 @@ let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 let transformOrigin3d:
   (Types.Length.t, Types.Length.t, Types.Length.t) => rule;
 let transformStyle: [ | `preserve3d | `flat] => rule;
-let perspective: [ | `none | Types.Length.t] => rule;
+let perspective:
+  [ Types.Perspective.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
   * Transition
