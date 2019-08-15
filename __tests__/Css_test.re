@@ -390,3 +390,49 @@ describe("transitions", () => {
     |> toBeJson({"transition": "3ms ease-out 4ms top"})
   );
 });
+
+external toAnimationName: string => animationName = "%identity";
+
+describe("animation", () => {
+  test("should allow single or list definition", () =>
+    expect(
+      (
+        r(animation(toAnimationName("a"))),
+        r(
+          animations([
+            Animation.shorthand(toAnimationName("a1")),
+            Animation.shorthand(toAnimationName("a2")),
+          ]),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"animation": "a 0ms ease 0ms 1 normal none running"},
+         {
+           "animation": "a1 0ms ease 0ms 1 normal none running, a2 0ms ease 0ms 1 normal none running",
+         },
+       ))
+  );
+
+  test("should use options when present", () =>
+    expect(
+      r(
+        animation(
+          ~duration=300,
+          ~delay=400,
+          ~direction=reverse,
+          ~timingFunction=linear,
+          ~fillMode=forwards,
+          ~playState=running,
+          ~iterationCount=infinite,
+          toAnimationName("a"),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson({
+         "animation": "a 300ms linear 400ms infinite reverse forwards running",
+       })
+  );
+});

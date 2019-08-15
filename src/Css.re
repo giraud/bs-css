@@ -4,7 +4,6 @@ module Types = Css_Types;
 type rule = [
   | `selector(string, list(rule))
   | `declaration(string, string)
-  | `animation(string)
 ];
 
 type selector = [ | `selector(string, list(rule))];
@@ -33,7 +32,6 @@ module Emotion = {
       )
     | `declaration(name, value) => (name, Js.Json.string(value))
     | `selector(name, ruleset) => (name, makeJson(ruleset))
-    | `animation(value) => ("animation", Js.Json.string(value))
     }
 
   and makeJson = rules =>
@@ -292,7 +290,7 @@ let global = (selector, rules: list(rule)) =>
 
 let insertRule = raw => Emotion.rawInjectGlobal(raw);
 
-type animation = string;
+type animationName = string;
 
 let keyframes = frames => {
   let addStop = (dict, (stop, rules)) => {
@@ -2120,42 +2118,73 @@ let string_of_animationPlayState =
   | `paused => "paused"
   | `running => "running";
 
+module Animation = {
+  type t = [ | `value(string)];
+
+  let shorthand =
+      (
+        ~duration=0,
+        ~delay=0,
+        ~direction=`normal,
+        ~timingFunction=`ease,
+        ~fillMode=`none,
+        ~playState=`running,
+        ~iterationCount=`count(1),
+        name,
+      ) =>
+    `value(
+      name
+      ++ " "
+      ++ string_of_time(duration)
+      ++ " "
+      ++ timingFunction->Types.TimingFunction.toString
+      ++ " "
+      ++ string_of_time(delay)
+      ++ " "
+      ++ string_of_animationIterationCount(iterationCount)
+      ++ " "
+      ++ string_of_animationDirection(direction)
+      ++ " "
+      ++ string_of_animationFillMode(fillMode)
+      ++ " "
+      ++ string_of_animationPlayState(playState),
+    );
+
+  let toString =
+    fun
+    | `value(v) => v;
+};
+
+let animationValue = x => `declaration(("animation", x->Animation.toString));
+
 let animation =
     (
-      ~duration=0,
-      ~delay=0,
-      ~direction=`normal,
-      ~timingFunction=`ease,
-      ~fillMode=`none,
-      ~playState=`running,
-      ~iterationCount=`count(1),
+      ~duration=?,
+      ~delay=?,
+      ~direction=?,
+      ~timingFunction=?,
+      ~fillMode=?,
+      ~playState=?,
+      ~iterationCount=?,
       name,
     ) =>
-  `animation(
-    name
-    ++ " "
-    ++ string_of_time(duration)
-    ++ " "
-    ++ timingFunction->Types.TimingFunction.toString
-    ++ " "
-    ++ string_of_time(delay)
-    ++ " "
-    ++ string_of_animationIterationCount(iterationCount)
-    ++ " "
-    ++ string_of_animationDirection(direction)
-    ++ " "
-    ++ string_of_animationFillMode(fillMode)
-    ++ " "
-    ++ string_of_animationPlayState(playState),
+  animationValue(
+    Animation.shorthand(
+      ~duration?,
+      ~delay?,
+      ~direction?,
+      ~timingFunction?,
+      ~fillMode?,
+      ~playState?,
+      ~iterationCount?,
+      name,
+    ),
   );
 
-let string_of_animation =
-  fun
-  | `animation(s) => s;
-let animations = xs =>
+let animations = x =>
   `declaration((
     "animation",
-    xs |> List.map(string_of_animation) |> joinLast(", "),
+    x->Belt.List.map(Animation.toString)->join(", "),
   ));
 
 let animationDelay = x =>

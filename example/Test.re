@@ -1205,8 +1205,12 @@ let make = () =>
             redBox
             @ [
               animations([
-                animation(~duration=300, ~iterationCount=infinite, spin),
-                animation(
+                Animation.shorthand(
+                  ~duration=300,
+                  ~iterationCount=infinite,
+                  spin,
+                ),
+                Animation.shorthand(
                   ~duration=300,
                   ~iterationCount=infinite,
                   scaleAnimation,

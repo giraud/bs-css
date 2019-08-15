@@ -3,7 +3,6 @@ module Types = Css_Types;
 type rule = [
   | `selector(string, list(rule))
   | `declaration(string, string)
-  | `animation(string)
 ];
 
 type cache;
@@ -841,8 +840,8 @@ let transitionProperty: string => rule;
  * Animation
  */
 
-type animation;
-let keyframes: list((int, list(rule))) => animation;
+type animationName;
+let keyframes: list((int, list(rule))) => animationName;
 
 type animationDirection = [
   | `normal
@@ -855,6 +854,26 @@ type animationFillMode = [ | `none | `forwards | `backwards | `both];
 type animationIterationCount = [ | `infinite | `count(int)];
 type animationPlayState = [ | `paused | `running];
 
+module Animation: {
+  type t = [ | `value(string)];
+
+  let shorthand:
+    (
+      ~duration: int=?,
+      ~delay: int=?,
+      ~direction: animationDirection=?,
+      ~timingFunction: Types.TimingFunction.t=?,
+      ~fillMode: animationFillMode=?,
+      ~playState: animationPlayState=?,
+      ~iterationCount: animationIterationCount=?,
+      animationName
+    ) =>
+    [> t];
+
+  let toString: t => string;
+};
+
+let animationValue: Animation.t => rule;
 let animation:
   (
     ~duration: int=?,
@@ -864,17 +883,17 @@ let animation:
     ~fillMode: animationFillMode=?,
     ~playState: animationPlayState=?,
     ~iterationCount: animationIterationCount=?,
-    animation
+    animationName
   ) =>
-  [> | `animation(string)];
-let animations: list([ | `animation(string)]) => rule;
+  rule;
+let animations: list([ Animation.t]) => rule;
 
 let animationDelay: int => rule;
 let animationDirection: animationDirection => rule;
 let animationDuration: int => rule;
 let animationFillMode: animationFillMode => rule;
 let animationIterationCount: [ | `infinite | `count(int)] => rule;
-let animationName: animation => rule;
+let animationName: animationName => rule;
 let animationPlayState: [ | `paused | `running] => rule;
 let animationTimingFunction: Types.TimingFunction.t => rule;
 
