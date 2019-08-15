@@ -247,3 +247,39 @@ module VerticalAlign = {
     | `bottom => "bottom"
     | `textBottom => "text-bottom";
 };
+
+module TimingFunction = {
+  type t = [
+    | `linear
+    | `ease
+    | `easeIn
+    | `easeOut
+    | `easeInOut
+    | `stepStart
+    | `stepEnd
+    | `steps(int, [ | `start | `end_])
+    | `cubicBezier(float, float, float, float)
+  ];
+
+  let toString =
+    fun
+    | `linear => "linear"
+    | `ease => "ease"
+    | `easeIn => "ease-out"
+    | `easeOut => "ease-out"
+    | `easeInOut => "ease-in-out"
+    | `stepStart => "step-start"
+    | `stepEnd => "step-end"
+    | `steps(i, `start) => "steps(" ++ Js.Int.toString(i) ++ ", start)"
+    | `steps(i, `end_) => "steps(" ++ Js.Int.toString(i) ++ ", end)"
+    | `cubicBezier(a, b, c, d) =>
+      "cubic-bezier("
+      ++ Js.Float.toString(a)
+      ++ ", "
+      ++ Js.Float.toString(b)
+      ++ ", "
+      ++ Js.Float.toString(c)
+      ++ ", "
+      ++ Js.Float.toString(d)
+      ++ ")";
+};

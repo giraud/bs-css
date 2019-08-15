@@ -5,7 +5,6 @@ type rule = [
   | `selector(string, list(rule))
   | `declaration(string, string)
   | `animation(string)
-  | `transition(string)
 ];
 
 type selector = [ | `selector(string, list(rule))];
@@ -34,7 +33,6 @@ module Emotion = {
       )
     | `declaration(name, value) => (name, Js.Json.string(value))
     | `selector(name, ruleset) => (name, makeJson(ruleset))
-    | `transition(value) => ("transition", Js.Json.string(value))
     | `animation(value) => ("animation", Js.Json.string(value))
     }
 
@@ -2027,61 +2025,39 @@ let perspective = x =>
 /**
 * Transition
 */
-type timingFunction = [
-  | `linear
-  | `ease
-  | `easeIn
-  | `easeOut
-  | `easeInOut
-  | `stepStart
-  | `stepEnd
-  | `steps(int, [ | `start | `end_])
-  | `cubicBezier(float, float, float, float)
-];
+module Transition = {
+  type t = [ | `value(string)];
 
-let string_of_timingFunction =
-  fun
-  | `linear => "linear"
-  | `ease => "ease"
-  | `easeIn => "ease-out"
-  | `easeOut => "ease-out"
-  | `easeInOut => "ease-in-out"
-  | `stepStart => "step-start"
-  | `stepEnd => "step-end"
-  | `steps(i, `start) => "steps(" ++ Js.Int.toString(i) ++ ", start)"
-  | `steps(i, `end_) => "steps(" ++ Js.Int.toString(i) ++ ", end)"
-  | `cubicBezier(a, b, c, d) =>
-    "cubic-bezier("
-    ++ Js.Float.toString(a)
-    ++ ", "
-    ++ Js.Float.toString(b)
-    ++ ", "
-    ++ Js.Float.toString(c)
-    ++ ", "
-    ++ Js.Float.toString(d)
-    ++ ")";
+  let shorthand = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
+    `value(
+      string_of_time(duration)
+      ++ " "
+      ++ timingFunction->Types.TimingFunction.toString
+      ++ " "
+      ++ string_of_time(delay)
+      ++ " "
+      ++ property,
+    );
 
-let transition = (~duration=0, ~delay=0, ~timingFunction=`ease, property) =>
-  `transition(
-    string_of_time(duration)
-    ++ " "
-    ++ string_of_timingFunction(timingFunction)
-    ++ " "
-    ++ string_of_time(delay)
-    ++ " "
-    ++ property,
-  );
+  let toString =
+    fun
+    | `value(v) => v;
+};
 
-let transitions = xs =>
+let transitionValue = x =>
+  `declaration(("transition", x->Transition.toString));
+
+let transitionList = x =>
   `declaration((
     "transition",
-    xs
-    |> List.map(
-         fun
-         | `transition(s) => s,
-       )
-    |> joinLast(", "),
+    x->Belt.List.map(Transition.toString)->join(", "),
   ));
+let transitions = transitionList;
+
+let transition = (~duration=?, ~delay=?, ~timingFunction=?, property) =>
+  transitionValue(
+    Transition.shorthand(~duration?, ~delay?, ~timingFunction?, property),
+  );
 
 let transitionDelay = i =>
   `declaration(("transitionDelay", string_of_time(i)));
@@ -2090,7 +2066,10 @@ let transitionDuration = i =>
   `declaration(("transitionDuration", string_of_time(i)));
 
 let transitionTimingFunction = x =>
-  `declaration(("transitionTimingFunction", string_of_timingFunction(x)));
+  `declaration((
+    "transitionTimingFunction",
+    x->Types.TimingFunction.toString,
+  ));
 
 let transitionProperty = x => `declaration(("transitionProperty", x));
 
@@ -2157,7 +2136,7 @@ let animation =
     ++ " "
     ++ string_of_time(duration)
     ++ " "
-    ++ string_of_timingFunction(timingFunction)
+    ++ timingFunction->Types.TimingFunction.toString
     ++ " "
     ++ string_of_time(delay)
     ++ " "
@@ -2196,7 +2175,7 @@ let animationName = x => `declaration(("animationName", x));
 let animationPlayState = x =>
   `declaration(("animationPlayState", string_of_animationPlayState(x)));
 let animationTimingFunction = x =>
-  `declaration(("animationTimingFunction", string_of_timingFunction(x)));
+  `declaration(("animationTimingFunction", x->Types.TimingFunction.toString));
 
 /**
  * Selectors

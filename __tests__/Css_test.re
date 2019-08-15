@@ -361,3 +361,32 @@ describe("text-shadow", () => {
        ))
   );
 });
+
+describe("transitions", () => {
+  test("should allow single or list definition", () =>
+    expect(
+      (
+        r(transition("transform")),
+        r(
+          transitions([
+            Transition.shorthand("height"),
+            Transition.shorthand("top"),
+          ]),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"transition": "0ms ease 0ms transform"},
+         {"transition": "0ms ease 0ms height, 0ms ease 0ms top"},
+       ))
+  );
+
+  test("should use options when present", () =>
+    expect(
+      r(transition(~duration=3, ~delay=4, ~timingFunction=easeOut, "top"))
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson({"transition": "3ms ease-out 4ms top"})
+  );
+});

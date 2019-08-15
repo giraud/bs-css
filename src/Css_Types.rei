@@ -199,3 +199,19 @@ module VerticalAlign: {
 
   let toString: t => string;
 };
+
+module TimingFunction: {
+  type t = [
+    | `linear
+    | `ease
+    | `easeIn
+    | `easeOut
+    | `easeInOut
+    | `stepStart
+    | `stepEnd
+    | `steps(int, [ | `start | `end_])
+    | `cubicBezier(float, float, float, float)
+  ];
+
+  let toString: t => string;
+};

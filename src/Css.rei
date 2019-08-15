@@ -4,7 +4,6 @@ type rule = [
   | `selector(string, list(rule))
   | `declaration(string, string)
   | `animation(string)
-  | `transition(string)
 ];
 
 type cache;
@@ -804,29 +803,38 @@ let perspectiveOrigin: (Types.Length.t, Types.Length.t) => rule;
 /**
   * Transition
   */
-type timingFunction = [
-  | `linear
-  | `ease
-  | `easeIn
-  | `easeOut
-  | `easeInOut
-  | `stepStart
-  | `stepEnd
-  | `steps(int, [ | `start | `end_])
-  | `cubicBezier(float, float, float, float)
-];
+
+module Transition: {
+  type t = [ | `value(string)];
+
+  let shorthand:
+    (
+      ~duration: int=?,
+      ~delay: int=?,
+      ~timingFunction: Types.TimingFunction.t=?,
+      string
+    ) =>
+    [> t];
+
+  let toString: t => string;
+};
+
+let transitionValue: Transition.t => rule;
+let transitionList: list([ Transition.t]) => rule;
+
 let transition:
   (
     ~duration: int=?,
     ~delay: int=?,
-    ~timingFunction: timingFunction=?,
+    ~timingFunction: Types.TimingFunction.t=?,
     string
   ) =>
-  [> | `transition(string)];
-let transitions: list([ | `transition(string)]) => rule;
+  rule;
+let transitions: list([ Transition.t]) => rule;
+
 let transitionDelay: int => rule;
 let transitionDuration: int => rule;
-let transitionTimingFunction: timingFunction => rule;
+let transitionTimingFunction: Types.TimingFunction.t => rule;
 let transitionProperty: string => rule;
 
 /**
@@ -852,7 +860,7 @@ let animation:
     ~duration: int=?,
     ~delay: int=?,
     ~direction: animationDirection=?,
-    ~timingFunction: timingFunction=?,
+    ~timingFunction: Types.TimingFunction.t=?,
     ~fillMode: animationFillMode=?,
     ~playState: animationPlayState=?,
     ~iterationCount: animationIterationCount=?,
@@ -868,7 +876,7 @@ let animationFillMode: animationFillMode => rule;
 let animationIterationCount: [ | `infinite | `count(int)] => rule;
 let animationName: animation => rule;
 let animationPlayState: [ | `paused | `running] => rule;
-let animationTimingFunction: timingFunction => rule;
+let animationTimingFunction: Types.TimingFunction.t => rule;
 
 /**
  * selectors
