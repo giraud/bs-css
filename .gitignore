@@ -11,5 +11,6 @@ finalOutput/*.js
 npm-debug.log
 *.js
 .merlin
-.bsb.lock
+.nvmrc
+*.lock
 *.log
