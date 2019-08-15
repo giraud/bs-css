@@ -664,10 +664,10 @@ let transparent = Color.transparent;
 let pct = x => `percent(x);
 
 type gradient = [
-  | `linearGradient(angle, list((length, color)))
-  | `repeatingLinearGradient(angle, list((length, color)))
-  | `radialGradient(list((length, color)))
-  | `repeatingRadialGradient(list((length, color)))
+  | `linearGradient(angle, list((Length.t, Color.t)))
+  | `repeatingLinearGradient(angle, list((Length.t, Color.t)))
+  | `radialGradient(list((Length.t, Color.t)))
+  | `repeatingRadialGradient(list((Length.t, Color.t)))
 ];
 
 let linearGradient = (angle, stops) => `linearGradient((angle, stops));
@@ -984,16 +984,16 @@ let maxWidth = x => D("maxWidth", string_of_dimension(x));
 let minHeight = x => D("minHeight", string_of_dimension(x));
 let maxHeight = x => D("maxHeight", string_of_dimension(x));
 
-type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
+type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | Length.t];
 
 type trackLength = [
-  length
+  Length.t
   | `fr(float)
   | `minContent
   | `maxContent
   | `minmax(minmax, minmax)
 ];
-type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
+type gridLength = [ trackLength | `repeat(RepeatValue.t, trackLength)];
 
 let gridLengthToJs =
   fun
@@ -1128,10 +1128,10 @@ let objectFit = x =>
   );
 
 type filter = [
-  | `blur(length)
+  | `blur(Length.t)
   | `brightness(float)
   | `contrast(float)
-  | `dropShadow(length, length, length, color)
+  | `dropShadow(Length.t, Length.t, Length.t, Color.t)
   | `grayscale(float)
   | `hueRotate(angle)
   | `invert(float)
@@ -1140,7 +1140,7 @@ type filter = [
   | `sepia(float)
   | `url(string)
   | `none
-  | cascading
+  | Cascading.t
 ];
 
 let string_of_filter =
@@ -1877,7 +1877,7 @@ let animationName = x => D("animationName", x);
  * SVG
  */
 module SVG = {
-  let fill = color => D("fill", Color.toString(color));
+  let fill = x => D("fill", Color.toString(x));
   let fillOpacity = opacity => D("fillOpacity", Js.Float.toString(opacity));
   let fillRule = x =>
     D(
@@ -1887,8 +1887,8 @@ module SVG = {
       | `nonzero => "nonzero"
       },
     );
-  let stroke = color => D("stroke", Color.toString(color));
-  let strokeWidth = length => D("strokeWidth", Length.toString(length));
+  let stroke = x => D("stroke", Color.toString(x));
+  let strokeWidth = x => D("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
     D("strokeOpacity", Js.Float.toString(opacity));
   let strokeMiterlimit = x => D("strokeMiterlimit", Js.Float.toString(x));

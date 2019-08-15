@@ -174,7 +174,7 @@ let zIndex: int => rule;
 
 /* *******
  selectors
- ******* */
+ ********* */
 
 let selector: (string, list(rule)) => rule;
 let media: (string, list(rule)) => rule;
@@ -297,26 +297,34 @@ let currentColor: [> Types.Color.t];
  ********************************************************/
 
 type gradient = [
-  | `linearGradient(Types.Angle.t, list((Types.Length.t, color)))
-  | `repeatingLinearGradient(Types.Angle.t, list((Types.Length.t, color)))
-  | `radialGradient(list((Types.Length.t, color)))
-  | `repeatingRadialGradient(list((Types.Length.t, color)))
+  | `linearGradient(Types.Angle.t, list((Types.Length.t, Types.Color.t)))
+  | `repeatingLinearGradient(
+      Types.Angle.t,
+      list((Types.Length.t, Types.Color.t)),
+    )
+  | `radialGradient(list((Types.Length.t, Types.Color.t)))
+  | `repeatingRadialGradient(list((Types.Length.t, Types.Color.t)))
 ];
 
 let linearGradient:
-  (Types.Angle.t, list((Types.Length.t, color))) =>
-  [> | `linearGradient(Types.Angle.t, list((Types.Length.t, color)))];
-let repeatingLinearGradient:
-  (Types.Angle.t, list((Types.Length.t, color))) =>
+  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
   [>
-    | `repeatingLinearGradient(Types.Angle.t, list((Types.Length.t, color)))
+    | `linearGradient(Types.Angle.t, list((Types.Length.t, Types.Color.t)))
+  ];
+let repeatingLinearGradient:
+  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
+  [>
+    | `repeatingLinearGradient(
+        Types.Angle.t,
+        list((Types.Length.t, Types.Color.t)),
+      )
   ];
 let radialGradient:
-  list((Types.Length.t, color)) =>
-  [> | `radialGradient(list((Types.Length.t, color)))];
+  list((Types.Length.t, Types.Color.t)) =>
+  [> | `radialGradient(list((Types.Length.t, Types.Color.t)))];
 let repeatingRadialGradient:
-  list((Types.Length.t, color)) =>
-  [> | `repeatingRadialGradient(list((Types.Length.t, color)))];
+  list((Types.Length.t, Types.Color.t)) =>
+  [> | `repeatingRadialGradient(list((Types.Length.t, Types.Color.t)))];
 
 type minmax = [
   | `fr(float)
@@ -332,7 +340,7 @@ type trackLength = [
   | `maxContent
   | `minmax(minmax, minmax)
 ];
-type gridLength = [ trackLength | `repeat(repeatValue, trackLength)];
+type gridLength = [ trackLength | `repeat(Types.RepeatValue.t, trackLength)];
 
 let fr: float => [> | `fr(float)];
 let pct: float => [> | `percent(float)];
@@ -502,14 +510,6 @@ let bevel: [> | `bevel];
 let butt: [> | `butt];
 let square: [> | `square];
 
-/********************************************************
- ******************** PROPERTIES ************************
- ********************************************************/
-
-/**
- * Layout
-*/
-
 let display:
   [
     | `inline
@@ -598,7 +598,8 @@ let clear: [ | `left | `right | `both] => rule;
 let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 
 let objectFit:
-  [ | `fill | `contain | `cover | `none | `scaleDown | cascading] => rule;
+  [ | `fill | `contain | `cover | `none | `scaleDown | Types.Cascading.t] =>
+  rule;
 
 /**
  * Style
@@ -607,27 +608,32 @@ let backfaceVisibility: [ | `visible | `hidden] => rule;
 let visibility: [ | `visible | `hidden] => rule;
 
 let border:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  rule;
 let borderStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 
 let borderTop:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  rule;
 let borderTopStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderBottom:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  rule;
 let borderBottomStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderLeft:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], [ color]) => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  rule;
 let borderLeftStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 let borderRight:
-  (Types.Length.t, [ | `solid | `dashed | `dotted], [ color]) => rule;
+  (Types.Length.t, [ | `solid | `dashed | `dotted], Types.Color.t) => rule;
 let borderRightStyle: [ | `solid | `dashed | `dotted | `none] => rule;
 
 let tableLayout: [ | `auto | `fixed] => rule;
 let borderCollapse: [ | `separate | `collapse] => rule;
 
-let background: [ color | `url(string) | gradient | `none] => rule;
-let backgrounds: list([ color | `url(string) | gradient | `none]) => rule;
+let background: [ Types.Color.t | `url(string) | gradient | `none] => rule;
+let backgrounds:
+  list([ Types.Color.t | `url(string) | gradient | `none]) => rule;
 let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
 let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
@@ -655,7 +661,7 @@ type filter = [
   | `blur(Types.Length.t)
   | `brightness(float)
   | `contrast(float)
-  | `dropShadow(Types.Length.t, Types.Length.t, Types.Length.t, color)
+  | `dropShadow(Types.Length.t, Types.Length.t, Types.Length.t, Types.Color.t)
   | `grayscale(float)
   | `hueRotate(Types.Angle.t)
   | `invert(float)
@@ -808,16 +814,16 @@ let animationName: animationName => rule;
  */
 
 module SVG: {
-  let fill: color => rule;
+  let fill: Types.Color.t => rule;
   let fillRule: [ | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
-  let stroke: color => rule;
+  let stroke: Types.Color.t => rule;
   let strokeLinecap: [ | `butt | `round | `square] => rule;
   let strokeLinejoin: [ | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;
   let strokeWidth: Types.Length.t => rule;
   let strokeOpacity: float => rule;
-  let stopColor: color => rule;
+  let stopColor: Types.Color.t => rule;
   let stopOpacity: float => rule;
 };
 
