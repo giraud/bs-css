@@ -398,3 +398,20 @@ module Color: {
 
   let toString: t => string;
 };
+
+module BorderStyle: {
+  type t = [
+    | `none
+    | `hidden
+    | `dotted
+    | `dashed
+    | `solid
+    | `double
+    | `groove
+    | `ridge
+    | `inset
+    | `outset
+  ];
+
+  let toString: t => string;
+};

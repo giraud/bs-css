@@ -608,25 +608,47 @@ let backfaceVisibility: [ | `visible | `hidden] => rule;
 let visibility: [ | `visible | `hidden] => rule;
 
 let border:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
   rule;
-let borderStyle: [ | `solid | `dashed | `dotted | `none] => rule;
+let borderStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 let borderTop:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
   rule;
-let borderTopStyle: [ | `solid | `dashed | `dotted | `none] => rule;
+
+let borderTopStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderBottom:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
   rule;
-let borderBottomStyle: [ | `solid | `dashed | `dotted | `none] => rule;
+let borderBottomStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderLeft:
-  (Types.Length.t, [ | `solid | `dashed | `dotted | `none], Types.Color.t) =>
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
   rule;
-let borderLeftStyle: [ | `solid | `dashed | `dotted | `none] => rule;
+let borderLeftStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderRight:
-  (Types.Length.t, [ | `solid | `dashed | `dotted], Types.Color.t) => rule;
-let borderRightStyle: [ | `solid | `dashed | `dotted | `none] => rule;
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
+  rule;
+let borderRightStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 let tableLayout: [ | `auto | `fixed] => rule;
 let borderCollapse: [ | `separate | `collapse] => rule;

@@ -1232,10 +1232,8 @@ let boxShadows = x =>
 
 let string_of_borderstyle =
   fun
-  | `solid => "solid"
-  | `dashed => "dashed"
-  | `dotted => "dotted"
-  | `none => "none";
+  | #BorderStyle.t as b => BorderStyle.toString(b)
+  | #Cascading.t as c => Cascading.toString(c);
 
 let border = (px, style, color) =>
   D(

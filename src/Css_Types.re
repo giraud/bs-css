@@ -659,3 +659,31 @@ module Color = {
     | `transparent => "transparent"
     | `currentColor => "currentColor";
 };
+
+module BorderStyle = {
+  type t = [
+    | `none
+    | `hidden
+    | `dotted
+    | `dashed
+    | `solid
+    | `double
+    | `groove
+    | `ridge
+    | `inset
+    | `outset
+  ];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `hidden => "hidden"
+    | `dotted => "dotted"
+    | `dashed => "dashed"
+    | `solid => "solid"
+    | `double => "double"
+    | `groove => "groove"
+    | `ridge => "ridge"
+    | `inset => "inset"
+    | `outset => "outset";
+};
