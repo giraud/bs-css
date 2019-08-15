@@ -283,3 +283,303 @@ module TimingFunction = {
       ++ Js.Float.toString(d)
       ++ ")";
 };
+
+module RepeatValue = {
+  type t = [ | `autoFill | `autoFit | `num(int)];
+
+  let toString =
+    fun
+    | `autoFill => "auto-fill"
+    | `autoFit => "auto-fit"
+    | `num(x) => Js.Int.toString(x);
+};
+
+module ListStyleType = {
+  type t = [
+    | `disc
+    | `circle
+    | `square
+    | `decimal
+    | `lowerAlpha
+    | `upperAlpha
+    | `lowerGreek
+    | `lowerLatin
+    | `upperLatin
+    | `lowerRoman
+    | `upperRoman
+    | `none
+  ];
+
+  let toString =
+    fun
+    | `disc => "disc"
+    | `circle => "circle"
+    | `square => "square"
+    | `decimal => "decimal"
+    | `lowerAlpha => "lower-alpha"
+    | `upperAlpha => "upper-alpha"
+    | `lowerGreek => "lower-greek"
+    | `lowerLatin => "lower-latin"
+    | `upperLatin => "upper-latin"
+    | `lowerRoman => "lower-roman"
+    | `upperRoman => "upper-roman"
+    | `none => "none";
+};
+
+module OutlineStyle = {
+  type t = [
+    | `none
+    | `hidden
+    | `dotted
+    | `dashed
+    | `solid
+    | `double
+    | `groove
+    | `ridge
+    | `inset
+    | `outset
+  ];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `hidden => "hidden"
+    | `dotted => "dotted"
+    | `dashed => "dashed"
+    | `solid => "solid"
+    | `double => "double"
+    | `groove => "grove"
+    | `ridge => "ridge"
+    | `inset => "inset"
+    | `outset => "outset";
+};
+
+module FontWeight = {
+  type t = [
+    | `num(int)
+    | `thin
+    | `extraLight
+    | `light
+    | `normal
+    | `medium
+    | `semiBold
+    | `bold
+    | `extraBold
+    | `black
+    | `lighter
+    | `bolder
+  ];
+
+  let toString = x =>
+    switch (x) {
+    | `num(n) => Js.Int.toString(n)
+    | `thin => "100"
+    | `extraLight => "200"
+    | `light => "300"
+    | `normal => "400"
+    | `medium => "500"
+    | `semiBold => "600"
+    | `bold => "700"
+    | `extraBold => "800"
+    | `black => "900"
+    | `lighter => "lighter"
+    | `bolder => "bolder"
+    };
+};
+
+module Transform = {
+  type t = [
+    | `translate(Length.t, Length.t)
+    | `translate3d(Length.t, Length.t, Length.t)
+    | `translateX(Length.t)
+    | `translateY(Length.t)
+    | `translateZ(Length.t)
+    | `scale(float, float)
+    | `scale3d(float, float, float)
+    | `scaleX(float)
+    | `scaleY(float)
+    | `scaleZ(float)
+    | `rotate(Angle.t)
+    | `rotate3d(float, float, float, Angle.t)
+    | `rotateX(Angle.t)
+    | `rotateY(Angle.t)
+    | `rotateZ(Angle.t)
+    | `skew(Angle.t, Angle.t)
+    | `skewX(Angle.t)
+    | `skewY(Angle.t)
+    | `perspective(int)
+  ];
+
+  let string_of_scale = (x, y) =>
+    "scale(" ++ Js.Float.toString(x) ++ ", " ++ Js.Float.toString(y) ++ ")";
+
+  let string_of_translate3d = (x, y, z) =>
+    "translate3d("
+    ++ Length.toString(x)
+    ++ ", "
+    ++ Length.toString(y)
+    ++ ", "
+    ++ Length.toString(z)
+    ++ ")";
+
+  let toString =
+    fun
+    | `translate(x, y) =>
+      "translate(" ++ Length.toString(x) ++ ", " ++ Length.toString(y) ++ ")"
+    | `translate3d(x, y, z) => string_of_translate3d(x, y, z)
+    | `translateX(x) => "translateX(" ++ Length.toString(x) ++ ")"
+    | `translateY(y) => "translateY(" ++ Length.toString(y) ++ ")"
+    | `translateZ(z) => "translateZ(" ++ Length.toString(z) ++ ")"
+    | `scale(x, y) => string_of_scale(x, y)
+    | `scale3d(x, y, z) =>
+      "scale3d("
+      ++ Js.Float.toString(x)
+      ++ ", "
+      ++ Js.Float.toString(y)
+      ++ ", "
+      ++ Js.Float.toString(z)
+      ++ ")"
+    | `scaleX(x) => "scaleX(" ++ Js.Float.toString(x) ++ ")"
+    | `scaleY(y) => "scaleY(" ++ Js.Float.toString(y) ++ ")"
+    | `scaleZ(z) => "scaleZ(" ++ Js.Float.toString(z) ++ ")"
+    | `rotate(a) => "rotate(" ++ Angle.toString(a) ++ ")"
+    | `rotate3d(x, y, z, a) =>
+      "rotate3d("
+      ++ Js.Float.toString(x)
+      ++ ", "
+      ++ Js.Float.toString(y)
+      ++ ", "
+      ++ Js.Float.toString(z)
+      ++ ", "
+      ++ Angle.toString(a)
+      ++ ")"
+    | `rotateX(a) => "rotateX(" ++ Angle.toString(a) ++ ")"
+    | `rotateY(a) => "rotateY(" ++ Angle.toString(a) ++ ")"
+    | `rotateZ(a) => "rotateZ(" ++ Angle.toString(a) ++ ")"
+    | `skew(x, y) =>
+      "skew(" ++ Angle.toString(x) ++ ", " ++ Angle.toString(y) ++ ")"
+    | `skewX(a) => "skewX(" ++ Angle.toString(a) ++ ")"
+    | `skewY(a) => "skewY(" ++ Angle.toString(a) ++ ")"
+    | `perspective(x) => "perspective(" ++ Js.Int.toString(x) ++ ")";
+};
+
+module AnimationDirection = {
+  type t = [ | `normal | `reverse | `alternate | `alternateReverse];
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `reverse => "reverse"
+    | `alternate => "alternate"
+    | `alternateReverse => "alternate-reverse";
+};
+
+module AnimationFillMode = {
+  type t = [ | `none | `forwards | `backwards | `both];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `forwards => "forwards"
+    | `backwards => "backwards"
+    | `both => "both";
+};
+
+module AnimationIterationCount = {
+  type t = [ | `infinite | `count(int)];
+
+  let toString =
+    fun
+    | `infinite => "infinite"
+    | `count(x) => Js.Int.toString(x);
+};
+
+module AnimationPlayState = {
+  type t = [ | `paused | `running];
+
+  let toString =
+    fun
+    | `paused => "paused"
+    | `running => "running";
+};
+
+module Cursor = {
+  type t = [
+    | `auto
+    | `default
+    | `none
+    | `contextMenu
+    | `help
+    | `pointer
+    | `progress
+    | `wait
+    | `cell
+    | `crosshair
+    | `text
+    | `verticalText
+    | `alias
+    | `copy
+    | `move
+    | `noDrop
+    | `notAllowed
+    | `grab
+    | `grabbing
+    | `allScroll
+    | `colResize
+    | `rowResize
+    | `nResize
+    | `eResize
+    | `sResize
+    | `wResize
+    | `neResize
+    | `nwResize
+    | `seResize
+    | `swResize
+    | `ewResize
+    | `nsResize
+    | `neswResize
+    | `nwseResize
+    | `zoomIn
+    | `zoomOut
+  ];
+
+  let toString = x =>
+    switch (x) {
+    | `auto => "auto"
+    | `default => "default"
+    | `none => "none"
+    | `contextMenu => "context-menu"
+    | `help => "help"
+    | `pointer => "pointer"
+    | `progress => "progress"
+    | `wait => "wait"
+    | `cell => "cell"
+    | `crosshair => "crosshair"
+    | `text => "text"
+    | `verticalText => "vertical-text"
+    | `alias => "alias"
+    | `copy => "copy"
+    | `move => "move"
+    | `noDrop => "no-drop"
+    | `notAllowed => "not-allowed"
+    | `grab => "grab"
+    | `grabbing => "grabbing"
+    | `allScroll => "all-scroll"
+    | `colResize => "col-resize"
+    | `rowResize => "row-resize"
+    | `nResize => "n-resize"
+    | `eResize => "e-resize"
+    | `sResize => "s-resize"
+    | `wResize => "w-resize"
+    | `neResize => "ne-resize"
+    | `nwResize => "nw-resize"
+    | `seResize => "se-resize"
+    | `swResize => "sw-resize"
+    | `ewResize => "ew-resize"
+    | `nsResize => "ns-resize"
+    | `neswResize => "nesw-resize"
+    | `nwseResize => "nwse-resize"
+    | `zoomIn => "zoom-in"
+    | `zoomOut => "zoom-out"
+    };
+};

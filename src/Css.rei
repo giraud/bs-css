@@ -21,6 +21,7 @@ let label: string => rule;
  ********** */
 
 let bottom: [ Types.Length.t | Types.Cascading.t] => rule;
+let cursor: Types.Cursor.t => rule;
 let direction: [< Types.Direction.t | Types.Cascading.t] => rule;
 let fontFamily: string => rule;
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
@@ -99,6 +100,15 @@ type cascading = Types.Cascading.t;
 type angle = Types.Angle.t;
 type fontStyle = Types.FontStyle.t;
 type length = Types.Length.t;
+type repeatValue = Types.RepeatValue.t;
+type listStyleType = Types.ListStyleType.t;
+type outlineStyle = Types.OutlineStyle.t;
+type fontWeight = Types.FontWeight.t;
+type transform = Types.Transform.t;
+type animationDirection = Types.AnimationDirection.t;
+type animationFillMode = Types.AnimationFillMode.t;
+type animationIterationCount = Types.AnimationIterationCount.t;
+type animationPlayState = Types.AnimationPlayState.t;
 
 /* **************************************************
  Constructor aliases, for ease of use.
@@ -241,7 +251,6 @@ let repeatingRadialGradient:
   list((Types.Length.t, color)) =>
   [> | `repeatingRadialGradient(list((Types.Length.t, color)))];
 
-type repeatValue = [ | `autoFill | `autoFit | `num(int)];
 type minmax = [
   | `fr(float)
   | `minContent
@@ -588,63 +597,8 @@ let backgroundSize:
   [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
   rule;
 
-let cursor:
-  [
-    | `auto
-    | `default
-    | `none
-    | `contextMenu
-    | `help
-    | `pointer
-    | `progress
-    | `wait
-    | `cell
-    | `crosshair
-    | `text
-    | `verticalText
-    | `alias
-    | `copy
-    | `move
-    | `noDrop
-    | `notAllowed
-    | `grab
-    | `grabbing
-    | `allScroll
-    | `colResize
-    | `rowResize
-    | `nResize
-    | `eResize
-    | `sResize
-    | `wResize
-    | `neResize
-    | `nwResize
-    | `seResize
-    | `swResize
-    | `ewResize
-    | `nsResize
-    | `neswResize
-    | `nwseResize
-    | `zoomIn
-    | `zoomOut
-  ] =>
-  rule;
-
 let clipPath: [ | `url(string)] => rule;
 
-type listStyleType = [
-  | `disc
-  | `circle
-  | `square
-  | `decimal
-  | `lowerAlpha
-  | `upperAlpha
-  | `lowerGreek
-  | `lowerLatin
-  | `upperLatin
-  | `lowerRoman
-  | `upperRoman
-  | `none
-];
 let listStyle:
   (listStyleType, [ | `inside | `outside], [ | `none | `url(string)]) => rule;
 let listStyleType: listStyleType => rule;
@@ -653,18 +607,6 @@ let listStyleImage: [ | `none | `url(string)] => rule;
 
 let opacity: float => rule;
 
-type outlineStyle = [
-  | `none
-  | `hidden
-  | `dotted
-  | `dashed
-  | `solid
-  | `double
-  | `groove
-  | `ridge
-  | `inset
-  | `outset
-];
 let outline: (Types.Length.t, outlineStyle, color) => rule;
 let outlineStyle: outlineStyle => rule;
 let outlineWidth: Types.Length.t => rule;
@@ -694,22 +636,6 @@ let filter: list(filter) => rule;
 /**
  * Text
  */
-
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
-type fontWeight = [
-  | `num(int)
-  | `thin
-  | `extraLight
-  | `light
-  | `normal
-  | `medium
-  | `semiBold
-  | `bold
-  | `extraBold
-  | `black
-  | `lighter
-  | `bolder
-];
 
 let thin: [> | `thin];
 let extraLight: [> | `extraLight];
@@ -765,28 +691,6 @@ let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
  * Transform
  */
 
-type transform = [
-  | `translate(Types.Length.t, Types.Length.t)
-  | `translate3d(Types.Length.t, Types.Length.t, Types.Length.t)
-  | `translateX(Types.Length.t)
-  | `translateY(Types.Length.t)
-  | `translateZ(Types.Length.t)
-  | `scale(float, float)
-  | `scale3d(float, float, float)
-  | `scaleX(float)
-  | `scaleY(float)
-  | `scaleZ(float)
-  | `rotate(Types.Angle.t)
-  | `rotate3d(float, float, float, Types.Angle.t)
-  | `rotateX(Types.Angle.t)
-  | `rotateY(Types.Angle.t)
-  | `rotateZ(Types.Angle.t)
-  | `skew(Types.Angle.t, Types.Angle.t)
-  | `skewX(Types.Angle.t)
-  | `skewY(Types.Angle.t)
-  | `perspective(int)
-];
-
 let transform: transform => rule;
 let transforms: list(transform) => rule;
 let transformOrigin: (Types.Length.t, Types.Length.t) => rule;
@@ -839,17 +743,6 @@ let transitionProperty: string => rule;
 
 type animationName;
 let keyframes: list((int, list(rule))) => animationName;
-
-type animationDirection = [
-  | `normal
-  | `reverse
-  | `alternate
-  | `alternateReverse
-];
-
-type animationFillMode = [ | `none | `forwards | `backwards | `both];
-type animationIterationCount = [ | `infinite | `count(int)];
-type animationPlayState = [ | `paused | `running];
 
 module Animation: {
   type t = [ | `value(string)];

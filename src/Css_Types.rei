@@ -215,3 +215,158 @@ module TimingFunction: {
 
   let toString: t => string;
 };
+
+module RepeatValue: {
+  type t = [ | `autoFill | `autoFit | `num(int)];
+
+  let toString: t => string;
+};
+
+module ListStyleType: {
+  type t = [
+    | `disc
+    | `circle
+    | `square
+    | `decimal
+    | `lowerAlpha
+    | `upperAlpha
+    | `lowerGreek
+    | `lowerLatin
+    | `upperLatin
+    | `lowerRoman
+    | `upperRoman
+    | `none
+  ];
+
+  let toString: t => string;
+};
+
+module OutlineStyle: {
+  type t = [
+    | `none
+    | `hidden
+    | `dotted
+    | `dashed
+    | `solid
+    | `double
+    | `groove
+    | `ridge
+    | `inset
+    | `outset
+  ];
+
+  let toString: t => string;
+};
+
+module FontWeight: {
+  /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+  type t = [
+    | `num(int)
+    | `thin
+    | `extraLight
+    | `light
+    | `normal
+    | `medium
+    | `semiBold
+    | `bold
+    | `extraBold
+    | `black
+    | `lighter
+    | `bolder
+  ];
+
+  let toString: t => string;
+};
+
+module Transform: {
+  type t = [
+    | `translate(Length.t, Length.t)
+    | `translate3d(Length.t, Length.t, Length.t)
+    | `translateX(Length.t)
+    | `translateY(Length.t)
+    | `translateZ(Length.t)
+    | `scale(float, float)
+    | `scale3d(float, float, float)
+    | `scaleX(float)
+    | `scaleY(float)
+    | `scaleZ(float)
+    | `rotate(Angle.t)
+    | `rotate3d(float, float, float, Angle.t)
+    | `rotateX(Angle.t)
+    | `rotateY(Angle.t)
+    | `rotateZ(Angle.t)
+    | `skew(Angle.t, Angle.t)
+    | `skewX(Angle.t)
+    | `skewY(Angle.t)
+    | `perspective(int)
+  ];
+
+  let toString: t => string;
+};
+
+module AnimationDirection: {
+  type t = [ | `normal | `reverse | `alternate | `alternateReverse];
+
+  let toString: t => string;
+};
+
+module AnimationFillMode: {
+  type t = [ | `none | `forwards | `backwards | `both];
+
+  let toString: t => string;
+};
+
+module AnimationIterationCount: {
+  type t = [ | `infinite | `count(int)];
+
+  let toString: t => string;
+};
+
+module AnimationPlayState: {
+  type t = [ | `paused | `running];
+
+  let toString: t => string;
+};
+
+module Cursor: {
+  type t = [
+    | `auto
+    | `default
+    | `none
+    | `contextMenu
+    | `help
+    | `pointer
+    | `progress
+    | `wait
+    | `cell
+    | `crosshair
+    | `text
+    | `verticalText
+    | `alias
+    | `copy
+    | `move
+    | `noDrop
+    | `notAllowed
+    | `grab
+    | `grabbing
+    | `allScroll
+    | `colResize
+    | `rowResize
+    | `nResize
+    | `eResize
+    | `sResize
+    | `wResize
+    | `neResize
+    | `nwResize
+    | `seResize
+    | `swResize
+    | `ewResize
+    | `nsResize
+    | `neswResize
+    | `nwseResize
+    | `zoomIn
+    | `zoomOut
+  ];
+
+  let toString: t => string;
+};

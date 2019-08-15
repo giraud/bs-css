@@ -139,18 +139,6 @@ module Converter = {
     ++ string_of_stops(stops)
     ++ ")";
 
-  let string_of_translate3d = (x, y, z) =>
-    "translate3d("
-    ++ Types.Length.toString(x)
-    ++ ", "
-    ++ Types.Length.toString(y)
-    ++ ", "
-    ++ Types.Length.toString(z)
-    ++ ")";
-
-  let string_of_scale = (x, y) =>
-    "scale(" ++ Js.Float.toString(x) ++ ", " ++ Js.Float.toString(y) ++ ")";
-
   let string_of_time = t => Js.Int.toString(t) ++ "ms";
 
   let string_of_visibility =
@@ -202,65 +190,6 @@ module Converter = {
       "radial-gradient(" ++ string_of_stops(stops) ++ ")"
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    };
-
-  let string_of_cursor = x =>
-    switch (x) {
-    | `auto => "auto"
-    | `default => "default"
-    | `none => "none"
-    | `contextMenu => "context-menu"
-    | `help => "help"
-    | `pointer => "pointer"
-    | `progress => "progress"
-    | `wait => "wait"
-    | `cell => "cell"
-    | `crosshair => "crosshair"
-    | `text => "text"
-    | `verticalText => "vertical-text"
-    | `alias => "alias"
-    | `copy => "copy"
-    | `move => "move"
-    | `noDrop => "no-drop"
-    | `notAllowed => "not-allowed"
-    | `grab => "grab"
-    | `grabbing => "grabbing"
-    | `allScroll => "all-scroll"
-    | `colResize => "col-resize"
-    | `rowResize => "row-resize"
-    | `nResize => "n-resize"
-    | `eResize => "e-resize"
-    | `sResize => "s-resize"
-    | `wResize => "w-resize"
-    | `neResize => "ne-resize"
-    | `nwResize => "nw-resize"
-    | `seResize => "se-resize"
-    | `swResize => "sw-resize"
-    | `ewResize => "ew-resize"
-    | `nsResize => "ns-resize"
-    | `neswResize => "nesw-resize"
-    | `nwseResize => "nwse-resize"
-    | `zoomIn => "zoom-in"
-    | `zoomOut => "zoom-out"
-    };
-
-  let string_of_fontWeight = x =>
-    switch (x) {
-    | `num(n) => Js.Int.toString(n)
-    | `thin => "100"
-    | `extraLight => "200"
-    | `light => "300"
-    | `normal => "400"
-    | `medium => "500"
-    | `semiBold => "600"
-    | `bold => "700"
-    | `extraBold => "800"
-    | `black => "900"
-    | `lighter => "lighter"
-    | `bolder => "bolder"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
     };
 
   let string_of_flex =
@@ -318,6 +247,8 @@ let bottom = x =>
     | #Types.Cascading.t as c => Types.Cascading.toString(c)
     },
   );
+
+let cursor = x => Declaration("cursor", Types.Cursor.toString(x));
 
 let direction = x =>
   Declaration(
@@ -534,6 +465,15 @@ type cascading = Types.Cascading.t;
 type length = Types.Length.t;
 type angle = Types.Angle.t;
 type fontStyle = Types.FontStyle.t;
+type repeatValue = Types.RepeatValue.t;
+type listStyleType = Types.ListStyleType.t;
+type outlineStyle = Types.OutlineStyle.t;
+type fontWeight = Types.FontWeight.t;
+type transform = Types.Transform.t;
+type animationDirection = Types.AnimationDirection.t;
+type animationFillMode = Types.AnimationFillMode.t;
+type animationIterationCount = Types.AnimationIterationCount.t;
+type animationPlayState = Types.AnimationPlayState.t;
 
 /* Constructor aliases */
 
@@ -800,7 +740,6 @@ let display = x =>
   Declaration(
     "display",
     switch (x) {
-    | `unset => "unset"
     | `inline => "inline"
     | `block => "block"
     | `contents => "contents"
@@ -824,6 +763,7 @@ let display = x =>
     | `none => "none"
     | `initial => "initial"
     | `inherit_ => "inherit"
+    | `unset => "unset"
     },
   );
 
@@ -955,13 +895,6 @@ let maxWidth = x => Declaration("maxWidth", string_of_dimension(x));
 let minHeight = x => Declaration("minHeight", string_of_dimension(x));
 let maxHeight = x => Declaration("maxHeight", string_of_dimension(x));
 
-type repeatValue = [ | `autoFill | `autoFit | `num(int)];
-let repeatValueToJs =
-  fun
-  | `autoFill => "auto-fill"
-  | `autoFit => "auto-fit"
-  | `num(x) => x->Js.Int.toString;
-
 type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | length];
 
 type trackLength = [
@@ -1007,7 +940,11 @@ let gridLengthToJs =
   | `minContent => "min-content"
   | `maxContent => "max-content"
   | `repeat(n, x) =>
-    "repeat(" ++ n->repeatValueToJs ++ ", " ++ string_of_dimension(x) ++ ")"
+    "repeat("
+    ++ Types.RepeatValue.toString(n)
+    ++ ", "
+    ++ string_of_dimension(x)
+    ++ ")"
   | `minmax(a, b) =>
     "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
 
@@ -1156,7 +1093,7 @@ let string_of_filter =
   | `none => "none";
 
 let filter = x =>
-  Declaration("filter", x |> List.map(string_of_filter) |> joinLast(" "));
+  Declaration("filter", x->Belt.List.map(string_of_filter)->join(" "));
 /**
  * Style
  */
@@ -1335,7 +1272,7 @@ let background = x => Declaration("background", string_of_background(x));
 let backgrounds = bg =>
   Declaration(
     "background",
-    bg |> List.map(string_of_background) |> joinLast(", "),
+    bg->Belt.List.map(string_of_background)->join(", "),
   );
 let backgroundColor = x =>
   Declaration("backgroundColor", string_of_color(x));
@@ -1414,8 +1351,6 @@ let backgroundSize = x =>
     },
   );
 
-let cursor = x => Declaration("cursor", string_of_cursor(x));
-
 let clipPath = x =>
   Declaration(
     "clipPath",
@@ -1423,36 +1358,6 @@ let clipPath = x =>
     | `url(url) => "url(" ++ url ++ ")"
     },
   );
-
-type listStyleType = [
-  | `disc
-  | `circle
-  | `square
-  | `decimal
-  | `lowerAlpha
-  | `upperAlpha
-  | `lowerGreek
-  | `lowerLatin
-  | `upperLatin
-  | `lowerRoman
-  | `upperRoman
-  | `none
-];
-
-let string_of_listStyleType =
-  fun
-  | `disc => "disc"
-  | `circle => "circle"
-  | `square => "square"
-  | `decimal => "decimal"
-  | `lowerAlpha => "lower-alpha"
-  | `upperAlpha => "upper-alpha"
-  | `lowerGreek => "lower-greek"
-  | `lowerLatin => "lower-latin"
-  | `upperLatin => "upper-latin"
-  | `lowerRoman => "lower-roman"
-  | `upperRoman => "upper-roman"
-  | `none => "none";
 
 let string_of_listStylePosition =
   fun
@@ -1467,7 +1372,7 @@ let string_of_listStyleImage =
 let listStyle = (style, pos, img) =>
   Declaration(
     "listStyle",
-    string_of_listStyleType(style)
+    Types.ListStyleType.toString(style)
     ++ " "
     ++ string_of_listStylePosition(pos)
     ++ " "
@@ -1475,7 +1380,7 @@ let listStyle = (style, pos, img) =>
   );
 
 let listStyleType = x =>
-  Declaration("listStyleType", string_of_listStyleType(x));
+  Declaration("listStyleType", Types.ListStyleType.toString(x));
 
 let listStylePosition = x =>
   Declaration("listStylePosition", string_of_listStylePosition(x));
@@ -1485,44 +1390,18 @@ let listStyleImage = x =>
 
 let opacity = x => Declaration("opacity", Js.Float.toString(x));
 
-type outlineStyle = [
-  | `none
-  | `hidden
-  | `dotted
-  | `dashed
-  | `solid
-  | `double
-  | `groove
-  | `ridge
-  | `inset
-  | `outset
-];
-
-let string_of_outlineStyle =
-  fun
-  | `none => "none"
-  | `hidden => "hidden"
-  | `dotted => "dotted"
-  | `dashed => "dashed"
-  | `solid => "solid"
-  | `double => "double"
-  | `groove => "grove"
-  | `ridge => "ridge"
-  | `inset => "inset"
-  | `outset => "outset";
-
 let outline = (size, style, color) =>
   Declaration(
     "outline",
     Types.Length.toString(size)
     ++ " "
-    ++ string_of_outlineStyle(style)
+    ++ Types.OutlineStyle.toString(style)
     ++ " "
     ++ string_of_color(color),
   );
 
 let outlineStyle = x =>
-  Declaration("outlineStyle", string_of_outlineStyle(x));
+  Declaration("outlineStyle", Types.OutlineStyle.toString(x));
 
 let outlineWidth = x =>
   Declaration("outlineWidth", Types.Length.toString(x));
@@ -1536,22 +1415,6 @@ let outlineOffset = x =>
  * Text
  */
 
-/* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
-type fontWeight = [
-  | `num(int)
-  | `thin
-  | `extraLight
-  | `light
-  | `normal
-  | `medium
-  | `semiBold
-  | `bold
-  | `extraBold
-  | `black
-  | `lighter
-  | `bolder
-];
-
 let thin = `thin;
 let extraLight = `extraLight;
 let light = `light;
@@ -1564,7 +1427,14 @@ let bolder = `bolder;
 
 let color = x => Declaration("color", string_of_color(x));
 
-let fontWeight = x => Declaration("fontWeight", string_of_fontWeight(x));
+let fontWeight = x =>
+  Declaration(
+    "fontWeight",
+    switch (x) {
+    | #Types.FontWeight.t as f => Types.FontWeight.toString(f)
+    | #Types.Cascading.t as c => Types.Cascading.toString(c)
+    },
+  );
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =
@@ -1582,7 +1452,13 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
     Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ s);
   let fontWeight =
     Belt.Option.mapWithDefault(fontWeight, "", w =>
-      "font-weight: " ++ string_of_fontWeight(w)
+      "font-weight: "
+      ++ (
+        switch (w) {
+        | #Types.FontWeight.t as f => Types.FontWeight.toString(f)
+        | #Types.Cascading.t as c => Types.Cascading.toString(c)
+        }
+      )
     );
   let asString = {j|@font-face {
     font-family: $fontFamily;
@@ -1867,82 +1743,12 @@ let pointerEvents = x =>
  * Transform
  */
 
-type transform = [
-  | `translate(length, length)
-  | `translate3d(length, length, length)
-  | `translateX(length)
-  | `translateY(length)
-  | `translateZ(length)
-  | `scale(float, float)
-  | `scale3d(float, float, float)
-  | `scaleX(float)
-  | `scaleY(float)
-  | `scaleZ(float)
-  | `rotate(angle)
-  | `rotate3d(float, float, float, angle)
-  | `rotateX(angle)
-  | `rotateY(angle)
-  | `rotateZ(angle)
-  | `skew(angle, angle)
-  | `skewX(angle)
-  | `skewY(angle)
-  | `perspective(int)
-];
-
-let string_of_transform =
-  fun
-  | `translate(x, y) =>
-    "translate("
-    ++ Types.Length.toString(x)
-    ++ ", "
-    ++ Types.Length.toString(y)
-    ++ ")"
-  | `translate3d(x, y, z) => string_of_translate3d(x, y, z)
-  | `translateX(x) => "translateX(" ++ Types.Length.toString(x) ++ ")"
-  | `translateY(y) => "translateY(" ++ Types.Length.toString(y) ++ ")"
-  | `translateZ(z) => "translateZ(" ++ Types.Length.toString(z) ++ ")"
-  | `scale(x, y) => string_of_scale(x, y)
-  | `scale3d(x, y, z) =>
-    "scale3d("
-    ++ Js.Float.toString(x)
-    ++ ", "
-    ++ Js.Float.toString(y)
-    ++ ", "
-    ++ Js.Float.toString(z)
-    ++ ")"
-  | `scaleX(x) => "scaleX(" ++ Js.Float.toString(x) ++ ")"
-  | `scaleY(y) => "scaleY(" ++ Js.Float.toString(y) ++ ")"
-  | `scaleZ(z) => "scaleZ(" ++ Js.Float.toString(z) ++ ")"
-  | `rotate(a) => "rotate(" ++ Types.Angle.toString(a) ++ ")"
-  | `rotate3d(x, y, z, a) =>
-    "rotate3d("
-    ++ Js.Float.toString(x)
-    ++ ", "
-    ++ Js.Float.toString(y)
-    ++ ", "
-    ++ Js.Float.toString(z)
-    ++ ", "
-    ++ Types.Angle.toString(a)
-    ++ ")"
-  | `rotateX(a) => "rotateX(" ++ Types.Angle.toString(a) ++ ")"
-  | `rotateY(a) => "rotateY(" ++ Types.Angle.toString(a) ++ ")"
-  | `rotateZ(a) => "rotateZ(" ++ Types.Angle.toString(a) ++ ")"
-  | `skew(x, y) =>
-    "skew("
-    ++ Types.Angle.toString(x)
-    ++ ", "
-    ++ Types.Angle.toString(y)
-    ++ ")"
-  | `skewX(a) => "skewX(" ++ Types.Angle.toString(a) ++ ")"
-  | `skewY(a) => "skewY(" ++ Types.Angle.toString(a) ++ ")"
-  | `perspective(x) => "perspective(" ++ Js.Int.toString(x) ++ ")";
-
-let transform = x => Declaration("transform", string_of_transform(x));
+let transform = x => Declaration("transform", Types.Transform.toString(x));
 
 let transforms = xs =>
   Declaration(
     "transform",
-    xs |> List.map(string_of_transform) |> joinLast(" "),
+    xs->Belt.List.map(Types.Transform.toString)->join(" "),
   );
 
 let transformOrigin = (x, y) =>
@@ -2016,7 +1822,7 @@ module Transition = {
     `value(
       string_of_time(duration)
       ++ " "
-      ++ timingFunction->Types.TimingFunction.toString
+      ++ Types.TimingFunction.toString(timingFunction)
       ++ " "
       ++ string_of_time(delay)
       ++ " "
@@ -2028,7 +1834,7 @@ module Transition = {
     | `value(v) => v;
 };
 
-let transitionValue = x => Declaration("transition", x->Transition.toString);
+let transitionValue = x => Declaration("transition", Transition.toString(x));
 
 let transitionList = x =>
   Declaration(
@@ -2048,7 +1854,7 @@ let transitionDuration = i =>
   Declaration("transitionDuration", string_of_time(i));
 
 let transitionTimingFunction = x =>
-  Declaration("transitionTimingFunction", x->Types.TimingFunction.toString);
+  Declaration("transitionTimingFunction", Types.TimingFunction.toString(x));
 
 let transitionProperty = x => Declaration("transitionProperty", x);
 
@@ -2061,44 +1867,6 @@ let perspectiveOrigin = (x, y) =>
 /**
  * Animation
  */
-
-type animationDirection = [
-  | `normal
-  | `reverse
-  | `alternate
-  | `alternateReverse
-];
-
-let string_of_animationDirection =
-  fun
-  | `normal => "normal"
-  | `reverse => "reverse"
-  | `alternate => "alternate"
-  | `alternateReverse => "alternate-reverse";
-
-type animationFillMode = [ | `none | `forwards | `backwards | `both];
-
-let string_of_animationFillMode =
-  fun
-  | `none => "none"
-  | `forwards => "forwards"
-  | `backwards => "backwards"
-  | `both => "both";
-
-type animationIterationCount = [ | `infinite | `count(int)];
-
-let string_of_animationIterationCount =
-  fun
-  | `infinite => "infinite"
-  | `count(x) => Js.Int.toString(x);
-
-type animationPlayState = [ | `paused | `running];
-
-let string_of_animationPlayState =
-  fun
-  | `paused => "paused"
-  | `running => "running";
-
 module Animation = {
   type t = [ | `value(string)];
 
@@ -2118,17 +1886,17 @@ module Animation = {
       ++ " "
       ++ string_of_time(duration)
       ++ " "
-      ++ timingFunction->Types.TimingFunction.toString
+      ++ Types.TimingFunction.toString(timingFunction)
       ++ " "
       ++ string_of_time(delay)
       ++ " "
-      ++ string_of_animationIterationCount(iterationCount)
+      ++ Types.AnimationIterationCount.toString(iterationCount)
       ++ " "
-      ++ string_of_animationDirection(direction)
+      ++ Types.AnimationDirection.toString(direction)
       ++ " "
-      ++ string_of_animationFillMode(fillMode)
+      ++ Types.AnimationFillMode.toString(fillMode)
       ++ " "
-      ++ string_of_animationPlayState(playState),
+      ++ Types.AnimationPlayState.toString(playState),
     );
 
   let toString =
@@ -2136,7 +1904,7 @@ module Animation = {
     | `value(v) => v;
 };
 
-let animationValue = x => Declaration("animation", x->Animation.toString);
+let animationValue = x => Declaration("animation", Animation.toString(x));
 
 let animation =
     (
@@ -2170,21 +1938,21 @@ let animations = x =>
 
 let animationDelay = x => Declaration("animationDelay", string_of_time(x));
 let animationDirection = x =>
-  Declaration("animationDirection", string_of_animationDirection(x));
+  Declaration("animationDirection", Types.AnimationDirection.toString(x));
 let animationDuration = x =>
   Declaration("animationDuration", string_of_time(x));
 let animationFillMode = x =>
-  Declaration("animationFillMode", string_of_animationFillMode(x));
+  Declaration("animationFillMode", Types.AnimationFillMode.toString(x));
 let animationIterationCount = x =>
   Declaration(
     "animationIterationCount",
-    string_of_animationIterationCount(x),
+    Types.AnimationIterationCount.toString(x),
   );
 let animationName = x => Declaration("animationName", x);
 let animationPlayState = x =>
-  Declaration("animationPlayState", string_of_animationPlayState(x));
+  Declaration("animationPlayState", Types.AnimationPlayState.toString(x));
 let animationTimingFunction = x =>
-  Declaration("animationTimingFunction", x->Types.TimingFunction.toString);
+  Declaration("animationTimingFunction", Types.TimingFunction.toString(x));
 
 /**
  * Selectors
