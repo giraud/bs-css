@@ -36,8 +36,7 @@ module Percentage: {
 };
 
 /**
- https://developer.mozilla.org/en-US/docs/Web/CSS/length.
- Note: calc is not a type
+ https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
 module Length: {
   // calc/percent are incorrect

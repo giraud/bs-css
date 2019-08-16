@@ -1228,9 +1228,6 @@ let string_of_filter =
 
 let filter = x =>
   D("filter", x->Belt.List.map(string_of_filter)->join(" "));
-/**
- * Style
- */
 
 let backfaceVisibility = x =>
   D("backfaceVisibility", string_of_visibility(x));

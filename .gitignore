@@ -12,5 +12,4 @@ npm-debug.log
 *.js
 .merlin
 .nvmrc
-*.lock
 *.log
