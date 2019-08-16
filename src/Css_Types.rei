@@ -10,38 +10,90 @@ module Cascading: {
   let toString: t => string;
 };
 
+module Time: {
+  /**
+   The <time> CSS data type represents a time value expressed in seconds or milliseconds.
+   It is used in animation, transition, and related properties
+   */
+  type t = [ | `s(float) | `ms(float)];
+
+  let s: float => [> | `s(float)];
+  let ms: float => [> | `ms(float)];
+
+  let toString: t => string;
+};
+
+module Percentage: {
+  /**
+   The <percentage> CSS data type represents a percentage value.
+   It is often used to define a size as relative to an element's parent object
+   */
+  type t = [ | `percent(float)];
+
+  let pct: float => [> t];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/length.
+ Note: calc is not a type
+ */
 module Length: {
+  // calc/percent are incorrect
+
+  /** The <length> CSS data type represents a distance value. */
   type t = [
-    | `calc([ | `add | `sub], t, t)
     | `ch(float)
-    | `cm(float)
     | `em(float)
     | `ex(float)
-    | `mm(float)
-    | `percent(float)
-    | `pt(int)
-    | `px(int)
-    | `pxFloat(float)
     | `rem(float)
     | `vh(float)
+    | `vw(float)
     | `vmin(float)
     | `vmax(float)
-    | `vw(float)
+    | `px(int)
+    | `pxFloat(float)
+    | `cm(float)
+    | `mm(float)
+    | `inch(float)
+    | `pc(float)
+    | `pt(int)
     | `zero
+    | `calc([ | `add | `sub], t, t)
+    | `percent(float)
   ];
 
+  /** Represents the width, or more precisely the advance measure, of the glyph "0" (zero, the Unicode character U+0030) in the element's font. */
   let ch: float => [> | `ch(float)];
-  let cm: float => [> | `cm(float)];
+  /** Represents the calculated font-size of the element. If used on the font-size property itself, it represents the inherited font-size of the element */
   let em: float => [> | `em(float)];
+  /** Represents the x-height of the element's font. On fonts with the "x" letter, this is generally the height of lowercase letters in the font; 1ex ≈ 0.5em in many fonts */
   let ex: float => [> | `ex(float)];
-  let mm: float => [> | `mm(float)];
-  let pt: int => [> | `pt(int)];
+  /** Represents the font-size of the root element (typically <html>). When used within the root element font-size, it represents its initial value (a common browser default is 16px, but user-defined preferences may modify this) */
+  let rem: float => [> | `rem(float)];
+  /** Equal to 1% of the height of the viewport's initial containing block */
+  let vh: float => [> | `vh(float)];
+  /** Equal to 1% of the width of the viewport's initial containing block */
+  let vw: float => [> | `vw(float)];
+  /** Equal to the smaller of vw and vh */
+  let vmin: float => [> | `vmin(float)];
+  /** Equal to the larger of vw and vh */
+  let vmax: float => [> | `vmax(float)];
+  /** One pixel. For screen displays, it traditionally represents one device pixel (dot). However, for printers and high-resolution screens, one CSS pixel implies multiple device pixels. 1px = 1/96th of 1in */
   let px: int => [> | `px(int)];
   let pxFloat: float => [> | `pxFloat(float)];
-  let rem: float => [> | `rem(float)];
-  let vh: float => [> | `vh(float)];
-  let vmin: float => [> | `vmin(float)];
-  let vmax: float => [> | `vmax(float)];
+  /** One centimeter. 1cm = 96px/2.54 */
+  let cm: float => [> | `cm(float)];
+  /** One millimeter. 1mm = 1/10th of 1cm */
+  let mm: float => [> | `mm(float)];
+  /** One inch. 1in = 2.54cm = 96px */
+  let inch: float => [> | `inch(float)];
+  /** One pica. 1pc = 12pt = 1/6th of 1in */
+  let pc: float => [> | `pc(float)];
+  /** One point. 1pt = 1/72nd of 1in */
+  let pt: int => [> | `pt(int)];
+  /** The value 0 */
   let zero: [> | `zero];
 
   let toString: t => string;
@@ -63,11 +115,6 @@ module Angle: {
 };
 
 module Direction: {
-  /**
-   The direction CSS property sets the direction of text, table columns, and horizontal overflow.
-   Use rtl for languages written from right to left (like Hebrew or Arabic),
-   and ltr for those written from left to right (like English and most other languages).
-   */
   type t = [ | `ltr | `rtl];
 
   /** Text and other elements go from left to right. This is the default value. */
@@ -79,10 +126,6 @@ module Direction: {
 };
 
 module Position: {
-  /**
-   The position CSS property sets how an element is positioned in a document.
-   The top, right, bottom, and left properties determine the final location of positioned elements.
-   */
   type t = [ | `absolute | `relative | `static | `fixed | `sticky];
 
   let absolute: [> t];
@@ -95,10 +138,6 @@ module Position: {
 };
 
 module Resize: {
-  /**
-   The resize CSS property sets whether an element is resizable, and if so,
-   in which directions.
-   */
   type t = [ | `none | `both | `horizontal | `vertical | `block | `inline];
 
   /** The element offers no user-controllable method for resizing it */
@@ -118,11 +157,6 @@ module Resize: {
 };
 
 module FontVariant: {
-  /**
-   The font-variant CSS property is a shorthand for the longhand properties font-variant-caps, font-variant-numeric,
-   font-variant-alternates, font-variant-ligatures, and font-variant-east-asian.
-   You can also set the CSS Level 2 (Revision 1) values of font-variant, (that is, normal or small-caps),
-   by using the font shorthand */
   type t = [ | `normal | `smallCaps];
 
   let normal: [> t];
@@ -196,6 +230,258 @@ module VerticalAlign: {
     | `bottom
     | `textBottom
   ];
+
+  let toString: t => string;
+};
+
+module TimingFunction: {
+  type t = [
+    | `linear
+    | `ease
+    | `easeIn
+    | `easeOut
+    | `easeInOut
+    | `stepStart
+    | `stepEnd
+    | `steps(int, [ | `start | `end_])
+    | `cubicBezier(float, float, float, float)
+  ];
+
+  let toString: t => string;
+};
+
+module RepeatValue: {
+  type t = [ | `autoFill | `autoFit | `num(int)];
+
+  let toString: t => string;
+};
+
+module ListStyleType: {
+  type t = [
+    | `disc
+    | `circle
+    | `square
+    | `decimal
+    | `lowerAlpha
+    | `upperAlpha
+    | `lowerGreek
+    | `lowerLatin
+    | `upperLatin
+    | `lowerRoman
+    | `upperRoman
+    | `none
+  ];
+
+  let toString: t => string;
+};
+
+module OutlineStyle: {
+  type t = [
+    | `none
+    | `hidden
+    | `dotted
+    | `dashed
+    | `solid
+    | `double
+    | `groove
+    | `ridge
+    | `inset
+    | `outset
+  ];
+
+  let toString: t => string;
+};
+
+module FontWeight: {
+  /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+  type t = [
+    | `num(int)
+    | `thin
+    | `extraLight
+    | `light
+    | `normal
+    | `medium
+    | `semiBold
+    | `bold
+    | `extraBold
+    | `black
+    | `lighter
+    | `bolder
+  ];
+
+  let toString: t => string;
+};
+
+module Transform: {
+  type t = [
+    | `translate(Length.t, Length.t)
+    | `translate3d(Length.t, Length.t, Length.t)
+    | `translateX(Length.t)
+    | `translateY(Length.t)
+    | `translateZ(Length.t)
+    | `scale(float, float)
+    | `scale3d(float, float, float)
+    | `scaleX(float)
+    | `scaleY(float)
+    | `scaleZ(float)
+    | `rotate(Angle.t)
+    | `rotate3d(float, float, float, Angle.t)
+    | `rotateX(Angle.t)
+    | `rotateY(Angle.t)
+    | `rotateZ(Angle.t)
+    | `skew(Angle.t, Angle.t)
+    | `skewX(Angle.t)
+    | `skewY(Angle.t)
+    | `perspective(int)
+  ];
+
+  let toString: t => string;
+};
+
+module AnimationDirection: {
+  type t = [ | `normal | `reverse | `alternate | `alternateReverse];
+
+  let toString: t => string;
+};
+
+module AnimationFillMode: {
+  type t = [ | `none | `forwards | `backwards | `both];
+
+  let toString: t => string;
+};
+
+module AnimationIterationCount: {
+  type t = [ | `infinite | `count(int)];
+
+  let toString: t => string;
+};
+
+module AnimationPlayState: {
+  type t = [ | `paused | `running];
+
+  let toString: t => string;
+};
+
+module Cursor: {
+  type t = [
+    | `auto
+    | `default
+    | `none
+    | `contextMenu
+    | `help
+    | `pointer
+    | `progress
+    | `wait
+    | `cell
+    | `crosshair
+    | `text
+    | `verticalText
+    | `alias
+    | `copy
+    | `move
+    | `noDrop
+    | `notAllowed
+    | `grab
+    | `grabbing
+    | `allScroll
+    | `colResize
+    | `rowResize
+    | `nResize
+    | `eResize
+    | `sResize
+    | `wResize
+    | `neResize
+    | `nwResize
+    | `seResize
+    | `swResize
+    | `ewResize
+    | `nsResize
+    | `neswResize
+    | `nwseResize
+    | `zoomIn
+    | `zoomOut
+  ];
+
+  let toString: t => string;
+};
+
+module Color: {
+  type t = [
+    | `rgb(int, int, int)
+    | `rgba(int, int, int, float)
+    | `hsl(Angle.t, [ | `percent(float)], [ | `percent(float)])
+    | `hsla(
+        Angle.t,
+        [ | `percent(float)],
+        [ | `percent(float)],
+        [ | `num(float) | `percent(float)],
+      )
+    | `hex(string)
+    | `transparent
+    | `currentColor
+  ];
+
+  let rgb: (int, int, int) => [> t];
+  let rgba: (int, int, int, float) => [> t];
+  let hsl: (Angle.t, float, float) => [> t];
+  let hsla:
+    (Angle.t, float, float, [ | `num(float) | `percent(float)]) => [> t];
+  let hex: string => [> t];
+  let transparent: [> t];
+  let currentColor: [> t];
+
+  let toString: t => string;
+};
+
+module BorderStyle: {
+  type t = [
+    | `none
+    | `hidden
+    | `dotted
+    | `dashed
+    | `solid
+    | `double
+    | `groove
+    | `ridge
+    | `inset
+    | `outset
+  ];
+
+  let toString: t => string;
+};
+
+module PointerEvents: {
+  type t = [ | `auto | `none];
+
+  let toString: t => string;
+};
+
+module Perspective: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};
+
+module LetterSpacing: {
+  type t = [ | `normal];
+
+  /**
+   The normal letter spacing for the current font.
+   Unlike a value of 0, this keyword allows the user agent to alter the space between characters in order to justify text.
+   */
+  let normal: [> t];
+
+  let toString: t => string;
+};
+
+module LineHeight: {
+  type t = [ | `normal | `abs(float)];
+
+  let toString: t => string;
+};
+
+module WordSpacing: {
+  type t = [ | `normal];
 
   let toString: t => string;
 };

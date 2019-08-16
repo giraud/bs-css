@@ -37,6 +37,7 @@ describe("Label", () => {
   test("test value", () =>
     expect(r(label("a"))->Js.Json.stringifyAny) |> toBeJson({"label": "a"})
   );
+
   test("test classname", () =>
     expect(style([label("theName")])) |> toContainString("theName")
   );
@@ -46,21 +47,21 @@ describe("Filter", () =>
   test("test values", () =>
     expect(
       (
-        r(Css.filter([`opacity(10.), `invert(20.)])),
-        r(Css.filter([`blur(`px(20)), `brightness(20.)])),
+        r(filter([`opacity(10.), `invert(20.)])),
+        r(filter([`blur(`px(20)), `brightness(20.)])),
         r(
-          Css.filter([
+          filter([
             `contrast(30.),
             `dropShadow((`px(5), `px(6), `px(7), `rgb((255, 0, 0)))),
           ]),
         ),
-        r(Css.filter([`grayscale(10.), `hueRotate(`deg(180.))])),
-        r(Css.filter([`saturate(10.), `sepia(100.)])),
-        r(Css.filter([`none])),
-        r(Css.filter([`inherit_])),
-        r(Css.filter([`initial])),
-        r(Css.filter([`unset])),
-        r(Css.filter([`url("myurl")])),
+        r(filter([`grayscale(10.), `hueRotate(`deg(180.))])),
+        r(filter([`saturate(10.), `sepia(100.)])),
+        r(filter([`none])),
+        r(filter([`inherit_])),
+        r(filter([`initial])),
+        r(filter([`unset])),
+        r(filter([`url("myurl")])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -103,12 +104,12 @@ describe("Direction", () =>
   test("test values", () =>
     expect(
       (
-        r(Css.direction(`ltr)),
-        r(Css.direction(ltr)),
-        r(Css.direction(rtl)),
-        r(Css.direction(inherit_)),
-        r(Css.direction(unset)),
-        r(Css.direction(initial)),
+        r(direction(`ltr)),
+        r(direction(ltr)),
+        r(direction(rtl)),
+        r(direction(inherit_)),
+        r(direction(unset)),
+        r(direction(initial)),
       )
       ->Js.Json.stringifyAny,
     )
@@ -127,15 +128,15 @@ describe("Resize", () =>
   test("test values", () =>
     expect(
       (
-        r(Css.resize(none)),
-        r(Css.resize(both)),
-        r(Css.resize(horizontal)),
-        r(Css.resize(vertical)),
-        r(Css.resize(block)),
-        r(Css.resize(inline)),
-        r(Css.resize(inherit_)),
-        r(Css.resize(unset)),
-        r(Css.resize(initial)),
+        r(resize(none)),
+        r(resize(both)),
+        r(resize(horizontal)),
+        r(resize(vertical)),
+        r(resize(block)),
+        r(resize(inline)),
+        r(resize(inherit_)),
+        r(resize(unset)),
+        r(resize(initial)),
       )
       ->Js.Json.stringifyAny,
     )
@@ -199,10 +200,10 @@ describe("Position", () => {
   test("should use length", () =>
     expect(
       (
-        r(Css.top(px(10))),
-        r(Css.right(rem(1.))),
-        r(Css.bottom(pct(20.))),
-        r(Css.left(vh(4.))),
+        r(top(px(10))),
+        r(right(rem(1.))),
+        r(bottom(pct(20.))),
+        r(left(vh(4.))),
       )
       ->Js.Json.stringifyAny,
     )
@@ -213,13 +214,14 @@ describe("Position", () => {
          {"left": "4vh"},
        ))
   );
+
   test("should allow cascading", () =>
     expect(
       (
-        r(Css.top(initial)),
-        r(Css.right(inherit_)),
-        r(Css.bottom(unset)),
-        r(Css.left(initial)),
+        r(top(initial)),
+        r(right(inherit_)),
+        r(bottom(unset)),
+        r(left(initial)),
       )
       ->Js.Json.stringifyAny,
     )
@@ -236,14 +238,14 @@ describe("object-fit", () =>
   test("test values", () =>
     expect(
       (
-        r(Css.objectFit(`fill)),
-        r(Css.objectFit(`contain)),
-        r(Css.objectFit(`cover)),
-        r(Css.objectFit(`none)),
-        r(Css.objectFit(`scaleDown)),
-        r(Css.objectFit(`inherit_)),
-        r(Css.objectFit(`initial)),
-        r(Css.objectFit(`unset)),
+        r(objectFit(`fill)),
+        r(objectFit(`contain)),
+        r(objectFit(`cover)),
+        r(objectFit(`none)),
+        r(objectFit(`scaleDown)),
+        r(objectFit(`inherit_)),
+        r(objectFit(`initial)),
+        r(objectFit(`unset)),
       )
       ->Js.Json.stringifyAny,
     )
@@ -264,27 +266,22 @@ describe("box-shadow", () => {
   test("should allow single or list definition", () =>
     expect(
       (
-        r(Css.boxShadow(Css.green)),
-        r(
-          Css.boxShadows([
-            Css.boxShadow(Css.yellow),
-            Css.boxShadow(Css.red),
-          ]),
-        ),
+        r(boxShadow(Shadow.box(green))),
+        r(boxShadows([Shadow.box(yellow), Shadow.box(red)])),
       )
       ->Js.Json.stringifyAny,
     )
     |> toBeJson((
          {"boxShadow": "0 0 0 0 #008000"},
-         {"boxShadow": "0 0 0 0 #FFFF00,0 0 0 0 #FF0000"},
+         {"boxShadow": "0 0 0 0 #FFFF00, 0 0 0 0 #FF0000"},
        ))
   );
 
   test("should use options when present", () =>
     expect(
       (
-        r(Css.boxShadow(~x=Css.px(1), ~y=Css.px(2), Css.red)),
-        r(Css.boxShadow(~inset=true, Css.red)),
+        r(boxShadow(Shadow.box(~x=px(1), ~y=px(2), red))),
+        r(boxShadow(Shadow.box(~inset=true, red))),
       )
       ->Js.Json.stringifyAny,
     )
@@ -293,33 +290,48 @@ describe("box-shadow", () => {
          {"boxShadow": "0 0 0 0 #FF0000 inset"},
        ))
   );
+
+  test("should allow special values", () =>
+    expect(
+      (
+        r(boxShadow(none)),
+        r(boxShadow(inherit_)),
+        r(boxShadow(initial)),
+        r(boxShadow(unset)),
+        r(important(boxShadow(none))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"boxShadow": "none"},
+         {"boxShadow": "inherit"},
+         {"boxShadow": "initial"},
+         {"boxShadow": "unset"},
+         {"boxShadow": "none !important"},
+       ))
+  );
 });
 
 describe("text-shadow", () => {
   test("should allow single or list definition", () =>
     expect(
       (
-        r(Css.textShadow(Css.green)),
-        r(
-          Css.textShadows([
-            Css.textShadow(Css.yellow),
-            Css.textShadow(Css.red),
-          ]),
-        ),
+        r(textShadow(Shadow.text(green))),
+        r(textShadows([Shadow.text(yellow), Shadow.text(red)])),
       )
       ->Js.Json.stringifyAny,
     )
     |> toBeJson((
          {"textShadow": "0 0 0 #008000"},
-         {"textShadow": "0 0 0 #FFFF00,0 0 0 #FF0000"},
+         {"textShadow": "0 0 0 #FFFF00, 0 0 0 #FF0000"},
        ))
   );
 
   test("should use options when present", () =>
     expect(
       (
-        r(Css.textShadow(~x=Css.px(1), ~y=Css.px(2), Css.red)),
-        r(Css.textShadow(~blur=Css.vh(1.), Css.red)),
+        r(textShadow(Shadow.text(~x=px(1), ~y=px(2), red))),
+        r(textShadow(Shadow.text(~blur=vh(1.), red))),
       )
       ->Js.Json.stringifyAny,
     )
@@ -328,4 +340,119 @@ describe("text-shadow", () => {
          {"textShadow": "0 0 1vh #FF0000"},
        ))
   );
+
+  test("should allow special values", () =>
+    expect(
+      (
+        r(textShadow(none)),
+        r(textShadow(inherit_)),
+        r(textShadow(initial)),
+        r(textShadow(unset)),
+        r(important(textShadow(none))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"textShadow": "none"},
+         {"textShadow": "inherit"},
+         {"textShadow": "initial"},
+         {"textShadow": "unset"},
+         {"textShadow": "none !important"},
+       ))
+  );
 });
+
+describe("transitions", () => {
+  test("should allow single or list definition", () =>
+    expect(
+      (
+        r(transition("transform")),
+        r(
+          transitions([
+            Transition.shorthand("height"),
+            Transition.shorthand("top"),
+          ]),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"transition": "0ms ease 0ms transform"},
+         {"transition": "0ms ease 0ms height, 0ms ease 0ms top"},
+       ))
+  );
+
+  test("should use options when present", () =>
+    expect(
+      r(transition(~duration=3, ~delay=4, ~timingFunction=easeOut, "top"))
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson({"transition": "3ms ease-out 4ms top"})
+  );
+});
+
+external toAnimationName: string => animationName = "%identity";
+
+describe("animation", () => {
+  test("should allow single or list definition", () =>
+    expect(
+      (
+        r(animation(toAnimationName("a"))),
+        r(
+          animations([
+            Animation.shorthand(toAnimationName("a1")),
+            Animation.shorthand(toAnimationName("a2")),
+          ]),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"animation": "a 0ms ease 0ms 1 normal none running"},
+         {
+           "animation": "a1 0ms ease 0ms 1 normal none running, a2 0ms ease 0ms 1 normal none running",
+         },
+       ))
+  );
+
+  test("should use options when present", () =>
+    expect(
+      r(
+        animation(
+          ~duration=300,
+          ~delay=400,
+          ~direction=reverse,
+          ~timingFunction=linear,
+          ~fillMode=forwards,
+          ~playState=running,
+          ~iterationCount=infinite,
+          toAnimationName("a"),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson({
+         "animation": "a 300ms linear 400ms infinite reverse forwards running",
+       })
+  );
+});
+
+describe("Word spacing", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(wordSpacing(`normal)),
+        r(wordSpacing(vh(1.))),
+        r(wordSpacing(pct(50.))),
+        r(wordSpacing(inherit_)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"wordSpacing": "normal"},
+         {"wordSpacing": "1vh"},
+         {"wordSpacing": "50%"},
+         {"wordSpacing": "inherit"},
+       ))
+  )
+);

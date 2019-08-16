@@ -1,3 +1,4 @@
+.nvmrc
 .merlin
 /.idea
 /.cache
@@ -5,6 +6,7 @@
 .editorconfig
 *.tgz
 *.iml
+*.lock
 webpack.config.js
 /example
 /lib/bs
