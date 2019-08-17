@@ -210,6 +210,18 @@ let gridRowStart: int => rule;
 
 let gridGap: Types.Length.t => rule;
 
+/**
+ The CSS justify-self property sets the way a box is justified inside its alignment container along the appropriate axis.
+ */
+let justifySelf:
+  [
+    Types.JustifySelf.t
+    | Types.PositionalAlignment.t
+    | Types.BaselineAlignment.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
 let left: [ Types.Length.t | Types.Cascading.t] => rule;
 
 /**
@@ -744,7 +756,6 @@ let alignItems:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
 let alignSelf:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
-let justifySelf: [ | `flexStart | `center | `flexEnd | `stretch] => rule;
 let justifyContent:
   [
     | `flexStart

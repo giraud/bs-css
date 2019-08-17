@@ -547,3 +547,40 @@ module DisplayLegacy: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+ */
+module JustifySelf: {
+  type t = [ | `auto | `normal | `stretch];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+ */
+module PositionalAlignment: {
+  type t = [
+    | `center
+    | `start
+    | `end_
+    | `flexStart
+    | `flexEnd
+    | `selfStart
+    | `selfEnd
+    | `left
+    | `right
+  ];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+ */
+module BaselineAlignment: {
+  type t = [ | `baseline];
+
+  let toString: t => string;
+};

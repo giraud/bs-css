@@ -544,6 +544,17 @@ let position = x =>
     },
   );
 
+let justifySelf = x =>
+  D(
+    "justifySelf",
+    switch (x) {
+    | #JustifySelf.t as j => JustifySelf.toString(j)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let resize = x =>
   D(
     "resize",
@@ -1088,7 +1099,6 @@ let string_of_justify =
   | `spaceEvenly => "space-evenly"
   | `stretch => "stretch";
 let justifyContent = x => D("justifyContent", string_of_justify(x));
-let justifySelf = x => D("justifySelf", string_of_justify(x));
 let alignContent = x => D("alignContent", string_of_justify(x));
 
 let boxSizing = x =>

@@ -833,3 +833,47 @@ module DisplayLegacy = {
     | `inlineGrid => "inline-grid"
     | `inlineTable => "inline-table";
 };
+
+module JustifySelf = {
+  type t = [ | `auto | `normal | `stretch];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `normal => "normal"
+    | `stretch => "stretch";
+};
+
+module PositionalAlignment = {
+  type t = [
+    | `center
+    | `start
+    | `end_
+    | `flexStart
+    | `flexEnd
+    | `selfStart
+    | `selfEnd
+    | `left
+    | `right
+  ];
+
+  let toString =
+    fun
+    | `center => "center"
+    | `start => "start"
+    | `end_ => "end"
+    | `flexStart => "flex-start"
+    | `flexEnd => "flex-end"
+    | `selfStart => "self-start"
+    | `selfEnd => "self-end"
+    | `left => "left"
+    | `right => "right";
+};
+
+module BaselineAlignment = {
+  type t = [ | `baseline];
+
+  let toString =
+    fun
+    | `baseline => "baseline";
+};
