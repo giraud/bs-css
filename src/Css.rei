@@ -333,6 +333,12 @@ let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 
 let right: [ Types.Length.t | Types.Cascading.t] => rule;
 
+/**
+ The text-align CSS property sets the horizontal alignment of a block element or table-cell box.
+ This means it works like vertical-align but in the horizontal direction.
+ */
+let textAlign: [ Types.TextAlign.t | Types.Cascading.t] => rule;
+
 let textDecorationColor: Types.Color.t => rule;
 
 let textIndent: Types.Length.t => rule;
@@ -870,8 +876,6 @@ let fontFace:
     unit
   ) =>
   string;
-let textAlign:
-  [ | `left | `center | `right | `justify | Types.Cascading.t] => rule;
 let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;

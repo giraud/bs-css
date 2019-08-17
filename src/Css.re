@@ -573,6 +573,15 @@ let right = x =>
     },
   );
 
+let textAlign = x =>
+  D(
+    "textAlign",
+    switch (x) {
+    | #TextAlign.t as ta => TextAlign.toString(ta)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let textIndent = x => D("textIndent", Length.toString(x));
 
 let top = x =>
@@ -1494,20 +1503,6 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
 
   fontFamily;
 };
-
-let textAlign = x =>
-  D(
-    "textAlign",
-    switch (x) {
-    | `left => "left"
-    | `right => "right"
-    | `center => "center"
-    | `justify => "justify"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
 
 let textDecoration = x =>
   D(

@@ -877,3 +877,14 @@ module BaselineAlignment = {
     fun
     | `baseline => "baseline";
 };
+
+module TextAlign = {
+  type t = [ | `left | `right | `center | `justify];
+
+  let toString =
+    fun
+    | `left => "left"
+    | `right => "right"
+    | `center => "center"
+    | `justify => "justify";
+};

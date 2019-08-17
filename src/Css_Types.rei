@@ -584,3 +584,12 @@ module BaselineAlignment: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/text-align
+ */
+module TextAlign: {
+  type t = [ | `left | `right | `center | `justify];
+
+  let toString: t => string;
+};
