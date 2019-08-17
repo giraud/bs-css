@@ -484,3 +484,66 @@ module WordSpacing: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/fr/docs/Web/CSS/display
+ */
+module DisplayOutside: {
+  type t = [ | `block | `inline | `runIn];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/fr/docs/Web/CSS/display
+ */
+module DisplayInside: {
+  type t = [ | `table | `flex | `grid];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/fr/docs/Web/CSS/display
+ */
+module DisplayListItem: {
+  type t = [ | `listItem];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/fr/docs/Web/CSS/display
+ */
+module DisplayInternal: {
+  type t = [
+    | `tableRowGroup
+    | `tableHeaderGroup
+    | `tableFooterGroup
+    | `tableRow
+    | `tableCell
+    | `tableColumnGroup
+    | `tableColumn
+    | `tableCaption
+  ];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/fr/docs/Web/CSS/display-box
+ */
+module DisplayBox: {
+  type t = [ | `contents | `none];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/fr/docs/Web/CSS/display
+ */
+module DisplayLegacy: {
+  type t = [ | `inlineBlock | `inlineFlex | `inlineGrid | `inlineTable];
+
+  let toString: t => string;
+};

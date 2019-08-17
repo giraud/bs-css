@@ -314,6 +314,20 @@ let direction = x =>
     },
   );
 
+let display = x =>
+  D(
+    "display",
+    switch (x) {
+    | #DisplayOutside.t as o => DisplayOutside.toString(o)
+    | #DisplayInside.t as i => DisplayInside.toString(i)
+    | #DisplayListItem.t as l => DisplayListItem.toString(l)
+    | #DisplayInternal.t as i' => DisplayInternal.toString(i')
+    | #DisplayBox.t as b => DisplayBox.toString(b)
+    | #DisplayLegacy.t as l' => DisplayLegacy.toString(l')
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let flexGrow = x => D("flexGrow", Js.Float.toString(x));
 
 let flexShrink = x => D("flexShrink", Js.Float.toString(x));
@@ -710,7 +724,7 @@ let currentColor = Color.currentColor;
 let transparent = Color.transparent;
 
 /********************************************************
- ************************ VALUES ************************
+ ********************************************************
  ********************************************************/
 
 type gradient = [
@@ -729,10 +743,6 @@ let radialGradient = stops => `radialGradient(stops);
 
 let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
 
-/**
- * Units
- */
-
 let vw = x => `vw(x);
 let fr = x => `fr(x);
 
@@ -741,10 +751,6 @@ module Calc = {
   let (+) = (a, b) => `calc((`add, a, b));
 };
 let size = (x, y) => `size((x, y));
-
-/**
- * Misc
- */
 
 let all = `all;
 let backwards = `backwards;
@@ -884,45 +890,6 @@ let miter = `miter;
 let bevel = `bevel;
 let butt = `butt;
 let square = `square;
-
-/********************************************************
- ******************** PROPERTIES ************************
- ********************************************************/
-
-/**
- * Layout
- */
-
-let display = x =>
-  D(
-    "display",
-    switch (x) {
-    | `inline => "inline"
-    | `block => "block"
-    | `contents => "contents"
-    | `flex => "flex"
-    | `grid => "grid"
-    | `inlineBlock => "inline-block"
-    | `inlineFlex => "inline-flex"
-    | `inlineGrid => "inline-grid"
-    | `inlineTable => "inline-table"
-    | `listItem => "list-item"
-    | `runIn => "run-in"
-    | `table => "table"
-    | `tableCaption => "table-caption"
-    | `tableColumnGroup => "table-column-group"
-    | `tableHeaderGroup => "table-header-group"
-    | `tableFooterGroup => "table-footer-group"
-    | `tableRowGroup => "table-row-group"
-    | `tableCell => "table-cell"
-    | `tableColumn => "table-column"
-    | `tableRow => "table-row"
-    | `none => "none"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
 
 let flex = x => D("flex", string_of_flex(x));
 let flex3 = (~grow, ~shrink, ~basis) =>

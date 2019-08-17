@@ -761,3 +761,75 @@ module WordSpacing = {
     fun
     | `normal => "normal";
 };
+
+module DisplayOutside = {
+  type t = [ | `block | `inline | `runIn];
+
+  let toString =
+    fun
+    | `block => "block"
+    | `inline => "inline"
+    | `runIn => "run-in";
+};
+
+module DisplayInside = {
+  type t = [ | `table | `flex | `grid];
+
+  let toString =
+    fun
+    | `table => "table"
+    | `flex => "flex"
+    | `grid => "grid";
+};
+
+module DisplayListItem = {
+  type t = [ | `listItem];
+
+  let toString =
+    fun
+    | `listItem => "list-item";
+};
+
+module DisplayInternal = {
+  type t = [
+    | `tableRowGroup
+    | `tableHeaderGroup
+    | `tableFooterGroup
+    | `tableRow
+    | `tableCell
+    | `tableColumnGroup
+    | `tableColumn
+    | `tableCaption
+  ];
+
+  let toString =
+    fun
+    | `tableRowGroup => "table-row-group"
+    | `tableHeaderGroup => "table-header-group"
+    | `tableFooterGroup => "table-footer-group"
+    | `tableRow => "table-row"
+    | `tableCell => "table-cell"
+    | `tableColumnGroup => "table-column-group"
+    | `tableColumn => "table-column"
+    | `tableCaption => "table-caption";
+};
+
+module DisplayBox = {
+  type t = [ | `contents | `none];
+
+  let toString =
+    fun
+    | `contents => "contents"
+    | `none => "none";
+};
+
+module DisplayLegacy = {
+  type t = [ | `inlineBlock | `inlineFlex | `inlineGrid | `inlineTable];
+
+  let toString =
+    fun
+    | `inlineBlock => "inline-block"
+    | `inlineFlex => "inline-flex"
+    | `inlineGrid => "inline-grid"
+    | `inlineTable => "inline-table";
+};

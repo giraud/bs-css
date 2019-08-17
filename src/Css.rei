@@ -154,6 +154,22 @@ let cursor: Types.Cursor.t => rule;
  */
 let direction: [ Types.Direction.t | Types.Cascading.t] => rule;
 
+/**
+ The display CSS property sets whether an element is treated as a block or inline element
+ and the layout used for its children, such as grid or flex.
+ */
+let display:
+  [
+    Types.DisplayOutside.t
+    | Types.DisplayInside.t
+    | Types.DisplayListItem.t
+    | Types.DisplayInternal.t
+    | Types.DisplayBox.t
+    | Types.DisplayLegacy.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
 let flexGrow: float => rule;
 
 let flexShrink: float => rule;
@@ -687,33 +703,6 @@ let miter: [> | `miter];
 let bevel: [> | `bevel];
 let butt: [> | `butt];
 let square: [> | `square];
-
-let display:
-  [
-    | `inline
-    | `block
-    | `contents
-    | `flex
-    | `grid
-    | `inlineBlock
-    | `inlineFlex
-    | `inlineGrid
-    | `inlineTable
-    | `listItem
-    | `runIn
-    | `table
-    | `tableCaption
-    | `tableColumnGroup
-    | `tableHeaderGroup
-    | `tableFooterGroup
-    | `tableRowGroup
-    | `tableCell
-    | `tableColumn
-    | `tableRow
-    | `none
-    | Types.Cascading.t
-  ] =>
-  rule;
 
 let flex: [ | `auto | `initial | `none | `num(float)] => rule;
 let flex3:
