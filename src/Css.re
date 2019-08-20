@@ -51,15 +51,6 @@ let join = (strings, separator) => {
     };
   run(strings, "");
 };
-let joinLast = (separator, strings) => {
-  let rec run = (acc, strings) =>
-    switch (strings) {
-    | [] => acc
-    | [x] => acc ++ x
-    | [x, ...xs] => run(acc ++ x ++ separator, xs)
-    };
-  run("", strings);
-};
 
 module Converter = {
   let string_of_rgb = (r, g, b) =>
@@ -113,10 +104,10 @@ module Converter = {
 
   let string_of_stops = stops =>
     stops
-    |> List.map(((l, c)) =>
-         joinLast(" ", [Color.toString(c), Length.toString(l)])
-       )
-    |> joinLast(", ");
+    ->Belt.List.map(((l, c)) =>
+        Color.toString(c) ++ " " ++ Length.toString(l)
+      )
+    ->join(", ");
 
   let string_of_linearGradient = (angle, stops) =>
     "linear-gradient("
@@ -145,22 +136,21 @@ module Converter = {
     | `url(url) => "url(" ++ url ++ ")"
     | `rgb(r, g, b) =>
       "rgb("
-      ++ joinLast(
-           ", ",
-           [Js.Int.toString(r), Js.Int.toString(g), Js.Int.toString(b)],
-         )
+      ++ Js.Int.toString(r)
+      ++ ", "
+      ++ Js.Int.toString(g)
+      ++ ", "
+      ++ Js.Int.toString(b)
       ++ ")"
     | `rgba(r, g, b, a) =>
       "rgba("
-      ++ joinLast(
-           ", ",
-           [
-             Js.Int.toString(r),
-             Js.Int.toString(g),
-             Js.Int.toString(b),
-             Js.Float.toString(a),
-           ],
-         )
+      ++ Js.Int.toString(r)
+      ++ ", "
+      ++ Js.Int.toString(g)
+      ++ ", "
+      ++ Js.Int.toString(b)
+      ++ ", "
+      ++ Js.Float.toString(a)
       ++ ")"
     | `hsl(h, s, l) => string_of_hsl(h, s, l)
     | `hsla(h, s, l, a) => string_of_hsla(h, s, l, a)
