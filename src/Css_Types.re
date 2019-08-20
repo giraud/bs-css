@@ -888,3 +888,13 @@ module TextAlign = {
     | `center => "center"
     | `justify => "justify";
 };
+
+module WordBreak = {
+  type t = [ | `normal | `breakAll | `keepAll];
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `breakAll => "break-all"
+    | `keepAll => "keep-all";
+};

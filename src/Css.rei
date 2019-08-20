@@ -366,6 +366,11 @@ let verticalAlign:
   [ Types.VerticalAlign.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
+ The word-break CSS property sets whether line breaks appear wherever the text would otherwise overflow its content box.
+ */
+let wordBreak: [ Types.WordBreak.t | Types.Cascading.t] => rule;
+
+/**
  The word-spacing CSS property sets the length of space between words and between tags
  */
 let wordSpacing:
@@ -894,7 +899,6 @@ let userSelect: [ | `auto | `all | `text | `none | Types.Cascading.t] => rule;
 let whiteSpace:
   [ | `normal | `nowrap | `pre | `preLine | `preWrap | Types.Cascading.t] =>
   rule;
-let wordBreak: [ | `breakAll | `keepAll | `normal | Types.Cascading.t] => rule;
 let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 
 /**

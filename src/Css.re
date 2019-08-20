@@ -613,6 +613,15 @@ let verticalAlign = x =>
     },
   );
 
+let wordBreak = x =>
+  D(
+    "wordBreak",
+    switch (x) {
+    | #WordBreak.t as w => WordBreak.toString(w)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let wordSpacing = x =>
   D(
     "wordSpacing",
@@ -1597,19 +1606,6 @@ let whiteSpace = x =>
     | `pre => "pre"
     | `preLine => "pre-line"
     | `preWrap => "pre-wrap"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
-let wordBreak = x =>
-  D(
-    "wordBreak",
-    switch (x) {
-    | `breakAll => "break-all"
-    | `keepAll => "keep-all"
-    | `normal => "normal"
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
