@@ -36,7 +36,7 @@ module Percentage: {
 };
 
 /**
- https://developer.mozilla.org/en-US/docs/Web/CSS/length
+ https://developer.mozilla.org/docs/Web/CSS/length
  */
 module Length: {
   // calc/percent are incorrect
@@ -292,7 +292,7 @@ module OutlineStyle: {
 };
 
 module FontWeight: {
-  /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping */
+  /* see https://developer.mozilla.org/docs/Web/CSS/font-weight#Common_weight_name_mapping */
   type t = [
     | `num(int)
     | `thin
@@ -486,7 +486,7 @@ module WordSpacing: {
 };
 
 /**
- https://developer.mozilla.org/fr/docs/Web/CSS/display
+ https://developer.mozilla.org/docs/Web/CSS/display
  */
 module DisplayOutside: {
   type t = [ | `block | `inline | `runIn];
@@ -495,7 +495,7 @@ module DisplayOutside: {
 };
 
 /**
- https://developer.mozilla.org/fr/docs/Web/CSS/display
+ https://developer.mozilla.org/docs/Web/CSS/display
  */
 module DisplayInside: {
   type t = [ | `table | `flex | `grid];
@@ -504,7 +504,7 @@ module DisplayInside: {
 };
 
 /**
- https://developer.mozilla.org/fr/docs/Web/CSS/display
+ https://developer.mozilla.org/docs/Web/CSS/display
  */
 module DisplayListItem: {
   type t = [ | `listItem];
@@ -513,7 +513,7 @@ module DisplayListItem: {
 };
 
 /**
- https://developer.mozilla.org/fr/docs/Web/CSS/display
+ https://developer.mozilla.org/docs/Web/CSS/display
  */
 module DisplayInternal: {
   type t = [
@@ -531,7 +531,7 @@ module DisplayInternal: {
 };
 
 /**
- https://developer.mozilla.org/fr/docs/Web/CSS/display-box
+ https://developer.mozilla.org/docs/Web/CSS/display-box
  */
 module DisplayBox: {
   type t = [ | `contents | `none];
@@ -540,7 +540,7 @@ module DisplayBox: {
 };
 
 /**
- https://developer.mozilla.org/fr/docs/Web/CSS/display
+ https://developer.mozilla.org/docs/Web/CSS/display
  */
 module DisplayLegacy: {
   type t = [ | `inlineBlock | `inlineFlex | `inlineGrid | `inlineTable];
@@ -549,7 +549,7 @@ module DisplayLegacy: {
 };
 
 /**
- https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+ https://developer.mozilla.org/docs/Web/CSS/justify-self
  */
 module JustifySelf: {
   type t = [ | `auto | `normal | `stretch];
@@ -558,7 +558,7 @@ module JustifySelf: {
 };
 
 /**
- https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+ https://developer.mozilla.org/docs/Web/CSS/justify-self
  */
 module PositionalAlignment: {
   type t = [
@@ -577,7 +577,7 @@ module PositionalAlignment: {
 };
 
 /**
- https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+ https://developer.mozilla.org/docs/Web/CSS/justify-self
  */
 module BaselineAlignment: {
   type t = [ | `baseline];
@@ -586,7 +586,7 @@ module BaselineAlignment: {
 };
 
 /**
- https://developer.mozilla.org/en-US/docs/Web/CSS/text-align
+ https://developer.mozilla.org/docs/Web/CSS/text-align
  */
 module TextAlign: {
   type t = [ | `left | `right | `center | `justify];
@@ -595,10 +595,19 @@ module TextAlign: {
 };
 
 /**
- https://developer.mozilla.org/fr/docs/Web/CSS/word-break
+ https://developer.mozilla.org/docs/Web/CSS/word-break
  */
 module WordBreak: {
   type t = [ | `normal | `breakAll | `keepAll];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/white-space
+ */
+module WhiteSpace: {
+  type t = [ | `normal | `nowrap | `pre | `preLine | `preWrap | `breakSpaces];
 
   let toString: t => string;
 };

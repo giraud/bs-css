@@ -898,3 +898,16 @@ module WordBreak = {
     | `breakAll => "break-all"
     | `keepAll => "keep-all";
 };
+
+module WhiteSpace = {
+  type t = [ | `normal | `nowrap | `pre | `preLine | `preWrap | `breakSpaces];
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `nowrap => "nowrap"
+    | `pre => "pre"
+    | `preLine => "pre-line"
+    | `preWrap => "pre-wrap"
+    | `breakSpaces => "break-spaces";
+};

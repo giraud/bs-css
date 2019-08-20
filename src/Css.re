@@ -613,6 +613,15 @@ let verticalAlign = x =>
     },
   );
 
+let whiteSpace = x =>
+  D(
+    "whiteSpace",
+    switch (x) {
+    | #WhiteSpace.t as w => WhiteSpace.toString(w)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let wordBreak = x =>
   D(
     "wordBreak",
@@ -1591,21 +1600,6 @@ let userSelect = x =>
     | `all => "all"
     | `text => "text"
     | `none => "none"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
-let whiteSpace = x =>
-  D(
-    "whiteSpace",
-    switch (x) {
-    | `normal => "normal"
-    | `nowrap => "nowrap"
-    | `pre => "pre"
-    | `preLine => "pre-line"
-    | `preWrap => "pre-wrap"
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
