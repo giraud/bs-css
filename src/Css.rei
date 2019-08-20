@@ -516,8 +516,97 @@ let transparent: [> Types.Color.t];
 let currentColor: [> Types.Color.t];
 
 /********************************************************
- ************************ VALUES ************************
+ ********************************************************
  ********************************************************/
+
+let flex: [ | `auto | `initial | `none | `num(float)] => rule;
+let flex3:
+  (
+    ~grow: float,
+    ~shrink: float,
+    ~basis: [ Types.Length.t | Types.FlexBasis.t]
+  ) =>
+  rule;
+let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
+let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
+let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
+let gridAutoColumns: [ Types.Length.t | `auto] => rule;
+let gridAutoRows: [ Types.Length.t | `auto] => rule;
+let width: [ Types.Length.t | `auto | `fitContent] => rule;
+let height: [ Types.Length.t | `auto] => rule;
+let minWidth: [ Types.Length.t | `auto] => rule;
+let maxWidth: [ Types.Length.t | `none] => rule;
+let minHeight: [ Types.Length.t | `auto] => rule;
+let maxHeight: [ Types.Length.t | `none] => rule;
+let alignItems:
+  [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
+let alignSelf:
+  [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
+let justifyContent:
+  [
+    | `flexStart
+    | `center
+    | `flexEnd
+    | `spaceBetween
+    | `spaceAround
+    | `spaceEvenly
+    | `stretch
+  ] =>
+  rule;
+let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
+let float: [ | `left | `right | `none] => rule;
+let clear: [ | `left | `right | `both] => rule;
+let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
+let backfaceVisibility: [ | `visible | `hidden] => rule;
+let visibility: [ | `visible | `hidden] => rule;
+let border:
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
+  rule;
+let borderStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+let borderTop:
+  (
+    Types.Length.t,
+    [ Types.BorderStyle.t | Types.Cascading.t],
+    Types.Color.t
+  ) =>
+  rule;
+let tableLayout: [ | `auto | `fixed] => rule;
+let borderCollapse: [ | `separate | `collapse] => rule;
+let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
+let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
+let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
+let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
+let backgroundSize:
+  [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
+  rule;
+let clipPath: [ | `url(string)] => rule;
+let listStyle:
+  (
+    Types.ListStyleType.t,
+    [ | `inside | `outside],
+    [ | `none | `url(string)]
+  ) =>
+  rule;
+let listStylePosition: [ | `inside | `outside] => rule;
+let listStyleImage: [ | `none | `url(string)] => rule;
+let textDecoration:
+  [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
+  rule;
+let textDecorationStyle:
+  [ | `wavy | `solid | `dotted | `dashed | `double | Types.Cascading.t] => rule;
+let textOverflow:
+  [ | `clip | `ellipsis | `string(string) | Types.Cascading.t] => rule;
+let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
+let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
+let textTransform:
+  [ | `uppercase | `lowercase | `capitalize | `none | Types.Cascading.t] =>
+  rule;
+let userSelect: [ | `auto | `all | `text | `none | Types.Cascading.t] => rule;
+let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 
 type gradient = [
   | `linearGradient(Types.Angle.t, list((Types.Length.t, Types.Color.t)))
@@ -549,6 +638,11 @@ let repeatingRadialGradient:
   list((Types.Length.t, Types.Color.t)) =>
   [> | `repeatingRadialGradient(list((Types.Length.t, Types.Color.t)))];
 
+let background: [ Types.Color.t | `url(string) | gradient | `none] => rule;
+let backgrounds:
+  list([ Types.Color.t | `url(string) | gradient | `none]) => rule;
+let backgroundImage: [ | `url(string) | gradient | `none] => rule;
+
 type minmax = [
   | `fr(float)
   | `minContent
@@ -564,6 +658,9 @@ type trackLength = [
   | `minmax(minmax, minmax)
 ];
 type gridLength = [ trackLength | `repeat(Types.RepeatValue.t, trackLength)];
+
+let gridTemplateColumns: list([ gridLength | `auto]) => rule;
+let gridTemplateRows: list([ gridLength | `auto]) => rule;
 
 let fr: float => [> | `fr(float)];
 let vw: float => [> | `vw(float)];
@@ -732,31 +829,6 @@ let bevel: [> | `bevel];
 let butt: [> | `butt];
 let square: [> | `square];
 
-let flex: [ | `auto | `initial | `none | `num(float)] => rule;
-let flex3:
-  (
-    ~grow: float,
-    ~shrink: float,
-    ~basis: [ Types.Length.t | Types.FlexBasis.t]
-  ) =>
-  rule;
-let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
-
-let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
-let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
-
-let gridTemplateColumns: list([ gridLength | `auto]) => rule;
-let gridTemplateRows: list([ gridLength | `auto]) => rule;
-let gridAutoColumns: [ Types.Length.t | `auto] => rule;
-let gridAutoRows: [ Types.Length.t | `auto] => rule;
-
-let width: [ Types.Length.t | `auto | `fitContent] => rule;
-let height: [ Types.Length.t | `auto] => rule;
-let minWidth: [ Types.Length.t | `auto] => rule;
-let maxWidth: [ Types.Length.t | `none] => rule;
-let minHeight: [ Types.Length.t | `auto] => rule;
-let maxHeight: [ Types.Length.t | `none] => rule;
-
 let alignContent:
   [
     | `stretch
@@ -768,28 +840,6 @@ let alignContent:
     | `spaceEvenly
   ] =>
   rule;
-let alignItems:
-  [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
-let alignSelf:
-  [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
-let justifyContent:
-  [
-    | `flexStart
-    | `center
-    | `flexEnd
-    | `spaceBetween
-    | `spaceAround
-    | `spaceEvenly
-    | `stretch
-  ] =>
-  rule;
-
-let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
-
-let float: [ | `left | `right | `none] => rule;
-let clear: [ | `left | `right | `both] => rule;
-
-let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 
 let objectFit:
   [ | `fill | `contain | `cover | `none | `scaleDown | Types.Cascading.t] =>
@@ -798,52 +848,6 @@ let objectFit:
 /**
  * Style
  */
-let backfaceVisibility: [ | `visible | `hidden] => rule;
-let visibility: [ | `visible | `hidden] => rule;
-
-let border:
-  (
-    Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
-  ) =>
-  rule;
-let borderStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
-
-let borderTop:
-  (
-    Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
-  ) =>
-  rule;
-
-let tableLayout: [ | `auto | `fixed] => rule;
-let borderCollapse: [ | `separate | `collapse] => rule;
-
-let background: [ Types.Color.t | `url(string) | gradient | `none] => rule;
-let backgrounds:
-  list([ Types.Color.t | `url(string) | gradient | `none]) => rule;
-let backgroundImage: [ | `url(string) | gradient | `none] => rule;
-let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
-let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
-let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
-let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
-let backgroundSize:
-  [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
-  rule;
-
-let clipPath: [ | `url(string)] => rule;
-
-let listStyle:
-  (
-    Types.ListStyleType.t,
-    [ | `inside | `outside],
-    [ | `none | `url(string)]
-  ) =>
-  rule;
-let listStylePosition: [ | `inside | `outside] => rule;
-let listStyleImage: [ | `none | `url(string)] => rule;
 
 type filter = [
   | `blur(Types.Length.t)
@@ -886,27 +890,6 @@ let fontFace:
     unit
   ) =>
   string;
-let textDecoration:
-  [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
-  rule;
-let textDecorationStyle:
-  [ | `wavy | `solid | `dotted | `dashed | `double | Types.Cascading.t] => rule;
-let textOverflow:
-  [ | `clip | `ellipsis | `string(string) | Types.Cascading.t] => rule;
-
-let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
-let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
-
-let textTransform:
-  [ | `uppercase | `lowercase | `capitalize | `none | Types.Cascading.t] =>
-  rule;
-let userSelect: [ | `auto | `all | `text | `none | Types.Cascading.t] => rule;
-
-let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
-
-/**
- * Transform
- */
 
 let transformOrigin3d:
   (Types.Length.t, Types.Length.t, Types.Length.t) => rule;

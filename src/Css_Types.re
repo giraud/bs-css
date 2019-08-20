@@ -34,6 +34,14 @@ module Percentage = {
     | `percent(x) => Js.Float.toString(x) ++ "%";
 };
 
+module Url = {
+  type t = [ | `url(string)];
+
+  let toString =
+    fun
+    | `url(s) => "url(" ++ s ++ ")";
+};
+
 module Length = {
   type t = [
     | `ch(float)

@@ -35,6 +35,16 @@ module Percentage: {
   let toString: t => string;
 };
 
+module Url: {
+  /**
+   The <url> CSS data type denotes a pointer to a resource, such as an image or a font.
+   URLs can be used in numerous CSS properties, such as background-image, cursor, and list-style.
+   */
+  type t = [ | `url(string)];
+
+  let toString: t => string;
+};
+
 /**
  https://developer.mozilla.org/docs/Web/CSS/length
  */

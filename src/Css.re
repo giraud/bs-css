@@ -10,6 +10,7 @@ type rule =
 module Emotion = {
   type stylename = string;
   type cache;
+
   [@bs.module "emotion"] external _make: Js.Json.t => stylename = "css";
   [@bs.module "emotion"] external cache: cache = "cache";
   [@bs.module "emotion"]
