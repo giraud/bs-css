@@ -886,6 +886,25 @@ module BaselineAlignment = {
     | `baseline => "baseline";
 };
 
+module NormalAlignment = {
+  type t = [ | `normal];
+
+  let toString =
+    fun
+    | `normal => "normal";
+};
+
+module DistributedAlignment = {
+  type t = [ | `spaceBetween | `spaceAround | `spaceEvenly | `stretch];
+
+  let toString =
+    fun
+    | `spaceBetween => "space-between"
+    | `spaceAround => "space-around"
+    | `spaceEvenly => "space-evenly"
+    | `stretch => "stretch";
+};
+
 module TextAlign = {
   type t = [ | `left | `right | `center | `justify];
 

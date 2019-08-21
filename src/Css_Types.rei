@@ -569,6 +569,7 @@ module JustifySelf: {
 
 /**
  https://developer.mozilla.org/docs/Web/CSS/justify-self
+ https://developer.mozilla.org/docs/Web/CSS/justify-content
  */
 module PositionalAlignment: {
   type t = [
@@ -591,6 +592,24 @@ module PositionalAlignment: {
  */
 module BaselineAlignment: {
   type t = [ | `baseline];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/justify-content
+ */
+module NormalAlignment: {
+  type t = [ | `normal];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/justify-content
+ */
+module DistributedAlignment: {
+  type t = [ | `spaceBetween | `spaceAround | `spaceEvenly | `stretch];
 
   let toString: t => string;
 };

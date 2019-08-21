@@ -390,6 +390,17 @@ let gridRowEnd = n => D("gridRowEnd", Js.Int.toString(n));
 
 let gridRowStart = n => D("gridRowStart", Js.Int.toString(n));
 
+let justifyContent = x =>
+  D(
+    "justifyContent",
+    switch (x) {
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #NormalAlignment.t as na => NormalAlignment.toString(na)
+    | #DistributedAlignment.t as da => DistributedAlignment.toString(da)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let listStyleType = x => D("listStyleType", ListStyleType.toString(x));
 
 let left = x =>
@@ -1116,7 +1127,7 @@ let string_of_justify =
   | `spaceBetween => "space-between"
   | `spaceEvenly => "space-evenly"
   | `stretch => "stretch";
-let justifyContent = x => D("justifyContent", string_of_justify(x));
+
 let alignContent = x => D("alignContent", string_of_justify(x));
 
 let boxSizing = x =>

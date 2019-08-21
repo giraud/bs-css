@@ -211,6 +211,19 @@ let gridRowStart: int => rule;
 let gridGap: Types.Length.t => rule;
 
 /**
+ The CSS justify-content property defines how the browser distributes space between and around content items
+ along the main-axis of a flex container, and the inline axis of a grid container.
+ */
+let justifyContent:
+  [
+    Types.PositionalAlignment.t
+    | Types.NormalAlignment.t
+    | Types.DistributedAlignment.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
  The CSS justify-self property sets the way a box is justified inside its alignment container along the appropriate axis.
  */
 let justifySelf:
@@ -542,17 +555,6 @@ let alignItems:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
 let alignSelf:
   [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
-let justifyContent:
-  [
-    | `flexStart
-    | `center
-    | `flexEnd
-    | `spaceBetween
-    | `spaceAround
-    | `spaceEvenly
-    | `stretch
-  ] =>
-  rule;
 let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 let float: [ | `left | `right | `none] => rule;
 let clear: [ | `left | `right | `both] => rule;
