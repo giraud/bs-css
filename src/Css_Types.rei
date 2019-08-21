@@ -640,3 +640,21 @@ module WhiteSpace: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/align-items
+ */
+module AlignItems: {
+  type t = [ | `normal | `stretch];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/align-self
+ */
+module AlignSelf: {
+  type t = [ | `auto | `normal];
+
+  let toString: t => string;
+};

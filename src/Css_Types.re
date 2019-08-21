@@ -938,3 +938,21 @@ module WhiteSpace = {
     | `preWrap => "pre-wrap"
     | `breakSpaces => "break-spaces";
 };
+
+module AlignItems = {
+  type t = [ | `normal | `stretch];
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `stretch => "stretch";
+};
+
+module AlignSelf = {
+  type t = [ | `auto | `normal];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `normal => "normal";
+};

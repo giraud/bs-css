@@ -53,6 +53,33 @@ module Shadow: {
 /** If nothing works, use this - unsafe - escape hatch */
 let unsafe: (string, string) => rule;
 
+/**
+ The CSS align-items property sets the align-self value on all direct children as a group.
+ In Flexbox, it controls the alignment of items on the Cross Axis.
+ In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
+ */
+let alignItems:
+  [
+    Types.AlignItems.t
+    | Types.PositionalAlignment.t
+    | Types.BaselineAlignment.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
+ The align-self CSS property overrides a grid or flex item's align-items value.
+ In Grid, it aligns the item inside the grid area. In Flexbox, it aligns the item on the cross axis.
+ */
+let alignSelf:
+  [
+    Types.AlignSelf.t
+    | Types.PositionalAlignment.t
+    | Types.BaselineAlignment.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
 let animationDelay: int => rule;
 
 let animationDirection: Types.AnimationDirection.t => rule;
@@ -551,10 +578,6 @@ let minWidth: [ Types.Length.t | `auto] => rule;
 let maxWidth: [ Types.Length.t | `none] => rule;
 let minHeight: [ Types.Length.t | `auto] => rule;
 let maxHeight: [ Types.Length.t | `none] => rule;
-let alignItems:
-  [ | `stretch | `flexStart | `center | `flexEnd | `baseline] => rule;
-let alignSelf:
-  [ | `stretch | `flexStart | `center | `flexEnd | `baseline | `auto] => rule;
 let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 let float: [ | `left | `right | `none] => rule;
 let clear: [ | `left | `right | `both] => rule;

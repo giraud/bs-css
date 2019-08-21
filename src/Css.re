@@ -222,6 +222,28 @@ let label = label => D("label", label);
 
 /* Properties */
 
+let alignItems = x =>
+  D(
+    "alignItems",
+    switch (x) {
+    | #AlignItems.t as ai => AlignItems.toString(ai)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let alignSelf = x =>
+  D(
+    "alignSelf",
+    switch (x) {
+    | #AlignSelf.t as a => AlignSelf.toString(a)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let animationDelay = x => D("animationDelay", string_of_time(x));
 
 let animationDirection = x =>
@@ -1106,17 +1128,6 @@ let gridAutoColumns = dimensions =>
 
 let gridAutoRows = dimensions =>
   D("gridAutoRows", string_of_dimension(dimensions));
-
-let string_of_align =
-  fun
-  | `baseline => "baseline"
-  | `flexStart => "flex-start"
-  | `flexEnd => "flex-end"
-  | `center => "center"
-  | `auto => "auto"
-  | `stretch => "stretch";
-let alignItems = x => D("alignItems", string_of_align(x));
-let alignSelf = x => D("alignSelf", string_of_align(x));
 
 let string_of_justify =
   fun
