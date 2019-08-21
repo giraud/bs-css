@@ -54,6 +54,20 @@ module Shadow: {
 let unsafe: (string, string) => rule;
 
 /**
+ The CSS align-content property sets the distribution of space between and around content items along a flexbox's
+ cross-axis or a grid's block axis.
+ */
+let alignContent:
+  [
+    Types.AlignContent.t
+    | Types.NormalAlignment.t
+    | Types.BaselineAlignment.t
+    | Types.DistributedAlignment.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
  The CSS align-items property sets the align-self value on all direct children as a group.
  In Flexbox, it controls the alignment of items on the Cross Axis.
  In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
@@ -853,19 +867,6 @@ let miter: [> | `miter];
 let bevel: [> | `bevel];
 let butt: [> | `butt];
 let square: [> | `square];
-
-let alignContent:
-  [
-    | `stretch
-    | `flexStart
-    | `center
-    | `flexEnd
-    | `spaceBetween
-    | `spaceAround
-    | `spaceEvenly
-  ] =>
-  rule;
-
 let objectFit:
   [ | `fill | `contain | `cover | `none | `scaleDown | Types.Cascading.t] =>
   rule;

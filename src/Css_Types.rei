@@ -658,3 +658,12 @@ module AlignSelf: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/align-content
+ */
+module AlignContent: {
+  type t = [ | `center | `start | `end_ | `flexStart | `flexEnd];
+
+  let toString: t => string;
+};

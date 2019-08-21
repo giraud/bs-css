@@ -956,3 +956,15 @@ module AlignSelf = {
     | `auto => "auto"
     | `normal => "normal";
 };
+
+module AlignContent = {
+  type t = [ | `center | `start | `end_ | `flexStart | `flexEnd];
+
+  let toString =
+    fun
+    | `center => "center"
+    | `start => "start"
+    | `end_ => "end"
+    | `flexStart => "flex-start"
+    | `flexEnd => "flex-end";
+};

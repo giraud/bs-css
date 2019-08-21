@@ -222,6 +222,18 @@ let label = label => D("label", label);
 
 /* Properties */
 
+let alignContent = x =>
+  D(
+    "alignContent",
+    switch (x) {
+    | #AlignContent.t as ac => AlignContent.toString(ac)
+    | #NormalAlignment.t as na => NormalAlignment.toString(na)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #DistributedAlignment.t as da => DistributedAlignment.toString(da)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let alignItems = x =>
   D(
     "alignItems",
@@ -1128,18 +1140,6 @@ let gridAutoColumns = dimensions =>
 
 let gridAutoRows = dimensions =>
   D("gridAutoRows", string_of_dimension(dimensions));
-
-let string_of_justify =
-  fun
-  | `flexStart => "flex-start"
-  | `flexEnd => "flex-end"
-  | `center => "center"
-  | `spaceAround => "space-around"
-  | `spaceBetween => "space-between"
-  | `spaceEvenly => "space-evenly"
-  | `stretch => "stretch";
-
-let alignContent = x => D("alignContent", string_of_justify(x));
 
 let boxSizing = x =>
   D(
