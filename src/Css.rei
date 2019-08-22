@@ -325,6 +325,12 @@ let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
 
 let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
 
+/**
+ The object-fit CSS property sets how the content of a replaced element,
+ such as an <img> or <video>, should be resized to fit its container.
+ */
+let objectFit: [ Types.ObjectFit.t | Types.Cascading.t] => rule;
+
 let opacity: float => rule;
 
 let order: int => rule;
@@ -867,13 +873,6 @@ let miter: [> | `miter];
 let bevel: [> | `bevel];
 let butt: [> | `butt];
 let square: [> | `square];
-let objectFit:
-  [ | `fill | `contain | `cover | `none | `scaleDown | Types.Cascading.t] =>
-  rule;
-
-/**
- * Style
- */
 
 type filter = [
   | `blur(Types.Length.t)

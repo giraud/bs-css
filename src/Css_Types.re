@@ -968,3 +968,15 @@ module AlignContent = {
     | `flexStart => "flex-start"
     | `flexEnd => "flex-end";
 };
+
+module ObjectFit = {
+  type t = [ | `fill | `contain | `cover | `none | `scaleDown];
+
+  let toString =
+    fun
+    | `fill => "fill"
+    | `contain => "contain"
+    | `cover => "cover"
+    | `none => "none"
+    | `scaleDown => "scale-down";
+};

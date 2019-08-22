@@ -667,3 +667,12 @@ module AlignContent: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/object-fit
+ */
+module ObjectFit: {
+  type t = [ | `fill | `contain | `cover | `none | `scaleDown];
+
+  let toString: t => string;
+};

@@ -500,6 +500,15 @@ let marginRight = x => D("marginRight", marginToString(x));
 let marginTop = x => D("marginTop", marginToString(x));
 let marginBottom = x => D("marginBottom", marginToString(x));
 
+let objectFit = x =>
+  D(
+    "objectFit",
+    switch (x) {
+    | #ObjectFit.t as o => ObjectFit.toString(o)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let opacity = x => D("opacity", Js.Float.toString(x));
 
 let outline = (size, style, color) =>
@@ -1179,21 +1188,6 @@ let columnCount = x =>
     switch (x) {
     | `auto => "auto"
     | `count(v) => Js.Int.toString(v)
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
-let objectFit = x =>
-  D(
-    "objectFit",
-    switch (x) {
-    | `fill => "fill"
-    | `contain => "contain"
-    | `cover => "cover"
-    | `none => "none"
-    | `scaleDown => "scale-down"
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
