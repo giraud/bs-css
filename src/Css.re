@@ -667,6 +667,15 @@ let verticalAlign = x =>
     },
   );
 
+let visibility = x =>
+  D(
+    "visibility",
+    switch (x) {
+    | #Visibility.t as v => Visibility.toString(v)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let whiteSpace = x =>
   D(
     "whiteSpace",
@@ -1241,8 +1250,6 @@ let filter = x =>
 
 let backfaceVisibility = x =>
   D("backfaceVisibility", string_of_visibility(x));
-
-let visibility = x => D("visibility", string_of_visibility(x));
 
 module Shadow = {
   type value('a) = string;

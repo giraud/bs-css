@@ -993,3 +993,13 @@ module Clear = {
     | `inlineStart => "inline-start"
     | `inlineEnd => "inline-end";
 };
+
+module Visibility = {
+  type t = [ | `visible | `hidden | `collapse];
+
+  let toString =
+    fun
+    | `visible => "visible"
+    | `hidden => "hidden"
+    | `collapse => "collapse";
+};

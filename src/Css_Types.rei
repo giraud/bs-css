@@ -685,3 +685,12 @@ module Clear: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/visibility
+ */
+module Visibility: {
+  type t = [ | `visible | `hidden | `collapse];
+
+  let toString: t => string;
+};

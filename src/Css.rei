@@ -432,6 +432,12 @@ let verticalAlign:
   [ Types.VerticalAlign.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
+ The visibility CSS property shows or hides an element without changing the layout of a document.
+ The property can also hide rows or columns in a <table>.
+ */
+let visibility: [ Types.Visibility.t | Types.Cascading.t] => rule;
+
+/**
  The white-space CSS property sets how white space inside an element is handled.
  */
 let whiteSpace: [ Types.WhiteSpace.t | Types.Cascading.t] => rule;
@@ -608,7 +614,6 @@ let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 let float: [ | `left | `right | `none] => rule;
 let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 let backfaceVisibility: [ | `visible | `hidden] => rule;
-let visibility: [ | `visible | `hidden] => rule;
 let border:
   (
     Types.Length.t,
