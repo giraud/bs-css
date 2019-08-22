@@ -182,6 +182,12 @@ let boxShadow: [ Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
 
 let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
 
+/**
+ The clear CSS property sets whether an element must be moved below (cleared) floating elements that precede it.
+ The clear property applies to floating and non-floating elements.
+ */
+let clear: [ Types.Clear.t | Types.Cascading.t] => rule;
+
 let color: Types.Color.t => rule;
 
 let contentRule: string => rule;
@@ -600,7 +606,6 @@ let minHeight: [ Types.Length.t | `auto] => rule;
 let maxHeight: [ Types.Length.t | `none] => rule;
 let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 let float: [ | `left | `right | `none] => rule;
-let clear: [ | `left | `right | `both] => rule;
 let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 let backfaceVisibility: [ | `visible | `hidden] => rule;
 let visibility: [ | `visible | `hidden] => rule;

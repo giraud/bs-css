@@ -324,6 +324,15 @@ let bottom = x =>
     },
   );
 
+let clear = x =>
+  D(
+    "clear",
+    switch (x) {
+    | #Clear.t as cl => Clear.toString(cl)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let color = x => D("color", Color.toString(x));
 
 let contentRule = x => D("content", {j|"$x"|j});
@@ -1169,16 +1178,6 @@ let float = x =>
     | `left => "left"
     | `right => "right"
     | `none => "none"
-    },
-  );
-
-let clear = x =>
-  D(
-    "clear",
-    switch (x) {
-    | `left => "left"
-    | `right => "right"
-    | `both => "both"
     },
   );
 

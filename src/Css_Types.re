@@ -980,3 +980,16 @@ module ObjectFit = {
     | `none => "none"
     | `scaleDown => "scale-down";
 };
+
+module Clear = {
+  type t = [ | `none | `left | `right | `both | `inlineStart | `inlineEnd];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `left => "left"
+    | `right => "right"
+    | `both => "both"
+    | `inlineStart => "inline-start"
+    | `inlineEnd => "inline-end";
+};

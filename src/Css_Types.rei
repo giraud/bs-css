@@ -676,3 +676,12 @@ module ObjectFit: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/clear
+ */
+module Clear: {
+  type t = [ | `none | `left | `right | `both | `inlineStart | `inlineEnd];
+
+  let toString: t => string;
+};
