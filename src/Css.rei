@@ -221,6 +221,14 @@ let flexGrow: float => rule;
 
 let flexShrink: float => rule;
 
+/**
+ The float CSS property places an element on the left or right side of its container,
+ allowing text and inline elements to wrap around it.
+ The element is removed from the normal flow of the page, though still remaining a part of the flow
+ (in contrast to absolute positioning).
+ */
+let float: [ Types.Float.t | Types.Cascading.t] => rule;
+
 let fontFamily: string => rule;
 
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
@@ -611,7 +619,6 @@ let maxWidth: [ Types.Length.t | `none] => rule;
 let minHeight: [ Types.Length.t | `auto] => rule;
 let maxHeight: [ Types.Length.t | `none] => rule;
 let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
-let float: [ | `left | `right | `none] => rule;
 let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 let backfaceVisibility: [ | `visible | `hidden] => rule;
 let border:

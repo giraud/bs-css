@@ -125,11 +125,6 @@ module Converter = {
 
   let string_of_time = t => Js.Int.toString(t) ++ "ms";
 
-  let string_of_visibility =
-    fun
-    | `hidden => "hidden"
-    | `visible => "visible";
-
   let string_of_background = bg =>
     switch (bg) {
     | `none => "none"
@@ -365,6 +360,15 @@ let display = x =>
 let flexGrow = x => D("flexGrow", Js.Float.toString(x));
 
 let flexShrink = x => D("flexShrink", Js.Float.toString(x));
+
+let float = x =>
+  D(
+    "float",
+    switch (x) {
+    | #Float.t as f => Float.toString(f)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 let fontFamily = x => D("fontFamily", x);
 
@@ -1180,16 +1184,6 @@ let boxSizing = x =>
     },
   );
 
-let float = x =>
-  D(
-    "float",
-    switch (x) {
-    | `left => "left"
-    | `right => "right"
-    | `none => "none"
-    },
-  );
-
 let columnCount = x =>
   D(
     "columnCount",
@@ -1249,7 +1243,13 @@ let filter = x =>
   D("filter", x->Belt.List.map(string_of_filter)->join(" "));
 
 let backfaceVisibility = x =>
-  D("backfaceVisibility", string_of_visibility(x));
+  D(
+    "backfaceVisibility",
+    switch (x) {
+    | `hidden => "hidden"
+    | `visible => "visible"
+    },
+  );
 
 module Shadow = {
   type value('a) = string;

@@ -994,6 +994,18 @@ module Clear = {
     | `inlineEnd => "inline-end";
 };
 
+module Float = {
+  type t = [ | `left | `right | `none | `inlineStart | `inlineEnd];
+
+  let toString =
+    fun
+    | `left => "left"
+    | `right => "right"
+    | `none => "none"
+    | `inlineStart => "inline-start"
+    | `inlineEnd => "inline-end";
+};
+
 module Visibility = {
   type t = [ | `visible | `hidden | `collapse];
 
