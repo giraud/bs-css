@@ -631,6 +631,15 @@ let right = x =>
     },
   );
 
+let tableLayout = x =>
+  D(
+    "tableLayout",
+    switch (x) {
+    | #TableLayout.t as tl => TableLayout.toString(tl)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let textAlign = x =>
   D(
     "textAlign",
@@ -1362,15 +1371,6 @@ let borderBottom = (px, style, color) =>
 
 let borderBottomStyle = x =>
   D("borderBottomStyle", string_of_borderstyle(x));
-
-let tableLayout = x =>
-  D(
-    "tableLayout",
-    switch (x) {
-    | `auto => "auto"
-    | `fixed => "fixed"
-    },
-  );
 
 let borderCollapse = x =>
   D(

@@ -1015,3 +1015,12 @@ module Visibility = {
     | `hidden => "hidden"
     | `collapse => "collapse";
 };
+
+module TableLayout = {
+  type t = [ | `auto | `fixed];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `fixed => "fixed";
+};

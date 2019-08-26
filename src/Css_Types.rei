@@ -703,3 +703,12 @@ module Visibility: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/table-layout
+ */
+module TableLayout: {
+  type t = [ | `auto | `fixed];
+
+  let toString: t => string;
+};

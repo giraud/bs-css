@@ -408,6 +408,11 @@ let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
 let right: [ Types.Length.t | Types.Cascading.t] => rule;
 
 /**
+ The table-layout CSS property sets the algorithm used to lay out <table> cells, rows, and columns.
+ */
+let tableLayout: [ Types.TableLayout.t | Types.Cascading.t] => rule;
+
+/**
  The text-align CSS property sets the horizontal alignment of a block element or table-cell box.
  This means it works like vertical-align but in the horizontal direction.
  */
@@ -636,7 +641,6 @@ let borderTop:
     Types.Color.t
   ) =>
   rule;
-let tableLayout: [ | `auto | `fixed] => rule;
 let borderCollapse: [ | `separate | `collapse] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
 let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
