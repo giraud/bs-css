@@ -130,6 +130,11 @@ let borderBottomStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 let borderBottomWidth: Types.Length.t => rule;
 
+/**
+ The border-collapse CSS property sets whether cells inside a <table> have shared or separate borders.
+ */
+let borderCollapse: [ Types.BorderCollapse.t | Types.Cascading.t] => rule;
+
 let borderColor: Types.Color.t => rule;
 
 let borderLeft:
@@ -641,7 +646,6 @@ let borderTop:
     Types.Color.t
   ) =>
   rule;
-let borderCollapse: [ | `separate | `collapse] => rule;
 let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
 let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;

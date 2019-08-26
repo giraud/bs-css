@@ -285,6 +285,15 @@ let borderBottomRightRadius = x =>
 
 let borderBottomWidth = x => D("borderBottomWidth", Length.toString(x));
 
+let borderCollapse = x =>
+  D(
+    "borderCollapse",
+    switch (x) {
+    | #BorderCollapse.t as bc => BorderCollapse.toString(bc)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let borderColor = x => D("borderColor", Color.toString(x));
 
 let borderLeftColor = x => D("borderLeftColor", Color.toString(x));
@@ -1371,15 +1380,6 @@ let borderBottom = (px, style, color) =>
 
 let borderBottomStyle = x =>
   D("borderBottomStyle", string_of_borderstyle(x));
-
-let borderCollapse = x =>
-  D(
-    "borderCollapse",
-    switch (x) {
-    | `collapse => "collapse"
-    | `separate => "separate"
-    },
-  );
 
 let background = x => D("background", string_of_background(x));
 let backgrounds = bg =>

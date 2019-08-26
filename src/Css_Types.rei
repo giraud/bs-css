@@ -712,3 +712,12 @@ module TableLayout: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/border-collapse
+ */
+module BorderCollapse: {
+  type t = [ | `collapse | `separate];
+
+  let toString: t => string;
+};

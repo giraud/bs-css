@@ -1024,3 +1024,12 @@ module TableLayout = {
     | `auto => "auto"
     | `fixed => "fixed";
 };
+
+module BorderCollapse = {
+  type t = [ | `collapse | `separate];
+
+  let toString =
+    fun
+    | `collapse => "collapse"
+    | `separate => "separate";
+};
