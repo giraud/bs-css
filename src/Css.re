@@ -308,6 +308,15 @@ let bottom = x =>
     },
   );
 
+let boxSizing = x =>
+  D(
+    "boxSizing",
+    switch (x) {
+    | #BoxSizing.t as bs => BoxSizing.toString(bs)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let clear = x =>
   D(
     "clear",
@@ -1166,18 +1175,6 @@ let gridAutoColumns = dimensions =>
 
 let gridAutoRows = dimensions =>
   D("gridAutoRows", string_of_dimension(dimensions));
-
-let boxSizing = x =>
-  D(
-    "boxSizing",
-    switch (x) {
-    | `contentBox => "content-box"
-    | `borderBox => "border-box"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
 
 let columnCount = x =>
   D(

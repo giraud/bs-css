@@ -183,6 +183,11 @@ let borderWidth: Types.Length.t => rule;
 
 let bottom: [ Types.Length.t | Types.Cascading.t] => rule;
 
+/**
+ The box-sizing CSS property sets how the total width and height of an element is calculated.
+ */
+let boxSizing: [ Types.BoxSizing.t | Types.Cascading.t] => rule;
+
 let boxShadow: [ Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
 
 let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
@@ -637,7 +642,6 @@ let minWidth: [ Types.Length.t | `auto] => rule;
 let maxWidth: [ Types.Length.t | `none] => rule;
 let minHeight: [ Types.Length.t | `auto] => rule;
 let maxHeight: [ Types.Length.t | `none] => rule;
-let boxSizing: [ | `borderBox | `contentBox | Types.Cascading.t] => rule;
 let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 let backfaceVisibility: [ | `visible | `hidden] => rule;
 let border:

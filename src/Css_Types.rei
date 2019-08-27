@@ -739,3 +739,12 @@ module FlexDirection: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/box-sizing
+ */
+module BoxSizing: {
+  type t = [ | `contentBox | `borderBox];
+
+  let toString: t => string;
+};

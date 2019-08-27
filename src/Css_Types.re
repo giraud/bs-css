@@ -1054,3 +1054,12 @@ module FlexDirection = {
     | `column => "column"
     | `columnReverse => "column-reverse";
 };
+
+module BoxSizing = {
+  type t = [ | `contentBox | `borderBox];
+
+  let toString =
+    fun
+    | `contentBox => "content-box"
+    | `borderBox => "border-box";
+};
