@@ -721,3 +721,12 @@ module BorderCollapse: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/flex-wrap
+ */
+module FlexWrap: {
+  type t = [ | `nowrap | `wrap | `wrapReverse];
+
+  let toString: t => string;
+};

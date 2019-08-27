@@ -53,26 +53,6 @@ let join = (strings, separator) => {
 };
 
 module Converter = {
-  let string_of_rgb = (r, g, b) =>
-    "rgb("
-    ++ Js.Int.toString(r)
-    ++ ", "
-    ++ Js.Int.toString(g)
-    ++ ", "
-    ++ Js.Int.toString(b)
-    ++ ")";
-
-  let string_of_rgba = (r, g, b, a) =>
-    "rgba("
-    ++ Js.Int.toString(r)
-    ++ ", "
-    ++ Js.Int.toString(g)
-    ++ ", "
-    ++ Js.Int.toString(b)
-    ++ ", "
-    ++ Js.Float.toString(a)
-    ++ ")";
-
   let string_of_percent =
     fun
     | `percent(x) => Js.Float.toString(x) ++ "%";
@@ -369,6 +349,15 @@ let display = x =>
 let flexGrow = x => D("flexGrow", Js.Float.toString(x));
 
 let flexShrink = x => D("flexShrink", Js.Float.toString(x));
+
+let flexWrap = x =>
+  D(
+    "flexWrap",
+    switch (x) {
+    | #FlexWrap.t as fw => FlexWrap.toString(fw)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 let float = x =>
   D(
@@ -1046,16 +1035,6 @@ let flexDirection = x =>
     | `column => "column"
     | `rowReverse => "row-reverse"
     | `columnReverse => "column-reverse"
-    },
-  );
-
-let flexWrap = x =>
-  D(
-    "flexWrap",
-    switch (x) {
-    | `nowrap => "nowrap"
-    | `wrap => "wrap"
-    | `wrapReverse => "wrap-reverse"
     },
   );
 

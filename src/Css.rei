@@ -227,6 +227,12 @@ let flexGrow: float => rule;
 let flexShrink: float => rule;
 
 /**
+ The flex-wrap CSS property sets whether flex items are forced onto one line or can wrap onto multiple lines.
+ If wrapping is allowed, it sets the direction that lines are stacked.
+ */
+let flexWrap: [ Types.FlexWrap.t | Types.Cascading.t] => rule;
+
+/**
  The float CSS property places an element on the left or right side of its container,
  allowing text and inline elements to wrap around it.
  The element is removed from the normal flow of the page, though still remaining a part of the flow
@@ -619,7 +625,6 @@ let flex3:
   rule;
 let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
 let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
-let flexWrap: [ | `wrap | `nowrap | `wrapReverse] => rule;
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 let width: [ Types.Length.t | `auto | `fitContent] => rule;

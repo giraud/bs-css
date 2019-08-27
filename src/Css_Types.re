@@ -1033,3 +1033,13 @@ module BorderCollapse = {
     | `collapse => "collapse"
     | `separate => "separate";
 };
+
+module FlexWrap = {
+  type t = [ | `nowrap | `wrap | `wrapReverse];
+
+  let toString =
+    fun
+    | `nowrap => "nowrap"
+    | `wrap => "wrap"
+    | `wrapReverse => "wrap-reverse";
+};
