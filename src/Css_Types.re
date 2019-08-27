@@ -1063,3 +1063,12 @@ module BoxSizing = {
     | `contentBox => "content-box"
     | `borderBox => "border-box";
 };
+
+module ColumnCount = {
+  type t = [ | `auto | `count(int)];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `count(v) => Js.Int.toString(v);
+};

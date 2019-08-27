@@ -200,6 +200,11 @@ let clear: [ Types.Clear.t | Types.Cascading.t] => rule;
 
 let color: Types.Color.t => rule;
 
+/**
+ The column-count CSS property breaks an element's content into the specified number of columns.
+ */
+let columnCount: [ Types.ColumnCount.t | Types.Cascading.t] => rule;
+
 let contentRule: string => rule;
 
 let cursor: Types.Cursor.t => rule;
@@ -642,7 +647,6 @@ let minWidth: [ Types.Length.t | `auto] => rule;
 let maxWidth: [ Types.Length.t | `none] => rule;
 let minHeight: [ Types.Length.t | `auto] => rule;
 let maxHeight: [ Types.Length.t | `none] => rule;
-let columnCount: [ | `auto | `count(int) | Types.Cascading.t] => rule;
 let backfaceVisibility: [ | `visible | `hidden] => rule;
 let border:
   (

@@ -748,3 +748,12 @@ module BoxSizing: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/box-sizing
+ */
+module ColumnCount: {
+  type t = [ | `auto | `count(int)];
+
+  let toString: t => string;
+};

@@ -328,6 +328,15 @@ let clear = x =>
 
 let color = x => D("color", Color.toString(x));
 
+let columnCount = x =>
+  D(
+    "columnCount",
+    switch (x) {
+    | #ColumnCount.t as cc => ColumnCount.toString(cc)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let contentRule = x => D("content", {j|"$x"|j});
 
 let cursor = x => D("cursor", Cursor.toString(x));
@@ -1175,18 +1184,6 @@ let gridAutoColumns = dimensions =>
 
 let gridAutoRows = dimensions =>
   D("gridAutoRows", string_of_dimension(dimensions));
-
-let columnCount = x =>
-  D(
-    "columnCount",
-    switch (x) {
-    | `auto => "auto"
-    | `count(v) => Js.Int.toString(v)
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
 
 type filter = [
   | `blur(Length.t)
