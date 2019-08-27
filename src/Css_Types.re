@@ -1043,3 +1043,14 @@ module FlexWrap = {
     | `wrap => "wrap"
     | `wrapReverse => "wrap-reverse";
 };
+
+module FlexDirection = {
+  type t = [ | `row | `rowReverse | `column | `columnReverse];
+
+  let toString =
+    fun
+    | `row => "row"
+    | `rowReverse => "row-reverse"
+    | `column => "column"
+    | `columnReverse => "column-reverse";
+};

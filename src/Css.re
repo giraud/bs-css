@@ -346,6 +346,15 @@ let display = x =>
     },
   );
 
+let flexDirection = x =>
+  D(
+    "flexDirection",
+    switch (x) {
+    | #FlexDirection.t as fd => FlexDirection.toString(fd)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let flexGrow = x => D("flexGrow", Js.Float.toString(x));
 
 let flexShrink = x => D("flexShrink", Js.Float.toString(x));
@@ -1024,17 +1033,6 @@ let flexBasis = x =>
     switch (x) {
     | #FlexBasis.t as b => FlexBasis.toString(b)
     | #Length.t as l => Length.toString(l)
-    },
-  );
-
-let flexDirection = x =>
-  D(
-    "flexDirection",
-    switch (x) {
-    | `row => "row"
-    | `column => "column"
-    | `rowReverse => "row-reverse"
-    | `columnReverse => "column-reverse"
     },
   );
 

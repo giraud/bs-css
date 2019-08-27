@@ -730,3 +730,12 @@ module FlexWrap: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/flex-direction
+ */
+module FlexDirection: {
+  type t = [ | `row | `rowReverse | `column | `columnReverse];
+
+  let toString: t => string;
+};

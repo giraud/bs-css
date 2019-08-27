@@ -222,6 +222,11 @@ let display:
   ] =>
   rule;
 
+/**
+ The flex-direction CSS property sets how flex items are placed in the flex container defining the main axis and the direction (normal or reversed).
+ */
+let flexDirection: [ Types.FlexDirection.t | Types.Cascading.t] => rule;
+
 let flexGrow: float => rule;
 
 let flexShrink: float => rule;
@@ -624,7 +629,6 @@ let flex3:
   ) =>
   rule;
 let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
-let flexDirection: [ | `row | `column | `rowReverse | `columnReverse] => rule;
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 let width: [ Types.Length.t | `auto | `fitContent] => rule;
