@@ -473,8 +473,6 @@ let justifyContent = x =>
     },
   );
 
-let listStyleType = x => D("listStyleType", ListStyleType.toString(x));
-
 let left = x =>
   D(
     "left",
@@ -500,6 +498,24 @@ let lineHeight = x =>
     switch (x) {
     | #LineHeight.t as h => LineHeight.toString(h)
     | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let listStyleType = x =>
+  D(
+    "listStyleType",
+    switch (x) {
+    | #ListStyleType.t as lsp => ListStyleType.toString(lsp)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let listStylePosition = x =>
+  D(
+    "listStylePosition",
+    switch (x) {
+    | #ListStylePosition.t as lsp => ListStylePosition.toString(lsp)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1431,11 +1447,6 @@ let clipPath = x =>
     },
   );
 
-let string_of_listStylePosition =
-  fun
-  | `inside => "inside"
-  | `outside => "outside";
-
 let string_of_listStyleImage =
   fun
   | `none => "none"
@@ -1446,13 +1457,10 @@ let listStyle = (style, pos, img) =>
     "listStyle",
     ListStyleType.toString(style)
     ++ " "
-    ++ string_of_listStylePosition(pos)
+    ++ ListStylePosition.toString(pos)
     ++ " "
     ++ string_of_listStyleImage(img),
   );
-
-let listStylePosition = x =>
-  D("listStylePosition", string_of_listStylePosition(x));
 
 let listStyleImage = x => D("listStyleImage", string_of_listStyleImage(x));
 

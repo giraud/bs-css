@@ -364,6 +364,15 @@ module ListStyleType = {
     | `none => "none";
 };
 
+module ListStylePosition = {
+  type t = [ | `inside | `outside];
+
+  let toString =
+    fun
+    | `inside => "inside"
+    | `outside => "outside";
+};
+
 module OutlineStyle = {
   type t = [
     | `none

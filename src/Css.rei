@@ -332,7 +332,16 @@ let letterSpacing:
 let lineHeight:
   [ Types.LineHeight.t | Types.Length.t | Types.Cascading.t] => rule;
 
-let listStyleType: Types.ListStyleType.t => rule;
+/**
+ The list-style-type CSS property sets the marker (such as a disc, character, or custom counter style) of a list item element.
+ */
+let listStyleType: [ Types.ListStyleType.t | Types.Cascading.t] => rule;
+
+/**
+ The list-style-position CSS property sets the position of the ::marker relative to a list item.
+ */
+let listStylePosition:
+  [ Types.ListStylePosition.t | Types.Cascading.t] => rule;
 
 let margin: [ Types.Length.t | Types.Margin.t] => rule;
 let margin2:
@@ -678,7 +687,6 @@ let listStyle:
     [ | `none | `url(string)]
   ) =>
   rule;
-let listStylePosition: [ | `inside | `outside] => rule;
 let listStyleImage: [ | `none | `url(string)] => rule;
 let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>

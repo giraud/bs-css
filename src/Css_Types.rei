@@ -284,6 +284,15 @@ module ListStyleType: {
   let toString: t => string;
 };
 
+/**
+ https://developer.mozilla.org/docs/Web/CSS/list-style-position
+ */
+module ListStylePosition: {
+  type t = [ | `inside | `outside];
+
+  let toString: t => string;
+};
+
 module OutlineStyle: {
   type t = [
     | `none
