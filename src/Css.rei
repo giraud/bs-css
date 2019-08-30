@@ -169,6 +169,11 @@ let borderRadius: Types.Length.t => rule;
 
 let borderSpacing: Types.Length.t => rule;
 
+/**
+ The border-style shorthand CSS property sets the line style for all four sides of an element's border.
+ */
+let borderStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+
 let borderTopColor: Types.Color.t => rule;
 
 let borderTopLeftRadius: Types.Length.t => rule;
@@ -474,6 +479,12 @@ let transitionProperty: string => rule;
 let transitionTimingFunction: Types.TimingFunction.t => rule;
 
 /**
+ The user-select CSS property controls whether the user can select text.
+ This doesn't have any effect on content loaded as chrome, except in textboxes.
+ */
+let userSelect: [ Types.UserSelect.t | Types.Cascading.t] => rule;
+
+/**
  The vertical-align CSS property sets vertical alignment of an inline or table-cell box.
  */
 let verticalAlign:
@@ -664,7 +675,6 @@ let border:
     Types.Color.t
   ) =>
   rule;
-let borderStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 let borderTop:
   (
     Types.Length.t,
@@ -700,7 +710,6 @@ let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
 let textTransform:
   [ | `uppercase | `lowercase | `capitalize | `none | Types.Cascading.t] =>
   rule;
-let userSelect: [ | `auto | `all | `text | `none | Types.Cascading.t] => rule;
 let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 
 type gradient = [

@@ -1081,3 +1081,15 @@ module ColumnCount = {
     | `auto => "auto"
     | `count(v) => Js.Int.toString(v);
 };
+
+module UserSelect = {
+  type t = [ | `none | `auto | `text | `contain | `all];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `auto => "auto"
+    | `text => "text"
+    | `contain => "contain"
+    | `all => "all";
+};

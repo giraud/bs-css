@@ -451,6 +451,9 @@ module Color: {
   let toString: t => string;
 };
 
+/**
+ https://developer.mozilla.org/docs/Web/CSS/border-style
+ */
 module BorderStyle: {
   type t = [
     | `none
@@ -763,6 +766,15 @@ module BoxSizing: {
  */
 module ColumnCount: {
   type t = [ | `auto | `count(int)];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/user-select
+ */
+module UserSelect: {
+  type t = [ | `none | `auto | `text | `contain | `all];
 
   let toString: t => string;
 };

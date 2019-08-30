@@ -711,6 +711,15 @@ let transformOrigin = (x, y) =>
 
 let unsafe = (property, value) => D(property, value);
 
+let userSelect = x =>
+  D(
+    "userSelect",
+    switch (x) {
+    | #UserSelect.t as us => UserSelect.toString(us)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let verticalAlign = x =>
   D(
     "verticalAlign",
@@ -1577,20 +1586,6 @@ let textTransform = x =>
     | `uppercase => "uppercase"
     | `lowercase => "lowercase"
     | `capitalize => "capitalize"
-    | `none => "none"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
-let userSelect = x =>
-  D(
-    "userSelect",
-    switch (x) {
-    | `auto => "auto"
-    | `all => "all"
-    | `text => "text"
     | `none => "none"
     | `initial => "initial"
     | `inherit_ => "inherit"
