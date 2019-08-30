@@ -778,3 +778,9 @@ module UserSelect: {
 
   let toString: t => string;
 };
+
+module TextTransform: {
+  type t = [ | `none | `capitalize | `uppercase | `lowercase];
+
+  let toString: t => string;
+};

@@ -692,6 +692,15 @@ let textAlign = x =>
 
 let textIndent = x => D("textIndent", Length.toString(x));
 
+let textTransform = x =>
+  D(
+    "textTransform",
+    switch (x) {
+    | #TextTransform.t as tt => TextTransform.toString(tt)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let top = x =>
   D(
     "top",
@@ -1578,20 +1587,6 @@ let textShadow = x =>
 
 let textShadows = x =>
   D("textShadow", x->Belt.List.map(Shadow.toString)->join(", "));
-
-let textTransform = x =>
-  D(
-    "textTransform",
-    switch (x) {
-    | `uppercase => "uppercase"
-    | `lowercase => "lowercase"
-    | `capitalize => "capitalize"
-    | `none => "none"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
 
 let wordWrap = x =>
   D(

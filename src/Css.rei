@@ -462,6 +462,12 @@ let textDecorationColor: Types.Color.t => rule;
 
 let textIndent: Types.Length.t => rule;
 
+/**
+ The text-transform CSS property specifies how to capitalize an element's text.
+ It can be used to make text appear in all-uppercase or all-lowercase, or with each word capitalized.
+ */
+let textTransform: [ Types.TextTransform.t | Types.Cascading.t] => rule;
+
 let top: [ Types.Length.t | Types.Cascading.t] => rule;
 
 let transform: Types.Transform.t => rule;
@@ -707,9 +713,6 @@ let textOverflow:
   [ | `clip | `ellipsis | `string(string) | Types.Cascading.t] => rule;
 let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
 let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
-let textTransform:
-  [ | `uppercase | `lowercase | `capitalize | `none | Types.Cascading.t] =>
-  rule;
 let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 
 type gradient = [

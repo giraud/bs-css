@@ -1093,3 +1093,14 @@ module UserSelect = {
     | `contain => "contain"
     | `all => "all";
 };
+
+module TextTransform = {
+  type t = [ | `none | `capitalize | `uppercase | `lowercase];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `capitalize => "capitalize"
+    | `uppercase => "uppercase"
+    | `lowercase => "lowercase";
+};
