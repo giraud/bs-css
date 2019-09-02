@@ -784,3 +784,9 @@ module TextTransform: {
 
   let toString: t => string;
 };
+
+module GridTemplateAreas: {
+  type t = [ | `none | `areas(list(string))];
+
+  let toString: t => string;
+};

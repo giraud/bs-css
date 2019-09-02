@@ -1219,6 +1219,14 @@ let gridAutoColumns = dimensions =>
 let gridAutoRows = dimensions =>
   D("gridAutoRows", string_of_dimension(dimensions));
 
+let gridArea = s =>
+  D("gridArea", s);
+
+let gridTemplateAreas = l => {
+  D("gridTemplateAreas", GridTemplateAreas.toString(l));
+}
+
+
 type filter = [
   | `blur(Length.t)
   | `brightness(float)

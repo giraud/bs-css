@@ -1104,3 +1104,13 @@ module TextTransform = {
     | `uppercase => "uppercase"
     | `lowercase => "lowercase";
 };
+
+module GridTemplateAreas = {
+  type t = [ | `none | `areas(list(string))];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `areas(l) =>
+      List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "", l);
+};
