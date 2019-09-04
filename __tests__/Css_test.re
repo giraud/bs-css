@@ -456,3 +456,81 @@ describe("Word spacing", () =>
        ))
   )
 );
+
+describe("gridTemplateAreas", () => {
+  test("takes acceptable types & cascades", () =>
+    expect(
+      (
+        r(gridTemplateAreas(`none)),
+        r(gridTemplateAreas(`areas(["a"]))),
+        r(gridTemplateAreas(`inherit_)),
+        r(gridTemplateAreas(`initial)),
+        r(gridTemplateAreas(`unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gridTemplateAreas": "none"},
+         {"gridTemplateAreas": "'a'"},
+         {"gridTemplateAreas": "inherit"},
+         {"gridTemplateAreas": "initial"},
+         {"gridTemplateAreas": "unset"},
+       ))
+  );
+
+  test("sucessfully combines list", () =>
+    expect(
+      r(gridTemplateAreas(`areas(["a a a", "b b b"])))
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson({"gridTemplateAreas": "'a a a' 'b b b'"})
+  );
+});
+
+describe("GridArea", () => {
+  test("gridArea takes values & cascades", () =>
+    expect(
+      (
+        r(gridArea(`auto)),
+        r(gridArea(`ident("a"))),
+        r(gridArea(`num(1))),
+        r(gridArea(`numIdent((1, "a")))),
+        r(gridArea(`span(`num(1)))),
+        r(gridArea(`span(`ident("a")))),
+        r(gridArea(`inherit_)),
+        r(gridArea(`initial)),
+        r(gridArea(`unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gridArea": "auto"},
+         {"gridArea": "a"},
+         {"gridArea": "1"},
+         {"gridArea": "1 a"},
+         {"gridArea": "span 1"},
+         {"gridArea": "span a"},
+         {"gridArea": "inherit"},
+         {"gridArea": "initial"},
+         {"gridArea": "unset"},
+       ))
+  );
+
+  test("multi-arg functions add in slashes", () =>
+    expect(
+      (
+        r(gridArea2(`auto, `num(1))),
+        r(gridArea3(`ident("a"), `numIdent((1, "a")), `auto)),
+        r(
+          gridArea4(`num(5), `span(`num(16)), `span(`ident("b")), `auto),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gridArea": "auto / 1"},
+         {"gridArea": "a / 1 a / auto"},
+         {"gridArea": "5 / span 16 / span b / auto"},
+       ))
+  );
+});

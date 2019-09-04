@@ -1104,3 +1104,42 @@ module TextTransform = {
     | `uppercase => "uppercase"
     | `lowercase => "lowercase";
 };
+
+module GridTemplateAreas = {
+  type t = [ | `none | `areas(list(string))];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `areas(l) =>
+      String.trim(
+        List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "", l),
+      );
+};
+
+module GridArea = {
+  type t = [
+    | `auto
+    | `ident(string)
+    | `num(int)
+    | `numIdent(int, string)
+    | `span([ | `num(int) | `ident(string)])
+  ];
+
+  let toString = t => {
+    switch (t) {
+    | `auto => "auto"
+    | `ident(s) => s
+    | `num(i) => string_of_int(i)
+    | `numIdent(i, s) => string_of_int(i) ++ " " ++ s
+    | `span(e) =>
+      "span "
+      ++ (
+        switch (e) {
+        | `num(i) => string_of_int(i)
+        | `ident(s) => s
+        }
+      )
+    };
+  };
+};

@@ -784,3 +784,21 @@ module TextTransform: {
 
   let toString: t => string;
 };
+
+module GridTemplateAreas: {
+  type t = [ | `none | `areas(list(string))];
+
+  let toString: t => string;
+};
+
+module GridArea: {
+  type t = [
+    | `auto
+    | `ident(string)
+    | `num(int)
+    | `numIdent(int, string)
+    | `span([ | `num(int) | `ident(string)])
+  ];
+
+  let toString: t => string;
+};
