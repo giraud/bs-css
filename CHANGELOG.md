@@ -1,3 +1,5 @@
+## [Unreleased]
+
 ## [10.0.0] - 2019-09-04
 
 Major release because of the breaking change in shadows definition.
@@ -40,7 +42,7 @@ textShadows([Shadow.text(~y=px(3), ~blur=px(2), black), Shadow.text(~x=px(3), gr
 - Move types to Css.Types, updated some css properties
 - Use yarn instead of npm
 
-## [9.0.1] - 2019-07-01
+## 9.0.1 - 2019-07-01
 
 This is a major release: bs-css now depend on emotion 10.x instead of 9.x (see [#114](https://github.com/SentiaAnalytics/bs-css/pull/114)).
 
@@ -115,3 +117,6 @@ than before, you can use `List.concat` instead or `@` operator.
 #### Contributors
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
+
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v9.0.1...v1.0.0
