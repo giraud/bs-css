@@ -1,6 +1,6 @@
 {
   "name": "bs-css",
-  "version": "9.0.1",
+  "version": "10.0.0",
   "description": "BuckleScript bindings for emotion",
   "scripts": {
     "build": "bsb -make-world",

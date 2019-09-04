@@ -1,4 +1,46 @@
-## 9.0.1 - 2019-07-01
+## [10.0.0] - 2019-09-04
+
+Major release because of the breaking change in shadows definition.
+
+### Breaking change
+
+- Css.rule is now an abstract type [#153](https://github.com/SentiaAnalytics/bs-css/issues/153)
+- Update shadow definition [#148](https://github.com/SentiaAnalytics/bs-css/issues/148)
+
+boxShadow has been changed to be a rule to allow for `none`, `important` and all other rule related functions.
+
+It means that the shadow properties must be updated to the following patterns:
+```reason
+// before:
+boxShadow(~x=px(1), ~y=px(2));
+boxShadows([boxShadow(yellow), boxShadow(red)]);
+textShadow(~y=px(3), ~blur=px(2), black);
+textShadows([textShadow(~y=px(3), ~blur=px(2), black), textShadow(~x=px(3), green)]);
+
+// after:
+boxShadow(Shadow.box(~x=px(1), ~y=px(2)));
+boxShadows([shadow.box(yellow), Shadow.box(red)]);
+textShadow(Shadow.text(~y=px(3), ~blur=px(2), black));
+textShadows([Shadow.text(~y=px(3), ~blur=px(2), black), Shadow.text(~x=px(3), green)]);
+```
+
+### Added
+
+- Support for for `object-fit` property by [@kuy](https://github.com/kuy) - [#125](https://github.com/SentiaAnalytics/bs-css/pull/125)
+- Add `fit-content` option for width property by [@mwarni](https://github.com/mwarni) - [#149](https://github.com/SentiaAnalytics/bs-css/pull/149)
+- Add support for `grid-template-areas` and `grid-area` by [@drew887](https://github.com/drew887) - [#156](https://github.com/SentiaAnalytics/bs-css/issues/156)
+
+### Fixed
+
+- BoxShadow: none doesn't work - [#148](https://github.com/SentiaAnalytics/bs-css/issues/148)
+- !important doesn't apply to boxShadow - [#147](https://github.com/SentiaAnalytics/bs-css/issues/147)
+
+### Changed
+
+- Move types to Css.Types, updated some css properties
+- Use yarn instead of npm
+
+## [9.0.1] - 2019-07-01
 
 This is a major release: bs-css now depend on emotion 10.x instead of 9.x (see [#114](https://github.com/SentiaAnalytics/bs-css/pull/114)).
 
