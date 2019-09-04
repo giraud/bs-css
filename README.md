@@ -8,6 +8,8 @@ Bs-css is a statically typed interface to [Emotion](https://github.com/emotion-j
 
 ```sh
 npm install --save bs-css
+or
+yarn add bs-css
 ```
 
 In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
@@ -201,7 +203,7 @@ Nothing is lost and everything ends up in the final stylesheet where normal over
 ## Development
 
 ```sh
-npm run dev
+yarn dev
 ```
 
 ## Where is the documentation?
