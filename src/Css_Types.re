@@ -262,6 +262,14 @@ module GridAutoFlow = {
     | `rowDense => "row dense";
 };
 
+module GridColumnGap = {
+  type t = [ | `normal];
+
+  let toString =
+    fun
+    | `normal => "normal";
+};
+
 module VerticalAlign = {
   type t = [
     | `baseline

@@ -445,7 +445,16 @@ let gridAutoFlow = x =>
 let gridColumn = (start, end') =>
   D("gridColumn", Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'));
 
-let gridColumnGap = n => D("gridColumnGap", Length.toString(n));
+let gridColumnGap = x =>
+  D(
+    "gridColumnGap",
+    switch (x) {
+    | #GridColumnGap.t as gcg => GridColumnGap.toString(gcg)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 let gridColumnStart = n => D("gridColumnStart", Js.Int.toString(n));
 
@@ -454,9 +463,25 @@ let gridColumnEnd = n => D("gridColumnEnd", Js.Int.toString(n));
 let gridRow = (start, end') =>
   D("gridRow", Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'));
 
-let gridGap = n => D("gridGap", Length.toString(n));
+let gridGap = x =>
+  D(
+    "gridGap",
+    switch (x) {
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
-let gridRowGap = n => D("gridRowGap", Length.toString(n));
+let gridRowGap = x =>
+  D(
+    "gridRowGap",
+    switch (x) {
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 let gridRowEnd = n => D("gridRowEnd", Js.Int.toString(n));
 

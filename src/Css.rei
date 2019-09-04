@@ -1,3 +1,5 @@
+/* Css documentation is copy/pasted from mozilla mdn web docs */
+
 module Types = Css_Types;
 
 type rule;
@@ -94,24 +96,60 @@ let alignSelf:
   ] =>
   rule;
 
+/**
+ The animation-delay CSS property sets when an animation starts.
+ The animation can start later, immediately from its beginning, or immediately and partway through the animation.
+ */
 let animationDelay: int => rule;
 
+/**
+ The animation-direction CSS property sets whether an animation should play forwards, backwards,
+ or alternating back and forth.
+ */
 let animationDirection: Types.AnimationDirection.t => rule;
 
+/**
+ The animation-duration CSS property sets the length of time that an animation takes to complete one cycle.
+ */
 let animationDuration: int => rule;
 
+/**
+ The animation-fill-mode CSS property sets how a CSS animation applies styles to its target before and after
+ its execution.
+ */
 let animationFillMode: Types.AnimationFillMode.t => rule;
 
+/**
+ The animation-iteration-count CSS property sets the number of times an animation cycle should be played
+ before stopping.
+ */
 let animationIterationCount: Types.AnimationIterationCount.t => rule;
 
+/**
+ The animation-play-state CSS property sets whether an animation is running or paused.
+ */
 let animationPlayState: Types.AnimationPlayState.t => rule;
 
+/**
+ The animation-timing-function CSS property sets how an animation progresses through the duration of each cycle.
+ */
 let animationTimingFunction: Types.TimingFunction.t => rule;
 
+/**
+ The background-color CSS property sets the background color of an element.
+ */
 let backgroundColor: Types.Color.t => rule;
 
+/**
+ The background-position CSS property sets the initial position for each background image.
+ The position is relative to the position layer set by background-origin.
+ */
 let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
 
+/**
+ The border-bottom shorthand CSS property sets an element's bottom border.
+ It sets the values of border-bottom-width, border-bottom-style and border-bottom-color.
+ */
 let borderBottom:
   (
     Types.Length.t,
@@ -120,14 +158,30 @@ let borderBottom:
   ) =>
   rule;
 
+/**
+ The border-bottom-color CSS property sets the color of an element's bottom border.
+ It can also be set with the shorthand CSS properties border-color or border-bottom.
+ */
 let borderBottomColor: Types.Color.t => rule;
 
+/**
+ The border-bottom-left-radius CSS property rounds the bottom-left corner of an element.
+ */
 let borderBottomLeftRadius: Types.Length.t => rule;
 
+/**
+ The border-bottom-right-radius CSS property rounds the bottom-right corner of an element.
+ */
 let borderBottomRightRadius: Types.Length.t => rule;
 
+/**
+ The border-bottom-style CSS property sets the line style of an element's bottom border.
+ */
 let borderBottomStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
 
+/**
+ The border-bottom-width CSS property sets the width of the bottom border of an element.
+ */
 let borderBottomWidth: Types.Length.t => rule;
 
 /**
@@ -135,8 +189,14 @@ let borderBottomWidth: Types.Length.t => rule;
  */
 let borderCollapse: [ Types.BorderCollapse.t | Types.Cascading.t] => rule;
 
+/**
+ The border-color shorthand CSS property sets the color of an element's border.
+ */
 let borderColor: Types.Color.t => rule;
 
+/**
+ The border-left shorthand CSS property set an element's left border.
+ */
 let borderLeft:
   (
     Types.Length.t,
@@ -276,25 +336,93 @@ let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 
 let fontWeight: [ Types.FontWeight.t | Types.Cascading.t] => rule;
 
+/**
+ The grid-area CSS property is a shorthand property for grid-row-start, grid-column-start, grid-row-end and
+ grid-column-end, specifying a grid item’s size and location within the grid by contributing a line, a span,
+ or nothing (automatic) to its grid placement, thereby specifying the edges of its grid area.
+ */
+let gridArea: [ Types.GridArea.t | Types.Cascading.t] => rule;
+let gridArea2: (Types.GridArea.t, Types.GridArea.t) => rule;
+let gridArea3: (Types.GridArea.t, Types.GridArea.t, Types.GridArea.t) => rule;
+let gridArea4:
+  (Types.GridArea.t, Types.GridArea.t, Types.GridArea.t, Types.GridArea.t) =>
+  rule;
+
+/**
+ The grid-auto-flow CSS property controls how the auto-placement algorithm works,
+ specifying exactly how auto-placed items get flowed into the grid.
+ */
 let gridAutoFlow: [ Types.GridAutoFlow.t | Types.Cascading.t] => rule;
 
+/**
+ The grid-column CSS property is a shorthand property for grid-column-start and grid-column-end
+ specifying a grid item's size and location within the grid column by contributing a line, a span,
+ or nothing (automatic) to its grid placement, thereby specifying the inline-start and
+ inline-end edge of its grid area.
+ */
 let gridColumn: (int, int) => rule;
 
+/**
+ The grid-column-end CSS property specifies a grid item’s end position within the grid column by contributing a line,
+ a span, or nothing (automatic) to its grid placement, thereby specifying the block-end edge of its grid area.
+ */
 let gridColumnEnd: int => rule;
 
-let gridColumnGap: Types.Length.t => rule;
+/**
+ The column-gap CSS property sets the size of the gap (gutter) between an element's columns.
+ */
+let gridColumnGap:
+  [
+    Types.GridColumnGap.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
+  rule;
 
+/**
+ The grid-column-start CSS property specifies a grid item’s start position within the grid column
+ by contributing a line, a span, or nothing (automatic) to its grid placement.
+ This start position defines the block-start edge of the grid area.
+ */
 let gridColumnStart: int => rule;
 
+/**
+ The gap CSS property sets the gaps (gutters) between rows and columns. It is a shorthand for row-gap and column-gap.
+ */
+let gridGap:
+  [ Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
+
+/**
+ The grid-row CSS property is a shorthand property for grid-row-start and grid-row-end specifying a grid item’s size
+ and location within the grid row by contributing a line, a span, or nothing (automatic) to its grid placement,
+ thereby specifying the inline-start and inline-end edge of its grid area.
+ */
 let gridRow: (int, int) => rule;
 
+/**
+ The grid-row-end CSS property specifies a grid item’s end position within the grid row by contributing a line, a span,
+ or nothing (automatic) to its grid placement, thereby specifying the inline-end edge of its grid area.
+ */
 let gridRowEnd: int => rule;
 
-let gridRowGap: Types.Length.t => rule;
+/**
+ The row-gap CSS property sets the size of the gap (gutter) between an element's grid rows.
+ */
+let gridRowGap:
+  [ Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
 
+/**
+ The grid-row-start CSS property specifies a grid item’s start position within the grid row by contributing a line,
+ a span, or nothing (automatic) to its grid placement, thereby specifying the inline-start edge of its grid area.
+ */
 let gridRowStart: int => rule;
 
-let gridGap: Types.Length.t => rule;
+/**
+ The grid-template-areas CSS property specifies named grid areas.
+ */
+let gridTemplateAreas:
+  [ Types.GridTemplateAreas.t | Types.Cascading.t] => rule;
 
 /**
  The CSS justify-content property defines how the browser distributes space between and around content items
@@ -667,15 +795,6 @@ let flex3:
 let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
-
-let gridArea: [ Types.GridArea.t | Types.Cascading.t] => rule;
-let gridArea2: (Types.GridArea.t, Types.GridArea.t) => rule;
-let gridArea3: (Types.GridArea.t, Types.GridArea.t, Types.GridArea.t) => rule;
-let gridArea4:
-  (Types.GridArea.t, Types.GridArea.t, Types.GridArea.t, Types.GridArea.t) =>
-  rule;
-let gridTemplateAreas:
-  [ Types.GridTemplateAreas.t | Types.Cascading.t] => rule;
 
 let width: [ Types.Length.t | `auto | `fitContent] => rule;
 let height: [ Types.Length.t | `auto] => rule;

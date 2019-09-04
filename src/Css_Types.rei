@@ -228,6 +228,12 @@ module GridAutoFlow: {
   let toString: t => string;
 };
 
+module GridColumnGap: {
+  type t = [ | `normal];
+
+  let toString: t => string;
+};
+
 module VerticalAlign: {
   type t = [
     | `baseline
