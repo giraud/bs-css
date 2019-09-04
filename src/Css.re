@@ -1220,7 +1220,38 @@ let gridAutoRows = dimensions =>
   D("gridAutoRows", string_of_dimension(dimensions));
 
 let gridArea = s =>
-  D("gridArea", s);
+  D(
+    "gridArea",
+    switch (s) {
+    | #GridArea.t as t => GridArea.toString(t)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let gridArea2 = (s, s2) =>
+  D("gridArea", GridArea.toString(s) ++ " / " ++ GridArea.toString(s2));
+
+let gridArea3 = (s, s2, s3) =>
+  D(
+    "gridArea",
+    GridArea.toString(s)
+    ++ " / "
+    ++ GridArea.toString(s2)
+    ++ " / "
+    ++ GridArea.toString(s3),
+  );
+
+let gridArea4 = (s, s2, s3, s4) =>
+  D(
+    "gridArea",
+    GridArea.toString(s)
+    ++ " / "
+    ++ GridArea.toString(s2)
+    ++ " / "
+    ++ GridArea.toString(s3)
+    ++ " / "
+    ++ GridArea.toString(s4),
+  );
 
 let gridTemplateAreas = l =>
   D(

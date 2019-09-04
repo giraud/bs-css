@@ -486,3 +486,33 @@ describe("gridTemplateAreas", () => {
     |> toBeJson({"gridTemplateAreas": "'a a a' 'b b b'"})
   );
 });
+
+describe("GridArea", () =>
+  test("gridArea takes values & cascades", () =>
+    expect(
+      (
+        r(gridArea(`auto)),
+        r(gridArea(`ident("a"))),
+        r(gridArea(`num(1))),
+        r(gridArea(`numIdent((1, "a")))),
+        r(gridArea(`span(`num(1)))),
+        r(gridArea(`span(`ident("a")))),
+        r(gridArea(`inherit_)),
+        r(gridArea(`initial)),
+        r(gridArea(`unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gridArea": "auto"},
+         {"gridArea": "a"},
+         {"gridArea": "1"},
+         {"gridArea": "1 a"},
+         {"gridArea": "span 1"},
+         {"gridArea": "span a"},
+         {"gridArea": "inherit"},
+         {"gridArea": "initial"},
+         {"gridArea": "unset"},
+       ))
+  )
+);
