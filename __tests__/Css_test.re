@@ -457,7 +457,7 @@ describe("Word spacing", () =>
   )
 );
 
-describe("gridTemplateAreas", () =>
+describe("gridTemplateAreas", () => {
   test("takes acceptable types & cascades", () =>
     expect(
       (
@@ -476,5 +476,13 @@ describe("gridTemplateAreas", () =>
          {"gridTemplateAreas": "initial"},
          {"gridTemplateAreas": "unset"},
        ))
-  )
-);
+  );
+
+  test("sucessfully combines list", () =>
+    expect(
+      r(gridTemplateAreas(`areas(["a a a", "b b b"])))
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson({"gridTemplateAreas": "'a a a' 'b b b'"})
+  );
+});
