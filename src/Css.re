@@ -1222,10 +1222,14 @@ let gridAutoRows = dimensions =>
 let gridArea = s =>
   D("gridArea", s);
 
-let gridTemplateAreas = l => {
-  D("gridTemplateAreas", GridTemplateAreas.toString(l));
-}
-
+let gridTemplateAreas = l =>
+  D(
+    "gridTemplateAreas",
+    switch (l) {
+    | #GridTemplateAreas.t as t => GridTemplateAreas.toString(t)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 type filter = [
   | `blur(Length.t)

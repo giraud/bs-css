@@ -1112,5 +1112,5 @@ module GridTemplateAreas = {
     fun
     | `none => "none"
     | `areas(l) =>
-      List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "", l);
+      String.trim(List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "", l));
 };

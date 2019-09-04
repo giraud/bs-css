@@ -668,7 +668,8 @@ let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 let gridArea: string => rule;
-let gridTemplateAreas: Types.GridTemplateAreas.t => rule;
+let gridTemplateAreas:
+  [ Types.GridTemplateAreas.t | Types.Cascading.t] => rule;
 let width: [ Types.Length.t | `auto | `fitContent] => rule;
 let height: [ Types.Length.t | `auto] => rule;
 let minWidth: [ Types.Length.t | `auto] => rule;
