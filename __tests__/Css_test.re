@@ -487,7 +487,7 @@ describe("gridTemplateAreas", () => {
   );
 });
 
-describe("GridArea", () =>
+describe("GridArea", () => {
   test("gridArea takes values & cascades", () =>
     expect(
       (
@@ -514,5 +514,23 @@ describe("GridArea", () =>
          {"gridArea": "initial"},
          {"gridArea": "unset"},
        ))
-  )
-);
+  );
+
+  test("multi-arg functions add in slashes", () =>
+    expect(
+      (
+        r(gridArea2(`auto, `num(1))),
+        r(gridArea3(`ident("a"), `numIdent((1, "a")), `auto)),
+        r(
+          gridArea4(`num(5), `span(`num(16)), `span(`ident("b")), `auto),
+        ),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gridArea": "auto / 1"},
+         {"gridArea": "a / 1 a / auto"},
+         {"gridArea": "5 / span 16 / span b / auto"},
+       ))
+  );
+});
