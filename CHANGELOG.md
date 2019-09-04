@@ -118,5 +118,5 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v9.0.1...v1.0.0
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.0...HEAD
+[10.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v9.0.1...v10.0.0
