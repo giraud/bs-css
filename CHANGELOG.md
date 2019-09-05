@@ -21,7 +21,7 @@ textShadows([textShadow(~y=px(3), ~blur=px(2), black), textShadow(~x=px(3), gree
 
 // after:
 boxShadow(Shadow.box(~x=px(1), ~y=px(2)));
-boxShadows([shadow.box(yellow), Shadow.box(red)]);
+boxShadows([Shadow.box(yellow), Shadow.box(red)]);
 textShadow(Shadow.text(~y=px(3), ~blur=px(2), black));
 textShadows([Shadow.text(~y=px(3), ~blur=px(2), black), Shadow.text(~x=px(3), green)]);
 ```
