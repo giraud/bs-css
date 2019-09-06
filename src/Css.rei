@@ -665,34 +665,256 @@ let zIndex: int => rule;
 let selector: (string, list(rule)) => rule;
 let media: (string, list(rule)) => rule;
 
+/** type selector */
+
+/*
+ Pseudo-classes selectors
+
+ A CSS pseudo-class is a keyword added to a selector that specifies a special state of the selected element(s).
+ */
+
+/**
+ The :active CSS pseudo-class represents an element (such as a button) that is being activated by the user.
+ When using a mouse, "activation" typically starts when the user presses down the primary mouse button.
+ */
 let active: list(rule) => rule;
+
+/**
+ The :checked CSS pseudo-class selector represents any radio (<input type="radio">), checkbox (<input type="checkbox">),
+ or option (<option> in a <select>) element that is checked or toggled to an on state.
+ */
+let checked: list(rule) => rule;
+
+/**
+ The :default CSS pseudo-class selects form elements that are the default in a group of related elements.
+ */
+let default: list(rule) => rule;
+
+/**
+ The :defined CSS pseudo-class represents any element that has been defined.
+ This includes any standard element built in to the browser, and custom elements that have been successfully defined
+ (i.e. with the CustomElementRegistry.define() method).
+ */
+let defined: list(rule) => rule;
+
+/**
+ The :disabled CSS pseudo-class represents any disabled element.
+ An element is disabled if it can't be activated (selected, clicked on, typed into, etc.) or accept focus.
+ The element also has an enabled state, in which it can be activated or accept focus.
+ */
+let disabled: list(rule) => rule;
+
+/**
+ The :empty CSS pseudo-class represents any element that has no children.
+ Children can be either element nodes or text (including whitespace).
+ Comments, processing instructions, and CSS content do not affect whether an element is considered empty.
+ */
+let empty: list(rule) => rule;
+
+/**
+ The :enabled CSS pseudo-class represents any enabled element.
+ An element is enabled if it can be activated (selected, clicked on, typed into, etc.) or accept focus.
+ The element also has a disabled state, in which it can't be activated or accept focus.
+ */
+let enabled: list(rule) => rule;
+
+/**
+ The :first CSS pseudo-class, used with the  @page at-rule, represents the first page of a printed document.
+ */
+let first: list(rule) => rule;
+
+/**
+ The :first-child CSS pseudo-class represents the first element among a group of sibling elements.
+ */
+let firstChild: list(rule) => rule;
+
+/**
+ The :first-of-type CSS pseudo-class represents the first element of its type among a group of sibling elements.
+ */
+let firstOfType: list(rule) => rule;
+
+/**
+ The :focus CSS pseudo-class represents an element (such as a form input) that has received focus.
+ It is generally triggered when the user clicks or taps on an element or selects it with the keyboard's "tab" key.
+ */
+let focus: list(rule) => rule;
+
+/**
+ The :focus-within CSS pseudo-class represents an element that has received focus or contains an element
+ that has received focus. In other words, it represents an element that is itself matched by the :focus pseudo-class or has a descendant that is matched by :focus.
+  (This includes descendants in shadow trees.)
+ */
+let focusWithin: list(rule) => rule;
+
+/**
+ The :host CSS pseudo-class selects the shadow host of the shadow DOM containing the CSS it is used inside
+ — in other words, this allows you to select a custom element from inside its shadow DOM.
+ */
+let host: (~selector: option(string), list(rule)) => rule;
+
+/**
+ The :hover CSS pseudo-class matches when the user interacts with an element with a pointing device,
+ but does not necessarily activate it.
+ It is generally triggered when the user hovers over an element with the cursor (mouse pointer).
+ */
+let hover: list(rule) => rule;
+
+/**
+ The :indeterminate CSS pseudo-class represents any form element whose state is indeterminate.
+ */
+let indeterminate: list(rule) => rule;
+
+/**
+ The :in-range CSS pseudo-class represents an <input> element whose current value is
+ within the range limits specified by the min and max attributes.
+ */
+let inRange: list(rule) => rule;
+
+/**
+ The :invalid CSS pseudo-class represents any <input> or other <form> element whose contents fail to validate.
+ */
+let invalid: list(rule) => rule;
+
+/**
+ The :lang() CSS pseudo-class matches elements based on the language they are determined to be in.
+ */
+let lang: (string, list(rule)) => rule;
+
+/**
+ The :last-child CSS pseudo-class represents the last element among a group of sibling elements.
+ */
+let lastChild: list(rule) => rule;
+
+/**
+ The :last-of-type CSS pseudo-class represents the last element of its type among a group of sibling elements.
+ */
+let lastOfType: list(rule) => rule;
+
+//let left: list(rule) => rule;
+
+/**
+ The :link CSS pseudo-class represents an element that has not yet been visited.
+ It matches every unvisited <a>, <area>, or <link> element that has an href attribute.
+ */
+let link: list(rule) => rule;
+
+/**
+ The :not() CSS pseudo-class represents elements that do not match a list of selectors.
+ Since it prevents specific items from being selected, it is known as the negation pseudo-class.
+ */
+let not_: (string, list(rule)) => rule;
+
+module Nth: {
+  type t = [ | `odd | `even | `n(int) | `add(int, int)];
+  let toString: t => string;
+};
+
+/**
+ The :nth-child() CSS pseudo-class matches elements based on their position in a group of siblings.
+ */
+let nthChild: (Nth.t, list(rule)) => rule;
+
+/**
+ The :nth-last-child() CSS pseudo-class matches elements based on their position among a group of siblings,
+ counting from the end.
+ */
+let nthLastChild: (Nth.t, list(rule)) => rule;
+
+/**
+ The :nth-last-of-type() CSS pseudo-class matches elements of a given type,
+ based on their position among a group of siblings, counting from the end.
+ */
+let nthLastOfType: (Nth.t, list(rule)) => rule;
+
+/**
+ The :nth-of-type() CSS pseudo-class matches elements of a given type,
+ based on their position among a group of siblings.
+ */
+let nthOfType: (Nth.t, list(rule)) => rule;
+
+/**
+ The :only-child CSS pseudo-class represents an element without any siblings.
+ This is the same as :first-child:last-child or :nth-child(1):nth-last-child(1),
+ but with a lower specificity.
+ */
+let onlyChild: list(rule) => rule;
+
+/**
+ The :only-of-type CSS pseudo-class represents an element that has no siblings of the same type.
+ */
+let onlyOfType: list(rule) => rule;
+
+/**
+ The :optional CSS pseudo-class represents any <input>, <select>,
+ or <textarea> element that does not have the required attribute set on it.
+ */
+let optional: list(rule) => rule;
+
+/**
+ The :out-of-range CSS pseudo-class represents an <input> element whose current value
+ is outside the range limits specified by the min and max attributes.
+ */
+let outOfRange: list(rule) => rule;
+
+/**
+ The :read-only CSS pseudo-class represents an element (such as input or textarea)
+ that is not editable by the user.
+ */
+let readOnly: list(rule) => rule;
+
+/**
+ The :read-write CSS pseudo-class represents an element (such as input or textarea)
+ that is editable by the user.
+ */
+let readWrite: list(rule) => rule;
+
+/**
+ The :required CSS pseudo-class represents any <input>, <select>, or <textarea> element
+ that has the required attribute set on it.
+ */
+let required: list(rule) => rule;
+
+//let right: list(rule) => rule;
+
+/**
+ The :root CSS pseudo-class matches the root element of a tree representing the document.
+ In HTML, :root represents the <html> element and is identical to the selector html,
+ except that its specificity is higher.
+ */
+let root: list(rule) => rule;
+
+/**
+ The :scope CSS pseudo-class represents elements that are a reference point for selectors to match against.
+ */
+let scope: list(rule) => rule;
+
+/**
+ The :target CSS pseudo-class represents a unique element (the target element) with an id matching
+ the URL's fragment.
+ */
+let target: list(rule) => rule;
+
+/**
+ The :valid CSS pseudo-class represents any <input> or other <form> element whose contents validate successfully.
+ This allows to easily make valid fields adopt an appearance that helps the user confirm that their data is formatted properly.
+ */
+let valid: list(rule) => rule;
+
+/**
+ The :visited CSS pseudo-class represents links that the user has already visited.
+ For privacy reasons, the styles that can be modified using this selector are very limited.
+ */
+let visited: list(rule) => rule;
+
+/* ***** */
+
 let after: list(rule) => rule;
 let before: list(rule) => rule;
-let checked: list(rule) => rule;
 let children: list(rule) => rule;
 let directSibling: list(rule) => rule;
-let disabled: list(rule) => rule;
-let firstChild: list(rule) => rule;
-let firstOfType: list(rule) => rule;
-let focus: list(rule) => rule;
-let hover: list(rule) => rule;
-let lastChild: list(rule) => rule;
-let lastOfType: list(rule) => rule;
-let link: list(rule) => rule;
-let readOnly: list(rule) => rule;
-let required: list(rule) => rule;
-let visited: list(rule) => rule;
-let enabled: list(rule) => rule;
 let noContent: list(rule) => rule;
-let default: list(rule) => rule;
 let anyLink: list(rule) => rule;
-let onlyChild: list(rule) => rule;
-let onlyOfType: list(rule) => rule;
-let optional: list(rule) => rule;
-let invalid: list(rule) => rule;
-let outOfRange: list(rule) => rule;
 let siblings: list(rule) => rule;
-let target: list(rule) => rule;
 let firstLine: list(rule) => rule;
 let firstLetter: list(rule) => rule;
 let selection: list(rule) => rule;

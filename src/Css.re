@@ -4,8 +4,10 @@ open Types;
 include Css_Colors;
 
 type rule =
+  | D(string, string) // Declaration
   | S(string, list(rule)) // Selector
-  | D(string, string); // Declaration
+  | PseudoClass(string, list(rule))
+  | PseudoClassParam(string, string, list(rule));
 
 module Emotion = {
   type stylename = string;
@@ -23,18 +25,25 @@ module Emotion = {
   let mergeStyles: list(stylename) => stylename =
     stylenames => stylenames |> Array.of_list |> cx;
 
-  let rec ruleToJs = rule =>
+  let rec ruleToDict = (dict, rule) => {
     switch (rule) {
-    | D(name, value) when name == "content" => (
-        name,
-        Js.Json.string(value == "" ? "\"\"" : value),
+    | D(name, value) when name == "content" =>
+      dict->Js.Dict.set(name, Js.Json.string(value == "" ? "\"\"" : value))
+    | D(name, value) => dict->Js.Dict.set(name, Js.Json.string(value))
+    | S(name, ruleset) => dict->Js.Dict.set(name, makeJson(ruleset))
+    | PseudoClass(name, ruleset) =>
+      dict->Js.Dict.set(":" ++ name, makeJson(ruleset))
+    | PseudoClassParam(name, param, ruleset) =>
+      dict->Js.Dict.set(
+        ":" ++ name ++ "(" ++ param ++ ")",
+        makeJson(ruleset),
       )
-    | D(name, value) => (name, Js.Json.string(value))
-    | S(name, ruleset) => (name, makeJson(ruleset))
-    }
+    };
+    dict;
+  }
 
   and makeJson = rules =>
-    List.map(ruleToJs, rules)->Js.Dict.fromList->Js.Json.object_;
+    rules->Belt.List.reduce(Js.Dict.empty(), ruleToDict)->Js.Json.object_;
 
   let make = rules => rules->makeJson->_make;
 };
@@ -796,8 +805,8 @@ let wordSpacing = x =>
     "wordSpacing",
     switch (x) {
     | #WordSpacing.t as w => WordSpacing.toString(w)
+    | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
-    //| #Percentage.t as p => Percentage.toString(p)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -806,37 +815,75 @@ let zIndex = x => D("zIndex", Js.Int.toString(x));
 
 /* Selectors */
 
-let selector = (selector, rules) => S(selector, rules);
 let media = (query, rules) => S("@media " ++ query, rules);
+let selector = (selector, rules) => S(selector, rules);
+let pseudoClass = (selector, rules) => PseudoClass(selector, rules);
 
-let active = selector(":active");
+let active = pseudoClass("active");
+let checked = pseudoClass("checked");
+let default = pseudoClass("default");
+let defined = pseudoClass("defined");
+let disabled = pseudoClass("disabled");
+let empty = pseudoClass("empty");
+let enabled = pseudoClass("enabled");
+let first = pseudoClass("first");
+let firstChild = pseudoClass("first-child");
+let firstOfType = pseudoClass("first-of-type");
+let focus = pseudoClass("focus");
+let focusWithin = pseudoClass("focus-within");
+let host = (~selector, rules) =>
+  switch (selector) {
+  | None => PseudoClass("host", rules)
+  | Some(s) => PseudoClassParam("host", s, rules)
+  };
+let hover = pseudoClass("hover");
+let indeterminate = pseudoClass("indeterminate");
+let inRange = pseudoClass("in-range");
+let invalid = pseudoClass("invalid");
+let lang = (code, rules) => PseudoClassParam("lang", code, rules);
+let lastChild = pseudoClass("last-child");
+let lastOfType = pseudoClass("last-of-type");
+//let left = selector(":left");
+let link = pseudoClass("link");
+let not_ = (selector, rules) => PseudoClassParam("not", selector, rules);
+module Nth = {
+  type t = [ | `odd | `even | `n(int) | `add(int, int)];
+  let toString =
+    fun
+    | `odd => "odd"
+    | `even => "even"
+    | `n(x) => Js.Int.toString(x) ++ "n"
+    | `add(x, y) => Js.Int.toString(x) ++ "n + " ++ Js.Int.toString(y);
+};
+let nthChild = (x, rules) =>
+  PseudoClassParam("nth-child", Nth.toString(x), rules);
+let nthLastChild = (x, rules) =>
+  PseudoClassParam("nth-last-child", Nth.toString(x), rules);
+let nthLastOfType = (x, rules) =>
+  PseudoClassParam("nth-last-of-type", Nth.toString(x), rules);
+let nthOfType = (x, rules) =>
+  PseudoClassParam("nth-of-type", Nth.toString(x), rules);
+let onlyChild = pseudoClass("only-child");
+let onlyOfType = pseudoClass("only-of-type");
+let optional = pseudoClass("optional");
+let outOfRange = pseudoClass("out-of-range");
+let readOnly = pseudoClass("read-only");
+let readWrite = pseudoClass("read-write");
+let required = pseudoClass("required");
+//let right = selector(":right");
+let root = pseudoClass("root");
+let scope = pseudoClass("scope");
+let target = pseudoClass("target");
+let valid = pseudoClass("valid");
+let visited = pseudoClass("visited");
+
 let after = selector("::after");
 let before = selector("::before");
-let checked = selector(":checked");
 let children = selector(" > *");
 let directSibling = selector(" + ");
-let disabled = selector(":disabled");
-let firstChild = selector(":first-child");
-let firstOfType = selector(":first-of-type");
-let focus = selector(":focus");
-let hover = selector(":hover");
-let lastChild = selector(":last-child");
-let lastOfType = selector(":last-of-type");
-let link = selector(":link");
-let readOnly = selector(":read-only");
-let required = selector(":required");
-let visited = selector(":visited");
-let enabled = selector(":enabled");
 let noContent = selector(":empty");
-let default = selector(":default");
 let anyLink = selector(":any-link");
-let onlyChild = selector(":only-child");
-let onlyOfType = selector(":only-of-type");
-let optional = selector(":optional");
-let invalid = selector(":invalid");
-let outOfRange = selector(":out-of-range");
 let siblings = selector(" ~ ");
-let target = selector(":target");
 let firstLine = selector("::first-line");
 let firstLetter = selector("::first-letter");
 let selection = selector("::selection");
