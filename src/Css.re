@@ -831,7 +831,7 @@ let firstChild = pseudoClass("first-child");
 let firstOfType = pseudoClass("first-of-type");
 let focus = pseudoClass("focus");
 let focusWithin = pseudoClass("focus-within");
-let host = (~selector, rules) =>
+let host = (~selector=?, rules) =>
   switch (selector) {
   | None => PseudoClass("host", rules)
   | Some(s) => PseudoClassParam("host", s, rules)
@@ -853,7 +853,7 @@ module Nth = {
     | `odd => "odd"
     | `even => "even"
     | `n(x) => Js.Int.toString(x) ++ "n"
-    | `add(x, y) => Js.Int.toString(x) ++ "n + " ++ Js.Int.toString(y);
+    | `add(x, y) => Js.Int.toString(x) ++ "n+" ++ Js.Int.toString(y);
 };
 let nthChild = (x, rules) =>
   PseudoClassParam("nth-child", Nth.toString(x), rules);

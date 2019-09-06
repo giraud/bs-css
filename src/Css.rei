@@ -750,7 +750,7 @@ let focusWithin: list(rule) => rule;
  The :host CSS pseudo-class selects the shadow host of the shadow DOM containing the CSS it is used inside
  — in other words, this allows you to select a custom element from inside its shadow DOM.
  */
-let host: (~selector: option(string), list(rule)) => rule;
+let host: (~selector: string=?, list(rule)) => rule;
 
 /**
  The :hover CSS pseudo-class matches when the user interacts with an element with a pointing device,
