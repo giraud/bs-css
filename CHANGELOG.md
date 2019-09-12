@@ -3,6 +3,7 @@
 ### Changed
 
 - Pseudo classes selectors have been updated and documented
+- Update properties : backgroundAttachment, backgroundClip, backgroundOrigin, backgroundRepeat
 
 ## [10.0.0] - 2019-09-04
 
