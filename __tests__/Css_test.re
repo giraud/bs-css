@@ -534,3 +534,47 @@ describe("GridArea", () => {
        ))
   );
 });
+
+describe("backgroundRepeat", () => {
+  test("test single values", () =>
+    expect(
+      (
+        r(backgroundRepeat(repeatX)),
+        r(backgroundRepeat(repeatY)),
+        r(backgroundRepeat(repeat)),
+        r(backgroundRepeat(space)),
+        r(backgroundRepeat(round)),
+        r(backgroundRepeat(noRepeat)),
+        r(backgroundRepeat(inherit_)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"backgroundRepeat": "repeat-x"},
+         {"backgroundRepeat": "repeat-y"},
+         {"backgroundRepeat": "repeat"},
+         {"backgroundRepeat": "space"},
+         {"backgroundRepeat": "round"},
+         {"backgroundRepeat": "no-repeat"},
+         {"backgroundRepeat": "inherit"},
+       ))
+  );
+
+  test("test two values", () =>
+    expect(
+      (
+        r(backgroundRepeat(`hv((repeat, space)))),
+        r(backgroundRepeat(`hv((repeat, repeat)))),
+        r(backgroundRepeat(`hv((round, space)))),
+        r(backgroundRepeat(`hv((noRepeat, round)))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"backgroundRepeat": "repeat space"},
+         {"backgroundRepeat": "repeat repeat"},
+         {"backgroundRepeat": "round space"},
+         {"backgroundRepeat": "no-repeat round"},
+       ))
+  );
+});

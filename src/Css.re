@@ -291,6 +291,17 @@ let backgroundOrigin = x =>
 let backgroundPosition = (x, y) =>
   D("backgroundPosition", Length.toString(x) ++ " " ++ Length.toString(y));
 
+let backgroundRepeat = x =>
+  D(
+    "backgroundRepeat",
+    switch (x) {
+    | #BackgroundRepeat.t as br => BackgroundRepeat.toString(br)
+    | `hv(#BackgroundRepeat.horizontal as h, #BackgroundRepeat.vertical as v) =>
+      BackgroundRepeat.toString(h) ++ " " ++ BackgroundRepeat.toString(v)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let borderBottomColor = x => D("borderBottomColor", Color.toString(x));
 
 let borderBottomLeftRadius = x =>
@@ -1078,6 +1089,7 @@ let local = `local;
 let localUrl = x => `localUrl(x);
 let none = `none;
 let noRepeat = `noRepeat;
+let space = `space;
 let nowrap = `nowrap;
 let paddingBox = `paddingBox;
 let paused = `paused;
@@ -1544,17 +1556,6 @@ let backgroundImage = x =>
       "radial-gradient(" ++ string_of_stops(stops) ++ ")"
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    },
-  );
-
-let backgroundRepeat = x =>
-  D(
-    "backgroundRepeat",
-    switch (x) {
-    | `repeat => "repeat"
-    | `noRepeat => "no-repeat"
-    | `repeatX => "repeat-x"
-    | `repeatY => "repeat-y"
     },
   );
 

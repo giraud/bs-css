@@ -1181,3 +1181,19 @@ module BackgroundOrigin = {
     | `contentBox => "content-box"
     | `paddingBox => "padding-box";
 };
+
+module BackgroundRepeat = {
+  type twoValue = [ | `repeat | `space | `round | `noRepeat];
+  type t = [ | `repeatX | `repeatY | twoValue];
+  type horizontal = twoValue;
+  type vertical = twoValue;
+
+  let toString =
+    fun
+    | `repeatX => "repeat-x"
+    | `repeatY => "repeat-y"
+    | `repeat => "repeat"
+    | `space => "space"
+    | `round => "round"
+    | `noRepeat => "no-repeat";
+};

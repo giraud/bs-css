@@ -166,6 +166,18 @@ let backgroundOrigin: [ Types.BackgroundClip.t | Types.Cascading.t] => rule;
 let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
 
 /**
+ The background-repeat CSS property sets how background images are repeated.
+ A background image can be repeated along the horizontal and vertical axes, or not repeated at all.
+ */
+let backgroundRepeat:
+  [
+    Types.BackgroundRepeat.t
+    | `hv(Types.BackgroundRepeat.horizontal, Types.BackgroundRepeat.vertical)
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
  The border-bottom shorthand CSS property sets an element's bottom border.
  It sets the values of border-bottom-width, border-bottom-style and border-bottom-color.
  */
@@ -1058,7 +1070,6 @@ let borderTop:
     Types.Color.t
   ) =>
   rule;
-let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
 let backgroundSize:
   [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
   rule;
@@ -1163,6 +1174,7 @@ let borderBox: [> | `borderBox];
 let contentBox: [> | `contentBox];
 
 let noRepeat: [> | `noRepeat];
+let space: [> | `space];
 let repeat: [> | `repeat];
 let minmax: [> | `minmax];
 let repeatX: [> | `repeatX];

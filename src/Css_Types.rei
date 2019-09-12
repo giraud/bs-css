@@ -835,3 +835,15 @@ module BackgroundOrigin: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/background-origin
+ */
+module BackgroundRepeat: {
+  type twoValue = [ | `repeat | `space | `round | `noRepeat];
+  type t = [ | `repeatX | `repeatY | twoValue];
+  type horizontal = twoValue;
+  type vertical = twoValue;
+
+  let toString: t => string;
+};
