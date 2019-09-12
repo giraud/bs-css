@@ -817,3 +817,12 @@ module BackgroundAttachment: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/background-clip
+ */
+module BackgroundClip: {
+  type t = [ | `borderBox | `paddingBox | `contentBox];
+
+  let toString: t => string;
+};

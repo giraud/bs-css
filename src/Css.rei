@@ -148,6 +148,12 @@ let backgroundAttachment:
 let backgroundColor: Types.Color.t => rule;
 
 /**
+ The background-clip CSS property sets whether an element's background extends underneath its border box,
+ padding box, or content box.
+ */
+let backgroundClip: [ Types.BackgroundClip.t | Types.Cascading.t] => rule;
+
+/**
  The background-position CSS property sets the initial position for each background image.
  The position is relative to the position layer set by background-origin.
  */
@@ -1046,7 +1052,6 @@ let borderTop:
     Types.Color.t
   ) =>
   rule;
-let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;
 let backgroundSize:

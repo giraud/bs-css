@@ -270,6 +270,15 @@ let backgroundAttachment = x =>
 
 let backgroundColor = x => D("backgroundColor", Color.toString(x));
 
+let backgroundClip = x =>
+  D(
+    "backgroundClip",
+    switch (x) {
+    | #BackgroundClip.t as bc => BackgroundClip.toString(bc)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let backgroundPosition = (x, y) =>
   D("backgroundPosition", Length.toString(x) ++ " " ++ Length.toString(y));
 
@@ -1526,16 +1535,6 @@ let backgroundImage = x =>
       "radial-gradient(" ++ string_of_stops(stops) ++ ")"
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    },
-  );
-
-let backgroundClip = x =>
-  D(
-    "backgroundClip",
-    switch (x) {
-    | `borderBox => "border-box"
-    | `contentBox => "content-box"
-    | `paddingBox => "padding-box"
     },
   );
 
