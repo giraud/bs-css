@@ -136,6 +136,13 @@ let animationPlayState: Types.AnimationPlayState.t => rule;
 let animationTimingFunction: Types.TimingFunction.t => rule;
 
 /**
+ The background-attachment CSS property sets whether a background image's position is fixed within the viewport,
+ or scrolls with its containing block.
+ */
+let backgroundAttachment:
+  [ Types.BackgroundAttachment.t | Types.Cascading.t] => rule;
+
+/**
  The background-color CSS property sets the background color of an element.
  */
 let backgroundColor: Types.Color.t => rule;
@@ -1039,7 +1046,6 @@ let borderTop:
     Types.Color.t
   ) =>
   rule;
-let backgroundAttachment: [ | `scroll | `fixed | `local] => rule;
 let backgroundClip: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundOrigin: [ | `borderBox | `contentBox | `paddingBox] => rule;
 let backgroundRepeat: [ | `repeat | `noRepeat | `repeatX | `repeatY] => rule;

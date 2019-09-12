@@ -259,6 +259,15 @@ let animationPlayState = x =>
 let animationTimingFunction = x =>
   D("animationTimingFunction", TimingFunction.toString(x));
 
+let backgroundAttachment = x =>
+  D(
+    "backgroundAttachment",
+    switch (x) {
+    | #BackgroundAttachment.t as ba => BackgroundAttachment.toString(ba)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let backgroundColor = x => D("backgroundColor", Color.toString(x));
 
 let backgroundPosition = (x, y) =>
@@ -1517,16 +1526,6 @@ let backgroundImage = x =>
       "radial-gradient(" ++ string_of_stops(stops) ++ ")"
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    },
-  );
-
-let backgroundAttachment = x =>
-  D(
-    "backgroundAttachment",
-    switch (x) {
-    | `scroll => "scroll"
-    | `fixed => "fixed"
-    | `local => "local"
     },
   );
 

@@ -1151,3 +1151,13 @@ module GridArea = {
     };
   };
 };
+
+module BackgroundAttachment = {
+  type t = [ | `scroll | `fixed | `local];
+
+  let toString =
+    fun
+    | `scroll => "scroll"
+    | `fixed => "fixed"
+    | `local => "local";
+};

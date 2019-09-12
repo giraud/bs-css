@@ -808,3 +808,12 @@ module GridArea: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/background-attachment
+ */
+module BackgroundAttachment: {
+  type t = [ | `scroll | `fixed | `local];
+
+  let toString: t => string;
+};
