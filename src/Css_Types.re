@@ -1161,7 +1161,18 @@ module BackgroundAttachment = {
     | `fixed => "fixed"
     | `local => "local";
 };
+
 module BackgroundClip = {
+  type t = [ | `borderBox | `paddingBox | `contentBox];
+
+  let toString =
+    fun
+    | `borderBox => "border-box"
+    | `contentBox => "content-box"
+    | `paddingBox => "padding-box";
+};
+
+module BackgroundOrigin = {
   type t = [ | `borderBox | `paddingBox | `contentBox];
 
   let toString =

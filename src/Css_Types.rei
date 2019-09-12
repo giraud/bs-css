@@ -826,3 +826,12 @@ module BackgroundClip: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/background-origin
+ */
+module BackgroundOrigin: {
+  type t = [ | `borderBox | `paddingBox | `contentBox];
+
+  let toString: t => string;
+};
