@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+
+- Pseudo classes selectors have been updated and documented
+
 ## [10.0.0] - 2019-09-04
 
 Major release because of the breaking change in shadows definition.
