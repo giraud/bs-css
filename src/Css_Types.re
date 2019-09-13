@@ -1197,3 +1197,13 @@ module BackgroundRepeat = {
     | `round => "round"
     | `noRepeat => "no-repeat";
 };
+
+module TextOverflow = {
+  type t = [ | `clip | `ellipsis | `string(string)];
+
+  let toString =
+    fun
+    | `clip => "clip"
+    | `ellipsis => "ellipsis"
+    | `string(s) => s;
+};

@@ -847,3 +847,12 @@ module BackgroundRepeat: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/text-overflow
+ */
+module TextOverflow: {
+  type t = [ | `clip | `ellipsis | `string(string)];
+
+  let toString: t => string;
+};

@@ -617,9 +617,23 @@ let tableLayout: [ Types.TableLayout.t | Types.Cascading.t] => rule;
  */
 let textAlign: [ Types.TextAlign.t | Types.Cascading.t] => rule;
 
-let textDecorationColor: Types.Color.t => rule;
+/**
+ The text-decoration-color CSS property sets the color of decorations added to text by text-decoration-line.
+ */
+let textDecorationColor: [ Types.Color.t | Types.Cascading.t] => rule;
 
-let textIndent: Types.Length.t => rule;
+/**
+ The text-indent CSS property sets the length of empty space (indentation)
+ that is put before lines of text in a block.
+ */
+let textIndent:
+  [ Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
+
+/**
+ The text-overflow CSS property sets how hidden overflow content is signaled to users.
+ It can be clipped, display an ellipsis ('…'), or display a custom string.
+ */
+let textOverflow: [ Types.TextOverflow.t | Types.Cascading.t] => rule;
 
 /**
  The text-transform CSS property specifies how to capitalize an element's text.
@@ -1087,8 +1101,6 @@ let textDecoration:
   rule;
 let textDecorationStyle:
   [ | `wavy | `solid | `dotted | `dashed | `double | Types.Cascading.t] => rule;
-let textOverflow:
-  [ | `clip | `ellipsis | `string(string) | Types.Cascading.t] => rule;
 let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
 let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
 let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;

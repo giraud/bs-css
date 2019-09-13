@@ -762,7 +762,24 @@ let textAlign = x =>
     },
   );
 
-let textIndent = x => D("textIndent", Length.toString(x));
+let textIndent = x =>
+  D(
+    "textIndent",
+    switch (x) {
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let textOverflow = x =>
+  D(
+    "textOverflow",
+    switch (x) {
+    | #TextOverflow.t as txo => TextOverflow.toString(txo)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 let textTransform = x =>
   D(
@@ -1659,7 +1676,14 @@ let textDecoration = x =>
     },
   );
 
-let textDecorationColor = x => D("textDecorationColor", Color.toString(x));
+let textDecorationColor = x =>
+  D(
+    "textDecorationColor",
+    switch (x) {
+    | #Color.t as co => Color.toString(co)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
 
 let textDecorationStyle = x =>
   D(
@@ -1670,19 +1694,6 @@ let textDecorationStyle = x =>
     | `double => "double"
     | `dotted => "dotted"
     | `dashed => "dashed"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
-let textOverflow = x =>
-  D(
-    "textOverflow",
-    switch (x) {
-    | `clip => "clip"
-    | `ellipsis => "ellipsis"
-    | `string(s) => s
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
