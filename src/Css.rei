@@ -623,6 +623,20 @@ let textAlign: [ Types.TextAlign.t | Types.Cascading.t] => rule;
 let textDecorationColor: [ Types.Color.t | Types.Cascading.t] => rule;
 
 /**
+ The text-decoration-line CSS property sets the kind of decoration
+ that is used on text in an element, such as an underline or overline.
+ */
+let textDecorationLine:
+  [ Types.TextDecorationLine.t | Types.Cascading.t] => rule;
+
+/**
+ The text-decoration-style CSS property sets the style of the lines specified by text-decoration-line.
+ The style applies to all lines that are set with text-decoration-line.
+ */
+let textDecorationStyle:
+  [ Types.TextDecorationStyle.t | Types.Cascading.t] => rule;
+
+/**
  The text-indent CSS property sets the length of empty space (indentation)
  that is put before lines of text in a block.
  */
@@ -1096,11 +1110,10 @@ let listStyle:
   ) =>
   rule;
 let listStyleImage: [ | `none | `url(string)] => rule;
+
 let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
-let textDecorationStyle:
-  [ | `wavy | `solid | `dotted | `dashed | `double | Types.Cascading.t] => rule;
 let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
 let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
 let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;

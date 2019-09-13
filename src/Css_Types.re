@@ -1207,3 +1207,27 @@ module TextOverflow = {
     | `ellipsis => "ellipsis"
     | `string(s) => s;
 };
+
+module TextDecorationLine = {
+  type t = [ | `none | `underline | `overline | `lineThrough | `blink];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `underline => "underline"
+    | `overline => "overline"
+    | `lineThrough => "line-through"
+    | `blink => "blink";
+};
+
+module TextDecorationStyle = {
+  type t = [ | `solid | `double | `dotted | `dashed | `wavy];
+
+  let toString =
+    fun
+    | `solid => "solid"
+    | `double => "double"
+    | `dotted => "dotted"
+    | `dashed => "dashed"
+    | `wavy => "wavy";
+};

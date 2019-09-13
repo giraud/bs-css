@@ -762,6 +762,33 @@ let textAlign = x =>
     },
   );
 
+let textDecorationColor = x =>
+  D(
+    "textDecorationColor",
+    switch (x) {
+    | #Color.t as co => Color.toString(co)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let textDecorationLine = x =>
+  D(
+    "textDecorationLine",
+    switch (x) {
+    | #TextDecorationLine.t as tdl => TextDecorationLine.toString(tdl)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let textDecorationStyle = x =>
+  D(
+    "textDecorationStyle",
+    switch (x) {
+    | #TextDecorationStyle.t as tds => TextDecorationStyle.toString(tds)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let textIndent = x =>
   D(
     "textIndent",
@@ -1670,30 +1697,6 @@ let textDecoration = x =>
     | `underline => "underline"
     | `overline => "overline"
     | `lineThrough => "line-through"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
-
-let textDecorationColor = x =>
-  D(
-    "textDecorationColor",
-    switch (x) {
-    | #Color.t as co => Color.toString(co)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
-
-let textDecorationStyle = x =>
-  D(
-    "textDecorationStyle",
-    switch (x) {
-    | `wavy => "wavy"
-    | `solid => "solid"
-    | `double => "double"
-    | `dotted => "dotted"
-    | `dashed => "dashed"
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"

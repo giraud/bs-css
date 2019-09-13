@@ -856,3 +856,21 @@ module TextOverflow: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/text-decoration-line
+ */
+module TextDecorationLine: {
+  type t = [ | `none | `underline | `overline | `lineThrough | `blink];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/text-decoration-style
+ */
+module TextDecorationStyle: {
+  type t = [ | `solid | `double | `dotted | `dashed | `wavy];
+
+  let toString: t => string;
+};
