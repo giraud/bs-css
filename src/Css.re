@@ -677,6 +677,15 @@ let overflow = x => D("overflow", Overflow.toString(x));
 let overflowX = x => D("overflowX", Overflow.toString(x));
 let overflowY = x => D("overflowY", Overflow.toString(x));
 
+let overflowWrap = x =>
+  D(
+    "overflowWrap",
+    switch (x) {
+    | #OverflowWrap.t as ow => OverflowWrap.toString(ow)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let padding = x => D("padding", Length.toString(x));
 let padding2 = (~v, ~h) =>
   D("padding", Length.toString(v) ++ " " ++ Length.toString(h));
@@ -925,6 +934,8 @@ let wordSpacing = x =>
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
+
+let wordWrap = overflowWrap;
 
 let zIndex = x => D("zIndex", Js.Int.toString(x));
 
@@ -1744,18 +1755,6 @@ let textShadow = x =>
 
 let textShadows = x =>
   D("textShadow", x->Belt.List.map(Shadow.toString)->join(", "));
-
-let wordWrap = x =>
-  D(
-    "wordWrap",
-    switch (x) {
-    | `normal => "normal"
-    | `breakWord => "break-word"
-    | `initial => "initial"
-    | `inherit_ => "inherit"
-    | `unset => "unset"
-    },
-  );
 
 /**
  * Transform

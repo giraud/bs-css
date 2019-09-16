@@ -329,6 +329,13 @@ let display:
   rule;
 
 /**
+ The flex-basis CSS property sets the initial main size of a flex item.
+ It sets the size of the content box unless otherwise set with box-sizing.
+ */
+let flexBasis:
+  [ Types.FlexBasis.t | Types.Percentage.t | Types.Length.t] => rule;
+
+/**
  The flex-direction CSS property sets how flex items are placed in the flex container defining the main axis and the direction (normal or reversed).
  */
 let flexDirection: [ Types.FlexDirection.t | Types.Cascading.t] => rule;
@@ -585,6 +592,13 @@ let overflowX: [ Types.Overflow.t] => rule;
 
 let overflowY: [ Types.Overflow.t] => rule;
 
+/**
+ The overflow-wrap CSS property applies to inline elements, setting whether the browser
+ should insert line breaks within an otherwise unbreakable string to prevent text
+ from overflowing its line box.
+ */
+let overflowWrap: [ Types.OverflowWrap.t | Types.Cascading.t] => rule;
+
 let padding: Types.Length.t => rule;
 let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
 let padding3:
@@ -671,6 +685,14 @@ let textIndent:
 let textOverflow: [ Types.TextOverflow.t | Types.Cascading.t] => rule;
 
 /**
+ The text-shadow CSS property adds shadows to text.
+ It accepts a comma-separated list of shadows to be applied to the text and any of its decorations.
+ Each shadow is described by some combination of X and Y offsets from the element, blur radius, and color.
+ */
+let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
+let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
+
+/**
  The text-transform CSS property specifies how to capitalize an element's text.
  It can be used to make text appear in all-uppercase or all-lowercase, or with each word capitalized.
  */
@@ -740,6 +762,11 @@ let wordSpacing:
     | Types.Cascading.t
   ] =>
   rule;
+
+/**
+ see overflowWrap
+ */
+let wordWrap: [ Types.OverflowWrap.t | Types.Cascading.t] => rule;
 
 /**
  The z-index CSS property sets the z-order of a positioned element and its descendants or flex items.
@@ -1238,7 +1265,6 @@ let flex3:
     ~basis: [ Types.Length.t | Types.FlexBasis.t]
   ) =>
   rule;
-let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 
@@ -1276,9 +1302,6 @@ let listStyleImage: [ | `none | `url(string)] => rule;
 let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
-let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
-let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
-let wordWrap: [ | `normal | `breakWord | Types.Cascading.t] => rule;
 
 type gradient = [
   | `linearGradient(Types.Angle.t, list((Types.Length.t, Types.Color.t)))

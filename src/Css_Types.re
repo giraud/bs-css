@@ -1248,3 +1248,13 @@ module MaxWidth = {
     fun
     | `none => "none";
 };
+
+module OverflowWrap = {
+  type t = [ | `normal | `breakWord | `anywhere];
+
+  let toString =
+    fun
+    | `normal => "normal"
+    | `breakWord => "break-word"
+    | `anywhere => "anywhere";
+};

@@ -892,3 +892,12 @@ module MaxWidth: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/overflow-wrap
+ */
+module OverflowWrap: {
+  type t = [ | `normal | `breakWord | `anywhere];
+
+  let toString: t => string;
+};
