@@ -626,6 +626,28 @@ let marginRight = x => D("marginRight", marginToString(x));
 let marginTop = x => D("marginTop", marginToString(x));
 let marginBottom = x => D("marginBottom", marginToString(x));
 
+let maxWidth = x =>
+  D(
+    "maxWidth",
+    switch (x) {
+    | #MaxWidth.t as mw => MaxWidth.toString(mw)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let minWidth = x =>
+  D(
+    "minWidth",
+    switch (x) {
+    | #Width.t as w => Width.toString(w)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let objectFit = x =>
   D(
     "objectFit",
@@ -1317,8 +1339,6 @@ let string_of_dimension =
     "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
 
 let height = x => D("height", string_of_dimension(x));
-let minWidth = x => D("minWidth", string_of_dimension(x));
-let maxWidth = x => D("maxWidth", string_of_dimension(x));
 let minHeight = x => D("minHeight", string_of_dimension(x));
 let maxHeight = x => D("maxHeight", string_of_dimension(x));
 

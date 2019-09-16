@@ -539,6 +539,27 @@ let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
 let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
 
 /**
+ The max-width CSS property sets the maximum width of an element.
+ It prevents the used value of the width property from becoming larger than the value specified by max-width.
+ */
+let maxWidth:
+  [
+    Types.MaxWidth.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
+ The min-width CSS property sets the minimum width of an element.
+ It prevents the used value of the width property from becoming smaller than the value specified for min-width.
+ */
+let minWidth:
+  [ Types.Width.t | Types.Percentage.t | Types.Length.t | Types.Cascading.t] =>
+  rule;
+
+/**
  The object-fit CSS property sets how the content of a replaced element,
  such as an <img> or <video>, should be resized to fit its container.
  */
@@ -1222,8 +1243,6 @@ let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 
 let height: [ Types.Length.t | `auto] => rule;
-let minWidth: [ Types.Length.t | `auto] => rule;
-let maxWidth: [ Types.Length.t | `none] => rule;
 let minHeight: [ Types.Length.t | `auto] => rule;
 let maxHeight: [ Types.Length.t | `none] => rule;
 let backfaceVisibility: [ | `visible | `hidden] => rule;

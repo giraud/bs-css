@@ -1240,3 +1240,11 @@ module Width = {
     | `auto => "auto"
     | `fitContent => "fit-content";
 };
+
+module MaxWidth = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
+};

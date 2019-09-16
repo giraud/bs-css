@@ -883,3 +883,12 @@ module Width: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/max-width
+ */
+module MaxWidth: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};
