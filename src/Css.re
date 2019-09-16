@@ -864,6 +864,17 @@ let visibility = x =>
     },
   );
 
+let width = x =>
+  D(
+    "width",
+    switch (x) {
+    | #Width.t as w => Width.toString(w)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let whiteSpace = x =>
   D(
     "whiteSpace",
@@ -1305,7 +1316,6 @@ let string_of_dimension =
   | `minmax(a, b) =>
     "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
 
-let width = x => D("width", string_of_dimension(x));
 let height = x => D("height", string_of_dimension(x));
 let minWidth = x => D("minWidth", string_of_dimension(x));
 let maxWidth = x => D("maxWidth", string_of_dimension(x));

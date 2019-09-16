@@ -690,6 +690,15 @@ let verticalAlign:
 let visibility: [ Types.Visibility.t | Types.Cascading.t] => rule;
 
 /**
+ The width CSS property sets an element's width.
+ By default, it sets the width of the content area, but if box-sizing is set to border-box,
+ it sets the width of the border area.
+ */
+let width:
+  [ Types.Width.t | Types.Percentage.t | Types.Length.t | Types.Cascading.t] =>
+  rule;
+
+/**
  The white-space CSS property sets how white space inside an element is handled.
  */
 let whiteSpace: [ Types.WhiteSpace.t | Types.Cascading.t] => rule;
@@ -1061,6 +1070,141 @@ let hex: string => [> Types.Color.t];
 let transparent: [> Types.Color.t];
 let currentColor: [> Types.Color.t];
 
+let none: [> | `none];
+let local: [> | `local];
+
+let paddingBox: [> | `paddingBox];
+let borderBox: [> | `borderBox];
+let contentBox: [> | `contentBox];
+
+let noRepeat: [> | `noRepeat];
+let space: [> | `space];
+let repeat: [> | `repeat];
+let minmax: [> | `minmax];
+let repeatX: [> | `repeatX];
+let repeatY: [> | `repeatY];
+let contain: [> | `contain];
+let cover: [> | `cover];
+
+let row: [> | `row];
+let rowReverse: [> | `rowReverse];
+let column: [> | `column];
+let columnReverse: [> | `columnReverse];
+let wrap: [> | `wrap];
+let nowrap: [> | `nowrap];
+let wrapReverse: [> | `wrapReverse];
+
+let inline: [> | `inline];
+let block: [> | `block];
+let contents: [> | `contents];
+let flexBox: [> | `flex];
+let grid: [> | `grid];
+let inlineBlock: [> | `inlineBlock];
+let inlineFlex: [> | `inlineFlex];
+let inlineGrid: [> | `inlineGrid];
+let inlineTable: [> | `inlineTable];
+let listItem: [> | `listItem];
+let runIn: [> | `runIn];
+let table: [> | `table];
+let tableCaption: [> | `tableCaption];
+let tableColumnGroup: [> | `tableColumnGroup];
+let tableHeaderGroup: [> | `tableHeaderGroup];
+let tableFooterGroup: [> | `tableFooterGroup];
+let tableRowGroup: [> | `tableRowGroup];
+let tableCell: [> | `tableCell];
+let tableColumn: [> | `tableColumn];
+let tableRow: [> | `tableRow];
+
+let flexStart: [> | `flexStart];
+let flexEnd: [> | `flexEnd];
+let center: [> | `center];
+let stretch: [> | `stretch];
+let spaceBetween: [> | `spaceBetween];
+let spaceAround: [> | `spaceAround];
+let spaceEvenly: [> | `spaceEvenly];
+let baseline: [> | `baseline];
+
+let forwards: [> | `forwards];
+let backwards: [> | `backwards];
+let both: [> | `both];
+let infinite: [> | `infinite];
+let count: int => [> | `count(int)];
+let paused: [> | `paused];
+let running: [> | `running];
+
+let inside: [> | `inside];
+let outside: [> | `outside];
+
+let solid: [> | `solid];
+let dotted: [> | `dotted];
+let dashed: [> | `dashed];
+
+let underline: [> | `underline];
+let overline: [> | `overline];
+let lineThrough: [> | `lineThrough];
+
+let clip: [> | `clip];
+let ellipsis: [> | `ellipsis];
+
+let wavy: [> | `wavy];
+let double: [> | `double];
+
+let uppercase: [> | `uppercase];
+let lowercase: [> | `lowercase];
+let capitalize: [> | `capitalize];
+
+let sub: [> | `sub];
+let super: [> | `super];
+let textTop: [> | `textTop];
+let textBottom: [> | `textBottom];
+let middle: [> | `middle];
+
+let normal: [> | `normal];
+
+let breakAll: [> | `breakAll];
+let keepAll: [> | `keepAll];
+let breakWord: [> | `breakWord];
+
+let reverse: [> | `reverse];
+let alternate: [> | `alternate];
+let alternateReverse: [> | `alternateReverse];
+
+let fill: [> | `fill];
+let content: [> | `content];
+let maxContent: [> | `maxContent];
+let minContent: [> | `minContent];
+let fitContent: [> | `fitContent];
+
+let all: [> | `all];
+let text: [> | `text];
+
+let linear: [> | `linear];
+let ease: [> | `ease];
+let easeIn: [> | `easeIn];
+let easeOut: [> | `easeOut];
+let easeInOut: [> | `easeInOut];
+let stepStart: [> | `stepStart];
+let stepEnd: [> | `stepEnd];
+let round: [> | `round];
+let miter: [> | `miter];
+let bevel: [> | `bevel];
+let butt: [> | `butt];
+let square: [> | `square];
+let thin: [> | `thin];
+let extraLight: [> | `extraLight];
+let light: [> | `light];
+let medium: [> | `medium];
+let semiBold: [> | `semiBold];
+let bold: [> | `bold];
+let extraBold: [> | `extraBold];
+let lighter: [> | `lighter];
+let bolder: [> | `bolder];
+let fr: float => [> | `fr(float)];
+let vw: float => [> | `vw(float)];
+
+let localUrl: string => [> | `localUrl(string)];
+let url: string => [> | `url(string)];
+
 /********************************************************
  ********************************************************
  ********************************************************/
@@ -1077,7 +1221,6 @@ let flexBasis: [ Types.FlexBasis.t | Types.Length.t] => rule;
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 
-let width: [ Types.Length.t | `auto | `fitContent] => rule;
 let height: [ Types.Length.t | `auto] => rule;
 let minWidth: [ Types.Length.t | `auto] => rule;
 let maxWidth: [ Types.Length.t | `none] => rule;
@@ -1172,9 +1315,6 @@ type gridLength = [ trackLength | `repeat(Types.RepeatValue.t, trackLength)];
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
 
-let fr: float => [> | `fr(float)];
-let vw: float => [> | `vw(float)];
-
 module Calc: {
   let (-): (Types.Length.t, Types.Length.t) => [> Types.Length.t];
   let (+): (Types.Length.t, Types.Length.t) => [> Types.Length.t];
@@ -1183,78 +1323,6 @@ module Calc: {
 let size:
   (Types.Length.t, Types.Length.t) =>
   [> | `size(Types.Length.t, Types.Length.t)];
-
-let solid: [> | `solid];
-let dotted: [> | `dotted];
-let dashed: [> | `dashed];
-
-let localUrl: string => [> | `localUrl(string)];
-let url: string => [> | `url(string)];
-
-let none: [> | `none];
-let local: [> | `local];
-
-let paddingBox: [> | `paddingBox];
-let borderBox: [> | `borderBox];
-let contentBox: [> | `contentBox];
-
-let noRepeat: [> | `noRepeat];
-let space: [> | `space];
-let repeat: [> | `repeat];
-let minmax: [> | `minmax];
-let repeatX: [> | `repeatX];
-let repeatY: [> | `repeatY];
-let contain: [> | `contain];
-let cover: [> | `cover];
-
-let row: [> | `row];
-let rowReverse: [> | `rowReverse];
-let column: [> | `column];
-let columnReverse: [> | `columnReverse];
-let wrap: [> | `wrap];
-let nowrap: [> | `nowrap];
-let wrapReverse: [> | `wrapReverse];
-
-let inline: [> | `inline];
-let block: [> | `block];
-let contents: [> | `contents];
-let flexBox: [> | `flex];
-let grid: [> | `grid];
-let inlineBlock: [> | `inlineBlock];
-let inlineFlex: [> | `inlineFlex];
-let inlineGrid: [> | `inlineGrid];
-let inlineTable: [> | `inlineTable];
-let listItem: [> | `listItem];
-let runIn: [> | `runIn];
-let table: [> | `table];
-let tableCaption: [> | `tableCaption];
-let tableColumnGroup: [> | `tableColumnGroup];
-let tableHeaderGroup: [> | `tableHeaderGroup];
-let tableFooterGroup: [> | `tableFooterGroup];
-let tableRowGroup: [> | `tableRowGroup];
-let tableCell: [> | `tableCell];
-let tableColumn: [> | `tableColumn];
-let tableRow: [> | `tableRow];
-
-let flexStart: [> | `flexStart];
-let flexEnd: [> | `flexEnd];
-let center: [> | `center];
-let stretch: [> | `stretch];
-let spaceBetween: [> | `spaceBetween];
-let spaceAround: [> | `spaceAround];
-let spaceEvenly: [> | `spaceEvenly];
-let baseline: [> | `baseline];
-
-let forwards: [> | `forwards];
-let backwards: [> | `backwards];
-let both: [> | `both];
-let infinite: [> | `infinite];
-let count: int => [> | `count(int)];
-let paused: [> | `paused];
-let running: [> | `running];
-
-let inside: [> | `inside];
-let outside: [> | `outside];
 
 let translate:
   (Types.Length.t, Types.Length.t) =>
@@ -1282,63 +1350,11 @@ let skew:
 let skewX: Types.Angle.t => [> | `skewX(Types.Angle.t)];
 let skewY: Types.Angle.t => [> | `skewY(Types.Angle.t)];
 
-let underline: [> | `underline];
-let overline: [> | `overline];
-let lineThrough: [> | `lineThrough];
-
-let clip: [> | `clip];
-let ellipsis: [> | `ellipsis];
-
-let wavy: [> | `wavy];
-let double: [> | `double];
-
-let uppercase: [> | `uppercase];
-let lowercase: [> | `lowercase];
-let capitalize: [> | `capitalize];
-
-let sub: [> | `sub];
-let super: [> | `super];
-let textTop: [> | `textTop];
-let textBottom: [> | `textBottom];
-let middle: [> | `middle];
-
-let normal: [> | `normal];
-
-let breakAll: [> | `breakAll];
-let keepAll: [> | `keepAll];
-let breakWord: [> | `breakWord];
-
-let reverse: [> | `reverse];
-let alternate: [> | `alternate];
-let alternateReverse: [> | `alternateReverse];
-
-let fill: [> | `fill];
-let content: [> | `content];
-let maxContent: [> | `maxContent];
-let minContent: [> | `minContent];
-let fitContent: [> | `fitContent];
-
-let all: [> | `all];
-let text: [> | `text];
-
-let linear: [> | `linear];
-let ease: [> | `ease];
-let easeIn: [> | `easeIn];
-let easeOut: [> | `easeOut];
-let easeInOut: [> | `easeInOut];
-let stepStart: [> | `stepStart];
-let stepEnd: [> | `stepEnd];
 let steps:
   (int, [ | `start | `end_]) => [> | `steps(int, [ | `start | `end_])];
 let cubicBesier:
   (float, float, float, float) =>
   [> | `cubicBezier(float, float, float, float)];
-
-let round: [> | `round];
-let miter: [> | `miter];
-let bevel: [> | `bevel];
-let butt: [> | `butt];
-let square: [> | `square];
 
 type filter = [
   | `blur(Types.Length.t)
@@ -1361,16 +1377,6 @@ let filter: list(filter) => rule;
 /**
  * Text
  */
-
-let thin: [> | `thin];
-let extraLight: [> | `extraLight];
-let light: [> | `light];
-let medium: [> | `medium];
-let semiBold: [> | `semiBold];
-let bold: [> | `bold];
-let extraBold: [> | `extraBold];
-let lighter: [> | `lighter];
-let bolder: [> | `bolder];
 
 let fontFace:
   (
@@ -1463,9 +1469,9 @@ let animations: list([ Animation.t]) => rule;
 
 let animationName: animationName => rule;
 
-/**
- * SVG
- */
+/* *
+ SVG
+ *** */
 
 module SVG: {
   let fill: Types.Color.t => rule;

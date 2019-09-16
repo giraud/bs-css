@@ -1231,3 +1231,12 @@ module TextDecorationStyle = {
     | `dashed => "dashed"
     | `wavy => "wavy";
 };
+
+module Width = {
+  type t = [ | `auto | `fitContent];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `fitContent => "fit-content";
+};

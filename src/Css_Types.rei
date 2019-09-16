@@ -874,3 +874,12 @@ module TextDecorationStyle: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/width
+ */
+module Width: {
+  type t = [ | `auto | `fitContent];
+
+  let toString: t => string;
+};
