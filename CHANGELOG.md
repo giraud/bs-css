@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [10.0.1] - 2019-09-23
+
 ### Added
 
 - textDecorationLine
@@ -8,7 +10,7 @@
 
 - Pseudo classes selectors have been updated and documented
 - Update properties : backgroundAttachment, backgroundClip, backgroundOrigin, backgroundRepeat,
-  textOverflow, textDecorationStyle
+  textOverflow, textDecorationLine, textDecorationStyle, width, wordWrap
 
 ## [10.0.0] - 2019-09-04
 
@@ -128,5 +130,6 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.1...HEAD
+[10.0.1]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.0...v10.0.1
 [10.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v9.0.1...v10.0.0
