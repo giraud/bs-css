@@ -722,7 +722,12 @@ let transform: Types.Transform.t => rule;
 
 let transforms: list(Types.Transform.t) => rule;
 
+/**
+ The transform-origin CSS property sets the origin for an element's transformations.
+ */
 let transformOrigin: (Types.Length.t, Types.Length.t) => rule;
+let transformOrigin3d:
+  (Types.Length.t, Types.Length.t, Types.Length.t) => rule;
 
 let transitionDelay: int => rule;
 
@@ -1448,8 +1453,6 @@ let fontFace:
   ) =>
   string;
 
-let transformOrigin3d:
-  (Types.Length.t, Types.Length.t, Types.Length.t) => rule;
 let transformStyle: [ | `preserve3d | `flat] => rule;
 
 /**

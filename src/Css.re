@@ -883,6 +883,17 @@ let transforms = x =>
 let transformOrigin = (x, y) =>
   D("transformOrigin", Length.toString(x) ++ " " ++ Length.toString(y));
 
+let transformOrigin3d = (x, y, z) =>
+  D(
+    "transformOrigin",
+    Length.toString(x)
+    ++ " "
+    ++ Length.toString(y)
+    ++ " "
+    ++ Length.toString(z)
+    ++ " ",
+  );
+
 let unsafe = (property, value) => D(property, value);
 
 let userSelect = x =>
@@ -1773,21 +1784,6 @@ let textShadow = x =>
 
 let textShadows = x =>
   D("textShadow", x->Belt.List.map(Shadow.toString)->join(", "));
-
-/**
- * Transform
- */
-
-let transformOrigin3d = (x, y, z) =>
-  D(
-    "transformOrigin",
-    Length.toString(x)
-    ++ " "
-    ++ Length.toString(y)
-    ++ " "
-    ++ Length.toString(z)
-    ++ " ",
-  );
 
 let transformStyle = x =>
   D(
