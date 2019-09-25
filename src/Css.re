@@ -1123,6 +1123,8 @@ let hex = Color.hex;
 let currentColor = Color.currentColor;
 let transparent = Color.transparent;
 
+let cubicBezier = TimingFunction.cubicBezier;
+
 /********************************************************
  ********************************************************
  ********************************************************/
@@ -1165,7 +1167,6 @@ let contain = `contain;
 let contentBox = `contentBox;
 let count = x => `count(x);
 let cover = `cover;
-let cubicBesier = (a, b, c, d) => `cubicBezier((a, b, c, d));
 let dashed = `dashed;
 let dotted = `dotted;
 let ease = `ease;

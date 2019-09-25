@@ -307,6 +307,8 @@ module TimingFunction = {
     | `cubicBezier(float, float, float, float)
   ];
 
+  let cubicBezier = (a, b, c, d) => `cubicBezier((a, b, c, d));
+
   let toString =
     fun
     | `linear => "linear"

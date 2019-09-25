@@ -1077,6 +1077,7 @@ type listStyleType = Types.ListStyleType.t;
 type repeatValue = Types.RepeatValue.t;
 type outlineStyle = Types.OutlineStyle.t;
 type transform = Types.Transform.t;
+type animationName;
 
 /* **************************************************
  Constructor aliases, for ease of use.
@@ -1276,6 +1277,8 @@ let vw: float => [> | `vw(float)];
 let localUrl: string => [> | `localUrl(string)];
 let url: string => [> | `url(string)];
 
+let cubicBezier: (float, float, float, float) => [> Types.TimingFunction.t];
+
 /********************************************************
  ********************************************************
  ********************************************************/
@@ -1417,9 +1420,6 @@ let skewY: Types.Angle.t => [> | `skewY(Types.Angle.t)];
 
 let steps:
   (int, [ | `start | `end_]) => [> | `steps(int, [ | `start | `end_])];
-let cubicBesier:
-  (float, float, float, float) =>
-  [> | `cubicBezier(float, float, float, float)];
 
 type filter = [
   | `blur(Types.Length.t)
@@ -1491,7 +1491,6 @@ let transitions: list([ Transition.t]) => rule;
  * Animation
  */
 
-type animationName;
 let keyframes: list((int, list(rule))) => animationName;
 
 module Animation: {

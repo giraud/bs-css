@@ -262,6 +262,8 @@ module TimingFunction: {
     | `cubicBezier(float, float, float, float)
   ];
 
+  let cubicBezier: (float, float, float, float) => [> t];
+
   let toString: t => string;
 };
 
