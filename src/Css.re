@@ -1123,6 +1123,14 @@ let hex = Color.hex;
 let currentColor = Color.currentColor;
 let transparent = Color.transparent;
 
+let linear = TimingFunction.linear;
+let ease = TimingFunction.ease;
+let easeIn = TimingFunction.easeIn;
+let easeInOut = TimingFunction.easeInOut;
+let easeOut = TimingFunction.easeOut;
+let stepStart = TimingFunction.stepStart;
+let stepEnd = TimingFunction.stepEnd;
+let steps = TimingFunction.steps;
 let cubicBezier = TimingFunction.cubicBezier;
 
 /********************************************************
@@ -1169,10 +1177,6 @@ let count = x => `count(x);
 let cover = `cover;
 let dashed = `dashed;
 let dotted = `dotted;
-let ease = `ease;
-let easeIn = `easeIn;
-let easeInOut = `easeInOut;
-let easeOut = `easeOut;
 let flexBox = `flex;
 let grid = `grid;
 let inlineGrid = `inlineGrid;
@@ -1202,7 +1206,6 @@ let tableCell = `tableCell;
 let tableColumn = `tableColumn;
 let tableRow = `tableRow;
 
-let linear = `linear;
 let local = `local;
 let localUrl = x => `localUrl(x);
 let none = `none;
@@ -1235,9 +1238,6 @@ let solid = `solid;
 let spaceAround = `spaceAround;
 let spaceBetween = `spaceBetween;
 let spaceEvenly = `spaceEvenly;
-let stepEnd = `stepEnd;
-let steps = (i, dir) => `steps((i, dir));
-let stepStart = `stepStart;
 let stretch = `stretch;
 let text = `text;
 let translate = (x, y) => `translate((x, y));

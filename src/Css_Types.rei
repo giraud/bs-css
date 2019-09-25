@@ -262,6 +262,14 @@ module TimingFunction: {
     | `cubicBezier(float, float, float, float)
   ];
 
+  let linear: [> t];
+  let ease: [> t];
+  let easeIn: [> t];
+  let easeOut: [> t];
+  let easeInOut: [> t];
+  let stepStart: [> t];
+  let stepEnd: [> t];
+  let steps: (int, [ | `start | `end_]) => [> t];
   let cubicBezier: (float, float, float, float) => [> t];
 
   let toString: t => string;

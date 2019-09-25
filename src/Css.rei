@@ -1250,13 +1250,6 @@ let fitContent: [> | `fitContent];
 let all: [> | `all];
 let text: [> | `text];
 
-let linear: [> | `linear];
-let ease: [> | `ease];
-let easeIn: [> | `easeIn];
-let easeOut: [> | `easeOut];
-let easeInOut: [> | `easeInOut];
-let stepStart: [> | `stepStart];
-let stepEnd: [> | `stepEnd];
 let round: [> | `round];
 let miter: [> | `miter];
 let bevel: [> | `bevel];
@@ -1277,6 +1270,14 @@ let vw: float => [> | `vw(float)];
 let localUrl: string => [> | `localUrl(string)];
 let url: string => [> | `url(string)];
 
+let linear: [> Types.TimingFunction.t];
+let ease: [> Types.TimingFunction.t];
+let easeIn: [> Types.TimingFunction.t];
+let easeOut: [> Types.TimingFunction.t];
+let easeInOut: [> Types.TimingFunction.t];
+let stepStart: [> Types.TimingFunction.t];
+let stepEnd: [> Types.TimingFunction.t];
+let steps: (int, [ | `start | `end_]) => [> Types.TimingFunction.t];
 let cubicBezier: (float, float, float, float) => [> Types.TimingFunction.t];
 
 /********************************************************
@@ -1417,9 +1418,6 @@ let skew:
   (Types.Angle.t, Types.Angle.t) => [> | `skew(Types.Angle.t, Types.Angle.t)];
 let skewX: Types.Angle.t => [> | `skewX(Types.Angle.t)];
 let skewY: Types.Angle.t => [> | `skewY(Types.Angle.t)];
-
-let steps:
-  (int, [ | `start | `end_]) => [> | `steps(int, [ | `start | `end_])];
 
 type filter = [
   | `blur(Types.Length.t)
