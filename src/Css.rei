@@ -620,7 +620,25 @@ let paddingTop: Types.Length.t => rule;
 
 let paddingBottom: Types.Length.t => rule;
 
-let perspectiveOrigin: (Types.Length.t, Types.Length.t) => rule;
+/**
+ The perspective CSS property determines the distance between the z=0 plane and the user in order
+ to give a 3D-positioned element some perspective.
+ Each 3D element with z>0 becomes larger; each 3D-element with z<0 becomes smaller.
+ The strength of the effect is determined by the value of this property.
+ */
+let perspective:
+  [ Types.Perspective.t | Types.Length.t | Types.Cascading.t] => rule;
+
+/**
+ The perspective-origin CSS property determines the position at which the viewer is looking.
+ It is used as the vanishing point by the perspective property.
+ */
+let perspectiveOrigin:
+  (
+    [ Types.Perspective.t | Types.Length.t],
+    [ Types.Perspective.t | Types.Length.t]
+  ) =>
+  rule;
 
 /**
  The pointer-events CSS property sets under what circumstances (if any) a particular graphic element can become the target of pointer events.
@@ -1433,8 +1451,6 @@ let fontFace:
 let transformOrigin3d:
   (Types.Length.t, Types.Length.t, Types.Length.t) => rule;
 let transformStyle: [ | `preserve3d | `flat] => rule;
-let perspective:
-  [ Types.Perspective.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
   * Transition

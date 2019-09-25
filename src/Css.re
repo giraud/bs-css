@@ -728,6 +728,24 @@ let perspective = x =>
     },
   );
 
+let perspectiveOrigin = (x, y) =>
+  D(
+    "perspectiveOrigin",
+    (
+      switch (x) {
+      | #Perspective.t as p => Perspective.toString(p)
+      | #Length.t as l => Length.toString(l)
+      }
+    )
+    ++ " "
+    ++ (
+      switch (y) {
+      | #Perspective.t as p => Perspective.toString(p)
+      | #Length.t as l => Length.toString(l)
+      }
+    ),
+  );
+
 let pointerEvents = x =>
   D(
     "pointerEvents",
@@ -1821,9 +1839,6 @@ let transitionTimingFunction = x =>
   D("transitionTimingFunction", TimingFunction.toString(x));
 
 let transitionProperty = x => D("transitionProperty", x);
-
-let perspectiveOrigin = (x, y) =>
-  D("perspectiveOrigin", Length.toString(x) ++ " " ++ Length.toString(y));
 
 /**
  * Animation
