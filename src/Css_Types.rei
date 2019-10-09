@@ -904,6 +904,24 @@ module MaxWidth: {
 };
 
 /**
+ https://developer.mozilla.org/docs/Web/CSS/height
+ */
+module Height: {
+  type t = [ | `auto];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/max-height
+ */
+module MaxHeight: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/overflow-wrap
  */
 module OverflowWrap: {

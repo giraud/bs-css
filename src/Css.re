@@ -541,6 +541,17 @@ let gridRowEnd = n => D("gridRowEnd", Js.Int.toString(n));
 
 let gridRowStart = n => D("gridRowStart", Js.Int.toString(n));
 
+let height = x =>
+  D(
+    "height",
+    switch (x) {
+    | #Height.t as h => Height.toString(h)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let justifyContent = x =>
   D(
     "justifyContent",
@@ -633,11 +644,33 @@ let marginRight = x => D("marginRight", marginToString(x));
 let marginTop = x => D("marginTop", marginToString(x));
 let marginBottom = x => D("marginBottom", marginToString(x));
 
+let maxHeight = x =>
+  D(
+    "maxHeight",
+    switch (x) {
+    | #MaxHeight.t as mh => MaxHeight.toString(mh)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let maxWidth = x =>
   D(
     "maxWidth",
     switch (x) {
     | #MaxWidth.t as mw => MaxWidth.toString(mw)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let minHeight = x =>
+  D(
+    "minHeight",
+    switch (x) {
+    | #Height.t as h => Height.toString(h)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
     | #Cascading.t as c => Cascading.toString(c)
@@ -1383,10 +1416,6 @@ let string_of_dimension =
   | `maxContent => "max-content"
   | `minmax(a, b) =>
     "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
-
-let height = x => D("height", string_of_dimension(x));
-let minHeight = x => D("minHeight", string_of_dimension(x));
-let maxHeight = x => D("maxHeight", string_of_dimension(x));
 
 type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | Length.t];
 

@@ -1269,6 +1269,22 @@ module MaxWidth = {
     | `none => "none";
 };
 
+module Height = {
+  type t = [ | `auto];
+
+  let toString =
+    fun
+    | `auto => "auto";
+};
+
+module MaxHeight = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
+};
+
 module OverflowWrap = {
   type t = [ | `normal | `breakWord | `anywhere];
 

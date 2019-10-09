@@ -477,6 +477,20 @@ let gridTemplateAreas:
   [ Types.GridTemplateAreas.t | Types.Cascading.t] => rule;
 
 /**
+ The height CSS property specifies the height of an element.
+ By default, the property defines the height of the content area.
+ If box-sizing is set to border-box, however, it instead determines the height of the border area.
+ */
+let height:
+  [
+    Types.Height.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
  The CSS justify-content property defines how the browser distributes space between and around content items
  along the main-axis of a flex container, and the inline axis of a grid container.
  */
@@ -560,12 +574,38 @@ let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
 let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
 
 /**
+ The max-height CSS property sets the maximum height of an element.
+ It prevents the used value of the height property from becoming larger than the value specified for max-height.
+ */
+let maxHeight:
+  [
+    Types.MaxHeight.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
  The max-width CSS property sets the maximum width of an element.
  It prevents the used value of the width property from becoming larger than the value specified by max-width.
  */
 let maxWidth:
   [
     Types.MaxWidth.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
+ The min-height CSS property sets the minimum height of an element.
+ It prevents the used value of the height property from becoming smaller than the value specified for min-height.
+ */
+let minHeight:
+  [
+    Types.Height.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Cascading.t
@@ -1328,9 +1368,6 @@ let flex3:
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 
-let height: [ Types.Length.t | `auto] => rule;
-let minHeight: [ Types.Length.t | `auto] => rule;
-let maxHeight: [ Types.Length.t | `none] => rule;
 let backfaceVisibility: [ | `visible | `hidden] => rule;
 let border:
   (
