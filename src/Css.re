@@ -144,13 +144,6 @@ module Converter = {
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
     };
-
-  let string_of_flex =
-    fun
-    | `auto => "auto"
-    | `initial => "initial"
-    | `none => "none"
-    | `num(n) => Js.Float.toString(n);
 };
 include Converter;
 
@@ -424,6 +417,15 @@ let display = x =>
     | #DisplayBox.t as b => DisplayBox.toString(b)
     | #DisplayLegacy.t as l' => DisplayLegacy.toString(l')
     | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let flex = x =>
+  D(
+    "flex",
+    switch (x) {
+    | #Flex.t as f => Flex.toString(f)
+    | `num(n) => Js.Float.toString(n)
     },
   );
 
@@ -1341,7 +1343,6 @@ let bevel = `bevel;
 let butt = `butt;
 let square = `square;
 
-let flex = x => D("flex", string_of_flex(x));
 let flex3 = (~grow, ~shrink, ~basis) =>
   D(
     "flex",

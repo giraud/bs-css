@@ -347,6 +347,12 @@ let display:
   rule;
 
 /**
+ The flex CSS property sets how a flex item will grow or shrink to fit the space available in its flex container.
+ It is a shorthand for flex-grow, flex-shrink, and flex-basis.
+ */
+let flex: [ Types.Flex.t | `num(float)] => rule;
+
+/**
  The flex-basis CSS property sets the initial main size of a flex item.
  It sets the size of the content box unless otherwise set with box-sizing.
  */
@@ -1382,7 +1388,6 @@ let repeatingRadialGradient:
  ********************************************************
  ********************************************************/
 
-let flex: [ | `auto | `initial | `none | `num(float)] => rule;
 let flex3:
   (
     ~grow: float,

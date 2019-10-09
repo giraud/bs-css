@@ -1409,3 +1409,13 @@ module BackfaceVisibility = {
     | `visible => "visible"
     | `hidden => "hidden";
 };
+
+module Flex = {
+  type t = [ | `auto | `initial | `none];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `initial => "initial"
+    | `none => "none";
+};

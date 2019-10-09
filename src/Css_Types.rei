@@ -1038,3 +1038,12 @@ module BackfaceVisibility: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/flex
+ */
+module Flex: {
+  type t = [ | `auto | `initial | `none];
+
+  let toString: t => string;
+};
