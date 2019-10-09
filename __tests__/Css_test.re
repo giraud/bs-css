@@ -606,3 +606,39 @@ describe("backgroundImage", () =>
        ))
   )
 );
+
+describe("clipPath", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(clipPath(none)),
+        r(clipPath(url("x"))),
+        r(clipPath(marginBox)),
+        r(clipPath(borderBox)),
+        r(clipPath(paddingBox)),
+        r(clipPath(contentBox)),
+        r(clipPath(fillBox)),
+        r(clipPath(strokeBox)),
+        r(clipPath(viewBox)),
+        r(clipPath(inherit_)),
+        r(clipPath(initial)),
+        r(clipPath(unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"clipPath": "none"},
+         {"clipPath": "url(x)"},
+         {"clipPath": "margin-box"},
+         {"clipPath": "border-box"},
+         {"clipPath": "padding-box"},
+         {"clipPath": "content-box"},
+         {"clipPath": "fill-box"},
+         {"clipPath": "stroke-box"},
+         {"clipPath": "view-box"},
+         {"clipPath": "inherit"},
+         {"clipPath": "initial"},
+         {"clipPath": "unset"},
+       ))
+  )
+);

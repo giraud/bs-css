@@ -369,6 +369,17 @@ let clear = x =>
     },
   );
 
+let clipPath = x =>
+  D(
+    "clipPath",
+    switch (x) {
+    | #ClipPath.t as cp => ClipPath.toString(cp)
+    | #Url.t as u => Url.toString(u)
+    | #GeometyBox.t as gb => GeometyBox.toString(gb)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let color = x => D("color", Color.toString(x));
 
 let columnCount = x =>
@@ -1130,6 +1141,14 @@ let stepEnd = TimingFunction.stepEnd;
 let steps = TimingFunction.steps;
 let cubicBezier = TimingFunction.cubicBezier;
 
+let marginBox = GeometyBox.marginBox;
+//let borderBox = GeometyBox.borderBox;
+//let paddingBox = GeometyBox.paddingBox;
+//let contentBox = GeometyBox.contentBox;
+let fillBox = GeometyBox.fillBox;
+let strokeBox = GeometyBox.strokeBox;
+let viewBox = GeometyBox.viewBox;
+
 let linearGradient = Gradient.linearGradient;
 let repeatingLinearGradient = Gradient.repeatingLinearGradient;
 let radialGradient = Gradient.radialGradient;
@@ -1653,14 +1672,6 @@ let backgroundSize = x =>
     | `auto => "auto"
     | `cover => "cover"
     | `contain => "contain"
-    },
-  );
-
-let clipPath = x =>
-  D(
-    "clipPath",
-    switch (x) {
-    | `url(url) => "url(" ++ url ++ ")"
     },
   );
 

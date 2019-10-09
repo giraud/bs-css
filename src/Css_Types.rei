@@ -944,3 +944,49 @@ module BackgroundImage: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/clip-path
+ */
+module GeometyBox: {
+  type t = [
+    | `marginBox
+    | `borderBox
+    | `paddingBox
+    | `contentBox
+    | `fillBox
+    | `strokeBox
+    | `viewBox
+  ];
+
+  /** Uses the margin box as the reference box. */
+  let marginBox: [> t];
+  /** Uses the border box as the reference box. */
+  let borderBox: [> t];
+  /** Uses the padding box as the reference box. */
+  let paddingBox: [> t];
+  /** Uses the content box as the reference box. */
+  let contentBox: [> t];
+  /** Uses the object bounding box as the reference box. */
+  let fillBox: [> t];
+  /** Uses the stroke bounding box as the reference box. */
+  let strokeBox: [> t];
+  /**
+   Uses the nearest SVG viewport as the reference box.
+   If a viewBox attribute is specified for the element creating the SVG viewport,
+   the reference box is positioned at the origin of the coordinate system established by the viewBox attribute and
+   the dimension of the size of the reference box is set to the width and height values of the viewBox attribute.
+   */
+  let viewBox: [> t];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/clip-path
+ */
+module ClipPath: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};

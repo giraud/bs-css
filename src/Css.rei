@@ -300,6 +300,14 @@ let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
  */
 let clear: [ Types.Clear.t | Types.Cascading.t] => rule;
 
+/**
+ The clip-path CSS property creates a clipping region that sets what part of an element should be shown.
+ Parts that are inside the region are shown, while those outside are hidden.
+ */
+let clipPath:
+  [ Types.ClipPath.t | Types.Url.t | Types.GeometyBox.t | Types.Cascading.t] =>
+  rule;
+
 let color: Types.Color.t => rule;
 
 /**
@@ -1286,6 +1294,14 @@ let stepEnd: [> Types.TimingFunction.t];
 let steps: (int, [ | `start | `end_]) => [> Types.TimingFunction.t];
 let cubicBezier: (float, float, float, float) => [> Types.TimingFunction.t];
 
+let marginBox: [> Types.GeometyBox.t];
+//let borderBox: [> Types.GeometyBox.t];
+//let paddingBox: [> Types.GeometyBox.t];
+//let contentBox: [> Types.GeometyBox.t];
+let fillBox: [> Types.GeometyBox.t];
+let strokeBox: [> Types.GeometyBox.t];
+let viewBox: [> Types.GeometyBox.t];
+
 let linearGradient:
   (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
   [> Types.Gradient.t];
@@ -1333,7 +1349,7 @@ let borderTop:
 let backgroundSize:
   [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
   rule;
-let clipPath: [ | `url(string)] => rule;
+
 let listStyle:
   (
     Types.ListStyleType.t,

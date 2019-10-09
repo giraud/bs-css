@@ -1327,3 +1327,41 @@ module BackgroundImage = {
     fun
     | `none => "none";
 };
+
+module GeometyBox = {
+  type t = [
+    | `marginBox
+    | `borderBox
+    | `paddingBox
+    | `contentBox
+    | `fillBox
+    | `strokeBox
+    | `viewBox
+  ];
+
+  let marginBox = `marginBox;
+  let borderBox = `borderBox;
+  let paddingBox = `paddingBox;
+  let contentBox = `contentBox;
+  let fillBox = `fillBox;
+  let strokeBox = `strokeBox;
+  let viewBox = `viewBox;
+
+  let toString =
+    fun
+    | `marginBox => "margin-box"
+    | `borderBox => "border-box"
+    | `paddingBox => "padding-box"
+    | `contentBox => "content-box"
+    | `fillBox => "fill-box"
+    | `strokeBox => "stroke-box"
+    | `viewBox => "view-box";
+};
+
+module ClipPath = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
+};
