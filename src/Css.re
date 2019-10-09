@@ -98,20 +98,6 @@ module Converter = {
       )
     ->join(", ");
 
-  let string_of_linearGradient = (angle, stops) =>
-    "linear-gradient("
-    ++ Angle.toString(angle)
-    ++ ", "
-    ++ string_of_stops(stops)
-    ++ ")";
-
-  let string_of_repeatingLinearGradient = (angle, stops) =>
-    "repeating-linear-gradient("
-    ++ Angle.toString(angle)
-    ++ ", "
-    ++ string_of_stops(stops)
-    ++ ")";
-
   let string_of_time = t => Js.Int.toString(t) ++ "ms";
 
   let string_of_background = bg =>
@@ -276,6 +262,16 @@ let backgroundClip = x =>
     switch (x) {
     | #BackgroundClip.t as bc => BackgroundClip.toString(bc)
     | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let backgroundImage = x =>
+  D(
+    "backgroundImage",
+    switch (x) {
+    | #BackgroundImage.t as bi => BackgroundImage.toString(bi)
+    | #Url.t as u => Url.toString(u)
+    | #Gradient.t as g => Gradient.toString(g)
     },
   );
 
@@ -1060,6 +1056,7 @@ type listStyleType = ListStyleType.t;
 type repeatValue = RepeatValue.t;
 type outlineStyle = OutlineStyle.t;
 type transform = Transform.t;
+type gradient = Types.Gradient.t;
 
 /* Constructor aliases */
 
@@ -1133,25 +1130,14 @@ let stepEnd = TimingFunction.stepEnd;
 let steps = TimingFunction.steps;
 let cubicBezier = TimingFunction.cubicBezier;
 
+let linearGradient = Gradient.linearGradient;
+let repeatingLinearGradient = Gradient.repeatingLinearGradient;
+let radialGradient = Gradient.radialGradient;
+let repeatingRadialGradient = Gradient.repeatingRadialGradient;
+
 /********************************************************
  ********************************************************
  ********************************************************/
-
-type gradient = [
-  | `linearGradient(angle, list((Length.t, Color.t)))
-  | `repeatingLinearGradient(angle, list((Length.t, Color.t)))
-  | `radialGradient(list((Length.t, Color.t)))
-  | `repeatingRadialGradient(list((Length.t, Color.t)))
-];
-
-let linearGradient = (angle, stops) => `linearGradient((angle, stops));
-
-let repeatingLinearGradient = (angle, stops) =>
-  `repeatingLinearGradient((angle, stops));
-
-let radialGradient = stops => `radialGradient(stops);
-
-let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
 
 let vw = x => `vw(x);
 let fr = x => `fr(x);
@@ -1658,21 +1644,6 @@ let borderBottomStyle = x =>
 let background = x => D("background", string_of_background(x));
 let backgrounds = bg =>
   D("background", bg->Belt.List.map(string_of_background)->join(", "));
-let backgroundImage = x =>
-  D(
-    "backgroundImage",
-    switch (x) {
-    | `none => "none"
-    | `url(url) => "url(" ++ url ++ ")"
-    | `linearGradient(angle, stops) => string_of_linearGradient(angle, stops)
-    | `repeatingLinearGradient(angle, stops) =>
-      string_of_repeatingLinearGradient(angle, stops)
-    | `radialGradient(stops) =>
-      "radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    | `repeatingRadialGradient(stops) =>
-      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    },
-  );
 
 let backgroundSize = x =>
   D(

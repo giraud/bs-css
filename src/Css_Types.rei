@@ -911,3 +911,36 @@ module OverflowWrap: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/gradient
+ */
+module Gradient: {
+  type t = [
+    | `linearGradient(Angle.t, list((Length.t, Color.t)))
+    | `repeatingLinearGradient(Angle.t, list((Length.t, Color.t)))
+    | `radialGradient(list((Length.t, Color.t)))
+    | `repeatingRadialGradient(list((Length.t, Color.t)))
+  ];
+
+  /** Linear gradients transition colors progressively along an imaginary line. */
+  let linearGradient: (Angle.t, list((Length.t, Color.t))) => [> t];
+  /** Radial gradients transition colors progressively from a center point (origin). */
+  let radialGradient: list((Length.t, Color.t)) => [> t];
+
+  /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (linearGradient function). */
+  let repeatingLinearGradient: (Angle.t, list((Length.t, Color.t))) => [> t];
+  /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (radialGradient function). */
+  let repeatingRadialGradient: list((Length.t, Color.t)) => [> t];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/background-image
+ */
+module BackgroundImage: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};

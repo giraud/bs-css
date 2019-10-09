@@ -578,3 +578,31 @@ describe("backgroundRepeat", () => {
        ))
   );
 });
+
+describe("backgroundImage", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(backgroundImage(none)),
+        r(backgroundImage(url("x"))),
+        r(backgroundImage(linearGradient(deg(5.), [(pct(10.), red)]))),
+        r(
+          backgroundImage(
+            repeatingLinearGradient(rad(6.), [(pct(20.), black)]),
+          ),
+        ),
+        r(backgroundImage(radialGradient([(pct(30.), yellow)]))),
+        r(backgroundImage(repeatingRadialGradient([(pct(30.), yellow)]))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"backgroundImage": "none"},
+         {"backgroundImage": "url(x)"},
+         {"backgroundImage": "linear-gradient(5deg, #FF0000 10%)"},
+         {"backgroundImage": "repeating-linear-gradient(6rad, #000000 20%)"},
+         {"backgroundImage": "radial-gradient(#FFFF00 30%)"},
+         {"backgroundImage": "repeating-radial-gradient(#FFFF00 30%)"},
+       ))
+  )
+);

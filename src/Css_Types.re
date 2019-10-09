@@ -1,3 +1,13 @@
+let join = (strings, separator) => {
+  let rec run = (strings, acc) =>
+    switch (strings) {
+    | [] => acc
+    | [x] => acc ++ x
+    | [x, ...xs] => run(xs, acc ++ x ++ separator)
+    };
+  run(strings, "");
+};
+
 module Cascading = {
   type t = [ | `initial | `inherit_ | `unset];
 
@@ -1267,4 +1277,53 @@ module OverflowWrap = {
     | `normal => "normal"
     | `breakWord => "break-word"
     | `anywhere => "anywhere";
+};
+
+module Gradient = {
+  type t = [
+    | `linearGradient(Angle.t, list((Length.t, Color.t)))
+    | `repeatingLinearGradient(Angle.t, list((Length.t, Color.t)))
+    | `radialGradient(list((Length.t, Color.t)))
+    | `repeatingRadialGradient(list((Length.t, Color.t)))
+  ];
+
+  let linearGradient = (angle, stops) => `linearGradient((angle, stops));
+  let repeatingLinearGradient = (angle, stops) =>
+    `repeatingLinearGradient((angle, stops));
+  let radialGradient = stops => `radialGradient(stops);
+  let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
+
+  let string_of_stops = stops =>
+    stops
+    ->Belt.List.map(((l, c)) =>
+        Color.toString(c) ++ " " ++ Length.toString(l)
+      )
+    ->join(", ");
+
+  let toString =
+    fun
+    | `linearGradient(angle, stops) =>
+      "linear-gradient("
+      ++ Angle.toString(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `repeatingLinearGradient(angle, stops) =>
+      "repeating-linear-gradient("
+      ++ Angle.toString(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")"
+    | `radialGradient(stops) =>
+      "radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    | `repeatingRadialGradient(stops) =>
+      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")";
+};
+
+module BackgroundImage = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
 };

@@ -154,6 +154,12 @@ let backgroundColor: Types.Color.t => rule;
 let backgroundClip: [ Types.BackgroundClip.t | Types.Cascading.t] => rule;
 
 /**
+ The background-image CSS property sets one or more background images on an element.
+ */
+let backgroundImage:
+  [ Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t] => rule;
+
+/**
  The background-origin CSS property sets the background's origin: from the border start,
  inside the border, or inside the padding.
  */
@@ -1280,6 +1286,17 @@ let stepEnd: [> Types.TimingFunction.t];
 let steps: (int, [ | `start | `end_]) => [> Types.TimingFunction.t];
 let cubicBezier: (float, float, float, float) => [> Types.TimingFunction.t];
 
+let linearGradient:
+  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
+  [> Types.Gradient.t];
+let repeatingLinearGradient:
+  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
+  [> Types.Gradient.t];
+let radialGradient:
+  list((Types.Length.t, Types.Color.t)) => [> Types.Gradient.t];
+let repeatingRadialGradient:
+  list((Types.Length.t, Types.Color.t)) => [> Types.Gradient.t];
+
 /********************************************************
  ********************************************************
  ********************************************************/
@@ -1330,40 +1347,11 @@ let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
 
-type gradient = [
-  | `linearGradient(Types.Angle.t, list((Types.Length.t, Types.Color.t)))
-  | `repeatingLinearGradient(
-      Types.Angle.t,
-      list((Types.Length.t, Types.Color.t)),
-    )
-  | `radialGradient(list((Types.Length.t, Types.Color.t)))
-  | `repeatingRadialGradient(list((Types.Length.t, Types.Color.t)))
-];
-
-let linearGradient:
-  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
-  [>
-    | `linearGradient(Types.Angle.t, list((Types.Length.t, Types.Color.t)))
-  ];
-let repeatingLinearGradient:
-  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
-  [>
-    | `repeatingLinearGradient(
-        Types.Angle.t,
-        list((Types.Length.t, Types.Color.t)),
-      )
-  ];
-let radialGradient:
-  list((Types.Length.t, Types.Color.t)) =>
-  [> | `radialGradient(list((Types.Length.t, Types.Color.t)))];
-let repeatingRadialGradient:
-  list((Types.Length.t, Types.Color.t)) =>
-  [> | `repeatingRadialGradient(list((Types.Length.t, Types.Color.t)))];
+type gradient = Types.Gradient.t;
 
 let background: [ Types.Color.t | `url(string) | gradient | `none] => rule;
 let backgrounds:
   list([ Types.Color.t | `url(string) | gradient | `none]) => rule;
-let backgroundImage: [ | `url(string) | gradient | `none] => rule;
 
 type minmax = [
   | `fr(float)
