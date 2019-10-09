@@ -1400,3 +1400,12 @@ module ClipPath = {
     fun
     | `none => "none";
 };
+
+module BackfaceVisibility = {
+  type t = [ | `visible | `hidden];
+
+  let toString =
+    fun
+    | `visible => "visible"
+    | `hidden => "hidden";
+};

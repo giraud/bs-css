@@ -135,6 +135,10 @@ let animationPlayState: Types.AnimationPlayState.t => rule;
  */
 let animationTimingFunction: Types.TimingFunction.t => rule;
 
+/* Warning: experimental */
+let backfaceVisibility:
+  [ Types.BackfaceVisibility.t | Types.Cascading.t] => rule;
+
 /**
  The background-attachment CSS property sets whether a background image's position is fixed within the viewport,
  or scrolls with its containing block.
@@ -1389,7 +1393,6 @@ let flex3:
 let gridAutoColumns: [ Types.Length.t | `auto] => rule;
 let gridAutoRows: [ Types.Length.t | `auto] => rule;
 
-let backfaceVisibility: [ | `visible | `hidden] => rule;
 let border:
   (
     Types.Length.t,

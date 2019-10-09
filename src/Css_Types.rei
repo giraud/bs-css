@@ -1029,3 +1029,12 @@ module ClipPath: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/backface-visibility
+ */
+module BackfaceVisibility: {
+  type t = [ | `visible | `hidden];
+
+  let toString: t => string;
+};

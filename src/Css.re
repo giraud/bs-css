@@ -245,6 +245,15 @@ let animationPlayState = x =>
 let animationTimingFunction = x =>
   D("animationTimingFunction", TimingFunction.toString(x));
 
+let backfaceVisibility = x =>
+  D(
+    "backfaceVisibility",
+    switch (x) {
+    | #BackfaceVisibility.t as bv => BackfaceVisibility.toString(bv)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let backgroundAttachment = x =>
   D(
     "backgroundAttachment",
@@ -1568,15 +1577,6 @@ let string_of_filter =
 
 let filter = x =>
   D("filter", x->Belt.List.map(string_of_filter)->join(" "));
-
-let backfaceVisibility = x =>
-  D(
-    "backfaceVisibility",
-    switch (x) {
-    | `hidden => "hidden"
-    | `visible => "visible"
-    },
-  );
 
 module Shadow = {
   type value('a) = string;
