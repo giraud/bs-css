@@ -1131,6 +1131,7 @@ type listStyleType = Types.ListStyleType.t;
 type repeatValue = Types.RepeatValue.t;
 type outlineStyle = Types.OutlineStyle.t;
 type transform = Types.Transform.t;
+type gradient = Types.Gradient.t;
 type animationName;
 
 /* **************************************************
@@ -1342,6 +1343,26 @@ let fillBox: [> Types.GeometyBox.t];
 let strokeBox: [> Types.GeometyBox.t];
 let viewBox: [> Types.GeometyBox.t];
 
+let translate: (Types.Length.t, Types.Length.t) => [> Types.Transform.t];
+let translate3d:
+  (Types.Length.t, Types.Length.t, Types.Length.t) => [> Types.Transform.t];
+let translateX: Types.Length.t => [> Types.Transform.t];
+let translateY: Types.Length.t => [> Types.Transform.t];
+let translateZ: Types.Length.t => [> Types.Transform.t];
+let scale: (float, float) => [> Types.Transform.t];
+let scale3d: (float, float, float) => [> Types.Transform.t];
+let scaleX: float => [> Types.Transform.t];
+let scaleY: float => [> Types.Transform.t];
+let scaleZ: float => [> Types.Transform.t];
+let rotate: Types.Angle.t => [> Types.Transform.t];
+let rotate3d: (float, float, float, Types.Angle.t) => [> Types.Transform.t];
+let rotateX: Types.Angle.t => [> Types.Transform.t];
+let rotateY: Types.Angle.t => [> Types.Transform.t];
+let rotateZ: Types.Angle.t => [> Types.Transform.t];
+let skew: (Types.Angle.t, Types.Angle.t) => [> Types.Transform.t];
+let skewX: Types.Angle.t => [> Types.Transform.t];
+let skewY: Types.Angle.t => [> Types.Transform.t];
+
 let linearGradient:
   (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
   [> Types.Gradient.t];
@@ -1400,8 +1421,6 @@ let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
 
-type gradient = Types.Gradient.t;
-
 let background: [ Types.Color.t | `url(string) | gradient | `none] => rule;
 let backgrounds:
   list([ Types.Color.t | `url(string) | gradient | `none]) => rule;
@@ -1433,32 +1452,6 @@ module Calc: {
 let size:
   (Types.Length.t, Types.Length.t) =>
   [> | `size(Types.Length.t, Types.Length.t)];
-
-let translate:
-  (Types.Length.t, Types.Length.t) =>
-  [> | `translate(Types.Length.t, Types.Length.t)];
-let translate3d:
-  (Types.Length.t, Types.Length.t, Types.Length.t) =>
-  [> | `translate3d(Types.Length.t, Types.Length.t, Types.Length.t)];
-let translateX: Types.Length.t => [> | `translateX(Types.Length.t)];
-let translateY: Types.Length.t => [> | `translateY(Types.Length.t)];
-let translateZ: Types.Length.t => [> | `translateZ(Types.Length.t)];
-let scale: (float, float) => [> | `scale(float, float)];
-let scale3d: (float, float, float) => [> | `scale3d(float, float, float)];
-let scaleX: float => [> | `scaleX(float)];
-let scaleY: float => [> | `scaleY(float)];
-let scaleZ: float => [> | `scaleZ(float)];
-let rotate: Types.Angle.t => [> | `rotate(Types.Angle.t)];
-let rotate3d:
-  (float, float, float, Types.Angle.t) =>
-  [> | `rotate3d(float, float, float, Types.Angle.t)];
-let rotateX: Types.Angle.t => [> | `rotateX(Types.Angle.t)];
-let rotateY: Types.Angle.t => [> | `rotateY(Types.Angle.t)];
-let rotateZ: Types.Angle.t => [> | `rotateZ(Types.Angle.t)];
-let skew:
-  (Types.Angle.t, Types.Angle.t) => [> | `skew(Types.Angle.t, Types.Angle.t)];
-let skewX: Types.Angle.t => [> | `skewX(Types.Angle.t)];
-let skewY: Types.Angle.t => [> | `skewY(Types.Angle.t)];
 
 type filter = [
   | `blur(Types.Length.t)

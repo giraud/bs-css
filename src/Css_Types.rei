@@ -369,6 +369,27 @@ module Transform: {
     | `perspective(int)
   ];
 
+  let translate: (Length.t, Length.t) => [> | `translate(Length.t, Length.t)];
+  let translate3d:
+    (Length.t, Length.t, Length.t) =>
+    [> | `translate3d(Length.t, Length.t, Length.t)];
+  let translateX: Length.t => [> t];
+  let translateY: Length.t => [> t];
+  let translateZ: Length.t => [> t];
+  let scale: (float, float) => [> t];
+  let scale3d: (float, float, float) => [> t];
+  let scaleX: float => [> t];
+  let scaleY: float => [> t];
+  let scaleZ: float => [> t];
+  let rotate: Angle.t => [> t];
+  let rotate3d: (float, float, float, Angle.t) => [> t];
+  let rotateX: Angle.t => [> t];
+  let rotateY: Angle.t => [> t];
+  let rotateZ: Angle.t => [> t];
+  let skew: (Angle.t, Angle.t) => [> t];
+  let skewX: Angle.t => [> t];
+  let skewY: Angle.t => [> t];
+
   let toString: t => string;
 };
 

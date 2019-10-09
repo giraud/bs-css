@@ -485,6 +485,25 @@ module Transform = {
     | `perspective(int)
   ];
 
+  let translate = (x, y) => `translate((x, y));
+  let translate3d = (x, y, z) => `translate3d((x, y, z));
+  let translateX = x => `translateX(x);
+  let translateY = y => `translateY(y);
+  let translateZ = z => `translateZ(z);
+  let scale = (x, y) => `scale((x, y));
+  let scale3d = (x, y, z) => `scale3d((x, y, z));
+  let scaleX = x => `scaleX(x);
+  let scaleY = x => `scaleY(x);
+  let scaleZ = x => `scaleZ(x);
+  let rotate = a => `rotate(a);
+  let rotate3d = (x, y, z, a) => `rotate3d((x, y, z, a));
+  let rotateX = a => `rotateX(a);
+  let rotateY = a => `rotateY(a);
+  let rotateZ = a => `rotateZ(a);
+  let skew = (a, a') => `skew((a, a'));
+  let skewX = a => `skewX(a);
+  let skewY = a => `skewY(a);
+
   let string_of_scale = (x, y) =>
     "scale(" ++ Js.Float.toString(x) ++ ", " ++ Js.Float.toString(y) ++ ")";
 
