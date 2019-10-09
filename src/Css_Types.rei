@@ -1056,3 +1056,12 @@ module TransformStyle: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/list-style-image
+ */
+module ListStyleImage: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};

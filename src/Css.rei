@@ -542,6 +542,13 @@ let lineHeight:
   [ Types.LineHeight.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
+ The list-style-image CSS property sets an image to be used as the list item marker.
+ It is often more convenient to use the shorthand list-style.
+ */
+let listStyleImage:
+  [ Types.ListStyleImage.t | Types.Url.t | Types.Cascading.t] => rule;
+
+/**
  The list-style-type CSS property sets the marker (such as a disc, character, or custom counter style) of a list item element.
  */
 let listStyleType: [ Types.ListStyleType.t | Types.Cascading.t] => rule;
@@ -1421,7 +1428,6 @@ let backgroundSize:
 let listStyle:
   (Types.ListStyleType.t, [ | `inside | `outside], [ | `none | Types.Url.t]) =>
   rule;
-let listStyleImage: [ | `none | Types.Url.t] => rule;
 
 let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>

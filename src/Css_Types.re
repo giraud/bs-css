@@ -1428,3 +1428,11 @@ module TransformStyle = {
     | `preserve3d => "preserve-3d"
     | `flat => "flat";
 };
+
+module ListStyleImage = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
+};

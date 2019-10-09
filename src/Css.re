@@ -603,6 +603,16 @@ let lineHeight = x =>
     },
   );
 
+let listStyleImage = x =>
+  D(
+    "listStyleImage",
+    switch (x) {
+    | #ListStyleImage.t as lsi => ListStyleImage.toString(lsi)
+    | #Url.t as u => Url.toString(u)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let listStyleType = x =>
   D(
     "listStyleType",
@@ -1720,12 +1730,6 @@ let listStyle = (style, pos, img) =>
     ++ " "
     ++ string_of_listStyleImage(img),
   );
-
-let listStyleImage = x => D("listStyleImage", string_of_listStyleImage(x));
-
-/**
- * Text
- */
 
 let thin = `thin;
 let extraLight = `extraLight;
