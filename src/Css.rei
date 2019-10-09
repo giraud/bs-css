@@ -799,6 +799,8 @@ let transitionDuration: int => rule;
 
 let transitionProperty: string => rule;
 
+let transformStyle: [ Types.TransformStyle.t | Types.Cascading.t] => rule;
+
 let transitionTimingFunction: Types.TimingFunction.t => rule;
 
 /**
@@ -1475,10 +1477,6 @@ type filter = [
 
 let filter: list(filter) => rule;
 
-/**
- * Text
- */
-
 let fontFace:
   (
     ~fontFamily: string,
@@ -1488,8 +1486,6 @@ let fontFace:
     unit
   ) =>
   string;
-
-let transformStyle: [ | `preserve3d | `flat] => rule;
 
 /**
   * Transition

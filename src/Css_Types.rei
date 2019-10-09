@@ -1047,3 +1047,12 @@ module Flex: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/transform-style
+ */
+module TransformStyle: {
+  type t = [ | `preserve3d | `flat];
+
+  let toString: t => string;
+};

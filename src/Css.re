@@ -1803,8 +1803,8 @@ let transformStyle = x =>
   D(
     "transformStyle",
     switch (x) {
-    | `preserve3d => "preserve-3d"
-    | `flat => "flat"
+    | #TransformStyle.t as ts => TransformStyle.toString(ts)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 

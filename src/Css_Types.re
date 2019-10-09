@@ -1419,3 +1419,12 @@ module Flex = {
     | `initial => "initial"
     | `none => "none";
 };
+
+module TransformStyle = {
+  type t = [ | `preserve3d | `flat];
+
+  let toString =
+    fun
+    | `preserve3d => "preserve-3d"
+    | `flat => "flat";
+};
