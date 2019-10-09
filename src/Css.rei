@@ -1341,15 +1341,17 @@ let miter: [> | `miter];
 let bevel: [> | `bevel];
 let butt: [> | `butt];
 let square: [> | `square];
-let thin: [> | `thin];
-let extraLight: [> | `extraLight];
-let light: [> | `light];
-let medium: [> | `medium];
-let semiBold: [> | `semiBold];
-let bold: [> | `bold];
-let extraBold: [> | `extraBold];
-let lighter: [> | `lighter];
-let bolder: [> | `bolder];
+
+let thin: [> Types.FontWeight.t];
+let extraLight: [> Types.FontWeight.t];
+let light: [> Types.FontWeight.t];
+let medium: [> Types.FontWeight.t];
+let semiBold: [> Types.FontWeight.t];
+let bold: [> Types.FontWeight.t];
+let extraBold: [> Types.FontWeight.t];
+let lighter: [> Types.FontWeight.t];
+let bolder: [> Types.FontWeight.t];
+
 let fr: float => [> | `fr(float)];
 let vw: float => [> | `vw(float)];
 

@@ -445,6 +445,16 @@ module FontWeight = {
     | `bolder
   ];
 
+  let thin = `thin;
+  let extraLight = `extraLight;
+  let light = `light;
+  let medium = `medium;
+  let semiBold = `semiBold;
+  let bold = `bold;
+  let extraBold = `extraBold;
+  let lighter = `lighter;
+  let bolder = `bolder;
+
   let toString = x =>
     switch (x) {
     | `num(n) => Js.Int.toString(n)

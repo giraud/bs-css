@@ -1235,6 +1235,16 @@ let skew = Transform.skew;
 let skewX = Transform.skewX;
 let skewY = Transform.skewY;
 
+let thin = Types.FontWeight.thin;
+let extraLight = Types.FontWeight.extraLight;
+let light = Types.FontWeight.light;
+let medium = Types.FontWeight.medium;
+let semiBold = Types.FontWeight.semiBold;
+let bold = Types.FontWeight.bold;
+let extraBold = Types.FontWeight.extraBold;
+let lighter = Types.FontWeight.lighter;
+let bolder = Types.FontWeight.bolder;
+
 let linearGradient = Gradient.linearGradient;
 let repeatingLinearGradient = Gradient.repeatingLinearGradient;
 let radialGradient = Gradient.radialGradient;
@@ -1730,16 +1740,6 @@ let backgroundSize = x =>
     | `contain => "contain"
     },
   );
-
-let thin = `thin;
-let extraLight = `extraLight;
-let light = `light;
-let medium = `medium;
-let semiBold = `semiBold;
-let bold = `bold;
-let extraBold = `extraBold;
-let lighter = `lighter;
-let bolder = `bolder;
 
 let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
   let fontStyle =

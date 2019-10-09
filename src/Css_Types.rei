@@ -343,6 +343,16 @@ module FontWeight: {
     | `bolder
   ];
 
+  let thin: [> t];
+  let extraLight: [> t];
+  let light: [> t];
+  let medium: [> t];
+  let semiBold: [> t];
+  let bold: [> t];
+  let extraBold: [> t];
+  let lighter: [> t];
+  let bolder: [> t];
+
   let toString: t => string;
 };
 
