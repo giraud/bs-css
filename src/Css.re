@@ -603,6 +603,21 @@ let lineHeight = x =>
     },
   );
 
+let listStyle = (style, position, image) =>
+  D(
+    "listStyle",
+    ListStyleType.toString(style)
+    ++ " "
+    ++ ListStylePosition.toString(position)
+    ++ " "
+    ++ (
+      switch (image) {
+      | #ListStyleImage.t as lsi => ListStyleImage.toString(lsi)
+      | #Url.t as u => Url.toString(u)
+      }
+    ),
+  );
+
 let listStyleImage = x =>
   D(
     "listStyleImage",
@@ -1714,21 +1729,6 @@ let backgroundSize = x =>
     | `cover => "cover"
     | `contain => "contain"
     },
-  );
-
-let string_of_listStyleImage =
-  fun
-  | `none => "none"
-  | `url(url) => "url(" ++ url ++ ")";
-
-let listStyle = (style, pos, img) =>
-  D(
-    "listStyle",
-    ListStyleType.toString(style)
-    ++ " "
-    ++ ListStylePosition.toString(pos)
-    ++ " "
-    ++ string_of_listStyleImage(img),
   );
 
 let thin = `thin;

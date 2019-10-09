@@ -542,6 +542,18 @@ let lineHeight:
   [ Types.LineHeight.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
+ The list-style CSS property is a shorthand to set list style properties list-style-type,
+ list-style-image, and list-style-position.
+ */
+let listStyle:
+  (
+    Types.ListStyleType.t,
+    Types.ListStylePosition.t,
+    [ Types.ListStyleImage.t | Types.Url.t]
+  ) =>
+  rule;
+
+/**
  The list-style-image CSS property sets an image to be used as the list item marker.
  It is often more convenient to use the shorthand list-style.
  */
@@ -1423,10 +1435,6 @@ let borderTop:
   rule;
 let backgroundSize:
   [ | `size(Types.Length.t, Types.Length.t) | `auto | `cover | `contain] =>
-  rule;
-
-let listStyle:
-  (Types.ListStyleType.t, [ | `inside | `outside], [ | `none | Types.Url.t]) =>
   rule;
 
 let textDecoration:
