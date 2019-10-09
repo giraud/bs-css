@@ -1409,21 +1409,17 @@ let backgroundSize:
   rule;
 
 let listStyle:
-  (
-    Types.ListStyleType.t,
-    [ | `inside | `outside],
-    [ | `none | `url(string)]
-  ) =>
+  (Types.ListStyleType.t, [ | `inside | `outside], [ | `none | Types.Url.t]) =>
   rule;
-let listStyleImage: [ | `none | `url(string)] => rule;
+let listStyleImage: [ | `none | Types.Url.t] => rule;
 
 let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
 
-let background: [ Types.Color.t | `url(string) | gradient | `none] => rule;
+let background: [ Types.Color.t | Types.Url.t | gradient | `none] => rule;
 let backgrounds:
-  list([ Types.Color.t | `url(string) | gradient | `none]) => rule;
+  list([ Types.Color.t | Types.Url.t | gradient | `none]) => rule;
 
 type minmax = [
   | `fr(float)
@@ -1464,7 +1460,7 @@ type filter = [
   | `opacity(float)
   | `saturate(float)
   | `sepia(float)
-  | `url(string)
+  | Types.Url.t
   | `none
   | Types.Cascading.t
 ];
@@ -1478,7 +1474,7 @@ let filter: list(filter) => rule;
 let fontFace:
   (
     ~fontFamily: string,
-    ~src: list([< | `localUrl(string) | `url(string)]),
+    ~src: list([< | `localUrl(string) | Types.Url.t]),
     ~fontStyle: fontStyle=?,
     ~fontWeight: [ fontWeight | Types.Cascading.t]=?,
     unit

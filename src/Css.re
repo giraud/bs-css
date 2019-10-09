@@ -64,7 +64,7 @@ let join = (strings, separator) => {
 module Converter = {
   let string_of_percent =
     fun
-    | `percent(x) => Js.Float.toString(x) ++ "%";
+    | #Percentage.t as p => Percentage.toString(p);
 
   let string_of_hsl = (h, s, l) =>
     "hsl("
