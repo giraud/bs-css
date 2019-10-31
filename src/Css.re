@@ -286,8 +286,43 @@ let backgroundOrigin = x =>
     },
   );
 
-let backgroundPosition = (x, y) =>
-  D("backgroundPosition", Length.toString(x) ++ " " ++ Length.toString(y));
+let string_of_backgroundposition =
+  fun
+  | #BackgroundPosition.t as bp => BackgroundPosition.toString(bp)
+  | `hv(h, v) =>
+    (
+      switch (h) {
+      | #BackgroundPosition.X.t as h => BackgroundPosition.X.toString(h)
+      | #Length.t as l => Length.toString(l)
+      }
+    )
+    ++ " "
+    ++ (
+      switch (v) {
+      | #BackgroundPosition.Y.t as v => BackgroundPosition.Y.toString(v)
+      | #Length.t as l => Length.toString(l)
+      }
+    )
+  | #Length.t as l => Length.toString(l)
+  | #Cascading.t as c => Cascading.toString(c);
+
+let backgroundPosition = x =>
+  D("backgroundPosition", string_of_backgroundposition(x));
+
+let backgroundPositions = bp =>
+  D("backgroundPosition", bp->Belt.List.map(string_of_backgroundposition)->join(", "));
+
+let backgroundPosition4 = (~x, ~offsetX, ~y, ~offsetY) =>
+  D(
+    "backgroundPosition",
+    BackgroundPosition.X.toString(x)
+    ++ " "
+    ++ Length.toString(offsetX)
+    ++ " "
+    ++ BackgroundPosition.Y.toString(y)
+    ++ " "
+    ++ Length.toString(offsetY),
+  );
 
 let backgroundRepeat = x =>
   D(

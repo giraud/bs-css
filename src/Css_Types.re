@@ -1231,6 +1231,38 @@ module BackgroundOrigin = {
     | `paddingBox => "padding-box";
 };
 
+module BackgroundPosition = {
+  module X {
+    type t = [ | `left | `right | `center];
+
+    let toString =
+      fun
+      | `left => "left"
+      | `right => "right"
+      | `center => "center";
+  };
+
+  module Y {
+    type t = [ | `top | `bottom | `center];
+
+    let toString =
+      fun
+      | `top => "top"
+      | `bottom => "bottom"
+      | `center => "center";
+  };
+
+  type t = [ | X.t | Y.t];
+
+  let toString =
+    fun
+    | `left => "left"
+    | `right => "right"
+    | `top => "top"
+    | `bottom => "bottom"
+    | `center => "center";
+};
+
 module BackgroundRepeat = {
   type twoValue = [ | `repeat | `space | `round | `noRepeat];
   type t = [ | `repeatX | `repeatY | twoValue];

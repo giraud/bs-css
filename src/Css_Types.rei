@@ -878,6 +878,27 @@ module BackgroundOrigin: {
 };
 
 /**
+ https://developer.mozilla.org/docs/Web/CSS/background-position
+ */
+module BackgroundPosition: {
+  module X {
+    type t = [ | `left | `right | `center];
+
+    let toString: t => string;
+  };
+
+  module Y {
+    type t = [ | `top | `bottom | `center];
+
+    let toString: t => string;
+  };
+
+  type t = [ | X.t | Y.t];
+
+  let toString: t => string;
+};
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/background-origin
  */
 module BackgroundRepeat: {
