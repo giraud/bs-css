@@ -814,7 +814,7 @@ let make = () =>
               backgroundAttachment(scroll),
               backgroundClip(borderBox),
               backgroundOrigin(borderBox),
-              backgroundPosition(pct(50.), pct(50.)),
+              backgroundPosition(`hv(pct(50.), pct(50.))),
               backgroundRepeat(noRepeat),
               backgroundSize(size(px(100), px(100))),
             ],
