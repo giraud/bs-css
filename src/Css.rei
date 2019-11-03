@@ -1418,8 +1418,6 @@ let flex3:
     ~basis: [ Types.Length.t | Types.FlexBasis.t]
   ) =>
   rule;
-let gridAutoColumns: [ Types.Length.t | `auto] => rule;
-let gridAutoRows: [ Types.Length.t | `auto] => rule;
 
 let border:
   (
@@ -1463,6 +1461,8 @@ type trackLength = [
 ];
 type gridLength = [ trackLength | `repeat(Types.RepeatValue.t, trackLength)];
 
+let gridAutoColumns: [ trackLength | `auto] => rule;
+let gridAutoRows: [ trackLength | `auto] => rule;
 let gridTemplateColumns: list([ gridLength | `auto]) => rule;
 let gridTemplateRows: list([ gridLength | `auto]) => rule;
 
