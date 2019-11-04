@@ -173,7 +173,40 @@ let backgroundOrigin: [ Types.BackgroundClip.t | Types.Cascading.t] => rule;
  The background-position CSS property sets the initial position for each background image.
  The position is relative to the position layer set by background-origin.
  */
-let backgroundPosition: ([ Types.Length.t], [ Types.Length.t]) => rule;
+let backgroundPosition:
+  [
+    Types.BackgroundPosition.t
+    | `hv(
+        [ Types.BackgroundPosition.X.t | Types.Length.t],
+        [ Types.BackgroundPosition.Y.t | Types.Length.t]
+      )
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+let backgroundPositions:
+  list(
+    [
+      Types.BackgroundPosition.t
+      | `hv(
+          [ Types.BackgroundPosition.X.t | Types.Length.t],
+          [ Types.BackgroundPosition.Y.t | Types.Length.t]
+        )
+      | Types.Length.t
+      | Types.Cascading.t
+    ]
+  ) =>
+  rule;
+
+let backgroundPosition4:
+  (
+    ~x: Types.BackgroundPosition.X.t,
+    ~offsetX: Types.Length.t,
+    ~y: Types.BackgroundPosition.Y.t,
+    ~offsetY: Types.Length.t
+  ) =>
+  rule;
 
 /**
  The background-repeat CSS property sets how background images are repeated.
