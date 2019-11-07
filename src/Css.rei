@@ -1,6 +1,6 @@
 /* Css documentation is copy/pasted from mozilla mdn web docs */
 
-module Types = Css_Types;
+module Types = Css_AtomicTypes;
 
 type rule;
 
@@ -178,7 +178,7 @@ let backgroundPosition:
     Types.BackgroundPosition.t
     | `hv(
         [ Types.BackgroundPosition.X.t | Types.Length.t],
-        [ Types.BackgroundPosition.Y.t | Types.Length.t]
+        [ Types.BackgroundPosition.Y.t | Types.Length.t],
       )
     | Types.Length.t
     | Types.Cascading.t
@@ -191,11 +191,11 @@ let backgroundPositions:
       Types.BackgroundPosition.t
       | `hv(
           [ Types.BackgroundPosition.X.t | Types.Length.t],
-          [ Types.BackgroundPosition.Y.t | Types.Length.t]
+          [ Types.BackgroundPosition.Y.t | Types.Length.t],
         )
       | Types.Length.t
       | Types.Cascading.t
-    ]
+    ],
   ) =>
   rule;
 

@@ -1,4 +1,4 @@
-module Types = Css_Types;
+module Types = Css_AtomicTypes;
 open Types;
 
 include Css_Colors;
@@ -310,7 +310,10 @@ let backgroundPosition = x =>
   D("backgroundPosition", string_of_backgroundposition(x));
 
 let backgroundPositions = bp =>
-  D("backgroundPosition", bp->Belt.List.map(string_of_backgroundposition)->join(", "));
+  D(
+    "backgroundPosition",
+    bp->Belt.List.map(string_of_backgroundposition)->join(", "),
+  );
 
 let backgroundPosition4 = (~x, ~offsetX, ~y, ~offsetY) =>
   D(
