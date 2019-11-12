@@ -5,8 +5,8 @@ and some elements removed.
 
 ### Changed
 
-- background-position definition by [@lukiwolski](https://github.com/lukiwolski) -  [#168](https://github.com/SentiaAnalytics/bs-css/pull/168) 
-- Extend rule to use gridLength type by  
+- Extend rule to use gridLength type by [@lukiwolski](https://github.com/lukiwolski) - [#168](https://github.com/SentiaAnalytics/bs-css/pull/168)
+- background-position definition by [@lucasweng](https://github.com/lucasweng) - [#167](https://github.com/SentiaAnalytics/bs-css/issues/167)
 
 ### Removed
 
