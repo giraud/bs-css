@@ -52,7 +52,7 @@ module Shadow: {
  Properties
  ********** */
 
-/** If nothing works, use this - unsafe - escape hatch */
+/** If nothing works, use this (unsafe) escape hatch */
 let unsafe: (string, string) => rule;
 
 /**
@@ -425,7 +425,7 @@ let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
  The font-variant CSS property is a shorthand for the longhand properties font-variant-caps, font-variant-numeric,
  font-variant-alternates, font-variant-ligatures, and font-variant-east-asian.
  You can also set the CSS Level 2 (Revision 1) values of font-variant, (that is, normal or small-caps),
- by using the font shorthand
+ by using the font shorthand.
  */
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 
@@ -911,7 +911,7 @@ let wordWrap: [ Types.OverflowWrap.t | Types.Cascading.t] => rule;
 
 /**
  The z-index CSS property sets the z-order of a positioned element and its descendants or flex items.
- Overlapping elements with a larger z-index cover those with a smaller one
+ Overlapping elements with a larger z-index cover those with a smaller one.
  */
 let zIndex: int => rule;
 
@@ -1163,40 +1163,78 @@ let valid: list(rule) => rule;
  */
 let visited: list(rule) => rule;
 
-/* ***** */
+/*
+ Pseudo-elements selectors
 
+ A CSS pseudo-element is a keyword added to a selector that lets you style a specific part of the selected element(s).
+ */
+
+/**
+ ::after creates a pseudo-element that is the last child of the selected element.
+ It is often used to add cosmetic content to an element with the content property. It is inline by default.
+ */
 let after: list(rule) => rule;
+
+/**
+ ::before creates a pseudo-element that is the first child of the selected element.
+ It is often used to add cosmetic content to an element with the content property. It is inline by default.
+ */
 let before: list(rule) => rule;
-let children: list(rule) => rule;
-let directSibling: list(rule) => rule;
-let noContent: list(rule) => rule;
-let anyLink: list(rule) => rule;
-let siblings: list(rule) => rule;
-let firstLine: list(rule) => rule;
+
+/**
+ The ::first-letter CSS pseudo-element applies styles to the first letter of the first line of a block-level element,
+ but only when not preceded by other content (such as images or inline tables).
+ */
 let firstLetter: list(rule) => rule;
-let selection: list(rule) => rule;
+
+/**
+ The ::first-line CSS pseudo-element applies styles to the first line of a block-level element.
+ Note that the length of the first line depends on many factors, including the width of the element,
+ the width of the document, and the font size of the text.
+ */
+let firstLine: list(rule) => rule;
+
+/**
+ The ::placeholder CSS pseudo-element represents the placeholder text in an <input> or <textarea> element.
+ */
 let placeholder: list(rule) => rule;
 
-/* *************************************
- Type aliases for backward compatibility
- *************************************** */
+/**
+ The ::selection CSS pseudo-element applies styles to the part of a document that has been highlighted by the user
+ (such as clicking and dragging the mouse across text).
+ */
+let selection: list(rule) => rule;
 
-type angle = Types.Angle.t;
-type animationDirection = Types.AnimationDirection.t;
-type animationFillMode = Types.AnimationFillMode.t;
-type animationIterationCount = Types.AnimationIterationCount.t;
-type animationPlayState = Types.AnimationPlayState.t;
-type cascading = Types.Cascading.t;
-type color = Types.Color.t;
-type fontStyle = Types.FontStyle.t;
-type fontWeight = Types.FontWeight.t;
-type length = Types.Length.t;
-type listStyleType = Types.ListStyleType.t;
-type repeatValue = Types.RepeatValue.t;
-type outlineStyle = Types.OutlineStyle.t;
-type transform = Types.Transform.t;
-type gradient = Types.Gradient.t;
-type animationName;
+/**
+ Combinators selectors
+ */
+
+/**
+ The > combinator selects nodes that are direct children of the first element.
+ */
+let child: (string, list(rule)) => rule;
+
+/**
+ The > * combinator selects all nodes that are direct children of the first element.
+ */
+let children: list(rule) => rule;
+
+/**
+ The + combinator selects adjacent siblings.
+ This means that the second element directly follows the first, and both share the same parent.
+ */
+let directSibling: list(rule) => rule;
+
+/**
+ The ~ combinator selects siblings.
+ This means that the second element follows the first (though not necessarily immediately),
+ and both share the same parent.
+ */
+let siblings: list(rule) => rule;
+
+/* !experimental! */
+
+let anyLink: list(rule) => rule;
 
 /* **************************************************
  Constructor aliases, for ease of use.
@@ -1474,9 +1512,10 @@ let textDecoration:
   [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
 
-let background: [ Types.Color.t | Types.Url.t | gradient | `none] => rule;
+let background:
+  [ Types.Color.t | Types.Url.t | Types.Gradient.t | `none] => rule;
 let backgrounds:
-  list([ Types.Color.t | Types.Url.t | gradient | `none]) => rule;
+  list([ Types.Color.t | Types.Url.t | Types.Gradient.t | `none]) => rule;
 
 type minmax = [
   | `fr(float)
@@ -1530,8 +1569,8 @@ let fontFace:
   (
     ~fontFamily: string,
     ~src: list([< | `localUrl(string) | Types.Url.t]),
-    ~fontStyle: fontStyle=?,
-    ~fontWeight: [ fontWeight | Types.Cascading.t]=?,
+    ~fontStyle: Types.FontStyle.t=?,
+    ~fontWeight: [ Types.FontWeight.t | Types.Cascading.t]=?,
     unit
   ) =>
   string;
@@ -1572,6 +1611,8 @@ let transitions: list([ Transition.t]) => rule;
  * Animation
  */
 
+type animationName;
+
 let keyframes: list((int, list(rule))) => animationName;
 
 module Animation: {
@@ -1581,11 +1622,11 @@ module Animation: {
     (
       ~duration: int=?,
       ~delay: int=?,
-      ~direction: animationDirection=?,
+      ~direction: Types.AnimationDirection.t=?,
       ~timingFunction: Types.TimingFunction.t=?,
-      ~fillMode: animationFillMode=?,
-      ~playState: animationPlayState=?,
-      ~iterationCount: animationIterationCount=?,
+      ~fillMode: Types.AnimationFillMode.t=?,
+      ~playState: Types.AnimationPlayState.t=?,
+      ~iterationCount: Types.AnimationIterationCount.t=?,
       animationName
     ) =>
     [> t];
@@ -1598,11 +1639,11 @@ let animation:
   (
     ~duration: int=?,
     ~delay: int=?,
-    ~direction: animationDirection=?,
+    ~direction: Types.AnimationDirection.t=?,
     ~timingFunction: Types.TimingFunction.t=?,
-    ~fillMode: animationFillMode=?,
-    ~playState: animationPlayState=?,
-    ~iterationCount: animationIterationCount=?,
+    ~fillMode: Types.AnimationFillMode.t=?,
+    ~playState: Types.AnimationPlayState.t=?,
+    ~iterationCount: Types.AnimationIterationCount.t=?,
     animationName
   ) =>
   rule;

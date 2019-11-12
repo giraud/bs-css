@@ -1,5 +1,18 @@
 ## [Unreleased]
 
+Major release because of the breaking change in background-position definition,
+and some elements removed.
+
+### Changed
+
+- background-position definition by [@lukiwolski](https://github.com/lukiwolski) -  [#168](https://github.com/SentiaAnalytics/bs-css/pull/168) 
+- Extend rule to use gridLength type by  
+
+### Removed
+
+- noContent selector, duplicate of empty
+- type aliases
+ 
 ## [10.0.1] - 2019-09-23
 
 ### Added

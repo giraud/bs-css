@@ -13,7 +13,7 @@ module Cascading: {
 module Time: {
   /**
    The <time> CSS data type represents a time value expressed in seconds or milliseconds.
-   It is used in animation, transition, and related properties
+   It is used in animation, transition, and related properties.
    */
   type t = [ | `s(float) | `ms(float)];
 
@@ -26,7 +26,7 @@ module Time: {
 module Percentage: {
   /**
    The <percentage> CSS data type represents a percentage value.
-   It is often used to define a size as relative to an element's parent object
+   It is often used to define a size as relative to an element's parent object.
    */
   type t = [ | `percent(float)];
 
@@ -75,9 +75,9 @@ module Length: {
 
   /** Represents the width, or more precisely the advance measure, of the glyph "0" (zero, the Unicode character U+0030) in the element's font. */
   let ch: float => [> | `ch(float)];
-  /** Represents the calculated font-size of the element. If used on the font-size property itself, it represents the inherited font-size of the element */
+  /** Represents the calculated font-size of the element. If used on the font-size property itself, it represents the inherited font-size of the element. */
   let em: float => [> | `em(float)];
-  /** Represents the x-height of the element's font. On fonts with the "x" letter, this is generally the height of lowercase letters in the font; 1ex ≈ 0.5em in many fonts */
+  /** Represents the x-height of the element's font. On fonts with the "x" letter, this is generally the height of lowercase letters in the font; 1ex ≈ 0.5em in many fonts. */
   let ex: float => [> | `ex(float)];
   /** Represents the font-size of the root element (typically <html>). When used within the root element font-size, it represents its initial value (a common browser default is 16px, but user-defined preferences may modify this) */
   let rem: float => [> | `rem(float)];
@@ -881,19 +881,19 @@ module BackgroundOrigin: {
  https://developer.mozilla.org/docs/Web/CSS/background-position
  */
 module BackgroundPosition: {
-  module X {
+  module X: {
     type t = [ | `left | `right | `center];
 
     let toString: t => string;
   };
 
-  module Y {
+  module Y: {
     type t = [ | `top | `bottom | `center];
 
     let toString: t => string;
   };
 
-  type t = [ | X.t | Y.t];
+  type t = [ X.t | Y.t];
 
   let toString: t => string;
 };

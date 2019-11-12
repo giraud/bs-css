@@ -1148,15 +1148,17 @@ let visited = pseudoClass("visited");
 
 let after = selector("::after");
 let before = selector("::before");
+let firstLetter = selector("::first-letter");
+let firstLine = selector("::first-line");
+let selection = selector("::selection");
+
+let child = x => selector(" > " ++ x);
 let children = selector(" > *");
 let directSibling = selector(" + ");
-let noContent = selector(":empty");
-let anyLink = selector(":any-link");
-let siblings = selector(" ~ ");
-let firstLine = selector("::first-line");
-let firstLetter = selector("::first-letter");
-let selection = selector("::selection");
 let placeholder = selector("::placeholder");
+let siblings = selector(" ~ ");
+
+let anyLink = selector(":any-link");
 
 /* Type aliasing */
 

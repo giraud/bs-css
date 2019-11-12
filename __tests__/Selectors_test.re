@@ -171,3 +171,47 @@ describe("Pseudo classes", () => {
        ))
   );
 });
+
+describe("Pseudo classes", () =>
+  test("test selectors that have no parameters", () =>
+    expect(
+      (
+        r(after([ruleSelector])),
+        r(before([ruleSelector])),
+        r(firstLetter([ruleSelector])),
+        r(firstLine([ruleSelector])),
+        r(placeholder([ruleSelector])),
+        r(selection([ruleSelector])),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"::after": ruleJson},
+         {"::before": ruleJson},
+         {"::first-letter": ruleJson},
+         {"::first-line": ruleJson},
+         {"::placeholder": ruleJson},
+         {"::selection": ruleJson},
+       ))
+  )
+);
+
+describe("Combinators", () =>
+  test("test selectors", () =>
+    expect(
+      (
+        r(child("li", [ruleSelector])),
+        r(children([ruleSelector])),
+        r(siblings([ruleSelector])),
+        r(directSibling([ruleSelector])),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {" > li": ruleJson},
+         {" > *": ruleJson},
+         {" ~ ": ruleJson},
+         {" + ": ruleJson},
+       ))
+  )
+);
