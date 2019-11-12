@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [11.0.0] - 2019-11-12
+
 Major release because of the breaking change in background-position definition,
 and some elements removed.
 
@@ -7,6 +9,7 @@ and some elements removed.
 
 - Extend rule to use gridLength type by [@lukiwolski](https://github.com/lukiwolski) - [#168](https://github.com/SentiaAnalytics/bs-css/pull/168)
 - background-position definition by [@lucasweng](https://github.com/lucasweng) - [#167](https://github.com/SentiaAnalytics/bs-css/issues/167)
+- Rename Css_Types to Css_AtomicTypes
 
 ### Removed
 
@@ -143,6 +146,7 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.1...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v11.0.0...HEAD
+[11.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.1...v11.0.0
 [10.0.1]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.0...v10.0.1
 [10.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v9.0.1...v10.0.0
