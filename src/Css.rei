@@ -415,7 +415,13 @@ let flexWrap: [ Types.FlexWrap.t | Types.Cascading.t] => rule;
  */
 let float: [ Types.Float.t | Types.Cascading.t] => rule;
 
-let fontFamily: string => rule;
+/**
+ The font-family CSS property specifies a prioritized list of one or more font family names and/or generic family names
+ for the selected element.
+ */
+let fontFamily: [ Types.FontFamilyName.t | Types.Cascading.t] => rule;
+
+let fontFamilies: list([ Types.FontFamilyName.t]) => rule;
 
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 

@@ -15,7 +15,7 @@ module Styles = {
       selector(
         "& > h1",
         [
-          fontFamily(arialNarrow),
+          fontFamily(`custom(arialNarrow)),
           fontSize(px(32)),
           fontWeight(`num(300)),
           marginTop(zero),

@@ -1109,7 +1109,7 @@ let make = () =>
         className=Css.(
           style([
             color(black),
-            fontFamily("Helvetica, sans-serif"),
+            fontFamilies([`custom("Helvetica"), `sansSerif]),
             fontSize(pt(18)),
             fontVariant(`smallCaps),
             fontStyle(italic),
