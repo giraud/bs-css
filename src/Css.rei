@@ -879,7 +879,12 @@ let visibility: [ Types.Visibility.t | Types.Cascading.t] => rule;
  it sets the width of the border area.
  */
 let width:
-  [ Types.Width.t | Types.Percentage.t | Types.Length.t | Types.Cascading.t] =>
+  [<
+    Types.Width.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
   rule;
 
 /**
