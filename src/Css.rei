@@ -60,7 +60,7 @@ let unsafe: (string, string) => rule;
  cross-axis or a grid's block axis.
  */
 let alignContent:
-  [
+  [<
     Types.AlignContent.t
     | Types.NormalAlignment.t
     | Types.BaselineAlignment.t
@@ -75,7 +75,7 @@ let alignContent:
  In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
  */
 let alignItems:
-  [
+  [<
     Types.AlignItems.t
     | Types.PositionalAlignment.t
     | Types.BaselineAlignment.t
@@ -88,7 +88,7 @@ let alignItems:
  In Grid, it aligns the item inside the grid area. In Flexbox, it aligns the item on the cross axis.
  */
 let alignSelf:
-  [
+  [<
     Types.AlignSelf.t
     | Types.PositionalAlignment.t
     | Types.BaselineAlignment.t
@@ -137,14 +137,14 @@ let animationTimingFunction: Types.TimingFunction.t => rule;
 
 /* Warning: experimental */
 let backfaceVisibility:
-  [ Types.BackfaceVisibility.t | Types.Cascading.t] => rule;
+  [< Types.BackfaceVisibility.t | Types.Cascading.t] => rule;
 
 /**
  The background-attachment CSS property sets whether a background image's position is fixed within the viewport,
  or scrolls with its containing block.
  */
 let backgroundAttachment:
-  [ Types.BackgroundAttachment.t | Types.Cascading.t] => rule;
+  [< Types.BackgroundAttachment.t | Types.Cascading.t] => rule;
 
 /**
  The background-color CSS property sets the background color of an element.
@@ -155,26 +155,26 @@ let backgroundColor: Types.Color.t => rule;
  The background-clip CSS property sets whether an element's background extends underneath its border box,
  padding box, or content box.
  */
-let backgroundClip: [ Types.BackgroundClip.t | Types.Cascading.t] => rule;
+let backgroundClip: [< Types.BackgroundClip.t | Types.Cascading.t] => rule;
 
 /**
  The background-image CSS property sets one or more background images on an element.
  */
 let backgroundImage:
-  [ Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t] => rule;
+  [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t] => rule;
 
 /**
  The background-origin CSS property sets the background's origin: from the border start,
  inside the border, or inside the padding.
  */
-let backgroundOrigin: [ Types.BackgroundClip.t | Types.Cascading.t] => rule;
+let backgroundOrigin: [< Types.BackgroundClip.t | Types.Cascading.t] => rule;
 
 /**
  The background-position CSS property sets the initial position for each background image.
  The position is relative to the position layer set by background-origin.
  */
 let backgroundPosition:
-  [
+  [<
     Types.BackgroundPosition.t
     | `hv(
         [ Types.BackgroundPosition.X.t | Types.Length.t],
@@ -187,7 +187,7 @@ let backgroundPosition:
 
 let backgroundPositions:
   list(
-    [
+    [<
       Types.BackgroundPosition.t
       | `hv(
           [ Types.BackgroundPosition.X.t | Types.Length.t],
@@ -213,7 +213,7 @@ let backgroundPosition4:
  A background image can be repeated along the horizontal and vertical axes, or not repeated at all.
  */
 let backgroundRepeat:
-  [
+  [<
     Types.BackgroundRepeat.t
     | `hv(Types.BackgroundRepeat.horizontal, Types.BackgroundRepeat.vertical)
     | Types.Cascading.t
@@ -227,7 +227,7 @@ let backgroundRepeat:
 let borderBottom:
   (
     Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
+    [< Types.BorderStyle.t | Types.Cascading.t],
     Types.Color.t
   ) =>
   rule;
@@ -251,7 +251,7 @@ let borderBottomRightRadius: Types.Length.t => rule;
 /**
  The border-bottom-style CSS property sets the line style of an element's bottom border.
  */
-let borderBottomStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+let borderBottomStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 /**
  The border-bottom-width CSS property sets the width of the bottom border of an element.
@@ -261,7 +261,7 @@ let borderBottomWidth: Types.Length.t => rule;
 /**
  The border-collapse CSS property sets whether cells inside a <table> have shared or separate borders.
  */
-let borderCollapse: [ Types.BorderCollapse.t | Types.Cascading.t] => rule;
+let borderCollapse: [< Types.BorderCollapse.t | Types.Cascading.t] => rule;
 
 /**
  The border-color shorthand CSS property sets the color of an element's border.
@@ -274,28 +274,28 @@ let borderColor: Types.Color.t => rule;
 let borderLeft:
   (
     Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
+    [< Types.BorderStyle.t | Types.Cascading.t],
     Types.Color.t
   ) =>
   rule;
 
 let borderLeftColor: Types.Color.t => rule;
 
-let borderLeftStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+let borderLeftStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 let borderLeftWidth: Types.Length.t => rule;
 
 let borderRight:
   (
     Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
+    [< Types.BorderStyle.t | Types.Cascading.t],
     Types.Color.t
   ) =>
   rule;
 
 let borderRightColor: Types.Color.t => rule;
 
-let borderRightStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+let borderRightStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 let borderRightWidth: Types.Length.t => rule;
 
@@ -306,7 +306,7 @@ let borderSpacing: Types.Length.t => rule;
 /**
  The border-style shorthand CSS property sets the line style for all four sides of an element's border.
  */
-let borderStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+let borderStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 let borderTopColor: Types.Color.t => rule;
 
@@ -314,20 +314,20 @@ let borderTopLeftRadius: Types.Length.t => rule;
 
 let borderTopRightRadius: Types.Length.t => rule;
 
-let borderTopStyle: [ Types.BorderStyle.t | Types.Cascading.t] => rule;
+let borderTopStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
 let borderTopWidth: Types.Length.t => rule;
 
 let borderWidth: Types.Length.t => rule;
 
-let bottom: [ Types.Length.t | Types.Cascading.t] => rule;
+let bottom: [< Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The box-sizing CSS property sets how the total width and height of an element is calculated.
  */
-let boxSizing: [ Types.BoxSizing.t | Types.Cascading.t] => rule;
+let boxSizing: [< Types.BoxSizing.t | Types.Cascading.t] => rule;
 
-let boxShadow: [ Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
+let boxShadow: [< Shadow.t(Shadow.box) | Types.Cascading.t] => rule;
 
 let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
 
@@ -335,14 +335,19 @@ let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
  The clear CSS property sets whether an element must be moved below (cleared) floating elements that precede it.
  The clear property applies to floating and non-floating elements.
  */
-let clear: [ Types.Clear.t | Types.Cascading.t] => rule;
+let clear: [< Types.Clear.t | Types.Cascading.t] => rule;
 
 /**
  The clip-path CSS property creates a clipping region that sets what part of an element should be shown.
  Parts that are inside the region are shown, while those outside are hidden.
  */
 let clipPath:
-  [ Types.ClipPath.t | Types.Url.t | Types.GeometyBox.t | Types.Cascading.t] =>
+  [<
+    Types.ClipPath.t
+    | Types.Url.t
+    | Types.GeometyBox.t
+    | Types.Cascading.t
+  ] =>
   rule;
 
 let color: Types.Color.t => rule;
@@ -350,7 +355,7 @@ let color: Types.Color.t => rule;
 /**
  The column-count CSS property breaks an element's content into the specified number of columns.
  */
-let columnCount: [ Types.ColumnCount.t | Types.Cascading.t] => rule;
+let columnCount: [< Types.ColumnCount.t | Types.Cascading.t] => rule;
 
 let contentRule: string => rule;
 
@@ -361,14 +366,14 @@ let cursor: Types.Cursor.t => rule;
  Use rtl for languages written from right to left (like Hebrew or Arabic),
  and ltr for those written from left to right (like English and most other languages).
  */
-let direction: [ Types.Direction.t | Types.Cascading.t] => rule;
+let direction: [< Types.Direction.t | Types.Cascading.t] => rule;
 
 /**
  The display CSS property sets whether an element is treated as a block or inline element
  and the layout used for its children, such as grid or flex.
  */
 let display:
-  [
+  [<
     Types.DisplayOutside.t
     | Types.DisplayInside.t
     | Types.DisplayListItem.t
@@ -383,19 +388,19 @@ let display:
  The flex CSS property sets how a flex item will grow or shrink to fit the space available in its flex container.
  It is a shorthand for flex-grow, flex-shrink, and flex-basis.
  */
-let flex: [ Types.Flex.t | `num(float)] => rule;
+let flex: [< Types.Flex.t | `num(float)] => rule;
 
 /**
  The flex-basis CSS property sets the initial main size of a flex item.
  It sets the size of the content box unless otherwise set with box-sizing.
  */
 let flexBasis:
-  [ Types.FlexBasis.t | Types.Percentage.t | Types.Length.t] => rule;
+  [< Types.FlexBasis.t | Types.Percentage.t | Types.Length.t] => rule;
 
 /**
  The flex-direction CSS property sets how flex items are placed in the flex container defining the main axis and the direction (normal or reversed).
  */
-let flexDirection: [ Types.FlexDirection.t | Types.Cascading.t] => rule;
+let flexDirection: [< Types.FlexDirection.t | Types.Cascading.t] => rule;
 
 let flexGrow: float => rule;
 
@@ -405,7 +410,7 @@ let flexShrink: float => rule;
  The flex-wrap CSS property sets whether flex items are forced onto one line or can wrap onto multiple lines.
  If wrapping is allowed, it sets the direction that lines are stacked.
  */
-let flexWrap: [ Types.FlexWrap.t | Types.Cascading.t] => rule;
+let flexWrap: [< Types.FlexWrap.t | Types.Cascading.t] => rule;
 
 /**
  The float CSS property places an element on the left or right side of its container,
@@ -413,13 +418,13 @@ let flexWrap: [ Types.FlexWrap.t | Types.Cascading.t] => rule;
  The element is removed from the normal flow of the page, though still remaining a part of the flow
  (in contrast to absolute positioning).
  */
-let float: [ Types.Float.t | Types.Cascading.t] => rule;
+let float: [< Types.Float.t | Types.Cascading.t] => rule;
 
 let fontFamily: string => rule;
 
-let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
+let fontSize: [< Types.Length.t | Types.Cascading.t] => rule;
 
-let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
+let fontStyle: [< Types.FontStyle.t | Types.Cascading.t] => rule;
 
 /**
  The font-variant CSS property is a shorthand for the longhand properties font-variant-caps, font-variant-numeric,
@@ -427,16 +432,16 @@ let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
  You can also set the CSS Level 2 (Revision 1) values of font-variant, (that is, normal or small-caps),
  by using the font shorthand.
  */
-let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
+let fontVariant: [< Types.FontVariant.t | Types.Cascading.t] => rule;
 
-let fontWeight: [ Types.FontWeight.t | Types.Cascading.t] => rule;
+let fontWeight: [< Types.FontWeight.t | Types.Cascading.t] => rule;
 
 /**
  The grid-area CSS property is a shorthand property for grid-row-start, grid-column-start, grid-row-end and
  grid-column-end, specifying a grid item’s size and location within the grid by contributing a line, a span,
  or nothing (automatic) to its grid placement, thereby specifying the edges of its grid area.
  */
-let gridArea: [ Types.GridArea.t | Types.Cascading.t] => rule;
+let gridArea: [< Types.GridArea.t | Types.Cascading.t] => rule;
 let gridArea2: (Types.GridArea.t, Types.GridArea.t) => rule;
 let gridArea3: (Types.GridArea.t, Types.GridArea.t, Types.GridArea.t) => rule;
 let gridArea4:
@@ -447,7 +452,7 @@ let gridArea4:
  The grid-auto-flow CSS property controls how the auto-placement algorithm works,
  specifying exactly how auto-placed items get flowed into the grid.
  */
-let gridAutoFlow: [ Types.GridAutoFlow.t | Types.Cascading.t] => rule;
+let gridAutoFlow: [< Types.GridAutoFlow.t | Types.Cascading.t] => rule;
 
 /**
  The grid-column CSS property is a shorthand property for grid-column-start and grid-column-end
@@ -467,7 +472,7 @@ let gridColumnEnd: int => rule;
  The column-gap CSS property sets the size of the gap (gutter) between an element's columns.
  */
 let gridColumnGap:
-  [
+  [<
     Types.GridColumnGap.t
     | Types.Percentage.t
     | Types.Length.t
@@ -505,7 +510,7 @@ let gridRowEnd: int => rule;
  The row-gap CSS property sets the size of the gap (gutter) between an element's grid rows.
  */
 let gridRowGap:
-  [ Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
+  [< Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The grid-row-start CSS property specifies a grid item’s start position within the grid row by contributing a line,
@@ -517,7 +522,7 @@ let gridRowStart: int => rule;
  The grid-template-areas CSS property specifies named grid areas.
  */
 let gridTemplateAreas:
-  [ Types.GridTemplateAreas.t | Types.Cascading.t] => rule;
+  [< Types.GridTemplateAreas.t | Types.Cascading.t] => rule;
 
 /**
  The height CSS property specifies the height of an element.
@@ -525,7 +530,7 @@ let gridTemplateAreas:
  If box-sizing is set to border-box, however, it instead determines the height of the border area.
  */
 let height:
-  [
+  [<
     Types.Height.t
     | Types.Percentage.t
     | Types.Length.t
@@ -538,7 +543,7 @@ let height:
  along the main-axis of a flex container, and the inline axis of a grid container.
  */
 let justifyContent:
-  [
+  [<
     Types.PositionalAlignment.t
     | Types.NormalAlignment.t
     | Types.DistributedAlignment.t
@@ -550,7 +555,7 @@ let justifyContent:
  The CSS justify-self property sets the way a box is justified inside its alignment container along the appropriate axis.
  */
 let justifySelf:
-  [
+  [<
     Types.JustifySelf.t
     | Types.PositionalAlignment.t
     | Types.BaselineAlignment.t
@@ -558,13 +563,13 @@ let justifySelf:
   ] =>
   rule;
 
-let left: [ Types.Length.t | Types.Cascading.t] => rule;
+let left: [< Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The letter-spacing CSS property sets the spacing behavior between text characters
  */
 let letterSpacing:
-  [ Types.LetterSpacing.t | Types.Length.t | Types.Cascading.t] => rule;
+  [< Types.LetterSpacing.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The line-height CSS property sets the height of a line box. It's commonly used to set the distance between lines of text.
@@ -572,7 +577,7 @@ let letterSpacing:
  On non-replaced inline elements, it specifies the height that is used to calculate line box height.
  */
 let lineHeight:
-  [ Types.LineHeight.t | Types.Length.t | Types.Cascading.t] => rule;
+  [< Types.LineHeight.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The list-style CSS property is a shorthand to set list style properties list-style-type,
@@ -582,7 +587,7 @@ let listStyle:
   (
     Types.ListStyleType.t,
     Types.ListStylePosition.t,
-    [ Types.ListStyleImage.t | Types.Url.t]
+    [< Types.ListStyleImage.t | Types.Url.t]
   ) =>
   rule;
 
@@ -591,56 +596,56 @@ let listStyle:
  It is often more convenient to use the shorthand list-style.
  */
 let listStyleImage:
-  [ Types.ListStyleImage.t | Types.Url.t | Types.Cascading.t] => rule;
+  [< Types.ListStyleImage.t | Types.Url.t | Types.Cascading.t] => rule;
 
 /**
  The list-style-type CSS property sets the marker (such as a disc, character, or custom counter style) of a list item element.
  */
-let listStyleType: [ Types.ListStyleType.t | Types.Cascading.t] => rule;
+let listStyleType: [< Types.ListStyleType.t | Types.Cascading.t] => rule;
 
 /**
  The list-style-position CSS property sets the position of the ::marker relative to a list item.
  */
 let listStylePosition:
-  [ Types.ListStylePosition.t | Types.Cascading.t] => rule;
+  [< Types.ListStylePosition.t | Types.Cascading.t] => rule;
 
-let margin: [ Types.Length.t | Types.Margin.t] => rule;
+let margin: [< Types.Length.t | Types.Margin.t] => rule;
 let margin2:
   (
-    ~v: [ Types.Length.t | Types.Margin.t],
-    ~h: [ Types.Length.t | Types.Margin.t]
+    ~v: [< Types.Length.t | Types.Margin.t],
+    ~h: [< Types.Length.t | Types.Margin.t]
   ) =>
   rule;
 let margin3:
   (
-    ~top: [ Types.Length.t | Types.Margin.t],
-    ~h: [ Types.Length.t | Types.Margin.t],
-    ~bottom: [ Types.Length.t | Types.Margin.t]
+    ~top: [< Types.Length.t | Types.Margin.t],
+    ~h: [< Types.Length.t | Types.Margin.t],
+    ~bottom: [< Types.Length.t | Types.Margin.t]
   ) =>
   rule;
 let margin4:
   (
-    ~top: [ Types.Length.t | Types.Margin.t],
-    ~right: [ Types.Length.t | Types.Margin.t],
-    ~bottom: [ Types.Length.t | Types.Margin.t],
-    ~left: [ Types.Length.t | Types.Margin.t]
+    ~top: [< Types.Length.t | Types.Margin.t],
+    ~right: [< Types.Length.t | Types.Margin.t],
+    ~bottom: [< Types.Length.t | Types.Margin.t],
+    ~left: [< Types.Length.t | Types.Margin.t]
   ) =>
   rule;
 
-let marginLeft: [ Types.Length.t | Types.Margin.t] => rule;
+let marginLeft: [< Types.Length.t | Types.Margin.t] => rule;
 
-let marginRight: [ Types.Length.t | Types.Margin.t] => rule;
+let marginRight: [< Types.Length.t | Types.Margin.t] => rule;
 
-let marginTop: [ Types.Length.t | Types.Margin.t] => rule;
+let marginTop: [< Types.Length.t | Types.Margin.t] => rule;
 
-let marginBottom: [ Types.Length.t | Types.Margin.t] => rule;
+let marginBottom: [< Types.Length.t | Types.Margin.t] => rule;
 
 /**
  The max-height CSS property sets the maximum height of an element.
  It prevents the used value of the height property from becoming larger than the value specified for max-height.
  */
 let maxHeight:
-  [
+  [<
     Types.MaxHeight.t
     | Types.Percentage.t
     | Types.Length.t
@@ -653,7 +658,7 @@ let maxHeight:
  It prevents the used value of the width property from becoming larger than the value specified by max-width.
  */
 let maxWidth:
-  [
+  [<
     Types.MaxWidth.t
     | Types.Percentage.t
     | Types.Length.t
@@ -666,7 +671,7 @@ let maxWidth:
  It prevents the used value of the height property from becoming smaller than the value specified for min-height.
  */
 let minHeight:
-  [
+  [<
     Types.Height.t
     | Types.Percentage.t
     | Types.Length.t
@@ -679,14 +684,19 @@ let minHeight:
  It prevents the used value of the width property from becoming smaller than the value specified for min-width.
  */
 let minWidth:
-  [ Types.Width.t | Types.Percentage.t | Types.Length.t | Types.Cascading.t] =>
+  [<
+    Types.Width.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
   rule;
 
 /**
  The object-fit CSS property sets how the content of a replaced element,
  such as an <img> or <video>, should be resized to fit its container.
  */
-let objectFit: [ Types.ObjectFit.t | Types.Cascading.t] => rule;
+let objectFit: [< Types.ObjectFit.t | Types.Cascading.t] => rule;
 
 let opacity: float => rule;
 
@@ -713,7 +723,7 @@ let overflowY: [ Types.Overflow.t] => rule;
  should insert line breaks within an otherwise unbreakable string to prevent text
  from overflowing its line box.
  */
-let overflowWrap: [ Types.OverflowWrap.t | Types.Cascading.t] => rule;
+let overflowWrap: [< Types.OverflowWrap.t | Types.Cascading.t] => rule;
 
 let padding: Types.Length.t => rule;
 let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
@@ -743,7 +753,7 @@ let paddingBottom: Types.Length.t => rule;
  The strength of the effect is determined by the value of this property.
  */
 let perspective:
-  [ Types.Perspective.t | Types.Length.t | Types.Cascading.t] => rule;
+  [< Types.Perspective.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The perspective-origin CSS property determines the position at which the viewer is looking.
@@ -751,88 +761,88 @@ let perspective:
  */
 let perspectiveOrigin:
   (
-    [ Types.Perspective.t | Types.Length.t],
-    [ Types.Perspective.t | Types.Length.t]
+    [< Types.Perspective.t | Types.Length.t],
+    [< Types.Perspective.t | Types.Length.t]
   ) =>
   rule;
 
 /**
  The pointer-events CSS property sets under what circumstances (if any) a particular graphic element can become the target of pointer events.
  */
-let pointerEvents: [ Types.PointerEvents.t | Types.Cascading.t] => rule;
+let pointerEvents: [< Types.PointerEvents.t | Types.Cascading.t] => rule;
 
 /**
  The position CSS property sets how an element is positioned in a document.
  The top, right, bottom, and left properties determine the final location of positioned elements.
  */
-let position: [ Types.Position.t | Types.Cascading.t] => rule;
+let position: [< Types.Position.t | Types.Cascading.t] => rule;
 
 /**
  The resize CSS property sets whether an element is resizable, and if so,
  in which directions.
  */
-let resize: [ Types.Resize.t | Types.Cascading.t] => rule;
+let resize: [< Types.Resize.t | Types.Cascading.t] => rule;
 
-let right: [ Types.Length.t | Types.Cascading.t] => rule;
+let right: [< Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The table-layout CSS property sets the algorithm used to lay out <table> cells, rows, and columns.
  */
-let tableLayout: [ Types.TableLayout.t | Types.Cascading.t] => rule;
+let tableLayout: [< Types.TableLayout.t | Types.Cascading.t] => rule;
 
 /**
  The text-align CSS property sets the horizontal alignment of a block element or table-cell box.
  This means it works like vertical-align but in the horizontal direction.
  */
-let textAlign: [ Types.TextAlign.t | Types.Cascading.t] => rule;
+let textAlign: [< Types.TextAlign.t | Types.Cascading.t] => rule;
 
 /**
  The text-decoration-color CSS property sets the color of decorations added to text by text-decoration-line.
  */
-let textDecorationColor: [ Types.Color.t | Types.Cascading.t] => rule;
+let textDecorationColor: [< Types.Color.t | Types.Cascading.t] => rule;
 
 /**
  The text-decoration-line CSS property sets the kind of decoration
  that is used on text in an element, such as an underline or overline.
  */
 let textDecorationLine:
-  [ Types.TextDecorationLine.t | Types.Cascading.t] => rule;
+  [< Types.TextDecorationLine.t | Types.Cascading.t] => rule;
 
 /**
  The text-decoration-style CSS property sets the style of the lines specified by text-decoration-line.
  The style applies to all lines that are set with text-decoration-line.
  */
 let textDecorationStyle:
-  [ Types.TextDecorationStyle.t | Types.Cascading.t] => rule;
+  [< Types.TextDecorationStyle.t | Types.Cascading.t] => rule;
 
 /**
  The text-indent CSS property sets the length of empty space (indentation)
  that is put before lines of text in a block.
  */
 let textIndent:
-  [ Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
+  [< Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The text-overflow CSS property sets how hidden overflow content is signaled to users.
  It can be clipped, display an ellipsis ('…'), or display a custom string.
  */
-let textOverflow: [ Types.TextOverflow.t | Types.Cascading.t] => rule;
+let textOverflow: [< Types.TextOverflow.t | Types.Cascading.t] => rule;
 
 /**
  The text-shadow CSS property adds shadows to text.
  It accepts a comma-separated list of shadows to be applied to the text and any of its decorations.
  Each shadow is described by some combination of X and Y offsets from the element, blur radius, and color.
  */
-let textShadow: [ Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
+let textShadow: [< Shadow.t(Shadow.text) | Types.Cascading.t] => rule;
 let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
 
 /**
  The text-transform CSS property specifies how to capitalize an element's text.
  It can be used to make text appear in all-uppercase or all-lowercase, or with each word capitalized.
  */
-let textTransform: [ Types.TextTransform.t | Types.Cascading.t] => rule;
+let textTransform: [< Types.TextTransform.t | Types.Cascading.t] => rule;
 
-let top: [ Types.Length.t | Types.Cascading.t] => rule;
+let top: [< Types.Length.t | Types.Cascading.t] => rule;
 
 let transform: Types.Transform.t => rule;
 
@@ -851,7 +861,7 @@ let transitionDuration: int => rule;
 
 let transitionProperty: string => rule;
 
-let transformStyle: [ Types.TransformStyle.t | Types.Cascading.t] => rule;
+let transformStyle: [< Types.TransformStyle.t | Types.Cascading.t] => rule;
 
 let transitionTimingFunction: Types.TimingFunction.t => rule;
 
@@ -859,19 +869,19 @@ let transitionTimingFunction: Types.TimingFunction.t => rule;
  The user-select CSS property controls whether the user can select text.
  This doesn't have any effect on content loaded as chrome, except in textboxes.
  */
-let userSelect: [ Types.UserSelect.t | Types.Cascading.t] => rule;
+let userSelect: [< Types.UserSelect.t | Types.Cascading.t] => rule;
 
 /**
  The vertical-align CSS property sets vertical alignment of an inline or table-cell box.
  */
 let verticalAlign:
-  [ Types.VerticalAlign.t | Types.Length.t | Types.Cascading.t] => rule;
+  [< Types.VerticalAlign.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The visibility CSS property shows or hides an element without changing the layout of a document.
  The property can also hide rows or columns in a <table>.
  */
-let visibility: [ Types.Visibility.t | Types.Cascading.t] => rule;
+let visibility: [< Types.Visibility.t | Types.Cascading.t] => rule;
 
 /**
  The width CSS property sets an element's width.
@@ -890,18 +900,18 @@ let width:
 /**
  The white-space CSS property sets how white space inside an element is handled.
  */
-let whiteSpace: [ Types.WhiteSpace.t | Types.Cascading.t] => rule;
+let whiteSpace: [< Types.WhiteSpace.t | Types.Cascading.t] => rule;
 
 /**
  The word-break CSS property sets whether line breaks appear wherever the text would otherwise overflow its content box.
  */
-let wordBreak: [ Types.WordBreak.t | Types.Cascading.t] => rule;
+let wordBreak: [< Types.WordBreak.t | Types.Cascading.t] => rule;
 
 /**
  The word-spacing CSS property sets the length of space between words and between tags
  */
 let wordSpacing:
-  [
+  [<
     Types.WordSpacing.t
     | Types.Length.t
     | Types.Percentage.t
@@ -912,7 +922,7 @@ let wordSpacing:
 /**
  see overflowWrap
  */
-let wordWrap: [ Types.OverflowWrap.t | Types.Cascading.t] => rule;
+let wordWrap: [< Types.OverflowWrap.t | Types.Cascading.t] => rule;
 
 /**
  The z-index CSS property sets the z-order of a positioned element and its descendants or flex items.
@@ -1491,21 +1501,21 @@ let flex3:
   (
     ~grow: float,
     ~shrink: float,
-    ~basis: [ Types.Length.t | Types.FlexBasis.t]
+    ~basis: [< Types.Length.t | Types.FlexBasis.t]
   ) =>
   rule;
 
 let border:
   (
     Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
+    [< Types.BorderStyle.t | Types.Cascading.t],
     Types.Color.t
   ) =>
   rule;
 let borderTop:
   (
     Types.Length.t,
-    [ Types.BorderStyle.t | Types.Cascading.t],
+    [< Types.BorderStyle.t | Types.Cascading.t],
     Types.Color.t
   ) =>
   rule;
@@ -1514,13 +1524,13 @@ let backgroundSize:
   rule;
 
 let textDecoration:
-  [ | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
+  [< | `none | `underline | `overline | `lineThrough | Types.Cascading.t] =>
   rule;
 
 let background:
-  [ Types.Color.t | Types.Url.t | Types.Gradient.t | `none] => rule;
+  [< Types.Color.t | Types.Url.t | Types.Gradient.t | `none] => rule;
 let backgrounds:
-  list([ Types.Color.t | Types.Url.t | Types.Gradient.t | `none]) => rule;
+  list([< Types.Color.t | Types.Url.t | Types.Gradient.t | `none]) => rule;
 
 type minmax = [
   | `fr(float)
@@ -1538,10 +1548,10 @@ type trackLength = [
 ];
 type gridLength = [ trackLength | `repeat(Types.RepeatValue.t, trackLength)];
 
-let gridAutoColumns: [ trackLength | `auto] => rule;
-let gridAutoRows: [ trackLength | `auto] => rule;
-let gridTemplateColumns: list([ gridLength | `auto]) => rule;
-let gridTemplateRows: list([ gridLength | `auto]) => rule;
+let gridAutoColumns: [< trackLength | `auto] => rule;
+let gridAutoRows: [< trackLength | `auto] => rule;
+let gridTemplateColumns: list([< gridLength | `auto]) => rule;
+let gridTemplateRows: list([< gridLength | `auto]) => rule;
 
 module Calc: {
   let (-): (Types.Length.t, Types.Length.t) => [> Types.Length.t];
@@ -1662,11 +1672,11 @@ let animationName: animationName => rule;
 
 module SVG: {
   let fill: Types.Color.t => rule;
-  let fillRule: [ | `nonzero | `evenodd] => rule;
+  let fillRule: [< | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
   let stroke: Types.Color.t => rule;
-  let strokeLinecap: [ | `butt | `round | `square] => rule;
-  let strokeLinejoin: [ | `miter | `round | `bevel] => rule;
+  let strokeLinecap: [< | `butt | `round | `square] => rule;
+  let strokeLinejoin: [< | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;
   let strokeWidth: Types.Length.t => rule;
   let strokeOpacity: float => rule;
