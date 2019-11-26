@@ -222,21 +222,47 @@ let alignSelf = x =>
 let animationDelay = x => D("animationDelay", string_of_time(x));
 
 let animationDirection = x =>
-  D("animationDirection", AnimationDirection.toString(x));
+  D(
+    "animationDirection",
+    switch (x) {
+    | #AnimationDirection.t as ad => AnimationDirection.toString(ad)
+    },
+  );
 
 let animationDuration = x => D("animationDuration", string_of_time(x));
 
 let animationFillMode = x =>
-  D("animationFillMode", AnimationFillMode.toString(x));
+  D(
+    "animationFillMode",
+    switch (x) {
+    | #AnimationFillMode.t as afm => AnimationFillMode.toString(afm)
+    },
+  );
 
 let animationIterationCount = x =>
-  D("animationIterationCount", AnimationIterationCount.toString(x));
+  D(
+    "animationIterationCount",
+    switch (x) {
+    | #AnimationIterationCount.t as aic =>
+      AnimationIterationCount.toString(aic)
+    },
+  );
 
 let animationPlayState = x =>
-  D("animationPlayState", AnimationPlayState.toString(x));
+  D(
+    "animationPlayState",
+    switch (x) {
+    | #AnimationPlayState.t as aps => AnimationPlayState.toString(aps)
+    },
+  );
 
 let animationTimingFunction = x =>
-  D("animationTimingFunction", TimingFunction.toString(x));
+  D(
+    "animationTimingFunction",
+    switch (x) {
+    | #TimingFunction.t as tf => TimingFunction.toString(tf)
+    },
+  );
 
 let backfaceVisibility = x =>
   D(
@@ -256,7 +282,13 @@ let backgroundAttachment = x =>
     },
   );
 
-let backgroundColor = x => D("backgroundColor", Color.toString(x));
+let backgroundColor = x =>
+  D(
+    "backgroundColor",
+    switch (x) {
+    | #Color.t as c => Color.toString(c)
+    },
+  );
 
 let backgroundClip = x =>
   D(
@@ -338,15 +370,32 @@ let backgroundRepeat = x =>
     },
   );
 
-let borderBottomColor = x => D("borderBottomColor", Color.toString(x));
+let borderBottomColor = x =>
+  D(
+    "borderBottomColor",
+    switch (x) {
+    | #Color.t as c => Color.toString(c)
+    },
+  );
+
+// utility function
+let lengthToString = x =>
+  switch (x) {
+  | #Length.t as l => Length.toString(l)
+  };
+// utility function
+let colorToString = x =>
+  switch (x) {
+  | #Color.t as c => Color.toString(c)
+  };
 
 let borderBottomLeftRadius = x =>
-  D("borderBottomLeftRadius", Length.toString(x));
+  D("borderBottomLeftRadius", lengthToString(x));
 
 let borderBottomRightRadius = x =>
-  D("borderBottomRightRadius", Length.toString(x));
+  D("borderBottomRightRadius", lengthToString(x));
 
-let borderBottomWidth = x => D("borderBottomWidth", Length.toString(x));
+let borderBottomWidth = x => D("borderBottomWidth", lengthToString(x));
 
 let borderCollapse = x =>
   D(
@@ -357,30 +406,29 @@ let borderCollapse = x =>
     },
   );
 
-let borderColor = x => D("borderColor", Color.toString(x));
+let borderColor = x => D("borderColor", colorToString(x));
 
-let borderLeftColor = x => D("borderLeftColor", Color.toString(x));
+let borderLeftColor = x => D("borderLeftColor", colorToString(x));
 
-let borderLeftWidth = x => D("borderLeftWidth", Length.toString(x));
+let borderLeftWidth = x => D("borderLeftWidth", lengthToString(x));
 
-let borderSpacing = x => D("borderSpacing", Length.toString(x));
+let borderSpacing = x => D("borderSpacing", lengthToString(x));
 
-let borderRadius = x => D("borderRadius", Length.toString(x));
+let borderRadius = x => D("borderRadius", lengthToString(x));
 
-let borderRightColor = x => D("borderRightColor", Color.toString(x));
+let borderRightColor = x => D("borderRightColor", colorToString(x));
 
-let borderRightWidth = x => D("borderRightWidth", Length.toString(x));
+let borderRightWidth = x => D("borderRightWidth", lengthToString(x));
 
-let borderTopColor = x => D("borderTopColor", Color.toString(x));
+let borderTopColor = x => D("borderTopColor", colorToString(x));
 
-let borderTopLeftRadius = x => D("borderTopLeftRadius", Length.toString(x));
+let borderTopLeftRadius = x => D("borderTopLeftRadius", lengthToString(x));
 
-let borderTopRightRadius = x =>
-  D("borderTopRightRadius", Length.toString(x));
+let borderTopRightRadius = x => D("borderTopRightRadius", lengthToString(x));
 
-let borderTopWidth = x => D("borderTopWidth", Length.toString(x));
+let borderTopWidth = x => D("borderTopWidth", lengthToString(x));
 
-let borderWidth = x => D("borderWidth", Length.toString(x));
+let borderWidth = x => D("borderWidth", lengthToString(x));
 
 let bottom = x =>
   D(
@@ -420,7 +468,7 @@ let clipPath = x =>
     },
   );
 
-let color = x => D("color", Color.toString(x));
+let color = x => D("color", colorToString(x));
 
 let columnCount = x =>
   D(
@@ -433,7 +481,13 @@ let columnCount = x =>
 
 let contentRule = x => D("content", {j|"$x"|j});
 
-let cursor = x => D("cursor", Cursor.toString(x));
+let cursor = x =>
+  D(
+    "cursor",
+    switch (x) {
+    | #Cursor.t as c => Cursor.toString(c)
+    },
+  );
 
 let direction = x =>
   D(
@@ -644,9 +698,17 @@ let lineHeight = x =>
 let listStyle = (style, position, image) =>
   D(
     "listStyle",
-    ListStyleType.toString(style)
+    (
+      switch (style) {
+      | #ListStyleType.t as lst => ListStyleType.toString(lst)
+      }
+    )
     ++ " "
-    ++ ListStylePosition.toString(position)
+    ++ (
+      switch (position) {
+      | #ListStylePosition.t as lsp => ListStylePosition.toString(lsp)
+      }
+    )
     ++ " "
     ++ (
       switch (image) {
@@ -684,6 +746,7 @@ let listStylePosition = x =>
     },
   );
 
+// utility function
 let marginToString = x =>
   switch (x) {
   | #Length.t as l => Length.toString(l)
@@ -776,20 +839,48 @@ let opacity = x => D("opacity", Js.Float.toString(x));
 let outline = (size, style, color) =>
   D(
     "outline",
-    Length.toString(size)
+    lengthToString(size)
     ++ " "
-    ++ OutlineStyle.toString(style)
+    ++ (
+      switch (style) {
+      | #OutlineStyle.t as os => OutlineStyle.toString(os)
+      }
+    )
     ++ " "
-    ++ Color.toString(color),
+    ++ colorToString(color),
   );
-let outlineColor = x => D("outlineColor", Color.toString(x));
-let outlineOffset = x => D("outlineOffset", Length.toString(x));
-let outlineStyle = x => D("outlineStyle", OutlineStyle.toString(x));
-let outlineWidth = x => D("outlineWidth", Length.toString(x));
+let outlineColor = x => D("outlineColor", colorToString(x));
+let outlineOffset = x => D("outlineOffset", lengthToString(x));
+let outlineStyle = x =>
+  D(
+    "outlineStyle",
+    switch (x) {
+    | #OutlineStyle.t as os => OutlineStyle.toString(os)
+    },
+  );
+let outlineWidth = x => D("outlineWidth", lengthToString(x));
 
-let overflow = x => D("overflow", Overflow.toString(x));
-let overflowX = x => D("overflowX", Overflow.toString(x));
-let overflowY = x => D("overflowY", Overflow.toString(x));
+let overflow = x =>
+  D(
+    "overflow",
+    switch (x) {
+    | #Overflow.t as o => Overflow.toString(o)
+    },
+  );
+let overflowX = x =>
+  D(
+    "overflowX",
+    switch (x) {
+    | #Overflow.t as o => Overflow.toString(o)
+    },
+  );
+let overflowY = x =>
+  D(
+    "overflowY",
+    switch (x) {
+    | #Overflow.t as o => Overflow.toString(o)
+    },
+  );
 
 let overflowWrap = x =>
   D(
@@ -800,37 +891,43 @@ let overflowWrap = x =>
     },
   );
 
-let padding = x => D("padding", Length.toString(x));
+// utility function
+let paddingToString = x =>
+  switch (x) {
+  | #Length.t as l => Length.toString(l)
+  };
+
+let padding = x => D("padding", paddingToString(x));
 let padding2 = (~v, ~h) =>
-  D("padding", Length.toString(v) ++ " " ++ Length.toString(h));
+  D("padding", paddingToString(v) ++ " " ++ paddingToString(h));
 let padding3 = (~top, ~h, ~bottom) =>
   D(
     "padding",
-    Length.toString(top)
+    paddingToString(top)
     ++ " "
-    ++ Length.toString(h)
+    ++ paddingToString(h)
     ++ " "
-    ++ Length.toString(bottom),
+    ++ paddingToString(bottom),
   );
 let padding4 = (~top, ~right, ~bottom, ~left) =>
   D(
     "padding",
-    Length.toString(top)
+    paddingToString(top)
     ++ " "
-    ++ Length.toString(right)
+    ++ paddingToString(right)
     ++ " "
-    ++ Length.toString(bottom)
+    ++ paddingToString(bottom)
     ++ " "
-    ++ Length.toString(left),
+    ++ paddingToString(left),
   );
 
-let paddingBottom = x => D("paddingBottom", Length.toString(x));
+let paddingBottom = x => D("paddingBottom", paddingToString(x));
 
-let paddingLeft = x => D("paddingLeft", Length.toString(x));
+let paddingLeft = x => D("paddingLeft", paddingToString(x));
 
-let paddingRight = x => D("paddingRight", Length.toString(x));
+let paddingRight = x => D("paddingRight", paddingToString(x));
 
-let paddingTop = x => D("paddingTop", Length.toString(x));
+let paddingTop = x => D("paddingTop", paddingToString(x));
 
 let perspective = x =>
   D(
@@ -989,22 +1086,28 @@ let top = x =>
     },
   );
 
-let transform = x => D("transform", Transform.toString(x));
+// utility function
+let transformToString = x =>
+  switch (x) {
+  | #Transform.t as t => Transform.toString(t)
+  };
+
+let transform = x => D("transform", transformToString(x));
 
 let transforms = x =>
-  D("transform", x->Belt.List.map(Transform.toString)->join(" "));
+  D("transform", x->Belt.List.map(transformToString)->join(" "));
 
 let transformOrigin = (x, y) =>
-  D("transformOrigin", Length.toString(x) ++ " " ++ Length.toString(y));
+  D("transformOrigin", lengthToString(x) ++ " " ++ lengthToString(y));
 
 let transformOrigin3d = (x, y, z) =>
   D(
     "transformOrigin",
-    Length.toString(x)
+    lengthToString(x)
     ++ " "
-    ++ Length.toString(y)
+    ++ lengthToString(y)
     ++ " "
-    ++ Length.toString(z)
+    ++ lengthToString(z)
     ++ " ",
   );
 
@@ -1711,44 +1814,44 @@ let string_of_borderstyle =
 let border = (px, style, color) =>
   D(
     "border",
-    Length.toString(px)
+    lengthToString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ colorToString(color),
   );
 let borderStyle = x => D("borderStyle", string_of_borderstyle(x));
 
 let borderLeft = (px, style, color) =>
   D(
     "borderLeft",
-    Length.toString(px)
+    lengthToString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ colorToString(color),
   );
 let borderLeftStyle = x => D("borderLeftStyle", string_of_borderstyle(x));
 
 let borderRight = (px, style, color) =>
   D(
     "borderRight",
-    Length.toString(px)
+    lengthToString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ colorToString(color),
   );
 
 let borderRightStyle = x => D("borderRightStyle", string_of_borderstyle(x));
 let borderTop = (px, style, color) =>
   D(
     "borderTop",
-    Length.toString(px)
+    lengthToString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ colorToString(color),
   );
 
 let borderTopStyle = x => D("borderTopStyle", string_of_borderstyle(x));
@@ -1756,11 +1859,11 @@ let borderTopStyle = x => D("borderTopStyle", string_of_borderstyle(x));
 let borderBottom = (px, style, color) =>
   D(
     "borderBottom",
-    Length.toString(px)
+    lengthToString(px)
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ colorToString(color),
   );
 
 let borderBottomStyle = x =>
@@ -1890,7 +1993,12 @@ let transitionDelay = i => D("transitionDelay", string_of_time(i));
 let transitionDuration = i => D("transitionDuration", string_of_time(i));
 
 let transitionTimingFunction = x =>
-  D("transitionTimingFunction", TimingFunction.toString(x));
+  D(
+    "transitionTimingFunction",
+    switch (x) {
+    | #TimingFunction.t as tf => TimingFunction.toString(tf)
+    },
+  );
 
 let transitionProperty = x => D("transitionProperty", x);
 
@@ -1969,7 +2077,8 @@ let animationName = x => D("animationName", x);
  * SVG
  */
 module SVG = {
-  let fill = x => D("fill", Color.toString(x));
+  let fill = x => D("fill", colorToString(x));
+
   let fillOpacity = opacity => D("fillOpacity", Js.Float.toString(opacity));
   let fillRule = x =>
     D(
@@ -1979,8 +2088,8 @@ module SVG = {
       | `nonzero => "nonzero"
       },
     );
-  let stroke = x => D("stroke", Color.toString(x));
-  let strokeWidth = x => D("strokeWidth", Length.toString(x));
+  let stroke = x => D("stroke", colorToString(x));
+  let strokeWidth = x => D("strokeWidth", lengthToString(x));
   let strokeOpacity = opacity =>
     D("strokeOpacity", Js.Float.toString(opacity));
   let strokeMiterlimit = x => D("strokeMiterlimit", Js.Float.toString(x));
@@ -2003,6 +2112,6 @@ module SVG = {
       | `bevel => "bevel"
       },
     );
-  let stopColor = x => D("stopColor", Color.toString(x));
+  let stopColor = x => D("stopColor", colorToString(x));
   let stopOpacity = x => D("stopOpacity", Js.Float.toString(x));
 };

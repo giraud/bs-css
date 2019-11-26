@@ -106,7 +106,7 @@ let animationDelay: int => rule;
  The animation-direction CSS property sets whether an animation should play forwards, backwards,
  or alternating back and forth.
  */
-let animationDirection: Types.AnimationDirection.t => rule;
+let animationDirection: [< Types.AnimationDirection.t] => rule;
 
 /**
  The animation-duration CSS property sets the length of time that an animation takes to complete one cycle.
@@ -117,23 +117,23 @@ let animationDuration: int => rule;
  The animation-fill-mode CSS property sets how a CSS animation applies styles to its target before and after
  its execution.
  */
-let animationFillMode: Types.AnimationFillMode.t => rule;
+let animationFillMode: [< Types.AnimationFillMode.t] => rule;
 
 /**
  The animation-iteration-count CSS property sets the number of times an animation cycle should be played
  before stopping.
  */
-let animationIterationCount: Types.AnimationIterationCount.t => rule;
+let animationIterationCount: [< Types.AnimationIterationCount.t] => rule;
 
 /**
  The animation-play-state CSS property sets whether an animation is running or paused.
  */
-let animationPlayState: Types.AnimationPlayState.t => rule;
+let animationPlayState: [< Types.AnimationPlayState.t] => rule;
 
 /**
  The animation-timing-function CSS property sets how an animation progresses through the duration of each cycle.
  */
-let animationTimingFunction: Types.TimingFunction.t => rule;
+let animationTimingFunction: [< Types.TimingFunction.t] => rule;
 
 /* Warning: experimental */
 let backfaceVisibility:
@@ -149,7 +149,7 @@ let backgroundAttachment:
 /**
  The background-color CSS property sets the background color of an element.
  */
-let backgroundColor: Types.Color.t => rule;
+let backgroundColor: [< Types.Color.t] => rule;
 
 /**
  The background-clip CSS property sets whether an element's background extends underneath its border box,
@@ -226,9 +226,9 @@ let backgroundRepeat:
  */
 let borderBottom:
   (
-    Types.Length.t,
+    [< Types.Length.t],
     [< Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t]
   ) =>
   rule;
 
@@ -236,17 +236,17 @@ let borderBottom:
  The border-bottom-color CSS property sets the color of an element's bottom border.
  It can also be set with the shorthand CSS properties border-color or border-bottom.
  */
-let borderBottomColor: Types.Color.t => rule;
+let borderBottomColor: [< Types.Color.t] => rule;
 
 /**
  The border-bottom-left-radius CSS property rounds the bottom-left corner of an element.
  */
-let borderBottomLeftRadius: Types.Length.t => rule;
+let borderBottomLeftRadius: [< Types.Length.t] => rule;
 
 /**
  The border-bottom-right-radius CSS property rounds the bottom-right corner of an element.
  */
-let borderBottomRightRadius: Types.Length.t => rule;
+let borderBottomRightRadius: [< Types.Length.t] => rule;
 
 /**
  The border-bottom-style CSS property sets the line style of an element's bottom border.
@@ -256,7 +256,7 @@ let borderBottomStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 /**
  The border-bottom-width CSS property sets the width of the bottom border of an element.
  */
-let borderBottomWidth: Types.Length.t => rule;
+let borderBottomWidth: [< Types.Length.t] => rule;
 
 /**
  The border-collapse CSS property sets whether cells inside a <table> have shared or separate borders.
@@ -266,59 +266,59 @@ let borderCollapse: [< Types.BorderCollapse.t | Types.Cascading.t] => rule;
 /**
  The border-color shorthand CSS property sets the color of an element's border.
  */
-let borderColor: Types.Color.t => rule;
+let borderColor: [< Types.Color.t] => rule;
 
 /**
  The border-left shorthand CSS property set an element's left border.
  */
 let borderLeft:
   (
-    Types.Length.t,
+    [< Types.Length.t],
     [< Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t]
   ) =>
   rule;
 
-let borderLeftColor: Types.Color.t => rule;
+let borderLeftColor: [< Types.Color.t] => rule;
 
 let borderLeftStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
-let borderLeftWidth: Types.Length.t => rule;
+let borderLeftWidth: [< Types.Length.t] => rule;
 
 let borderRight:
   (
-    Types.Length.t,
+    [< Types.Length.t],
     [< Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t]
   ) =>
   rule;
 
-let borderRightColor: Types.Color.t => rule;
+let borderRightColor: [< Types.Color.t] => rule;
 
 let borderRightStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
-let borderRightWidth: Types.Length.t => rule;
+let borderRightWidth: [< Types.Length.t] => rule;
 
-let borderRadius: Types.Length.t => rule;
+let borderRadius: [< Types.Length.t] => rule;
 
-let borderSpacing: Types.Length.t => rule;
+let borderSpacing: [< Types.Length.t] => rule;
 
 /**
  The border-style shorthand CSS property sets the line style for all four sides of an element's border.
  */
 let borderStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
-let borderTopColor: Types.Color.t => rule;
+let borderTopColor: [< Types.Color.t] => rule;
 
-let borderTopLeftRadius: Types.Length.t => rule;
+let borderTopLeftRadius: [< Types.Length.t] => rule;
 
-let borderTopRightRadius: Types.Length.t => rule;
+let borderTopRightRadius: [< Types.Length.t] => rule;
 
 let borderTopStyle: [< Types.BorderStyle.t | Types.Cascading.t] => rule;
 
-let borderTopWidth: Types.Length.t => rule;
+let borderTopWidth: [< Types.Length.t] => rule;
 
-let borderWidth: Types.Length.t => rule;
+let borderWidth: [< Types.Length.t] => rule;
 
 let bottom: [< Types.Length.t | Types.Cascading.t] => rule;
 
@@ -350,7 +350,7 @@ let clipPath:
   ] =>
   rule;
 
-let color: Types.Color.t => rule;
+let color: [< Types.Color.t] => rule;
 
 /**
  The column-count CSS property breaks an element's content into the specified number of columns.
@@ -359,7 +359,7 @@ let columnCount: [< Types.ColumnCount.t | Types.Cascading.t] => rule;
 
 let contentRule: string => rule;
 
-let cursor: Types.Cursor.t => rule;
+let cursor: [< Types.Cursor.t] => rule;
 
 /**
  The direction CSS property sets the direction of text, table columns, and horizontal overflow.
@@ -491,7 +491,7 @@ let gridColumnStart: int => rule;
  The gap CSS property sets the gaps (gutters) between rows and columns. It is a shorthand for row-gap and column-gap.
  */
 let gridGap:
-  [ Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
+  [< Types.Percentage.t | Types.Length.t | Types.Cascading.t] => rule;
 
 /**
  The grid-row CSS property is a shorthand property for grid-row-start and grid-row-end specifying a grid item’s size
@@ -585,8 +585,8 @@ let lineHeight:
  */
 let listStyle:
   (
-    Types.ListStyleType.t,
-    Types.ListStylePosition.t,
+    [< Types.ListStyleType.t],
+    [< Types.ListStylePosition.t],
     [< Types.ListStyleImage.t | Types.Url.t]
   ) =>
   rule;
@@ -702,21 +702,22 @@ let opacity: float => rule;
 
 let order: int => rule;
 
-let outline: (Types.Length.t, Types.OutlineStyle.t, Types.Color.t) => rule;
+let outline:
+  ([< Types.Length.t], [< Types.OutlineStyle.t], [< Types.Color.t]) => rule;
 
-let outlineColor: Types.Color.t => rule;
+let outlineColor: [< Types.Color.t] => rule;
 
-let outlineOffset: Types.Length.t => rule;
+let outlineOffset: [< Types.Length.t] => rule;
 
-let outlineStyle: Types.OutlineStyle.t => rule;
+let outlineStyle: [< Types.OutlineStyle.t] => rule;
 
-let outlineWidth: Types.Length.t => rule;
+let outlineWidth: [< Types.Length.t] => rule;
 
-let overflow: [ Types.Overflow.t] => rule;
+let overflow: [< Types.Overflow.t] => rule;
 
-let overflowX: [ Types.Overflow.t] => rule;
+let overflowX: [< Types.Overflow.t] => rule;
 
-let overflowY: [ Types.Overflow.t] => rule;
+let overflowY: [< Types.Overflow.t] => rule;
 
 /**
  The overflow-wrap CSS property applies to inline elements, setting whether the browser
@@ -725,26 +726,31 @@ let overflowY: [ Types.Overflow.t] => rule;
  */
 let overflowWrap: [< Types.OverflowWrap.t | Types.Cascading.t] => rule;
 
-let padding: Types.Length.t => rule;
-let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule;
+let padding: [< Types.Length.t] => rule;
+let padding2: (~v: [< Types.Length.t], ~h: [< Types.Length.t]) => rule;
 let padding3:
-  (~top: Types.Length.t, ~h: Types.Length.t, ~bottom: Types.Length.t) => rule;
+  (
+    ~top: [< Types.Length.t],
+    ~h: [< Types.Length.t],
+    ~bottom: [< Types.Length.t]
+  ) =>
+  rule;
 let padding4:
   (
-    ~top: Types.Length.t,
-    ~right: Types.Length.t,
-    ~bottom: Types.Length.t,
-    ~left: Types.Length.t
+    ~top: [< Types.Length.t],
+    ~right: [< Types.Length.t],
+    ~bottom: [< Types.Length.t],
+    ~left: [< Types.Length.t]
   ) =>
   rule;
 
-let paddingLeft: Types.Length.t => rule;
+let paddingLeft: [< Types.Length.t] => rule;
 
-let paddingRight: Types.Length.t => rule;
+let paddingRight: [< Types.Length.t] => rule;
 
-let paddingTop: Types.Length.t => rule;
+let paddingTop: [< Types.Length.t] => rule;
 
-let paddingBottom: Types.Length.t => rule;
+let paddingBottom: [< Types.Length.t] => rule;
 
 /**
  The perspective CSS property determines the distance between the z=0 plane and the user in order
@@ -844,16 +850,16 @@ let textTransform: [< Types.TextTransform.t | Types.Cascading.t] => rule;
 
 let top: [< Types.Length.t | Types.Cascading.t] => rule;
 
-let transform: Types.Transform.t => rule;
+let transform: [< Types.Transform.t] => rule;
 
-let transforms: list(Types.Transform.t) => rule;
+let transforms: list([< Types.Transform.t]) => rule;
 
 /**
  The transform-origin CSS property sets the origin for an element's transformations.
  */
-let transformOrigin: (Types.Length.t, Types.Length.t) => rule;
+let transformOrigin: ([< Types.Length.t], [< Types.Length.t]) => rule;
 let transformOrigin3d:
-  (Types.Length.t, Types.Length.t, Types.Length.t) => rule;
+  ([< Types.Length.t], [< Types.Length.t], [< Types.Length.t]) => rule;
 
 let transitionDelay: int => rule;
 
@@ -863,7 +869,7 @@ let transitionProperty: string => rule;
 
 let transformStyle: [< Types.TransformStyle.t | Types.Cascading.t] => rule;
 
-let transitionTimingFunction: Types.TimingFunction.t => rule;
+let transitionTimingFunction: [< Types.TimingFunction.t] => rule;
 
 /**
  The user-select CSS property controls whether the user can select text.
@@ -1507,16 +1513,16 @@ let flex3:
 
 let border:
   (
-    Types.Length.t,
+    [< Types.Length.t],
     [< Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t]
   ) =>
   rule;
 let borderTop:
   (
-    Types.Length.t,
+    [< Types.Length.t],
     [< Types.BorderStyle.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t]
   ) =>
   rule;
 let backgroundSize:
@@ -1671,16 +1677,16 @@ let animationName: animationName => rule;
  *** */
 
 module SVG: {
-  let fill: Types.Color.t => rule;
+  let fill: [< Types.Color.t] => rule;
   let fillRule: [< | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
-  let stroke: Types.Color.t => rule;
+  let stroke: [< Types.Color.t] => rule;
   let strokeLinecap: [< | `butt | `round | `square] => rule;
   let strokeLinejoin: [< | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;
-  let strokeWidth: Types.Length.t => rule;
+  let strokeWidth: [< Types.Length.t] => rule;
   let strokeOpacity: float => rule;
-  let stopColor: Types.Color.t => rule;
+  let stopColor: [< Types.Color.t] => rule;
   let stopOpacity: float => rule;
 };
 

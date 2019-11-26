@@ -1232,7 +1232,7 @@ module BackgroundOrigin = {
 };
 
 module BackgroundPosition = {
-  module X {
+  module X = {
     type t = [ | `left | `right | `center];
 
     let toString =
@@ -1242,7 +1242,7 @@ module BackgroundPosition = {
       | `center => "center";
   };
 
-  module Y {
+  module Y = {
     type t = [ | `top | `bottom | `center];
 
     let toString =
@@ -1252,7 +1252,7 @@ module BackgroundPosition = {
       | `center => "center";
   };
 
-  type t = [ | X.t | Y.t];
+  type t = [ X.t | Y.t];
 
   let toString =
     fun
