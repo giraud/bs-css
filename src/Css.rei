@@ -415,10 +415,24 @@ let flexWrap: [ Types.FlexWrap.t | Types.Cascading.t] => rule;
  */
 let float: [ Types.Float.t | Types.Cascading.t] => rule;
 
-let fontFamily: string => rule;
+/**
+ The font-family CSS property specifies a prioritized list of one or more font family names and/or generic family names
+ for the selected element.
+ */
+let fontFamily: [ Types.FontFamilyName.t | Types.Cascading.t] => rule;
 
+let fontFamilies: list([ Types.FontFamilyName.t]) => rule;
+
+/**
+ The font-size CSS property sets the size of the font. This property is also used to compute the size of em, ex, and
+ other relative <length> units.
+ */
 let fontSize: [ Types.Length.t | Types.Cascading.t] => rule;
 
+/**
+ The font-style CSS property sets whether a font should be styled with a normal, italic, or oblique face from its
+ font-family.
+ */
 let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
 
 /**
@@ -429,6 +443,10 @@ let fontStyle: [ Types.FontStyle.t | Types.Cascading.t] => rule;
  */
 let fontVariant: [ Types.FontVariant.t | Types.Cascading.t] => rule;
 
+/**
+ The font-weight CSS property sets the weight (or boldness) of the font. The weights available depend on the
+ font-family you are using.
+ */
 let fontWeight: [ Types.FontWeight.t | Types.Cascading.t] => rule;
 
 /**

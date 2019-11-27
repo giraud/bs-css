@@ -1096,3 +1096,23 @@ module ListStyleImage: {
 
   let toString: t => string;
 };
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/font-family
+ */
+module FontFamilyName: {
+  type t = [
+    |`custom(string)
+    |`serif
+    |`sansSerif
+    |`cursive
+    |`fantasy
+    |`monospace
+    |`systemUi
+    |`emoji
+    |`math
+    |`fangsong
+  ];
+
+  let toString: t => string;
+};
