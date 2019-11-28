@@ -552,7 +552,20 @@ let float = x =>
     },
   );
 
-let fontFamily = x => D("fontFamily", x);
+let fontFamily = x =>
+  D(
+    "fontFamily",
+    switch (x) {
+    | #FontFamilyName.t as n => FontFamilyName.toString(n)
+    | #Cascading.t as c => Cascading.toString(c)
+    }
+  );
+
+let fontFamilies = xs =>
+  D(
+    "fontFamily",
+    xs->Belt.List.map(FontFamilyName.toString)->join(", ")
+  );
 
 let fontSize = x =>
   D(
@@ -1913,7 +1926,7 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
     src: $src;
     $(fontStyle);
     $(fontWeight);
-}|j};
+  }|j};
 
   Emotion.rawInjectGlobal(asString);
 

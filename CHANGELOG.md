@@ -1,5 +1,14 @@
 ## [Unreleased]
 
+### Breaking change
+
+- FontFamily accepts cascading and predefined generic font names by [@erykpiast](https://github.com/erykpiast) - [#171](https://github.com/SentiaAnalytics/bs-css/pull/171)
+ 
+  if you have code like this:
+  ```fontFamily("Helvetica, sans-serif")```
+  you need to convert it to:
+  ```fontfamilies([`custom("Helvetica"), `sansSerif])```
+ 
 ## [11.0.0] - 2019-11-12
 
 Major release because of the breaking change in background-position definition,

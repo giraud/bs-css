@@ -1478,3 +1478,42 @@ module ListStyleImage = {
     fun
     | `none => "none";
 };
+
+module FontFamilyName = {
+  type t = [
+    |`custom(string)
+    |`serif
+    |`sansSerif
+    |`cursive
+    |`fantasy
+    |`monospace
+    |`systemUi
+    |`emoji
+    |`math
+    |`fangsong
+  ];
+
+  let custom = `custom;
+  let serif = `serif;
+  let sansSerif = `sansSerif;
+  let cursive = `cursive;
+  let fantasy = `fantasy;
+  let monospace = `monospace;
+  let systemUi = `systemUi;
+  let emoji = `emoji;
+  let math = `math;
+  let fangsong = `fangsong;
+
+  let toString =
+    fun
+    | `custom(name) => name
+    | `serif => "serif"
+    | `sansSerif => "sans-serif"
+    | `cursive => "cursive"
+    | `fantasy => "fantasy"
+    | `monospace => "monospace"
+    | `systemUi => "system-ui"
+    | `emoji => "emoji"
+    | `math => "math"
+    | `fangsong => "fangsong";
+};
