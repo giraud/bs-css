@@ -8,7 +8,11 @@
   ```fontFamily("Helvetica, sans-serif")```
   you need to convert it to:
   ```fontfamilies([`custom("Helvetica"), `sansSerif])```
- 
+
+### Changed
+
+- Add upper bound to union types in Css.rei, thanks to [@tomiS](https://github.com/TomiS) - [#172](https://github.com/SentiaAnalytics/bs-css/issues/172)
+
 ## [11.0.0] - 2019-11-12
 
 Major release because of the breaking change in background-position definition,

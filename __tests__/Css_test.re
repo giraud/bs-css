@@ -567,10 +567,10 @@ describe("backgroundPosition", () => {
   test("test two values", () =>
     expect(
       (
-        r(backgroundPosition(`hv(`left, center))),
-        r(backgroundPosition(`hv(`right, pct(50.)))),
-        r(backgroundPosition(`hv(pct(50.), `top))),
-        r(backgroundPosition(`hv(pct(50.), pct(50.)))),
+        r(backgroundPosition(`hv((`left, center)))),
+        r(backgroundPosition(`hv((`right, pct(50.))))),
+        r(backgroundPosition(`hv((pct(50.), `top)))),
+        r(backgroundPosition(`hv((pct(50.), pct(50.))))),
       )
       ->Js.Json.stringifyAny,
     )
@@ -584,33 +584,25 @@ describe("backgroundPosition", () => {
 
   test("test multiple positions", () =>
     expect(
-      (
-        r(backgroundPositions([`hv(px(0), px(0)), center])),
-      )
+      r(backgroundPositions([`hv((px(0), px(0))), center]))
       ->Js.Json.stringifyAny,
     )
-    |> toBeJson((
-         {"backgroundPosition": "0px 0px, center"},
-       ))
+    |> toBeJson({"backgroundPosition": "0px 0px, center"})
   );
 
   test("test edge offsets values", () =>
     expect(
-      (
-        r(
-          backgroundPosition4(
-            ~y=`top,
-            ~offsetY=px(10),
-            ~x=`right,
-            ~offsetX=px(50),
-          ),
+      r(
+        backgroundPosition4(
+          ~y=`top,
+          ~offsetY=px(10),
+          ~x=`right,
+          ~offsetX=px(50),
         ),
       )
       ->Js.Json.stringifyAny,
     )
-    |> toBeJson((
-         {"backgroundPosition": "right 50px top 10px"},
-       ))
+    |> toBeJson({"backgroundPosition": "right 50px top 10px"})
   );
 });
 
