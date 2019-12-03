@@ -7,16 +7,14 @@
   "bs-dev-dependencies": [
     "reason-react", "@glennsl/bs-jest"
   ],
-  "bsc-flags": [
-    "-bs-super-errors",
-    "-w",
-    "+a-4-6-7-9-27-29-32..39-41..42-40-44-45-48-50",
-    "-warn-error",
-    "-a+8"
-  ],
+  "warnings": {
+    "number":  "+A-32-34-44",
+    "error": "+A-32-34-44"
+  },
   "sources": [
     {
-      "dir": "src"
+      "dir": "src",
+      "public":  ["Css"]
     },
     {
       "dir": "example",

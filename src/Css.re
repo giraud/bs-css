@@ -178,7 +178,9 @@ let keyframes = frames => {
 let important = v =>
   switch (v) {
   | D(name, value) => D(name, value ++ " !important")
-  | _ => v
+  | S(_, _)
+  | PseudoClass(_, _)
+  | PseudoClassParam(_, _, _) => v
   };
 
 let label = label => D("label", label);
@@ -504,14 +506,11 @@ let fontFamily = x =>
     switch (x) {
     | #FontFamilyName.t as n => FontFamilyName.toString(n)
     | #Cascading.t as c => Cascading.toString(c)
-    }
+    },
   );
 
 let fontFamilies = xs =>
-  D(
-    "fontFamily",
-    xs->Belt.List.map(FontFamilyName.toString)->join(", ")
-  );
+  D("fontFamily", xs->Belt.List.map(FontFamilyName.toString)->join(", "));
 
 let fontSize = x =>
   D(
