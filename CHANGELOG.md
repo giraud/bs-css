@@ -7,7 +7,7 @@
   if you have code like this:
   ```fontFamily("Helvetica, sans-serif")```
   you need to convert it to:
-  ```fontfamilies([`custom("Helvetica"), `sansSerif])```
+  ```fontFamilies([`custom("Helvetica"), `sansSerif])```
 
 ### Changed
 
