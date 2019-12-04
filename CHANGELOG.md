@@ -1,6 +1,6 @@
 ## [Unreleased]
 
-- github repository mved to reasonml-labs organisation
+- github repository moved to reasonml-labs organisation
 
 ### Breaking change
 
