@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- github repository mved to reasonml-labs organisation
+
 ### Breaking change
 
 - FontFamily accepts cascading and predefined generic font names by [@erykpiast](https://github.com/erykpiast) - [#171](https://github.com/SentiaAnalytics/bs-css/pull/171)
