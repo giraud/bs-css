@@ -9,47 +9,70 @@ type rule =
   | PseudoClass(string, list(rule))
   | PseudoClassParam(string, string, list(rule));
 
-module Emotion = {
-  type stylename = string;
+module type CssImplementation = {
   type cache;
-
-  [@bs.module "emotion"] external _make: Js.Json.t => stylename = "css";
-  [@bs.module "emotion"] external cache: cache = "cache";
-  [@bs.module "emotion"]
-  external injectGlobal: Js.Json.t => unit = "injectGlobal";
-  [@bs.module "emotion"]
-  external rawInjectGlobal: string => unit = "injectGlobal";
-  [@bs.module "emotion"]
-  external makeKeyFrames: Js.Dict.t(Js.Json.t) => string = "keyframes";
-  [@bs.module "emotion"] external cx: array(stylename) => stylename = "cx";
-  let mergeStyles: list(stylename) => stylename =
-    stylenames => stylenames |> Array.of_list |> cx;
-
-  let rec ruleToDict = (dict, rule) => {
-    switch (rule) {
-    | D(name, value) when name == "content" =>
-      dict->Js.Dict.set(name, Js.Json.string(value == "" ? "\"\"" : value))
-    | D(name, value) => dict->Js.Dict.set(name, Js.Json.string(value))
-    | S(name, ruleset) => dict->Js.Dict.set(name, makeJson(ruleset))
-    | PseudoClass(name, ruleset) =>
-      dict->Js.Dict.set(":" ++ name, makeJson(ruleset))
-    | PseudoClassParam(name, param, ruleset) =>
-      dict->Js.Dict.set(
-        ":" ++ name ++ "(" ++ param ++ ")",
-        makeJson(ruleset),
-      )
-    };
-    dict;
-  }
-
-  and makeJson = rules =>
-    rules->Belt.List.reduce(Js.Dict.empty(), ruleToDict)->Js.Json.object_;
-
-  let make = rules => rules->makeJson->_make;
+  let cache: cache;
+  let mergeStyles: (. array(string)) => string;
+  let injectRule: (. Js.Json.t) => unit;
+  let injectRaw: (. string) => unit;
+  let make: (. Js.Json.t) => string;
+  let makeKeyFrames: (. Js.Dict.t(Js.Json.t)) => string;
 };
 
-let toJson = Emotion.makeJson;
-let style = Emotion.make;
+module Emotion: CssImplementation = {
+  type cache;
+  [@bs.module "emotion"] external cache: cache = "cache";
+  [@bs.module "emotion"]
+  external mergeStyles: (. array(string)) => string = "cx";
+  [@bs.module "emotion"] external make: (. Js.Json.t) => string = "css";
+  [@bs.module "emotion"]
+  external injectRule: (. Js.Json.t) => unit = "injectGlobal";
+  [@bs.module "emotion"]
+  external injectRaw: (. string) => unit = "injectGlobal";
+  [@bs.module "emotion"]
+  external makeKeyFrames: (. Js.Dict.t(Js.Json.t)) => string = "keyframes";
+};
+module Implementation = Emotion;
+
+type cache = Implementation.cache;
+let cache = Implementation.cache;
+let merge = stylenames =>
+  Implementation.mergeStyles(. stylenames->Array.of_list);
+
+let insertRule = s => Implementation.injectRaw(. s);
+
+let rec ruleToDict = (dict, rule) => {
+  switch (rule) {
+  | D(name, value) when name == "content" =>
+    dict->Js.Dict.set(name, Js.Json.string(value == "" ? "\"\"" : value))
+  | D(name, value) => dict->Js.Dict.set(name, Js.Json.string(value))
+  | S(name, ruleset) => dict->Js.Dict.set(name, toJson(ruleset))
+  | PseudoClass(name, ruleset) =>
+    dict->Js.Dict.set(":" ++ name, toJson(ruleset))
+  | PseudoClassParam(name, param, ruleset) =>
+    dict->Js.Dict.set(":" ++ name ++ "(" ++ param ++ ")", toJson(ruleset))
+  };
+  dict;
+}
+
+and toJson = rules =>
+  rules->Belt.List.reduce(Js.Dict.empty(), ruleToDict)->Js.Json.object_;
+
+let style = rules => Implementation.make(. rules->toJson);
+let global = (selector, rules: list(rule)) =>
+  Implementation.injectRule(.
+    [(selector, toJson(rules))]->Js.Dict.fromList->Js.Json.object_,
+  );
+
+let addStop = (dict, (stop, rules)) => {
+  Js.Dict.set(dict, Js.Int.toString(stop) ++ "%", toJson(rules));
+  dict;
+};
+
+let keyframes = frames =>
+  Implementation.makeKeyFrames(.
+    List.fold_left(addStop, Js.Dict.empty(), frames),
+  );
 
 let join = (strings, separator) => {
   let rec run = (strings, acc) =>
@@ -147,33 +170,9 @@ module Converter = {
 };
 include Converter;
 
-type cache = Emotion.cache;
-
 let empty = [];
-let cache = Emotion.cache;
-let merge = Emotion.mergeStyles;
-let global = (selector, rules: list(rule)) =>
-  Emotion.injectGlobal(
-    [(selector, Emotion.makeJson(rules))]
-    ->Js.Dict.fromList
-    ->Js.Json.object_,
-  );
-
-let insertRule = raw => Emotion.rawInjectGlobal(raw);
 
 type animationName = string;
-
-let keyframes = frames => {
-  let addStop = (dict, (stop, rules)) => {
-    Js.Dict.set(
-      dict,
-      Js.Int.toString(stop) ++ "%",
-      Emotion.makeJson(rules),
-    );
-    dict;
-  };
-  Emotion.makeKeyFrames @@ List.fold_left(addStop, Js.Dict.empty(), frames);
-};
 
 let important = v =>
   switch (v) {
@@ -1824,7 +1823,7 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
     $(fontWeight);
   }|j};
 
-  Emotion.rawInjectGlobal(asString);
+  insertRule(asString);
 
   fontFamily;
 };
