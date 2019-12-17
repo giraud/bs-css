@@ -331,7 +331,7 @@ module TimingFunction = {
     fun
     | `linear => "linear"
     | `ease => "ease"
-    | `easeIn => "ease-out"
+    | `easeIn => "ease-in"
     | `easeOut => "ease-out"
     | `easeInOut => "ease-in-out"
     | `stepStart => "step-start"
