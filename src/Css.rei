@@ -1605,6 +1605,7 @@ let fontFace:
     ~src: list([< | `localUrl(string) | Types.Url.t]),
     ~fontStyle: Types.FontStyle.t=?,
     ~fontWeight: [< Types.FontWeight.t | Types.Cascading.t]=?,
+    ~fontDisplay: Types.FontDisplay.t=?,
     unit
   ) =>
   string;

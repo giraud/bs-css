@@ -1792,7 +1792,8 @@ let backgroundSize = x =>
     },
   );
 
-let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
+let fontFace =
+    (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, ()) => {
   let fontStyle =
     Js.Option.map((. value) => FontStyle.toString(value), fontStyle);
   let src =
@@ -1805,7 +1806,7 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
     |> String.concat(", ");
 
   let fontStyle =
-    Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ s);
+    Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ s ++ ";");
   let fontWeight =
     Belt.Option.mapWithDefault(fontWeight, "", w =>
       "font-weight: "
@@ -1815,12 +1816,18 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ()) => {
         | #Cascading.t as c => Cascading.toString(c)
         }
       )
+      ++ ";"
+    );
+  let fontDisplay =
+    Belt.Option.mapWithDefault(fontDisplay, "", f =>
+      "font-display: " ++ Types.FontDisplay.toString(f) ++ ";"
     );
   let asString = {j|@font-face {
     font-family: $fontFamily;
     src: $src;
-    $(fontStyle);
-    $(fontWeight);
+    $(fontStyle)
+    $(fontWeight)
+    $(fontDisplay)
   }|j};
 
   insertRule(asString);

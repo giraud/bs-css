@@ -1232,7 +1232,7 @@ module BackgroundOrigin = {
 };
 
 module BackgroundPosition = {
-  module X {
+  module X = {
     type t = [ | `left | `right | `center];
 
     let toString =
@@ -1242,7 +1242,7 @@ module BackgroundPosition = {
       | `center => "center";
   };
 
-  module Y {
+  module Y = {
     type t = [ | `top | `bottom | `center];
 
     let toString =
@@ -1252,7 +1252,7 @@ module BackgroundPosition = {
       | `center => "center";
   };
 
-  type t = [ | X.t | Y.t];
+  type t = [ X.t | Y.t];
 
   let toString =
     fun
@@ -1481,16 +1481,16 @@ module ListStyleImage = {
 
 module FontFamilyName = {
   type t = [
-    |`custom(string)
-    |`serif
-    |`sansSerif
-    |`cursive
-    |`fantasy
-    |`monospace
-    |`systemUi
-    |`emoji
-    |`math
-    |`fangsong
+    | `custom(string)
+    | `serif
+    | `sansSerif
+    | `cursive
+    | `fantasy
+    | `monospace
+    | `systemUi
+    | `emoji
+    | `math
+    | `fangsong
   ];
 
   let custom = `custom;
@@ -1516,4 +1516,22 @@ module FontFamilyName = {
     | `emoji => "emoji"
     | `math => "math"
     | `fangsong => "fangsong";
+};
+
+module FontDisplay = {
+  type t = [ | `auto | `block | `swap | `fallback | `optional];
+
+  let auto = `auto;
+  let block = `block;
+  let swap = `swap;
+  let fallback = `fallback;
+  let optional = `optional;
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `block => "block"
+    | `swap => "swap"
+    | `fallback => "fallback"
+    | `optional => "optional";
 };
