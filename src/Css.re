@@ -85,17 +85,13 @@ let join = (strings, separator) => {
 };
 
 module Converter = {
-  let string_of_percent =
-    fun
-    | #Percentage.t as p => Percentage.toString(p);
-
   let string_of_hsl = (h, s, l) =>
     "hsl("
     ++ Angle.toString(h)
     ++ ", "
-    ++ string_of_percent(s)
+    ++ Percentage.toString(s)
     ++ ", "
-    ++ string_of_percent(l)
+    ++ Percentage.toString(l)
     ++ ")";
 
   let string_of_alpha =
@@ -107,9 +103,9 @@ module Converter = {
     "hsla("
     ++ Angle.toString(h)
     ++ ", "
-    ++ string_of_percent(s)
+    ++ Percentage.toString(s)
     ++ ", "
-    ++ string_of_percent(l)
+    ++ Percentage.toString(l)
     ++ ", "
     ++ string_of_alpha(a)
     ++ ")";
