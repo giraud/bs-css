@@ -1116,3 +1116,18 @@ module FontFamilyName: {
 
   let toString: t => string;
 };
+
+/**
+ * https://developer.mozilla.org/fr/docs/Web/CSS/@font-face/font-display
+ */
+module FontDisplay: {
+  type t = [
+    |`auto
+    |`block
+    |`swap
+    |`fallback
+    |`optional
+  ];
+
+  let toString: t => string;
+};
