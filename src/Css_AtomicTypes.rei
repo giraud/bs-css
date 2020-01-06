@@ -1102,16 +1102,16 @@ module ListStyleImage: {
  */
 module FontFamilyName: {
   type t = [
-    |`custom(string)
-    |`serif
-    |`sansSerif
-    |`cursive
-    |`fantasy
-    |`monospace
-    |`systemUi
-    |`emoji
-    |`math
-    |`fangsong
+    | `custom(string)
+    | `serif
+    | `sansSerif
+    | `cursive
+    | `fantasy
+    | `monospace
+    | `systemUi
+    | `emoji
+    | `math
+    | `fangsong
   ];
 
   let toString: t => string;
@@ -1121,13 +1121,7 @@ module FontFamilyName: {
  * https://developer.mozilla.org/fr/docs/Web/CSS/@font-face/font-display
  */
 module FontDisplay: {
-  type t = [
-    |`auto
-    |`block
-    |`swap
-    |`fallback
-    |`optional
-  ];
+  type t = [ | `auto | `block | `swap | `fallback | `optional];
 
   let toString: t => string;
 };
