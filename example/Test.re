@@ -1295,12 +1295,52 @@ let make = () =>
       </div>
     </Section>
     <Section name="content">
+      <div
+        className=Css.(
+          style([
+            position(relative),
+            after([
+              contentRule(`none),
+              position(absolute),
+              top(zero),
+              left(zero),
+              width(pct(100.)),
+              height(pct(100.)),
+              border(px(1), solid, black),
+            ]),
+          ])
+        )>
+        {text("none")}
+      </div>
+      <div
+        className=Css.(
+          style([
+            position(relative),
+            after([
+              contentRule(`normal),
+              position(absolute),
+              top(zero),
+              left(zero),
+              width(pct(100.)),
+              height(pct(100.)),
+              border(px(1), solid, black),
+            ]),
+          ])
+        )>
+        {text("normal")}
+      </div>
+      <div className=Css.(
+          style([
+            position(relative),
+            marginLeft(px(20)),
+          ])
+        )>
       <a
         href="https://github.com/SentiaAnalytics/bs-css"
         className=Css.(
           style([
             before([
-              contentRule("external "),
+              contentRule(`string("external ")),
               backgroundColor(red),
               display(inlineBlock),
               flexBasis(content /*for test*/),
@@ -1309,13 +1349,14 @@ let make = () =>
         )>
         {text("link")}
       </a>
+      </div>
       <div
         className=Css.(
           style([
             position(relative),
             marginLeft(px(20)),
             after([
-              contentRule(""),
+              contentRule(`string("")),
               position(absolute),
               top(zero),
               left(zero),
@@ -1326,6 +1367,99 @@ let make = () =>
           ])
         )>
         {text("empty content")}
+      </div>
+      <div
+        className=Css.(
+          style([
+            position(relative),
+            marginLeft(px(20)),
+            paddingLeft(px(20)),
+            after([
+              contentRule(`url("https://via.placeholder.com/18")),
+              position(absolute),
+              top(zero),
+              left(zero),
+              width(px(18)),
+              height(px(18)),
+              border(px(1), solid, black),
+            ]),
+          ])
+        )>
+        {text("url")}
+      </div>
+      <div
+        className=Css.(
+          style([
+            marginLeft(px(20)),
+            counterReset(Types.CounterOperation.reset("foo", ~value=1)),
+            before([
+              contentRule(Types.Counter.counter("foo")),
+              border(px(1), solid, black),
+            ]),
+          ])
+        )>
+        {text("counter")}
+      </div>
+      <div className=Css.(
+            style([
+              counterReset(Types.CounterOperation.reset("foo", ~value=1)),
+              marginLeft(px(20))
+            ])
+      )>
+        <div
+          className=Css.(
+            style([
+              counterReset(Types.CounterOperation.reset("foo", ~value=2)),
+              before([
+                contentRule(Types.Counter.counters("foo", ~separator="@", ~style=`upperRoman)),
+                border(px(1), solid, black),
+              ]),
+            ])
+          )>
+          {text("counters")}
+        </div>
+      </div>
+      <div
+        className=Css.(
+          style([
+            marginLeft(px(20)),
+            before([
+              contentRule(`attr("class")),
+              border(px(1), solid, black),
+            ]),
+          ])
+        )>
+        {text("attr")}
+      </div>
+      <div
+        className=Css.(
+          style([
+            marginLeft(px(20)),
+            before([
+              contentRule(Types.Gradient.linearGradient(
+                  deg(45.),
+                  [(zero, red), (pct(100.), blue)],
+                )),
+              border(px(1), solid, black),
+              display(`inlineBlock),
+              height(px(18)),
+              width(px(18))
+            ]),
+          ])
+        )>
+        {text("linear gradient")}
+      </div>
+      <div
+        className=Css.(
+          style([
+            marginLeft(px(20)),
+            before([
+              contentRules([`openQuote, `string("foo"), `closeQuote]),
+              border(px(1), solid, black),
+            ]),
+          ])
+        )>
+        {text("contents (quotes)")}
       </div>
     </Section>
     <Section name="insertRule, the ultimate escape hatch">

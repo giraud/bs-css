@@ -1572,3 +1572,77 @@ module FontDisplay = {
     | `fallback => "fallback"
     | `optional => "optional";
 };
+
+module Counter = {
+  type style = [ ListStyleType.t | `unset];
+  type t = [ | `counter(string, style) | `counters(string, string, style)];
+
+  let counter = (~style=`unset, name) => `counter((name, style));
+  let counters = (~style=`unset, ~separator="", name) =>
+    `counters((name, separator, style));
+
+  let toString =
+    fun
+    | `counter(counter, style) =>
+      switch (style) {
+      | `unset => "counter(" ++ counter ++ ")"
+      | #ListStyleType.t as t =>
+        "counter(" ++ counter ++ "," ++ ListStyleType.toString(t) ++ ")"
+      }
+    | `counters(counter, string, style) =>
+      switch (style) {
+      | `unset => "counters(" ++ counter ++ ",\"" ++ string ++ "\")"
+      | #ListStyleType.t as t =>
+        "counters("
+        ++ counter
+        ++ ",\""
+        ++ string
+        ++ "\","
+        ++ ListStyleType.toString(t)
+        ++ ")"
+      };
+};
+
+module CounterOperation = {
+  type t = [
+    | `none
+    | `increment(string, int)
+    | `reset(string, int)
+    | `set(string, int)
+  ];
+
+  let increment = (~value=1, name) => `increment((name, value));
+  let reset = (~value=0, name) => `reset((name, value));
+  let set = (~value=0, name) => `set((name, value));
+
+  let toString =
+    fun
+    | `none => "none"
+    | `increment(name, value) => name ++ " " ++ string_of_int(value)
+    | `reset(name, value) => name ++ " " ++ string_of_int(value)
+    | `set(name, value) => name ++ " " ++ string_of_int(value);
+};
+
+module Content = {
+  type t = [
+    | `none
+    | `normal
+    | `openQuote
+    | `closeQuote
+    | `noOpenQuote
+    | `noCloseQuote
+    | `attr(string)
+    | `string(string)
+  ];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `normal => "normal"
+    | `openQuote => "open-quote"
+    | `closeQuote => "close-quote"
+    | `noOpenQuote => "no-open-quote"
+    | `noCloseQuote => "no-close-quote"
+    | `attr(name) => "attr(" ++ name ++ ")"
+    | `string(string) => {j|"$string"|j};
+};

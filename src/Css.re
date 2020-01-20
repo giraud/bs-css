@@ -163,7 +163,22 @@ module Converter = {
     | `repeatingRadialGradient(stops) =>
       "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
     };
+
+  let string_of_content = x =>
+    switch (x) {
+    | #Content.t as c => Content.toString(c)
+    | #Counter.t as c => Counter.toString(c)
+    | #Gradient.t as g => Gradient.toString(g)
+    | #Url.t as u => Url.toString(u)
+    | #Cascading.t as c => Cascading.toString(c)
+    };
+  let string_of_counter_operation = x =>
+    switch (x) {
+    | #CounterOperation.t as o => CounterOperation.toString(o)
+    | #Cascading.t as c => Cascading.toString(c)
+    };
 };
+
 include Converter;
 
 let empty = [];
@@ -428,7 +443,31 @@ let columnCount = x =>
     },
   );
 
-let contentRule = x => D("content", {j|"$x"|j});
+let contentRule = x => D("content", string_of_content(x));
+let contentRules = xs =>
+  D("content", xs->Belt.List.map(string_of_content)->join(" "));
+
+let counterIncrement = x =>
+  D("counter-increment", string_of_counter_operation(x));
+let countersIncrement = xs =>
+  D(
+    "counter-increment",
+    xs->Belt.List.map(string_of_counter_operation)->join(" "),
+  );
+
+let counterReset = x => D("counter-reset", string_of_counter_operation(x));
+let countersReset = xs =>
+  D(
+    "counter-reset",
+    xs->Belt.List.map(string_of_counter_operation)->join(" "),
+  );
+
+let counterSet = x => D("counter-set", string_of_counter_operation(x));
+let countersSet = xs =>
+  D(
+    "counter-set",
+    xs->Belt.List.map(string_of_counter_operation)->join(" "),
+  );
 
 let cursor = x => D("cursor", Cursor.toString(x));
 

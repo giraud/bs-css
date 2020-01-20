@@ -1162,3 +1162,50 @@ module FontDisplay: {
 
   let toString: t => string;
 };
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counters
+ */
+module Counter: {
+  type style = [ ListStyleType.t | `unset];
+  type t = [ | `counter(string, style) | `counters(string, string, style)];
+
+  let counter: (~style: style=?, string) => t;
+  let counters: (~style: style=?, ~separator: string=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-increment
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-reset
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-set
+ */
+module CounterOperation: {
+  type t = [ | `none | `increment(string, int) | `reset(string, int) | `set(string, int)];
+
+  let increment: (~value: int=?, string) => t;
+  let reset: (~value: int=?, string) => t;
+  let set: (~value: int=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/content
+ */
+module Content: {
+  type t = [
+    | `none
+    | `normal
+    | `openQuote
+    | `closeQuote
+    | `noOpenQuote
+    | `noCloseQuote
+    | `attr(string)
+    | `string(string)
+  ];
+
+  let toString: t => string;
+};
