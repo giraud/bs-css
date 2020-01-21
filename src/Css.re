@@ -785,12 +785,6 @@ let objectFit = x =>
 let objectPosition = ( x ) =>
   D("objectPosition", string_of_backgroundposition(x));
 
-let objectPositions = ( op ) =>
-  D(
-    "objectPosition",
-    op->Belt.List.map(string_of_backgroundposition)->join(", "),
-  );
-
 let opacity = x => D("opacity", Js.Float.toString(x));
 
 let outline = (size, style, color) =>
