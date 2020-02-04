@@ -1,5 +1,6 @@
 ## [Unreleased]
 
+- Add objectPosition by [@damianfral](https://github.com/damianfral) - [#177](https://github.com/SentiaAnalytics/bs-css/pull/177)
 - Add support for fontDisplay in fontFace by [@bloodyowl](https://github.com/bloodyowl) - [#176](https://github.com/SentiaAnalytics/bs-css/pull/176)
 - Fix typo string of `easeIn by [@zalcode](https://github.com/zalcode) - [#175](https://github.com/SentiaAnalytics/bs-css/pull/175)
 - github repository moved to reasonml-labs organisation
