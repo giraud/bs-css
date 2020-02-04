@@ -20,7 +20,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SentiaAnalytics/bs-css.git"
+    "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "dependencies": {
     "emotion": "^10.0.7"
