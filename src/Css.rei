@@ -1523,6 +1523,44 @@ let radialGradient:
 let repeatingRadialGradient:
   list((Types.Length.t, Types.Color.t)) => [> Types.Gradient.t];
 
+// cursor aliases
+//let auto: [> Types.Cursor.t];
+//let default: [> Types.Cursor.t];
+//let none: [> Types.Cursor.t];
+let contextMenu: [> Types.Cursor.t];
+let help: [> Types.Cursor.t];
+let pointer: [> Types.Cursor.t];
+let progress: [> Types.Cursor.t];
+let wait: [> Types.Cursor.t];
+let cell: [> Types.Cursor.t];
+let crosshair: [> Types.Cursor.t];
+let text: [> Types.Cursor.t];
+let verticalText: [> Types.Cursor.t];
+let alias: [> Types.Cursor.t];
+let copy: [> Types.Cursor.t];
+let move: [> Types.Cursor.t];
+let noDrop: [> Types.Cursor.t];
+let notAllowed: [> Types.Cursor.t];
+let grab: [> Types.Cursor.t];
+let grabbing: [> Types.Cursor.t];
+let allScroll: [> Types.Cursor.t];
+let colResize: [> Types.Cursor.t];
+let rowResize: [> Types.Cursor.t];
+let nResize: [> Types.Cursor.t];
+let eResize: [> Types.Cursor.t];
+let sResize: [> Types.Cursor.t];
+let wResize: [> Types.Cursor.t];
+let neResize: [> Types.Cursor.t];
+let nwResize: [> Types.Cursor.t];
+let seResize: [> Types.Cursor.t];
+let swResize: [> Types.Cursor.t];
+let ewResize: [> Types.Cursor.t];
+let nsResize: [> Types.Cursor.t];
+let neswResize: [> Types.Cursor.t];
+let nwseResize: [> Types.Cursor.t];
+let zoomIn: [> Types.Cursor.t];
+let zoomOut: [> Types.Cursor.t];
+
 /********************************************************
  ********************************************************
  ********************************************************/

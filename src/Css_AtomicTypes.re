@@ -647,6 +647,43 @@ module Cursor = {
     | `zoomOut
   ];
 
+  let auto = `auto;
+  let default = `default;
+  let none = `none;
+  let contextMenu = `contextMenu;
+  let help = `help;
+  let pointer = `pointer;
+  let progress = `progress;
+  let wait = `wait;
+  let cell = `cell;
+  let crosshair = `crosshair;
+  let text = `text;
+  let verticalText = `verticalText;
+  let alias = `alias;
+  let copy = `copy;
+  let move = `move;
+  let noDrop = `noDrop;
+  let notAllowed = `notAllowed;
+  let grab = `grab;
+  let grabbing = `grabbing;
+  let allScroll = `allScroll;
+  let colResize = `colResize;
+  let rowResize = `rowResize;
+  let nResize = `nResize;
+  let eResize = `eResize;
+  let sResize = `sResize;
+  let wResize = `wResize;
+  let neResize = `neResize;
+  let nwResize = `nwResize;
+  let seResize = `seResize;
+  let swResize = `swResize;
+  let ewResize = `ewResize;
+  let nsResize = `nsResize;
+  let neswResize = `neswResize;
+  let nwseResize = `nwseResize;
+  let zoomIn = `zoomIn;
+  let zoomOut = `zoomOut;
+
   let toString = x =>
     switch (x) {
     | `auto => "auto"

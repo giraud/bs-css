@@ -713,3 +713,84 @@ describe("clipPath", () =>
        ))
   )
 );
+
+describe("cursor", () =>
+  test("test values", () =>
+    expect(
+      (
+        //let auto: [> Types.Cursor.t];
+        //let default: [> Types.Cursor.t];
+        //let none: [> Types.Cursor.t];
+        r(cursor(contextMenu)),
+        r(cursor(help)),
+        r(cursor(pointer)),
+        r(cursor(progress)),
+        r(cursor(wait)),
+        r(cursor(cell)),
+        r(cursor(crosshair)),
+        r(cursor(text)),
+        r(cursor(verticalText)),
+        r(cursor(alias)),
+        r(cursor(copy)),
+        r(cursor(move)),
+        r(cursor(noDrop)),
+        r(cursor(notAllowed)),
+        r(cursor(grab)),
+        r(cursor(grabbing)),
+        r(cursor(allScroll)),
+        r(cursor(colResize)),
+        r(cursor(rowResize)),
+        r(cursor(nResize)),
+        r(cursor(eResize)),
+        r(cursor(sResize)),
+        r(cursor(wResize)),
+        r(cursor(neResize)),
+        r(cursor(nwResize)),
+        r(cursor(seResize)),
+        r(cursor(swResize)),
+        r(cursor(ewResize)),
+        r(cursor(nsResize)),
+        r(cursor(neswResize)),
+        r(cursor(nwseResize)),
+        r(cursor(zoomIn)),
+        r(cursor(zoomOut)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"cursor": "context-menu"},
+         {"cursor": "help"},
+         {"cursor": "pointer"},
+         {"cursor": "progress"},
+         {"cursor": "wait"},
+         {"cursor": "cell"},
+         {"cursor": "crosshair"},
+         {"cursor": "text"},
+         {"cursor": "vertical-text"},
+         {"cursor": "alias"},
+         {"cursor": "copy"},
+         {"cursor": "move"},
+         {"cursor": "no-drop"},
+         {"cursor": "not-allowed"},
+         {"cursor": "grab"},
+         {"cursor": "grabbing"},
+         {"cursor": "all-scroll"},
+         {"cursor": "col-resize"},
+         {"cursor": "row-resize"},
+         {"cursor": "n-resize"},
+         {"cursor": "e-resize"},
+         {"cursor": "s-resize"},
+         {"cursor": "w-resize"},
+         {"cursor": "ne-resize"},
+         {"cursor": "nw-resize"},
+         {"cursor": "se-resize"},
+         {"cursor": "sw-resize"},
+         {"cursor": "ew-resize"},
+         {"cursor": "ns-resize"},
+         {"cursor": "nesw-resize"},
+         {"cursor": "nwse-resize"},
+         {"cursor": "zoom-in"},
+         {"cursor": "zoom-out"},
+       ))
+  )
+);

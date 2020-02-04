@@ -467,6 +467,43 @@ module Cursor: {
     | `zoomOut
   ];
 
+  let auto: [> t];
+  let default: [> t];
+  let none: [> t];
+  let contextMenu: [> t];
+  let help: [> t];
+  let pointer: [> t];
+  let progress: [> t];
+  let wait: [> t];
+  let cell: [> t];
+  let crosshair: [> t];
+  let text: [> t];
+  let verticalText: [> t];
+  let alias: [> t];
+  let copy: [> t];
+  let move: [> t];
+  let noDrop: [> t];
+  let notAllowed: [> t];
+  let grab: [> t];
+  let grabbing: [> t];
+  let allScroll: [> t];
+  let colResize: [> t];
+  let rowResize: [> t];
+  let nResize: [> t];
+  let eResize: [> t];
+  let sResize: [> t];
+  let wResize: [> t];
+  let neResize: [> t];
+  let nwResize: [> t];
+  let seResize: [> t];
+  let swResize: [> t];
+  let ewResize: [> t];
+  let nsResize: [> t];
+  let neswResize: [> t];
+  let nwseResize: [> t];
+  let zoomIn: [> t];
+  let zoomOut: [> t];
+
   let toString: t => string;
 };
 

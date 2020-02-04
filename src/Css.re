@@ -778,7 +778,7 @@ let objectFit = x =>
     },
   );
 
-let objectPosition = ( x ) =>
+let objectPosition = x =>
   D("objectPosition", string_of_backgroundposition(x));
 
 let opacity = x => D("opacity", Js.Float.toString(x));
@@ -1299,6 +1299,44 @@ let linearGradient = Gradient.linearGradient;
 let repeatingLinearGradient = Gradient.repeatingLinearGradient;
 let radialGradient = Gradient.radialGradient;
 let repeatingRadialGradient = Gradient.repeatingRadialGradient;
+
+// cursor aliases
+//let auto = Cursor.auto;
+//let default = Cursor.default;
+//let none = Cursor.none;
+let contextMenu = Cursor.contextMenu;
+let help = Cursor.help;
+let pointer = Cursor.pointer;
+let progress = Cursor.progress;
+let wait = Cursor.wait;
+let cell = Cursor.cell;
+let crosshair = Cursor.crosshair;
+let text = Cursor.text;
+let verticalText = Cursor.verticalText;
+let alias = Cursor.alias;
+let copy = Cursor.copy;
+let move = Cursor.move;
+let noDrop = Cursor.noDrop;
+let notAllowed = Cursor.notAllowed;
+let grab = Cursor.grab;
+let grabbing = Cursor.grabbing;
+let allScroll = Cursor.allScroll;
+let colResize = Cursor.colResize;
+let rowResize = Cursor.rowResize;
+let nResize = Cursor.nResize;
+let eResize = Cursor.eResize;
+let sResize = Cursor.sResize;
+let wResize = Cursor.wResize;
+let neResize = Cursor.neResize;
+let nwResize = Cursor.nwResize;
+let seResize = Cursor.seResize;
+let swResize = Cursor.swResize;
+let ewResize = Cursor.ewResize;
+let nsResize = Cursor.nsResize;
+let neswResize = Cursor.neswResize;
+let nwseResize = Cursor.nwseResize;
+let zoomIn = Cursor.zoomIn;
+let zoomOut = Cursor.zoomOut;
 
 /********************************************************
  ********************************************************
