@@ -716,6 +716,18 @@ let minWidth:
  */
 let objectFit: [< Types.ObjectFit.t | Types.Cascading.t] => rule;
 
+let objectPosition:
+  [<
+    Types.BackgroundPosition.t
+    | `hv(
+        [ Types.BackgroundPosition.X.t | Types.Length.t],
+        [ Types.BackgroundPosition.Y.t | Types.Length.t],
+      )
+    | Types.Length.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
 let opacity: float => rule;
 
 let order: int => rule;
