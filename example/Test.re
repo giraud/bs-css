@@ -1340,7 +1340,7 @@ let make = () =>
         className=Css.(
           style([
             before([
-              contentRule(`string("external ")),
+              contentRule(`text("external ")),
               backgroundColor(red),
               display(inlineBlock),
               flexBasis(content /*for test*/),
@@ -1356,7 +1356,7 @@ let make = () =>
             position(relative),
             marginLeft(px(20)),
             after([
-              contentRule(`string("")),
+              contentRule(`text("")),
               position(absolute),
               top(zero),
               left(zero),
@@ -1454,7 +1454,7 @@ let make = () =>
           style([
             marginLeft(px(20)),
             before([
-              contentRules([`openQuote, `string("foo"), `closeQuote]),
+              contentRules([`openQuote, `text("foo"), `closeQuote]),
               border(px(1), solid, black),
             ]),
           ])

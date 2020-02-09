@@ -1204,7 +1204,7 @@ module Content: {
     | `noOpenQuote
     | `noCloseQuote
     | `attr(string)
-    | `string(string)
+    | `text(string)
   ];
 
   let toString: t => string;

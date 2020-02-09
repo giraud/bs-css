@@ -1632,7 +1632,7 @@ module Content = {
     | `noOpenQuote
     | `noCloseQuote
     | `attr(string)
-    | `string(string)
+    | `text(string)
   ];
 
   let toString =
@@ -1644,5 +1644,5 @@ module Content = {
     | `noOpenQuote => "no-open-quote"
     | `noCloseQuote => "no-close-quote"
     | `attr(name) => "attr(" ++ name ++ ")"
-    | `string(string) => {j|"$string"|j};
+    | `text(string) => {j|"$string"|j};
 };
