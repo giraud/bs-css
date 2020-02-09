@@ -1179,14 +1179,32 @@ module Counter: {
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-increment
- * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-reset
- * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-set
  */
-module CounterOperation: {
-  type t = [ | `none | `increment(string, int) | `reset(string, int) | `set(string, int)];
+module CounterIncrement: {
+  type t = [ | `none | `increment(string, int)];
 
   let increment: (~value: int=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-reset
+ */
+module CounterReset: {
+  type t = [ | `none | `reset(string, int)];
+
   let reset: (~value: int=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-set
+ */
+module CounterSet: {
+  type t = [ | `none | `set(string, int)];
+
   let set: (~value: int=?, string) => t;
 
   let toString: t => string;

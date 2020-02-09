@@ -1391,7 +1391,7 @@ let make = () =>
         className=Css.(
           style([
             marginLeft(px(20)),
-            counterReset(Types.CounterOperation.reset("foo", ~value=1)),
+            counterReset(Types.CounterReset.reset("foo", ~value=1)),
             before([
               contentRule(Types.Counter.counter("foo")),
               border(px(1), solid, black),
@@ -1402,14 +1402,14 @@ let make = () =>
       </div>
       <div className=Css.(
             style([
-              counterReset(Types.CounterOperation.reset("foo", ~value=1)),
+              counterReset(Types.CounterReset.reset("foo", ~value=1)),
               marginLeft(px(20))
             ])
       )>
         <div
           className=Css.(
             style([
-              counterReset(Types.CounterOperation.reset("foo", ~value=2)),
+              counterReset(Types.CounterReset.reset("foo", ~value=2)),
               before([
                 contentRule(Types.Counter.counters("foo", ~separator="@", ~style=`upperRoman)),
                 border(px(1), solid, black),

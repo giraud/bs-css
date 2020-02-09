@@ -172,9 +172,19 @@ module Converter = {
     | #Url.t as u => Url.toString(u)
     | #Cascading.t as c => Cascading.toString(c)
     };
-  let string_of_counter_operation = x =>
+  let string_of_counter_increment = x =>
     switch (x) {
-    | #CounterOperation.t as o => CounterOperation.toString(o)
+    | #CounterIncrement.t as o => CounterIncrement.toString(o)
+    | #Cascading.t as c => Cascading.toString(c)
+    };
+  let string_of_counter_reset = x =>
+    switch (x) {
+    | #CounterReset.t as o => CounterReset.toString(o)
+    | #Cascading.t as c => Cascading.toString(c)
+    };
+  let string_of_counter_set = x =>
+    switch (x) {
+    | #CounterSet.t as o => CounterSet.toString(o)
     | #Cascading.t as c => Cascading.toString(c)
     };
 };
@@ -448,25 +458,25 @@ let contentRules = xs =>
   D("content", xs->Belt.List.map(string_of_content)->join(" "));
 
 let counterIncrement = x =>
-  D("counter-increment", string_of_counter_operation(x));
+  D("counter-increment", string_of_counter_increment(x));
 let countersIncrement = xs =>
   D(
     "counter-increment",
-    xs->Belt.List.map(string_of_counter_operation)->join(" "),
+    xs->Belt.List.map(string_of_counter_increment)->join(" "),
   );
 
-let counterReset = x => D("counter-reset", string_of_counter_operation(x));
+let counterReset = x => D("counter-reset", string_of_counter_reset(x));
 let countersReset = xs =>
   D(
     "counter-reset",
-    xs->Belt.List.map(string_of_counter_operation)->join(" "),
+    xs->Belt.List.map(string_of_counter_reset)->join(" "),
   );
 
-let counterSet = x => D("counter-set", string_of_counter_operation(x));
+let counterSet = x => D("counter-set", string_of_counter_set(x));
 let countersSet = xs =>
   D(
     "counter-set",
-    xs->Belt.List.map(string_of_counter_operation)->join(" "),
+    xs->Belt.List.map(string_of_counter_set)->join(" "),
   );
 
 let cursor = x => D("cursor", Cursor.toString(x));

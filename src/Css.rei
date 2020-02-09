@@ -361,12 +361,12 @@ let contentRule: [< Types.Content.t | Types.Counter.t | Types.Gradient.t | Types
 let contentRules:
   list([< Types.Content.t | Types.Counter.t | Types.Gradient.t | Types.Url.t]) => rule;
 
-let counterIncrement: [< Types.CounterOperation.t | Types.Cascading.t] => rule;
-let countersIncrement: list([< Types.CounterOperation.t]) => rule;
-let counterReset: [< Types.CounterOperation.t | Types.Cascading.t] => rule;
-let countersReset: list([< Types.CounterOperation.t]) => rule;
-let counterSet: [< Types.CounterOperation.t | Types.Cascading.t] => rule;
-let countersSet: list([< Types.CounterOperation.t]) => rule;
+let counterIncrement: [< Types.CounterIncrement.t | Types.Cascading.t] => rule;
+let countersIncrement: list([< Types.CounterIncrement.t]) => rule;
+let counterReset: [< Types.CounterReset.t | Types.Cascading.t] => rule;
+let countersReset: list([< Types.CounterReset.t]) => rule;
+let counterSet: [< Types.CounterSet.t | Types.Cascading.t] => rule;
+let countersSet: list([< Types.CounterSet.t]) => rule;
 
 let cursor: Types.Cursor.t => rule;
 

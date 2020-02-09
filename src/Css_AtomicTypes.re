@@ -1603,23 +1603,36 @@ module Counter = {
       };
 };
 
-module CounterOperation = {
-  type t = [
-    | `none
-    | `increment(string, int)
-    | `reset(string, int)
-    | `set(string, int)
-  ];
+module CounterIncrement = {
+  type t = [ | `none | `increment(string, int) ];
 
   let increment = (~value=1, name) => `increment((name, value));
+
+  let toString =
+    fun
+    | `none => "none"
+    | `increment(name, value) => name ++ " " ++ string_of_int(value);
+};
+
+module CounterReset = {
+  type t = [ | `none | `reset(string, int) ];
+
   let reset = (~value=0, name) => `reset((name, value));
+
+  let toString =
+    fun
+    | `none => "none"
+    | `reset(name, value) => name ++ " " ++ string_of_int(value);
+};
+
+module CounterSet = {
+  type t = [ | `none | `set(string, int) ];
+
   let set = (~value=0, name) => `set((name, value));
 
   let toString =
     fun
     | `none => "none"
-    | `increment(name, value) => name ++ " " ++ string_of_int(value)
-    | `reset(name, value) => name ++ " " ++ string_of_int(value)
     | `set(name, value) => name ++ " " ++ string_of_int(value);
 };
 
