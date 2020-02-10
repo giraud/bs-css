@@ -168,6 +168,7 @@ module Converter = {
     switch (x) {
     | #Content.t as c => Content.toString(c)
     | #Counter.t as c => Counter.toString(c)
+    | #Counters.t as c => Counters.toString(c)
     | #Gradient.t as g => Gradient.toString(g)
     | #Url.t as u => Url.toString(u)
     | #Cascading.t as c => Cascading.toString(c)

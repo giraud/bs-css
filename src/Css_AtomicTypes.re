@@ -1575,11 +1575,9 @@ module FontDisplay = {
 
 module Counter = {
   type style = [ ListStyleType.t | `unset];
-  type t = [ | `counter(string, style) | `counters(string, string, style)];
+  type t = [ | `counter(string, style)];
 
   let counter = (~style=`unset, name) => `counter((name, style));
-  let counters = (~style=`unset, ~separator="", name) =>
-    `counters((name, separator, style));
 
   let toString =
     fun
@@ -1588,17 +1586,28 @@ module Counter = {
       | `unset => "counter(" ++ counter ++ ")"
       | #ListStyleType.t as t =>
         "counter(" ++ counter ++ "," ++ ListStyleType.toString(t) ++ ")"
-      }
-    | `counters(counter, string, style) =>
+      };
+};
+
+module Counters = {
+  type style = [ ListStyleType.t | `unset];
+  type t = [ | `counters(string, string, style)];
+
+  let counters = (~style=`unset, ~separator="", name) =>
+    `counters((name, separator, style));
+
+  let toString =
+    fun
+    | `counters(name, separator, style) =>
       switch (style) {
-      | `unset => "counters(" ++ counter ++ ",\"" ++ string ++ "\")"
-      | #ListStyleType.t as t =>
+      | `unset => "counters(" ++ name ++ ",\"" ++ separator ++ "\")"
+      | #ListStyleType.t as s =>
         "counters("
-        ++ counter
+        ++ name
         ++ ",\""
-        ++ string
+        ++ separator
         ++ "\","
-        ++ ListStyleType.toString(t)
+        ++ ListStyleType.toString(s)
         ++ ")"
       };
 };

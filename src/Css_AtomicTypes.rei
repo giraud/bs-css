@@ -1165,13 +1165,23 @@ module FontDisplay: {
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/CSS/counter
- * https://developer.mozilla.org/en-US/docs/Web/CSS/counters
  */
 module Counter: {
   type style = [ ListStyleType.t | `unset];
-  type t = [ | `counter(string, style) | `counters(string, string, style)];
+  type t = [ | `counter(string, style)];
 
   let counter: (~style: style=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counters
+ */
+module Counters: {
+  type style = [ ListStyleType.t | `unset];
+  type t = [ | `counters(string, string, style)];
+
   let counters: (~style: style=?, ~separator: string=?, string) => t;
 
   let toString: t => string;

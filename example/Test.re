@@ -1411,7 +1411,7 @@ let make = () =>
             style([
               counterReset(Types.CounterReset.reset("foo", ~value=2)),
               before([
-                contentRule(Types.Counter.counters("foo", ~separator="@", ~style=`upperRoman)),
+                contentRule(Types.Counters.counters("foo", ~separator="@", ~style=`upperRoman)),
                 border(px(1), solid, black),
               ]),
             ])
