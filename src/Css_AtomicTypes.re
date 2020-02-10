@@ -1573,8 +1573,16 @@ module FontDisplay = {
     | `optional => "optional";
 };
 
+module CounterStyleType = {
+  type t = [ ListStyleType.t ];
+
+  let toString =
+    fun
+    | #ListStyleType.t as c => ListStyleType.toString(c);
+};
+
 module Counter = {
-  type style = [ ListStyleType.t | `unset];
+  type style = [ CounterStyleType.t | `unset];
   type t = [ | `counter(string, style)];
 
   let counter = (~style=`unset, name) => `counter((name, style));
@@ -1584,13 +1592,13 @@ module Counter = {
     | `counter(counter, style) =>
       switch (style) {
       | `unset => "counter(" ++ counter ++ ")"
-      | #ListStyleType.t as t =>
-        "counter(" ++ counter ++ "," ++ ListStyleType.toString(t) ++ ")"
+      | #CounterStyleType.t as t =>
+        "counter(" ++ counter ++ "," ++ CounterStyleType.toString(t) ++ ")"
       };
 };
 
 module Counters = {
-  type style = [ ListStyleType.t | `unset];
+  type style = [ CounterStyleType.t | `unset];
   type t = [ | `counters(string, string, style)];
 
   let counters = (~style=`unset, ~separator="", name) =>
@@ -1601,13 +1609,13 @@ module Counters = {
     | `counters(name, separator, style) =>
       switch (style) {
       | `unset => "counters(" ++ name ++ ",\"" ++ separator ++ "\")"
-      | #ListStyleType.t as s =>
+      | #CounterStyleType.t as s =>
         "counters("
         ++ name
         ++ ",\""
         ++ separator
         ++ "\","
-        ++ ListStyleType.toString(s)
+        ++ CounterStyleType.toString(s)
         ++ ")"
       };
 };

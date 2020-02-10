@@ -1164,10 +1164,19 @@ module FontDisplay: {
 };
 
 /**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counters
+ */
+module CounterStyleType: {
+  type t = [ ListStyleType.t];
+
+  let toString: t => string;
+};
+
+/**
  * https://developer.mozilla.org/en-US/docs/Web/CSS/counter
  */
 module Counter: {
-  type style = [ ListStyleType.t | `unset];
+  type style = [ CounterStyleType.t | `unset];
   type t = [ | `counter(string, style)];
 
   let counter: (~style: style=?, string) => t;
@@ -1179,7 +1188,7 @@ module Counter: {
  * https://developer.mozilla.org/en-US/docs/Web/CSS/counters
  */
 module Counters: {
-  type style = [ ListStyleType.t | `unset];
+  type style = [ CounterStyleType.t | `unset];
   type t = [ | `counters(string, string, style)];
 
   let counters: (~style: style=?, ~separator: string=?, string) => t;
