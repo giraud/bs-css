@@ -3,10 +3,13 @@
 .cache
 /dist
 *.iml
-/node_modules*
 /lib/bs
 /lib/js/example
-/example/bundle*.js
+/node_modules*
+/packages/**/node_modules*
+/packages/**/lib*
+/packages/**/dist*
+/packages/bs-css/example/bundle*.js
 finalOutput/*.js
 npm-debug.log
 *.js

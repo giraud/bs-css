@@ -1,35 +1,4 @@
 {
-  "name": "bs-css",
-  "version": "11.0.0",
-  "description": "BuckleScript bindings for emotion",
-  "scripts": {
-    "build": "bsb -make-world",
-    "predev": "npm run build",
-    "dev": "parcel example/index.html",
-    "start": "bsb -make-world -w",
-    "test": "jest",
-    "testw": "jest --watchAll"
-  },
-  "keywords": [
-    "emotion",
-    "bucklescript",
-    "reason",
-    "css"
-  ],
-  "author": "Andreas Møller <andreas@sentia.ai>",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/reasonml-labs/bs-css.git"
-  },
-  "dependencies": {
-    "emotion": "^10.0.7"
-  },
-  "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.8",
-    "bs-platform": "^7.0.1",
-    "jest": "^24.7.1",
-    "parcel-bundler": "^1.12.3",
-    "reason-react": "^0.7.0"
-  }
+    "private": true,
+    "workspaces": ["packages/**"]
 }
