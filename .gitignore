@@ -6,10 +6,10 @@
 /lib/bs
 /lib/js/example
 /node_modules*
-/packages/**/node_modules*
-/packages/**/lib*
-/packages/**/dist*
-/packages/bs-css/example/bundle*.js
+/**/node_modules*
+/**/lib*
+/**/dist*
+/bs-css/example/bundle*.js
 finalOutput/*.js
 npm-debug.log
 *.js

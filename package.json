@@ -1,4 +1,4 @@
 {
     "private": true,
-    "workspaces": ["packages/**"]
+    "workspaces": ["bs-css"]
 }

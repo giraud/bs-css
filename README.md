@@ -208,7 +208,7 @@ yarn dev
 
 ## Where is the documentation?
 
-You can check out [css.rei](packages/bs-css/src/Css.rei).
+You can check out [css.rei](bs-css/src/Css.rei).
 
 ## Thanks
 
