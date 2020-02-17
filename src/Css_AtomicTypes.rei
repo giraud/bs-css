@@ -1162,3 +1162,87 @@ module FontDisplay: {
 
   let toString: t => string;
 };
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counters
+ */
+module CounterStyleType: {
+  type t = [ ListStyleType.t];
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter
+ */
+module Counter: {
+  type style = [ CounterStyleType.t | `unset];
+  type t = [ | `counter(string, style)];
+
+  let counter: (~style: style=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counters
+ */
+module Counters: {
+  type style = [ CounterStyleType.t | `unset];
+  type t = [ | `counters(string, string, style)];
+
+  let counters: (~style: style=?, ~separator: string=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-increment
+ */
+module CounterIncrement: {
+  type t = [ | `none | `increment(string, int)];
+
+  let increment: (~value: int=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-reset
+ */
+module CounterReset: {
+  type t = [ | `none | `reset(string, int)];
+
+  let reset: (~value: int=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/counter-set
+ */
+module CounterSet: {
+  type t = [ | `none | `set(string, int)];
+
+  let set: (~value: int=?, string) => t;
+
+  let toString: t => string;
+};
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/content
+ */
+module Content: {
+  type t = [
+    | `none
+    | `normal
+    | `openQuote
+    | `closeQuote
+    | `noOpenQuote
+    | `noCloseQuote
+    | `attr(string)
+    | `text(string)
+  ];
+
+  let toString: t => string;
+};

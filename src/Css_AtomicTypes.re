@@ -1572,3 +1572,107 @@ module FontDisplay = {
     | `fallback => "fallback"
     | `optional => "optional";
 };
+
+module CounterStyleType = {
+  type t = [ ListStyleType.t ];
+
+  let toString =
+    fun
+    | #ListStyleType.t as c => ListStyleType.toString(c);
+};
+
+module Counter = {
+  type style = [ CounterStyleType.t | `unset];
+  type t = [ | `counter(string, style)];
+
+  let counter = (~style=`unset, name) => `counter((name, style));
+
+  let toString =
+    fun
+    | `counter(counter, style) =>
+      switch (style) {
+      | `unset => "counter(" ++ counter ++ ")"
+      | #CounterStyleType.t as t =>
+        "counter(" ++ counter ++ "," ++ CounterStyleType.toString(t) ++ ")"
+      };
+};
+
+module Counters = {
+  type style = [ CounterStyleType.t | `unset];
+  type t = [ | `counters(string, string, style)];
+
+  let counters = (~style=`unset, ~separator="", name) =>
+    `counters((name, separator, style));
+
+  let toString =
+    fun
+    | `counters(name, separator, style) =>
+      switch (style) {
+      | `unset => "counters(" ++ name ++ ",\"" ++ separator ++ "\")"
+      | #CounterStyleType.t as s =>
+        "counters("
+        ++ name
+        ++ ",\""
+        ++ separator
+        ++ "\","
+        ++ CounterStyleType.toString(s)
+        ++ ")"
+      };
+};
+
+module CounterIncrement = {
+  type t = [ | `none | `increment(string, int) ];
+
+  let increment = (~value=1, name) => `increment((name, value));
+
+  let toString =
+    fun
+    | `none => "none"
+    | `increment(name, value) => name ++ " " ++ string_of_int(value);
+};
+
+module CounterReset = {
+  type t = [ | `none | `reset(string, int) ];
+
+  let reset = (~value=0, name) => `reset((name, value));
+
+  let toString =
+    fun
+    | `none => "none"
+    | `reset(name, value) => name ++ " " ++ string_of_int(value);
+};
+
+module CounterSet = {
+  type t = [ | `none | `set(string, int) ];
+
+  let set = (~value=0, name) => `set((name, value));
+
+  let toString =
+    fun
+    | `none => "none"
+    | `set(name, value) => name ++ " " ++ string_of_int(value);
+};
+
+module Content = {
+  type t = [
+    | `none
+    | `normal
+    | `openQuote
+    | `closeQuote
+    | `noOpenQuote
+    | `noCloseQuote
+    | `attr(string)
+    | `text(string)
+  ];
+
+  let toString =
+    fun
+    | `none => "none"
+    | `normal => "normal"
+    | `openQuote => "open-quote"
+    | `closeQuote => "close-quote"
+    | `noOpenQuote => "no-open-quote"
+    | `noCloseQuote => "no-close-quote"
+    | `attr(name) => "attr(" ++ name ++ ")"
+    | `text(string) => {j|"$string"|j};
+};

@@ -357,7 +357,30 @@ let color: Types.Color.t => rule;
  */
 let columnCount: [< Types.ColumnCount.t | Types.Cascading.t] => rule;
 
-let contentRule: string => rule;
+let contentRule:
+  [<
+    Types.Content.t
+    | Types.Counter.t
+    | Types.Counters.t
+    | Types.Gradient.t
+    | Types.Url.t
+    | Types.Cascading.t
+  ] => rule;
+let contentRules:
+  list([<
+    Types.Content.t
+    | Types.Counter.t
+    | Types.Counters.t
+    | Types.Gradient.t
+    | Types.Url.t
+  ]) => rule;
+
+let counterIncrement: [< Types.CounterIncrement.t | Types.Cascading.t] => rule;
+let countersIncrement: list([< Types.CounterIncrement.t]) => rule;
+let counterReset: [< Types.CounterReset.t | Types.Cascading.t] => rule;
+let countersReset: list([< Types.CounterReset.t]) => rule;
+let counterSet: [< Types.CounterSet.t | Types.Cascading.t] => rule;
+let countersSet: list([< Types.CounterSet.t]) => rule;
 
 let cursor: Types.Cursor.t => rule;
 
