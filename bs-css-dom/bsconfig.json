@@ -1,5 +1,8 @@
 {
-  "name": "bs-css",
+  "name": "bs-css-dom",
+  "reason": {
+    "react-jsx": 3
+  },
   "refmt": 3,
   "warnings": {
     "number":  "+A-32-34-44",
@@ -10,11 +13,12 @@
       "dir": "src"
     },
     {
-      "dir": "__tests__",
+      "dir": "example",
       "type": "dev"
     }
   ],
-  "bs-dev-dependencies": [
-    "@glennsl/bs-jest"
+  "bs-dependencies": [
+    "reason-react",
+    "bs-css"
   ]
 }

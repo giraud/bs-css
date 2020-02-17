@@ -2,18 +2,29 @@
 
 module Types = Css_AtomicTypes;
 
-type rule;
+module type CssImplementationIntf = {
+  let mergeStyles: (. array(string)) => string;
+  let injectRule: (. Js.Json.t) => unit;
+  let injectRaw: (. string) => unit;
+  let make: (. Js.Json.t) => string;
+  let makeKeyFrames: (. Js.Dict.t(Js.Json.t)) => string;
+};
 
-type cache;
+type rule;
+type animationName;
+
+module Make:
+  (CssImplementationIntf) =>
+   {
+    let global: (string, list(rule)) => unit;
+    let insertRule: string => unit;
+    let merge: list(string) => string;
+    let style: list(rule) => string;
+    let keyframes: list((int, list(rule))) => animationName;
+  };
 
 let empty: list(rule);
-let merge: list(string) => string;
-let style: list(rule) => string;
 let toJson: list(rule) => Js.Json.t;
-let cache: cache;
-
-let global: (string, list(rule)) => unit;
-let insertRule: string => unit;
 
 let important: rule => rule;
 let label: string => rule;
@@ -365,15 +376,19 @@ let contentRule:
     | Types.Gradient.t
     | Types.Url.t
     | Types.Cascading.t
-  ] => rule;
+  ] =>
+  rule;
 let contentRules:
-  list([<
-    Types.Content.t
-    | Types.Counter.t
-    | Types.Counters.t
-    | Types.Gradient.t
-    | Types.Url.t
-  ]) => rule;
+  list(
+    [<
+      Types.Content.t
+      | Types.Counter.t
+      | Types.Counters.t
+      | Types.Gradient.t
+      | Types.Url.t
+    ],
+  ) =>
+  rule;
 
 let counterIncrement: [< Types.CounterIncrement.t | Types.Cascading.t] => rule;
 let countersIncrement: list([< Types.CounterIncrement.t]) => rule;
@@ -1718,10 +1733,6 @@ let transitions: list([ Transition.t]) => rule;
 /**
  * Animation
  */
-
-type animationName;
-
-let keyframes: list((int, list(rule))) => animationName;
 
 module Animation: {
   type t = [ | `value(string)];

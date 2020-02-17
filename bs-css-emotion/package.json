@@ -1,30 +1,33 @@
 {
-  "name": "bs-css",
-  "version": "12.0.0-beta01",
-  "description": "Css types",
+  "name": "bs-css-emotion",
+  "version": "0.0.2",
+  "description": "BuckleScript bindings for emotion",
   "scripts": {
     "build:bs": "bsb -make-world",
     "watch:bs": "bsb -make-world -w",
+    "dev": "parcel example/index.html",
     "test": "jest",
     "testw": "jest --watchAll"
   },
   "keywords": [
+    "emotion",
     "bucklescript",
     "reason",
     "css"
   ],
-  "author": "Andreas Møller <andreas@sentia.ai>",
+  "author": "Hervé Giraud <giraud.contact@yahoo.fr>",
   "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "dependencies": {
+    "bs-css": "^12.0.0-beta01",
     "emotion": "^10.0.7"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.8",
     "bs-platform": "^7.0.1",
-    "jest": "^24.7.1"
+    "parcel-bundler": "^1.12.3",
+    "reason-react": "^0.7.0"
   }
 }

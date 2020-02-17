@@ -1,0 +1,11 @@
+/.idea
+/.cache
+/example
+/lib/bs
+/lib/js/example
+/dist
+.nvmrc
+.merlin
+*.tgz
+*.iml
+*.lock

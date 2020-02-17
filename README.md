@@ -2,19 +2,25 @@
 
 Statically typed DSL for writing css in reason.
 
-Bs-css is a statically typed interface to [Emotion](https://github.com/emotion-js/emotion)
+The bs-css library contains type css core definitions, it has different implementations:
+- bs-css-emotion is a typed interface to [Emotion](https://github.com/emotion-js/emotion)
+- bs-css-dom is a typed interface to ReactDOMRe.Style
+
+If you know another implementation that can be added, send a link in an issue or create a PR.
 
 ## Installation
 
 ```sh
-npm install --save bs-css
+npm install --save bs-css-emotion
 or
-yarn add bs-css
+yarn add bs-css-emotion
 ```
 
-In your `bsconfig.json`, include `"bs-css"` in the `bs-dependencies`.
+In your `bsconfig.json`, include `"bs-css-emotion"` in the `bs-dependencies`.
 
-## Usage
+You can replace `bs-css-emotion` with `bs-css-dom` in the above instructions if you prefer to use React styles.
+
+## Usage for bs-css-emotion
 
 ```reason
 module Styles = {
@@ -200,15 +206,52 @@ Generates the following:
 
 Nothing is lost and everything ends up in the final stylesheet where normal overrides apply.
 
-## Development
+## Usage for bs-css-dom
 
-```sh
-yarn dev
+Use style instead of classname, for example:
+
+
+```reason
+module Styles = {
+  /* Open the Css module, so we can access the style properties below without prefixing them with Css. */
+  open Css;
+
+  let card = style([
+    display(flexBox),
+    flexDirection(column),
+    alignItems(stretch),
+    backgroundColor(white),
+    boxShadow(Shadow.box(~y=px(3), ~blur=px(5), rgba(0, 0, 0, 0.3))),
+    /* You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments. */
+    unsafe("-webkit-overflow-scrolling", "touch"),
+    /* You can place all your theme styles in Theme.re and access as normal Reason module */
+    padding(Theme.basePadding)
+  ]);
+
+  let title = style([
+    fontSize(rem(1.5)),
+    color(Theme.textColor),
+    marginBottom(Theme.basePadding)
+  ]);
+
+  let actionButton = disabled =>
+    style([
+      background(disabled ? darkgray : white),
+      color(black),
+      border(px(1), solid, black),
+      borderRadius(px(3)),
+    ])
+};
+
+<div style=Styles.card>
+  <h1 style=Styles.title> (ReasonReact.stringToElement("Hello")) </h1>
+  <button style=Styles.actionButton(false)>
+</div>
 ```
 
 ## Where is the documentation?
 
-You can check out [css.rei](bs-css/src/Css.rei).
+You can check out [Css.rei](bs-css/src/Css.rei).
 
 ## Thanks
 

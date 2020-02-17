@@ -1,4 +1,4 @@
 {
     "private": true,
-    "workspaces": ["bs-css"]
+    "workspaces": ["bs-css", "bs-css-emotion", "bs-css-dom"]
 }

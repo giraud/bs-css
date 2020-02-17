@@ -1,6 +1,5 @@
 module Types = Css_AtomicTypes;
-open Types;
-
+open Css_AtomicTypes;
 include Css_Colors;
 
 type rule =
@@ -8,38 +7,6 @@ type rule =
   | S(string, list(rule)) // Selector
   | PseudoClass(string, list(rule))
   | PseudoClassParam(string, string, list(rule));
-
-module type CssImplementation = {
-  type cache;
-  let cache: cache;
-  let mergeStyles: (. array(string)) => string;
-  let injectRule: (. Js.Json.t) => unit;
-  let injectRaw: (. string) => unit;
-  let make: (. Js.Json.t) => string;
-  let makeKeyFrames: (. Js.Dict.t(Js.Json.t)) => string;
-};
-
-module Emotion: CssImplementation = {
-  type cache;
-  [@bs.module "emotion"] external cache: cache = "cache";
-  [@bs.module "emotion"]
-  external mergeStyles: (. array(string)) => string = "cx";
-  [@bs.module "emotion"] external make: (. Js.Json.t) => string = "css";
-  [@bs.module "emotion"]
-  external injectRule: (. Js.Json.t) => unit = "injectGlobal";
-  [@bs.module "emotion"]
-  external injectRaw: (. string) => unit = "injectGlobal";
-  [@bs.module "emotion"]
-  external makeKeyFrames: (. Js.Dict.t(Js.Json.t)) => string = "keyframes";
-};
-module Implementation = Emotion;
-
-type cache = Implementation.cache;
-let cache = Implementation.cache;
-let merge = stylenames =>
-  Implementation.mergeStyles(. stylenames->Array.of_list);
-
-let insertRule = s => Implementation.injectRaw(. s);
 
 let rec ruleToDict = (dict, rule) => {
   switch (rule) {
@@ -58,21 +25,37 @@ let rec ruleToDict = (dict, rule) => {
 and toJson = rules =>
   rules->Belt.List.reduce(Js.Dict.empty(), ruleToDict)->Js.Json.object_;
 
-let style = rules => Implementation.make(. rules->toJson);
-let global = (selector, rules: list(rule)) =>
-  Implementation.injectRule(.
-    [(selector, toJson(rules))]->Js.Dict.fromList->Js.Json.object_,
-  );
-
 let addStop = (dict, (stop, rules)) => {
   Js.Dict.set(dict, Js.Int.toString(stop) ++ "%", toJson(rules));
   dict;
 };
 
-let keyframes = frames =>
-  Implementation.makeKeyFrames(.
-    List.fold_left(addStop, Js.Dict.empty(), frames),
-  );
+module type CssImplementationIntf = {
+  let mergeStyles: (. array(string)) => string;
+  let injectRule: (. Js.Json.t) => unit;
+  let injectRaw: (. string) => unit;
+  let make: (. Js.Json.t) => string;
+  let makeKeyFrames: (. Js.Dict.t(Js.Json.t)) => string;
+};
+
+module Make = (CssImplementation: CssImplementationIntf) => {
+  let merge = stylenames =>
+    CssImplementation.mergeStyles(. stylenames->Array.of_list);
+
+  let insertRule = s => CssImplementation.injectRaw(. s);
+
+  let style = rules => CssImplementation.make(. rules->toJson);
+
+  let global = (selector, rules: list(rule)) =>
+    CssImplementation.injectRule(.
+      [(selector, toJson(rules))]->Js.Dict.fromList->Js.Json.object_,
+    );
+
+  let keyframes = frames =>
+    CssImplementation.makeKeyFrames(.
+      List.fold_left(addStop, Js.Dict.empty(), frames),
+    );
+};
 
 let join = (strings, separator) => {
   let rec run = (strings, acc) =>
@@ -468,17 +451,11 @@ let countersIncrement = xs =>
 
 let counterReset = x => D("counter-reset", string_of_counter_reset(x));
 let countersReset = xs =>
-  D(
-    "counter-reset",
-    xs->Belt.List.map(string_of_counter_reset)->join(" "),
-  );
+  D("counter-reset", xs->Belt.List.map(string_of_counter_reset)->join(" "));
 
 let counterSet = x => D("counter-set", string_of_counter_set(x));
 let countersSet = xs =>
-  D(
-    "counter-set",
-    xs->Belt.List.map(string_of_counter_set)->join(" "),
-  );
+  D("counter-set", xs->Belt.List.map(string_of_counter_set)->join(" "));
 
 let cursor = x => D("cursor", Cursor.toString(x));
 
@@ -1236,7 +1213,7 @@ type listStyleType = ListStyleType.t;
 type repeatValue = RepeatValue.t;
 type outlineStyle = OutlineStyle.t;
 type transform = Transform.t;
-type gradient = Types.Gradient.t;
+type gradient = Gradient.t;
 
 /* Constructor aliases */
 
@@ -1335,15 +1312,15 @@ let skew = Transform.skew;
 let skewX = Transform.skewX;
 let skewY = Transform.skewY;
 
-let thin = Types.FontWeight.thin;
-let extraLight = Types.FontWeight.extraLight;
-let light = Types.FontWeight.light;
-let medium = Types.FontWeight.medium;
-let semiBold = Types.FontWeight.semiBold;
-let bold = Types.FontWeight.bold;
-let extraBold = Types.FontWeight.extraBold;
-let lighter = Types.FontWeight.lighter;
-let bolder = Types.FontWeight.bolder;
+let thin = FontWeight.thin;
+let extraLight = FontWeight.extraLight;
+let light = FontWeight.light;
+let medium = FontWeight.medium;
+let semiBold = FontWeight.semiBold;
+let bold = FontWeight.bold;
+let extraBold = FontWeight.extraBold;
+let lighter = FontWeight.lighter;
+let bolder = FontWeight.bolder;
 
 let linearGradient = Gradient.linearGradient;
 let repeatingLinearGradient = Gradient.repeatingLinearGradient;
@@ -1907,19 +1884,16 @@ let fontFace =
     );
   let fontDisplay =
     Belt.Option.mapWithDefault(fontDisplay, "", f =>
-      "font-display: " ++ Types.FontDisplay.toString(f) ++ ";"
+      "font-display: " ++ FontDisplay.toString(f) ++ ";"
     );
-  let asString = {j|@font-face {
-    font-family: $fontFamily;
-    src: $src;
-    $(fontStyle)
-    $(fontWeight)
-    $(fontDisplay)
-  }|j};
 
-  insertRule(asString);
-
-  fontFamily;
+  {j|@font-face {
+     font-family: $fontFamily;
+     src: $src;
+     $(fontStyle)
+     $(fontWeight)
+     $(fontDisplay)
+   }|j};
 };
 
 let textDecoration = x =>
@@ -1958,8 +1932,8 @@ let transformStyle = x =>
   );
 
 /**
-* Transition
-*/
+ * Transition
+ */
 module Transition = {
   type t = [ | `value(string)];
 

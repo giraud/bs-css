@@ -1,5 +1,8 @@
 {
-  "name": "bs-css",
+  "name": "bs-css-emotion",
+  "reason": {
+    "react-jsx": 3
+  },
   "refmt": 3,
   "warnings": {
     "number":  "+A-32-34-44",
@@ -10,11 +13,14 @@
       "dir": "src"
     },
     {
-      "dir": "__tests__",
+      "dir": "example",
       "type": "dev"
     }
   ],
+  "bs-dependencies": [
+    "bs-css"
+  ],
   "bs-dev-dependencies": [
-    "@glennsl/bs-jest"
+    "reason-react"
   ]
 }
