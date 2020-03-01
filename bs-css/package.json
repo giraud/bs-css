@@ -1,6 +1,6 @@
 {
   "name": "bs-css",
-  "version": "12.0.0-beta01",
+  "version": "12.0.0",
   "description": "Css types",
   "scripts": {
     "build:bs": "bsb -make-world",

@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [12.0.0] - 2019-03-01
+
+This release introduce 2 new packages: `bs-css-emotion` and `bs-css-dom`.
+You need to replace `bs-css` with `bs-css-emotion` in your `package.json` and `bsconfig.json`.
+
 - Add cursor aliases - [#179](https://github.com/SentiaAnalytics/bs-css/issues/179)
 - Add objectPosition by [@damianfral](https://github.com/damianfral) - [#177](https://github.com/SentiaAnalytics/bs-css/pull/177)
 - Add support for fontDisplay in fontFace by [@bloodyowl](https://github.com/bloodyowl) - [#176](https://github.com/SentiaAnalytics/bs-css/pull/176)
@@ -8,6 +13,7 @@
 
 ### Breaking change
 
+- Redesign content rule to support all possible values by  [@erykpiast](https://github.com/erykpiast) - [#180](https://github.com/SentiaAnalytics/bs-css/pull/180)
 - FontFamily accepts cascading and predefined generic font names by [@erykpiast](https://github.com/erykpiast) - [#171](https://github.com/SentiaAnalytics/bs-css/pull/171)
  
   if you have code like this:
@@ -165,7 +171,8 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v11.0.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v12.0.0...HEAD
+[12.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v11.0.0...v12.0.0
 [11.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.1...v11.0.0
 [10.0.1]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.0...v10.0.1
 [10.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v9.0.1...v10.0.0
