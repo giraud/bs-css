@@ -16,7 +16,7 @@ or
 yarn add bs-css-emotion
 ```
 
-In your `bsconfig.json`, include `"bs-css-emotion"` in the `bs-dependencies`.
+In your `bsconfig.json`, include `"bs-css"` and `"bs-css-emotion"` in the `bs-dependencies`.
 
 You can replace `bs-css-emotion` with `bs-css-dom` in the above instructions if you prefer to use React styles.
 
