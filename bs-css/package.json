@@ -19,9 +19,6 @@
     "type": "git",
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
-  "dependencies": {
-    "emotion": "^10.0.7"
-  },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.8",
     "bs-platform": "^7.0.1",
