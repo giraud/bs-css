@@ -1,9 +1,9 @@
 ## [Unreleased]
 
-## [12.0.0] - 2019-03-01
+## [12.0.1] - 2019-03-04
 
 This release introduce 2 new packages: `bs-css-emotion` and `bs-css-dom`.
-You need to replace `bs-css` with `bs-css-emotion` in your `package.json` and `bsconfig.json`.
+You need to replace `bs-css` with `bs-css-emotion` (or `bs-css-dom`) in your `package.json`, and you need to add either `bs-css-emotion` or `bs-css-dom` in your `bsconfig.json`.
 
 - Add cursor aliases - [#179](https://github.com/SentiaAnalytics/bs-css/issues/179)
 - Add objectPosition by [@damianfral](https://github.com/damianfral) - [#177](https://github.com/SentiaAnalytics/bs-css/pull/177)
