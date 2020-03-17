@@ -888,6 +888,27 @@ module GridArea: {
 };
 
 /**
+  https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter
+  */
+module BackdropFilter: {
+  type t = [
+    | `blur(Length.t)
+    | `brightness([ | `num(int) | `percent(float)])
+    | `contrast([ | `num(int) | `percent(float)])
+    | `dropShadow([ | `num(int) | `percent(float)])
+    | `grayscale([ | `num(int) | `percent(float)])
+    | `hueRotate([ | Angle.t | `zero])
+    | `invert([ | `num(int) | `percent(float)])
+    | `none
+    | `opacity([ | `num(int) | `percent(float)])
+    | `saturate([ | `num(int) | `percent(float)])
+    | `sepia([ | `num(int) | `percent(float)])
+  ];
+
+  let toString: t => string;
+};
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/background-attachment
  */
 module BackgroundAttachment: {
