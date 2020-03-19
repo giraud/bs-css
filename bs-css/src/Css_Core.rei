@@ -146,6 +146,13 @@ let animationPlayState: Types.AnimationPlayState.t => rule;
  */
 let animationTimingFunction: Types.TimingFunction.t => rule;
 
+/**
+  The backdrop-filter CSS property lets you apply graphical effects such as blurring or color shifting to the 
+  area behind an element. Because it applies to everything behind the element, to see the effect you must 
+  make the element or its background at least partially transparent.
+  */
+let backdropFilter: list(Types.BackdropFilter.t) => rule;
+
 /* Warning: experimental */
 let backfaceVisibility:
   [< Types.BackfaceVisibility.t | Types.Cascading.t] => rule;
