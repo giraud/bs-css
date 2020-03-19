@@ -1328,6 +1328,11 @@ let initial: [> Types.Cascading.t];
 let inherit_: [> Types.Cascading.t];
 let unset: [> Types.Cascading.t];
 
+// shared
+let auto: [> | `auto];
+let none: [> | `none];
+let text: [> | `text];
+
 let pct: float => [> Types.Percentage.t];
 
 let ch: float => [> | `ch(float)];
@@ -1370,7 +1375,6 @@ let oblique: [> Types.FontStyle.t];
 let hidden: [> | `hidden];
 let visible: [> | `visible];
 let scroll: [> | `scroll];
-let auto: [> | `auto];
 
 let rgb: (int, int, int) => [> Types.Color.t];
 let rgba: (int, int, int, float) => [> Types.Color.t];
@@ -1382,7 +1386,6 @@ let hex: string => [> Types.Color.t];
 let transparent: [> Types.Color.t];
 let currentColor: [> Types.Color.t];
 
-let none: [> | `none];
 let local: [> | `local];
 
 let paddingBox: [> | `paddingBox];
@@ -1488,7 +1491,6 @@ let minContent: [> | `minContent];
 let fitContent: [> | `fitContent];
 
 let all: [> | `all];
-let text: [> | `text];
 
 let round: [> | `round];
 let miter: [> | `miter];
@@ -1561,6 +1563,10 @@ let radialGradient:
 let repeatingRadialGradient:
   list((Types.Length.t, Types.Color.t)) => [> Types.Gradient.t];
 
+let areas: list(string) => [> Types.GridTemplateAreas.t];
+let ident: string => [> Types.GridArea.t];
+let numIdent: (int, string) => [> Types.GridArea.t];
+
 // cursor aliases
 //let auto: [> Types.Cursor.t];
 //let default: [> Types.Cursor.t];
@@ -1572,7 +1578,7 @@ let progress: [> Types.Cursor.t];
 let wait: [> Types.Cursor.t];
 let cell: [> Types.Cursor.t];
 let crosshair: [> Types.Cursor.t];
-let text: [> Types.Cursor.t];
+//let text: [> Types.Cursor.t];
 let verticalText: [> Types.Cursor.t];
 let alias: [> Types.Cursor.t];
 let copy: [> Types.Cursor.t];

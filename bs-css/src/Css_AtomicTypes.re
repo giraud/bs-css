@@ -1202,6 +1202,8 @@ module TextTransform = {
 module GridTemplateAreas = {
   type t = [ | `none | `areas(list(string))];
 
+  let areas = x => `areas(x);
+
   let toString =
     fun
     | `none => "none"
@@ -1219,6 +1221,12 @@ module GridArea = {
     | `numIdent(int, string)
     | `span([ | `num(int) | `ident(string)])
   ];
+
+  let auto = `auto;
+  let ident = x => `ident(x);
+  let num = x => `num(x);
+  let numIdent = (x, y) => `numIdent((x, y));
+  let span = x => `span(x);
 
   let toString = t => {
     switch (t) {
@@ -1574,7 +1582,7 @@ module FontDisplay = {
 };
 
 module CounterStyleType = {
-  type t = [ ListStyleType.t ];
+  type t = [ ListStyleType.t];
 
   let toString =
     fun
@@ -1621,7 +1629,7 @@ module Counters = {
 };
 
 module CounterIncrement = {
-  type t = [ | `none | `increment(string, int) ];
+  type t = [ | `none | `increment(string, int)];
 
   let increment = (~value=1, name) => `increment((name, value));
 
@@ -1632,7 +1640,7 @@ module CounterIncrement = {
 };
 
 module CounterReset = {
-  type t = [ | `none | `reset(string, int) ];
+  type t = [ | `none | `reset(string, int)];
 
   let reset = (~value=0, name) => `reset((name, value));
 
@@ -1643,7 +1651,7 @@ module CounterReset = {
 };
 
 module CounterSet = {
-  type t = [ | `none | `set(string, int) ];
+  type t = [ | `none | `set(string, int)];
 
   let set = (~value=0, name) => `set((name, value));
 

@@ -872,6 +872,8 @@ module TextTransform: {
 module GridTemplateAreas: {
   type t = [ | `none | `areas(list(string))];
 
+  let areas: list(string) => [> t];
+
   let toString: t => string;
 };
 
@@ -883,6 +885,12 @@ module GridArea: {
     | `numIdent(int, string)
     | `span([ | `num(int) | `ident(string)])
   ];
+
+  let auto: [> t];
+  let ident: string => [> t];
+  let num: int => [> t];
+  let numIdent: (int, string) => [> t];
+  let span: [ | `num(int) | `ident(string)] => [> t];
 
   let toString: t => string;
 };

@@ -1221,6 +1221,11 @@ let initial = Cascading.initial;
 let inherit_ = Cascading.inherit_;
 let unset = Cascading.unset;
 
+// shared
+let auto = `auto;
+let none = `none;
+let text = `text;
+
 let pct = Percentage.pct;
 
 let ch = Length.ch;
@@ -1267,7 +1272,6 @@ let oblique = FontStyle.oblique;
 let hidden = `hidden;
 let visible = `visible;
 let scroll = `scroll;
-let auto = `auto;
 
 let rgb = Color.rgb;
 let rgba = Color.rgba;
@@ -1327,6 +1331,10 @@ let repeatingLinearGradient = Gradient.repeatingLinearGradient;
 let radialGradient = Gradient.radialGradient;
 let repeatingRadialGradient = Gradient.repeatingRadialGradient;
 
+let areas = GridTemplateAreas.areas;
+let ident = GridArea.ident;
+let numIdent = GridArea.numIdent;
+
 // cursor aliases
 //let auto = Cursor.auto;
 //let default = Cursor.default;
@@ -1338,7 +1346,7 @@ let progress = Cursor.progress;
 let wait = Cursor.wait;
 let cell = Cursor.cell;
 let crosshair = Cursor.crosshair;
-let text = Cursor.text;
+//let text = Cursor.text;
 let verticalText = Cursor.verticalText;
 let alias = Cursor.alias;
 let copy = Cursor.copy;
@@ -1402,13 +1410,9 @@ let forwards = `forwards;
 let infinite = `infinite;
 
 let inline = `inline;
-let block = `block;
 let contents = `contents;
-let flexBox = `flex;
-let grid = `grid;
 let inlineBlock = `inlineBlock;
 let inlineFlex = `inlineFlex;
-let inlineGrid = `inlineGrid;
 let inlineTable = `inlineTable;
 let listItem = `listItem;
 let runIn = `runIn;
@@ -1424,7 +1428,6 @@ let tableRow = `tableRow;
 
 let local = `local;
 let localUrl = x => `localUrl(x);
-let none = `none;
 let noRepeat = `noRepeat;
 let space = `space;
 let nowrap = `nowrap;
@@ -1444,7 +1447,6 @@ let spaceAround = `spaceAround;
 let spaceBetween = `spaceBetween;
 let spaceEvenly = `spaceEvenly;
 let stretch = `stretch;
-let text = `text;
 let url = x => `url(x);
 let wrap = `wrap;
 let wrapReverse = `wrapReverse;
