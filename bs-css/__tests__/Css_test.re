@@ -168,6 +168,40 @@ describe("Resize", () =>
   )
 );
 
+describe("Backdrop filter", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(backdropFilter([`none])),
+        r(backdropFilter([`blur(`px(10)), `brightness(`percent(42.0))])),
+        r(
+          backdropFilter([
+            `contrast(`num(10)),
+            `dropShadow(`percent(0.5)),
+          ]),
+        ),
+        r(
+          backdropFilter([
+            `grayscale(`percent(99.9)),
+            `hueRotate(`deg(90.0)),
+          ]),
+        ),
+        r(backdropFilter([`invert(`num(30)), `opacity(`percent(10.0))])),
+        r(backdropFilter([`saturate(`num(30)), `sepia(`percent(10.0))])),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"backdrop-filter": "none"},
+         {"backdrop-filter": "blur(10px), brightness(42%)"},
+         {"backdrop-filter": "contrast(10), drop-shadow(0.5%)"},
+         {"backdrop-filter": "grayscale(99.9%), hue-rotate(90deg)"},
+         {"backdrop-filter": "invert(30), opacity(10%)"},
+         {"backdrop-filter": "saturate(30), sepia(10%)"},
+       ))
+  )
+);
+
 describe("Gradient background", () =>
   test("test values", () =>
     expect(
