@@ -253,6 +253,12 @@ let backfaceVisibility = x =>
     },
   );
 
+let backdropFilter = x =>
+  D(
+    "backdrop-filter",
+    x->Belt.List.map(Types.BackdropFilter.toString)->join(", "),
+  );
+
 let backgroundAttachment = x =>
   D(
     "backgroundAttachment",
