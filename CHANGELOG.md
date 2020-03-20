@@ -1,6 +1,11 @@
 ## [Unreleased]
 
-## [12.0.1] - 2019-03-04
+## [12.1.0] - 2020-03-20
+
+- Add `backdropFilter` by [@Arnarkari93](https://github.com/Arnarkari93) - [#186](https://github.com/SentiaAnalytics/bs-css/pull/186)
+- Add aliases to `GridTemplateAreas` and `GridArea` - [#185](https://github.com/SentiaAnalytics/bs-css/issues/185)
+
+## [12.0.1] - 2020-03-04
 
 This release introduce 2 new packages: `bs-css-emotion` and `bs-css-dom`.
 You need to replace `bs-css` with `bs-css-emotion` (or `bs-css-dom`) in your `package.json`, and you need to add either `bs-css-emotion` or `bs-css-dom` in your `bsconfig.json`.
