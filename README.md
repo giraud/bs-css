@@ -251,7 +251,7 @@ module Styles = {
 
 ## Where is the documentation?
 
-You can check out [Css.rei](bs-css/src/Css.rei).
+You can check out [Css_Core.rei](bs-css/src/Css_Core.rei).
 
 ## Thanks
 
