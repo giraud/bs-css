@@ -750,7 +750,7 @@ module AlignItems: {
  https://developer.mozilla.org/docs/Web/CSS/align-self
  */
 module AlignSelf: {
-  type t = [ | `auto | `normal];
+  type t = [ | `auto | `normal | `stretch];
 
   let toString: t => string;
 };
