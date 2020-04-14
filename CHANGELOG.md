@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+## [12.2.0] - 2020-04-14
+
+- Add missing "stretch" property for alignSelf by [@bloodyowl](https://github.com/bloodyowl) - [#192](https://github.com/SentiaAnalytics/bs-css/pull/192)
+- Udpate incorrect link in README by [@mfakhrusy](https://github.com/mfakhrusy) - [#191](https://github.com/SentiaAnalytics/bs-css/pull/191)
+
+bs-css-dom@1.2.0, bs-css-emotion@1.2.0
+
 ## [12.1.0] - 2020-03-20
 
 - Add `backdropFilter` by [@Arnarkari93](https://github.com/Arnarkari93) - [#186](https://github.com/SentiaAnalytics/bs-css/pull/186)
@@ -176,7 +183,9 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v12.0.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v12.2.0...HEAD
+[12.2.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.1.0...v12.2.0
+[12.1.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.0.0...v12.1.0
 [12.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v11.0.0...v12.0.0
 [11.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.1...v11.0.0
 [10.0.1]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.0...v10.0.1
