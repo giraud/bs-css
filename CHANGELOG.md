@@ -185,8 +185,8 @@ Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github
 
 [Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/v12.2.0...HEAD
 [12.2.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.1.0...v12.2.0
-[12.1.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.0.0...v12.1.0
-[12.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v11.0.0...v12.0.0
+[12.1.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.0.1...v12.1.0
+[12.0.1]: https://github.com/SentiaAnalytics/bs-css/compare/v11.0.0...v12.0.1
 [11.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.1...v11.0.0
 [10.0.1]: https://github.com/SentiaAnalytics/bs-css/compare/v10.0.0...v10.0.1
 [10.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v9.0.1...v10.0.0
