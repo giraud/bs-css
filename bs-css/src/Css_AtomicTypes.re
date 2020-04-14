@@ -1052,12 +1052,13 @@ module AlignItems = {
 };
 
 module AlignSelf = {
-  type t = [ | `auto | `normal];
+  type t = [ | `auto | `normal | `stretch];
 
   let toString =
     fun
     | `auto => "auto"
-    | `normal => "normal";
+    | `normal => "normal"
+    | `stretch => "stretch";
 };
 
 module AlignContent = {
