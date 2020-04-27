@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Update SVG fill property - [#193](https://github.com/SentiaAnalytics/bs-css/issues/193)
+
 ## [12.2.0] - 2020-04-14
 
 - Add missing "stretch" property for alignSelf by [@bloodyowl](https://github.com/bloodyowl) - [#192](https://github.com/SentiaAnalytics/bs-css/pull/192)

@@ -2056,7 +2056,15 @@ let animationName = x => D("animationName", x);
  * SVG
  */
 module SVG = {
-  let fill = x => D("fill", Color.toString(x));
+  let fill = x =>
+    D(
+      "fill",
+      switch (x) {
+      | #Types.SVG.Fill.t as f => Types.SVG.Fill.toString(f)
+      | #Types.Color.t as c => Types.Color.toString(c)
+      | #Types.Url.t as u => Types.Url.toString(u)
+      },
+    );
   let fillOpacity = opacity => D("fillOpacity", Js.Float.toString(opacity));
   let fillRule = x =>
     D(

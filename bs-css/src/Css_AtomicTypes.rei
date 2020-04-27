@@ -905,7 +905,7 @@ module BackdropFilter: {
     | `contrast([ | `num(int) | `percent(float)])
     | `dropShadow([ | `num(int) | `percent(float)])
     | `grayscale([ | `num(int) | `percent(float)])
-    | `hueRotate([ | Angle.t | `zero])
+    | `hueRotate([ Angle.t | `zero])
     | `invert([ | `num(int) | `percent(float)])
     | `none
     | `opacity([ | `num(int) | `percent(float)])
@@ -1274,4 +1274,15 @@ module Content: {
   ];
 
   let toString: t => string;
+};
+
+module SVG: {
+  module Fill: {
+    type t = [ | `none | `contextFill | `contextStroke];
+
+    let contextFill: [> t];
+    let contextStroke: [> t];
+
+    let toString: t => string;
+  };
 };

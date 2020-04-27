@@ -1248,44 +1248,46 @@ module GridArea = {
 };
 
 module BackdropFilter = {
-type t = [
-  | `blur(Length.t)
-  | `brightness([ | `num(int) | `percent(float)])
-  | `contrast([ | `num(int) | `percent(float)])
-  | `dropShadow([ | `num(int) | `percent(float)])
-  | `grayscale([ | `num(int) | `percent(float)])
-  | `hueRotate([ | Angle.t | `zero])
-  | `invert([ | `num(int) | `percent(float)])
-  | `none
-  | `opacity([ | `num(int) | `percent(float)])
-  | `saturate([ | `num(int) | `percent(float)])
-  | `sepia([ | `num(int) | `percent(float)])
-];
+  type t = [
+    | `blur(Length.t)
+    | `brightness([ | `num(int) | `percent(float)])
+    | `contrast([ | `num(int) | `percent(float)])
+    | `dropShadow([ | `num(int) | `percent(float)])
+    | `grayscale([ | `num(int) | `percent(float)])
+    | `hueRotate([ Angle.t | `zero])
+    | `invert([ | `num(int) | `percent(float)])
+    | `none
+    | `opacity([ | `num(int) | `percent(float)])
+    | `saturate([ | `num(int) | `percent(float)])
+    | `sepia([ | `num(int) | `percent(float)])
+  ];
 
-let string_of_percent = (p) => Js.Float.toString(p) ++ "%";
+  let string_of_percent = p => Js.Float.toString(p) ++ "%";
 
-let toString =
-  fun
+  let toString =
+    fun
     | `blur(#Length.t as b) => "blur(" ++ Length.toString(b) ++ ")"
-    | `brightness(`num b) => "brightness(" ++ string_of_int(b) ++ ")"
-    | `brightness(`percent b) => "brightness(" ++ string_of_percent(b) ++ ")"
-    | `contrast(`num c) => "contrast(" ++ string_of_int(c) ++ ")"
-    | `contrast(`percent c) => "contrast(" ++ string_of_percent(c) ++ ")"
-    | `dropShadow(`num i) => "drop-shadow(" ++ string_of_int(i) ++ ")"
-    | `dropShadow(`percent i) => "drop-shadow(" ++ string_of_percent(i) ++ ")"
-    | `grayscale(`num i) => "grayscale(" ++ string_of_int(i) ++ ")"
-    | `grayscale(`percent i) => "grayscale(" ++ string_of_percent(i) ++ ")"
+    | `brightness(`num(b)) => "brightness(" ++ string_of_int(b) ++ ")"
+    | `brightness(`percent(b)) =>
+      "brightness(" ++ string_of_percent(b) ++ ")"
+    | `contrast(`num(c)) => "contrast(" ++ string_of_int(c) ++ ")"
+    | `contrast(`percent(c)) => "contrast(" ++ string_of_percent(c) ++ ")"
+    | `dropShadow(`num(i)) => "drop-shadow(" ++ string_of_int(i) ++ ")"
+    | `dropShadow(`percent(i)) =>
+      "drop-shadow(" ++ string_of_percent(i) ++ ")"
+    | `grayscale(`num(i)) => "grayscale(" ++ string_of_int(i) ++ ")"
+    | `grayscale(`percent(i)) => "grayscale(" ++ string_of_percent(i) ++ ")"
     | `hueRotate(#Angle.t as h) => "hue-rotate(" ++ Angle.toString(h) ++ ")"
     | `hueRotate(`zero) => "hue-rotate(0deg)"
-    | `invert(`num i) => "invert(" ++ string_of_int(i) ++ ")"
-    | `invert(`percent i) => "invert(" ++ string_of_percent(i) ++ ")"
+    | `invert(`num(i)) => "invert(" ++ string_of_int(i) ++ ")"
+    | `invert(`percent(i)) => "invert(" ++ string_of_percent(i) ++ ")"
     | `none => "none"
-    | `opacity(`num i) => "opacity(" ++ string_of_int(i) ++ ")"
-    | `opacity(`percent i) => "opacity(" ++ string_of_percent(i) ++ ")"
-    | `saturate(`num i) => "saturate(" ++ string_of_int(i) ++ ")"
-    | `saturate(`percent i) => "saturate(" ++ string_of_percent(i) ++ ")"
-    | `sepia(`num i) => "sepia(" ++ string_of_int(i) ++ ")"
-    | `sepia(`percent i) => "sepia(" ++ string_of_percent(i) ++ ")"
+    | `opacity(`num(i)) => "opacity(" ++ string_of_int(i) ++ ")"
+    | `opacity(`percent(i)) => "opacity(" ++ string_of_percent(i) ++ ")"
+    | `saturate(`num(i)) => "saturate(" ++ string_of_int(i) ++ ")"
+    | `saturate(`percent(i)) => "saturate(" ++ string_of_percent(i) ++ ")"
+    | `sepia(`num(i)) => "sepia(" ++ string_of_int(i) ++ ")"
+    | `sepia(`percent(i)) => "sepia(" ++ string_of_percent(i) ++ ")";
 };
 
 module BackgroundAttachment = {
@@ -1725,4 +1727,19 @@ module Content = {
     | `noCloseQuote => "no-close-quote"
     | `attr(name) => "attr(" ++ name ++ ")"
     | `text(string) => {j|"$string"|j};
+};
+
+module SVG = {
+  module Fill = {
+    type t = [ | `none | `contextFill | `contextStroke];
+
+    let contextFill = `contextFill;
+    let contextStroke = `contextStroke;
+
+    let toString =
+      fun
+      | `none => "none"
+      | `contextFill => "context-fill"
+      | `contextStroke => "context-stroke";
+  };
 };

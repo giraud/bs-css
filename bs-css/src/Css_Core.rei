@@ -147,10 +147,10 @@ let animationPlayState: Types.AnimationPlayState.t => rule;
 let animationTimingFunction: Types.TimingFunction.t => rule;
 
 /**
-  The backdrop-filter CSS property lets you apply graphical effects such as blurring or color shifting to the 
-  area behind an element. Because it applies to everything behind the element, to see the effect you must 
-  make the element or its background at least partially transparent.
-  */
+ The backdrop-filter CSS property lets you apply graphical effects such as blurring or color shifting to the
+ area behind an element. Because it applies to everything behind the element, to see the effect you must
+ make the element or its background at least partially transparent.
+ */
 let backdropFilter: list(Types.BackdropFilter.t) => rule;
 
 /* Warning: experimental */
@@ -1788,7 +1788,7 @@ let animationName: animationName => rule;
  *** */
 
 module SVG: {
-  let fill: Types.Color.t => rule;
+  let fill: [ Types.SVG.Fill.t | Types.Color.t | Types.Url.t] => rule;
   let fillRule: [ | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
   let stroke: Types.Color.t => rule;
