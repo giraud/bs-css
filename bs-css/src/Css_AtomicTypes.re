@@ -22,6 +22,20 @@ module Cascading = {
     | `unset => "unset";
 };
 
+module Var = {
+  type t = [ | `var(string) | `varDefault(string, string)];
+
+  let var = x => `var(x);
+  let varDefault = (x, default) => `varDefault((x, default));
+
+  let prefix = x => Js.String.startsWith("--", x) ? x : "--" ++ x;
+
+  let toString =
+    fun
+    | `var(x) => "var(" ++ prefix(x) ++ ")"
+    | `varDefault(x, v) => "var(" ++ prefix(x) ++ "," ++ v ++ ")";
+};
+
 module Time = {
   type t = [ | `s(float) | `ms(float)];
 

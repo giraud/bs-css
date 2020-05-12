@@ -154,21 +154,25 @@ module Converter = {
     | #Counters.t as c => Counters.toString(c)
     | #Gradient.t as g => Gradient.toString(g)
     | #Url.t as u => Url.toString(u)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     };
   let string_of_counter_increment = x =>
     switch (x) {
     | #CounterIncrement.t as o => CounterIncrement.toString(o)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     };
   let string_of_counter_reset = x =>
     switch (x) {
     | #CounterReset.t as o => CounterReset.toString(o)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     };
   let string_of_counter_set = x =>
     switch (x) {
     | #CounterSet.t as o => CounterSet.toString(o)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     };
 };
@@ -199,6 +203,7 @@ let alignContent = x =>
     | #NormalAlignment.t as na => NormalAlignment.toString(na)
     | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
     | #DistributedAlignment.t as da => DistributedAlignment.toString(da)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -210,6 +215,7 @@ let alignItems = x =>
     | #AlignItems.t as ai => AlignItems.toString(ai)
     | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
     | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -221,6 +227,7 @@ let alignSelf = x =>
     | #AlignSelf.t as a => AlignSelf.toString(a)
     | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
     | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -249,6 +256,7 @@ let backfaceVisibility = x =>
     "backfaceVisibility",
     switch (x) {
     | #BackfaceVisibility.t as bv => BackfaceVisibility.toString(bv)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -264,6 +272,7 @@ let backgroundAttachment = x =>
     "backgroundAttachment",
     switch (x) {
     | #BackgroundAttachment.t as ba => BackgroundAttachment.toString(ba)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -275,6 +284,7 @@ let backgroundClip = x =>
     "backgroundClip",
     switch (x) {
     | #BackgroundClip.t as bc => BackgroundClip.toString(bc)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -294,6 +304,7 @@ let backgroundOrigin = x =>
     "backgroundOrigin",
     switch (x) {
     | #BackgroundOrigin.t as bo => BackgroundOrigin.toString(bo)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -316,6 +327,7 @@ let string_of_backgroundposition =
       }
     )
   | #Length.t as l => Length.toString(l)
+  | #Var.t as va => Var.toString(va)
   | #Cascading.t as c => Cascading.toString(c);
 
 let backgroundPosition = x =>
@@ -346,6 +358,7 @@ let backgroundRepeat = x =>
     | #BackgroundRepeat.t as br => BackgroundRepeat.toString(br)
     | `hv(#BackgroundRepeat.horizontal as h, #BackgroundRepeat.vertical as v) =>
       BackgroundRepeat.toString(h) ++ " " ++ BackgroundRepeat.toString(v)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -365,6 +378,7 @@ let borderCollapse = x =>
     "borderCollapse",
     switch (x) {
     | #BorderCollapse.t as bc => BorderCollapse.toString(bc)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -399,6 +413,7 @@ let bottom = x =>
     "bottom",
     switch (x) {
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -408,6 +423,7 @@ let boxSizing = x =>
     "boxSizing",
     switch (x) {
     | #BoxSizing.t as bs => BoxSizing.toString(bs)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -417,6 +433,7 @@ let clear = x =>
     "clear",
     switch (x) {
     | #Clear.t as cl => Clear.toString(cl)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -428,17 +445,26 @@ let clipPath = x =>
     | #ClipPath.t as cp => ClipPath.toString(cp)
     | #Url.t as u => Url.toString(u)
     | #GeometyBox.t as gb => GeometyBox.toString(gb)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
-let color = x => D("color", Color.toString(x));
+let color = x =>
+  D(
+    "color",
+    switch (x) {
+    | #Color.t as co => Color.toString(co)
+    | #Var.t as va => Var.toString(va)
+    },
+  );
 
 let columnCount = x =>
   D(
     "columnCount",
     switch (x) {
     | #ColumnCount.t as cc => ColumnCount.toString(cc)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -470,6 +496,7 @@ let direction = x =>
     "direction",
     switch (x) {
     | #Direction.t as d => Direction.toString(d)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -484,6 +511,7 @@ let display = x =>
     | #DisplayInternal.t as i' => DisplayInternal.toString(i')
     | #DisplayBox.t as b => DisplayBox.toString(b)
     | #DisplayLegacy.t as l' => DisplayLegacy.toString(l')
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -502,6 +530,7 @@ let flexDirection = x =>
     "flexDirection",
     switch (x) {
     | #FlexDirection.t as fd => FlexDirection.toString(fd)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -515,6 +544,7 @@ let flexWrap = x =>
     "flexWrap",
     switch (x) {
     | #FlexWrap.t as fw => FlexWrap.toString(fw)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -524,6 +554,7 @@ let float = x =>
     "float",
     switch (x) {
     | #Float.t as f => Float.toString(f)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -533,6 +564,7 @@ let fontFamily = x =>
     "fontFamily",
     switch (x) {
     | #FontFamilyName.t as n => FontFamilyName.toString(n)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -545,6 +577,7 @@ let fontSize = x =>
     "fontSize",
     switch (x) {
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -554,6 +587,7 @@ let fontStyle = x =>
     "fontStyle",
     switch (x) {
     | #FontStyle.t as f => FontStyle.toString(f)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -563,6 +597,7 @@ let fontVariant = x =>
     "fontVariant",
     switch (x) {
     | #FontVariant.t as f => FontVariant.toString(f)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -572,6 +607,7 @@ let fontWeight = x =>
     "fontWeight",
     switch (x) {
     | #FontWeight.t as f => FontWeight.toString(f)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -581,6 +617,7 @@ let gridAutoFlow = x =>
     "gridAutoFlow",
     switch (x) {
     | #GridAutoFlow.t as f => GridAutoFlow.toString(f)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -595,6 +632,7 @@ let gridColumnGap = x =>
     | #GridColumnGap.t as gcg => GridColumnGap.toString(gcg)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -612,6 +650,7 @@ let gridGap = x =>
     switch (x) {
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -622,6 +661,7 @@ let gridRowGap = x =>
     switch (x) {
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -637,6 +677,7 @@ let height = x =>
     | #Height.t as h => Height.toString(h)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -648,6 +689,7 @@ let justifyContent = x =>
     | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
     | #NormalAlignment.t as na => NormalAlignment.toString(na)
     | #DistributedAlignment.t as da => DistributedAlignment.toString(da)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -657,6 +699,7 @@ let left = x =>
     "left",
     switch (x) {
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -667,6 +710,7 @@ let letterSpacing = x =>
     switch (x) {
     | #LetterSpacing.t as s => LetterSpacing.toString(s)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -677,6 +721,7 @@ let lineHeight = x =>
     switch (x) {
     | #LineHeight.t as h => LineHeight.toString(h)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -702,6 +747,7 @@ let listStyleImage = x =>
     switch (x) {
     | #ListStyleImage.t as lsi => ListStyleImage.toString(lsi)
     | #Url.t as u => Url.toString(u)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -711,6 +757,7 @@ let listStyleType = x =>
     "listStyleType",
     switch (x) {
     | #ListStyleType.t as lsp => ListStyleType.toString(lsp)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -720,6 +767,7 @@ let listStylePosition = x =>
     "listStylePosition",
     switch (x) {
     | #ListStylePosition.t as lsp => ListStylePosition.toString(lsp)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -728,6 +776,8 @@ let marginToString = x =>
   switch (x) {
   | #Length.t as l => Length.toString(l)
   | #Margin.t as m => Margin.toString(m)
+  | #Var.t as va => Var.toString(va)
+  | #Cascading.t as c => Cascading.toString(c)
   };
 
 let margin = x => D("margin", marginToString(x));
@@ -765,6 +815,7 @@ let maxHeight = x =>
     | #MaxHeight.t as mh => MaxHeight.toString(mh)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -776,6 +827,7 @@ let maxWidth = x =>
     | #MaxWidth.t as mw => MaxWidth.toString(mw)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -787,6 +839,7 @@ let minHeight = x =>
     | #Height.t as h => Height.toString(h)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -798,6 +851,7 @@ let minWidth = x =>
     | #Width.t as w => Width.toString(w)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -807,6 +861,7 @@ let objectFit = x =>
     "objectFit",
     switch (x) {
     | #ObjectFit.t as o => ObjectFit.toString(o)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -839,6 +894,7 @@ let overflowWrap = x =>
     "overflowWrap",
     switch (x) {
     | #OverflowWrap.t as ow => OverflowWrap.toString(ow)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -881,6 +937,7 @@ let perspective = x =>
     switch (x) {
     | #Perspective.t as p => Perspective.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -908,6 +965,7 @@ let pointerEvents = x =>
     "pointerEvents",
     switch (x) {
     | #PointerEvents.t as p => PointerEvents.toString(p)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -917,6 +975,7 @@ let position = x =>
     "position",
     switch (x) {
     | #Position.t as p => Position.toString(p)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -928,6 +987,7 @@ let justifySelf = x =>
     | #JustifySelf.t as j => JustifySelf.toString(j)
     | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
     | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -937,6 +997,7 @@ let resize = x =>
     "resize",
     switch (x) {
     | #Resize.t as r => Resize.toString(r)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -946,6 +1007,7 @@ let right = x =>
     "right",
     switch (x) {
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -955,6 +1017,7 @@ let tableLayout = x =>
     "tableLayout",
     switch (x) {
     | #TableLayout.t as tl => TableLayout.toString(tl)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -964,6 +1027,7 @@ let textAlign = x =>
     "textAlign",
     switch (x) {
     | #TextAlign.t as ta => TextAlign.toString(ta)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -973,6 +1037,7 @@ let textDecorationColor = x =>
     "textDecorationColor",
     switch (x) {
     | #Color.t as co => Color.toString(co)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -982,6 +1047,7 @@ let textDecorationLine = x =>
     "textDecorationLine",
     switch (x) {
     | #TextDecorationLine.t as tdl => TextDecorationLine.toString(tdl)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -991,6 +1057,7 @@ let textDecorationStyle = x =>
     "textDecorationStyle",
     switch (x) {
     | #TextDecorationStyle.t as tds => TextDecorationStyle.toString(tds)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1001,6 +1068,7 @@ let textIndent = x =>
     switch (x) {
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1010,6 +1078,7 @@ let textOverflow = x =>
     "textOverflow",
     switch (x) {
     | #TextOverflow.t as txo => TextOverflow.toString(txo)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1019,6 +1088,7 @@ let textTransform = x =>
     "textTransform",
     switch (x) {
     | #TextTransform.t as tt => TextTransform.toString(tt)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1028,6 +1098,7 @@ let top = x =>
     "top",
     switch (x) {
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1058,6 +1129,7 @@ let userSelect = x =>
     "userSelect",
     switch (x) {
     | #UserSelect.t as us => UserSelect.toString(us)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1068,6 +1140,7 @@ let verticalAlign = x =>
     switch (x) {
     | #VerticalAlign.t as v => VerticalAlign.toString(v)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1077,6 +1150,7 @@ let visibility = x =>
     "visibility",
     switch (x) {
     | #Visibility.t as v => Visibility.toString(v)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1088,6 +1162,7 @@ let width = x =>
     | #Width.t as w => Width.toString(w)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1097,6 +1172,7 @@ let whiteSpace = x =>
     "whiteSpace",
     switch (x) {
     | #WhiteSpace.t as w => WhiteSpace.toString(w)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1106,6 +1182,7 @@ let wordBreak = x =>
     "wordBreak",
     switch (x) {
     | #WordBreak.t as w => WordBreak.toString(w)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1117,6 +1194,7 @@ let wordSpacing = x =>
     | #WordSpacing.t as w => WordSpacing.toString(w)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1226,6 +1304,9 @@ type gradient = Gradient.t;
 let initial = Cascading.initial;
 let inherit_ = Cascading.inherit_;
 let unset = Cascading.unset;
+
+let var = Types.Var.var;
+let varDefault = Types.Var.varDefault;
 
 // shared
 let auto = `auto;
@@ -1653,6 +1734,7 @@ let gridArea = s =>
     "gridArea",
     switch (s) {
     | #GridArea.t as t => GridArea.toString(t)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1687,6 +1769,7 @@ let gridTemplateAreas = l =>
     "gridTemplateAreas",
     switch (l) {
     | #GridTemplateAreas.t as t => GridTemplateAreas.toString(t)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1704,6 +1787,7 @@ type filter = [
   | `sepia(float)
   | `url(string)
   | `none
+  | Var.t
   | Cascading.t
 ];
 
@@ -1728,11 +1812,10 @@ let string_of_filter =
   | `opacity(v) => "opacity(" ++ Js.Float.toString(v) ++ "%)"
   | `saturate(v) => "saturate(" ++ Js.Float.toString(v) ++ "%)"
   | `sepia(v) => "sepia(" ++ Js.Float.toString(v) ++ "%)"
-  | `url(v) => "url(" ++ v ++ ")"
-  | `initial => "initial"
-  | `inherit_ => "inherit"
-  | `unset => "unset"
-  | `none => "none";
+  | `none => "none"
+  | #Url.t as u => Url.toString(u)
+  | #Var.t as va => Var.toString(va)
+  | #Cascading.t as c => Cascading.toString(c);
 
 let filter = x =>
   D("filter", x->Belt.List.map(string_of_filter)->join(" "));
@@ -1779,6 +1862,7 @@ let boxShadow = x =>
     "boxShadow",
     switch (x) {
     | #Shadow.t as s => Shadow.toString(s)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1789,6 +1873,7 @@ let boxShadows = x =>
 let string_of_borderstyle =
   fun
   | #BorderStyle.t as b => BorderStyle.toString(b)
+  | #Var.t as va => Var.toString(va)
   | #Cascading.t as c => Cascading.toString(c);
 
 let border = (px, style, color) =>
@@ -1885,6 +1970,7 @@ let fontFace =
       ++ (
         switch (w) {
         | #FontWeight.t as f => FontWeight.toString(f)
+        | #Var.t as va => Var.toString(va)
         | #Cascading.t as c => Cascading.toString(c)
         }
       )
@@ -1915,6 +2001,7 @@ let textDecoration = x =>
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
+    | #Var.t as va => Var.toString(va)
     },
   );
 
@@ -1923,6 +2010,7 @@ let textShadow = x =>
     "textShadow",
     switch (x) {
     | #Shadow.t as s => Shadow.toString(s)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );
@@ -1935,6 +2023,7 @@ let transformStyle = x =>
     "transformStyle",
     switch (x) {
     | #TransformStyle.t as ts => TransformStyle.toString(ts)
+    | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
   );

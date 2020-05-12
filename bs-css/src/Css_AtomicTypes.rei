@@ -10,6 +10,15 @@ module Cascading: {
   let toString: t => string;
 };
 
+module Var: {
+  type t = [ | `var(string) | `varDefault(string, string)];
+
+  let var: string => [> t];
+  let varDefault: (string, string) => [> t];
+
+  let toString: t => string;
+};
+
 module Time: {
   /**
    The <time> CSS data type represents a time value expressed in seconds or milliseconds.

@@ -18,6 +18,30 @@ open CssForTest;
 let toBeJson = x => Expect.toBe(x->Js.Json.stringifyAny);
 let r = x => toJson([x]); /* simple rule for more readable tests */
 
+describe("Var", () => {
+  test("test usage (limited)", () =>
+    expect(
+      (r(color(var("foo"))), r(marginTop(var("--bar"))))
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson(({"color": "var(--foo)"}, {"marginTop": "var(--bar)"}))
+  );
+
+  test("test usage with default (limited)", () =>
+    expect(
+      (
+        r(textDecoration(varDefault("foo", "default"))),
+        r(alignItems(varDefault("--bar", "default"))),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"textDecoration": "var(--foo,default)"},
+         {"alignItems": "var(--bar,default)"},
+       ))
+  );
+});
+
 describe("Color style", () =>
   test("test values", () =>
     expect(
