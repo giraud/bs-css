@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### Added
+
+- Introduce var (usage only) - [#152](https://github.com/SentiaAnalytics/bs-css/issues/152)
+
+### Breaking change
+
+- Update hsl/hsla signatures - [#194](https://github.com/SentiaAnalytics/bs-css/issues/194)
 - Update SVG fill property - [#193](https://github.com/SentiaAnalytics/bs-css/issues/193)
 
 ## [12.2.0] - 2020-04-14
