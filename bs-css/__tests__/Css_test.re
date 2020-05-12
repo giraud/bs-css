@@ -48,9 +48,9 @@ describe("Color style", () =>
       (
         r(color(rgb(1, 2, 3))),
         r(color(rgba(4, 5, 6, 0.3))),
-        r(color(hsl(deg(7.), 8., 9.))),
-        r(color(hsla(deg(10.), 11., 12., `num(0.5)))),
-        r(color(hsla(rad(4.7), 11., 12., pct(50.)))),
+        r(color(hsl(deg(7.), pct(8.), pct(9.)))),
+        r(color(hsla(deg(10.), pct(11.), pct(12.), `num(0.5)))),
+        r(color(hsla(rad(4.7), pct(11.), pct(12.), pct(50.)))),
         r(color(transparent)),
         r(color(hex("FFF"))),
         r(color(currentColor)),

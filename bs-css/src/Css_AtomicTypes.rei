@@ -520,12 +520,12 @@ module Color: {
   type t = [
     | `rgb(int, int, int)
     | `rgba(int, int, int, float)
-    | `hsl(Angle.t, [ | `percent(float)], [ | `percent(float)])
+    | `hsl(Angle.t, Percentage.t, Percentage.t)
     | `hsla(
         Angle.t,
-        [ | `percent(float)],
-        [ | `percent(float)],
-        [ | `num(float) | `percent(float)],
+        Percentage.t,
+        Percentage.t,
+        [ | `num(float) | Percentage.t],
       )
     | `hex(string)
     | `transparent
@@ -534,9 +534,10 @@ module Color: {
 
   let rgb: (int, int, int) => [> t];
   let rgba: (int, int, int, float) => [> t];
-  let hsl: (Angle.t, float, float) => [> t];
+  let hsl: (Angle.t, Percentage.t, Percentage.t) => [> t];
   let hsla:
-    (Angle.t, float, float, [ | `num(float) | `percent(float)]) => [> t];
+    (Angle.t, Percentage.t, Percentage.t, [ | `num(float) | Percentage.t]) =>
+    [> t];
   let hex: string => [> t];
   let transparent: [> t];
   let currentColor: [> t];

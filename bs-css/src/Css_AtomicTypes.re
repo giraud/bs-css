@@ -743,12 +743,12 @@ module Color = {
   type t = [
     | `rgb(int, int, int)
     | `rgba(int, int, int, float)
-    | `hsl(Angle.t, [ | `percent(float)], [ | `percent(float)])
+    | `hsl(Angle.t, Percentage.t, Percentage.t)
     | `hsla(
         Angle.t,
-        [ | `percent(float)],
-        [ | `percent(float)],
-        [ | `num(float) | `percent(float)],
+        Percentage.t,
+        Percentage.t,
+        [ | `num(float) | Percentage.t],
       )
     | `hex(string)
     | `transparent
@@ -757,8 +757,8 @@ module Color = {
 
   let rgb = (r, g, b) => `rgb((r, g, b));
   let rgba = (r, g, b, a) => `rgba((r, g, b, a));
-  let hsl = (h, s, l) => `hsl((h, `percent(s), `percent(l)));
-  let hsla = (h, s, l, a) => `hsla((h, `percent(s), `percent(l), a));
+  let hsl = (h, s, l) => `hsl((h, s, l));
+  let hsla = (h, s, l, a) => `hsla((h, s, l, a));
   let hex = x => `hex(x);
   let transparent = `transparent;
   let currentColor = `currentColor;
@@ -766,11 +766,7 @@ module Color = {
   let string_of_alpha =
     fun
     | `num(f) => Js.Float.toString(f)
-    | `percent(p) => Js.Float.toString(p) ++ "%";
-
-  let string_of_percent =
-    fun
-    | `percent(x) => Js.Float.toString(x) ++ "%";
+    | #Percentage.t as pc => Percentage.toString(pc);
 
   let toString =
     fun
@@ -796,17 +792,17 @@ module Color = {
       "hsl("
       ++ Angle.toString(h)
       ++ ", "
-      ++ string_of_percent(s)
+      ++ Percentage.toString(s)
       ++ ", "
-      ++ string_of_percent(l)
+      ++ Percentage.toString(l)
       ++ ")"
     | `hsla(h, s, l, a) =>
       "hsla("
       ++ Angle.toString(h)
       ++ ", "
-      ++ string_of_percent(s)
+      ++ Percentage.toString(s)
       ++ ", "
-      ++ string_of_percent(l)
+      ++ Percentage.toString(l)
       ++ ", "
       ++ string_of_alpha(a)
       ++ ")"

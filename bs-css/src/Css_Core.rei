@@ -1460,9 +1460,15 @@ let scroll: [> | `scroll];
 
 let rgb: (int, int, int) => [> Types.Color.t];
 let rgba: (int, int, int, float) => [> Types.Color.t];
-let hsl: (Types.Angle.t, float, float) => [> Types.Color.t];
+let hsl:
+  (Types.Angle.t, Types.Percentage.t, Types.Percentage.t) => [> Types.Color.t];
 let hsla:
-  (Types.Angle.t, float, float, [ | `num(float) | `percent(float)]) =>
+  (
+    Types.Angle.t,
+    Types.Percentage.t,
+    Types.Percentage.t,
+    [ | `num(float) | `percent(float)]
+  ) =>
   [> Types.Color.t];
 let hex: string => [> Types.Color.t];
 let transparent: [> Types.Color.t];
