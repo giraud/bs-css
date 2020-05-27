@@ -68,31 +68,6 @@ let join = (strings, separator) => {
 };
 
 module Converter = {
-  let string_of_hsl = (h, s, l) =>
-    "hsl("
-    ++ Angle.toString(h)
-    ++ ", "
-    ++ Percentage.toString(s)
-    ++ ", "
-    ++ Percentage.toString(l)
-    ++ ")";
-
-  let string_of_alpha =
-    fun
-    | `num(f) => Js.Float.toString(f)
-    | `percent(p) => Js.Float.toString(p) ++ "%";
-
-  let string_of_hsla = (h, s, l, a) =>
-    "hsla("
-    ++ Angle.toString(h)
-    ++ ", "
-    ++ Percentage.toString(s)
-    ++ ", "
-    ++ Percentage.toString(l)
-    ++ ", "
-    ++ string_of_alpha(a)
-    ++ ")";
-
   let string_of_stops = stops =>
     stops
     ->Belt.List.map(((l, c)) =>
@@ -101,51 +76,6 @@ module Converter = {
     ->join(", ");
 
   let string_of_time = t => Js.Int.toString(t) ++ "ms";
-
-  let string_of_background = bg =>
-    switch (bg) {
-    | `none => "none"
-    | `url(url) => "url(" ++ url ++ ")"
-    | `rgb(r, g, b) =>
-      "rgb("
-      ++ Js.Int.toString(r)
-      ++ ", "
-      ++ Js.Int.toString(g)
-      ++ ", "
-      ++ Js.Int.toString(b)
-      ++ ")"
-    | `rgba(r, g, b, a) =>
-      "rgba("
-      ++ Js.Int.toString(r)
-      ++ ", "
-      ++ Js.Int.toString(g)
-      ++ ", "
-      ++ Js.Int.toString(b)
-      ++ ", "
-      ++ Js.Float.toString(a)
-      ++ ")"
-    | `hsl(h, s, l) => string_of_hsl(h, s, l)
-    | `hsla(h, s, l, a) => string_of_hsla(h, s, l, a)
-    | `hex(s) => "#" ++ s
-    | `transparent => "transparent"
-    | `currentColor => "currentColor"
-    | `linearGradient(angle, stops) =>
-      "linear-gradient("
-      ++ Angle.toString(angle)
-      ++ ", "
-      ++ string_of_stops(stops)
-      ++ ")"
-    | `repeatingLinearGradient(angle, stops) =>
-      "repeating-linear-gradient("
-      ++ Angle.toString(angle)
-      ++ ", "
-      ++ string_of_stops(stops)
-      ++ ")"
-    | `radialGradient(stops) =>
-      "radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    | `repeatingRadialGradient(stops) =>
-      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
-    };
 
   let string_of_content = x =>
     switch (x) {
@@ -178,8 +108,6 @@ module Converter = {
 };
 
 include Converter;
-
-let empty = [];
 
 type animationName = string;
 
@@ -1934,9 +1862,31 @@ let borderBottom = (px, style, color) =>
 let borderBottomStyle = x =>
   D("borderBottomStyle", string_of_borderstyle(x));
 
-let background = x => D("background", string_of_background(x));
-let backgrounds = bg =>
-  D("background", bg->Belt.List.map(string_of_background)->join(", "));
+let background = x =>
+  D(
+    "background",
+    switch (x) {
+    | #Color.t as c => Color.toString(c)
+    | #Url.t as u => Url.toString(u)
+    | #Gradient.t as g => Gradient.toString(g)
+    | `none => "none"
+    },
+  );
+
+let backgrounds = x =>
+  D(
+    "background",
+    x
+    ->Belt.List.map(item =>
+        switch (item) {
+        | #Color.t as c => Color.toString(c)
+        | #Url.t as u => Url.toString(u)
+        | #Gradient.t as g => Gradient.toString(g)
+        | `none => "none"
+        }
+      )
+    ->join(", "),
+  );
 
 let backgroundSize = x =>
   D(

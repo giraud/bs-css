@@ -6,8 +6,9 @@
 
 ### Breaking change
 
-- Update hsl/hsla signatures - [#194](https://github.com/SentiaAnalytics/bs-css/issues/194)
+- Update rgba/hsl/hsla signatures - [#194](https://github.com/SentiaAnalytics/bs-css/issues/194)
 - Update SVG fill property - [#193](https://github.com/SentiaAnalytics/bs-css/issues/193)
+- Delete the empty rule, it was just a shortcut to `[]` and was conflicting with the `empty` selector 
 
 ## [12.2.0] - 2020-04-14
 

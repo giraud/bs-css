@@ -23,7 +23,6 @@ module Make:
     let keyframes: list((int, list(rule))) => animationName;
   };
 
-let empty: list(rule);
 let toJson: list(rule) => Js.Json.t;
 
 let important: rule => rule;

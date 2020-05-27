@@ -750,6 +750,26 @@ describe("backgroundImage", () =>
   )
 );
 
+describe("background shorhand", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(background(rgb(1, 2, 3))),
+        r(background(url("x"))),
+        r(background(linearGradient(deg(5.), [(pct(10.), red)]))),
+        r(background(none)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"background": "rgb(1, 2, 3)"},
+         {"background": "url(x)"},
+         {"background": "linear-gradient(5deg, #FF0000 10%)"},
+         {"background": "none"},
+       ))
+  )
+);
+
 describe("clipPath", () =>
   test("test values", () =>
     expect(
