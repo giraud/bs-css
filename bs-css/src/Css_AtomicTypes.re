@@ -742,7 +742,7 @@ module Cursor = {
 module Color = {
   type t = [
     | `rgb(int, int, int)
-    | `rgba(int, int, int, float)
+    | `rgba(int, int, int, [ | `num(float) | Percentage.t])
     | `hsl(Angle.t, Percentage.t, Percentage.t)
     | `hsla(
         Angle.t,
@@ -786,7 +786,7 @@ module Color = {
       ++ ", "
       ++ Js.Int.toString(b)
       ++ ", "
-      ++ Js.Float.toString(a)
+      ++ string_of_alpha(a)
       ++ ")"
     | `hsl(h, s, l) =>
       "hsl("

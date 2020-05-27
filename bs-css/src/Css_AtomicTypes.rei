@@ -519,7 +519,7 @@ module Cursor: {
 module Color: {
   type t = [
     | `rgb(int, int, int)
-    | `rgba(int, int, int, float)
+    | `rgba(int, int, int, [ | `num(float) | Percentage.t])
     | `hsl(Angle.t, Percentage.t, Percentage.t)
     | `hsla(
         Angle.t,
@@ -533,7 +533,7 @@ module Color: {
   ];
 
   let rgb: (int, int, int) => [> t];
-  let rgba: (int, int, int, float) => [> t];
+  let rgba: (int, int, int, [ | `num(float) | Percentage.t]) => [> t];
   let hsl: (Angle.t, Percentage.t, Percentage.t) => [> t];
   let hsla:
     (Angle.t, Percentage.t, Percentage.t, [ | `num(float) | Percentage.t]) =>
