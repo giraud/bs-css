@@ -100,7 +100,7 @@ let make = () =>
         style=Css.(
           style(
             redBox @ [background(hsl(deg(255.), pct(100.), pct(50.)))],
-        )
+          )
         )
       />
       <div
@@ -1560,5 +1560,23 @@ let make = () =>
         style=Css.(style(redBox @ [objectFit(`unset)]))
         src="./img-29.jpg"
       />
+    </Section>
+    <Section name="intrinsic-sizes">
+      <div style=Css.(style([width(`maxContent), backgroundColor(red)]))>
+        <p> {"max-content" |> React.string} </p>
+        <p> {"max-content max-content max-content" |> React.string} </p>
+        <p> {"max-content max-content" |> React.string} </p>
+      </div>
+      <div
+        style=Css.(style([width(`minContent), backgroundColor(green)]))>
+        <p> {"min-content" |> React.string} </p>
+        <p> {"min-content min-content min-content" |> React.string} </p>
+        <p> {"min-content min-content" |> React.string} </p>
+      </div>
+      <div style=Css.(style([width(`fitContent), backgroundColor(blue)]))>
+        <p> {"fit-content" |> React.string} </p>
+        <p> {"fit-content fit-content fit-content" |> React.string} </p>
+        <p> {"fit-content fit-content" |> React.string} </p>
+      </div>
     </Section>
   </div>;

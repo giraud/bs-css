@@ -622,7 +622,7 @@ let gridTemplateAreas:
  */
 let height:
   [<
-    Types.Height.t
+    Types.Size.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Var.t
@@ -753,7 +753,7 @@ let marginBottom:
  */
 let maxHeight:
   [<
-    Types.MaxHeight.t
+    Types.MaxSize.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Var.t
@@ -767,7 +767,7 @@ let maxHeight:
  */
 let maxWidth:
   [<
-    Types.MaxWidth.t
+    Types.MaxSize.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Var.t
@@ -781,7 +781,7 @@ let maxWidth:
  */
 let minHeight:
   [<
-    Types.Height.t
+    Types.Size.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Var.t
@@ -795,7 +795,7 @@ let minHeight:
  */
 let minWidth:
   [<
-    Types.Width.t
+    Types.Size.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Var.t
@@ -1032,7 +1032,7 @@ let visibility:
  */
 let width:
   [<
-    Types.Width.t
+    Types.Size.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Var.t

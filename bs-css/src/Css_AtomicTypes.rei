@@ -1015,35 +1015,19 @@ module TextDecorationStyle: {
 
 /**
  https://developer.mozilla.org/docs/Web/CSS/width
+ https://developer.mozilla.org/docs/Web/CSS/height
  */
-module Width: {
-  type t = [ | `auto | `fitContent];
+module Size: {
+  type t = [ | `auto | `fitContent | `maxContent | `minContent];
 
   let toString: t => string;
 };
 
 /**
  https://developer.mozilla.org/docs/Web/CSS/max-width
- */
-module MaxWidth: {
-  type t = [ | `none];
-
-  let toString: t => string;
-};
-
-/**
- https://developer.mozilla.org/docs/Web/CSS/height
- */
-module Height: {
-  type t = [ | `auto];
-
-  let toString: t => string;
-};
-
-/**
  https://developer.mozilla.org/docs/Web/CSS/max-height
  */
-module MaxHeight: {
+module MaxSize: {
   type t = [ | `none];
 
   let toString: t => string;

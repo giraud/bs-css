@@ -602,7 +602,7 @@ let height = x =>
   D(
     "height",
     switch (x) {
-    | #Height.t as h => Height.toString(h)
+    | #Size.t as h => Size.toString(h)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
@@ -740,7 +740,7 @@ let maxHeight = x =>
   D(
     "maxHeight",
     switch (x) {
-    | #MaxHeight.t as mh => MaxHeight.toString(mh)
+    | #MaxSize.t as mh => MaxSize.toString(mh)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
@@ -752,7 +752,7 @@ let maxWidth = x =>
   D(
     "maxWidth",
     switch (x) {
-    | #MaxWidth.t as mw => MaxWidth.toString(mw)
+    | #MaxSize.t as mw => MaxSize.toString(mw)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
@@ -764,7 +764,7 @@ let minHeight = x =>
   D(
     "minHeight",
     switch (x) {
-    | #Height.t as h => Height.toString(h)
+    | #Size.t as h => Size.toString(h)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
@@ -776,7 +776,7 @@ let minWidth = x =>
   D(
     "minWidth",
     switch (x) {
-    | #Width.t as w => Width.toString(w)
+    | #Size.t as w => Size.toString(w)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
@@ -1087,7 +1087,7 @@ let width = x =>
   D(
     "width",
     switch (x) {
-    | #Width.t as w => Width.toString(w)
+    | #Size.t as w => Size.toString(w)
     | #Percentage.t as p => Percentage.toString(p)
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)

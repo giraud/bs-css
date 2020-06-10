@@ -1412,32 +1412,18 @@ module TextDecorationStyle = {
     | `wavy => "wavy";
 };
 
-module Width = {
-  type t = [ | `auto | `fitContent];
+module Size = {
+  type t = [ | `auto | `fitContent | `minContent | `maxContent];
 
   let toString =
     fun
     | `auto => "auto"
-    | `fitContent => "fit-content";
+    | `fitContent => "fit-content"
+    | `minContent => "min-content"
+    | `maxContent => "max-content";
 };
 
-module MaxWidth = {
-  type t = [ | `none];
-
-  let toString =
-    fun
-    | `none => "none";
-};
-
-module Height = {
-  type t = [ | `auto];
-
-  let toString =
-    fun
-    | `auto => "auto";
-};
-
-module MaxHeight = {
+module MaxSize = {
   type t = [ | `none];
 
   let toString =
