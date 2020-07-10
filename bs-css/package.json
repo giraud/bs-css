@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.8",
-    "bs-platform": "^7.0.1",
+    "bs-platform": "^8.1.0",
     "jest": "^24.7.1"
   }
 }
