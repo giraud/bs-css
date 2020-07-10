@@ -104,17 +104,17 @@ let make = () =>
       <div className=Css.(style(redBox @ [background(red)])) />
       <div className=Css.(style(redBox @ [background(rgb(255, 0, 0))])) />
       <div
-        className=Css.(style(redBox @ [background(rgba(255, 0, 0, 0.5))]))
+        className=Css.(style(redBox @ [background(rgba(255, 0, 0, `num(0.5)))]))
       />
       <div
         className=Css.(
-          style(redBox @ [background(hsl(deg(255.), 100., 50.))])
+          style(redBox @ [background(hsl(deg(255.), pct(100.), pct(50.)))])
         )
       />
       <div
         className=Css.(
           style(
-            redBox @ [background(hsla(deg(255.), 100., 50., `num(0.5)))],
+            redBox @ [background(hsla(deg(255.), pct(100.), pct(50.), `num(0.5)))],
           )
         )
       />
