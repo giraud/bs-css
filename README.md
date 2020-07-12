@@ -41,6 +41,7 @@ module Styles = {
 
   let title = style([
     fontSize(rem(1.5)),
+    lineHeight(`abs(1.25)),
     color(Theme.textColor),
     marginBottom(Theme.basePadding)
   ]);
