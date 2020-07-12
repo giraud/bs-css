@@ -56,7 +56,7 @@ module Styles = {
 
 <div className=Styles.card>
   <h1 className=Styles.title> (ReasonReact.stringToElement("Hello")) </h1>
-  <button className=Styles.actionButton(false)>
+  <button className=Styles.actionButton(false) />
 </div>
 ```
 
@@ -245,7 +245,7 @@ module Styles = {
 
 <div style=Styles.card>
   <h1 style=Styles.title> (ReasonReact.stringToElement("Hello")) </h1>
-  <button style=Styles.actionButton(false)>
+  <button style=Styles.actionButton(false) />
 </div>
 ```
 
