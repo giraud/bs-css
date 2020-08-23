@@ -806,6 +806,32 @@ describe("clipPath", () =>
   )
 );
 
+describe("columnGap", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(columnGap(normal)),
+        r(columnGap(px(3))),
+        r(columnGap(em(2.5))),
+        r(columnGap(pct(3.))),
+        r(columnGap(inherit_)),
+        r(columnGap(initial)),
+        r(columnGap(unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"columnGap": "normal"},
+         {"columnGap": "3px"},
+         {"columnGap": "2.5em"},
+         {"columnGap": "3%"},
+         {"columnGap": "inherit"},
+         {"columnGap": "initial"},
+         {"columnGap": "unset"},
+       ))
+  )
+);
+
 describe("cursor", () =>
   test("test values", () =>
     expect(
