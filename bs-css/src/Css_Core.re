@@ -105,6 +105,14 @@ module Converter = {
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     };
+
+  let string_of_column_gap =
+    fun
+    | #ColumnGap.t as gcg => ColumnGap.toString(gcg)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c);
 };
 
 include Converter;
@@ -397,6 +405,8 @@ let columnCount = x =>
     },
   );
 
+let columnGap = x => D("columnGap", string_of_column_gap(x));
+
 let contentRule = x => D("content", string_of_content(x));
 let contentRules = xs =>
   D("content", xs->Belt.List.map(string_of_content)->join(" "));
@@ -553,17 +563,7 @@ let gridAutoFlow = x =>
 let gridColumn = (start, end') =>
   D("gridColumn", Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'));
 
-let gridColumnGap = x =>
-  D(
-    "gridColumnGap",
-    switch (x) {
-    | #GridColumnGap.t as gcg => GridColumnGap.toString(gcg)
-    | #Percentage.t as p => Percentage.toString(p)
-    | #Length.t as l => Length.toString(l)
-    | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
+let gridColumnGap = x => D("gridColumnGap", string_of_column_gap(x));
 
 let gridColumnStart = n => D("gridColumnStart", Js.Int.toString(n));
 

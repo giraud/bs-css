@@ -559,9 +559,22 @@ let gridColumnEnd: int => rule;
 /**
  The column-gap CSS property sets the size of the gap (gutter) between an element's columns.
  */
+let columnGap:
+  [<
+    Types.ColumnGap.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
+ This prefixed property is being replaced by column-gap.
+ */
 let gridColumnGap:
   [<
-    Types.GridColumnGap.t
+    Types.ColumnGap.t
     | Types.Percentage.t
     | Types.Length.t
     | Types.Var.t
