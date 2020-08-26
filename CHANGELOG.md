@@ -2,6 +2,7 @@
 
 ### Added
 
+- Add column-gap by [@lucasweng](https://github.com/lucasweng) - [#203](https://github.com/SentiaAnalytics/bs-css/issues/203)
 - Introduce var (usage only) - [#152](https://github.com/SentiaAnalytics/bs-css/issues/152)
 
 ### Breaking change
