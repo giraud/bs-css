@@ -1,6 +1,6 @@
 {
   "name": "bs-css-dom",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "bs-css bindings for React DOM",
   "scripts": {
     "build:bs": "bsb -make-world",
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "dependencies": {
-    "bs-css": "12.2.0"
+    "bs-css": "13.0.0"
   },
   "devDependencies": {
     "bs-platform": "^8.1.0",

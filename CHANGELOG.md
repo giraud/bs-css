@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [13.0.0] - 2020-08-26
+
 ### Added
 
 - Add column-gap by [@lucasweng](https://github.com/lucasweng) - [#203](https://github.com/SentiaAnalytics/bs-css/issues/203)
@@ -10,6 +12,8 @@
 - Update rgba/hsl/hsla signatures - [#194](https://github.com/SentiaAnalytics/bs-css/issues/194)
 - Update SVG fill property - [#193](https://github.com/SentiaAnalytics/bs-css/issues/193)
 - Delete the empty rule, it was just a shortcut to `[]` and was conflicting with the `empty` selector 
+
+bs-css-dom@2.0.0, bs-css-emotion@2.0.0
 
 ## [12.2.0] - 2020-04-14
 
