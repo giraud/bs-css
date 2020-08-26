@@ -237,7 +237,7 @@ module GridAutoFlow: {
   let toString: t => string;
 };
 
-module GridColumnGap: {
+module ColumnGap: {
   type t = [ | `normal];
 
   let toString: t => string;

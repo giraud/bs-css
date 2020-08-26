@@ -286,7 +286,7 @@ module GridAutoFlow = {
     | `rowDense => "row dense";
 };
 
-module GridColumnGap = {
+module ColumnGap = {
   type t = [ | `normal];
 
   let toString =
