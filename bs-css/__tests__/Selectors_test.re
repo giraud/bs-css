@@ -1,6 +1,6 @@
 module CssForTest = {
-  include Css_Core;
-  include Css_Core.Make({
+  include Css_Legacy_Core;
+  include Css_Legacy_Core.Make({
     exception NotImplemented;
 
     let mergeStyles = (. _) => raise(NotImplemented);

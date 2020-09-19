@@ -1,7 +1,7 @@
-include Css_Legacy_Core;
+include Css_Js_Core;
 include Css_Colors;
 
-include Css_Legacy_Core.Make({
+include Css_Js_Core.Make({
   exception NotImplemented;
 
   let make = (. _) => raise(NotImplemented);
@@ -13,4 +13,4 @@ include Css_Legacy_Core.Make({
 
 external unsafeJsonToStyles: Js.Json.t => ReactDOMRe.Style.t = "%identity";
 
-let style = rules => rules->toJson->unsafeJsonToStyles;
+let style = (. rules) => rules->toJson->unsafeJsonToStyles;

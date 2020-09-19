@@ -2,28 +2,20 @@
 
 module Types = Css_AtomicTypes;
 
-module type CssImplementationIntf = {
-  let mergeStyles: (. array(string)) => string;
-  let injectRule: (. Js.Json.t) => unit;
-  let injectRaw: (. string) => unit;
-  let make: (. Js.Json.t) => string;
-  let makeKeyFrames: (. Js.Dict.t(Js.Json.t)) => string;
-};
-
 type rule;
 type animationName;
 
 module Make:
-  (CssImplementationIntf) =>
+  (Css_Core.CssImplementationIntf) =>
    {
-    let global: (string, list(rule)) => unit;
-    let insertRule: string => unit;
-    let merge: list(string) => string;
-    let style: list(rule) => string;
-    let keyframes: list((int, list(rule))) => animationName;
+    let global: (. string, array(rule)) => unit;
+    let insertRule: (. string) => unit;
+    let merge: (. array(string)) => string;
+    let style: (. array(rule)) => string;
+    let keyframes: (. array((int, array(rule)))) => animationName;
   };
 
-let toJson: list(rule) => Js.Json.t;
+let toJson: array(rule) => Js.Json.t;
 
 let important: rule => rule;
 let label: string => rule;
@@ -153,14 +145,13 @@ let animationTimingFunction: Types.TimingFunction.t => rule;
  area behind an element. Because it applies to everything behind the element, to see the effect you must
  make the element or its background at least partially transparent.
  */
-let backdropFilter: list(Types.BackdropFilter.t) => rule;
+let backdropFilter: array(Types.BackdropFilter.t) => rule;
 
 /* Warning: experimental */
 let backfaceVisibility:
   [< Types.BackfaceVisibility.t | Types.Var.t | Types.Cascading.t] => rule;
 
-/**
- The background-attachment CSS property sets whether a background image's position is fixed within the viewport,
+/** The background-attachment CSS property sets whether a background image's position is fixed within the viewport,
  or scrolls with its containing block.
  */
 let backgroundAttachment:
@@ -209,7 +200,7 @@ let backgroundPosition:
   rule;
 
 let backgroundPositions:
-  list(
+  array(
     [<
       Types.BackgroundPosition.t
       | `hv(
@@ -361,7 +352,7 @@ let boxSizing: [< Types.BoxSizing.t | Types.Var.t | Types.Cascading.t] => rule;
 let boxShadow:
   [< Shadow.t(Shadow.box) | Types.Var.t | Types.Cascading.t] => rule;
 
-let boxShadows: list([ Shadow.t(Shadow.box)]) => rule;
+let boxShadows: array([ Shadow.t(Shadow.box)]) => rule;
 
 /**
  The clear CSS property sets whether an element must be moved below (cleared) floating elements that precede it.
@@ -402,7 +393,7 @@ let contentRule:
   ] =>
   rule;
 let contentRules:
-  list(
+  array(
     [<
       Types.Content.t
       | Types.Counter.t
@@ -415,13 +406,13 @@ let contentRules:
 
 let counterIncrement:
   [< Types.CounterIncrement.t | Types.Var.t | Types.Cascading.t] => rule;
-let countersIncrement: list([< Types.CounterIncrement.t]) => rule;
+let countersIncrement: array([< Types.CounterIncrement.t]) => rule;
 let counterReset:
   [< Types.CounterReset.t | Types.Var.t | Types.Cascading.t] => rule;
-let countersReset: list([< Types.CounterReset.t]) => rule;
+let countersReset: array([< Types.CounterReset.t]) => rule;
 let counterSet:
   [< Types.CounterSet.t | Types.Var.t | Types.Cascading.t] => rule;
-let countersSet: list([< Types.CounterSet.t]) => rule;
+let countersSet: array([< Types.CounterSet.t]) => rule;
 
 let cursor: Types.Cursor.t => rule;
 
@@ -493,7 +484,7 @@ let float: [< Types.Float.t | Types.Var.t | Types.Cascading.t] => rule;
 let fontFamily:
   [< Types.FontFamilyName.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let fontFamilies: list([ Types.FontFamilyName.t]) => rule;
+let fontFamilies: array([ Types.FontFamilyName.t]) => rule;
 
 /**
  The font-size CSS property sets the size of the font. This property is also used to compute the size of em, ex, and
@@ -979,7 +970,7 @@ let textOverflow:
  */
 let textShadow:
   [< Shadow.t(Shadow.text) | Types.Var.t | Types.Cascading.t] => rule;
-let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
+let textShadows: array([ Shadow.t(Shadow.text)]) => rule;
 
 /**
  The text-transform CSS property specifies how to capitalize an element's text.
@@ -992,7 +983,7 @@ let top: [< Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 let transform: Types.Transform.t => rule;
 
-let transforms: list(Types.Transform.t) => rule;
+let transforms: array(Types.Transform.t) => rule;
 
 /**
  The transform-origin CSS property sets the origin for an element's transformations.
@@ -1093,8 +1084,8 @@ let zIndex: int => rule;
  selectors
  ********* */
 
-let selector: (string, list(rule)) => rule;
-let media: (string, list(rule)) => rule;
+let selector: (string, array(rule)) => rule;
+let media: (string, array(rule)) => rule;
 
 /** type selector */
 
@@ -1108,132 +1099,132 @@ let media: (string, list(rule)) => rule;
  The :active CSS pseudo-class represents an element (such as a button) that is being activated by the user.
  When using a mouse, "activation" typically starts when the user presses down the primary mouse button.
  */
-let active: list(rule) => rule;
+let active: array(rule) => rule;
 
 /**
  The :checked CSS pseudo-class selector represents any radio (<input type="radio">), checkbox (<input type="checkbox">),
  or option (<option> in a <select>) element that is checked or toggled to an on state.
  */
-let checked: list(rule) => rule;
+let checked: array(rule) => rule;
 
 /**
  The :default CSS pseudo-class selects form elements that are the default in a group of related elements.
  */
-let default: list(rule) => rule;
+let default: array(rule) => rule;
 
 /**
  The :defined CSS pseudo-class represents any element that has been defined.
  This includes any standard element built in to the browser, and custom elements that have been successfully defined
  (i.e. with the CustomElementRegistry.define() method).
  */
-let defined: list(rule) => rule;
+let defined: array(rule) => rule;
 
 /**
  The :disabled CSS pseudo-class represents any disabled element.
  An element is disabled if it can't be activated (selected, clicked on, typed into, etc.) or accept focus.
  The element also has an enabled state, in which it can be activated or accept focus.
  */
-let disabled: list(rule) => rule;
+let disabled: array(rule) => rule;
 
 /**
  The :empty CSS pseudo-class represents any element that has no children.
  Children can be either element nodes or text (including whitespace).
  Comments, processing instructions, and CSS content do not affect whether an element is considered empty.
  */
-let empty: list(rule) => rule;
+let empty: array(rule) => rule;
 
 /**
  The :enabled CSS pseudo-class represents any enabled element.
  An element is enabled if it can be activated (selected, clicked on, typed into, etc.) or accept focus.
  The element also has a disabled state, in which it can't be activated or accept focus.
  */
-let enabled: list(rule) => rule;
+let enabled: array(rule) => rule;
 
 /**
  The :first CSS pseudo-class, used with the  @page at-rule, represents the first page of a printed document.
  */
-let first: list(rule) => rule;
+let first: array(rule) => rule;
 
 /**
  The :first-child CSS pseudo-class represents the first element among a group of sibling elements.
  */
-let firstChild: list(rule) => rule;
+let firstChild: array(rule) => rule;
 
 /**
  The :first-of-type CSS pseudo-class represents the first element of its type among a group of sibling elements.
  */
-let firstOfType: list(rule) => rule;
+let firstOfType: array(rule) => rule;
 
 /**
  The :focus CSS pseudo-class represents an element (such as a form input) that has received focus.
  It is generally triggered when the user clicks or taps on an element or selects it with the keyboard's "tab" key.
  */
-let focus: list(rule) => rule;
+let focus: array(rule) => rule;
 
 /**
  The :focus-within CSS pseudo-class represents an element that has received focus or contains an element
  that has received focus. In other words, it represents an element that is itself matched by the :focus pseudo-class or has a descendant that is matched by :focus.
   (This includes descendants in shadow trees.)
  */
-let focusWithin: list(rule) => rule;
+let focusWithin: array(rule) => rule;
 
 /**
  The :host CSS pseudo-class selects the shadow host of the shadow DOM containing the CSS it is used inside
  — in other words, this allows you to select a custom element from inside its shadow DOM.
  */
-let host: (~selector: string=?, list(rule)) => rule;
+let host: (~selector: string=?, array(rule)) => rule;
 
 /**
  The :hover CSS pseudo-class matches when the user interacts with an element with a pointing device,
  but does not necessarily activate it.
  It is generally triggered when the user hovers over an element with the cursor (mouse pointer).
  */
-let hover: list(rule) => rule;
+let hover: array(rule) => rule;
 
 /**
  The :indeterminate CSS pseudo-class represents any form element whose state is indeterminate.
  */
-let indeterminate: list(rule) => rule;
+let indeterminate: array(rule) => rule;
 
 /**
  The :in-range CSS pseudo-class represents an <input> element whose current value is
  within the range limits specified by the min and max attributes.
  */
-let inRange: list(rule) => rule;
+let inRange: array(rule) => rule;
 
 /**
  The :invalid CSS pseudo-class represents any <input> or other <form> element whose contents fail to validate.
  */
-let invalid: list(rule) => rule;
+let invalid: array(rule) => rule;
 
 /**
  The :lang() CSS pseudo-class matches elements based on the language they are determined to be in.
  */
-let lang: (string, list(rule)) => rule;
+let lang: (string, array(rule)) => rule;
 
 /**
  The :last-child CSS pseudo-class represents the last element among a group of sibling elements.
  */
-let lastChild: list(rule) => rule;
+let lastChild: array(rule) => rule;
 
 /**
  The :last-of-type CSS pseudo-class represents the last element of its type among a group of sibling elements.
  */
-let lastOfType: list(rule) => rule;
+let lastOfType: array(rule) => rule;
 
-//let left: list(rule) => rule;
+//let left: array(rule) => rule;
 
 /**
  The :link CSS pseudo-class represents an element that has not yet been visited.
  It matches every unvisited <a>, <area>, or <link> element that has an href attribute.
  */
-let link: list(rule) => rule;
+let link: array(rule) => rule;
 
 /**
  The :not() CSS pseudo-class represents elements that do not match a list of selectors.
  Since it prevents specific items from being selected, it is known as the negation pseudo-class.
  */
-let not_: (string, list(rule)) => rule;
+let not_: (string, array(rule)) => rule;
 
 module Nth: {
   type t = [ | `odd | `even | `n(int) | `add(int, int)];
@@ -1243,99 +1234,99 @@ module Nth: {
 /**
  The :nth-child() CSS pseudo-class matches elements based on their position in a group of siblings.
  */
-let nthChild: (Nth.t, list(rule)) => rule;
+let nthChild: (Nth.t, array(rule)) => rule;
 
 /**
  The :nth-last-child() CSS pseudo-class matches elements based on their position among a group of siblings,
  counting from the end.
  */
-let nthLastChild: (Nth.t, list(rule)) => rule;
+let nthLastChild: (Nth.t, array(rule)) => rule;
 
 /**
  The :nth-last-of-type() CSS pseudo-class matches elements of a given type,
  based on their position among a group of siblings, counting from the end.
  */
-let nthLastOfType: (Nth.t, list(rule)) => rule;
+let nthLastOfType: (Nth.t, array(rule)) => rule;
 
 /**
  The :nth-of-type() CSS pseudo-class matches elements of a given type,
  based on their position among a group of siblings.
  */
-let nthOfType: (Nth.t, list(rule)) => rule;
+let nthOfType: (Nth.t, array(rule)) => rule;
 
 /**
  The :only-child CSS pseudo-class represents an element without any siblings.
  This is the same as :first-child:last-child or :nth-child(1):nth-last-child(1),
  but with a lower specificity.
  */
-let onlyChild: list(rule) => rule;
+let onlyChild: array(rule) => rule;
 
 /**
  The :only-of-type CSS pseudo-class represents an element that has no siblings of the same type.
  */
-let onlyOfType: list(rule) => rule;
+let onlyOfType: array(rule) => rule;
 
 /**
  The :optional CSS pseudo-class represents any <input>, <select>,
  or <textarea> element that does not have the required attribute set on it.
  */
-let optional: list(rule) => rule;
+let optional: array(rule) => rule;
 
 /**
  The :out-of-range CSS pseudo-class represents an <input> element whose current value
  is outside the range limits specified by the min and max attributes.
  */
-let outOfRange: list(rule) => rule;
+let outOfRange: array(rule) => rule;
 
 /**
  The :read-only CSS pseudo-class represents an element (such as input or textarea)
  that is not editable by the user.
  */
-let readOnly: list(rule) => rule;
+let readOnly: array(rule) => rule;
 
 /**
  The :read-write CSS pseudo-class represents an element (such as input or textarea)
  that is editable by the user.
  */
-let readWrite: list(rule) => rule;
+let readWrite: array(rule) => rule;
 
 /**
  The :required CSS pseudo-class represents any <input>, <select>, or <textarea> element
  that has the required attribute set on it.
  */
-let required: list(rule) => rule;
+let required: array(rule) => rule;
 
-//let right: list(rule) => rule;
+//let right: array(rule) => rule;
 
 /**
  The :root CSS pseudo-class matches the root element of a tree representing the document.
  In HTML, :root represents the <html> element and is identical to the selector html,
  except that its specificity is higher.
  */
-let root: list(rule) => rule;
+let root: array(rule) => rule;
 
 /**
  The :scope CSS pseudo-class represents elements that are a reference point for selectors to match against.
  */
-let scope: list(rule) => rule;
+let scope: array(rule) => rule;
 
 /**
  The :target CSS pseudo-class represents a unique element (the target element) with an id matching
  the URL's fragment.
  */
-let target: list(rule) => rule;
+let target: array(rule) => rule;
 
 /**
  The :valid CSS pseudo-class represents any <input> or other <form> element whose contents validate successfully.
  This allows to easily make valid fields adopt an appearance that helps the user confirm that their data is formatted properly.
  */
-let valid: list(rule) => rule;
+let valid: array(rule) => rule;
 
 /**
  The :visited CSS pseudo-class represents links that the user has already visited.
  For privacy reasons, the styles that can be modified using this selector are very limited.
  */
-let visited: list(rule) => rule;
+let visited: array(rule) => rule;
 
 /*
  Pseudo-elements selectors
@@ -1347,37 +1338,37 @@ let visited: list(rule) => rule;
  ::after creates a pseudo-element that is the last child of the selected element.
  It is often used to add cosmetic content to an element with the content property. It is inline by default.
  */
-let after: list(rule) => rule;
+let after: array(rule) => rule;
 
 /**
  ::before creates a pseudo-element that is the first child of the selected element.
  It is often used to add cosmetic content to an element with the content property. It is inline by default.
  */
-let before: list(rule) => rule;
+let before: array(rule) => rule;
 
 /**
  The ::first-letter CSS pseudo-element applies styles to the first letter of the first line of a block-level element,
  but only when not preceded by other content (such as images or inline tables).
  */
-let firstLetter: list(rule) => rule;
+let firstLetter: array(rule) => rule;
 
 /**
  The ::first-line CSS pseudo-element applies styles to the first line of a block-level element.
  Note that the length of the first line depends on many factors, including the width of the element,
  the width of the document, and the font size of the text.
  */
-let firstLine: list(rule) => rule;
+let firstLine: array(rule) => rule;
 
 /**
  The ::placeholder CSS pseudo-element represents the placeholder text in an <input> or <textarea> element.
  */
-let placeholder: list(rule) => rule;
+let placeholder: array(rule) => rule;
 
 /**
  The ::selection CSS pseudo-element applies styles to the part of a document that has been highlighted by the user
  (such as clicking and dragging the mouse across text).
  */
-let selection: list(rule) => rule;
+let selection: array(rule) => rule;
 
 /**
  Combinators selectors
@@ -1386,29 +1377,29 @@ let selection: list(rule) => rule;
 /**
  The > combinator selects nodes that are direct children of the first element.
  */
-let child: (string, list(rule)) => rule;
+let child: (string, array(rule)) => rule;
 
 /**
  The > * combinator selects all nodes that are direct children of the first element.
  */
-let children: list(rule) => rule;
+let children: array(rule) => rule;
 
 /**
  The + combinator selects adjacent siblings.
  This means that the second element directly follows the first, and both share the same parent.
  */
-let directSibling: list(rule) => rule;
+let directSibling: array(rule) => rule;
 
 /**
  The ~ combinator selects siblings.
  This means that the second element follows the first (though not necessarily immediately),
  and both share the same parent.
  */
-let siblings: list(rule) => rule;
+let siblings: array(rule) => rule;
 
 /* !experimental! */
 
-let anyLink: list(rule) => rule;
+let anyLink: array(rule) => rule;
 
 /* **************************************************
  Constructor aliases, for ease of use.
@@ -1750,7 +1741,7 @@ let textDecoration:
 let background:
   [< Types.Color.t | Types.Url.t | Types.Gradient.t | `none] => rule;
 let backgrounds:
-  list([< Types.Color.t | Types.Url.t | Types.Gradient.t | `none]) => rule;
+  array([< Types.Color.t | Types.Url.t | Types.Gradient.t | `none]) => rule;
 
 type minmax = [
   | `fr(float)
@@ -1771,8 +1762,8 @@ type gridLength = [ trackLength | `repeat(Types.RepeatValue.t, trackLength)];
 
 let gridAutoColumns: [< trackLength | `auto] => rule;
 let gridAutoRows: [< trackLength | `auto] => rule;
-let gridTemplateColumns: list([< gridLength | `auto]) => rule;
-let gridTemplateRows: list([< gridLength | `auto]) => rule;
+let gridTemplateColumns: array([< gridLength | `auto]) => rule;
+let gridTemplateRows: array([< gridLength | `auto]) => rule;
 
 module Calc: {
   let (-): (Types.Length.t, Types.Length.t) => [> Types.Length.t];
@@ -1800,12 +1791,12 @@ type filter = [
   | Types.Cascading.t
 ];
 
-let filter: list(filter) => rule;
+let filter: array(filter) => rule;
 
 let fontFace:
   (
     ~fontFamily: string,
-    ~src: list([< | `localUrl(string) | Types.Url.t]),
+    ~src: array([< | `localUrl(string) | Types.Url.t]),
     ~fontStyle: Types.FontStyle.t=?,
     ~fontWeight: [< Types.FontWeight.t | Types.Var.t | Types.Cascading.t]=?,
     ~fontDisplay: Types.FontDisplay.t=?,
@@ -1833,7 +1824,7 @@ module Transition: {
 };
 
 let transitionValue: Transition.t => rule;
-let transitionList: list([ Transition.t]) => rule;
+let transitionList: array([ Transition.t]) => rule;
 
 let transition:
   (
@@ -1843,7 +1834,7 @@ let transition:
     string
   ) =>
   rule;
-let transitions: list([ Transition.t]) => rule;
+let transitions: array([ Transition.t]) => rule;
 
 /**
  * Animation
@@ -1881,7 +1872,7 @@ let animation:
     animationName
   ) =>
   rule;
-let animations: list([ Animation.t]) => rule;
+let animations: array([ Animation.t]) => rule;
 
 let animationName: animationName => rule;
 
@@ -1902,156 +1893,3 @@ module SVG: {
   let stopColor: Types.Color.t => rule;
   let stopOpacity: float => rule;
 };
-
-/* ****
- Colors
- ****** */
-
-let aliceblue: [> Types.Color.t];
-let antiquewhite: [> Types.Color.t];
-let aqua: [> Types.Color.t];
-let aquamarine: [> Types.Color.t];
-let azure: [> Types.Color.t];
-let beige: [> Types.Color.t];
-let bisque: [> Types.Color.t];
-let black: [> Types.Color.t];
-let blanchedalmond: [> Types.Color.t];
-let blue: [> Types.Color.t];
-let blueviolet: [> Types.Color.t];
-let brown: [> Types.Color.t];
-let burlywood: [> Types.Color.t];
-let cadetblue: [> Types.Color.t];
-let chartreuse: [> Types.Color.t];
-let chocolate: [> Types.Color.t];
-let coral: [> Types.Color.t];
-let cornflowerblue: [> Types.Color.t];
-let cornsilk: [> Types.Color.t];
-let crimson: [> Types.Color.t];
-let cyan: [> Types.Color.t];
-let darkblue: [> Types.Color.t];
-let darkcyan: [> Types.Color.t];
-let darkgoldenrod: [> Types.Color.t];
-let darkgray: [> Types.Color.t];
-let darkgrey: [> Types.Color.t];
-let darkgreen: [> Types.Color.t];
-let darkkhaki: [> Types.Color.t];
-let darkmagenta: [> Types.Color.t];
-let darkolivegreen: [> Types.Color.t];
-let darkorange: [> Types.Color.t];
-let darkorchid: [> Types.Color.t];
-let darkred: [> Types.Color.t];
-let darksalmon: [> Types.Color.t];
-let darkseagreen: [> Types.Color.t];
-let darkslateblue: [> Types.Color.t];
-let darkslategray: [> Types.Color.t];
-let darkslategrey: [> Types.Color.t];
-let darkturquoise: [> Types.Color.t];
-let darkviolet: [> Types.Color.t];
-let deeppink: [> Types.Color.t];
-let deepskyblue: [> Types.Color.t];
-let dimgray: [> Types.Color.t];
-let dimgrey: [> Types.Color.t];
-let dodgerblue: [> Types.Color.t];
-let firebrick: [> Types.Color.t];
-let floralwhite: [> Types.Color.t];
-let forestgreen: [> Types.Color.t];
-let fuchsia: [> Types.Color.t];
-let gainsboro: [> Types.Color.t];
-let ghostwhite: [> Types.Color.t];
-let gold: [> Types.Color.t];
-let goldenrod: [> Types.Color.t];
-let gray: [> Types.Color.t];
-let grey: [> Types.Color.t];
-let green: [> Types.Color.t];
-let greenyellow: [> Types.Color.t];
-let honeydew: [> Types.Color.t];
-let hotpink: [> Types.Color.t];
-let indianred: [> Types.Color.t];
-let indigo: [> Types.Color.t];
-let ivory: [> Types.Color.t];
-let khaki: [> Types.Color.t];
-let lavender: [> Types.Color.t];
-let lavenderblush: [> Types.Color.t];
-let lawngreen: [> Types.Color.t];
-let lemonchiffon: [> Types.Color.t];
-let lightblue: [> Types.Color.t];
-let lightcoral: [> Types.Color.t];
-let lightcyan: [> Types.Color.t];
-let lightgoldenrodyellow: [> Types.Color.t];
-let lightgray: [> Types.Color.t];
-let lightgrey: [> Types.Color.t];
-let lightgreen: [> Types.Color.t];
-let lightpink: [> Types.Color.t];
-let lightsalmon: [> Types.Color.t];
-let lightseagreen: [> Types.Color.t];
-let lightskyblue: [> Types.Color.t];
-let lightslategray: [> Types.Color.t];
-let lightslategrey: [> Types.Color.t];
-let lightsteelblue: [> Types.Color.t];
-let lightyellow: [> Types.Color.t];
-let lime: [> Types.Color.t];
-let limegreen: [> Types.Color.t];
-let linen: [> Types.Color.t];
-let magenta: [> Types.Color.t];
-let maroon: [> Types.Color.t];
-let mediumaquamarine: [> Types.Color.t];
-let mediumblue: [> Types.Color.t];
-let mediumorchid: [> Types.Color.t];
-let mediumpurple: [> Types.Color.t];
-let mediumseagreen: [> Types.Color.t];
-let mediumslateblue: [> Types.Color.t];
-let mediumspringgreen: [> Types.Color.t];
-let mediumturquoise: [> Types.Color.t];
-let mediumvioletred: [> Types.Color.t];
-let midnightblue: [> Types.Color.t];
-let mintcream: [> Types.Color.t];
-let mistyrose: [> Types.Color.t];
-let moccasin: [> Types.Color.t];
-let navajowhite: [> Types.Color.t];
-let navy: [> Types.Color.t];
-let oldlace: [> Types.Color.t];
-let olive: [> Types.Color.t];
-let olivedrab: [> Types.Color.t];
-let orange: [> Types.Color.t];
-let orangered: [> Types.Color.t];
-let orchid: [> Types.Color.t];
-let palegoldenrod: [> Types.Color.t];
-let palegreen: [> Types.Color.t];
-let paleturquoise: [> Types.Color.t];
-let palevioletred: [> Types.Color.t];
-let papayawhip: [> Types.Color.t];
-let peachpuff: [> Types.Color.t];
-let peru: [> Types.Color.t];
-let pink: [> Types.Color.t];
-let plum: [> Types.Color.t];
-let powderblue: [> Types.Color.t];
-let purple: [> Types.Color.t];
-let rebeccapurple: [> Types.Color.t];
-let red: [> Types.Color.t];
-let rosybrown: [> Types.Color.t];
-let royalblue: [> Types.Color.t];
-let saddlebrown: [> Types.Color.t];
-let salmon: [> Types.Color.t];
-let sandybrown: [> Types.Color.t];
-let seagreen: [> Types.Color.t];
-let seashell: [> Types.Color.t];
-let sienna: [> Types.Color.t];
-let silver: [> Types.Color.t];
-let skyblue: [> Types.Color.t];
-let slateblue: [> Types.Color.t];
-let slategray: [> Types.Color.t];
-let slategrey: [> Types.Color.t];
-let snow: [> Types.Color.t];
-let springgreen: [> Types.Color.t];
-let steelblue: [> Types.Color.t];
-let tan: [> Types.Color.t];
-let teal: [> Types.Color.t];
-let thistle: [> Types.Color.t];
-let tomato: [> Types.Color.t];
-let turquoise: [> Types.Color.t];
-let violet: [> Types.Color.t];
-let wheat: [> Types.Color.t];
-let white: [> Types.Color.t];
-let whitesmoke: [> Types.Color.t];
-let yellow: [> Types.Color.t];
-let yellowgreen: [> Types.Color.t];

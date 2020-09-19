@@ -1,7 +1,7 @@
-include Css_Legacy_Core;
+include Css_Js_Core;
 include Css_Colors;
 
-include Css_Legacy_Core.Make({
+include Css_Js_Core.Make({
   [@bs.module "emotion"]
   external mergeStyles: (. array(string)) => string = "cx";
 
@@ -23,15 +23,15 @@ type cache;
 
 let fontFace =
     (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, ()) => {
-  let asString =
-    Css_Legacy_Core.fontFace(
+  insertRule(.
+    Css_Js_Core.fontFace(
       ~fontFamily,
       ~src,
       ~fontStyle?,
       ~fontWeight?,
       ~fontDisplay?,
       (),
-    );
-  insertRule(asString);
+    ),
+  );
   fontFamily;
 };

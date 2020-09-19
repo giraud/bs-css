@@ -1,49 +1,49 @@
 module Styles = {
-  open Css;
+  open CssJs
 
   let arialNarrow =
     fontFace(
       ~fontFamily="Arial FontFace Test",
       ~src=[localUrl("Arial Narrow")],
-      ~fontStyle=normal,
-      ~fontWeight=`num(500),
-      (),
-    );
+      ~fontStyle=#normal,
+      ~fontWeight=#num(500),
+      ()
+    )
 
   let section =
-    style([
+    style(. [
       selector(
         "& > h1",
         [
-          fontFamily(`custom(arialNarrow)),
+          fontFamily(#custom(arialNarrow)),
           fontSize(px(32)),
-          fontWeight(`num(300)),
-          marginTop(zero),
+          fontWeight(#num(300)),
+          marginTop(#zero),
         ],
       ),
-      position(relative),
+      position(#relative),
       background(hex("f5f5f5")),
       margin(px(20)),
       padding(px(10)),
-      boxShadow(Shadow.box(~y=px(1), ~blur=px(5), rgba(0, 0, 0, `num(0.3)))),
+      boxShadow(Shadow.box(~y=px(1), ~blur=px(5), rgba(0, 0, 0, #num(0.3)))),
       boxShadows([
-        Shadow.box(~y=px(1), ~blur=px(5), rgba(0, 0, 0, `num(0.3))),
+        Shadow.box(~y=px(1), ~blur=px(5), rgba(0, 0, 0, #num(0.3))),
         Shadow.box(
           ~y=px(1),
           ~blur=px(10),
           ~inset=true,
-          rgba(255, 255, 255, `num(0.5)),
+          rgba(255, 255, 255, #num(0.5)),
         ),
       ]),
-    ]);
+    ])
 
   let rowLayout =
-    style([display(flexBox), flexDirection(row), flexWrap(wrap)]);
+    style(. [display(#flex), flexDirection(#row), flexWrap(#wrap)])
 };
 
-[@react.component]
+@react.component
 let make = (~name, ~children) =>
   <section style=Styles.section>
-    <h1> name->ReasonReact.string </h1>
+    <h1> {name->React.string} </h1>
     <div style=Styles.rowLayout> children </div>
-  </section>;
+  </section>

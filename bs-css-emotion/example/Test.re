@@ -1,1583 +1,1416 @@
-let text = React.string;
+open Css;
 
-Css.insertRule(
+insertRule(
   ".raw-css { display:block; background-color: green; width: 50px; height: 50px; }",
 );
 
-let fontItem =
-  Css.[
-    marginLeft(px(10)),
-    paddingRight(px(10)),
-    borderRight(px(1), solid, black),
-  ];
+let fontItem = [
+  marginLeft(px(10)),
+  paddingRight(px(10)),
+  borderRight(px(1), solid, black),
+];
 
 let spin =
-  Css.(
-    keyframes([
-      (0, [transform(rotate(deg(0.)))]),
-      (100, [transform(rotate(deg(360.)))]),
-    ])
-  );
+  keyframes([
+    (0, [transform(rotate(deg(0.)))]),
+    (100, [transform(rotate(deg(360.)))]),
+  ]);
 
 let scaleAnimation =
-  Css.(
-    keyframes([
-      (0, [transform(scale(0.3, 0.3))]),
-      (100, [transform(scale(1.0, 1.0))]),
-    ])
-  );
+  keyframes([
+    (0, [transform(scale(0.3, 0.3))]),
+    (100, [transform(scale(1.0, 1.0))]),
+  ]);
 
-let redBox =
-  Css.[
-    background(red),
-    borderBottom(px(5), solid, black),
-    width(px(50)),
-    height(px(50)),
-    margin(px(10)),
-  ];
+let redBox = [
+  background(red),
+  borderBottom(px(5), solid, black),
+  width(px(50)),
+  height(px(50)),
+  margin(px(10)),
+];
 
-let miniBox =
-  Css.[
-    border(px(2), solid, black),
-    width(px(15)),
-    height(px(15)),
-    margin(px(1)),
-  ];
+let miniBox = [
+  border(px(2), solid, black),
+  width(px(15)),
+  height(px(15)),
+  margin(px(1)),
+];
 
 // https://github.com/SentiaAnalytics/bs-css/issues/86
 let mergedStyles =
-  Css.(
-    merge([
-      style([padding(px(0)), fontSize(px(1))]),
-      style([padding(px(20)), fontSize(px(24)), color(blue)]),
-      style([media("(max-width: 768px)", [padding(px(10))])]),
-      style([
-        media("(max-width: 768px)", [fontSize(px(16)), color(red)]),
-      ]),
-    ])
-  );
+  merge([
+    style([padding(px(0)), fontSize(px(1))]),
+    style([padding(px(20)), fontSize(px(24)), color(blue)]),
+    style([media("(max-width: 768px)", [padding(px(10))])]),
+    style([media("(max-width: 768px)", [fontSize(px(16)), color(red)])]),
+  ]);
 
 let differentHeightLengths =
-  Css.(
-    [|
-      cm(1.),
-      em(1.2),
-      ex(1.2),
-      mm(10.),
-      pct(50.),
-      pt(14),
-      px(20),
-      rem(2.0),
-      vh(1.),
-      vw(1.0),
-      vmax(1.0),
-      vmin(1.0),
-      zero,
-    |]
-    |> Array.map(x => {
-         let className = style(redBox @ [height(x)]);
-         <div className key=className />;
-       })
-  )
+  [|
+    cm(1.),
+    em(1.2),
+    ex(1.2),
+    mm(10.),
+    pct(50.),
+    pt(14),
+    px(20),
+    rem(2.0),
+    vh(1.),
+    vw(1.0),
+    vmax(1.0),
+    vmin(1.0),
+    zero,
+  |]
+  ->Belt.Array.map(x => {
+      let className = style(redBox @ [height(x)]);
+      <div className key=className />;
+    })
   ->React.array;
 
 [@react.component]
 let make = () =>
-  <div className=Css.(style([background(hex("f5f5f5"))]))>
+  <div className={style([background(hex("f5f5f5"))])}>
     <Section name="angles">
+      <div className={style(redBox @ [transform(rotate(deg(45.)))])} />
+      <div className={style(redBox @ [transform(rotate(rad(3.1415)))])} />
+      <div className={style(redBox @ [transform(rotate(grad(50.)))])} />
       <div
-        className=Css.(style(redBox @ [transform(rotate(deg(45.)))]))
-      />
-      <div
-        className=Css.(style(redBox @ [transform(rotate(rad(3.1415)))]))
-      />
-      <div
-        className=Css.(style(redBox @ [transform(rotate(grad(50.)))]))
-      />
-      <div
-        className=Css.(
-          style(redBox @ [transform(rotate(turn(1. /. 3.)))])
-        )
+        className={style(redBox @ [transform(rotate(turn(1. /. 3.)))])}
       />
     </Section>
     <Section name="colors">
-      <div className=Css.(style(redBox @ [background(red)])) />
-      <div className=Css.(style(redBox @ [background(rgb(255, 0, 0))])) />
+      <div className={style(redBox @ [background(red)])} />
+      <div className={style(redBox @ [background(rgb(255, 0, 0))])} />
       <div
-        className=Css.(style(redBox @ [background(rgba(255, 0, 0, `num(0.5)))]))
+        className={style(
+          redBox @ [background(rgba(255, 0, 0, `num(0.5)))],
+        )}
       />
       <div
-        className=Css.(
-          style(redBox @ [background(hsl(deg(255.), pct(100.), pct(50.)))])
-        )
+        className={style(
+          redBox @ [background(hsl(deg(255.), pct(100.), pct(50.)))],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox @ [background(hsla(deg(255.), pct(100.), pct(50.), `num(0.5)))],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            background(hsla(deg(255.), pct(100.), pct(50.), `num(0.5))),
+          ],
+        )}
       />
-      <div className=Css.(style(redBox @ [background(hex("FF0000"))])) />
-      <div className=Css.(style(redBox @ [background(transparent)])) />
+      <div className={style(redBox @ [background(hex("FF0000"))])} />
+      <div className={style(redBox @ [background(transparent)])} />
       <div
-        className=Css.(
-          style(redBox @ [background(currentColor), color(blue)])
-        )
+        className={style(redBox @ [background(currentColor), color(blue)])}
       />
     </Section>
     <Section name="Named colors">
       {React.array(
-         Css.(
-           [|
-             aliceblue,
-             antiquewhite,
-             aqua,
-             aquamarine,
-             azure,
-             beige,
-             bisque,
-             black,
-             blanchedalmond,
-             blue,
-             blueviolet,
-             brown,
-             burlywood,
-             cadetblue,
-             chartreuse,
-             chocolate,
-             coral,
-             cornflowerblue,
-             cornsilk,
-             crimson,
-             cyan,
-             darkblue,
-             darkcyan,
-             darkgoldenrod,
-             darkgray,
-             darkgreen,
-             darkgrey,
-             darkkhaki,
-             darkmagenta,
-             darkolivegreen,
-             darkorange,
-             darkorchid,
-             darkred,
-             darksalmon,
-             darkseagreen,
-             darkslateblue,
-             darkslategray,
-             darkslategrey,
-             darkturquoise,
-             darkviolet,
-             deeppink,
-             deepskyblue,
-             dimgray,
-             dimgrey,
-             dodgerblue,
-             firebrick,
-             floralwhite,
-             forestgreen,
-             fuchsia,
-             gainsboro,
-             ghostwhite,
-             gold,
-             goldenrod,
-             gray,
-             green,
-             greenyellow,
-             grey,
-             honeydew,
-             hotpink,
-             indianred,
-             indigo,
-             ivory,
-             khaki,
-             lavender,
-             lavenderblush,
-             lawngreen,
-             lemonchiffon,
-             lightblue,
-             lightcoral,
-             lightcyan,
-             lightgoldenrodyellow,
-             lightgray,
-             lightgreen,
-             lightgrey,
-             lightpink,
-             lightsalmon,
-             lightseagreen,
-             lightskyblue,
-             lightslategray,
-             lightslategrey,
-             lightsteelblue,
-             lightyellow,
-             lime,
-             limegreen,
-             linen,
-             magenta,
-             maroon,
-             mediumaquamarine,
-             mediumblue,
-             mediumorchid,
-             mediumpurple,
-             mediumseagreen,
-             mediumslateblue,
-             mediumspringgreen,
-             mediumturquoise,
-             mediumvioletred,
-             midnightblue,
-             mintcream,
-             mistyrose,
-             moccasin,
-             navajowhite,
-             navy,
-             oldlace,
-             olive,
-             olivedrab,
-             orange,
-             orangered,
-             orchid,
-             palegoldenrod,
-             palegreen,
-             paleturquoise,
-             palevioletred,
-             papayawhip,
-             peachpuff,
-             peru,
-             pink,
-             plum,
-             powderblue,
-             purple,
-             rebeccapurple,
-             red,
-             rosybrown,
-             royalblue,
-             saddlebrown,
-             salmon,
-             sandybrown,
-             seagreen,
-             seashell,
-             sienna,
-             silver,
-             skyblue,
-             slateblue,
-             slategray,
-             slategrey,
-             snow,
-             springgreen,
-             steelblue,
-             tan,
-             teal,
-             thistle,
-             tomato,
-             transparent,
-             turquoise,
-             violet,
-             wheat,
-             white,
-             whitesmoke,
-             yellow,
-             yellowgreen,
-           |]
-         )
+         [|
+           aliceblue,
+           antiquewhite,
+           aqua,
+           aquamarine,
+           azure,
+           beige,
+           bisque,
+           black,
+           blanchedalmond,
+           blue,
+           blueviolet,
+           brown,
+           burlywood,
+           cadetblue,
+           chartreuse,
+           chocolate,
+           coral,
+           cornflowerblue,
+           cornsilk,
+           crimson,
+           cyan,
+           darkblue,
+           darkcyan,
+           darkgoldenrod,
+           darkgray,
+           darkgreen,
+           darkgrey,
+           darkkhaki,
+           darkmagenta,
+           darkolivegreen,
+           darkorange,
+           darkorchid,
+           darkred,
+           darksalmon,
+           darkseagreen,
+           darkslateblue,
+           darkslategray,
+           darkslategrey,
+           darkturquoise,
+           darkviolet,
+           deeppink,
+           deepskyblue,
+           dimgray,
+           dimgrey,
+           dodgerblue,
+           firebrick,
+           floralwhite,
+           forestgreen,
+           fuchsia,
+           gainsboro,
+           ghostwhite,
+           gold,
+           goldenrod,
+           gray,
+           green,
+           greenyellow,
+           grey,
+           honeydew,
+           hotpink,
+           indianred,
+           indigo,
+           ivory,
+           khaki,
+           lavender,
+           lavenderblush,
+           lawngreen,
+           lemonchiffon,
+           lightblue,
+           lightcoral,
+           lightcyan,
+           lightgoldenrodyellow,
+           lightgray,
+           lightgreen,
+           lightgrey,
+           lightpink,
+           lightsalmon,
+           lightseagreen,
+           lightskyblue,
+           lightslategray,
+           lightslategrey,
+           lightsteelblue,
+           lightyellow,
+           lime,
+           limegreen,
+           linen,
+           magenta,
+           maroon,
+           mediumaquamarine,
+           mediumblue,
+           mediumorchid,
+           mediumpurple,
+           mediumseagreen,
+           mediumslateblue,
+           mediumspringgreen,
+           mediumturquoise,
+           mediumvioletred,
+           midnightblue,
+           mintcream,
+           mistyrose,
+           moccasin,
+           navajowhite,
+           navy,
+           oldlace,
+           olive,
+           olivedrab,
+           orange,
+           orangered,
+           orchid,
+           palegoldenrod,
+           palegreen,
+           paleturquoise,
+           palevioletred,
+           papayawhip,
+           peachpuff,
+           peru,
+           pink,
+           plum,
+           powderblue,
+           purple,
+           rebeccapurple,
+           red,
+           rosybrown,
+           royalblue,
+           saddlebrown,
+           salmon,
+           sandybrown,
+           seagreen,
+           seashell,
+           sienna,
+           silver,
+           skyblue,
+           slateblue,
+           slategray,
+           slategrey,
+           snow,
+           springgreen,
+           steelblue,
+           Css.tan,
+           teal,
+           thistle,
+           tomato,
+           transparent,
+           turquoise,
+           violet,
+           wheat,
+           white,
+           whitesmoke,
+           yellow,
+           yellowgreen,
+         |]
          ->Belt.Array.map(c =>
-             <div className=Css.(style([background(c), ...miniBox])) />
+             <div className={style([background(c), ...miniBox])} />
            ),
        )}
     </Section>
     <Section name="gradients">
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              background(
-                linearGradient(
-                  deg(45.),
-                  [(zero, red), (pct(100.), blue)],
-                ),
-              ),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            background(
+              linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]),
+            ),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              background(
-                repeatingLinearGradient(
-                  deg(45.),
-                  [(zero, red), (pct(10.), blue)],
-                ),
+        className={style(
+          redBox
+          @ [
+            background(
+              repeatingLinearGradient(
+                deg(45.),
+                [(zero, red), (pct(10.), blue)],
               ),
-            ],
-          )
-        )
+            ),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              background(
-                radialGradient([(zero, red), (pct(100.), blue)]),
-              ),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            background(radialGradient([(zero, red), (pct(100.), blue)])),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              background(
-                repeatingRadialGradient([(zero, red), (pct(10.), blue)]),
-              ),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            background(
+              repeatingRadialGradient([(zero, red), (pct(10.), blue)]),
+            ),
+          ],
+        )}
       />
     </Section>
     <Section name="lengths">
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              height(ch(1.2)),
-              width(px(10)),
-              maxHeight(pct(50.)),
-              maxWidth(pct(100.)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            height(ch(1.2)),
+            width(px(10)),
+            maxHeight(pct(50.)),
+            maxWidth(pct(100.)),
+          ],
+        )}
       />
       differentHeightLengths
     </Section>
     <Section name="calc">
+      <div className={style(redBox @ [height(Calc.(pt(14) - px(10)))])} />
       <div
-        className=Css.(style(redBox @ [height(Calc.(pt(14) - px(10)))]))
-      />
-      <div
-        className=Css.(style(redBox @ [height(Calc.(cm(0.2) + mm(10.)))]))
+        className={style(redBox @ [height(Calc.(cm(0.2) + mm(10.)))])}
       />
     </Section>
     <Section name="display">
-      <div className=Css.(style(redBox @ [display(block)])) />
-      <div className=Css.(style(redBox @ [display(inline)])) />
-      <div className=Css.(style(redBox @ [display(inlineBlock)])) />
-      <div className=Css.(style(redBox @ [display(none)])) />
-      <div className=Css.(style(redBox @ [display(flexBox)])) />
+      <div className={style(redBox @ [display(block)])} />
+      <div className={style(redBox @ [display(inline)])} />
+      <div className={style(redBox @ [display(inlineBlock)])} />
+      <div className={style(redBox @ [display(none)])} />
+      <div className={style(redBox @ [display(flexBox)])} />
     </Section>
     <Section name="position">
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              position(absolute),
-              top(zero),
-              left(zero),
-              right(zero),
-              bottom(zero),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            position(absolute),
+            top(zero),
+            left(zero),
+            right(zero),
+            bottom(zero),
+          ],
+        )}
       />
-      <div className=Css.(style(redBox @ [position(relative)])) />
+      <div className={style(redBox @ [position(relative)])} />
       <div
-        className=Css.(
-          style(
-            redBox @ [position(fixed), bottom(px(10)), right(px(10))],
-          )
-        )
+        className={style(
+          redBox @ [position(fixed), bottom(px(10)), right(px(10))],
+        )}
       />
-      <div className=Css.(style(redBox @ [position(static)])) />
-      <div className=Css.(style(redBox @ [position(sticky)])) />
+      <div className={style(redBox @ [position(static)])} />
+      <div className={style(redBox @ [position(sticky)])} />
     </Section>
     <Section name="Padding & Margin">
       <div
-        className=Css.(style(redBox @ [padding(px(10)), margin(px(10))]))
+        className={style(redBox @ [padding(px(10)), margin(px(10))])}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              paddingLeft(px(10)),
-              paddingRight(px(10)),
-              paddingTop(px(10)),
-              paddingBottom(px(10)),
-              marginLeft(px(10)),
-              marginRight(px(10)),
-              marginTop(px(10)),
-              marginBottom(px(10)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            paddingLeft(px(10)),
+            paddingRight(px(10)),
+            paddingTop(px(10)),
+            paddingBottom(px(10)),
+            marginLeft(px(10)),
+            marginRight(px(10)),
+            marginTop(px(10)),
+            marginBottom(px(10)),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              padding2(~v=px(10), ~h=px(20)),
-              margin2(~v=px(10), ~h=px(20)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            padding2(~v=px(10), ~h=px(20)),
+            margin2(~v=px(10), ~h=px(20)),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              padding3(~top=px(10), ~h=px(20), ~bottom=px(1)),
-              margin3(~top=px(10), ~h=px(20), ~bottom=px(2)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            padding3(~top=px(10), ~h=px(20), ~bottom=px(1)),
+            margin3(~top=px(10), ~h=px(20), ~bottom=px(2)),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              padding4(
-                ~top=px(10),
-                ~bottom=px(1),
-                ~left=px(5),
-                ~right=px(15),
-              ),
-              margin4(
-                ~top=px(10),
-                ~bottom=px(1),
-                ~left=px(5),
-                ~right=px(15),
-              ),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            padding4(
+              ~top=px(10),
+              ~bottom=px(1),
+              ~left=px(5),
+              ~right=px(15),
+            ),
+            margin4(
+              ~top=px(10),
+              ~bottom=px(1),
+              ~left=px(5),
+              ~right=px(15),
+            ),
+          ],
+        )}
       />
     </Section>
     <Section name="grid">
       <div
-        className=Css.(
-          style([
-            width(pct(100.)),
-            height(px(500)),
-            display(grid),
-            gridTemplateColumns([px(150), auto, px(150)]),
-            gridTemplateRows([px(60), auto]),
-          ])
-        )>
+        className={style([
+          width(pct(100.)),
+          height(px(500)),
+          display(grid),
+          gridTemplateColumns([px(150), auto, px(150)]),
+          gridTemplateRows([px(60), auto]),
+        ])}>
         <div
-          className=Css.(
-            style([
-              gridColumnStart(1),
-              gridColumnEnd(4),
-              background(red),
-              gridRowStart(1),
-              gridRowEnd(1),
-            ])
-          )
+          className={style([
+            gridColumnStart(1),
+            gridColumnEnd(4),
+            background(red),
+            gridRowStart(1),
+            gridRowEnd(1),
+          ])}
         />
         <div
-          className=Css.(
-            style([background(blue), gridColumn(1, 1), gridRow(2, 2)])
-          )
+          className={style([
+            background(blue),
+            gridColumn(1, 1),
+            gridRow(2, 2),
+          ])}
         />
         <div
-          className=Css.(
-            style([
-              background(green),
+          className={style([
+            background(green),
+            gridColumn(2, 2),
+            gridRow(2, 2),
+            display(inlineGrid),
+            gridTemplateColumns([px(50), auto]),
+            gridTemplateRows([px(40), auto]),
+          ])}>
+          <div
+            className={style([
+              background(yellow),
+              gridRow(1, 1),
               gridColumn(2, 2),
+            ])}
+          />
+          <div
+            className={style([
+              background(green),
+              gridRow(1, 2),
+              gridColumn(1, 1),
+            ])}
+          />
+          <div
+            className={style([
+              background(purple),
               gridRow(2, 2),
-              display(inlineGrid),
-              gridTemplateColumns([px(50), auto]),
-              gridTemplateRows([px(40), auto]),
-            ])
-          )>
-          <div
-            className=Css.(
-              style([background(yellow), gridRow(1, 1), gridColumn(2, 2)])
-            )
-          />
-          <div
-            className=Css.(
-              style([background(green), gridRow(1, 2), gridColumn(1, 1)])
-            )
-          />
-          <div
-            className=Css.(
-              style([background(purple), gridRow(2, 2), gridColumn(2, 2)])
-            )
+              gridColumn(2, 2),
+            ])}
           />
         </div>
         <div
-          className=Css.(
-            style([
-              gridColumnStart(3),
-              gridColumnEnd(3),
-              background(blue),
-              gridRowStart(2),
-              gridRowEnd(2),
-            ])
-          )
+          className={style([
+            gridColumnStart(3),
+            gridColumnEnd(3),
+            background(blue),
+            gridRowStart(2),
+            gridRowEnd(2),
+          ])}
         />
       </div>
-      <div className=Css.(style([display(`grid), gridAutoFlow(`row)]))>
-        <div className=Css.(style([background(purple)]))>
-          {text("grid auto direction row 1")}
+      <div className={style([display(`grid), gridAutoFlow(`row)])}>
+        <div className={style([background(purple)])}>
+          "grid auto direction row 1"->React.string
         </div>
-        <div className=Css.(style([background(green)]))>
-          {text("grid auto direction row 2")}
-        </div>
-      </div>
-      <div
-        className=Css.(
-          style([
-            display(`grid),
-            gridTemplateColumns([100->px, `repeat((`num(2), 60->px))]),
-          ])
-        )>
-        <div className=Css.(style([background(purple)]))>
-          {text("Grid track repeat")}
-        </div>
-        <div className=Css.(style([background(green)]))>
-          {text("two times")}
-        </div>
-        <div className=Css.(style([background(red)]))>
-          {text("three times")}
+        <div className={style([background(green)])}>
+          "grid auto direction row 2"->React.string
         </div>
       </div>
       <div
-        className=Css.(style([display(`grid), gridAutoColumns(100->px)]))>
-        <div className=Css.(style([background(purple)]))>
-          {text("Grid auto columns (100px)")}
+        className={style([
+          display(`grid),
+          gridTemplateColumns([100->px, `repeat((`num(2), 60->px))]),
+        ])}>
+        <div className={style([background(purple)])}>
+          "Grid track repeat"->React.string
         </div>
-        <div className=Css.(style([background(green)]))>
-          {text("100px")}
+        <div className={style([background(green)])}>
+          "two times"->React.string
         </div>
-        <div className=Css.(style([background(blue)]))>
-          {text("100px")}
+        <div className={style([background(red)])}>
+          "three times"->React.string
+        </div>
+      </div>
+      <div className={style([display(`grid), gridAutoColumns(100->px)])}>
+        <div className={style([background(purple)])}>
+          "Grid auto columns (100px)"->React.string
+        </div>
+        <div className={style([background(green)])}>
+          "100px"->React.string
+        </div>
+        <div className={style([background(blue)])}>
+          "100px"->React.string
         </div>
       </div>
     </Section>
     <Section name="flexbox">
       <div
-        className=Css.(
-          style([
+        className={style([
+          flexDirection(column),
+          flexGrow(1.),
+          alignItems(stretch),
+          selector("& > *", [marginBottom(px(10)), width(pct(100.))]),
+        ])}>
+        <div
+          className={style([
+            display(flexBox),
+            flexDirection(row),
+            background(gray),
+            alignItems(flexStart),
+            justifyContent(flexEnd),
+          ])}>
+          <div
+            className={style(
+              redBox
+              @ [order(1), flexGrow(1.), flexShrink(1.), flexBasis(auto)],
+            )}
+          />
+          <div className={style(redBox @ [flex(none)])} />
+          <div
+            className={style(
+              redBox
+              @ [order(1), flex3(~grow=1.5, ~shrink=0.8, ~basis=100->px)],
+            )}
+          />
+          <div className={style(redBox @ [alignSelf(flexEnd)])} />
+          <div className={style(redBox)} />
+        </div>
+        <div
+          className={style([
+            display(flexBox),
             flexDirection(column),
-            flexGrow(1.),
+            background(gray),
+            alignItems(baseline),
+            justifyContent(flexStart),
+          ])}>
+          <div className={style(redBox)} />
+          <div className={style(redBox)} />
+          <div className={style(redBox)} />
+        </div>
+        <div
+          className={style([
+            display(flexBox),
+            flexDirection(rowReverse),
+            background(gray),
+            alignItems(center),
+            justifyContent(spaceBetween),
+          ])}>
+          <div className={style(redBox)} />
+          <div
+            className={style(redBox @ [height(px(50)), width(px(50))])}
+          />
+          <div className={style(redBox)} />
+        </div>
+        <div
+          className={style([
+            display(flexBox),
+            flexDirection(columnReverse),
+            background(gray),
+            alignItems(flexEnd),
+            justifyContent(flexEnd),
+          ])}>
+          <div className={style(redBox)} />
+          <div
+            className={style(redBox @ [height(px(50)), width(px(50))])}
+          />
+          <div className={style(redBox)} />
+        </div>
+        <div
+          className={style([
+            display(flexBox),
+            flexDirection(row),
+            background(gray),
             alignItems(stretch),
-            selector("& > *", [marginBottom(px(10)), width(pct(100.))]),
-          ])
-        )>
-        <div
-          className=Css.(
-            style([
-              display(flexBox),
-              flexDirection(row),
-              background(gray),
-              alignItems(flexStart),
-              justifyContent(flexEnd),
-            ])
-          )>
+            justifyContent(spaceAround),
+          ])}>
+          <div className={style(redBox)} />
           <div
-            className=Css.(
-              style(
-                redBox
-                @ [
-                  order(1),
-                  flexGrow(1.),
-                  flexShrink(1.),
-                  flexBasis(auto),
-                ],
-              )
-            )
+            className={style(redBox @ [height(px(50)), width(px(50))])}
           />
-          <div className=Css.(style(redBox @ [flex(none)])) />
-          <div
-            className=Css.(
-              style(
-                redBox
-                @ [order(1), flex3(~grow=1.5, ~shrink=0.8, ~basis=100->px)],
-              )
-            )
-          />
-          <div className=Css.(style(redBox @ [alignSelf(flexEnd)])) />
-          <div className={Css.style(redBox)} />
+          <div className={style(redBox)} />
         </div>
         <div
-          className=Css.(
-            style([
-              display(flexBox),
-              flexDirection(column),
-              background(gray),
-              alignItems(baseline),
-              justifyContent(flexStart),
-            ])
-          )>
-          <div className={Css.style(redBox)} />
-          <div className={Css.style(redBox)} />
-          <div className={Css.style(redBox)} />
-        </div>
-        <div
-          className=Css.(
-            style([
-              display(flexBox),
-              flexDirection(rowReverse),
-              background(gray),
-              alignItems(center),
-              justifyContent(spaceBetween),
-            ])
-          )>
-          <div className={Css.style(redBox)} />
+          className={style([
+            display(flexBox),
+            flexDirection(row),
+            background(gray),
+            alignItems(stretch),
+            justifyContent(spaceEvenly),
+          ])}>
+          <div className={style(redBox)} />
           <div
-            className=Css.(
-              style(redBox @ [height(px(50)), width(px(50))])
-            )
+            className={style(redBox @ [height(px(50)), width(px(50))])}
           />
-          <div className={Css.style(redBox)} />
-        </div>
-        <div
-          className=Css.(
-            style([
-              display(flexBox),
-              flexDirection(columnReverse),
-              background(gray),
-              alignItems(flexEnd),
-              justifyContent(flexEnd),
-            ])
-          )>
-          <div className={Css.style(redBox)} />
-          <div
-            className=Css.(
-              style(redBox @ [height(px(50)), width(px(50))])
-            )
-          />
-          <div className={Css.style(redBox)} />
-        </div>
-        <div
-          className=Css.(
-            style([
-              display(flexBox),
-              flexDirection(row),
-              background(gray),
-              alignItems(stretch),
-              justifyContent(spaceAround),
-            ])
-          )>
-          <div className={Css.style(redBox)} />
-          <div
-            className=Css.(
-              style(redBox @ [height(px(50)), width(px(50))])
-            )
-          />
-          <div className={Css.style(redBox)} />
-        </div>
-        <div
-          className=Css.(
-            style([
-              display(flexBox),
-              flexDirection(row),
-              background(gray),
-              alignItems(stretch),
-              justifyContent(spaceEvenly),
-            ])
-          )>
-          <div className={Css.style(redBox)} />
-          <div
-            className=Css.(
-              style(redBox @ [height(px(50)), width(px(50))])
-            )
-          />
-          <div className={Css.style(redBox)} />
+          <div className={style(redBox)} />
         </div>
       </div>
     </Section>
     <Section name="float">
-      <div className=Css.(style(redBox @ [float(`left), clear(`right)])) />
-      <div className=Css.(style(redBox @ [float(`right), clear(`left)])) />
-      <div className=Css.(style(redBox @ [float(none), clear(both)])) />
+      <div className={style(redBox @ [Css.float(`left), clear(`right)])} />
+      <div className={style(redBox @ [Css.float(`right), clear(`left)])} />
+      <div className={style(redBox @ [Css.float(none), clear(both)])} />
     </Section>
     <Section name="overflow">
-      <div className=Css.(style(redBox @ [overflow(hidden)])) />
-      <div className=Css.(style(redBox @ [overflow(visible)])) />
-      <div className=Css.(style(redBox @ [overflow(auto)])) />
-      <div className=Css.(style(redBox @ [overflow(scroll)])) />
+      <div className={style(redBox @ [overflow(hidden)])} />
+      <div className={style(redBox @ [overflow(visible)])} />
+      <div className={style(redBox @ [overflow(auto)])} />
+      <div className={style(redBox @ [overflow(scroll)])} />
     </Section>
     <Section name="border">
       <div
-        className=Css.(
-          style(
-            redBox @ [border(px(5), solid, blue), borderRadius(px(1000))],
-          )
-        )
+        className={style(
+          redBox @ [border(px(5), solid, blue), borderRadius(px(1000))],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              border(px(5), solid, green),
-              borderTopRightRadius(px(1000)),
-              borderTopLeftRadius(px(1000)),
-              borderBottomRightRadius(px(1000)),
-              borderBottomLeftRadius(px(1000)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            border(px(5), solid, green),
+            borderTopRightRadius(px(1000)),
+            borderTopLeftRadius(px(1000)),
+            borderBottomRightRadius(px(1000)),
+            borderBottomLeftRadius(px(1000)),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              borderTop(px(5), dashed, hex("FFF")),
-              borderRight(px(5), dotted, rgb(0, 0, 0)),
-              borderBottom(px(5), none, green),
-              borderLeft(px(5), solid, blue),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            borderTop(px(5), dashed, hex("FFF")),
+            borderRight(px(5), dotted, rgb(0, 0, 0)),
+            borderBottom(px(5), none, green),
+            borderLeft(px(5), solid, blue),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [borderWidth(px(5)), borderStyle(solid), borderColor(blue)],
-          )
-        )
+        className={style(
+          redBox
+          @ [borderWidth(px(5)), borderStyle(solid), borderColor(blue)],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              borderTopWidth(px(5)),
-              borderTopStyle(solid),
-              borderTopColor(blue),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            borderTopWidth(px(5)),
+            borderTopStyle(solid),
+            borderTopColor(blue),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              borderBottomWidth(px(5)),
-              borderBottomStyle(solid),
-              borderBottomColor(blue),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            borderBottomWidth(px(5)),
+            borderBottomStyle(solid),
+            borderBottomColor(blue),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              borderLeftWidth(px(5)),
-              borderLeftStyle(solid),
-              borderLeftColor(blue),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            borderLeftWidth(px(5)),
+            borderLeftStyle(solid),
+            borderLeftColor(blue),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              borderRightWidth(px(5)),
-              borderRightStyle(solid),
-              borderRightColor(blue),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            borderRightWidth(px(5)),
+            borderRightStyle(solid),
+            borderRightColor(blue),
+          ],
+        )}
       />
     </Section>
     <Section name="background">
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              background(red),
-              backgroundAttachment(scroll),
-              backgroundClip(borderBox),
-              backgroundOrigin(borderBox),
-              backgroundPosition(`hv(pct(50.), pct(50.))),
-              backgroundRepeat(noRepeat),
-              backgroundSize(size(px(100), px(100))),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            background(red),
+            backgroundAttachment(scroll),
+            backgroundClip(borderBox),
+            backgroundOrigin(borderBox),
+            backgroundPosition(`hv((pct(50.), pct(50.)))),
+            backgroundRepeat(noRepeat),
+            backgroundSize(size(px(100), px(100))),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              background(radialGradient([(zero, red), (pct(10.), blue)])),
-              backgroundAttachment(fixed),
-              backgroundClip(contentBox),
-              backgroundOrigin(contentBox),
-              backgroundRepeat(repeat),
-              backgroundSize(auto),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            background(radialGradient([(zero, red), (pct(10.), blue)])),
+            backgroundAttachment(fixed),
+            backgroundClip(contentBox),
+            backgroundOrigin(contentBox),
+            backgroundRepeat(repeat),
+            backgroundSize(auto),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              background(url("./img-29.jpg")),
-              backgroundAttachment(local),
-              backgroundClip(paddingBox),
-              backgroundOrigin(paddingBox),
-              backgroundRepeat(repeatX),
-              backgroundSize(cover),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            background(url("./img-29.jpg")),
+            backgroundAttachment(local),
+            backgroundClip(paddingBox),
+            backgroundOrigin(paddingBox),
+            backgroundRepeat(repeatX),
+            backgroundSize(cover),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              backgroundColor(rgb(0, 0, 255)),
-              backgroundImage(
-                linearGradient(
-                  deg(45.),
-                  [(zero, green), (pct(50.), red), (pct(100.), yellow)],
-                ),
+        className={style(
+          redBox
+          @ [
+            backgroundColor(rgb(0, 0, 255)),
+            backgroundImage(
+              linearGradient(
+                deg(45.),
+                [(zero, green), (pct(50.), red), (pct(100.), yellow)],
               ),
-              backgroundRepeat(repeatY),
-              backgroundSize(contain),
-            ],
-          )
-        )
+            ),
+            backgroundRepeat(repeatY),
+            backgroundSize(contain),
+          ],
+        )}
       />
     </Section>
     <Section name="cursor">
-      <div className=Css.(style(redBox @ [cursor(`auto)]))>
-        {text("auto")}
+      <div className={style(redBox @ [cursor(`auto)])}>
+        "auto"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`default)]))>
-        {text("default")}
+      <div className={style(redBox @ [cursor(`default)])}>
+        "default"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`none)]))>
-        {text("none")}
+      <div className={style(redBox @ [cursor(`none)])}>
+        "none"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`contextMenu)]))>
-        {text("context menu")}
+      <div className={style(redBox @ [cursor(`contextMenu)])}>
+        "context menu"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`help)]))>
-        {text("help")}
+      <div className={style(redBox @ [cursor(`help)])}>
+        "help"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`pointer)]))>
-        {text("pointer")}
+      <div className={style(redBox @ [cursor(`pointer)])}>
+        "pointer"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`progress)]))>
-        {text("progress")}
+      <div className={style(redBox @ [cursor(`progress)])}>
+        "progress"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`wait)]))>
-        {text("wait")}
+      <div className={style(redBox @ [cursor(`wait)])}>
+        "wait"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`cell)]))>
-        {text("cell")}
+      <div className={style(redBox @ [cursor(`cell)])}>
+        "cell"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`crosshair)]))>
-        {text("crosshair")}
+      <div className={style(redBox @ [cursor(`crosshair)])}>
+        "crosshair"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`text)]))>
-        {text("text")}
+      <div className={style(redBox @ [cursor(`text)])}>
+        "text"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`verticalText)]))>
-        {text("vert text")}
+      <div className={style(redBox @ [cursor(`verticalText)])}>
+        "vert text"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`alias)]))>
-        {text("alias")}
+      <div className={style(redBox @ [cursor(`alias)])}>
+        "alias"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`copy)]))>
-        {text("copy")}
+      <div className={style(redBox @ [cursor(`copy)])}>
+        "copy"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`move)]))>
-        {text("move")}
+      <div className={style(redBox @ [cursor(`move)])}>
+        "move"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`noDrop)]))>
-        {text("no drop")}
+      <div className={style(redBox @ [cursor(`noDrop)])}>
+        "no drop"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`notAllowed)]))>
-        {text("not allowed")}
+      <div className={style(redBox @ [cursor(`notAllowed)])}>
+        "not allowed"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`grab)]))>
-        {text("grab")}
+      <div className={style(redBox @ [cursor(`grab)])}>
+        "grab"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`grabbing)]))>
-        {text("grabbing")}
+      <div className={style(redBox @ [cursor(`grabbing)])}>
+        "grabbing"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`allScroll)]))>
-        {text("all scroll")}
+      <div className={style(redBox @ [cursor(`allScroll)])}>
+        "all scroll"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`colResize)]))>
-        {text("col resize")}
+      <div className={style(redBox @ [cursor(`colResize)])}>
+        "col resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`rowResize)]))>
-        {text("row resize")}
+      <div className={style(redBox @ [cursor(`rowResize)])}>
+        "row resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`nResize)]))>
-        {text("n resize")}
+      <div className={style(redBox @ [cursor(`nResize)])}>
+        "n resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`eResize)]))>
-        {text("e resize")}
+      <div className={style(redBox @ [cursor(`eResize)])}>
+        "e resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`sResize)]))>
-        {text("s resize")}
+      <div className={style(redBox @ [cursor(`sResize)])}>
+        "s resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`wResize)]))>
-        {text("w resize")}
+      <div className={style(redBox @ [cursor(`wResize)])}>
+        "w resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`neResize)]))>
-        {text("ne resize")}
+      <div className={style(redBox @ [cursor(`neResize)])}>
+        "ne resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`nwResize)]))>
-        {text("nw resize")}
+      <div className={style(redBox @ [cursor(`nwResize)])}>
+        "nw resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`seResize)]))>
-        {text("se resize")}
+      <div className={style(redBox @ [cursor(`seResize)])}>
+        "se resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`swResize)]))>
-        {text("sw resize")}
+      <div className={style(redBox @ [cursor(`swResize)])}>
+        "sw resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`ewResize)]))>
-        {text("ew resize")}
+      <div className={style(redBox @ [cursor(`ewResize)])}>
+        "ew resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`nsResize)]))>
-        {text("ns resize")}
+      <div className={style(redBox @ [cursor(`nsResize)])}>
+        "ns resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`neswResize)]))>
-        {text("nesw resize")}
+      <div className={style(redBox @ [cursor(`neswResize)])}>
+        "nesw resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`nwseResize)]))>
-        {text("nwse resize")}
+      <div className={style(redBox @ [cursor(`nwseResize)])}>
+        "nwse resize"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`zoomIn)]))>
-        {text("zoom in")}
+      <div className={style(redBox @ [cursor(`zoomIn)])}>
+        "zoom in"->React.string
       </div>
-      <div className=Css.(style(redBox @ [cursor(`zoomOut)]))>
-        {text("zoom out")}
+      <div className={style(redBox @ [cursor(`zoomOut)])}>
+        "zoom out"->React.string
       </div>
     </Section>
     <Section name="list">
       <ul>
-        <li className=Css.(style([listStyle(`disc, inside, none)])) />
-        <li className=Css.(style([listStyleType(`circle)])) />
-        <li className=Css.(style([listStyleType(`square)])) />
-        <li className=Css.(style([listStyleType(`decimal)])) />
-        <li className=Css.(style([listStyleType(`lowerAlpha)])) />
-        <li className=Css.(style([listStyleType(`upperAlpha)])) />
-        <li className=Css.(style([listStyleType(`lowerGreek)])) />
-        <li className=Css.(style([listStyleType(`lowerLatin)])) />
-        <li className=Css.(style([listStyleType(`upperLatin)])) />
-        <li className=Css.(style([listStyleType(`lowerRoman)])) />
-        <li className=Css.(style([listStyleType(`upperRoman)])) />
+        <li className={style([listStyle(`disc, inside, none)])} />
+        <li className={style([listStyleType(`circle)])} />
+        <li className={style([listStyleType(`square)])} />
+        <li className={style([listStyleType(`decimal)])} />
+        <li className={style([listStyleType(`lowerAlpha)])} />
+        <li className={style([listStyleType(`upperAlpha)])} />
+        <li className={style([listStyleType(`lowerGreek)])} />
+        <li className={style([listStyleType(`lowerLatin)])} />
+        <li className={style([listStyleType(`upperLatin)])} />
+        <li className={style([listStyleType(`lowerRoman)])} />
+        <li className={style([listStyleType(`upperRoman)])} />
         <li
-          className=Css.(
-            style([
-              listStyleType(`disc),
-              listStylePosition(inside),
-              listStyleImage(url("./facebook.png")),
-            ])
-          )
+          className={style([
+            listStyleType(`disc),
+            listStylePosition(inside),
+            listStyleImage(url("./facebook.png")),
+          ])}
         />
       </ul>
     </Section>
     <Section name="outline">
+      <div className={style(redBox @ [outline(px(5), `double, green)])} />
       <div
-        className=Css.(style(redBox @ [outline(px(5), `double, green)]))
+        className={style(
+          redBox
+          @ [
+            outlineStyle(solid),
+            outlineWidth(px(5)),
+            outlineColor(green),
+            outlineOffset(px(5)),
+          ],
+        )}
       />
-      <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              outlineStyle(solid),
-              outlineWidth(px(5)),
-              outlineColor(green),
-              outlineOffset(px(5)),
-            ],
-          )
-        )
-      />
-      <div
-        className=Css.(style(redBox @ [outline(px(5), `double, red)]))
-      />
-      <div className=Css.(style(redBox @ [outline(px(5), `ridge, red)])) />
+      <div className={style(redBox @ [outline(px(5), `double, red)])} />
+      <div className={style(redBox @ [outline(px(5), `ridge, red)])} />
     </Section>
     <Section name="transform">
-      <div className=Css.(style(redBox @ [opacity(0.5)])) />
+      <div className={style(redBox @ [opacity(0.5)])} />
       <div
-        className=Css.(
-          style(
-            redBox @ [perspective(px(500)), transform(rotate(deg(10.)))],
-          )
-        )
+        className={style(
+          redBox @ [perspective(px(500)), transform(rotate(deg(10.)))],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              transforms([
-                translate(px(10), pct(10.)),
-                skew(deg(10.), deg(10.)),
-              ]),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            transforms([
+              translate(px(10), pct(10.)),
+              skew(deg(10.), deg(10.)),
+            ]),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              transform(rotate(deg(19.))),
-              transformOrigin(pct(50.), pct(50.)),
-              transformStyle(`preserve3d),
-              perspective(px(900)),
-              perspectiveOrigin(pct(10.), pct(10.)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            transform(rotate(deg(19.))),
+            transformOrigin(pct(50.), pct(50.)),
+            transformStyle(`preserve3d),
+            perspective(px(900)),
+            perspectiveOrigin(pct(10.), pct(10.)),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              transform(translate(px(10), pct(10.))),
-              transformOrigin3d(px(10), px(10), px(10)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            transform(translate(px(10), pct(10.))),
+            transformOrigin3d(px(10), px(10), px(10)),
+          ],
+        )}
       />
     </Section>
     <Section name="transition">
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              transition(
-                ~duration=300,
-                ~delay=300,
-                ~timingFunction=easeInOut,
-                "transform",
-              ),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            transition(
+              ~duration=300,
+              ~delay=300,
+              ~timingFunction=easeInOut,
+              "transform",
+            ),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              transitionProperty("height"),
-              transitionDelay(300),
-              transitionDuration(300),
-              transitionTimingFunction(linear),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            transitionProperty("height"),
+            transitionDelay(300),
+            transitionDuration(300),
+            transitionTimingFunction(linear),
+          ],
+        )}
       />
     </Section>
     <Section name="text">
       <p
-        className=Css.(
-          style([
-            color(black),
-            fontFamilies([`custom("Helvetica"), `sansSerif]),
-            fontSize(pt(18)),
-            fontVariant(`smallCaps),
-            fontStyle(italic),
-            fontWeight(`num(300)),
-            letterSpacing(px(3)),
-            lineHeight(`abs(2.)),
-            textAlign(`left),
-            textDecoration(underline),
-            textDecorationColor(pink),
-            textDecorationStyle(wavy),
-            textIndent(px(10)),
-            textOverflow(clip),
-            textShadow(Shadow.text(~y=px(3), ~blur=px(2), black)),
-            textTransform(capitalize),
-            verticalAlign(sub),
-            whiteSpace(normal),
-            wordBreak(breakAll),
-            wordSpacing(px(20)),
-            wordWrap(breakWord),
-          ])
-        )>
-        {text(
-           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-         )}
+        className={style([
+          color(black),
+          fontFamilies([`custom("Helvetica"), `sansSerif]),
+          fontSize(pt(18)),
+          fontVariant(`smallCaps),
+          fontStyle(italic),
+          fontWeight(`num(300)),
+          letterSpacing(px(3)),
+          lineHeight(`abs(2.)),
+          textAlign(`left),
+          textDecoration(underline),
+          textDecorationColor(pink),
+          textDecorationStyle(wavy),
+          textIndent(px(10)),
+          textOverflow(clip),
+          textShadow(Shadow.text(~y=px(3), ~blur=px(2), black)),
+          textTransform(capitalize),
+          verticalAlign(sub),
+          whiteSpace(normal),
+          wordBreak(breakAll),
+          wordSpacing(px(20)),
+          wordWrap(breakWord),
+        ])}>
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        ->React.string
       </p>
-      <h2 className=Css.(style([width(pct(100.))]))>
-        {text("Named Font weights")}
+      <h2 className={style([width(pct(100.))])}>
+        "Named Font weights"->React.string
       </h2>
       <span
-        className=Css.(
-          style([
-            fontWeight(thin),
-            paddingRight(px(10)),
-            borderRight(px(1), solid, black),
-          ])
-        )>
-        {text("thin")}
+        className={style([
+          fontWeight(thin),
+          paddingRight(px(10)),
+          borderRight(px(1), solid, black),
+        ])}>
+        "thin"->React.string
       </span>
-      <span className=Css.(style([fontWeight(extraLight), ...fontItem]))>
-        {text("extra light")}
+      <span className={style([fontWeight(extraLight), ...fontItem])}>
+        "extra light"->React.string
       </span>
-      <span className=Css.(style([fontWeight(light), ...fontItem]))>
-        {text("light")}
+      <span className={style([fontWeight(light), ...fontItem])}>
+        "light"->React.string
       </span>
-      <span className=Css.(style([fontWeight(normal), ...fontItem]))>
-        {text("normal")}
+      <span className={style([fontWeight(normal), ...fontItem])}>
+        "normal"->React.string
       </span>
-      <span className=Css.(style([fontWeight(medium), ...fontItem]))>
-        {text("medium")}
+      <span className={style([fontWeight(medium), ...fontItem])}>
+        "medium"->React.string
       </span>
-      <span className=Css.(style([fontWeight(semiBold), ...fontItem]))>
-        {text("semiBold")}
+      <span className={style([fontWeight(semiBold), ...fontItem])}>
+        "semiBold"->React.string
       </span>
-      <span className=Css.(style([fontWeight(bold), ...fontItem]))>
-        {text("bold")}
+      <span className={style([fontWeight(bold), ...fontItem])}>
+        "bold"->React.string
       </span>
-      <span className=Css.(style([fontWeight(extraBold), ...fontItem]))>
-        {text("extra bold")}
+      <span className={style([fontWeight(extraBold), ...fontItem])}>
+        "extra bold"->React.string
       </span>
-      <span className=Css.(style([fontWeight(`black), ...fontItem]))>
-        {text("black")}
+      <span className={style([fontWeight(`black), ...fontItem])}>
+        "black"->React.string
       </span>
-      <span className=Css.(style([fontWeight(lighter), ...fontItem]))>
-        {text("lighter")}
+      <span className={style([fontWeight(lighter), ...fontItem])}>
+        "lighter"->React.string
       </span>
-      <span className=Css.(style([fontWeight(bolder), ...fontItem]))>
-        {text("bolder")}
+      <span className={style([fontWeight(bolder), ...fontItem])}>
+        "bolder"->React.string
       </span>
     </Section>
     <Section name="animation">
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              animation(
+        className={style(
+          redBox
+          @ [
+            animation(
+              ~duration=300,
+              ~delay=300,
+              ~direction=reverse,
+              ~timingFunction=linear,
+              ~fillMode=forwards,
+              ~playState=running,
+              ~iterationCount=infinite,
+              spin,
+            ),
+          ],
+        )}
+      />
+      <div
+        className={style(
+          redBox
+          @ [
+            animations([
+              Animation.shorthand(
                 ~duration=300,
-                ~delay=300,
-                ~direction=reverse,
-                ~timingFunction=linear,
-                ~fillMode=forwards,
-                ~playState=running,
                 ~iterationCount=infinite,
                 spin,
               ),
-            ],
-          )
-        )
+              Animation.shorthand(
+                ~duration=300,
+                ~iterationCount=infinite,
+                scaleAnimation,
+              ),
+            ]),
+          ],
+        )}
       />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              animations([
-                Animation.shorthand(
-                  ~duration=300,
-                  ~iterationCount=infinite,
-                  spin,
-                ),
-                Animation.shorthand(
-                  ~duration=300,
-                  ~iterationCount=infinite,
-                  scaleAnimation,
-                ),
-              ]),
-            ],
-          )
-        )
-      />
-      <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              animationName(spin),
-              animationTimingFunction(easeIn),
-              animationDuration(300),
-              animationDelay(300),
-              animationDirection(normal),
-              animationFillMode(backwards),
-              animationPlayState(paused),
-              animationIterationCount(count(5)),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            animationName(spin),
+            animationTimingFunction(easeIn),
+            animationDuration(300),
+            animationDelay(300),
+            animationDirection(normal),
+            animationFillMode(backwards),
+            animationPlayState(paused),
+            animationIterationCount(count(5)),
+          ],
+        )}
       />
     </Section>
     <Section name="cascading">
-      {text("inherit")}
+      "inherit"->React.string
       <div
-        className=Css.(
-          style([
-            display(inherit_),
-            position(inherit_),
-            fontSize(inherit_),
-            fontStyle(inherit_),
-            lineHeight(inherit_),
-          ])
-        )
+        className={style([
+          display(inherit_),
+          position(inherit_),
+          fontSize(inherit_),
+          fontStyle(inherit_),
+          lineHeight(inherit_),
+        ])}
       />
-      {text("unset")}
+      "unset"->React.string
       <div
-        className=Css.(
-          style([
-            display(unset),
-            position(unset),
-            fontSize(unset),
-            fontStyle(unset),
-            lineHeight(unset),
-          ])
-        )
+        className={style([
+          display(unset),
+          position(unset),
+          fontSize(unset),
+          fontStyle(unset),
+          lineHeight(unset),
+        ])}
       />
     </Section>
     <Section name="columns">
-      <p className=Css.(style([columnCount(count(10))]))>
-        {text(
-           "This is a bunch of text split into columns
+      <p className={style([columnCount(count(10))])}>
+        "This is a bunch of text split into columns
              using the CSS `column-count` property. The text
-             is equally distributed over the columns.",
-         )}
+             is equally distributed over the columns."
+        ->React.string
       </p>
     </Section>
     <Section name="resize">
-      <textarea className=Css.(style([resize(none)]))>
-        "Can't resize textarea"->text
+      <textarea className={style([resize(none)])}>
+        "Can't resize textarea"->React.string
       </textarea>
       <div
-        className=Css.(
-          style([
-            marginLeft(px(20)),
-            overflow(scroll),
-            resize(horizontal),
-          ])
-        )>
-        "Resizable div (horizontal)"->text
+        className={style([
+          marginLeft(px(20)),
+          overflow(scroll),
+          resize(horizontal),
+        ])}>
+        "Resizable div (horizontal)"->React.string
       </div>
       <div
-        className=Css.(
-          style([marginLeft(px(20)), overflow(scroll), resize(vertical)])
-        )>
-        "Resizable div (vertical)"->text
+        className={style([
+          marginLeft(px(20)),
+          overflow(scroll),
+          resize(vertical),
+        ])}>
+        "Resizable div (vertical)"->React.string
       </div>
     </Section>
     <Section name="content">
       <div
-        className=Css.(
-          style([
-            position(relative),
-            after([
-              contentRule(`none),
-              position(absolute),
-              top(zero),
-              left(zero),
-              width(pct(100.)),
-              height(pct(100.)),
-              border(px(1), solid, black),
-            ]),
-          ])
-        )>
-        {text("none")}
+        className={style([
+          position(relative),
+          after([
+            contentRule(`none),
+            position(absolute),
+            top(zero),
+            left(zero),
+            width(pct(100.)),
+            height(pct(100.)),
+            border(px(1), solid, black),
+          ]),
+        ])}>
+        "none"->React.string
       </div>
       <div
-        className=Css.(
-          style([
-            position(relative),
-            after([
-              contentRule(`normal),
-              position(absolute),
-              top(zero),
-              left(zero),
-              width(pct(100.)),
-              height(pct(100.)),
-              border(px(1), solid, black),
-            ]),
-          ])
-        )>
-        {text("normal")}
+        className={style([
+          position(relative),
+          after([
+            contentRule(`normal),
+            position(absolute),
+            top(zero),
+            left(zero),
+            width(pct(100.)),
+            height(pct(100.)),
+            border(px(1), solid, black),
+          ]),
+        ])}>
+        "normal"->React.string
       </div>
-      <div className=Css.(
-          style([
-            position(relative),
-            marginLeft(px(20)),
-          ])
-        )>
-      <a
-        href="https://github.com/SentiaAnalytics/bs-css"
-        className=Css.(
-          style([
+      <div className={style([position(relative), marginLeft(px(20))])}>
+        <a
+          href="https://github.com/SentiaAnalytics/bs-css"
+          className={style([
             before([
               contentRule(`text("external ")),
               backgroundColor(red),
               display(inlineBlock),
               flexBasis(content /*for test*/),
             ]),
-          ])
-        )>
-        {text("link")}
-      </a>
+          ])}>
+          "link"->React.string
+        </a>
       </div>
       <div
-        className=Css.(
-          style([
-            position(relative),
-            marginLeft(px(20)),
-            after([
-              contentRule(`text("")),
-              position(absolute),
-              top(zero),
-              left(zero),
-              width(pct(100.)),
-              height(pct(100.)),
-              border(px(1), solid, black),
-            ]),
-          ])
-        )>
-        {text("empty content")}
+        className={style([
+          position(relative),
+          marginLeft(px(20)),
+          after([
+            contentRule(`text("")),
+            position(absolute),
+            top(zero),
+            left(zero),
+            width(pct(100.)),
+            height(pct(100.)),
+            border(px(1), solid, black),
+          ]),
+        ])}>
+        "empty content"->React.string
       </div>
       <div
-        className=Css.(
-          style([
-            position(relative),
-            marginLeft(px(20)),
-            paddingLeft(px(20)),
-            after([
-              contentRule(`url("https://via.placeholder.com/18")),
-              position(absolute),
-              top(zero),
-              left(zero),
-              width(px(18)),
-              height(px(18)),
-              border(px(1), solid, black),
-            ]),
-          ])
-        )>
-        {text("url")}
+        className={style([
+          position(relative),
+          marginLeft(px(20)),
+          paddingLeft(px(20)),
+          after([
+            contentRule(`url("https://via.placeholder.com/18")),
+            position(absolute),
+            top(zero),
+            left(zero),
+            width(px(18)),
+            height(px(18)),
+            border(px(1), solid, black),
+          ]),
+        ])}>
+        "url"->React.string
       </div>
       <div
-        className=Css.(
-          style([
-            marginLeft(px(20)),
-            counterReset(Types.CounterReset.reset("foo", ~value=1)),
-            before([
-              contentRule(Types.Counter.counter("foo")),
-              border(px(1), solid, black),
-            ]),
-          ])
-        )>
-        {text("counter")}
+        className={style([
+          marginLeft(px(20)),
+          counterReset(Types.CounterReset.reset("foo", ~value=1)),
+          before([
+            contentRule(Types.Counter.counter("foo")),
+            border(px(1), solid, black),
+          ]),
+        ])}>
+        "counter"->React.string
       </div>
-      <div className=Css.(
-            style([
-              counterReset(Types.CounterReset.reset("foo", ~value=1)),
-              marginLeft(px(20))
-            ])
-      )>
+      <div
+        className={style([
+          counterReset(Types.CounterReset.reset("foo", ~value=1)),
+          marginLeft(px(20)),
+        ])}>
         <div
-          className=Css.(
-            style([
-              counterReset(Types.CounterReset.reset("foo", ~value=2)),
-              before([
-                contentRule(Types.Counters.counters("foo", ~separator="@", ~style=`upperRoman)),
-                border(px(1), solid, black),
-              ]),
-            ])
-          )>
-          {text("counters")}
+          className={style([
+            counterReset(Types.CounterReset.reset("foo", ~value=2)),
+            before([
+              contentRule(
+                Types.Counters.counters(
+                  "foo",
+                  ~separator="@",
+                  ~style=`upperRoman,
+                ),
+              ),
+              border(px(1), solid, black),
+            ]),
+          ])}>
+          "counters"->React.string
         </div>
       </div>
       <div
-        className=Css.(
-          style([
-            marginLeft(px(20)),
-            before([
-              contentRule(`attr("class")),
-              border(px(1), solid, black),
-            ]),
-          ])
-        )>
-        {text("attr")}
+        className={style([
+          marginLeft(px(20)),
+          before([
+            contentRule(`attr("class")),
+            border(px(1), solid, black),
+          ]),
+        ])}>
+        "attr"->React.string
       </div>
       <div
-        className=Css.(
-          style([
-            marginLeft(px(20)),
-            before([
-              contentRule(Types.Gradient.linearGradient(
-                  deg(45.),
-                  [(zero, red), (pct(100.), blue)],
-                )),
-              border(px(1), solid, black),
-              display(`inlineBlock),
-              height(px(18)),
-              width(px(18))
-            ]),
-          ])
-        )>
-        {text("linear gradient")}
+        className={style([
+          marginLeft(px(20)),
+          before([
+            contentRule(
+              Types.Gradient.linearGradient(
+                deg(45.),
+                [(zero, red), (pct(100.), blue)],
+              ),
+            ),
+            border(px(1), solid, black),
+            display(`inlineBlock),
+            height(px(18)),
+            width(px(18)),
+          ]),
+        ])}>
+        "linear gradient"->React.string
       </div>
       <div
-        className=Css.(
-          style([
-            marginLeft(px(20)),
-            before([
-              contentRules([`openQuote, `text("foo"), `closeQuote]),
-              border(px(1), solid, black),
-            ]),
-          ])
-        )>
-        {text("contents (quotes)")}
+        className={style([
+          marginLeft(px(20)),
+          before([
+            contentRules([`openQuote, `text("foo"), `closeQuote]),
+            border(px(1), solid, black),
+          ]),
+        ])}>
+        "contents (quotes)"->React.string
       </div>
     </Section>
     <Section name="insertRule, the ultimate escape hatch">
       <div className="raw-css" />
     </Section>
     <Section name="merging style names">
-      <button className=mergedStyles> {text("Merged")} </button>
+      <button className=mergedStyles> "Merged"->React.string </button>
     </Section>
     <Section name="filter">
-      <div className=Css.(style(redBox @ [filter([`blur(`px(10))])])) />
-      <div className=Css.(style(redBox @ [filter([`brightness(50.)])])) />
-      <div className=Css.(style(redBox @ [filter([`contrast(50.)])])) />
+      <div className={style(redBox @ [filter([`blur(`px(10))])])} />
+      <div className={style(redBox @ [filter([`brightness(50.)])])} />
+      <div className={style(redBox @ [filter([`contrast(50.)])])} />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              filter([
-                `dropShadow((
-                  `px(3),
-                  `px(3),
-                  `px(3),
-                  `rgb((200, 100, 100)),
-                )),
-              ]),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            filter([
+              `dropShadow((
+                `px(3),
+                `px(3),
+                `px(3),
+                `rgb((200, 100, 100)),
+              )),
+            ]),
+          ],
+        )}
       />
-      <div className=Css.(style(redBox @ [filter([`grayscale(50.)])])) />
+      <div className={style(redBox @ [filter([`grayscale(50.)])])} />
       <div
-        className=Css.(style(redBox @ [filter([`hueRotate(`deg(180.))])]))
+        className={style(redBox @ [filter([`hueRotate(`deg(180.))])])}
       />
-      <div className=Css.(style(redBox @ [filter([`invert(50.)])])) />
-      <div className=Css.(style(redBox @ [filter([`opacity(50.)])])) />
-      <div className=Css.(style(redBox @ [filter([`saturate(50.)])])) />
-      <div className=Css.(style(redBox @ [filter([`sepia(50.)])])) />
+      <div className={style(redBox @ [filter([`invert(50.)])])} />
+      <div className={style(redBox @ [filter([`opacity(50.)])])} />
+      <div className={style(redBox @ [filter([`saturate(50.)])])} />
+      <div className={style(redBox @ [filter([`sepia(50.)])])} />
       <div
-        className=Css.(
-          style(
-            redBox
-            @ [
-              filter([
-                `sepia(50.),
-                `saturate(50.),
-                `dropShadow((
-                  `px(3),
-                  `px(3),
-                  `px(3),
-                  `rgb((200, 100, 100)),
-                )),
-              ]),
-            ],
-          )
-        )
+        className={style(
+          redBox
+          @ [
+            filter([
+              `sepia(50.),
+              `saturate(50.),
+              `dropShadow((
+                `px(3),
+                `px(3),
+                `px(3),
+                `rgb((200, 100, 100)),
+              )),
+            ]),
+          ],
+        )}
       />
-      <svg height="0" className=Css.(style([display(`none)]))>
+      <svg height="0" className={style([display(`none)])}>
         <filter id="f1"> <feGaussianBlur stdDeviation="3" /> </filter>
       </svg>
-      <div className=Css.(style(redBox @ [filter([`url("#f1")])])) />
+      <div className={style(redBox @ [filter([`url("#f1")])])} />
     </Section>
     <Section name="direction">
       <Section name="ltr">
-        <div className=Css.(style([direction(`ltr), display(`flex)]))>
-          <div className=Css.(style(redBox))> {"1" |> text} </div>
-          <div className=Css.(style(redBox))> {"2" |> text} </div>
-          <div className=Css.(style(redBox))> {"3" |> text} </div>
-          <div className=Css.(style(redBox))> {"4" |> text} </div>
+        <div className={style([direction(`ltr), display(`flex)])}>
+          <div className={style(redBox)}> "1"->React.string </div>
+          <div className={style(redBox)}> "2"->React.string </div>
+          <div className={style(redBox)}> "3"->React.string </div>
+          <div className={style(redBox)}> "4"->React.string </div>
         </div>
       </Section>
       <Section name="rtl">
-        <div className=Css.(style([direction(`rtl), display(`flex)]))>
-          <div className=Css.(style(redBox))> {"1" |> text} </div>
-          <div className=Css.(style(redBox))> {"2" |> text} </div>
-          <div className=Css.(style(redBox))> {"3" |> text} </div>
-          <div className=Css.(style(redBox))> {"4" |> text} </div>
+        <div className={style([direction(`rtl), display(`flex)])}>
+          <div className={style(redBox)}> "1"->React.string </div>
+          <div className={style(redBox)}> "2"->React.string </div>
+          <div className={style(redBox)}> "3"->React.string </div>
+          <div className={style(redBox)}> "4"->React.string </div>
         </div>
       </Section>
       <Section name="unset">
-        <div className=Css.(style([direction(`unset), display(`flex)]))>
-          <div className=Css.(style(redBox))> {"1" |> text} </div>
-          <div className=Css.(style(redBox))> {"2" |> text} </div>
-          <div className=Css.(style(redBox))> {"3" |> text} </div>
-          <div className=Css.(style(redBox))> {"4" |> text} </div>
+        <div className={style([direction(`unset), display(`flex)])}>
+          <div className={style(redBox)}> "1"->React.string </div>
+          <div className={style(redBox)}> "2"->React.string </div>
+          <div className={style(redBox)}> "3"->React.string </div>
+          <div className={style(redBox)}> "4"->React.string </div>
         </div>
       </Section>
     </Section>
     <Section name="object-fit">
       <img
-        className=Css.(style(redBox @ [objectFit(`fill)]))
+        className={style(redBox @ [objectFit(`fill)])}
         src="./img-29.jpg"
       />
       <img
-        className=Css.(style(redBox @ [objectFit(`contain)]))
+        className={style(redBox @ [objectFit(`contain)])}
         src="./img-29.jpg"
       />
       <img
-        className=Css.(style(redBox @ [objectFit(`cover)]))
+        className={style(redBox @ [objectFit(`cover)])}
         src="./img-29.jpg"
       />
       <img
-        className=Css.(style(redBox @ [objectFit(`none)]))
+        className={style(redBox @ [objectFit(`none)])}
         src="./img-29.jpg"
       />
       <img
-        className=Css.(style(redBox @ [objectFit(`scaleDown)]))
+        className={style(redBox @ [objectFit(`scaleDown)])}
         src="./img-29.jpg"
       />
       <img
-        className=Css.(style(redBox @ [objectFit(`inherit_)]))
+        className={style(redBox @ [objectFit(`inherit_)])}
         src="./img-29.jpg"
       />
       <img
-        className=Css.(style(redBox @ [objectFit(`initial)]))
+        className={style(redBox @ [objectFit(`initial)])}
         src="./img-29.jpg"
       />
       <img
-        className=Css.(style(redBox @ [objectFit(`unset)]))
+        className={style(redBox @ [objectFit(`unset)])}
         src="./img-29.jpg"
       />
     </Section>
