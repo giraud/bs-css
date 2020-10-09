@@ -24,7 +24,11 @@ You can replace `bs-css-emotion` with `bs-css-dom` in the above instructions if 
 
 ```reason
 module Styles = {
-  /* Open the Css module, so we can access the style properties below without prefixing them with Css. */
+  /* 
+  Open the Css module, so we can access the style properties below without prefixing them with Css.
+  You can use either Css or CssJs: Css module is using lists, CssJs is using arrays.
+  If you're targeting js and/or using Rescript, prefer CssJs
+  */ 
   open Css;
 
   let card = style([
