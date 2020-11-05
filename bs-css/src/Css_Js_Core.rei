@@ -1713,14 +1713,14 @@ let border:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 let borderTop:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 let backgroundSize:

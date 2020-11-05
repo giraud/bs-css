@@ -245,7 +245,7 @@ let borderBottom:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 
@@ -253,7 +253,7 @@ let borderBottom:
  The border-bottom-color CSS property sets the color of an element's bottom border.
  It can also be set with the shorthand CSS properties border-color or border-bottom.
  */
-let borderBottomColor: Types.Color.t => rule;
+let borderBottomColor: [< Types.Color.t | Types.Var.t] => rule;
 
 /**
  The border-bottom-left-radius CSS property rounds the bottom-left corner of an element.
@@ -1714,14 +1714,14 @@ let border:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 let borderTop:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 let backgroundSize:
