@@ -1753,6 +1753,7 @@ type minmax = [
 
 type trackLength = [
   Types.Length.t
+  | `auto
   | `fr(float)
   | `minContent
   | `maxContent
