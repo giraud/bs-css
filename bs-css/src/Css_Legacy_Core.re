@@ -204,7 +204,14 @@ let backgroundAttachment = x =>
     },
   );
 
-let backgroundColor = x => D("backgroundColor", Color.toString(x));
+let backgroundColor = x =>
+  D(
+    "backgroundColor",
+    switch (x) {
+    | #Color.t as co => Color.toString(co)
+    | #Var.t as va => Var.toString(va)
+    },
+  );
 
 let backgroundClip = x =>
   D(

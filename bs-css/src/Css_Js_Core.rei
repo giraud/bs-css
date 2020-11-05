@@ -160,7 +160,7 @@ let backgroundAttachment:
 /**
  The background-color CSS property sets the background color of an element.
  */
-let backgroundColor: Types.Color.t => rule;
+let backgroundColor: [< Types.Color.t | Types.Var.t] => rule;
 
 /**
  The background-clip CSS property sets whether an element's background extends underneath its border box,
