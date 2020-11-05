@@ -285,7 +285,7 @@ let borderCollapse:
 /**
  The border-color shorthand CSS property sets the color of an element's border.
  */
-let borderColor: Types.Color.t => rule;
+let borderColor: [< Types.Color.t | Types.Var.t] => rule;
 
 /**
  The border-left shorthand CSS property set an element's left border.
@@ -294,11 +294,11 @@ let borderLeft:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 
-let borderLeftColor: Types.Color.t => rule;
+let borderLeftColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let borderLeftStyle:
   [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t] => rule;
@@ -309,11 +309,11 @@ let borderRight:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 
-let borderRightColor: Types.Color.t => rule;
+let borderRightColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let borderRightStyle:
   [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t] => rule;
@@ -330,7 +330,7 @@ let borderSpacing: Types.Length.t => rule;
 let borderStyle:
   [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let borderTopColor: Types.Color.t => rule;
+let borderTopColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let borderTopLeftRadius: Types.Length.t => rule;
 
