@@ -2090,6 +2090,7 @@ module SVG = {
       switch (x) {
       | #Types.SVG.Fill.t as f => Types.SVG.Fill.toString(f)
       | #Types.Color.t as c => Types.Color.toString(c)
+      | #Types.Var.t as v => Types.Var.toString(v)
       | #Types.Url.t as u => Types.Url.toString(u)
       },
     );
@@ -2102,7 +2103,7 @@ module SVG = {
       | `nonzero => "nonzero"
       },
     );
-  let stroke = x => D("stroke", Color.toString(x));
+  let stroke = x => D("stroke", string_of_color(x));
   let strokeWidth = x => D("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
     D("strokeOpacity", Js.Float.toString(opacity));
@@ -2126,6 +2127,6 @@ module SVG = {
       | `bevel => "bevel"
       },
     );
-  let stopColor = x => D("stopColor", Color.toString(x));
+  let stopColor = x => D("stopColor", string_of_color(x));
   let stopOpacity = x => D("stopOpacity", Js.Float.toString(x));
 };

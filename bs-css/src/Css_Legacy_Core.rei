@@ -1882,15 +1882,15 @@ let animationName: animationName => rule;
  *** */
 
 module SVG: {
-  let fill: [ Types.SVG.Fill.t | Types.Color.t | Types.Url.t] => rule;
+  let fill: [ Types.SVG.Fill.t | Types.Color.t | Types.Var.t | Types.Url.t] => rule;
   let fillRule: [ | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
-  let stroke: Types.Color.t => rule;
+  let stroke: [ Types.Color.t | Types.Var.t ] => rule;
   let strokeLinecap: [ | `butt | `round | `square] => rule;
   let strokeLinejoin: [ | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;
   let strokeWidth: Types.Length.t => rule;
   let strokeOpacity: float => rule;
-  let stopColor: Types.Color.t => rule;
+  let stopColor: [ Types.Color.t | Types.Var.t ] => rule;
   let stopOpacity: float => rule;
 };
