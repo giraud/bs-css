@@ -608,6 +608,42 @@ describe("GridArea", () => {
   );
 });
 
+describe("gridTemplateCoumns", () => {
+  test("concatenates list", () =>
+    expect(
+      (
+        r(gridTemplateColumns([`fr(1.), `px(100), `auto])),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gridTemplateColumns": "1fr 100px auto"},
+       ))
+  );
+
+  test("unfolds repeats", () =>
+    expect(
+      (
+        r(gridTemplateColumns([`repeat(`num(4), `fr(1.))])),
+        r(gridTemplateColumns([`repeat(`num(4), `auto)])),
+        r(gridTemplateColumns([`repeat(`num(4), `minContent)])),
+        r(gridTemplateColumns([`repeat(`num(4), `maxContent)])),
+        r(gridTemplateColumns([`repeat(`num(4), `minmax(`px(100), `fr(1.)))])),
+        // r(gridTemplateColumns([`repeat(`num(4), `fitContent(`px(200)))])),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gridTemplateColumns": "repeat(4, 1fr)"},
+         {"gridTemplateColumns": "repeat(4, auto)"},
+         {"gridTemplateColumns": "repeat(4, min-content)"},
+         {"gridTemplateColumns": "repeat(4, max-content)"},
+         {"gridTemplateColumns": "repeat(4, minmax(100px,1fr))"},
+        //  {"gridTemplateColumns": "repeat(4, fit-content(200px))"},
+       ))
+  );
+});
+
 describe("backgroundPosition", () => {
   test("test single values", () =>
     expect(

@@ -1590,6 +1590,7 @@ type minmax = [ | `fr(float) | `minContent | `maxContent | `auto | Length.t];
 
 type trackLength = [
   Length.t
+  | `auto
   | `fr(float)
   | `minContent
   | `maxContent
