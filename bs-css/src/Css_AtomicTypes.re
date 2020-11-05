@@ -1457,10 +1457,10 @@ module OverflowWrap = {
 
 module Gradient = {
   type t = [
-    | `linearGradient(Angle.t, list((Length.t, Color.t)))
-    | `repeatingLinearGradient(Angle.t, list((Length.t, Color.t)))
-    | `radialGradient(list((Length.t, Color.t)))
-    | `repeatingRadialGradient(list((Length.t, Color.t)))
+    | `linearGradient(Angle.t, list((Length.t, [Color.t | Var.t])))
+    | `repeatingLinearGradient(Angle.t, list((Length.t, [Color.t | Var.t])))
+    | `radialGradient(list((Length.t, [Color.t | Var.t])))
+    | `repeatingRadialGradient(list((Length.t, [Color.t | Var.t])))
   ];
 
   let linearGradient = (angle, stops) => `linearGradient((angle, stops));
@@ -1469,10 +1469,14 @@ module Gradient = {
   let radialGradient = stops => `radialGradient(stops);
   let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
 
+  let string_of_color =
+    fun
+    | #Color.t as co => Color.toString(co)
+    | #Var.t as va => Var.toString(va);
   let string_of_stops = stops =>
     stops
     ->Belt.List.map(((l, c)) =>
-        Color.toString(c) ++ " " ++ Length.toString(l)
+        string_of_color(c) ++ " " ++ Length.toString(l)
       )
     ->join(", ");
 

@@ -1063,21 +1063,21 @@ module OverflowWrap: {
  */
 module Gradient: {
   type t = [
-    | `linearGradient(Angle.t, list((Length.t, Color.t)))
-    | `repeatingLinearGradient(Angle.t, list((Length.t, Color.t)))
-    | `radialGradient(list((Length.t, Color.t)))
-    | `repeatingRadialGradient(list((Length.t, Color.t)))
+    | `linearGradient(Angle.t, list((Length.t, [Color.t | Var.t])))
+    | `repeatingLinearGradient(Angle.t, list((Length.t, [Color.t | Var.t])))
+    | `radialGradient(list((Length.t, [Color.t | Var.t])))
+    | `repeatingRadialGradient(list((Length.t, [Color.t | Var.t])))
   ];
 
   /** Linear gradients transition colors progressively along an imaginary line. */
-  let linearGradient: (Angle.t, list((Length.t, Color.t))) => [> t];
+  let linearGradient: (Angle.t, list((Length.t, [Color.t | Var.t]))) => [> t];
   /** Radial gradients transition colors progressively from a center point (origin). */
-  let radialGradient: list((Length.t, Color.t)) => [> t];
+  let radialGradient: list((Length.t, [Color.t | Var.t])) => [> t];
 
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (linearGradient function). */
-  let repeatingLinearGradient: (Angle.t, list((Length.t, Color.t))) => [> t];
+  let repeatingLinearGradient: (Angle.t, list((Length.t, [Color.t | Var.t]))) => [> t];
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (radialGradient function). */
-  let repeatingRadialGradient: list((Length.t, Color.t)) => [> t];
+  let repeatingRadialGradient: list((Length.t, [Color.t | Var.t])) => [> t];
 
   let toString: t => string;
 };
