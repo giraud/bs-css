@@ -831,9 +831,9 @@ let opacity: float => rule;
 
 let order: int => rule;
 
-let outline: (Types.Length.t, Types.OutlineStyle.t, Types.Color.t) => rule;
+let outline: (Types.Length.t, Types.OutlineStyle.t, [< Types.Color.t | Types.Var.t]) => rule;
 
-let outlineColor: Types.Color.t => rule;
+let outlineColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let outlineOffset: Types.Length.t => rule;
 

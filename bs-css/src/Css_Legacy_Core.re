@@ -795,9 +795,9 @@ let outline = (size, style, color) =>
     ++ " "
     ++ OutlineStyle.toString(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ string_of_color(color),
   );
-let outlineColor = x => D("outlineColor", Color.toString(x));
+let outlineColor = x => D("outlineColor", string_of_color(x));
 let outlineOffset = x => D("outlineOffset", Length.toString(x));
 let outlineStyle = x => D("outlineStyle", OutlineStyle.toString(x));
 let outlineWidth = x => D("outlineWidth", Length.toString(x));
