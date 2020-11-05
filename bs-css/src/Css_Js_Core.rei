@@ -34,7 +34,7 @@ module Shadow: {
       ~blur: Types.Length.t=?,
       ~spread: Types.Length.t=?,
       ~inset: bool=?,
-      Types.Color.t
+      [< Types.Color.t | Types.Var.t]
     ) =>
     [> t(box)];
 
@@ -43,7 +43,7 @@ module Shadow: {
       ~x: Types.Length.t=?,
       ~y: Types.Length.t=?,
       ~blur: Types.Length.t=?,
-      Types.Color.t
+      [< Types.Color.t | Types.Var.t]
     ) =>
     [> t(text)];
 

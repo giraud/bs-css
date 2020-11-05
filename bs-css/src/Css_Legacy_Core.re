@@ -1753,7 +1753,7 @@ module Shadow = {
       ++ " "
       ++ Length.toString(spread)
       ++ " "
-      ++ Color.toString(color)
+      ++ string_of_color(color)
       ++ (inset ? " inset" : ""),
     );
 
@@ -1765,7 +1765,7 @@ module Shadow = {
       ++ " "
       ++ Length.toString(blur)
       ++ " "
-      ++ Color.toString(color),
+      ++ string_of_color(color),
     );
 
   let toString: t('a) => string =
