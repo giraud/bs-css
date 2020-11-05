@@ -382,14 +382,7 @@ let clipPath = x =>
     },
   );
 
-let color = x =>
-  D(
-    "color",
-    switch (x) {
-    | #Color.t as co => Color.toString(co)
-    | #Var.t as va => Var.toString(va)
-    },
-  );
+let color = x => D("color", string_of_color(x));
 
 let columnCount = x =>
   D(
