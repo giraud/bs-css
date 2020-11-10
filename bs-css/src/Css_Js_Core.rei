@@ -173,7 +173,7 @@ let backgroundClip:
  The background-image CSS property sets one or more background images on an element.
  */
 let backgroundImage:
-  [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t] => rule;
+  [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t('gradient)] => rule;
 
 /**
  The background-origin CSS property sets the background's origin: from the border start,
@@ -386,7 +386,7 @@ let contentRule:
     Types.Content.t
     | Types.Counter.t
     | Types.Counters.t
-    | Types.Gradient.t
+    | Types.Gradient.t('gradient)
     | Types.Url.t
     | Types.Var.t
     | Types.Cascading.t
@@ -398,7 +398,7 @@ let contentRules:
       Types.Content.t
       | Types.Counter.t
       | Types.Counters.t
-      | Types.Gradient.t
+      | Types.Gradient.t('gradient)
       | Types.Url.t
     ],
   ) =>
@@ -1645,15 +1645,15 @@ let skewX: Types.Angle.t => [> Types.Transform.t];
 let skewY: Types.Angle.t => [> Types.Transform.t];
 
 let linearGradient:
-  (Types.Angle.t, list((Types.Length.t, [Types.Color.t | Types.Var.t]))) =>
-  [> Types.Gradient.t];
+  (Types.Angle.t, list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))) =>
+  [> Types.Gradient.t('colorOrVar)];
 let repeatingLinearGradient:
-  (Types.Angle.t, list((Types.Length.t, [Types.Color.t | Types.Var.t]))) =>
-  [> Types.Gradient.t];
+  (Types.Angle.t, list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))) =>
+  [> Types.Gradient.t('colorOrVar)];
 let radialGradient:
-  list((Types.Length.t, [Types.Color.t | Types.Var.t])) => [> Types.Gradient.t];
+  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) => [> Types.Gradient.t('colorOrVar)];
 let repeatingRadialGradient:
-  list((Types.Length.t, [Types.Color.t | Types.Var.t])) => [> Types.Gradient.t];
+  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) => [> Types.Gradient.t('colorOrVar)];
 
 let areas: list(string) => [> Types.GridTemplateAreas.t];
 let ident: string => [> Types.GridArea.t];
@@ -1739,9 +1739,9 @@ let textDecoration:
   rule;
 
 let background:
-  [< Types.Color.t | Types.Url.t | Types.Gradient.t | `none] => rule;
+  [< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none] => rule;
 let backgrounds:
-  array([< Types.Color.t | Types.Url.t | Types.Gradient.t | `none]) => rule;
+  array([< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none]) => rule;
 
 type minmax = [
   | `fr(float)

@@ -1456,11 +1456,11 @@ module OverflowWrap = {
 };
 
 module Gradient = {
-  type t = [
-    | `linearGradient(Angle.t, list((Length.t, [Color.t | Var.t])))
-    | `repeatingLinearGradient(Angle.t, list((Length.t, [Color.t | Var.t])))
-    | `radialGradient(list((Length.t, [Color.t | Var.t])))
-    | `repeatingRadialGradient(list((Length.t, [Color.t | Var.t])))
+  type t('colorOrVar) = [
+    | `linearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingLinearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `radialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingRadialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
   ];
 
   let linearGradient = (angle, stops) => `linearGradient((angle, stops));

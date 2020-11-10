@@ -1214,7 +1214,7 @@ type listStyleType = ListStyleType.t;
 type repeatValue = RepeatValue.t;
 type outlineStyle = OutlineStyle.t;
 type transform = Transform.t;
-type gradient = Gradient.t;
+type gradient('colorOrVar) = Gradient.t('colorOrVar);
 
 /* Constructor aliases */
 
