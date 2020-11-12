@@ -1020,7 +1020,14 @@ let top = x =>
     },
   );
 
-let transform = x => D("transform", Transform.toString(x));
+let transform = x =>
+  D(
+    "transform",
+    switch (x) {
+    | `none => "none"
+    | #Transform.t as t => Transform.toString(t)
+    },
+  );
 
 let transforms = x =>
   D("transform", x->Belt.List.map(Transform.toString)->join(" "));
