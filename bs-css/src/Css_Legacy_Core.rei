@@ -982,7 +982,7 @@ let textTransform:
 
 let top: [< Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let transform: Types.Transform.t => rule;
+let transform: [< `none | Types.Transform.t ] => rule;
 
 let transforms: list(Types.Transform.t) => rule;
 
