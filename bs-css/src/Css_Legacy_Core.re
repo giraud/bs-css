@@ -104,6 +104,13 @@ module Converter = {
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c);
+
+  let string_of_position =
+    fun
+    | `auto => "auto"
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
 };
 
 include Converter;
@@ -335,15 +342,7 @@ let borderTopWidth = x => D("borderTopWidth", Length.toString(x));
 
 let borderWidth = x => D("borderWidth", Length.toString(x));
 
-let bottom = x =>
-  D(
-    "bottom",
-    switch (x) {
-    | #Length.t as l => Length.toString(l)
-    | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
+let bottom = x => D("bottom", string_of_position(x));
 
 let boxSizing = x =>
   D(
@@ -613,15 +612,7 @@ let justifyContent = x =>
     },
   );
 
-let left = x =>
-  D(
-    "left",
-    switch (x) {
-    | #Length.t as l => Length.toString(l)
-    | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
+let left = x => D("left", string_of_position(x));
 
 let letterSpacing = x =>
   D(
@@ -921,15 +912,7 @@ let resize = x =>
     },
   );
 
-let right = x =>
-  D(
-    "right",
-    switch (x) {
-    | #Length.t as l => Length.toString(l)
-    | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
+let right = x => D("right", string_of_position(x));
 
 let tableLayout = x =>
   D(
@@ -1012,15 +995,7 @@ let textTransform = x =>
     },
   );
 
-let top = x =>
-  D(
-    "top",
-    switch (x) {
-    | #Length.t as l => Length.toString(l)
-    | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
+let top = x => D("top", string_of_position(x));
 
 let transform = x => D("transform", Transform.toString(x));
 
