@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- Support `transform: none` by [@rusty-key](https://github.com/rusty-key) - [#216](https://github.com/reasonml-labs/bs-css/pull/216)
+- Allow var where color can be applied by [@rusty-key](https://github.com/rusty-key) - [#214](https://github.com/reasonml-labs/bs-css/pull/214)
+- Support `auto` in `trackLength` by [@rusty-key](https://github.com/rusty-key) - [#213](https://github.com/reasonml-labs/bs-css/pull/213)
+
 ## [13.1.0] - 2020-10-09
 
 ### Added
