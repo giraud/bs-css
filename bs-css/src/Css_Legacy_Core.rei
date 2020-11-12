@@ -343,7 +343,7 @@ let borderTopWidth: Types.Length.t => rule;
 
 let borderWidth: Types.Length.t => rule;
 
-let bottom: [< Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let bottom: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
  The box-sizing CSS property sets how the total width and height of an element is calculated.
@@ -662,7 +662,7 @@ let justifySelf:
   ] =>
   rule;
 
-let left: [< Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let left: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
  The letter-spacing CSS property sets the spacing behavior between text characters
@@ -915,7 +915,7 @@ let position: [< Types.Position.t | Types.Var.t | Types.Cascading.t] => rule;
  */
 let resize: [< Types.Resize.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let right: [< Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let right: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
  The table-layout CSS property sets the algorithm used to lay out <table> cells, rows, and columns.
@@ -980,7 +980,7 @@ let textShadows: list([ Shadow.t(Shadow.text)]) => rule;
 let textTransform:
   [< Types.TextTransform.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let top: [< Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let top: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 let transform: [< `none | Types.Transform.t ] => rule;
 
