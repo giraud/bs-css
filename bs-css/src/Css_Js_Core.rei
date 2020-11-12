@@ -34,7 +34,7 @@ module Shadow: {
       ~blur: Types.Length.t=?,
       ~spread: Types.Length.t=?,
       ~inset: bool=?,
-      Types.Color.t
+      [< Types.Color.t | Types.Var.t]
     ) =>
     [> t(box)];
 
@@ -43,7 +43,7 @@ module Shadow: {
       ~x: Types.Length.t=?,
       ~y: Types.Length.t=?,
       ~blur: Types.Length.t=?,
-      Types.Color.t
+      [< Types.Color.t | Types.Var.t]
     ) =>
     [> t(text)];
 
@@ -160,7 +160,7 @@ let backgroundAttachment:
 /**
  The background-color CSS property sets the background color of an element.
  */
-let backgroundColor: Types.Color.t => rule;
+let backgroundColor: [< Types.Color.t | Types.Var.t] => rule;
 
 /**
  The background-clip CSS property sets whether an element's background extends underneath its border box,
@@ -173,7 +173,7 @@ let backgroundClip:
  The background-image CSS property sets one or more background images on an element.
  */
 let backgroundImage:
-  [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t] => rule;
+  [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t('gradient)] => rule;
 
 /**
  The background-origin CSS property sets the background's origin: from the border start,
@@ -244,7 +244,7 @@ let borderBottom:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 
@@ -252,7 +252,7 @@ let borderBottom:
  The border-bottom-color CSS property sets the color of an element's bottom border.
  It can also be set with the shorthand CSS properties border-color or border-bottom.
  */
-let borderBottomColor: Types.Color.t => rule;
+let borderBottomColor: [< Types.Color.t | Types.Var.t] => rule;
 
 /**
  The border-bottom-left-radius CSS property rounds the bottom-left corner of an element.
@@ -284,7 +284,7 @@ let borderCollapse:
 /**
  The border-color shorthand CSS property sets the color of an element's border.
  */
-let borderColor: Types.Color.t => rule;
+let borderColor: [< Types.Color.t | Types.Var.t] => rule;
 
 /**
  The border-left shorthand CSS property set an element's left border.
@@ -293,11 +293,11 @@ let borderLeft:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 
-let borderLeftColor: Types.Color.t => rule;
+let borderLeftColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let borderLeftStyle:
   [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t] => rule;
@@ -308,11 +308,11 @@ let borderRight:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 
-let borderRightColor: Types.Color.t => rule;
+let borderRightColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let borderRightStyle:
   [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t] => rule;
@@ -329,7 +329,7 @@ let borderSpacing: Types.Length.t => rule;
 let borderStyle:
   [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let borderTopColor: Types.Color.t => rule;
+let borderTopColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let borderTopLeftRadius: Types.Length.t => rule;
 
@@ -386,7 +386,7 @@ let contentRule:
     Types.Content.t
     | Types.Counter.t
     | Types.Counters.t
-    | Types.Gradient.t
+    | Types.Gradient.t('gradient)
     | Types.Url.t
     | Types.Var.t
     | Types.Cascading.t
@@ -398,7 +398,7 @@ let contentRules:
       Types.Content.t
       | Types.Counter.t
       | Types.Counters.t
-      | Types.Gradient.t
+      | Types.Gradient.t('gradient)
       | Types.Url.t
     ],
   ) =>
@@ -830,9 +830,9 @@ let opacity: float => rule;
 
 let order: int => rule;
 
-let outline: (Types.Length.t, Types.OutlineStyle.t, Types.Color.t) => rule;
+let outline: (Types.Length.t, Types.OutlineStyle.t, [< Types.Color.t | Types.Var.t]) => rule;
 
-let outlineColor: Types.Color.t => rule;
+let outlineColor: [< Types.Color.t | Types.Var.t] => rule;
 
 let outlineOffset: Types.Length.t => rule;
 
@@ -1645,15 +1645,15 @@ let skewX: Types.Angle.t => [> Types.Transform.t];
 let skewY: Types.Angle.t => [> Types.Transform.t];
 
 let linearGradient:
-  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
-  [> Types.Gradient.t];
+  (Types.Angle.t, list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))) =>
+  [> Types.Gradient.t('colorOrVar)];
 let repeatingLinearGradient:
-  (Types.Angle.t, list((Types.Length.t, Types.Color.t))) =>
-  [> Types.Gradient.t];
+  (Types.Angle.t, list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))) =>
+  [> Types.Gradient.t('colorOrVar)];
 let radialGradient:
-  list((Types.Length.t, Types.Color.t)) => [> Types.Gradient.t];
+  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) => [> Types.Gradient.t('colorOrVar)];
 let repeatingRadialGradient:
-  list((Types.Length.t, Types.Color.t)) => [> Types.Gradient.t];
+  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) => [> Types.Gradient.t('colorOrVar)];
 
 let areas: list(string) => [> Types.GridTemplateAreas.t];
 let ident: string => [> Types.GridArea.t];
@@ -1713,14 +1713,14 @@ let border:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 let borderTop:
   (
     Types.Length.t,
     [< Types.BorderStyle.t | Types.Var.t | Types.Cascading.t],
-    Types.Color.t
+    [< Types.Color.t | Types.Var.t]
   ) =>
   rule;
 let backgroundSize:
@@ -1739,9 +1739,9 @@ let textDecoration:
   rule;
 
 let background:
-  [< Types.Color.t | Types.Url.t | Types.Gradient.t | `none] => rule;
+  [< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none] => rule;
 let backgrounds:
-  array([< Types.Color.t | Types.Url.t | Types.Gradient.t | `none]) => rule;
+  array([< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none]) => rule;
 
 type minmax = [
   | `fr(float)
@@ -1882,15 +1882,15 @@ let animationName: animationName => rule;
  *** */
 
 module SVG: {
-  let fill: [ Types.SVG.Fill.t | Types.Color.t | Types.Url.t] => rule;
+  let fill: [< Types.SVG.Fill.t | Types.Color.t | Types.Var.t | Types.Url.t] => rule;
   let fillRule: [ | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
-  let stroke: Types.Color.t => rule;
+  let stroke: [< Types.Color.t | Types.Var.t ] => rule;
   let strokeLinecap: [ | `butt | `round | `square] => rule;
   let strokeLinejoin: [ | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;
   let strokeWidth: Types.Length.t => rule;
   let strokeOpacity: float => rule;
-  let stopColor: Types.Color.t => rule;
+  let stopColor: [< Types.Color.t | Types.Var.t ] => rule;
   let stopOpacity: float => rule;
 };

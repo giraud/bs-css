@@ -1062,24 +1062,24 @@ module OverflowWrap: {
  https://developer.mozilla.org/docs/Web/CSS/gradient
  */
 module Gradient: {
-  type t = [
-    | `linearGradient(Angle.t, list((Length.t, Color.t)))
-    | `repeatingLinearGradient(Angle.t, list((Length.t, Color.t)))
-    | `radialGradient(list((Length.t, Color.t)))
-    | `repeatingRadialGradient(list((Length.t, Color.t)))
+  type t('colorOrVar) = [
+    | `linearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingLinearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `radialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingRadialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
   ];
 
   /** Linear gradients transition colors progressively along an imaginary line. */
-  let linearGradient: (Angle.t, list((Length.t, Color.t))) => [> t];
+  let linearGradient: (Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
   /** Radial gradients transition colors progressively from a center point (origin). */
-  let radialGradient: list((Length.t, Color.t)) => [> t];
+  let radialGradient: list((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
 
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (linearGradient function). */
-  let repeatingLinearGradient: (Angle.t, list((Length.t, Color.t))) => [> t];
+  let repeatingLinearGradient: (Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (radialGradient function). */
-  let repeatingRadialGradient: list((Length.t, Color.t)) => [> t];
+  let repeatingRadialGradient: list((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
 
-  let toString: t => string;
+  let toString: t([< Color.t | Var.t]) => string;
 };
 
 /**

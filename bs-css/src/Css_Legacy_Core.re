@@ -104,6 +104,11 @@ module Converter = {
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c);
+
+  let string_of_color =
+    fun
+    | #Color.t as co => Color.toString(co)
+    | #Var.t as va => Var.toString(va);
 };
 
 include Converter;
@@ -204,7 +209,7 @@ let backgroundAttachment = x =>
     },
   );
 
-let backgroundColor = x => D("backgroundColor", Color.toString(x));
+let backgroundColor = x => D("backgroundColor", string_of_color(x));
 
 let backgroundClip = x =>
   D(
@@ -290,7 +295,7 @@ let backgroundRepeat = x =>
     },
   );
 
-let borderBottomColor = x => D("borderBottomColor", Color.toString(x));
+let borderBottomColor = x => D("borderBottomColor", string_of_color(x));
 
 let borderBottomLeftRadius = x =>
   D("borderBottomLeftRadius", Length.toString(x));
@@ -310,9 +315,9 @@ let borderCollapse = x =>
     },
   );
 
-let borderColor = x => D("borderColor", Color.toString(x));
+let borderColor = x => D("borderColor", string_of_color(x));
 
-let borderLeftColor = x => D("borderLeftColor", Color.toString(x));
+let borderLeftColor = x => D("borderLeftColor", string_of_color(x));
 
 let borderLeftWidth = x => D("borderLeftWidth", Length.toString(x));
 
@@ -320,11 +325,11 @@ let borderSpacing = x => D("borderSpacing", Length.toString(x));
 
 let borderRadius = x => D("borderRadius", Length.toString(x));
 
-let borderRightColor = x => D("borderRightColor", Color.toString(x));
+let borderRightColor = x => D("borderRightColor", string_of_color(x));
 
 let borderRightWidth = x => D("borderRightWidth", Length.toString(x));
 
-let borderTopColor = x => D("borderTopColor", Color.toString(x));
+let borderTopColor = x => D("borderTopColor", string_of_color(x));
 
 let borderTopLeftRadius = x => D("borderTopLeftRadius", Length.toString(x));
 
@@ -377,14 +382,7 @@ let clipPath = x =>
     },
   );
 
-let color = x =>
-  D(
-    "color",
-    switch (x) {
-    | #Color.t as co => Color.toString(co)
-    | #Var.t as va => Var.toString(va)
-    },
-  );
+let color = x => D("color", string_of_color(x));
 
 let columnCount = x =>
   D(
@@ -797,9 +795,9 @@ let outline = (size, style, color) =>
     ++ " "
     ++ OutlineStyle.toString(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ string_of_color(color),
   );
-let outlineColor = x => D("outlineColor", Color.toString(x));
+let outlineColor = x => D("outlineColor", string_of_color(x));
 let outlineOffset = x => D("outlineOffset", Length.toString(x));
 let outlineStyle = x => D("outlineStyle", OutlineStyle.toString(x));
 let outlineWidth = x => D("outlineWidth", Length.toString(x));
@@ -1216,7 +1214,7 @@ type listStyleType = ListStyleType.t;
 type repeatValue = RepeatValue.t;
 type outlineStyle = OutlineStyle.t;
 type transform = Transform.t;
-type gradient = Gradient.t;
+type gradient('colorOrVar) = Gradient.t('colorOrVar);
 
 /* Constructor aliases */
 
@@ -1756,7 +1754,7 @@ module Shadow = {
       ++ " "
       ++ Length.toString(spread)
       ++ " "
-      ++ Color.toString(color)
+      ++ string_of_color(color)
       ++ (inset ? " inset" : ""),
     );
 
@@ -1768,7 +1766,7 @@ module Shadow = {
       ++ " "
       ++ Length.toString(blur)
       ++ " "
-      ++ Color.toString(color),
+      ++ string_of_color(color),
     );
 
   let toString: t('a) => string =
@@ -1803,7 +1801,7 @@ let border = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ string_of_color(color),
   );
 let borderStyle = x => D("borderStyle", string_of_borderstyle(x));
 
@@ -1814,7 +1812,7 @@ let borderLeft = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ string_of_color(color),
   );
 let borderLeftStyle = x => D("borderLeftStyle", string_of_borderstyle(x));
 
@@ -1825,7 +1823,7 @@ let borderRight = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ string_of_color(color),
   );
 
 let borderRightStyle = x => D("borderRightStyle", string_of_borderstyle(x));
@@ -1836,7 +1834,7 @@ let borderTop = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ string_of_color(color),
   );
 
 let borderTopStyle = x => D("borderTopStyle", string_of_borderstyle(x));
@@ -1848,7 +1846,7 @@ let borderBottom = (px, style, color) =>
     ++ " "
     ++ string_of_borderstyle(style)
     ++ " "
-    ++ Color.toString(color),
+    ++ string_of_color(color),
   );
 
 let borderBottomStyle = x =>
@@ -2093,6 +2091,7 @@ module SVG = {
       switch (x) {
       | #Types.SVG.Fill.t as f => Types.SVG.Fill.toString(f)
       | #Types.Color.t as c => Types.Color.toString(c)
+      | #Types.Var.t as v => Types.Var.toString(v)
       | #Types.Url.t as u => Types.Url.toString(u)
       },
     );
@@ -2105,7 +2104,7 @@ module SVG = {
       | `nonzero => "nonzero"
       },
     );
-  let stroke = x => D("stroke", Color.toString(x));
+  let stroke = x => D("stroke", string_of_color(x));
   let strokeWidth = x => D("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
     D("strokeOpacity", Js.Float.toString(opacity));
@@ -2129,6 +2128,6 @@ module SVG = {
       | `bevel => "bevel"
       },
     );
-  let stopColor = x => D("stopColor", Color.toString(x));
+  let stopColor = x => D("stopColor", string_of_color(x));
   let stopOpacity = x => D("stopOpacity", Js.Float.toString(x));
 };
