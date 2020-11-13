@@ -1,4 +1,4 @@
-## [Unreleased]
+## [13.1.1] - 2020-11-13
 
 - Support `transform: none` by [@rusty-key](https://github.com/rusty-key) - [#216](https://github.com/reasonml-labs/bs-css/pull/216)
 - Allow var where color can be applied by [@rusty-key](https://github.com/rusty-key) - [#214](https://github.com/reasonml-labs/bs-css/pull/214)
@@ -9,7 +9,7 @@
 ### Added
 
 - New CssJs module that uses arrays instead of list for styles, more friendly to js and Rescript.
-This is not a breaking change, to use that new code you need to import `CssJs` instead of `Css`. 
+This is not a breaking change, to use that new code you need to import `CssJs` instead of `Css`.
 
 ## [13.0.0] - 2020-08-26
 
@@ -22,7 +22,7 @@ This is not a breaking change, to use that new code you need to import `CssJs` i
 
 - Update rgba/hsl/hsla signatures - [#194](https://github.com/SentiaAnalytics/bs-css/issues/194)
 - Update SVG fill property - [#193](https://github.com/SentiaAnalytics/bs-css/issues/193)
-- Delete the empty rule, it was just a shortcut to `[]` and was conflicting with the `empty` selector 
+- Delete the empty rule, it was just a shortcut to `[]` and was conflicting with the `empty` selector
 
 bs-css-dom@2.0.0, bs-css-emotion@2.0.0
 
@@ -53,7 +53,7 @@ You need to replace `bs-css` with `bs-css-emotion` (or `bs-css-dom`) in your `pa
 
 - Redesign content rule to support all possible values by  [@erykpiast](https://github.com/erykpiast) - [#180](https://github.com/SentiaAnalytics/bs-css/pull/180)
 - FontFamily accepts cascading and predefined generic font names by [@erykpiast](https://github.com/erykpiast) - [#171](https://github.com/SentiaAnalytics/bs-css/pull/171)
- 
+
   if you have code like this:
   ```fontFamily("Helvetica, sans-serif")```
   you need to convert it to:
@@ -78,7 +78,7 @@ and some elements removed.
 
 - noContent selector, duplicate of empty
 - type aliases
- 
+
 ## [10.0.1] - 2019-09-23
 
 ### Added
@@ -143,7 +143,7 @@ This is a major release: bs-css now depend on emotion 10.x instead of 9.x (see [
 - :rocket: [#131](https://github.com/SentiaAnalytics/bs-css/issues/131) - Support for "direction" property
 - :bug: [#109](https://github.com/SentiaAnalytics/bs-css/issues/109) - flexShrink and flex should accept a float instead of a int
 
-contributors: [@simonkberg](https://github.com/simonkberg), [@JakubMarkiewicz](https://github.com/JakubMarkiewicz), [@remitbri](https://github.com/remitbri), [@lucasweng](https://github.com/lucasweng) 
+contributors: [@simonkberg](https://github.com/simonkberg), [@JakubMarkiewicz](https://github.com/JakubMarkiewicz), [@remitbri](https://github.com/remitbri), [@lucasweng](https://github.com/lucasweng)
 
 ## 8.0.4 - 2019-04-04
 
@@ -157,7 +157,7 @@ contributors: [@Freddy03h](https://github.com/Freddy03h)
 - :rocket: [#118](https://github.com/SentiaAnalytics/bs-css/issues/118) - Minmax should allow fr
 - :rocket: Add a toJson function to convert a list of rules to a json object
 
-contributors: [@JakubMarkiewicz](https://github.com/JakubMarkiewicz) 
+contributors: [@JakubMarkiewicz](https://github.com/JakubMarkiewicz)
 
 ## 8.0.2 - 2019-02-25
 
@@ -165,7 +165,7 @@ contributors: [@JakubMarkiewicz](https://github.com/JakubMarkiewicz)
 - :rocket: [#117](https://github.com/SentiaAnalytics/bs-css/issues/117) - Add `spaceEvenly` for justifyContent and alignContent
 - :rocket: [#113](https://github.com/SentiaAnalytics/bs-css/pull/113) - Minmax in grid implementation
 
-contributors: [@JakubMarkiewicz](https://github.com/JakubMarkiewicz), [@lucasweng](https://github.com/lucasweng), [@wegry](https://github.com/wegry) 
+contributors: [@JakubMarkiewicz](https://github.com/JakubMarkiewicz), [@lucasweng](https://github.com/lucasweng), [@wegry](https://github.com/wegry)
 
 ## 8.0.1 - 2019-01-31
 
@@ -185,7 +185,7 @@ contributors: [@sean-clayton](https://github.com/sean-clayton), [@c19](https://g
 #### Breaking changes
 
 This version of bs-css is using a new runtime library that replaces glamor.
- 
+
 This decision is driven by the following points:
 
 - the author of glamor is no more maintaining its project, the last commit happened more than one year ago,
@@ -198,8 +198,8 @@ Given that it is a major version, we also changed some functions in the API, esp
 #### Migration
 
 - `fontWeight` number must now use the `num` constructor: you must change `fontWeight(300)` to `fontWeight(num(300))`.
-The benefit is that you can transform your absolute numbers to font names, see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping. 
-- `merge` was really a `concat` function and could lead to problems as seen in #86. This is why it has been changed to use 
+The benefit is that you can transform your absolute numbers to font names, see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping.
+- `merge` was really a `concat` function and could lead to problems as seen in #86. This is why it has been changed to use
 the internal library (emotion) and its signature is now : `list(string) => string`. If you want to keep the same functionality
 than before, you can use `List.concat` instead or `@` operator.
 - if you are mixin reason/js, you need to change your dependency and replace `glamor` with `emotion`
