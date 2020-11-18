@@ -1413,12 +1413,14 @@ module TextDecorationStyle = {
 };
 
 module Width = {
-  type t = [ | `auto | `fitContent];
+  type t = [ | `auto | `maxContent | `minContent | `fitContent(Percentage.t)];
 
   let toString =
     fun
     | `auto => "auto"
-    | `fitContent => "fit-content";
+    | `maxContent => "max-content"
+    | `minContent => "min-content"
+    | `fitContent(p) => Printf.sprintf("fit-content(%s)", Percentage.toString(p));
 };
 
 module MaxWidth = {

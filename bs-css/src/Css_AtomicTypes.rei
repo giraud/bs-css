@@ -1017,7 +1017,7 @@ module TextDecorationStyle: {
  https://developer.mozilla.org/docs/Web/CSS/width
  */
 module Width: {
-  type t = [ | `auto | `fitContent];
+  type t = [ | `auto | `maxContent | `minContent | `fitContent(Percentage.t)];
 
   let toString: t => string;
 };
