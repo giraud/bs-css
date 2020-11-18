@@ -1032,6 +1032,17 @@ module DistributedAlignment = {
     | `stretch => "stretch";
 };
 
+module LegacyAlignment = {
+  type t = [ | `legacy | `legacyRight | `legacyLeft | `legacyCenter];
+
+  let toString =
+    fun
+    | `legacy => "legacy"
+    | `legacyRight => "legacy right"
+    | `legacyLeft => "legacy left"
+    | `legacyCenter => "legacy center";
+};
+
 module TextAlign = {
   type t = [ | `left | `right | `center | `justify];
 

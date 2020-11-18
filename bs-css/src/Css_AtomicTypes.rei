@@ -733,6 +733,15 @@ module DistributedAlignment: {
 };
 
 /**
+ https://drafts.csswg.org/css-align-3/#propdef-justify-items
+ */
+module LegacyAlignment: {
+  type t = [ | `legacy | `legacyRight | `legacyLeft | `legacyCenter];
+
+  let toString: t => string;
+};
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/text-align
  */
 module TextAlign: {
