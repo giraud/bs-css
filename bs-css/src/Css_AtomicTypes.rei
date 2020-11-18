@@ -694,6 +694,18 @@ module PositionalAlignment: {
 };
 
 /**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Alignment#Overflow_alignment
+ */
+module OverflowAlignment: {
+  type t = [
+    | `safe(PositionalAlignment.t)
+    | `unsafe(PositionalAlignment.t)
+  ];
+
+  let toString: t => string;
+};
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/justify-self
  */
 module BaselineAlignment: {

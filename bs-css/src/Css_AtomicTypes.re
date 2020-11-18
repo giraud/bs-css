@@ -991,6 +991,18 @@ module PositionalAlignment = {
     | `right => "right";
 };
 
+module OverflowAlignment = {
+  type t = [
+    | `safe(PositionalAlignment.t)
+    | `unsafe(PositionalAlignment.t)
+  ];
+
+  let toString =
+    fun
+    | `safe(pa) => "safe " ++ PositionalAlignment.toString(pa)
+    | `unsafe(pa) => "unsafe " ++ PositionalAlignment.toString(pa)
+};
+
 module BaselineAlignment = {
   type t = [ | `baseline];
 
