@@ -706,10 +706,10 @@ module OverflowAlignment: {
 };
 
 /**
- https://developer.mozilla.org/docs/Web/CSS/justify-self
+ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Alignment#Baseline_alignment
  */
 module BaselineAlignment: {
-  type t = [ | `baseline];
+  type t = [ | `baseline | `firstBaseline | `lastBaseline ];
 
   let toString: t => string;
 };

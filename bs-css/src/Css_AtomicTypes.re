@@ -1004,11 +1004,13 @@ module OverflowAlignment = {
 };
 
 module BaselineAlignment = {
-  type t = [ | `baseline];
+  type t = [ | `baseline | `firstBaseline | `lastBaseline ];
 
   let toString =
     fun
-    | `baseline => "baseline";
+    | `baseline => "baseline"
+    | `firstBaseline => "first baseline"
+    | `lastBaseline=> "last baseline";
 };
 
 module NormalAlignment = {
