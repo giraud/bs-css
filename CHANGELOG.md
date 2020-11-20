@@ -1,10 +1,14 @@
 ## [Unreleased]
 
+## [13.2.0] - 2020-11-20
+
 - Add `justify-items` by [@rusty-key](https://github.com/rusty-key) - [#219](https://github.com/reasonml-labs/bs-css/pull/219)
 - Support `auto` keyword for positional rules by [@rusty-key](https://github.com/rusty-key) - [#215](https://github.com/reasonml-labs/bs-css/pull/215)
 - Support `transform: none` by [@rusty-key](https://github.com/rusty-key) - [#216](https://github.com/reasonml-labs/bs-css/pull/216)
 - Allow var where color can be applied by [@rusty-key](https://github.com/rusty-key) - [#214](https://github.com/reasonml-labs/bs-css/pull/214)
 - Support `auto` in `trackLength` by [@rusty-key](https://github.com/rusty-key) - [#213](https://github.com/reasonml-labs/bs-css/pull/213)
+
+bs-css-dom@2.2.0, bs-css-emotion@2.2.0
 
 ## [13.1.0] - 2020-10-09
 
@@ -211,7 +215,8 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.1.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.2.0...HEAD
+[13.2.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.1.0...13.2.0
 [13.1.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.0.0...13.1.0
 [13.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.1.0...13.0.0
 [12.2.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.1.0...v12.2.0
