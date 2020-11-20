@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Add `justify-items` by [@rusty-key](https://github.com/rusty-key) - [#219](https://github.com/reasonml-labs/bs-css/pull/219)
+- Support `auto` keyword for positional rules by [@rusty-key](https://github.com/rusty-key) - [#215](https://github.com/reasonml-labs/bs-css/pull/215)
 - Support `transform: none` by [@rusty-key](https://github.com/rusty-key) - [#216](https://github.com/reasonml-labs/bs-css/pull/216)
 - Allow var where color can be applied by [@rusty-key](https://github.com/rusty-key) - [#214](https://github.com/reasonml-labs/bs-css/pull/214)
 - Support `auto` in `trackLength` by [@rusty-key](https://github.com/rusty-key) - [#213](https://github.com/reasonml-labs/bs-css/pull/213)
