@@ -101,7 +101,7 @@ module Converter = {
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
-  
+
   let string_of_color =
     fun
     | #Color.t as co => Color.toString(co)
@@ -598,6 +598,20 @@ let justifyContent = x =>
     | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
     | #NormalAlignment.t as na => NormalAlignment.toString(na)
     | #DistributedAlignment.t as da => DistributedAlignment.toString(da)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let justifyItems = x =>
+  D(
+    "justifyItems",
+    switch (x) {
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #NormalAlignment.t as na => NormalAlignment.toString(na)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #OverflowAlignment.t as oa => OverflowAlignment.toString(oa)
+    | #LegacyAlignment.t as la => LegacyAlignment.toString(la)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },

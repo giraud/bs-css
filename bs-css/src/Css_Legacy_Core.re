@@ -610,6 +610,20 @@ let justifyContent = x =>
     },
   );
 
+let justifyItems = x =>
+  D(
+    "justifyItems",
+    switch (x) {
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #NormalAlignment.t as na => NormalAlignment.toString(na)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #OverflowAlignment.t as oa => OverflowAlignment.toString(oa)
+    | #LegacyAlignment.t as la => LegacyAlignment.toString(la)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let left = x => D("left", string_of_position(x));
 
 let letterSpacing = x =>

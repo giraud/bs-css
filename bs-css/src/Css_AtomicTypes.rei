@@ -694,10 +694,22 @@ module PositionalAlignment: {
 };
 
 /**
- https://developer.mozilla.org/docs/Web/CSS/justify-self
+ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Alignment#Overflow_alignment
+ */
+module OverflowAlignment: {
+  type t = [
+    | `safe(PositionalAlignment.t)
+    | `unsafe(PositionalAlignment.t)
+  ];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Alignment#Baseline_alignment
  */
 module BaselineAlignment: {
-  type t = [ | `baseline];
+  type t = [ | `baseline | `firstBaseline | `lastBaseline ];
 
   let toString: t => string;
 };
@@ -716,6 +728,15 @@ module NormalAlignment: {
  */
 module DistributedAlignment: {
   type t = [ | `spaceBetween | `spaceAround | `spaceEvenly | `stretch];
+
+  let toString: t => string;
+};
+
+/**
+ https://drafts.csswg.org/css-align-3/#propdef-justify-items
+ */
+module LegacyAlignment: {
+  type t = [ | `legacy | `legacyRight | `legacyLeft | `legacyCenter];
 
   let toString: t => string;
 };

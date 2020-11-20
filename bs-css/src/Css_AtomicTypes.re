@@ -991,12 +991,26 @@ module PositionalAlignment = {
     | `right => "right";
 };
 
-module BaselineAlignment = {
-  type t = [ | `baseline];
+module OverflowAlignment = {
+  type t = [
+    | `safe(PositionalAlignment.t)
+    | `unsafe(PositionalAlignment.t)
+  ];
 
   let toString =
     fun
-    | `baseline => "baseline";
+    | `safe(pa) => "safe " ++ PositionalAlignment.toString(pa)
+    | `unsafe(pa) => "unsafe " ++ PositionalAlignment.toString(pa)
+};
+
+module BaselineAlignment = {
+  type t = [ | `baseline | `firstBaseline | `lastBaseline ];
+
+  let toString =
+    fun
+    | `baseline => "baseline"
+    | `firstBaseline => "first baseline"
+    | `lastBaseline=> "last baseline";
 };
 
 module NormalAlignment = {
@@ -1016,6 +1030,17 @@ module DistributedAlignment = {
     | `spaceAround => "space-around"
     | `spaceEvenly => "space-evenly"
     | `stretch => "stretch";
+};
+
+module LegacyAlignment = {
+  type t = [ | `legacy | `legacyRight | `legacyLeft | `legacyCenter];
+
+  let toString =
+    fun
+    | `legacy => "legacy"
+    | `legacyRight => "legacy right"
+    | `legacyLeft => "legacy left"
+    | `legacyCenter => "legacy center";
 };
 
 module TextAlign = {

@@ -650,6 +650,21 @@ let justifyContent:
   rule;
 
 /**
+ The CSS justify-items property defines the default justify-self for all items of the box, giving them all
+ a default way of justifying each box along the appropriate axis.
+ */
+let justifyItems:
+  [<
+    Types.PositionalAlignment.t
+    | Types.NormalAlignment.t
+    | Types.BaselineAlignment.t
+    | Types.OverflowAlignment.t
+    | Types.LegacyAlignment.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] => rule;
+
+/**
  The CSS justify-self property sets the way a box is justified inside its alignment container along the appropriate axis.
  */
 let justifySelf:
