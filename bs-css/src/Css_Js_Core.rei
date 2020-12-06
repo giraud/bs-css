@@ -1901,6 +1901,7 @@ module SVG: {
   let fillRule: [ | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
   let stroke: [< Types.Color.t | Types.Var.t ] => rule;
+  let strokeDasharray: [< `none | `dasharray(array([< Types.Length.t | Types.Percentage.t]))] => rule;
   let strokeLinecap: [ | `butt | `round | `square] => rule;
   let strokeLinejoin: [ | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;

@@ -116,6 +116,11 @@ module Converter = {
     fun
     | #Color.t as co => Color.toString(co)
     | #Var.t as va => Var.toString(va);
+
+  let string_of_dasharray =
+    fun
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l);
 };
 
 include Converter;
@@ -2101,6 +2106,12 @@ module SVG = {
       },
     );
   let stroke = x => D("stroke", string_of_color(x));
+  let strokeDasharray = x =>
+    D("stroke-dasharray",
+      switch x {
+      | `none => "none"
+      | `dasharray(a) => a->Belt.List.map(string_of_dasharray)->join(" ")
+      });
   let strokeWidth = x => D("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
     D("strokeOpacity", Js.Float.toString(opacity));

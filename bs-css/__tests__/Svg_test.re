@@ -39,3 +39,25 @@ describe("Fill", () =>
        ))
   )
 );
+
+describe("strokeDasharray", () => {
+  test("test values", () => 
+    expect(
+      (
+        r(SVG.strokeDasharray(`dasharray([1->px, 2->px, 3->px, 4->px]))),
+        r(SVG.strokeDasharray(`dasharray([1.->pct, 2.->pct, 3.->pct, 4.->pct]))),
+        r(SVG.strokeDasharray(`dasharray([1->px, 2.->pct, 3->px, 4.->pct]))),
+        r(SVG.strokeDasharray(`dasharray([1.->pct, 2->px, 3.->pct, 4->px]))),
+        r(SVG.strokeDasharray(`none)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"stroke-dasharray": "1px 2px 3px 4px"},
+         {"stroke-dasharray": "1% 2% 3% 4%"},
+         {"stroke-dasharray": "1px 2% 3px 4%"},
+         {"stroke-dasharray": "1% 2px 3% 4px"},
+         {"stroke-dasharray": "none"},
+       ))
+  )
+})
