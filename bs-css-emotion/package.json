@@ -24,8 +24,8 @@
     "emotion": "^10.0.7"
   },
   "devDependencies": {
-    "bs-platform": "^8.1.0",
+    "bs-platform": "^8.4.2",
     "parcel-bundler": "^1.12.3",
-    "reason-react": "^0.7.0"
+    "reason-react": "^0.9.1"
   }
 }
