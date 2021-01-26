@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [13.3.0] - 2021-01-26
+
+- Add `stroke-dasharray` for SVG by [@pzshine](https://github.com/pzshine)
+
+bs-css-dom@2.3.0, bs-css-emotion@2.3.0
+
 ## [13.2.0] - 2020-11-20
 
 - Add `justify-items` by [@rusty-key](https://github.com/rusty-key) - [#219](https://github.com/reasonml-labs/bs-css/pull/219)
