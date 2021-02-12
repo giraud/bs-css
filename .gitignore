@@ -15,3 +15,10 @@ npm-debug.log
 *.iml
 *.js
 *.log
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
