@@ -254,5 +254,5 @@ let whitesmoke: [> Css_AtomicTypes.Color.t] =
   Css_AtomicTypes.Color.hex("F5F5F5");
 let yellow: [> Css_AtomicTypes.Color.t] = Css_AtomicTypes.Color.hex("FFFF00");
 let yellowgreen: [> Css_AtomicTypes.Color.t] =
-  Css_AtomicTypes.Color.hex("9ACD3");
+  Css_AtomicTypes.Color.hex("9ACD32");
 let transparent: [> Css_AtomicTypes.Color.t] = Css_AtomicTypes.Color.transparent;
