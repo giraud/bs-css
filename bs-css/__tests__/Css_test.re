@@ -217,12 +217,12 @@ describe("Backdrop filter", () =>
       ->Js.Json.stringifyAny,
     )
     |> toBeJson((
-         {"backdrop-filter": "none"},
-         {"backdrop-filter": "blur(10px), brightness(42%)"},
-         {"backdrop-filter": "contrast(10), drop-shadow(0.5%)"},
-         {"backdrop-filter": "grayscale(99.9%), hue-rotate(90deg)"},
-         {"backdrop-filter": "invert(30), opacity(10%)"},
-         {"backdrop-filter": "saturate(30), sepia(10%)"},
+         {"backdropFilter": "none"},
+         {"backdropFilter": "blur(10px), brightness(42%)"},
+         {"backdropFilter": "contrast(10), drop-shadow(0.5%)"},
+         {"backdropFilter": "grayscale(99.9%), hue-rotate(90deg)"},
+         {"backdropFilter": "invert(30), opacity(10%)"},
+         {"backdropFilter": "saturate(30), sepia(10%)"},
        ))
   )
 );
