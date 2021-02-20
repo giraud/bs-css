@@ -2100,7 +2100,7 @@ module SVG = {
     );
   let stroke = x => D("stroke", string_of_color(x));
   let strokeDasharray = x =>
-    D("stroke-dasharray",
+    D("strokeDasharray",
       switch x {
       | `none => "none"
       | `dasharray(a) => a->Belt.Array.map(string_of_dasharray)->join(" ")

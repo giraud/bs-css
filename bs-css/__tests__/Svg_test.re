@@ -53,11 +53,11 @@ describe("strokeDasharray", () => {
       ->Js.Json.stringifyAny,
     )
     |> toBeJson((
-         {"stroke-dasharray": "1px 2px 3px 4px"},
-         {"stroke-dasharray": "1% 2% 3% 4%"},
-         {"stroke-dasharray": "1px 2% 3px 4%"},
-         {"stroke-dasharray": "1% 2px 3% 4px"},
-         {"stroke-dasharray": "none"},
+         {"strokeDasharray": "1px 2px 3px 4px"},
+         {"strokeDasharray": "1% 2% 3% 4%"},
+         {"strokeDasharray": "1px 2% 3px 4%"},
+         {"strokeDasharray": "1% 2px 3% 4px"},
+         {"strokeDasharray": "none"},
        ))
   )
 })
