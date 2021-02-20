@@ -6,6 +6,8 @@
 - Fix `backdropFilter` property by [@lucasweng](https://github.com/lucasweng) - [#231](https://github.com/reasonml-labs/bs-css/pull/231)
 - Fix color - [#230](https://github.com/SentiaAnalytics/bs-css/issues/230)
 
+bs-css-dom@2.4.0, bs-css-emotion@2.4.0
+
 ## [13.3.0] - 2021-01-26
 
 - Add `stroke-dasharray` for SVG by [@pzshine](https://github.com/pzshine)
