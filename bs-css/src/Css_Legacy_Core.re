@@ -1138,6 +1138,7 @@ let first = pseudoClass("first");
 let firstChild = pseudoClass("first-child");
 let firstOfType = pseudoClass("first-of-type");
 let focus = pseudoClass("focus");
+let focusVisible = pseudoClass("focus-visible");
 let focusWithin = pseudoClass("focus-within");
 let host = (~selector=?, rules) =>
   switch (selector) {
