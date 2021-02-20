@@ -1,7 +1,9 @@
 ## [Unreleased]
 
+- Fix `strokeDasharray` property by [@lucasweng](https://github.com/lucasweng) - [#232](https://github.com/reasonml-labs/bs-css/pull/232)
+- Fix `backdropFilter` property by [@lucasweng](https://github.com/lucasweng) - [#231](https://github.com/reasonml-labs/bs-css/pull/231)
 - Fix color - [#230](https://github.com/SentiaAnalytics/bs-css/issues/230)
- 
+
 ## [13.3.0] - 2021-01-26
 
 - Add `stroke-dasharray` for SVG by [@pzshine](https://github.com/pzshine)
