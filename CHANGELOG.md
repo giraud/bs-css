@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [13.4.0] - 2021-02-20
+
 - Fix `strokeDasharray` property by [@lucasweng](https://github.com/lucasweng) - [#232](https://github.com/reasonml-labs/bs-css/pull/232)
 - Fix `backdropFilter` property by [@lucasweng](https://github.com/lucasweng) - [#231](https://github.com/reasonml-labs/bs-css/pull/231)
 - Fix color - [#230](https://github.com/SentiaAnalytics/bs-css/issues/230)
@@ -225,7 +227,9 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.2.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.0...HEAD
+[13.4.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.3.0...13.4.0
+[13.3.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.2.0...13.3.0
 [13.2.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.1.0...13.2.0
 [13.1.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.0.0...13.1.0
 [13.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.1.0...13.0.0

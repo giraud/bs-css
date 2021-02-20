@@ -2119,7 +2119,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bs-css-dom@workspace:bs-css-dom"
   dependencies:
-    bs-css: 13.3.0
+    bs-css: 13.4.0
     bs-platform: ^8.4.2
     parcel-bundler: ^1.12.3
     reason-react: ^0.9.1
@@ -2130,7 +2130,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bs-css-emotion@workspace:bs-css-emotion"
   dependencies:
-    bs-css: 13.3.0
+    bs-css: 13.4.0
     bs-platform: ^8.4.2
     emotion: ^10.0.7
     parcel-bundler: ^1.12.3
@@ -2138,7 +2138,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"bs-css@13.3.0, bs-css@workspace:bs-css":
+"bs-css@13.4.0, bs-css@workspace:bs-css":
   version: 0.0.0-use.local
   resolution: "bs-css@workspace:bs-css"
   dependencies:
