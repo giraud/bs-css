@@ -207,7 +207,7 @@ let backfaceVisibility = x =>
 
 let backdropFilter = x =>
   D(
-    "backdrop-filter",
+    "backdropFilter",
     x->Belt.List.map(Types.BackdropFilter.toString)->join(", "),
   );
 
