@@ -1,7 +1,7 @@
 module CssForTest = {
   include Css_Colors;
-  include Css_Legacy_Core;
-  include Css_Legacy_Core.Make({
+  include Css_Js_Core;
+  include Css_Js_Core.Make({
     exception NotImplemented;
 
     let mergeStyles = (. _) => raise(NotImplemented);
@@ -17,7 +17,7 @@ open Expect;
 open CssForTest;
 
 let toBeJson = x => Expect.toBe(x->Js.Json.stringifyAny);
-let r = x => toJson([x]); /* simple rule for more readable tests */
+let r = x => toJson([|x|]); /* simple rule for more readable tests */
 
 describe("Var", () => {
   test("test usage (limited)", () =>
@@ -86,21 +86,21 @@ describe("Filter", () =>
   test("test values", () =>
     expect(
       (
-        r(filter([`opacity(10.), `invert(20.)])),
-        r(filter([`blur(`px(20)), `brightness(20.)])),
+        r(filter([|`opacity(10.), `invert(20.)|])),
+        r(filter([|`blur(`px(20)), `brightness(20.)|])),
         r(
-          filter([
+          filter([|
             `contrast(30.),
             `dropShadow((`px(5), `px(6), `px(7), `rgb((255, 0, 0)))),
-          ]),
+          |]),
         ),
-        r(filter([`grayscale(10.), `hueRotate(`deg(180.))])),
-        r(filter([`saturate(10.), `sepia(100.)])),
-        r(filter([`none])),
-        r(filter([`inherit_])),
-        r(filter([`initial])),
-        r(filter([`unset])),
-        r(filter([`url("myurl")])),
+        r(filter([|`grayscale(10.), `hueRotate(`deg(180.))|])),
+        r(filter([|`saturate(10.), `sepia(100.)|])),
+        r(filter([|`none|])),
+        r(filter([|`inherit_|])),
+        r(filter([|`initial|])),
+        r(filter([|`unset|])),
+        r(filter([|`url("myurl")|])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -197,22 +197,22 @@ describe("Backdrop filter", () =>
   test("test values", () =>
     expect(
       (
-        r(backdropFilter([`none])),
-        r(backdropFilter([`blur(`px(10)), `brightness(`percent(42.0))])),
+        r(backdropFilter([|`none|])),
+        r(backdropFilter([|`blur(`px(10)), `brightness(`percent(42.0))|])),
         r(
-          backdropFilter([
+          backdropFilter([|
             `contrast(`num(10)),
             `dropShadow(`percent(0.5)),
-          ]),
+          |]),
         ),
         r(
-          backdropFilter([
+          backdropFilter([|
             `grayscale(`percent(99.9)),
             `hueRotate(`deg(90.0)),
-          ]),
+          |]),
         ),
-        r(backdropFilter([`invert(`num(30)), `opacity(`percent(10.0))])),
-        r(backdropFilter([`saturate(`num(30)), `sepia(`percent(10.0))])),
+        r(backdropFilter([|`invert(`num(30)), `opacity(`percent(10.0))|])),
+        r(backdropFilter([|`saturate(`num(30)), `sepia(`percent(10.0))|])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -340,7 +340,7 @@ describe("box-shadow", () => {
     expect(
       (
         r(boxShadow(Shadow.box(green))),
-        r(boxShadows([Shadow.box(yellow), Shadow.box(red)])),
+        r(boxShadows([|Shadow.box(yellow), Shadow.box(red)|])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -390,7 +390,7 @@ describe("text-shadow", () => {
     expect(
       (
         r(textShadow(Shadow.text(green))),
-        r(textShadows([Shadow.text(yellow), Shadow.text(red)])),
+        r(textShadows([|Shadow.text(yellow), Shadow.text(red)|])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -441,10 +441,10 @@ describe("transitions", () => {
       (
         r(transition("transform")),
         r(
-          transitions([
+          transitions([|
             Transition.shorthand("height"),
             Transition.shorthand("top"),
-          ]),
+          |]),
         ),
       )
       ->Js.Json.stringifyAny,
@@ -472,10 +472,10 @@ describe("animation", () => {
       (
         r(animation(toAnimationName("a"))),
         r(
-          animations([
+          animations([|
             Animation.shorthand(toAnimationName("a1")),
             Animation.shorthand(toAnimationName("a2")),
-          ]),
+          |]),
         ),
       )
       ->Js.Json.stringifyAny,
@@ -612,7 +612,7 @@ describe("gridTemplateCoumns", () => {
   test("concatenates list", () =>
     expect(
       (
-        r(gridTemplateColumns([`fr(1.), `px(100), `auto])),
+        r(gridTemplateColumns([|`fr(1.), `px(100), `auto|])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -624,12 +624,12 @@ describe("gridTemplateCoumns", () => {
   test("unfolds repeats", () =>
     expect(
       (
-        r(gridTemplateColumns([`repeat(`num(4), `fr(1.))])),
-        r(gridTemplateColumns([`repeat(`num(4), `auto)])),
-        r(gridTemplateColumns([`repeat(`num(4), `minContent)])),
-        r(gridTemplateColumns([`repeat(`num(4), `maxContent)])),
-        r(gridTemplateColumns([`repeat(`num(4), `minmax(`px(100), `fr(1.)))])),
-        // r(gridTemplateColumns([`repeat(`num(4), `fitContent(`px(200)))])),
+        r(gridTemplateColumns([|`repeat(`num(4), `fr(1.))|])),
+        r(gridTemplateColumns([|`repeat(`num(4), `auto)|])),
+        r(gridTemplateColumns([|`repeat(`num(4), `minContent)|])),
+        r(gridTemplateColumns([|`repeat(`num(4), `maxContent)|])),
+        r(gridTemplateColumns([|`repeat(`num(4), `minmax(`px(100), `fr(1.)))|])),
+        // r(gridTemplateColumns([|`repeat(`num(4), `fitContent(`px(200)))|])),
       )
       ->Js.Json.stringifyAny,
     )
@@ -693,7 +693,7 @@ describe("backgroundPosition", () => {
 
   test("test multiple positions", () =>
     expect(
-      r(backgroundPositions([`hv((px(0), px(0))), center]))
+      r(backgroundPositions([|`hv((px(0), px(0))), center|]))
       ->Js.Json.stringifyAny,
     )
     |> toBeJson({"backgroundPosition": "0px 0px, center"})

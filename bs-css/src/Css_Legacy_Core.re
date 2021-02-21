@@ -405,20 +405,20 @@ let contentRules = xs =>
   D("content", xs->Belt.List.map(string_of_content)->join(" "));
 
 let counterIncrement = x =>
-  D("counter-increment", string_of_counter_increment(x));
+  D("counterIncrement", string_of_counter_increment(x));
 let countersIncrement = xs =>
   D(
-    "counter-increment",
+    "counterIncrement",
     xs->Belt.List.map(string_of_counter_increment)->join(" "),
   );
 
-let counterReset = x => D("counter-reset", string_of_counter_reset(x));
+let counterReset = x => D("counterReset", string_of_counter_reset(x));
 let countersReset = xs =>
-  D("counter-reset", xs->Belt.List.map(string_of_counter_reset)->join(" "));
+  D("counterReset", xs->Belt.List.map(string_of_counter_reset)->join(" "));
 
-let counterSet = x => D("counter-set", string_of_counter_set(x));
+let counterSet = x => D("counterSet", string_of_counter_set(x));
 let countersSet = xs =>
-  D("counter-set", xs->Belt.List.map(string_of_counter_set)->join(" "));
+  D("counterSet", xs->Belt.List.map(string_of_counter_set)->join(" "));
 
 let cursor = x => D("cursor", Cursor.toString(x));
 
