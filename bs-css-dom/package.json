@@ -3,9 +3,10 @@
   "version": "2.4.0",
   "description": "bs-css bindings for React DOM",
   "scripts": {
-    "build:bs": "bsb -make-world",
-    "watch:bs": "bsb -make-world -w",
-    "dev": "parcel example/index.html"
+    "re:clean": "bsb -clean-world",
+    "re:build": "bsb -make-world",
+    "re:watch": "bsb -make-world -w",
+    "serve": "../node_modules/.bin/esbuild ./lib/js/example/App.js --servedir=example --outdir=example/js --bundle --loader:.js=jsx --define:process.env.NODE_ENV=\\\"development\\\""
   },
   "keywords": [
     "bucklescript",
@@ -23,7 +24,9 @@
   },
   "devDependencies": {
     "bs-platform": "^8.4.2",
-    "parcel-bundler": "^1.12.3",
+    "esbuild": "^0.8.49",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "reason-react": "^0.9.1"
   }
 }
