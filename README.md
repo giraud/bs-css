@@ -3,6 +3,7 @@
 Statically typed DSL for writing css in reason.
 
 The bs-css library contains type css core definitions, it has different implementations:
+
 - bs-css-emotion is a typed interface to [Emotion](https://github.com/emotion-js/emotion)
 - bs-css-dom is a typed interface to ReactDOMRe.Style
 
@@ -24,11 +25,11 @@ You can replace `bs-css-emotion` with `bs-css-dom` in the above instructions if 
 
 ```reason
 module Styles = {
-  /* 
+  /*
   Open the Css module, so we can access the style properties below without prefixing them with Css.
   You can use either Css or CssJs: Css module is using lists, CssJs is using arrays.
   If you're targeting js and/or using Rescript, prefer CssJs
-  */ 
+  */
   open Css;
 
   let card = style([
@@ -215,7 +216,6 @@ Nothing is lost and everything ends up in the final stylesheet where normal over
 
 Use style instead of classname, for example:
 
-
 ```reason
 module Styles = {
   /* Open the Css module, so we can access the style properties below without prefixing them with Css. */
@@ -256,7 +256,7 @@ module Styles = {
 
 ## Where is the documentation?
 
-You can check out [Css_Core.rei](bs-css/src/Css_Core.rei).
+You can check out [Css_Js_Core.rei](bs-css/src/Css_Js_Core.rei) and [Css_Legacy_Core.rei](bs-css/src/Css_Legacy_Core.rei).
 
 ## Thanks
 
