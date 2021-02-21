@@ -1177,6 +1177,11 @@ let firstOfType: array(rule) => rule;
 let focus: array(rule) => rule;
 
 /**
+ The :focus-visible CSS pseudo-class represents an element that has received focus via a keyboard event
+ */
+let focusVisible: array(rule) => rule;
+
+/**
  The :focus-within CSS pseudo-class represents an element that has received focus or contains an element
  that has received focus. In other words, it represents an element that is itself matched by the :focus pseudo-class or has a descendant that is matched by :focus.
   (This includes descendants in shadow trees.)
