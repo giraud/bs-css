@@ -70,8 +70,8 @@ let differentHeightLengths =
 
 [@react.component]
 let make = () =>
-  <div className={style([background(hex("f5f5f5"))])}>
-    <Section name="angles">
+  <div>
+    <Section name="Angles">
       <div className={style(redBox @ [transform(rotate(deg(45.)))])} />
       <div className={style(redBox @ [transform(rotate(rad(3.1415)))])} />
       <div className={style(redBox @ [transform(rotate(grad(50.)))])} />
@@ -79,7 +79,7 @@ let make = () =>
         className={style(redBox @ [transform(rotate(turn(1. /. 3.)))])}
       />
     </Section>
-    <Section name="colors">
+    <Section name="Colors">
       <div className={style(redBox @ [background(red)])} />
       <div className={style(redBox @ [background(rgb(255, 0, 0))])} />
       <div
@@ -259,12 +259,12 @@ let make = () =>
            yellow,
            yellowgreen,
          |]
-         ->Belt.Array.map(c =>
-             <div className={style([background(c), ...miniBox])} />
+         ->Belt.Array.mapWithIndex((i, c) =>
+             <div key=string_of_int(i) className={style([background(c), ...miniBox])} />
            ),
        )}
     </Section>
-    <Section name="gradients">
+    <Section name="Gradients">
       <div
         className={style(
           redBox
@@ -307,7 +307,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="lengths">
+    <Section name="Lengths">
       <div
         className={style(
           redBox
@@ -321,20 +321,20 @@ let make = () =>
       />
       differentHeightLengths
     </Section>
-    <Section name="calc">
+    <Section name="Calc">
       <div className={style(redBox @ [height(Calc.(pt(14) - px(10)))])} />
       <div
         className={style(redBox @ [height(Calc.(cm(0.2) + mm(10.)))])}
       />
     </Section>
-    <Section name="display">
+    <Section name="Display">
       <div className={style(redBox @ [display(block)])} />
       <div className={style(redBox @ [display(inline)])} />
       <div className={style(redBox @ [display(inlineBlock)])} />
       <div className={style(redBox @ [display(none)])} />
       <div className={style(redBox @ [display(flexBox)])} />
     </Section>
-    <Section name="position">
+    <Section name="Position">
       <div
         className={style(
           redBox
@@ -413,7 +413,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="grid">
+    <Section name="Grid">
       <div
         className={style([
           width(pct(100.)),
@@ -514,7 +514,7 @@ let make = () =>
         </div>
       </div>
     </Section>
-    <Section name="flexbox">
+    <Section name="Flexbox">
       <div
         className={style([
           flexDirection(column),
@@ -616,18 +616,18 @@ let make = () =>
         </div>
       </div>
     </Section>
-    <Section name="float">
+    <Section name="Float">
       <div className={style(redBox @ [Css.float(`left), clear(`right)])} />
       <div className={style(redBox @ [Css.float(`right), clear(`left)])} />
       <div className={style(redBox @ [Css.float(none), clear(both)])} />
     </Section>
-    <Section name="overflow">
+    <Section name="Overflow">
       <div className={style(redBox @ [overflow(hidden)])} />
       <div className={style(redBox @ [overflow(visible)])} />
       <div className={style(redBox @ [overflow(auto)])} />
       <div className={style(redBox @ [overflow(scroll)])} />
     </Section>
-    <Section name="border">
+    <Section name="Border">
       <div
         className={style(
           redBox @ [border(px(5), solid, blue), borderRadius(px(1000))],
@@ -703,7 +703,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="background">
+    <Section name="Background">
       <div
         className={style(
           redBox
@@ -761,7 +761,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="cursor">
+    <Section name="Cursor">
       <div className={style(redBox @ [cursor(`auto)])}>
         "auto"->React.string
       </div>
@@ -871,7 +871,7 @@ let make = () =>
         "zoom out"->React.string
       </div>
     </Section>
-    <Section name="list">
+    <Section name="List">
       <ul>
         <li className={style([listStyle(`disc, inside, none)])} />
         <li className={style([listStyleType(`circle)])} />
@@ -893,7 +893,7 @@ let make = () =>
         />
       </ul>
     </Section>
-    <Section name="outline">
+    <Section name="Outline">
       <div className={style(redBox @ [outline(px(5), `double, green)])} />
       <div
         className={style(
@@ -909,7 +909,7 @@ let make = () =>
       <div className={style(redBox @ [outline(px(5), `double, red)])} />
       <div className={style(redBox @ [outline(px(5), `ridge, red)])} />
     </Section>
-    <Section name="transform">
+    <Section name="Transform">
       <div className={style(redBox @ [opacity(0.5)])} />
       <div
         className={style(
@@ -949,7 +949,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="transition">
+    <Section name="Transition">
       <div
         className={style(
           redBox
@@ -975,7 +975,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="text">
+    <Section name="Text">
       <p
         className={style([
           color(black),
@@ -1045,7 +1045,7 @@ let make = () =>
         "bolder"->React.string
       </span>
     </Section>
-    <Section name="animation">
+    <Section name="Animation">
       <div
         className={style(
           redBox
@@ -1098,7 +1098,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="cascading">
+    <Section name="Cascading">
       "inherit"->React.string
       <div
         className={style([
@@ -1120,7 +1120,7 @@ let make = () =>
         ])}
       />
     </Section>
-    <Section name="columns">
+    <Section name="Columns">
       <p className={style([columnCount(count(10))])}>
         "This is a bunch of text split into columns
              using the CSS `column-count` property. The text
@@ -1128,10 +1128,8 @@ let make = () =>
         ->React.string
       </p>
     </Section>
-    <Section name="resize">
-      <textarea className={style([resize(none)])}>
-        "Can't resize textarea"->React.string
-      </textarea>
+    <Section name="Resize">
+      <textarea className={style([resize(none)])} value="Can't resize textarea" readOnly=true/>
       <div
         className={style([
           marginLeft(px(20)),
@@ -1149,7 +1147,7 @@ let make = () =>
         "Resizable div (vertical)"->React.string
       </div>
     </Section>
-    <Section name="content">
+    <Section name="Content">
       <div
         className={style([
           position(relative),
@@ -1299,13 +1297,13 @@ let make = () =>
         "contents (quotes)"->React.string
       </div>
     </Section>
-    <Section name="insertRule, the ultimate escape hatch">
+    <Section name="InsertRule, the ultimate escape hatch">
       <div className="raw-css" />
     </Section>
-    <Section name="merging style names">
+    <Section name="Merging style names">
       <button className=mergedStyles> "Merged"->React.string </button>
     </Section>
-    <Section name="filter">
+    <Section name="Filter">
       <div className={style(redBox @ [filter([`blur(`px(10))])])} />
       <div className={style(redBox @ [filter([`brightness(50.)])])} />
       <div className={style(redBox @ [filter([`contrast(50.)])])} />
@@ -1354,7 +1352,7 @@ let make = () =>
       </svg>
       <div className={style(redBox @ [filter([`url("#f1")])])} />
     </Section>
-    <Section name="direction">
+    <Section name="Direction">
       <Section name="ltr">
         <div className={style([direction(`ltr), display(`flex)])}>
           <div className={style(redBox)}> "1"->React.string </div>
@@ -1371,7 +1369,7 @@ let make = () =>
           <div className={style(redBox)}> "4"->React.string </div>
         </div>
       </Section>
-      <Section name="unset">
+      <Section name="Unset">
         <div className={style([direction(`unset), display(`flex)])}>
           <div className={style(redBox)}> "1"->React.string </div>
           <div className={style(redBox)}> "2"->React.string </div>
