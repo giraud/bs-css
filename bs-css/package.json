@@ -21,8 +21,8 @@
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.8",
-    "bs-platform": "^8.4.2",
-    "jest": "^24.7.1"
+    "@glennsl/bs-jest": "^0.7.0",
+    "bs-platform": "^8.0.0",
+    "jest": "^26.0.0"
   }
 }

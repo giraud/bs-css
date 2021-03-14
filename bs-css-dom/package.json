@@ -22,11 +22,12 @@
   "dependencies": {
     "bs-css": "13.4.0"
   },
+  "peerDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "reason-react": "^0.9.0"
+  },
   "devDependencies": {
-    "bs-platform": "^8.4.2",
-    "esbuild": "^0.8.49",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "reason-react": "^0.9.1"
+    "bs-platform": "^8.0.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "bs-css-dom",
+  "name": "dev-server-dom",
   "reason": {
     "react-jsx": 3
   },
@@ -15,6 +15,7 @@
   ],
   "bs-dependencies": [
     "bs-css",
+    "bs-css-dom",
     "reason-react"
   ]
 }

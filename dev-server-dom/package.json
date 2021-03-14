@@ -1,5 +1,5 @@
 {
-  "name": "dev-server-emotion",
+  "name": "dev-server-dom",
   "version": "1.0.0",
   "description": "Dev server",
   "private": true,
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "bs-css": "^13.0.0",
-    "bs-css-emotion": "^2.0.0"
+    "bs-css-dom": "^2.0.0"
   },
   "devDependencies": {
     "bs-platform": "^8.0.0",
