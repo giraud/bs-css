@@ -2,7 +2,8 @@
     "private": true,
     "workspaces": [
         "bs-css",
+        "bs-css-dom",
         "bs-css-emotion",
-        "bs-css-dom"
+        "dev-server-emotion"
     ]
 }

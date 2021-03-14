@@ -8,6 +8,7 @@
 /bs-css-emotion/example/bundle*.js
 npm-debug.log
 .DS_Store
+.bsb.lock
 .idea
 .cache
 .merlin

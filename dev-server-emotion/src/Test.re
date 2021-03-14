@@ -260,7 +260,10 @@ let make = () =>
            yellowgreen,
          |]
          ->Belt.Array.mapWithIndex((i, c) =>
-             <div key=string_of_int(i) className={style([background(c), ...miniBox])} />
+             <div
+               key={string_of_int(i)}
+               className={style([background(c), ...miniBox])}
+             />
            ),
        )}
     </Section>
@@ -1129,7 +1132,11 @@ let make = () =>
       </p>
     </Section>
     <Section name="Resize">
-      <textarea className={style([resize(none)])} value="Can't resize textarea" readOnly=true/>
+      <textarea
+        className={style([resize(none)])}
+        value="Can't resize textarea"
+        readOnly=true
+      />
       <div
         className={style([
           marginLeft(px(20)),

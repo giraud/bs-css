@@ -4,8 +4,7 @@
   "description": "BuckleScript bindings for emotion",
   "scripts": {
     "re:build": "bsb -make-world",
-    "re:watch": "bsb -make-world -w",
-    "serve": "../node_modules/.bin/esbuild ./lib/js/example/App.js --servedir=example --outdir=example/js --bundle --loader:.js=jsx --define:process.env.NODE_ENV=\\\"development\\\""
+    "re:watch": "bsb -make-world -w"
   },
   "keywords": [
     "emotion",
@@ -24,9 +23,6 @@
     "emotion": "^10.0.7"
   },
   "devDependencies": {
-    "bs-platform": "^8.4.2",
-    "esbuild": "^0.8.49",
-    "react": "^17.0.1",
-    "reason-react": "^0.9.1"
+    "bs-platform": "^8.4.2"
   }
 }

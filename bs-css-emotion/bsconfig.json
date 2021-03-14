@@ -1,26 +1,19 @@
 {
-  "name": "bs-css-emotion",
-  "reason": {
-    "react-jsx": 3
-  },
-  "refmt": 3,
-  "warnings": {
-    "number":  "+A-32-34-44",
-    "error": "+A-32-34-44"
-  },
-  "sources": [
-    {
-      "dir": "src"
+    "name": "bs-css-emotion",
+    "reason": {
+        "react-jsx": 3
     },
-    {
-      "dir": "example",
-      "type": "dev"
-    }
-  ],
-  "bs-dependencies": [
-    "bs-css"
-  ],
-  "bs-dev-dependencies": [
-    "reason-react"
-  ]
+    "refmt": 3,
+    "warnings": {
+        "number": "+A-32-34-44",
+        "error": "+A-32-34-44"
+    },
+    "sources": [
+        {
+            "dir": "src"
+        }
+    ],
+    "bs-dependencies": [
+        "bs-css"
+    ]
 }

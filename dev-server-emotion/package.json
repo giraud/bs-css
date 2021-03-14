@@ -1,0 +1,28 @@
+{
+  "name": "dev-server-emotion",
+  "version": "1.0.0",
+  "description": "Dev server",
+  "scripts": {
+    "re:clean": "bsb -clean-world",
+    "re:build": "bsb -make-world",
+    "re:watch": "bsb -make-world -w",
+    "serve": "../node_modules/.bin/esbuild ./lib/js/src/App.js --servedir=src --outdir=src/js --bundle --loader:.js=jsx --define:process.env.NODE_ENV=\\\"development\\\""
+  },
+  "author": "Hervé Giraud <giraud.contact@yahoo.fr>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reasonml-labs/bs-css.git"
+  },
+  "dependencies": {
+    "bs-css": "^13.0.0",
+    "bs-css-emotion": "^2.0.0"
+  },
+  "devDependencies": {
+    "bs-platform": "^8.4.2",
+    "esbuild": "^0.8.49",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "reason-react": "^0.9.0"
+  }
+}
