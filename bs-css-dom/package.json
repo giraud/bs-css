@@ -1,6 +1,6 @@
 {
   "name": "bs-css-dom",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "bs-css bindings for React DOM",
   "scripts": {
     "re:clean": "bsb -clean-world",
