@@ -1,4 +1,11 @@
 ## [Unreleased]
+            
+## [13.4.1] - 2021-03-19
+
+- Move react dependency out of bs-css-emotion
+- Use peer dependencies in bs-css-dom
+
+bs-css-dom@2.4.1, bs-css-emotion@2.4.1
 
 ## [13.4.0] - 2021-02-20
 
@@ -229,7 +236,8 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.1...HEAD
+[13.4.1]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.0...13.4.1
 [13.4.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.3.0...13.4.0
 [13.3.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.2.0...13.3.0
 [13.2.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.1.0...13.2.0

@@ -1314,12 +1314,12 @@ __metadata:
   resolution: "bs-css-emotion@workspace:bs-css-emotion"
   dependencies:
     bs-css: 13.4.0
-    bs-platform: ^8.4.2
-    emotion: ^10.0.7
+    bs-platform: ^8.0.0
+    emotion: ^10.0.0
   languageName: unknown
   linkType: soft
 
-"bs-css@13.4.0, bs-css@^13.0.0, bs-css@workspace:bs-css":
+"bs-css@^13.0.0, bs-css@workspace:bs-css":
   version: 0.0.0-use.local
   resolution: "bs-css@workspace:bs-css"
   dependencies:
@@ -1329,7 +1329,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"bs-platform@npm:^8.0.0, bs-platform@npm:^8.4.2":
+"bs-css@npm:13.4.0":
+  version: 13.4.0
+  resolution: "bs-css@npm:13.4.0"
+  checksum: f752943b2759f1b2436ed0bfd97d33ce5eb0417931b4e091945b4b228a2ad49e15af55ed3348ca2a697b6f18d0c4e6a18da4d892acb2085035e0376258a3fdc9
+  languageName: node
+  linkType: hard
+
+"bs-platform@npm:^8.0.0":
   version: 8.4.2
   resolution: "bs-platform@npm:8.4.2"
   bin:
@@ -1892,7 +1899,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emotion@npm:^10.0.7":
+"emotion@npm:^10.0.0":
   version: 10.0.27
   resolution: "emotion@npm:10.0.27"
   dependencies:

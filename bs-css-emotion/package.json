@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "bs-css": "13.4.0",
-    "emotion": "^10.0.7"
+    "emotion": "^10.0.0"
   },
   "devDependencies": {
-    "bs-platform": "^8.4.2"
+    "bs-platform": "^8.0.0"
   }
 }
