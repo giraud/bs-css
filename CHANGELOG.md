@@ -4,6 +4,8 @@
 
 - Move react dependency out of bs-css-emotion
 - Use peer dependencies in bs-css-dom
+- Fix broken link to rei (doc) by [@abenoit](https://github.com/abenoit) - [#234](https://github.com/reasonml-labs/bs-css/pull/234)  
+- Add support for focus-visible pseudo-class by [@TomiS](https://github.com/TomiS) - [#233](https://github.com/reasonml-labs/bs-css/pull/233)
 
 bs-css-dom@2.4.1, bs-css-emotion@2.4.1
 
