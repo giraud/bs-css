@@ -1319,6 +1319,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"bs-css-fela@^1.0.0, bs-css-fela@workspace:bs-css-fela":
+  version: 0.0.0-use.local
+  resolution: "bs-css-fela@workspace:bs-css-fela"
+  dependencies:
+    bs-css: 13.4.0
+    bs-platform: ^8.0.0
+    esbuild: ^0.9.0
+    fela: ^11.0.0
+    react: ^17.0.0
+    react-fela: ^11.0.0
+    reason-react: ^0.9.0
+  languageName: unknown
+  linkType: soft
+
 "bs-css@^13.0.0, bs-css@workspace:bs-css":
   version: 0.0.0-use.local
   resolution: "bs-css@workspace:bs-css"
@@ -1403,9 +1417,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001181":
-  version: 1.0.30001199
-  resolution: "caniuse-lite@npm:1.0.30001199"
-  checksum: 60bac988a66225e622d12808288e8924fba95f9b7fc300f2ad2a6011125fed493335980ffdb43c1e1ac94447990595f9a349edb5d2e0d5dc7228ac47f5ec3686
+  version: 1.0.30001200
+  resolution: "caniuse-lite@npm:1.0.30001200"
+  checksum: 58539f5702e969cb1d9c15134e59f82972e1174f948197011e3f2441c44bdffda60d7d48df98cec00471777c0d414571026540bec12d922e4e1e2e99a8f1aee1
   languageName: node
   linkType: hard
 
@@ -1669,6 +1683,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-in-js-utils@npm:^3.0.0":
+  version: 3.1.0
+  resolution: "css-in-js-utils@npm:3.1.0"
+  dependencies:
+    hyphenate-style-name: ^1.0.3
+  checksum: 0e55f69d165cdd9e98d8df4b15c340fdf221f08e16be8ffdd54e25e36062b2522f4a8a606a03dbcf5fb9360fd05a106b2c9cbe666972a101ab987639040830f5
+  languageName: node
+  linkType: hard
+
 "cssom@npm:^0.4.4":
   version: 0.4.4
   resolution: "cssom@npm:0.4.4"
@@ -1696,6 +1719,13 @@ __metadata:
   version: 2.6.16
   resolution: "csstype@npm:2.6.16"
   checksum: 857b0d414e13a550c7dd2b2a94f23ca63c8d5c10dc6e6020e7ca5afebd143b5e2926199cced1c3801a1e9eceb7d94b65edc11a521cdb3b67f61de757facfbff3
+  languageName: node
+  linkType: hard
+
+"csstype@npm:^3.0.5":
+  version: 3.0.7
+  resolution: "csstype@npm:3.0.7"
+  checksum: 76d542d719cd6bca7c491e6425a28873f76b0f4cf602b626a9fee105806446be4fab2191c5d18a045aea412bb3d5dcb5cab9414328080c672671433b786746f5
   languageName: node
   linkType: hard
 
@@ -1848,6 +1878,21 @@ __metadata:
     esbuild: ^0.9.0
     react: ^17.0.0
     react-dom: ^17.0.0
+    reason-react: ^0.9.0
+  languageName: unknown
+  linkType: soft
+
+"dev-server-fela@workspace:dev-server-fela":
+  version: 0.0.0-use.local
+  resolution: "dev-server-fela@workspace:dev-server-fela"
+  dependencies:
+    bs-css: ^13.0.0
+    bs-css-fela: ^1.0.0
+    bs-platform: ^8.0.0
+    esbuild: ^0.9.0
+    fela: ^11.0.0
+    react: ^17.0.0
+    react-fela: ^11.0.0
     reason-react: ^0.9.0
   languageName: unknown
   linkType: soft
@@ -2159,12 +2204,83 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-loops@npm:^1.0.0, fast-loops@npm:^1.0.1":
+  version: 1.1.3
+  resolution: "fast-loops@npm:1.1.3"
+  checksum: 7e8094845e6e1732124c8faf2c3fee7b9dccbe86493c1063652ed6a69229bd8e84ad5cade78c6700ec12dad7e097a66af1654ba6c0e6eff98c1d2cd8e4f7f580
+  languageName: node
+  linkType: hard
+
 "fb-watchman@npm:^2.0.0":
   version: 2.0.1
   resolution: "fb-watchman@npm:2.0.1"
   dependencies:
     bser: 2.1.1
   checksum: f9ec24592a45026a6a7f54034a4b5efb010cac7d7fbc234fe9ae5d725c13efa9be0ded1ae348473fc42af4e28eea53f8b993857c0c49e6d721f7c9eb5b21217f
+  languageName: node
+  linkType: hard
+
+"fela-bindings@npm:^11.6.0":
+  version: 11.6.0
+  resolution: "fela-bindings@npm:11.6.0"
+  dependencies:
+    fast-loops: ^1.0.0
+    fela-dom: ^11.6.0
+    fela-tools: ^11.6.0
+    react-addons-shallow-compare: ^15.6.2
+    shallow-equal: ^1.0.0
+  peerDependencies:
+    fela: "*"
+  checksum: 5cad67d0f088da6cc2b108cc11ee4abbe98fccfb00f044bff8862a9815baf2e6aa98a41d5485f6cf9f65ce92c30c8731ac92c164e714ecf961367c3ff62144a2
+  languageName: node
+  linkType: hard
+
+"fela-dom@npm:^11.6.0":
+  version: 11.6.0
+  resolution: "fela-dom@npm:11.6.0"
+  dependencies:
+    css-in-js-utils: ^3.0.0
+    fast-loops: ^1.0.1
+    fela-utils: ^11.6.0
+    sort-css-media-queries: ^1.4.3
+  checksum: eabb4d3b1ada8ecc2702e88b0eedafec7383d68400ded50eb5699560343b479ff5c3fa4fe6e7be332475d0966a674bd9e83f25edcfb9309ec96a037e105d47f2
+  languageName: node
+  linkType: hard
+
+"fela-tools@npm:^11.6.0":
+  version: 11.6.0
+  resolution: "fela-tools@npm:11.6.0"
+  dependencies:
+    css-in-js-utils: ^3.0.0
+    fast-loops: ^1.0.0
+    fela: ^11.6.0
+    fela-utils: ^11.6.0
+  peerDependencies:
+    fela: ^11.2.0
+  checksum: 9b66732a067aa52e232ccdd02e615b32ffe110ac3039d6dd77946d1c879fc573d6cc98dd875da0f85346972021489f74898adcc89cff562166130ba9c721bce3
+  languageName: node
+  linkType: hard
+
+"fela-utils@npm:^11.6.0":
+  version: 11.6.0
+  resolution: "fela-utils@npm:11.6.0"
+  dependencies:
+    css-in-js-utils: ^3.0.0
+    fast-loops: ^1.0.0
+  checksum: 730f36d17a31acf87f3260413735f78a3c4e6e25624ac7a947419cd498998e4c8f5ae60e7667aabc5af0c7317b06616bdec382e75ea0ce4063863afa8b04926b
+  languageName: node
+  linkType: hard
+
+"fela@npm:^11.0.0, fela@npm:^11.6.0":
+  version: 11.6.0
+  resolution: "fela@npm:11.6.0"
+  dependencies:
+    css-in-js-utils: ^3.0.0
+    csstype: ^3.0.5
+    fast-loops: ^1.0.0
+    fela-utils: ^11.6.0
+    isobject: ^3.0.1
+  checksum: 7e05fd56f57aa82b68035f465e88e5f987e82a8fb97cde9d712f2c5ee2cab487c35e5dd3adf4c812d2be773363236e82d783fb77ceaaaa065eaf40a0205c29d2
   languageName: node
   linkType: hard
 
@@ -2511,6 +2627,13 @@ fsevents@^2.1.2:
   version: 1.1.1
   resolution: "human-signals@npm:1.1.1"
   checksum: cac115f635090055427bbd9d066781b17de3a2d8bbf839d920ae2fa52c3eab4efc63b4c8abc10e9a8b979233fa932c43a83a48864003a8c684ed9fb78135dd45
+  languageName: node
+  linkType: hard
+
+"hyphenate-style-name@npm:^1.0.3":
+  version: 1.0.4
+  resolution: "hyphenate-style-name@npm:1.0.4"
+  checksum: 4cfeb47e98eab9c25e6dece20da772cc914a9f8e5ee794cf8db105b0649dd64a61d8ee8ff32acf23ae0ac181db8fcbe4a6abb2f7de48ae52b42a85bbf1aacb86
   languageName: node
   linkType: hard
 
@@ -3531,7 +3654,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0":
+"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -4151,6 +4274,17 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
+"prop-types@npm:^15.5.8":
+  version: 15.7.2
+  resolution: "prop-types@npm:15.7.2"
+  dependencies:
+    loose-envify: ^1.4.0
+    object-assign: ^4.1.1
+    react-is: ^16.8.1
+  checksum: a440dd406c5cf53bf39f3e898d2c65178511d34ca3c8c789b30c177992408b9e4273969726b274719aa69ccce5ab34b2fd8caa60b90f23cd2e910cdcf682de52
+  languageName: node
+  linkType: hard
+
 "psl@npm:^1.1.28, psl@npm:^1.1.33":
   version: 1.8.0
   resolution: "psl@npm:1.8.0"
@@ -4182,6 +4316,15 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
+"react-addons-shallow-compare@npm:^15.6.2":
+  version: 15.6.3
+  resolution: "react-addons-shallow-compare@npm:15.6.3"
+  dependencies:
+    object-assign: ^4.1.0
+  checksum: 763e778ad0831b40f3fa3fd500a4c9eec977369b5270f50e9bcad8dd0defbd634c06912930d8fbb78e8ec724e863a8c7851c3b4f1a3024d119c08f4d1cdd14a0
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^17.0.0":
   version: 17.0.1
   resolution: "react-dom@npm:17.0.1"
@@ -4192,6 +4335,27 @@ fsevents@^2.1.2:
   peerDependencies:
     react: 17.0.1
   checksum: 6a70028fbe3c95e0056c5e8ce065b4a9b8d4ff3bffde9b016454072bde5e4b012af7668ca45b7235ace428267d5be5237b68ea87ce8c296e54e81a8d678a4355
+  languageName: node
+  linkType: hard
+
+"react-fela@npm:^11.0.0":
+  version: 11.6.0
+  resolution: "react-fela@npm:11.6.0"
+  dependencies:
+    fela-bindings: ^11.6.0
+    fela-dom: ^11.6.0
+    prop-types: ^15.5.8
+  peerDependencies:
+    fela: ">= 11.3.1"
+    react: ">= 16.3.0"
+  checksum: 20d42d61ca6128926aef40a94919e29aed492119fd46ef74479dadb88c3901cf7ba07a1d074763e942bb407aaac3df40aabc58ea52d026f03e173737d0fac9b7
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^16.8.1":
+  version: 16.13.1
+  resolution: "react-is@npm:16.13.1"
+  checksum: 11bcf1267a314a522615f626f3ce3727a3a24cdbf61c4d452add3550a7875326669631326cfb1ba3e92b6f72244c32ffecf93ad21c0cad8455d3e169d0e3f060
   languageName: node
   linkType: hard
 
@@ -4562,6 +4726,13 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
+"shallow-equal@npm:^1.0.0":
+  version: 1.2.1
+  resolution: "shallow-equal@npm:1.2.1"
+  checksum: 5002ac4a3639e35782d3cb21073d48e1e4f85321cc54608f48b2331f6db6d54e4f4b44ed81ec4d75385ebe893e8286752b1e29595381e6adad72dd836f001b7f
+  languageName: node
+  linkType: hard
+
 "shebang-command@npm:^1.2.0":
   version: 1.2.0
   resolution: "shebang-command@npm:1.2.0"
@@ -4655,6 +4826,13 @@ fsevents@^2.1.2:
     source-map-resolve: ^0.5.0
     use: ^3.1.0
   checksum: c30b63a732bf37dbd2147bf57b4d9eac651ab7b313d1521f73855154b2c2f5a3f2ad18bd47e21cc64b6991f868ecb2a99f8da973ca86da39956f1f0f720b7033
+  languageName: node
+  linkType: hard
+
+"sort-css-media-queries@npm:^1.4.3":
+  version: 1.5.4
+  resolution: "sort-css-media-queries@npm:1.5.4"
+  checksum: d45cfe2578438bdc88dae0aed9f6d6bca98ae62f0bc4ac8e27dd753a75a7676116b97a5b959aad6c2b0bc71f12b8cc8713cdc170bd251b99c0a1c33d663ad75b
   languageName: node
   linkType: hard
 

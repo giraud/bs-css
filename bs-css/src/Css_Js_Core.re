@@ -7,47 +7,93 @@ type rule =
   | PseudoClass(string, array(rule))
   | PseudoClassParam(string, string, array(rule));
 
-let rec ruleToDict = (dict, rule) => {
-  switch (rule) {
-  | D(name, value) when name == "content" =>
-    dict->Js.Dict.set(name, Js.Json.string(value == "" ? "\"\"" : value))
-  | D(name, value) => dict->Js.Dict.set(name, Js.Json.string(value))
-  | S(name, ruleset) => dict->Js.Dict.set(name, toJson(ruleset))
-  | PseudoClass(name, ruleset) =>
-    dict->Js.Dict.set(":" ++ name, toJson(ruleset))
-  | PseudoClassParam(name, param, ruleset) =>
-    dict->Js.Dict.set(":" ++ name ++ "(" ++ param ++ ")", toJson(ruleset))
-  };
-  dict;
-}
+let rec ruleToDict =
+  (. dict, rule) => {
+    switch (rule) {
+    | D(name, value) when name == "content" =>
+      dict->Js.Dict.set(name, Js.Json.string(value == "" ? "\"\"" : value))
+    | D(name, value) => dict->Js.Dict.set(name, Js.Json.string(value))
+    | S(name, ruleset) => dict->Js.Dict.set(name, toJson(ruleset))
+    | PseudoClass(name, ruleset) =>
+      dict->Js.Dict.set(":" ++ name, toJson(ruleset))
+    | PseudoClassParam(name, param, ruleset) =>
+      dict->Js.Dict.set(":" ++ name ++ "(" ++ param ++ ")", toJson(ruleset))
+    };
+    dict;
+  }
 
 and toJson = rules =>
-  rules->Belt.Array.reduce(Js.Dict.empty(), ruleToDict)->Js.Json.object_;
+  rules->Belt.Array.reduceU(Js.Dict.empty(), ruleToDict)->Js.Json.object_;
 
-module Make = (CssImplementation: Css_Core.CssImplementationIntf) => {
-  let merge = (. stylenames) => CssImplementation.mergeStyles(. stylenames);
+type animationName = string;
 
-  let insertRule = (. rule) => CssImplementation.injectRaw(. rule);
+module type MakeResult = {
+  type styleEncoding;
+  type renderer;
 
-  let style = (. rules) => CssImplementation.make(. rules->toJson);
+  let insertRule: (. string) => unit;
+  let renderRule: (. renderer, string) => unit;
+
+  let global: (. string, array(rule)) => unit;
+  let renderGlobal: (. renderer, string, array(rule)) => unit;
+
+  let style: (. array(rule)) => styleEncoding;
+
+  let merge: (. array(styleEncoding)) => styleEncoding;
+  let merge2: (. styleEncoding, styleEncoding) => styleEncoding;
+  let merge3: (. styleEncoding, styleEncoding, styleEncoding) => styleEncoding;
+  let merge4:
+    (. styleEncoding, styleEncoding, styleEncoding, styleEncoding) =>
+    styleEncoding;
+
+  let keyframes: (. array((int, array(rule)))) => animationName;
+  let renderKeyframes:
+    (. renderer, array((int, array(rule)))) => animationName;
+};
+
+module Make =
+       (CssImpl: Css_Core.CssImplementationIntf)
+
+         : (
+           MakeResult with
+             type styleEncoding := CssImpl.styleEncoding and
+             type renderer := CssImpl.renderer
+       ) => {
+  type styleEncoding;
+  type renderer;
+
+  let insertRule = (. css) => CssImpl.injectRaw(. css);
+  let renderRule = (. renderer, css) => CssImpl.renderRaw(. renderer, css);
 
   let global =
-    (. selector, rules) =>
-      CssImplementation.injectRule(.
-        [|(selector, toJson(rules))|]->Js.Dict.fromArray->Js.Json.object_,
-      );
+    (. selector, rules) => CssImpl.injectRules(. selector, toJson(rules));
+
+  let renderGlobal =
+    (. renderer, selector, rules) =>
+      CssImpl.renderRules(. renderer, selector, toJson(rules));
+
+  let style = (. rules) => CssImpl.make(. toJson(rules));
+
+  let merge = (. styles) => CssImpl.mergeStyles(. styles);
+  let merge2 = (. s, s2) => merge(. [|s, s2|]);
+  let merge3 = (. s, s2, s3) => merge(. [|s, s2, s3|]);
+  let merge4 = (. s, s2, s3, s4) => merge(. [|s, s2, s3, s4|]);
+
+  let framesToDict = frames =>
+    frames->Belt.Array.reduceU(
+      Js.Dict.empty(),
+      (. dict, (stop, rules)) => {
+        Js.Dict.set(dict, Js.Int.toString(stop) ++ "%", toJson(rules));
+        dict;
+      },
+    );
 
   let keyframes =
-    (. frames) =>
-      CssImplementation.makeKeyFrames(.
-        frames->Belt.Array.reduceU(
-          Js.Dict.empty(),
-          (. dict, (stop, rules)) => {
-            Js.Dict.set(dict, Js.Int.toString(stop) ++ "%", toJson(rules));
-            dict;
-          },
-        ),
-      );
+    (. frames) => CssImpl.makeKeyframes(. framesToDict(frames));
+
+  let renderKeyframes =
+    (. renderer, frames) =>
+      CssImpl.renderKeyframes(. renderer, framesToDict(frames));
 };
 
 let join = (strings, separator) =>
@@ -100,7 +146,7 @@ module Converter = {
     | `auto => "auto"
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
+    | #Cascading.t as c => Cascading.toString(c);
 
   let string_of_color =
     fun
@@ -114,8 +160,6 @@ module Converter = {
 };
 
 include Converter;
-
-type animationName = string;
 
 let important = v =>
   switch (v) {
@@ -404,10 +448,7 @@ let countersIncrement = xs =>
 
 let counterReset = x => D("counterReset", string_of_counter_reset(x));
 let countersReset = xs =>
-  D(
-    "counterReset",
-    xs->Belt.Array.map(string_of_counter_reset)->join(" "),
-  );
+  D("counterReset", xs->Belt.Array.map(string_of_counter_reset)->join(" "));
 
 let counterSet = x => D("counterSet", string_of_counter_set(x));
 let countersSet = xs =>
@@ -2101,11 +2142,13 @@ module SVG = {
     );
   let stroke = x => D("stroke", string_of_color(x));
   let strokeDasharray = x =>
-    D("strokeDasharray",
-      switch x {
+    D(
+      "strokeDasharray",
+      switch (x) {
       | `none => "none"
       | `dasharray(a) => a->Belt.Array.map(string_of_dasharray)->join(" ")
-      });
+      },
+    );
   let strokeWidth = x => D("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
     D("strokeOpacity", Js.Float.toString(opacity));

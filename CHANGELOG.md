@@ -1,4 +1,7 @@
 ## [Unreleased]
+
+- BREAKING CHANGE bs-css: updated the Css_Core API to accept renderer. it should have no impact on existing implementations.
+- Added bs-css-fela with a dependency to the [fela](https://github.com/robinweser/fela) library
             
 ## [13.4.1] - 2021-03-19
 

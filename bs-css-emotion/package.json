@@ -3,6 +3,7 @@
   "version": "2.4.1",
   "description": "BuckleScript bindings for emotion",
   "scripts": {
+    "re:clean": "bsb -clean-world",
     "re:build": "bsb -make-world",
     "re:watch": "bsb -make-world -w"
   },

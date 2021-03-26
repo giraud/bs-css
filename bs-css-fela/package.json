@@ -1,0 +1,34 @@
+{
+    "name": "bs-css-fela",
+    "version": "1.0.0",
+    "description": "BuckleScript bindings for fela",
+    "scripts": {
+        "re:clean": "bsb -clean-world",
+        "re:build": "bsb -make-world",
+        "re:watch": "bsb -make-world -w",
+        "serve": "../node_modules/.bin/esbuild ./lib/js/example/App.js --servedir=example --outdir=example/js --bundle --loader:.js=jsx --define:process.env.NODE_ENV=\\\"development\\\""
+    },
+    "keywords": [
+        "fela",
+        "bucklescript",
+        "reason",
+        "css"
+    ],
+    "author": "Hervé Giraud <giraud.contact@yahoo.fr>",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/reasonml-labs/bs-css.git"
+    },
+    "dependencies": {
+        "bs-css": "13.4.0",
+        "fela": "^11.0.0",
+        "react-fela": "^11.0.0"
+    },
+    "devDependencies": {
+        "bs-platform": "^8.0.0",
+        "esbuild": "^0.9.0",
+        "react": "^17.0.0",
+        "reason-react": "^0.9.0"
+    }
+}

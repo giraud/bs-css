@@ -1,5 +1,8 @@
 {
-    "name": "bs-css-emotion",
+    "name": "bs-css-fela",
+    "reason": {
+        "react-jsx": 3
+    },
     "refmt": 3,
     "warnings": {
         "number": "+A-32-34-44",
@@ -9,6 +12,7 @@
         "src"
     ],
     "bs-dependencies": [
-        "bs-css"
+        "bs-css",
+        "reason-react"
     ]
 }
