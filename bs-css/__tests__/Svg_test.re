@@ -1,19 +1,6 @@
-module CssForTest = {
-  include Css_Legacy_Core;
-  include Css_Legacy_Core.Make({
-    exception NotImplemented;
-
-    let mergeStyles = (. _) => raise(NotImplemented);
-    let make = (. _) => raise(NotImplemented);
-    let injectRule = (. _) => raise(NotImplemented);
-    let injectRaw = (. _) => raise(NotImplemented);
-    let makeKeyFrames = (. _) => raise(NotImplemented);
-  });
-};
-
 open Jest;
 open Expect;
-open CssForTest;
+open EmptyCssImpl.Legacy;
 
 let toBeJson = x => Expect.toBe(x->Js.Json.stringifyAny);
 let r = x => toJson([x]); /* simple rule for more readable tests */
@@ -41,13 +28,21 @@ describe("Fill", () =>
 );
 
 describe("strokeDasharray", () => {
-  test("test values", () => 
+  test("test values", () =>
     expect(
       (
         r(SVG.strokeDasharray(`dasharray([1->px, 2->px, 3->px, 4->px]))),
-        r(SVG.strokeDasharray(`dasharray([1.->pct, 2.->pct, 3.->pct, 4.->pct]))),
-        r(SVG.strokeDasharray(`dasharray([1->px, 2.->pct, 3->px, 4.->pct]))),
-        r(SVG.strokeDasharray(`dasharray([1.->pct, 2->px, 3.->pct, 4->px]))),
+        r(
+          SVG.strokeDasharray(
+            `dasharray([1.->pct, 2.->pct, 3.->pct, 4.->pct]),
+          ),
+        ),
+        r(
+          SVG.strokeDasharray(`dasharray([1->px, 2.->pct, 3->px, 4.->pct])),
+        ),
+        r(
+          SVG.strokeDasharray(`dasharray([1.->pct, 2->px, 3.->pct, 4->px])),
+        ),
         r(SVG.strokeDasharray(`none)),
       )
       ->Js.Json.stringifyAny,
@@ -60,4 +55,4 @@ describe("strokeDasharray", () => {
          {"strokeDasharray": "none"},
        ))
   )
-})
+});

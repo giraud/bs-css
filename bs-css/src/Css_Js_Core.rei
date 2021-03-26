@@ -5,15 +5,35 @@ module Types = Css_AtomicTypes;
 type rule;
 type animationName;
 
+module type MakeResult = {
+  type styleEncoding;
+  type renderer;
+
+  let insertRule: (. string) => unit;
+  let renderRule: (. renderer, string) => unit;
+
+  let global: (. string, array(rule)) => unit;
+  let renderGlobal: (. renderer, string, array(rule)) => unit;
+
+  let style: (. array(rule)) => styleEncoding;
+
+  let merge: (. array(styleEncoding)) => styleEncoding;
+  let merge2: (. styleEncoding, styleEncoding) => styleEncoding;
+  let merge3: (. styleEncoding, styleEncoding, styleEncoding) => styleEncoding;
+  let merge4:
+    (. styleEncoding, styleEncoding, styleEncoding, styleEncoding) =>
+    styleEncoding;
+
+  let keyframes: (. array((int, array(rule)))) => animationName;
+  let renderKeyframes:
+    (. renderer, array((int, array(rule)))) => animationName;
+};
+
 module Make:
-  (Css_Core.CssImplementationIntf) =>
-   {
-    let global: (. string, array(rule)) => unit;
-    let insertRule: (. string) => unit;
-    let merge: (. array(string)) => string;
-    let style: (. array(rule)) => string;
-    let keyframes: (. array((int, array(rule)))) => animationName;
-  };
+  (C: Css_Core.CssImplementationIntf) =>
+
+    MakeResult with
+      type styleEncoding := C.styleEncoding and type renderer := C.renderer;
 
 let toJson: array(rule) => Js.Json.t;
 
@@ -173,7 +193,8 @@ let backgroundClip:
  The background-image CSS property sets one or more background images on an element.
  */
 let backgroundImage:
-  [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t('gradient)] => rule;
+  [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t('gradient)] =>
+  rule;
 
 /**
  The background-origin CSS property sets the background's origin: from the border start,
@@ -342,7 +363,8 @@ let borderTopWidth: Types.Length.t => rule;
 
 let borderWidth: Types.Length.t => rule;
 
-let bottom: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let bottom:
+  [< | `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
  The box-sizing CSS property sets how the total width and height of an element is calculated.
@@ -661,7 +683,8 @@ let justifyItems:
     | Types.LegacyAlignment.t
     | Types.Var.t
     | Types.Cascading.t
-  ] => rule;
+  ] =>
+  rule;
 
 /**
  The CSS justify-self property sets the way a box is justified inside its alignment container along the appropriate axis.
@@ -676,7 +699,8 @@ let justifySelf:
   ] =>
   rule;
 
-let left: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let left:
+  [< | `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
  The letter-spacing CSS property sets the spacing behavior between text characters
@@ -845,7 +869,9 @@ let opacity: float => rule;
 
 let order: int => rule;
 
-let outline: (Types.Length.t, Types.OutlineStyle.t, [< Types.Color.t | Types.Var.t]) => rule;
+let outline:
+  (Types.Length.t, Types.OutlineStyle.t, [< Types.Color.t | Types.Var.t]) =>
+  rule;
 
 let outlineColor: [< Types.Color.t | Types.Var.t] => rule;
 
@@ -929,7 +955,8 @@ let position: [< Types.Position.t | Types.Var.t | Types.Cascading.t] => rule;
  */
 let resize: [< Types.Resize.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let right: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let right:
+  [< | `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
  The table-layout CSS property sets the algorithm used to lay out <table> cells, rows, and columns.
@@ -994,9 +1021,10 @@ let textShadows: array([ Shadow.t(Shadow.text)]) => rule;
 let textTransform:
   [< Types.TextTransform.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let top: [< `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
+let top:
+  [< | `auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule;
 
-let transform: [< `none | Types.Transform.t ] => rule;
+let transform: [< | `none | Types.Transform.t] => rule;
 
 let transforms: array(Types.Transform.t) => rule;
 
@@ -1665,15 +1693,23 @@ let skewX: Types.Angle.t => [> Types.Transform.t];
 let skewY: Types.Angle.t => [> Types.Transform.t];
 
 let linearGradient:
-  (Types.Angle.t, list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))) =>
+  (
+    Types.Angle.t,
+    list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))
+  ) =>
   [> Types.Gradient.t('colorOrVar)];
 let repeatingLinearGradient:
-  (Types.Angle.t, list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))) =>
+  (
+    Types.Angle.t,
+    list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))
+  ) =>
   [> Types.Gradient.t('colorOrVar)];
 let radialGradient:
-  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) => [> Types.Gradient.t('colorOrVar)];
+  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) =>
+  [> Types.Gradient.t('colorOrVar)];
 let repeatingRadialGradient:
-  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) => [> Types.Gradient.t('colorOrVar)];
+  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) =>
+  [> Types.Gradient.t('colorOrVar)];
 
 let areas: list(string) => [> Types.GridTemplateAreas.t];
 let ident: string => [> Types.GridArea.t];
@@ -1759,9 +1795,13 @@ let textDecoration:
   rule;
 
 let background:
-  [< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none] => rule;
+  [< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none] =>
+  rule;
 let backgrounds:
-  array([< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none]) => rule;
+  array(
+    [< Types.Color.t | Types.Url.t | Types.Gradient.t('gradient) | `none],
+  ) =>
+  rule;
 
 type minmax = [
   | `fr(float)
@@ -1902,16 +1942,22 @@ let animationName: animationName => rule;
  *** */
 
 module SVG: {
-  let fill: [< Types.SVG.Fill.t | Types.Color.t | Types.Var.t | Types.Url.t] => rule;
+  let fill:
+    [< Types.SVG.Fill.t | Types.Color.t | Types.Var.t | Types.Url.t] => rule;
   let fillRule: [ | `nonzero | `evenodd] => rule;
   let fillOpacity: float => rule;
-  let stroke: [< Types.Color.t | Types.Var.t ] => rule;
-  let strokeDasharray: [< `none | `dasharray(array([< Types.Length.t | Types.Percentage.t]))] => rule;
+  let stroke: [< Types.Color.t | Types.Var.t] => rule;
+  let strokeDasharray:
+    [<
+      | `none
+      | `dasharray(array([< Types.Length.t | Types.Percentage.t]))
+    ] =>
+    rule;
   let strokeLinecap: [ | `butt | `round | `square] => rule;
   let strokeLinejoin: [ | `miter | `round | `bevel] => rule;
   let strokeMiterlimit: float => rule;
   let strokeWidth: Types.Length.t => rule;
   let strokeOpacity: float => rule;
-  let stopColor: [< Types.Color.t | Types.Var.t ] => rule;
+  let stopColor: [< Types.Color.t | Types.Var.t] => rule;
   let stopOpacity: float => rule;
 };

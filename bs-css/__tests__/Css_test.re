@@ -1,15 +1,5 @@
 module CssForTest = {
-  include Css_Colors;
-  include Css_Legacy_Core;
-  include Css_Legacy_Core.Make({
-    exception NotImplemented;
-
-    let mergeStyles = (. _) => raise(NotImplemented);
-    let make = (. _) => raise(NotImplemented);
-    let injectRule = (. _) => raise(NotImplemented);
-    let injectRaw = (. _) => raise(NotImplemented);
-    let makeKeyFrames = (. _) => raise(NotImplemented);
-  });
+  include EmptyCssImpl.Legacy;
 };
 
 open Jest;
@@ -611,24 +601,24 @@ describe("GridArea", () => {
 describe("gridTemplateCoumns", () => {
   test("concatenates list", () =>
     expect(
-      (
-        r(gridTemplateColumns([`fr(1.), `px(100), `auto])),
-      )
+      r(gridTemplateColumns([`fr(1.), `px(100), `auto]))
       ->Js.Json.stringifyAny,
     )
-    |> toBeJson((
-         {"gridTemplateColumns": "1fr 100px auto"},
-       ))
+    |> toBeJson({"gridTemplateColumns": "1fr 100px auto"})
   );
 
   test("unfolds repeats", () =>
     expect(
       (
-        r(gridTemplateColumns([`repeat(`num(4), `fr(1.))])),
-        r(gridTemplateColumns([`repeat(`num(4), `auto)])),
-        r(gridTemplateColumns([`repeat(`num(4), `minContent)])),
-        r(gridTemplateColumns([`repeat(`num(4), `maxContent)])),
-        r(gridTemplateColumns([`repeat(`num(4), `minmax(`px(100), `fr(1.)))])),
+        r(gridTemplateColumns([`repeat((`num(4), `fr(1.)))])),
+        r(gridTemplateColumns([`repeat((`num(4), `auto))])),
+        r(gridTemplateColumns([`repeat((`num(4), `minContent))])),
+        r(gridTemplateColumns([`repeat((`num(4), `maxContent))])),
+        r(
+          gridTemplateColumns([
+            `repeat((`num(4), `minmax((`px(100), `fr(1.))))),
+          ]),
+        ),
         // r(gridTemplateColumns([`repeat(`num(4), `fitContent(`px(200)))])),
       )
       ->Js.Json.stringifyAny,
@@ -639,7 +629,7 @@ describe("gridTemplateCoumns", () => {
          {"gridTemplateColumns": "repeat(4, min-content)"},
          {"gridTemplateColumns": "repeat(4, max-content)"},
          {"gridTemplateColumns": "repeat(4, minmax(100px,1fr))"},
-        //  {"gridTemplateColumns": "repeat(4, fit-content(200px))"},
+         //  {"gridTemplateColumns": "repeat(4, fit-content(200px))"},
        ))
   );
 });
@@ -950,12 +940,12 @@ describe("cursor", () =>
   )
 );
 
-describe("counter", () =>{
+describe("counter", () => {
   test("test reset", () =>
     expect(
       (
         r(counterReset(none)),
-        r(counterReset(`reset("foo", 2))),
+        r(counterReset(`reset(("foo", 2)))),
         r(counterReset(var("bar"))),
       )
       ->Js.Json.stringifyAny,
@@ -971,7 +961,7 @@ describe("counter", () =>{
     expect(
       (
         r(counterSet(none)),
-        r(counterSet(`set("foo", 2))),
+        r(counterSet(`set(("foo", 2)))),
         r(counterSet(var("bar"))),
       )
       ->Js.Json.stringifyAny,
@@ -987,7 +977,7 @@ describe("counter", () =>{
     expect(
       (
         r(counterIncrement(none)),
-        r(counterIncrement(`increment("foo", 2))),
+        r(counterIncrement(`increment(("foo", 2)))),
         r(counterIncrement(var("bar"))),
       )
       ->Js.Json.stringifyAny,
@@ -998,5 +988,4 @@ describe("counter", () =>{
          {"counterIncrement": "var(--bar)"},
        ))
   );
-  }
-);
+});

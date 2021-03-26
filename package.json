@@ -4,7 +4,9 @@
         "bs-css",
         "bs-css-dom",
         "bs-css-emotion",
+        "bs-css-fela",
         "dev-server-dom",
-        "dev-server-emotion"
+        "dev-server-emotion",
+        "dev-server-fela"
     ]
 }
