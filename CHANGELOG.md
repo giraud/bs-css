@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [14.0.0] - 2021-03-29
+
 - BREAKING CHANGE bs-css: updated the Css_Core API to accept renderer. it should have no impact on existing implementations.
 - Added bs-css-fela with a dependency to the [fela](https://github.com/robinweser/fela) library
             
@@ -241,7 +243,8 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.1...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/14.0.0...HEAD
+[14.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.1...14.0.0
 [13.4.1]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.0...13.4.1
 [13.4.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.3.0...13.4.0
 [13.3.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.2.0...13.3.0

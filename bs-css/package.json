@@ -1,6 +1,6 @@
 {
   "name": "bs-css",
-  "version": "13.4.1",
+  "version": "14.0.0",
   "description": "Css types",
   "scripts": {
     "re:clean": "bsb -clean-world",

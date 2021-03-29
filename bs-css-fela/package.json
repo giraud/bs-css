@@ -21,7 +21,7 @@
         "url": "git+https://github.com/reasonml-labs/bs-css.git"
     },
     "dependencies": {
-        "bs-css": "13.4.0",
+        "bs-css": "14.0.0",
         "fela": "^11.0.0",
         "react-fela": "^11.0.0"
     },
