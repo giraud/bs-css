@@ -24,5 +24,10 @@
     "@glennsl/bs-jest": "^0.7.0",
     "bs-platform": "^8.0.0",
     "jest": "^26.0.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/lib/js/__tests__/helpers"
+    ]
   }
 }

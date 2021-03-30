@@ -7,10 +7,10 @@
     },
     "sources": [
         "src",
-        "__tests_helpers__",
         {
             "dir": "__tests__",
-            "type": "dev"
+            "type": "dev",
+            "subdirs": true
         }
     ],
     "bs-dev-dependencies": [
