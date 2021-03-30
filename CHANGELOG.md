@@ -1,9 +1,17 @@
 ## [Unreleased]
 
+## [14.0.1] - 2021-03-30
+
+- Fix test helper dependency - [#237](https://github.com/SentiaAnalytics/bs-css/issues/237) 
+
+bs-css-dom@2.5.1, bs-css-emotion@2.5.1, bs-css-fela@1.0.1            
+
 ## [14.0.0] - 2021-03-29
 
 - BREAKING CHANGE bs-css: updated the Css_Core API to accept renderer. it should have no impact on existing implementations.
 - Added bs-css-fela with a dependency to the [fela](https://github.com/robinweser/fela) library
+
+bs-css-dom@2.5.0, bs-css-emotion@2.5.0, bs-css-fela@1.0.0
             
 ## [13.4.1] - 2021-03-19
 

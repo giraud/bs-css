@@ -1300,7 +1300,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bs-css-dom@workspace:bs-css-dom"
   dependencies:
-    bs-css: 14.0.0
+    bs-css: 14.0.1
     bs-platform: ^8.0.0
   peerDependencies:
     react: ^17.0.0
@@ -1313,7 +1313,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bs-css-emotion@workspace:bs-css-emotion"
   dependencies:
-    bs-css: 14.0.0
+    bs-css: 14.0.1
     bs-platform: ^8.0.0
     emotion: ^10.0.0
   languageName: unknown
@@ -1323,7 +1323,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bs-css-fela@workspace:bs-css-fela"
   dependencies:
-    bs-css: 14.0.0
+    bs-css: 14.0.1
     bs-platform: ^8.0.0
     esbuild: ^0.9.0
     fela: ^11.0.0
@@ -1333,7 +1333,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"bs-css@14.0.0, bs-css@^14.0.0, bs-css@workspace:bs-css":
+"bs-css@14.0.1, bs-css@^14.0.0, bs-css@workspace:bs-css":
   version: 0.0.0-use.local
   resolution: "bs-css@workspace:bs-css"
   dependencies:

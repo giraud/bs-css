@@ -1,6 +1,6 @@
 {
   "name": "bs-css-emotion",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "BuckleScript bindings for emotion",
   "scripts": {
     "re:clean": "bsb -clean-world",
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "dependencies": {
-    "bs-css": "14.0.0",
+    "bs-css": "14.0.1",
     "emotion": "^10.0.0"
   },
   "devDependencies": {
