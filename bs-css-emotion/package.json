@@ -27,6 +27,7 @@
     "react": "^17.0.1"
   },
   "devDependencies": {
+    "react-dom": "^17.0.1",
     "bs-platform": "^8.4.2",
     "react-dom": "^17.0.1"
   }
