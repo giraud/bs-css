@@ -1,5 +1,5 @@
 module Styles = {
-  open CssJs
+  open Css
 
   let arialNarrow =
     fontFace(
@@ -16,7 +16,6 @@ module Styles = {
         "& > h1",
         [
           fontFamily(#custom(arialNarrow)),
-          fontSize(px(32)),
           fontWeight(#num(300)),
           marginTop(#zero),
         ],
@@ -42,8 +41,11 @@ module Styles = {
 };
 
 @react.component
-let make = (~name, ~children) =>
-  <section className=Styles.section>
+let make = (~name, ~children) => {
+  let {css, _} = CssReact.useFela();
+
+  <section className={css(. Styles.section)}>
     <h1> {name->React.string} </h1>
-    <div className=Styles.rowLayout> children </div>
+    <div className={css(. Styles.rowLayout)}> children </div>
   </section>
+}

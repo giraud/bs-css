@@ -1,5 +1,8 @@
 {
-  "name": "bs-css-dom",
+  "name": "dev-server-fela",
+  "reason": {
+    "react-jsx": 3
+  },
   "refmt": 3,
   "warnings": {
     "number":  "+A-32-34-44",
@@ -12,6 +15,7 @@
   ],
   "bs-dependencies": [
     "bs-css",
+    "bs-css-fela",
     "reason-react"
   ]
 }

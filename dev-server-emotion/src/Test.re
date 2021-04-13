@@ -70,8 +70,8 @@ let differentHeightLengths =
 
 [@react.component]
 let make = () =>
-  <div className={style([background(hex("f5f5f5"))])}>
-    <Section name="angles">
+  <div>
+    <Section name="Angles">
       <div className={style(redBox @ [transform(rotate(deg(45.)))])} />
       <div className={style(redBox @ [transform(rotate(rad(3.1415)))])} />
       <div className={style(redBox @ [transform(rotate(grad(50.)))])} />
@@ -79,7 +79,7 @@ let make = () =>
         className={style(redBox @ [transform(rotate(turn(1. /. 3.)))])}
       />
     </Section>
-    <Section name="colors">
+    <Section name="Colors">
       <div className={style(redBox @ [background(red)])} />
       <div className={style(redBox @ [background(rgb(255, 0, 0))])} />
       <div
@@ -109,162 +109,166 @@ let make = () =>
     <Section name="Named colors">
       {React.array(
          [|
-           aliceblue,
-           antiquewhite,
-           aqua,
-           aquamarine,
-           azure,
-           beige,
-           bisque,
-           black,
-           blanchedalmond,
-           blue,
-           blueviolet,
-           brown,
-           burlywood,
-           cadetblue,
-           chartreuse,
-           chocolate,
-           coral,
-           cornflowerblue,
-           cornsilk,
-           crimson,
-           cyan,
-           darkblue,
-           darkcyan,
-           darkgoldenrod,
-           darkgray,
-           darkgreen,
-           darkgrey,
-           darkkhaki,
-           darkmagenta,
-           darkolivegreen,
-           darkorange,
-           darkorchid,
-           darkred,
-           darksalmon,
-           darkseagreen,
-           darkslateblue,
-           darkslategray,
-           darkslategrey,
-           darkturquoise,
-           darkviolet,
-           deeppink,
-           deepskyblue,
-           dimgray,
-           dimgrey,
-           dodgerblue,
-           firebrick,
-           floralwhite,
-           forestgreen,
-           fuchsia,
-           gainsboro,
-           ghostwhite,
-           gold,
-           goldenrod,
-           gray,
-           green,
-           greenyellow,
-           grey,
-           honeydew,
-           hotpink,
-           indianred,
-           indigo,
-           ivory,
-           khaki,
-           lavender,
-           lavenderblush,
-           lawngreen,
-           lemonchiffon,
-           lightblue,
-           lightcoral,
-           lightcyan,
-           lightgoldenrodyellow,
-           lightgray,
-           lightgreen,
-           lightgrey,
-           lightpink,
-           lightsalmon,
-           lightseagreen,
-           lightskyblue,
-           lightslategray,
-           lightslategrey,
-           lightsteelblue,
-           lightyellow,
-           lime,
-           limegreen,
-           linen,
-           magenta,
-           maroon,
-           mediumaquamarine,
-           mediumblue,
-           mediumorchid,
-           mediumpurple,
-           mediumseagreen,
-           mediumslateblue,
-           mediumspringgreen,
-           mediumturquoise,
-           mediumvioletred,
-           midnightblue,
-           mintcream,
-           mistyrose,
-           moccasin,
-           navajowhite,
-           navy,
-           oldlace,
-           olive,
-           olivedrab,
-           orange,
-           orangered,
-           orchid,
-           palegoldenrod,
-           palegreen,
-           paleturquoise,
-           palevioletred,
-           papayawhip,
-           peachpuff,
-           peru,
-           pink,
-           plum,
-           powderblue,
-           purple,
-           rebeccapurple,
-           red,
-           rosybrown,
-           royalblue,
-           saddlebrown,
-           salmon,
-           sandybrown,
-           seagreen,
-           seashell,
-           sienna,
-           silver,
-           skyblue,
-           slateblue,
-           slategray,
-           slategrey,
-           snow,
-           springgreen,
-           steelblue,
-           Css.tan,
-           teal,
-           thistle,
-           tomato,
-           transparent,
-           turquoise,
-           violet,
-           wheat,
-           white,
-           whitesmoke,
-           yellow,
-           yellowgreen,
+           ("aliceblue", aliceblue),
+           ("antiquewhite", antiquewhite),
+           ("aqua", aqua),
+           ("aquamarine", aquamarine),
+           ("azure", azure),
+           ("beige", beige),
+           ("bisque", bisque),
+           ("black", black),
+           ("blanchedalmond", blanchedalmond),
+           ("blue", blue),
+           ("blueviolet", blueviolet),
+           ("brown", brown),
+           ("burlywood", burlywood),
+           ("cadetblue", cadetblue),
+           ("chartreuse", chartreuse),
+           ("chocolate", chocolate),
+           ("coral", coral),
+           ("cornflowerblue", cornflowerblue),
+           ("cornsilk", cornsilk),
+           ("crimson", crimson),
+           ("cyan", cyan),
+           ("darkblue", darkblue),
+           ("darkcyan", darkcyan),
+           ("darkgoldenrod", darkgoldenrod),
+           ("darkgray", darkgray),
+           ("darkgreen", darkgreen),
+           ("darkgrey", darkgrey),
+           ("darkkhaki", darkkhaki),
+           ("darkmagenta", darkmagenta),
+           ("darkolivegreen", darkolivegreen),
+           ("darkorange", darkorange),
+           ("darkorchid", darkorchid),
+           ("darkred", darkred),
+           ("darksalmon", darksalmon),
+           ("darkseagreen", darkseagreen),
+           ("darkslateblue", darkslateblue),
+           ("darkslategray", darkslategray),
+           ("darkslategrey", darkslategrey),
+           ("darkturquoise", darkturquoise),
+           ("darkviolet", darkviolet),
+           ("deeppink", deeppink),
+           ("deepskyblue", deepskyblue),
+           ("dimgray", dimgray),
+           ("dimgrey", dimgrey),
+           ("dodgerblue", dodgerblue),
+           ("firebrick", firebrick),
+           ("floralwhite", floralwhite),
+           ("forestgreen", forestgreen),
+           ("fuchsia", fuchsia),
+           ("gainsboro", gainsboro),
+           ("ghostwhite", ghostwhite),
+           ("gold", gold),
+           ("goldenrod", goldenrod),
+           ("gray", gray),
+           ("green", green),
+           ("greenyellow", greenyellow),
+           ("grey", grey),
+           ("honeydew", honeydew),
+           ("hotpink", hotpink),
+           ("indianred", indianred),
+           ("indigo", indigo),
+           ("ivory", ivory),
+           ("khaki", khaki),
+           ("lavender", lavender),
+           ("lavenderblush", lavenderblush),
+           ("lawngreen", lawngreen),
+           ("lemonchiffon", lemonchiffon),
+           ("lightblue", lightblue),
+           ("lightcoral", lightcoral),
+           ("lightcyan", lightcyan),
+           ("lightgoldenrodyellow", lightgoldenrodyellow),
+           ("lightgray", lightgray),
+           ("lightgreen", lightgreen),
+           ("lightgrey", lightgrey),
+           ("lightpink", lightpink),
+           ("lightsalmon", lightsalmon),
+           ("lightseagreen", lightseagreen),
+           ("lightskyblue", lightskyblue),
+           ("lightslategray", lightslategray),
+           ("lightslategrey", lightslategrey),
+           ("lightsteelblue", lightsteelblue),
+           ("lightyellow", lightyellow),
+           ("lime", lime),
+           ("limegreen", limegreen),
+           ("linen", linen),
+           ("magenta", magenta),
+           ("maroon", maroon),
+           ("mediumaquamarine", mediumaquamarine),
+           ("mediumblue", mediumblue),
+           ("mediumorchid", mediumorchid),
+           ("mediumpurple", mediumpurple),
+           ("mediumseagreen", mediumseagreen),
+           ("mediumslateblue", mediumslateblue),
+           ("mediumspringgreen", mediumspringgreen),
+           ("mediumturquoise", mediumturquoise),
+           ("mediumvioletred", mediumvioletred),
+           ("midnightblue", midnightblue),
+           ("mintcream", mintcream),
+           ("mistyrose", mistyrose),
+           ("moccasin", moccasin),
+           ("navajowhite", navajowhite),
+           ("navy", navy),
+           ("oldlace", oldlace),
+           ("olive", olive),
+           ("olivedrab", olivedrab),
+           ("orange", orange),
+           ("orangered", orangered),
+           ("orchid", orchid),
+           ("palegoldenrod", palegoldenrod),
+           ("palegreen", palegreen),
+           ("paleturquoise", paleturquoise),
+           ("palevioletred", palevioletred),
+           ("papayawhip", papayawhip),
+           ("peachpuff", peachpuff),
+           ("peru", peru),
+           ("pink", pink),
+           ("plum", plum),
+           ("powderblue", powderblue),
+           ("purple", purple),
+           ("rebeccapurple", rebeccapurple),
+           ("red", red),
+           ("rosybrown", rosybrown),
+           ("royalblue", royalblue),
+           ("saddlebrown", saddlebrown),
+           ("salmon", salmon),
+           ("sandybrown", sandybrown),
+           ("seagreen", seagreen),
+           ("seashell", seashell),
+           ("sienna", sienna),
+           ("silver", silver),
+           ("skyblue", skyblue),
+           ("slateblue", slateblue),
+           ("slategray", slategray),
+           ("slategrey", slategrey),
+           ("snow", snow),
+           ("springgreen", springgreen),
+           ("steelblue", steelblue),
+           ("Css", Css.tan),
+           ("teal", teal),
+           ("thistle", thistle),
+           ("tomato", tomato),
+           ("transparent", transparent),
+           ("turquoise", turquoise),
+           ("violet", violet),
+           ("wheat", wheat),
+           ("white", white),
+           ("whitesmoke", whitesmoke),
+           ("yellow", yellow),
+           ("yellowgreen", yellowgreen),
          |]
-         ->Belt.Array.map(c =>
-             <div className={style([background(c), ...miniBox])} />
+         ->Belt.Array.map(((name, value)) =>
+             <div
+               key=name
+               title=name
+               className={style([background(value), ...miniBox])}
+             />
            ),
        )}
     </Section>
-    <Section name="gradients">
+    <Section name="Gradients">
       <div
         className={style(
           redBox
@@ -307,7 +311,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="lengths">
+    <Section name="Lengths">
       <div
         className={style(
           redBox
@@ -321,20 +325,20 @@ let make = () =>
       />
       differentHeightLengths
     </Section>
-    <Section name="calc">
+    <Section name="Calc">
       <div className={style(redBox @ [height(Calc.(pt(14) - px(10)))])} />
       <div
         className={style(redBox @ [height(Calc.(cm(0.2) + mm(10.)))])}
       />
     </Section>
-    <Section name="display">
+    <Section name="Display">
       <div className={style(redBox @ [display(block)])} />
       <div className={style(redBox @ [display(inline)])} />
       <div className={style(redBox @ [display(inlineBlock)])} />
       <div className={style(redBox @ [display(none)])} />
       <div className={style(redBox @ [display(flexBox)])} />
     </Section>
-    <Section name="position">
+    <Section name="Position">
       <div
         className={style(
           redBox
@@ -413,7 +417,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="grid">
+    <Section name="Grid">
       <div
         className={style([
           width(pct(100.)),
@@ -514,7 +518,7 @@ let make = () =>
         </div>
       </div>
     </Section>
-    <Section name="flexbox">
+    <Section name="Flexbox">
       <div
         className={style([
           flexDirection(column),
@@ -616,18 +620,18 @@ let make = () =>
         </div>
       </div>
     </Section>
-    <Section name="float">
+    <Section name="Float">
       <div className={style(redBox @ [Css.float(`left), clear(`right)])} />
       <div className={style(redBox @ [Css.float(`right), clear(`left)])} />
       <div className={style(redBox @ [Css.float(none), clear(both)])} />
     </Section>
-    <Section name="overflow">
+    <Section name="Overflow">
       <div className={style(redBox @ [overflow(hidden)])} />
       <div className={style(redBox @ [overflow(visible)])} />
       <div className={style(redBox @ [overflow(auto)])} />
       <div className={style(redBox @ [overflow(scroll)])} />
     </Section>
-    <Section name="border">
+    <Section name="Border">
       <div
         className={style(
           redBox @ [border(px(5), solid, blue), borderRadius(px(1000))],
@@ -703,7 +707,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="background">
+    <Section name="Background">
       <div
         className={style(
           redBox
@@ -761,7 +765,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="cursor">
+    <Section name="Cursor">
       <div className={style(redBox @ [cursor(`auto)])}>
         "auto"->React.string
       </div>
@@ -871,7 +875,7 @@ let make = () =>
         "zoom out"->React.string
       </div>
     </Section>
-    <Section name="list">
+    <Section name="List">
       <ul>
         <li className={style([listStyle(`disc, inside, none)])} />
         <li className={style([listStyleType(`circle)])} />
@@ -893,7 +897,7 @@ let make = () =>
         />
       </ul>
     </Section>
-    <Section name="outline">
+    <Section name="Outline">
       <div className={style(redBox @ [outline(px(5), `double, green)])} />
       <div
         className={style(
@@ -909,7 +913,7 @@ let make = () =>
       <div className={style(redBox @ [outline(px(5), `double, red)])} />
       <div className={style(redBox @ [outline(px(5), `ridge, red)])} />
     </Section>
-    <Section name="transform">
+    <Section name="Transform">
       <div className={style(redBox @ [opacity(0.5)])} />
       <div
         className={style(
@@ -949,7 +953,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="transition">
+    <Section name="Transition">
       <div
         className={style(
           redBox
@@ -975,7 +979,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="text">
+    <Section name="Text">
       <p
         className={style([
           color(black),
@@ -1045,7 +1049,7 @@ let make = () =>
         "bolder"->React.string
       </span>
     </Section>
-    <Section name="animation">
+    <Section name="Animation">
       <div
         className={style(
           redBox
@@ -1098,7 +1102,7 @@ let make = () =>
         )}
       />
     </Section>
-    <Section name="cascading">
+    <Section name="Cascading">
       "inherit"->React.string
       <div
         className={style([
@@ -1120,7 +1124,7 @@ let make = () =>
         ])}
       />
     </Section>
-    <Section name="columns">
+    <Section name="Columns">
       <p className={style([columnCount(count(10))])}>
         "This is a bunch of text split into columns
              using the CSS `column-count` property. The text
@@ -1128,10 +1132,12 @@ let make = () =>
         ->React.string
       </p>
     </Section>
-    <Section name="resize">
-      <textarea className={style([resize(none)])}>
-        "Can't resize textarea"->React.string
-      </textarea>
+    <Section name="Resize">
+      <textarea
+        className={style([resize(none)])}
+        value="Can't resize textarea"
+        readOnly=true
+      />
       <div
         className={style([
           marginLeft(px(20)),
@@ -1149,7 +1155,7 @@ let make = () =>
         "Resizable div (vertical)"->React.string
       </div>
     </Section>
-    <Section name="content">
+    <Section name="Content">
       <div
         className={style([
           position(relative),
@@ -1299,13 +1305,13 @@ let make = () =>
         "contents (quotes)"->React.string
       </div>
     </Section>
-    <Section name="insertRule, the ultimate escape hatch">
+    <Section name="InsertRule, the ultimate escape hatch">
       <div className="raw-css" />
     </Section>
-    <Section name="merging style names">
+    <Section name="Merging style names">
       <button className=mergedStyles> "Merged"->React.string </button>
     </Section>
-    <Section name="filter">
+    <Section name="Filter">
       <div className={style(redBox @ [filter([`blur(`px(10))])])} />
       <div className={style(redBox @ [filter([`brightness(50.)])])} />
       <div className={style(redBox @ [filter([`contrast(50.)])])} />
@@ -1354,7 +1360,7 @@ let make = () =>
       </svg>
       <div className={style(redBox @ [filter([`url("#f1")])])} />
     </Section>
-    <Section name="direction">
+    <Section name="Direction">
       <Section name="ltr">
         <div className={style([direction(`ltr), display(`flex)])}>
           <div className={style(redBox)}> "1"->React.string </div>
@@ -1371,7 +1377,7 @@ let make = () =>
           <div className={style(redBox)}> "4"->React.string </div>
         </div>
       </Section>
-      <Section name="unset">
+      <Section name="Unset">
         <div className={style([direction(`unset), display(`flex)])}>
           <div className={style(redBox)}> "1"->React.string </div>
           <div className={style(redBox)}> "2"->React.string </div>

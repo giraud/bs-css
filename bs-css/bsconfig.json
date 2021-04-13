@@ -1,20 +1,19 @@
 {
-  "name": "bs-css",
-  "refmt": 3,
-  "warnings": {
-    "number":  "+A-32-34-44",
-    "error": "+A-32-34-44"
-  },
-  "sources": [
-    {
-      "dir": "src"
+    "name": "bs-css",
+    "refmt": 3,
+    "warnings": {
+        "number": "+A-32-34-44",
+        "error": "+A-32-34-44"
     },
-    {
-      "dir": "__tests__",
-      "type": "dev"
-    }
-  ],
-  "bs-dev-dependencies": [
-    "@glennsl/bs-jest"
-  ]
+    "sources": [
+        "src",
+        {
+            "dir": "__tests__",
+            "type": "dev",
+            "subdirs": true
+        }
+    ],
+    "bs-dev-dependencies": [
+        "@glennsl/bs-jest"
+    ]
 }

@@ -1,11 +1,11 @@
 {
   "name": "bs-css-emotion",
-  "version": "2.3.0",
+  "version": "2.5.1",
   "description": "BuckleScript bindings for emotion",
   "scripts": {
-    "build:bs": "bsb -make-world",
-    "watch:bs": "bsb -make-world -w",
-    "dev": "parcel example/index.html"
+    "re:clean": "bsb -clean-world",
+    "re:build": "bsb -make-world",
+    "re:watch": "bsb -make-world -w"
   },
   "keywords": [
     "emotion",
@@ -22,14 +22,12 @@
   "dependencies": {
     "@emotion/cache": "^11.1.3",
     "@emotion/css": "^11.1.3",
-    "@emotion/react": "^11.1.4",
-    "bs-css": "13.3.0",
+    "@emotion/react": "^11.1.5",
+    "bs-css": "14.0.1",
     "react": "^17.0.1"
   },
   "devDependencies": {
     "react-dom": "^17.0.1",
-    "bs-platform": "^8.4.2",
-    "parcel-bundler": "^1.12.3",
-    "reason-react": "^0.9.1"
+    "bs-platform": "^8.4.2"
   }
 }

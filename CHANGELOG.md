@@ -1,5 +1,35 @@
 ## [Unreleased]
 
+## [14.0.1] - 2021-03-30
+
+- Fix test helper dependency - [#237](https://github.com/SentiaAnalytics/bs-css/issues/237) 
+
+bs-css-dom@2.5.1, bs-css-emotion@2.5.1, bs-css-fela@1.0.1            
+
+## [14.0.0] - 2021-03-29
+
+- BREAKING CHANGE bs-css: updated the Css_Core API to accept renderer. it should have no impact on existing implementations.
+- Added bs-css-fela with a dependency to the [fela](https://github.com/robinweser/fela) library
+
+bs-css-dom@2.5.0, bs-css-emotion@2.5.0, bs-css-fela@1.0.0
+            
+## [13.4.1] - 2021-03-19
+
+- Move react dependency out of bs-css-emotion
+- Use peer dependencies in bs-css-dom
+- Fix broken link to rei (doc) by [@abenoit](https://github.com/abenoit) - [#234](https://github.com/reasonml-labs/bs-css/pull/234)  
+- Add support for focus-visible pseudo-class by [@TomiS](https://github.com/TomiS) - [#233](https://github.com/reasonml-labs/bs-css/pull/233)
+
+bs-css-dom@2.4.1, bs-css-emotion@2.4.1
+
+## [13.4.0] - 2021-02-20
+
+- Fix `strokeDasharray` property by [@lucasweng](https://github.com/lucasweng) - [#232](https://github.com/reasonml-labs/bs-css/pull/232)
+- Fix `backdropFilter` property by [@lucasweng](https://github.com/lucasweng) - [#231](https://github.com/reasonml-labs/bs-css/pull/231)
+- Fix color - [#230](https://github.com/SentiaAnalytics/bs-css/issues/230)
+
+bs-css-dom@2.4.0, bs-css-emotion@2.4.0
+
 ## [13.3.0] - 2021-01-26
 
 - Add `stroke-dasharray` for SVG by [@pzshine](https://github.com/pzshine)
@@ -221,7 +251,11 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/13.2.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/14.0.0...HEAD
+[14.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.1...14.0.0
+[13.4.1]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.0...13.4.1
+[13.4.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.3.0...13.4.0
+[13.3.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.2.0...13.3.0
 [13.2.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.1.0...13.2.0
 [13.1.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.0.0...13.1.0
 [13.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/v12.1.0...13.0.0

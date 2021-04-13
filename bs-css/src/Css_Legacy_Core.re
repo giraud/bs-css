@@ -29,21 +29,65 @@ let addStop = (dict, (stop, rules)) => {
   dict;
 };
 
-module Make = (CssImplementation: Css_Core.CssImplementationIntf) => {
-  let merge = stylenames =>
-    CssImplementation.mergeStyles(. stylenames->Array.of_list);
+type animationName = string;
 
-  let insertRule = s => CssImplementation.injectRaw(. s);
+module type MakeResult = {
+  type styleEncoding;
+  type renderer;
 
-  let style = rules => CssImplementation.make(. rules->toJson);
+  let insertRule: string => unit;
+  let renderRule: (renderer, string) => unit;
 
-  let global = (selector, rules: list(rule)) =>
-    CssImplementation.injectRule(.
-      [(selector, toJson(rules))]->Js.Dict.fromList->Js.Json.object_,
-    );
+  let global: (string, list(rule)) => unit;
+  let renderGlobal: (. renderer, string, list(rule)) => unit;
+
+  let style: list(rule) => styleEncoding;
+
+  let merge: list(styleEncoding) => styleEncoding;
+  let merge2: (styleEncoding, styleEncoding) => styleEncoding;
+  let merge3: (styleEncoding, styleEncoding, styleEncoding) => styleEncoding;
+  let merge4:
+    (styleEncoding, styleEncoding, styleEncoding, styleEncoding) =>
+    styleEncoding;
+
+  let keyframes: list((int, list(rule))) => animationName;
+  let renderKeyframes: (renderer, list((int, list(rule)))) => animationName;
+};
+
+module Make =
+       (CssImpl: Css_Core.CssImplementationIntf)
+
+         : (
+           MakeResult with
+             type styleEncoding := CssImpl.styleEncoding and
+             type renderer := CssImpl.renderer
+       ) => {
+  type styleEncoding;
+  type renderer;
+
+  let insertRule = css => CssImpl.injectRaw(. css);
+  let renderRule = (renderer, css) => CssImpl.renderRaw(. renderer, css);
+
+  let global = (selector, rules) =>
+    CssImpl.injectRaw(. selector ++ " " ++ toJson(rules)->Js.Json.stringify);
+  let renderGlobal =
+    (. renderer, selector, rules) =>
+      CssImpl.renderRules(. renderer, selector, toJson(rules));
+
+  let style = rules => CssImpl.make(. rules->toJson);
+
+  let merge = styles => CssImpl.mergeStyles(. styles->Array.of_list);
+  let merge2 = (s, s2) => merge([s, s2]);
+  let merge3 = (s, s2, s3) => merge([s, s2, s3]);
+  let merge4 = (s, s2, s3, s4) => merge([s, s2, s3, s4]);
 
   let keyframes = frames =>
-    CssImplementation.makeKeyFrames(.
+    CssImpl.makeKeyframes(.
+      List.fold_left(addStop, Js.Dict.empty(), frames),
+    );
+  let renderKeyframes = (renderer, frames) =>
+    CssImpl.renderKeyframes(.
+      renderer,
       List.fold_left(addStop, Js.Dict.empty(), frames),
     );
 };
@@ -110,7 +154,7 @@ module Converter = {
     | `auto => "auto"
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
+    | #Cascading.t as c => Cascading.toString(c);
 
   let string_of_color =
     fun
@@ -124,8 +168,6 @@ module Converter = {
 };
 
 include Converter;
-
-type animationName = string;
 
 let important = v =>
   switch (v) {
@@ -207,7 +249,7 @@ let backfaceVisibility = x =>
 
 let backdropFilter = x =>
   D(
-    "backdrop-filter",
+    "backdropFilter",
     x->Belt.List.map(Types.BackdropFilter.toString)->join(", "),
   );
 
@@ -405,20 +447,20 @@ let contentRules = xs =>
   D("content", xs->Belt.List.map(string_of_content)->join(" "));
 
 let counterIncrement = x =>
-  D("counter-increment", string_of_counter_increment(x));
+  D("counterIncrement", string_of_counter_increment(x));
 let countersIncrement = xs =>
   D(
-    "counter-increment",
+    "counterIncrement",
     xs->Belt.List.map(string_of_counter_increment)->join(" "),
   );
 
-let counterReset = x => D("counter-reset", string_of_counter_reset(x));
+let counterReset = x => D("counterReset", string_of_counter_reset(x));
 let countersReset = xs =>
-  D("counter-reset", xs->Belt.List.map(string_of_counter_reset)->join(" "));
+  D("counterReset", xs->Belt.List.map(string_of_counter_reset)->join(" "));
 
-let counterSet = x => D("counter-set", string_of_counter_set(x));
+let counterSet = x => D("counterSet", string_of_counter_set(x));
 let countersSet = xs =>
-  D("counter-set", xs->Belt.List.map(string_of_counter_set)->join(" "));
+  D("counterSet", xs->Belt.List.map(string_of_counter_set)->join(" "));
 
 let cursor = x => D("cursor", Cursor.toString(x));
 
@@ -1138,6 +1180,7 @@ let first = pseudoClass("first");
 let firstChild = pseudoClass("first-child");
 let firstOfType = pseudoClass("first-of-type");
 let focus = pseudoClass("focus");
+let focusVisible = pseudoClass("focus-visible");
 let focusWithin = pseudoClass("focus-within");
 let host = (~selector=?, rules) =>
   switch (selector) {
@@ -2107,11 +2150,13 @@ module SVG = {
     );
   let stroke = x => D("stroke", string_of_color(x));
   let strokeDasharray = x =>
-    D("stroke-dasharray",
-      switch x {
+    D(
+      "strokeDasharray",
+      switch (x) {
       | `none => "none"
       | `dasharray(a) => a->Belt.List.map(string_of_dasharray)->join(" ")
-      });
+      },
+    );
   let strokeWidth = x => D("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
     D("strokeOpacity", Js.Float.toString(opacity));

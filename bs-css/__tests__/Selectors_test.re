@@ -1,19 +1,6 @@
-module CssForTest = {
-  include Css_Legacy_Core;
-  include Css_Legacy_Core.Make({
-    exception NotImplemented;
-
-    let mergeStyles = (. _) => raise(NotImplemented);
-    let make = (. _) => raise(NotImplemented);
-    let injectRule = (. _) => raise(NotImplemented);
-    let injectRaw = (. _) => raise(NotImplemented);
-    let makeKeyFrames = (. _) => raise(NotImplemented);
-  });
-};
-
 open Jest;
 open Expect;
-open CssForTest;
+open EmptyCssImpl.Legacy;
 
 let toBeJson = x => Expect.toBe(x->Js.Json.stringifyAny);
 let r = x => toJson([x]); /* simple rule for more readable tests */
@@ -35,6 +22,7 @@ describe("Pseudo classes", () => {
         r(firstChild([ruleSelector])),
         r(firstOfType([ruleSelector])),
         r(focus([ruleSelector])),
+        r(focusVisible([ruleSelector])),
         r(focusWithin([ruleSelector])),
         r(hover([ruleSelector])),
         r(indeterminate([ruleSelector])),
@@ -70,6 +58,7 @@ describe("Pseudo classes", () => {
          {":first-child": ruleJson},
          {":first-of-type": ruleJson},
          {":focus": ruleJson},
+         {":focus-visible": ruleJson},
          {":focus-within": ruleJson},
          {":hover": ruleJson},
          {":indeterminate": ruleJson},

@@ -1,11 +1,12 @@
 {
   "name": "bs-css-dom",
-  "version": "2.3.0",
+  "version": "2.5.1",
   "description": "bs-css bindings for React DOM",
   "scripts": {
-    "build:bs": "bsb -make-world",
-    "watch:bs": "bsb -make-world -w",
-    "dev": "parcel example/index.html"
+    "re:clean": "bsb -clean-world",
+    "re:build": "bsb -make-world",
+    "re:watch": "bsb -make-world -w",
+    "serve": "../node_modules/.bin/esbuild ./lib/js/example/App.js --servedir=example --outdir=example/js --bundle --loader:.js=jsx --define:process.env.NODE_ENV=\\\"development\\\""
   },
   "keywords": [
     "bucklescript",
@@ -19,11 +20,14 @@
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "dependencies": {
-    "bs-css": "13.3.0"
+    "bs-css": "14.0.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "reason-react": "^0.9.0"
   },
   "devDependencies": {
-    "bs-platform": "^8.4.2",
-    "parcel-bundler": "^1.12.3",
-    "reason-react": "^0.9.1"
+    "bs-platform": "^8.0.0"
   }
 }

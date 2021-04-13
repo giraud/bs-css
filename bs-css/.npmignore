@@ -7,8 +7,7 @@
 *.tgz
 *.iml
 *.lock
-webpack.config.js
-/example
 /__tests__
+/__tests_helpers__
 /lib
 /dist
