@@ -29,7 +29,7 @@ include Css_Js_Core.Make({
   [@bs.module "@emotion/css"] external make: (. Js.Json.t) => styleEncoding = "css";
 
 
-  [@bs.module "@emotion/react"]
+  [@bs.module "@emotion/css"]
   external makeAnimation: (. Js.Dict.t(Js.Json.t)) => string = "keyframes";
 
   let makeKeyframes = (. frames) => makeAnimation(. frames);
