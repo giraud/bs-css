@@ -24,6 +24,6 @@
     "emotion": "^10.0.0"
   },
   "devDependencies": {
-    "bs-platform": "^8.0.0"
+    "bs-platform": "^9.0.2"
   }
 }

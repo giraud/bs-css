@@ -2,7 +2,7 @@ include Css_Legacy_Core;
 include Css_Colors;
 
 include Css_Legacy_Core.Make({
-  type styleEncoding = ReactDOMRe.Style.t;
+  type styleEncoding = ReactDOM.Style.t;
   type renderer = Js.Json.t; // not relevant
   exception NotImplemented;
 

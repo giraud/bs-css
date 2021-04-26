@@ -14,6 +14,6 @@
     "bs-dependencies": [
         "bs-css",
         "bs-css-emotion",
-        "reason-react"
+        "@rescript/react"
     ]
 }
