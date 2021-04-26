@@ -583,6 +583,17 @@ let columnGap:
   ] =>
   rule;
 
+let rowGap:
+  [<
+    Types.RowGap.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+
 /**
  This prefixed property is being replaced by column-gap.
  */

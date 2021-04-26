@@ -141,6 +141,14 @@ module Converter = {
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c);
 
+  let string_of_row_gap =
+    fun
+    | #RowGap.t as rg => RowGap.toString(rg)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c);
+
   let string_of_position =
     fun
     | `auto => "auto"
@@ -432,6 +440,7 @@ let columnCount = x =>
     },
   );
 
+let rowGap = x => D("rowGap", string_of_row_gap(x));
 let columnGap = x => D("columnGap", string_of_column_gap(x));
 
 let contentRule = x => D("content", string_of_content(x));
@@ -608,6 +617,12 @@ let gridGap = x =>
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
+  );
+
+let rowGap = x =>
+  D(
+    "rowGap",
+    string_of_row_gap(x)
   );
 
 let gridRowGap = x =>
