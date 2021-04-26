@@ -859,6 +859,32 @@ describe("columnGap", () =>
   )
 );
 
+describe("rowGap", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(rowGap(normal)),
+        r(rowGap(px(3))),
+        r(rowGap(em(2.5))),
+        r(rowGap(pct(3.))),
+        r(rowGap(inherit_)),
+        r(rowGap(initial)),
+        r(rowGap(unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"rowGap": "normal"},
+         {"rowGap": "3px"},
+         {"rowGap": "2.5em"},
+         {"rowGap": "3%"},
+         {"rowGap": "inherit"},
+         {"rowGap": "initial"},
+         {"rowGap": "unset"},
+       ))
+  )
+);
+
 describe("cursor", () =>
   test("test values", () =>
     expect(

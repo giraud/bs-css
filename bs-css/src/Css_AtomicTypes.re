@@ -286,6 +286,14 @@ module GridAutoFlow = {
     | `rowDense => "row dense";
 };
 
+module RowGap = {
+  type t = [ | `normal];
+
+  let toString =
+    fun
+    | `normal => "normal";
+};
+
 module ColumnGap = {
   type t = [ | `normal];
 

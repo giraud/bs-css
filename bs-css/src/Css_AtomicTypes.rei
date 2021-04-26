@@ -237,6 +237,12 @@ module GridAutoFlow: {
   let toString: t => string;
 };
 
+module RowGap: {
+  type t = [ | `normal];
+
+  let toString: t => string;
+};
+
 module ColumnGap: {
   type t = [ | `normal];
 

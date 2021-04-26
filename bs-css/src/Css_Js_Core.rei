@@ -630,6 +630,19 @@ let gridRowGap:
   rule;
 
 /**
+ The row-gap CSS property sets the size of the gap (gutter) between an element's grid rows.
+ */
+let rowGap:
+  [<
+    Types.RowGap.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
  The grid-row-start CSS property specifies a grid item’s start position within the grid row by contributing a line,
  a span, or nothing (automatic) to its grid placement, thereby specifying the inline-start edge of its grid area.
  */
