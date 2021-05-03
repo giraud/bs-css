@@ -1,6 +1,6 @@
 {
   "name": "bs-css-emotion",
-  "version": "2.5.1",
+  "version": "3.0.0",
   "description": "BuckleScript bindings for emotion",
   "scripts": {
     "re:clean": "bsb -clean-world",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@emotion/cache": "^11.0.0",
     "@emotion/css": "^11.0.0",
-    "bs-css": "14.0.1"
+    "bs-css": "14.0.2"
   },
   "devDependencies": {
     "bs-platform": "^8.0.0"

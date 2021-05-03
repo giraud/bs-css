@@ -1,5 +1,16 @@
 ## [Unreleased]
 
+## [14.0.2] - 2021-05-03
+
+- Add rowGap by [@jeong-sik](https://github.com/jeong-sik) - [#240](https://github.com/reasonml-labs/bs-css/pull/240)  
+   
+bs-css-dom@2.5.2, bs-css-fela@1.0.2            
+
+### bs-css-emotion@3.0.0
+
+- BREAKING CHANGE bs-css-emotion: update to emotion v11
+  by [@TomiS](https://github.com/TomiS) - [#229](https://github.com/reasonml-labs/bs-css/pull/229)
+  
 ## [14.0.1] - 2021-03-30
 
 - Fix test helper dependency - [#237](https://github.com/SentiaAnalytics/bs-css/issues/237) 
@@ -251,7 +262,9 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/14.0.0...HEAD
+[Unreleased]: https://github.com/SentiaAnalytics/bs-css/compare/14.0.2...HEAD
+[14.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/14.0.1...14.0.2
+[14.0.1]: https://github.com/SentiaAnalytics/bs-css/compare/14.0.0...14.0.1
 [14.0.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.1...14.0.0
 [13.4.1]: https://github.com/SentiaAnalytics/bs-css/compare/13.4.0...13.4.1
 [13.4.0]: https://github.com/SentiaAnalytics/bs-css/compare/13.3.0...13.4.0

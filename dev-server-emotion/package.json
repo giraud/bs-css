@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "bs-css": "^14.0.0",
-    "bs-css-emotion": "^2.0.0"
+    "bs-css-emotion": "^3.0.0"
   },
   "devDependencies": {
     "bs-platform": "^8.0.0",
