@@ -5,11 +5,11 @@ include Css_Js_Core.Make({
   type styleEncoding = string;
   type renderer = Js.Json.t; // not relevant
 
-  [@bs.module "emotion"]
+  [@bs.module "@emotion/css"]
   external injectRaw: (. string) => unit = "injectGlobal";
   let renderRaw = (. _, css) => injectRaw(. css);
 
-  [@bs.module "emotion"]
+  [@bs.module "@emotion/css"]
   external injectRawRules: (. Js.Json.t) => unit = "injectGlobal";
 
   let injectRules =
@@ -23,12 +23,13 @@ include Css_Js_Core.Make({
         Js.Dict.fromArray([|(selector, rules)|])->Js.Json.object_,
       );
 
-  [@bs.module "emotion"]
+  [@bs.module "@emotion/css"]
   external mergeStyles: (. array(styleEncoding)) => styleEncoding = "cx";
 
-  [@bs.module "emotion"] external make: (. Js.Json.t) => styleEncoding = "css";
+  [@bs.module "@emotion/css"] external make: (. Js.Json.t) => styleEncoding = "css";
 
-  [@bs.module "emotion"]
+
+  [@bs.module "@emotion/css"]
   external makeAnimation: (. Js.Dict.t(Js.Json.t)) => string = "keyframes";
 
   let makeKeyframes = (. frames) => makeAnimation(. frames);
@@ -37,7 +38,7 @@ include Css_Js_Core.Make({
 
 type cache;
 
-[@bs.module "emotion"] external cache: cache = "cache";
+[@bs.module "@emotion/cache"] external cache: cache = "cache";
 
 let fontFace =
     (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, ()) => {
