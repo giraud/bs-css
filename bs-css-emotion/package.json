@@ -3,9 +3,9 @@
   "version": "3.0.0",
   "description": "BuckleScript bindings for emotion",
   "scripts": {
-    "re:clean": "bsb -clean-world",
-    "re:build": "bsb -make-world",
-    "re:watch": "bsb -make-world -w"
+    "re:clean": "rescript clean",
+    "re:build": "rescript build",
+    "re:watch": "rescript build -w"
   },
   "keywords": [
     "emotion",
@@ -25,6 +25,6 @@
     "bs-css": "14.0.2"
   },
   "devDependencies": {
-    "bs-platform": "^8.0.0"
+    "rescript": "^9.0.0"
   }
 }

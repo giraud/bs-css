@@ -3,9 +3,9 @@
   "version": "2.5.2",
   "description": "bs-css bindings for React DOM",
   "scripts": {
-    "re:clean": "bsb -clean-world",
-    "re:build": "bsb -make-world",
-    "re:watch": "bsb -make-world -w",
+    "re:clean": "rescript clean",
+    "re:build": "rescript build",
+    "re:watch": "rescript build -w",
     "serve": "../node_modules/.bin/esbuild ./lib/js/example/App.js --servedir=example --outdir=example/js --bundle --loader:.js=jsx --define:process.env.NODE_ENV=\\\"development\\\""
   },
   "keywords": [
@@ -28,6 +28,6 @@
     "reason-react": "^0.9.0"
   },
   "devDependencies": {
-    "bs-platform": "^8.0.0"
+    "rescript": "^9.0.0"
   }
 }

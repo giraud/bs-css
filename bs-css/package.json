@@ -3,9 +3,9 @@
   "version": "14.0.2",
   "description": "Css types",
   "scripts": {
-    "re:clean": "bsb -clean-world",
-    "re:build": "bsb -make-world",
-    "re:watch": "bsb -make-world -w",
+    "re:clean": "rescript clean",
+    "re:build": "rescript build",
+    "re:watch": "rescript build -w",
     "test": "jest",
     "testw": "jest --watchAll"
   },
@@ -22,8 +22,8 @@
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.7.0",
-    "bs-platform": "^8.0.0",
-    "jest": "^26.0.0"
+    "jest": "^26.0.0",
+    "rescript": "^9.0.0"
   },
   "jest": {
     "testPathIgnorePatterns": [
