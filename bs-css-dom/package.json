@@ -23,9 +23,9 @@
     "bs-css": "14.0.2"
   },
   "peerDependencies": {
+    "@rescript/react": "^0.10.0",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "reason-react": "^0.9.0"
+    "react-dom": "^17.0.0"
   },
   "devDependencies": {
     "rescript": "^9.0.0"

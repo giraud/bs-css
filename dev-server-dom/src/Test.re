@@ -7,22 +7,6 @@ let fontItem =
     borderRight(px(1), solid, black),
   ];
 
-//let spin =
-//  Css.(
-//    keyframes([
-//      (0, [transform(rotate(deg(0.)))]),
-//      (100, [transform(rotate(deg(360.)))]),
-//    ])
-//  );
-
-//let scaleAnimation =
-//  Css.(
-//    keyframes([
-//      (0, [transform(scale(0.3, 0.3))]),
-//      (100, [transform(scale(1.0, 1.0))]),
-//    ])
-//  );
-
 let redBox =
   Css.[
     background(red),

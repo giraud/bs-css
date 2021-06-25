@@ -3,7 +3,6 @@
     "reason": {
         "react-jsx": 3
     },
-    "refmt": 3,
     "warnings": {
         "number": "+A-32-34-44",
         "error": "+A-32-34-44"
@@ -14,6 +13,6 @@
     "bs-dependencies": [
         "bs-css",
         "bs-css-emotion",
-        "reason-react"
+        "@rescript/react"
     ]
 }

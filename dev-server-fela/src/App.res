@@ -7,7 +7,8 @@ renderRule(.
   ".raw-css { display:block; background-color: green; width: 50px; height: 50px; }",
 )
 
-ReactDOMRe.renderToElementWithId(
-  <CssReact.RendererProvider renderer> <Test /> </CssReact.RendererProvider>,
-  "app",
-)
+switch ReactDOM.querySelector("app") {
+| None => ()
+| Some(dom) =>
+  ReactDOM.render(<CssReact.RendererProvider renderer> <Test /> </CssReact.RendererProvider>, dom)
+}

@@ -1,4 +1,8 @@
 open CssJs
+
 global(. "html, body", [margin(#zero), padding(#zero), backgroundColor(lavender)])
 
-ReactDOMRe.renderToElementWithId(<Test />, "app")
+switch ReactDOM.querySelector("app") {
+| None => ()
+| Some(dom) => ReactDOM.render(<Test />, dom)
+}

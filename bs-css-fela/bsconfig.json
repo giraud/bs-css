@@ -13,6 +13,6 @@
     ],
     "bs-dependencies": [
         "bs-css",
-        "reason-react"
+        "@rescript/react"
     ]
 }

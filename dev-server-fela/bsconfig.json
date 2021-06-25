@@ -16,6 +16,6 @@
   "bs-dependencies": [
     "bs-css",
     "bs-css-fela",
-    "reason-react"
+    "@rescript/react"
   ]
 }

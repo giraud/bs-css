@@ -22,9 +22,10 @@
     "react-fela": "^11.0.0"
   },
   "devDependencies": {
+    "@rescript/react": "^0.10.0",
     "esbuild": "^0.9.0",
     "react": "^17.0.0",
-    "reason-react": "^0.9.0",
+    "react-dom": "^17.0.0",
     "rescript": "^9.0.0"
   }
 }
