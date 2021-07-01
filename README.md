@@ -111,6 +111,23 @@ let styles = style(. [
 <div className=styles> {React.string("bounce!")} </div>
 ```
 
+**Css attributes**
+
+For some CSS parameters (like setting padding on an input field), one needs to use CSS attributes like so:
+
+```css
+input[type="text"] {
+   padding:20px;
+}
+```
+
+The `selector` function can be used:
+
+```rescript
+open CssJs
+let styles = style(. [selector("input[type='text']", [padding(px(20))])])
+```
+
 ### Merging styles
 
 You should avoid trying to merge styles in the same list of rules or by concatinating lists. A list of rules is converted into a JS object before being passed to Emotion where every property becomes a key in the object. This means you lose any earlier rule if you have another rule with the same property later in the list. This is especially noticable [when writing sub-selectors and media queries](https://github.com/SentiaAnalytics/bs-css/issues/86)
