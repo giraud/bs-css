@@ -69,7 +69,7 @@ module Make =
   let renderRule = (renderer, css) => CssImpl.renderRaw(. renderer, css);
 
   let global = (selector, rules) =>
-    CssImpl.injectRaw(. selector ++ " " ++ toJson(rules)->Js.Json.stringify);
+    CssImpl.injectRules(. selector, toJson(rules));
   let renderGlobal =
     (. renderer, selector, rules) =>
       CssImpl.renderRules(. renderer, selector, toJson(rules));
@@ -148,7 +148,7 @@ module Converter = {
     | #Length.t as l => Length.toString(l)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c);
-    
+
   let string_of_row_gap =
     fun
     | #RowGap.t as rg => RowGap.toString(rg)

@@ -12,8 +12,10 @@ include Css_Legacy_Core.Make({
   @module("@emotion/css")
   external injectRawRules: (. Js.Json.t) => unit = "injectGlobal"
 
-  let injectRules = (. _: string, rules) => injectRawRules(. rules)
-  let renderRules = (. _, _: string, rules) => injectRawRules(. rules)
+  let injectRules = (. selector: string, rules) =>
+    injectRawRules(. Js.Dict.fromArray([(selector, rules)])->Js.Json.object_)
+  let renderRules = (. _, selector, rules) =>
+    injectRawRules(. Js.Dict.fromArray([(selector, rules)])->Js.Json.object_)
 
   @module("@emotion/css")
   external mergeStyles: (. array<styleEncoding>) => styleEncoding = "cx"
