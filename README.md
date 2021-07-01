@@ -25,48 +25,53 @@ to use React styles, or `bs-css-fela` for a different runtime.
 
 ## Usage for bs-css-emotion
 
-```reason
+```rescript
+module Theme = {
+  let basePadding = CssJs.px(5)
+  let textColor = CssJs.black
+}
+
 module Styles = {
   /*
   Open the Css module, so we can access the style properties below without prefixing them with Css.
   You can use either Css or CssJs: Css module is using lists, CssJs is using arrays.
   If you're targeting js and/or using Rescript, prefer CssJs
-  */
-  open Css;
+ */
+  open CssJs
 
-  let card = style([
+  let card = style(. [
     display(flexBox),
     flexDirection(column),
     alignItems(stretch),
     backgroundColor(white),
-    boxShadow(Shadow.box(~y=px(3), ~blur=px(5), rgba(0, 0, 0, `num(0.3)))),
-    /* You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments. */
+    boxShadow(Shadow.box(~y=px(3), ~blur=px(5), rgba(0, 0, 0, #num(0.3)))),
+    // You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments
     unsafe("-webkit-overflow-scrolling", "touch"),
-    /* You can place all your theme styles in Theme.re and access as normal Reason module */
-    padding(Theme.basePadding)
-  ]);
+    // You can place all your theme styles in Theme.re and access as normal module
+    padding(Theme.basePadding),
+  ])
 
-  let title = style([
+  let title = style(. [
     fontSize(rem(1.5)),
-    lineHeight(`abs(1.25)),
+    lineHeight(#abs(1.25)),
     color(Theme.textColor),
-    marginBottom(Theme.basePadding)
-  ]);
+    marginBottom(Theme.basePadding),
+  ])
 
   let actionButton = disabled =>
-    style([
+    style(. [
       background(disabled ? darkgray : white),
       color(black),
       border(px(1), solid, black),
       borderRadius(px(3)),
     ])
-};
+}
 
-[@react.component]
-let make = () => 
+@react.component
+let make = () =>
   <div className=Styles.card>
     <h1 className=Styles.title> {React.string("Hello")} </h1>
-    <button className=Styles.actionButton(false) />
+    <button className={Styles.actionButton(false)} />
   </div>
 ```
 
@@ -74,39 +79,36 @@ let make = () =>
 
 You can define global css rules with `global`
 
-```reason
-Css.(
-  global("body", [margin(px(0))])
-);
+```rescript
+open CssJs
 
-Css.(
-  global("h1, h2, h3", [color(rgb(33, 33, 33))])
-);
+global(. "body", [margin(px(0))])
+global(. "h1, h2, h3", [color(rgb(33, 33, 33))])
 ```
 
 **Keyframes**
 
 Define animation keyframes;
 
-```reason
-let bounce = Css.(keyframes([
-  (0, [ transform( scale(0.1, 0.1) ),  opacity(0.0) ]),
-  (60, [ transform( scale(1.2, 1.2) ),  opacity(1.0) ]),
-  (100, [ transform( scale(1.0,1.0) ), opacity(1.0) ])
-]));
+```rescript
+open CssJs
 
-let styles = Css.(style([
+let bounce = keyframes(. [
+  (0, [transform(scale(0.1, 0.1)), opacity(0.0)]),
+  (60, [transform(scale(1.2, 1.2)), opacity(1.0)]),
+  (100, [transform(scale(1.0, 1.0)), opacity(1.0)]),
+])
+
+let styles = style(. [
   animationName(bounce),
   animationDuration(2000),
   width(px(50)),
   height(px(50)),
-  backgroundColor(rgb(255, 0, 0))
-]));
+  backgroundColor(rgb(255, 0, 0)),
+])
 
 // ...
-<div className=styles>
-  {React.string("bounce!")}
-</div>
+<div className=styles> {React.string("bounce!")} </div>
 ```
 
 ### Merging styles
@@ -117,7 +119,7 @@ Trying to merge styles by just using `List.concat` can result in unexpected resu
 
 This example:
 
-```reason
+```rescript
 let base = Css.[
   padding(px(0)),
   fontSize(px(1))
@@ -164,31 +166,14 @@ As you can see both properties from `base` are overwritten (as opposed to overri
 `merge` safely merges styles by name. Uses [Emotion’s `cx` method](https://emotion.sh/docs/cx).
 
 ```reason
-let mergedStyles =
-  Css.(
-    merge([
-      style([
-        padding(px(0)),
-        fontSize(px(1))
-      ]),
-      style([
-        padding(px(20)),
-        fontSize(px(24)),
-        color(blue)
-      ]),
-      style([
-        media("(max-width: 768px)", [
-          padding(px(10))
-        ])
-      ]),
-      style([
-        media("(max-width: 768px)", [
-          fontSize(px(16)),
-          color(red)
-        ]),
-      ]),
-    ])
-  );
+open CssJs
+
+let mergedStyles = merge(. [
+  style(. [padding(px(0)), fontSize(px(1))]),
+  style(. [padding(px(20)), fontSize(px(24)), color(blue)]),
+  style(. [media("(max-width: 768px)", [padding(px(10))])]),
+  style(. [media("(max-width: 768px)", [fontSize(px(16)), color(red)])]),
+])
 ```
 
 Generates the following:
@@ -220,123 +205,115 @@ Nothing is lost and everything ends up in the final stylesheet where normal over
 
 First you need to use a provider in your Jsx:
 
-```reason
-let renderer = createRenderer();
+```rescript
+let renderer = createRenderer()
 
-ReactDOMRe.renderToElementWithId(
-    <CssReact.RendererProvider renderer>
-        ...
-    </CssReact.RendererProvider>, "app");
+switch ReactDOM.querySelector("#app") {
+| None => ()
+| Some(dom) =>
+  ReactDOM.render(<CssReact.RendererProvider renderer> ... </CssReact.RendererProvider>, dom)
+}
 ```
 
 Then, you need to use the useFela hook in your Jsx:
 
-```reason
-
+```rescript
 module Styles = {
   /*
    Open the Css module, so we can access the style properties below without prefixing them with Css.
    You can use either Css or CssJs: Css module is using lists, CssJs is using arrays.
    If you're targeting js and/or using Rescript, prefer CssJs
-   */
-  open Css;
+  */
+  open Css
 
-  let card =
-    style(. [|
-      display(flexBox),
-      flexDirection(column),
-      alignItems(stretch),
-      backgroundColor(white),
-      boxShadow(
-        Shadow.box(~y=px(3), ~blur=px(5), rgba(0, 0, 0, `num(0.3))),
-      ),
-      /* You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments. */
-      unsafe("-webkit-overflow-scrolling", "touch"),
-      /* You can place all your theme styles in Theme.re and access as normal Reason module */
-      padding(Theme.basePadding)
-    |]);
+  let card = style(. [
+    display(flexBox),
+    flexDirection(column),
+    alignItems(stretch),
+    backgroundColor(white),
+    boxShadow(Shadow.box(~y=px(3), ~blur=px(5), rgba(0, 0, 0, #num(0.3)))),
+    // You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments
+    unsafe("-webkit-overflow-scrolling", "touch"),
+    // You can place all your theme styles in Theme.re and access as normal Reason module
+    padding(Theme.basePadding),
+  ])
 
-  let title =
-    style(. [|
-      fontSize(rem(1.5)),
-      lineHeight(`abs(1.25)),
-      color(Theme.textColor),
-      marginBottom(Theme.basePadding)
-    |]);
+  let title = style(. [
+    fontSize(rem(1.5)),
+    lineHeight(#abs(1.25)),
+    color(Theme.textColor),
+    marginBottom(Theme.basePadding),
+  ])
 
   let actionButton = disabled =>
-    style(. [|
+    style(. [
       background(disabled ? darkgray : white),
       color(black),
       border(px(1), solid, black),
       borderRadius(px(3)),
-    |]);
-};
+    ])
+}
 
-[@react.component]
+@react.component
 let make = () => {
-  let {css, _} = CssReact.useFela();
+  let {css, _} = CssReact.useFela()
 
   <div className={css(. Styles.card)}>
     <h1 className={css(. Styles.title)}> {React.string("Hello")} </h1>
     <button className={css(. Styles.actionButton(false))} />
-  </div>;
-};
+  </div>
+}
 ```
 
 **Global css**
 
 You can define global css rules with `global`
 
-```reason               
-open Css;
-let renderer = createRenderer();
+```rescript       
+open Css
+let renderer = createRenderer()
 
-renderGlobal(. renderer, "body", [| margin(px(0)) |]);
-renderGlobal(. renderer, "h1, h2, h3", [| color(rgb(33, 33, 33)) |]);
+renderGlobal(. renderer, "body", [margin(px(0))])
+renderGlobal(. renderer, "h1, h2, h3", [color(rgb(33, 33, 33))])
 ```
 
 ## Usage for bs-css-dom
 
 Use style instead of classname, for example:
 
-```reason
+```rescript
 module Styles = {
-  /* Open the Css module, so we can access the style properties below without prefixing them with Css. */
-  open Css;
+  // Open the Css module, so we can access the style properties below without prefixing them with Css
+  open CssJs
 
-  let card = style([
+  let card = style(. [
     display(flexBox),
     flexDirection(column),
     alignItems(stretch),
     backgroundColor(white),
-    boxShadow(Shadow.box(~y=px(3), ~blur=px(5), rgba(0, 0, 0, `num(0.3)))),
-    /* You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments. */
+    boxShadow(Shadow.box(~y=px(3), ~blur=px(5), rgba(0, 0, 0, #num(0.3)))),
+    // You can add non-standard and other unsafe style declarations using the `unsafe` function, with strings as the two arguments
     unsafe("-webkit-overflow-scrolling", "touch"),
-    /* You can place all your theme styles in Theme.re and access as normal Reason module */
-    padding(Theme.basePadding)
-  ]);
+    // You can place all your theme styles in Theme.re and access as normal Reason module
+    padding(Theme.basePadding),
+  ])
 
-  let title = style([
-    fontSize(rem(1.5)),
-    color(Theme.textColor),
-    marginBottom(Theme.basePadding)
-  ]);
+  let title = style(. [fontSize(rem(1.5)), color(Theme.textColor), marginBottom(Theme.basePadding)])
 
   let actionButton = disabled =>
-    style([
+    style(. [
       background(disabled ? darkgray : white),
       color(black),
       border(px(1), solid, black),
       borderRadius(px(3)),
     ])
-};
+}
 
-[@react.component]
+@react.component
 let make = () =>
   <div style=Styles.card>
     <h1 style=Styles.title> {React.string("Hello")} </h1>
-    <button style=Styles.actionButton(false) />
+    <button style={Styles.actionButton(false)} />
   </div>
 ```
 
