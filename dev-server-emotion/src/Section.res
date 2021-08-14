@@ -4,21 +4,21 @@ module Styles = {
   let arialNarrow = fontFace(
     ~fontFamily="Arial FontFace Test",
     ~src=[localUrl("Arial Narrow")],
-    ~fontStyle=#normal,
+    ~fontStyle=normal,
     ~fontWeight=#num(500),
     (),
   )
 
   let section = style(. [
-    selector("& > h1", [fontFamily(#custom(arialNarrow)), marginTop(#zero)]),
-    position(#relative),
+    selector("& > h1", [fontFamily(#custom(arialNarrow)), marginTop(zero)]),
+    position(relative),
     background(hex("f5f5f5")),
-    margin(px(20)),
-    padding(px(10)),
-    boxShadow(Shadow.box(~y=px(1), ~blur=px(5), rgba(0, 0, 0, #num(0.3)))),
+    margin(20->px),
+    padding(10->px),
+    boxShadow(Shadow.box(~y=1->px, ~blur=5->px, rgba(0, 0, 0, #num(0.3)))),
     boxShadows([
-      Shadow.box(~y=px(1), ~blur=px(5), rgba(0, 0, 0, #num(0.3))),
-      Shadow.box(~y=px(1), ~blur=px(10), ~inset=true, rgba(255, 255, 255, #num(0.5))),
+      Shadow.box(~y=1->px, ~blur=5->px, rgba(0, 0, 0, #num(0.3))),
+      Shadow.box(~y=1->px, ~blur=10->px, ~inset=true, rgba(255, 255, 255, #num(0.5))),
     ]),
   ])
 
