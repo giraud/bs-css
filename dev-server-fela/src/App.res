@@ -10,5 +10,5 @@ renderRule(.
 switch ReactDOM.querySelector("#app") {
 | None => ()
 | Some(dom) =>
-  ReactDOM.render(<CssReact.RendererProvider renderer> <Test /> </CssReact.RendererProvider>, dom)
+  ReactDOM.render(<CssReact.RendererProvider renderer> <Demo /> </CssReact.RendererProvider>, dom)
 }
