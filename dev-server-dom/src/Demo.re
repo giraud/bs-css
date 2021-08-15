@@ -1,113 +1,115 @@
-let text = React.string;
+open CssJs;
+
+let concat = Belt.Array.concat;
 
 let fontItem =
-  Css.[
-    marginLeft(px(10)),
-    paddingRight(px(10)),
-    borderRight(px(1), solid, black),
-  ];
+  [|
+    marginLeft(10->px),
+    paddingRight(10->px),
+    borderRight(1->px, solid, black),
+  |];
 
 let redBox =
-  Css.[
+  [|
     background(red),
-    borderBottom(px(5), solid, black),
-    width(px(50)),
-    height(px(50)),
-    margin(px(10)),
-  ];
+    borderBottom(5->px, solid, black),
+    width(50->px),
+    height(50->px),
+    margin(10->px),
+  |];
+
+let addToRedBox = rules => redBox->Belt.Array.concat(rules);
 
 let miniBox =
-  Css.[
-    border(px(2), solid, black),
-    width(px(15)),
-    height(px(15)),
-    margin(px(1)),
-  ];
+  [|
+    border(2->px, solid, black),
+    width(15->px),
+    height(15->px),
+    margin(1->px),
+  |];
 
 // https://github.com/SentiaAnalytics/bs-css/issues/86
 let mergedStyles =
-  Css.(
-    merge([
-      style([padding(px(0)), fontSize(px(1))]),
-      style([padding(px(20)), fontSize(px(24)), color(blue)]),
-      style([media("(maxWidth: 768px)", [padding(px(10))])]),
-      style([
-        media("(maxWidth: 768px)", [fontSize(px(16)), color(red)]),
-      ]),
-    ])
+  (
+    merge(. [|
+      style(. [|padding(0->px), fontSize(1->px)|]),
+      style(. [|padding(20->px), fontSize(24->px), color(blue)|]),
+      style(. [|media("(maxWidth: 768px)", [|padding(10->px)|])|]),
+      style(. [|
+        media("(maxWidth: 768px)", [|fontSize(16->px), color(red)|]),
+      |]),
+    |])
   );
 
 let differentHeightLengths =
-  Css.(
     [|
-      cm(1.),
-      em(1.2),
-      ex(1.2),
-      mm(10.),
-      pct(50.),
-      pt(14),
-      px(20),
-      rem(2.0),
-      vh(1.),
-      vw(1.0),
-      vmax(1.0),
-      vmin(1.0),
+      1.->cm,
+      1.2->em,
+      1.2->ex,
+      10.->mm,
+      50.->pct,
+      14->pt,
+      20->px,
+      2.0->rem,
+      1.->vh,
+      1.0->vw,
+      1.0->vmax,
+      1.0->vmin,
       zero,
     |]
-    |> Array.map(x => {
-         let className = style(redBox @ [height(x)]);
+    ->Belt.Array.map(x => {
+         let className = style(. addToRedBox([|height(x)|]));
          <div style=className key="x" />;
        })
-  )
   ->React.array;
 
 [@react.component]
 let make = () =>
-  <div style=Css.(style([background(hex("f5f5f5"))]))>
+  <div style=(style(. [|background(hex("f5f5f5"))|]))>
     <Section name="angles">
-      <div style=Css.(style(redBox @ [transform(rotate(deg(45.)))])) />
-      <div style=Css.(style(redBox @ [transform(rotate(rad(3.1415)))])) />
-      <div style=Css.(style(redBox @ [transform(rotate(grad(50.)))])) />
+      <div style=(style(. addToRedBox([|transform(rotate(45.->deg))|]))) />
+      <div style=(style(. addToRedBox([|transform(rotate(3.1415->rad))|]))) />
+      <div style=(style(. addToRedBox([|transform(rotate(50.->grad))|]))) />
       <div
-        style=Css.(style(redBox @ [transform(rotate(turn(1. /. 3.)))]))
+        style=(style(. addToRedBox([|transform(rotate(turn(1. /. 3.)))|])))
       />
     </Section>
     <Section name="colors">
-      <div style=Css.(style(redBox @ [background(red)])) />
-      <div style=Css.(style(redBox @ [background(rgb(255, 0, 0))])) />
+      <div style=(style(. addToRedBox([|background(red)|]))) />
+      <div style=(style(. addToRedBox([|background(rgb(255, 0, 0))|]))) />
       <div
-        style=Css.(
-          style(redBox @ [background(rgba(255, 0, 0, `num(0.5)))])
+        style=(
+          style(. addToRedBox([|background(rgba(255, 0, 0, `num(0.5)))|]))
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox @ [background(hsl(deg(255.), pct(100.), pct(50.)))],
+        style=(
+          style(    .
+            addToRedBox([|background(hsl(255.->deg, 100.->pct, 50.->pct))|]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(     .
+            addToRedBox(
+             [|
               background(
-                hsla(deg(255.), pct(100.), pct(50.), `num(0.5)),
+                hsla(255.->deg, 100.->pct, 50.->pct, `num(0.5)),
               ),
-            ],
+            |]),
           )
         )
       />
-      <div style=Css.(style(redBox @ [background(hex("FF0000"))])) />
-      <div style=Css.(style(redBox @ [background(transparent)])) />
+      <div style=(style(. addToRedBox([|background(hex("FF0000"))|]))) />
+      <div style=(style(. addToRedBox([|background(transparent)|]))) />
       <div
-        style=Css.(style(redBox @ [background(currentColor), color(blue)]))
+        style=(style(. addToRedBox([|background(currentColor), color(blue)|])))
       />
     </Section>
     <Section name="Named colors">
       {React.array(
-         Css.(
+         (
            [|
              aliceblue,
              antiquewhite,
@@ -261,1112 +263,1026 @@ let make = () =>
            |]
          )
          ->Belt.Array.map(c =>
-             <div style=Css.(style([background(c), ...miniBox])) />
+             <div style=(style(. [|background(c)|]->Belt.Array.concat(miniBox))) />
            ),
        )}
     </Section>
     <Section name="gradients">
-      <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+      <div                                   
+        style=(
+          style(                                 .
+            addToRedBox([|
               background(
                 linearGradient(
-                  deg(45.),
-                  [(zero, red), (pct(100.), blue)],
+                  45.->deg,
+                  [(zero, red), (100.->pct, blue)],
                 ),
               ),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(                                  .
+            addToRedBox([|
               background(
                 repeatingLinearGradient(
-                  deg(45.),
-                  [(zero, red), (pct(10.), blue)],
+                  45.->deg,
+                  [(zero, red), (10.->pct, blue)],
                 ),
               ),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               background(
-                radialGradient([(zero, red), (pct(100.), blue)]),
+                radialGradient([(zero, red), (100.->pct, blue)]),
               ),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               background(
-                repeatingRadialGradient([(zero, red), (pct(10.), blue)]),
+                repeatingRadialGradient([(zero, red), (10.->pct, blue)]),
               ),
-            ],
+            |]),
           )
         )
       />
     </Section>
     <Section name="lengths">
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               height(ch(1.2)),
-              width(px(10)),
-              maxHeight(pct(50.)),
-              maxWidth(pct(100.)),
-            ],
+              width(10->px),
+              maxHeight(50.->pct),
+              maxWidth(100.->pct),
+            |]),
           )
         )
       />
       differentHeightLengths
     </Section>
     <Section name="calc">
-      <div style=Css.(style(redBox @ [height(Calc.(pt(14) - px(10)))])) />
+      <div style=(style(. addToRedBox([|height(Calc.(14->pt - 10->px))|]))) />
       <div
-        style=Css.(style(redBox @ [height(Calc.(cm(0.2) + mm(10.)))]))
+        style=(style(. addToRedBox([|height(Calc.(0.2->cm + 10.->mm))|])))
       />
     </Section>
     <Section name="display">
-      <div style=Css.(style(redBox @ [display(block)])) />
-      <div style=Css.(style(redBox @ [display(inline)])) />
-      <div style=Css.(style(redBox @ [display(inlineBlock)])) />
-      <div style=Css.(style(redBox @ [display(none)])) />
-      <div style=Css.(style(redBox @ [display(flexBox)])) />
+      <div style=(style(. addToRedBox([|display(block)|]))) />
+      <div style=(style(. addToRedBox([|display(inline)|]))) />
+      <div style=(style(. addToRedBox([|display(inlineBlock)|]))) />
+      <div style=(style(. addToRedBox([|display(none)|]))) />
+      <div style=(style(. addToRedBox([|display(flexBox)|]))) />
     </Section>
     <Section name="position">
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               position(absolute),
               top(zero),
               left(zero),
               right(zero),
               bottom(zero),
-            ],
+            |]),
           )
         )
       />
-      <div style=Css.(style(redBox @ [position(relative)])) />
+      <div style=(style(. addToRedBox([|position(relative)|]))) />
       <div
-        style=Css.(
-          style(
-            redBox @ [position(fixed), bottom(px(10)), right(px(10))],
+        style=(
+          style(.
+            addToRedBox([|position(fixed), bottom(10->px), right(10->px)|]),
           )
         )
       />
-      <div style=Css.(style(redBox @ [position(static)])) />
-      <div style=Css.(style(redBox @ [position(sticky)])) />
+      <div style=(style(. addToRedBox([|position(static)|]))) />
+      <div style=(style(. addToRedBox([|position(sticky)|]))) />
     </Section>
     <Section name="Padding & Margin">
       <div
-        style=Css.(style(redBox @ [padding(px(10)), margin(px(10))]))
+        style=(style(. addToRedBox([|padding(10->px), margin(10->px)|])))
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              paddingLeft(px(10)),
-              paddingRight(px(10)),
-              paddingTop(px(10)),
-              paddingBottom(px(10)),
-              marginLeft(px(10)),
-              marginRight(px(10)),
-              marginTop(px(10)),
-              marginBottom(px(10)),
-            ],
+        style=(
+          style(.
+            addToRedBox([|
+              paddingLeft(10->px),
+              paddingRight(10->px),
+              paddingTop(10->px),
+              paddingBottom(10->px),
+              marginLeft(10->px),
+              marginRight(10->px),
+              marginTop(10->px),
+              marginBottom(10->px),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              padding2(~v=px(10), ~h=px(20)),
-              margin2(~v=px(10), ~h=px(20)),
-            ],
+        style=(
+          style(.
+            addToRedBox([|
+              padding2(~v=10->px, ~h=20->px),
+              margin2(~v=10->px, ~h=20->px),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              padding3(~top=px(10), ~h=px(20), ~bottom=px(1)),
-              margin3(~top=px(10), ~h=px(20), ~bottom=px(2)),
-            ],
+        style=(
+          style(.
+            addToRedBox([|
+              padding3(~top=10->px, ~h=20->px, ~bottom=1->px),
+              margin3(~top=10->px, ~h=20->px, ~bottom=2->px),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               padding4(
-                ~top=px(10),
-                ~bottom=px(1),
-                ~left=px(5),
-                ~right=px(15),
+                ~top=10->px,
+                ~bottom=1->px,
+                ~left=5->px,
+                ~right=15->px,
               ),
               margin4(
-                ~top=px(10),
-                ~bottom=px(1),
-                ~left=px(5),
-                ~right=px(15),
+                ~top=10->px,
+                ~bottom=1->px,
+                ~left=5->px,
+                ~right=15->px,
               ),
-            ],
+            |]),
           )
         )
       />
     </Section>
     <Section name="grid">
       <div
-        style=Css.(
-          style([
-            width(pct(100.)),
-            height(px(500)),
+        style=(
+          style(. [|
+            width(100.->pct),
+            height(500->px),
             display(grid),
-            gridTemplateColumns([px(150), auto, px(150)]),
-            gridTemplateRows([px(60), auto]),
-          ])
+            gridTemplateColumns([|150->px, auto, 150->px|]),
+            gridTemplateRows([|60->px, auto|]),
+          |])
         )>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               gridColumnStart(1),
               gridColumnEnd(4),
               background(red),
               gridRowStart(1),
               gridRowEnd(1),
-            ])
+            |])
           )
         />
         <div
-          style=Css.(
-            style([background(blue), gridColumn(1, 1), gridRow(2, 2)])
+          style=(
+            style(. [|background(blue), gridColumn(1, 1), gridRow(2, 2)|])
           )
         />
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               background(green),
               gridColumn(2, 2),
               gridRow(2, 2),
               display(inlineGrid),
-              gridTemplateColumns([px(50), auto]),
-              gridTemplateRows([px(40), auto]),
-            ])
+              gridTemplateColumns([|50->px, auto|]),
+              gridTemplateRows([|40->px, auto|]),
+            |])
           )>
           <div
-            style=Css.(
-              style([background(yellow), gridRow(1, 1), gridColumn(2, 2)])
+            style=(
+              style(. [|background(yellow), gridRow(1, 1), gridColumn(2, 2)|])
             )
           />
           <div
-            style=Css.(
-              style([background(green), gridRow(1, 2), gridColumn(1, 1)])
+            style=(
+              style(. [|background(green), gridRow(1, 2), gridColumn(1, 1)|])
             )
           />
           <div
-            style=Css.(
-              style([background(purple), gridRow(2, 2), gridColumn(2, 2)])
+            style=(
+              style(. [|background(purple), gridRow(2, 2), gridColumn(2, 2)|])
             )
           />
         </div>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               gridColumnStart(3),
               gridColumnEnd(3),
               background(blue),
               gridRowStart(2),
               gridRowEnd(2),
-            ])
+            |])
           )
         />
       </div>
-      <div style=Css.(style([display(`grid), gridAutoFlow(`row)]))>
-        <div style=Css.(style([background(purple)]))>
-          {text("grid auto direction row 1")}
+      <div style=(style(. [|display(`grid), gridAutoFlow(`row)|]))>
+        <div style=(style(. [|background(purple)|]))>
+          {"grid auto direction row 1"->React.string}
         </div>
-        <div style=Css.(style([background(green)]))>
-          {text("grid auto direction row 2")}
+        <div style=(style(. [|background(green)|]))>
+          {"grid auto direction row 2"->React.string}
         </div>
       </div>
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             display(`grid),
-            gridTemplateColumns([100->px, `repeat((`num(2), 60->px))]),
-          ])
+            gridTemplateColumns([|100->px, `repeat((`num(2), 60->px))|]),
+          |])
         )>
-        <div style=Css.(style([background(purple)]))>
-          {text("Grid track repeat")}
+        <div style=(style(. [|background(purple)|]))>
+          {"Grid track repeat"->React.string}
         </div>
-        <div style=Css.(style([background(green)]))>
-          {text("two times")}
+        <div style=(style(. [|background(green)|]))>
+          {"two times"->React.string}
         </div>
-        <div style=Css.(style([background(red)]))>
-          {text("three times")}
+        <div style=(style(. [|background(red)|]))>
+          {"three times"->React.string}
         </div>
       </div>
-      <div style=Css.(style([display(`grid), gridAutoColumns(100->px)]))>
-        <div style=Css.(style([background(purple)]))>
-          {text("Grid auto columns (100px)")}
+      <div style=(style(. [|display(`grid), gridAutoColumns(100->px)|]))>
+        <div style=(style(. [|background(purple)|]))>
+          {"Grid auto columns (100px)"->React.string}
         </div>
-        <div style=Css.(style([background(green)]))> {text("100px")} </div>
-        <div style=Css.(style([background(blue)]))> {text("100px")} </div>
+        <div style=(style(. [|background(green)|]))> {"100px"->React.string} </div>
+        <div style=(style(. [|background(blue)|]))> {"100px"->React.string} </div>
       </div>
     </Section>
     <Section name="flexbox">
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             flexDirection(column),
             flexGrow(1.),
             alignItems(stretch),
-            selector("& > *", [marginBottom(px(10)), width(pct(100.))]),
-          ])
+            selector("& > *", [|marginBottom(10->px), width(100.->pct)|]),
+          |])
         )>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               display(flexBox),
               flexDirection(row),
               background(gray),
               alignItems(flexStart),
               justifyContent(flexEnd),
-            ])
+            |])
           )>
           <div
-            style=Css.(
-              style(
-                redBox
-                @ [
+            style=(
+              style(.
+                addToRedBox([|
                   order(1),
                   flexGrow(1.),
                   flexShrink(1.),
                   flexBasis(auto),
-                ],
+                |]),
               )
             )
           />
-          <div style=Css.(style(redBox @ [flex(none)])) />
+          <div style=(style(. addToRedBox([|flex(none)|]))) />
           <div
-            style=Css.(
-              style(
-                redBox
-                @ [order(1), flex3(~grow=1.5, ~shrink=0.8, ~basis=100->px)],
+            style=(
+              style(.
+                addToRedBox(
+                [|order(1), flex3(~grow=1.5, ~shrink=0.8, ~basis=100->px)|]),
               )
             )
           />
-          <div style=Css.(style(redBox @ [alignSelf(flexEnd)])) />
-          <div style={Css.style(redBox)} />
+          <div style=(style(. addToRedBox([|alignSelf(flexEnd)|]))) />
+          <div style={style(. redBox)} />
         </div>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               display(flexBox),
               flexDirection(column),
               background(gray),
               alignItems(baseline),
               justifyContent(flexStart),
-            ])
+            |])
           )>
-          <div style={Css.style(redBox)} />
-          <div style={Css.style(redBox)} />
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
+          <div style={style(. redBox)} />
+          <div style={style(. redBox)} />
         </div>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               display(flexBox),
               flexDirection(rowReverse),
               background(gray),
               alignItems(center),
               justifyContent(spaceBetween),
-            ])
+            |])
           )>
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
           <div
-            style=Css.(style(redBox @ [height(px(50)), width(px(50))]))
+            style=(style(. addToRedBox([|height(50->px), width(50->px)|])))
           />
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
         </div>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               display(flexBox),
               flexDirection(columnReverse),
               background(gray),
               alignItems(flexEnd),
               justifyContent(flexEnd),
-            ])
+            |])
           )>
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
           <div
-            style=Css.(style(redBox @ [height(px(50)), width(px(50))]))
+            style=(style(. addToRedBox([|height(50->px), width(50->px)|])))
           />
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
         </div>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               display(flexBox),
               flexDirection(row),
               background(gray),
               alignItems(stretch),
               justifyContent(spaceAround),
-            ])
+            |])
           )>
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
           <div
-            style=Css.(style(redBox @ [height(px(50)), width(px(50))]))
+            style=(style(. addToRedBox([|height(50->px), width(50->px)|])))
           />
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
         </div>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               display(flexBox),
               flexDirection(row),
               background(gray),
               alignItems(stretch),
               justifyContent(spaceEvenly),
-            ])
+            |])
           )>
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
           <div
-            style=Css.(style(redBox @ [height(px(50)), width(px(50))]))
+            style=(style(. addToRedBox([|height(50->px), width(50->px)|])))
           />
-          <div style={Css.style(redBox)} />
+          <div style={style(. redBox)} />
         </div>
       </div>
     </Section>
     <Section name="float">
-      <div style=Css.(style(redBox @ [float(`left), clear(`right)])) />
-      <div style=Css.(style(redBox @ [float(`right), clear(`left)])) />
-      <div style=Css.(style(redBox @ [float(none), clear(both)])) />
+      <div style=(style(. addToRedBox([|float(`left), clear(`right)|]))) />
+      <div style=(style(. addToRedBox([|float(`right), clear(`left)|]))) />
+      <div style=(style(. addToRedBox([|float(none), clear(both)|]))) />
     </Section>
     <Section name="overflow">
-      <div style=Css.(style(redBox @ [overflow(hidden)])) />
-      <div style=Css.(style(redBox @ [overflow(visible)])) />
-      <div style=Css.(style(redBox @ [overflow(auto)])) />
-      <div style=Css.(style(redBox @ [overflow(scroll)])) />
+      <div style=(style(. addToRedBox([|overflow(hidden)|]))) />
+      <div style=(style(. addToRedBox([|overflow(visible)|]))) />
+      <div style=(style(. addToRedBox([|overflow(auto)|]))) />
+      <div style=(style(. addToRedBox([|overflow(scroll)|]))) />
     </Section>
     <Section name="border">
       <div
-        style=Css.(
-          style(
-            redBox @ [border(px(5), solid, blue), borderRadius(px(1000))],
+        style=(
+          style(              .
+            addToRedBox([|border(5->px, solid, blue), borderRadius(1000->px)|]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              border(px(5), solid, green),
-              borderTopRightRadius(px(1000)),
-              borderTopLeftRadius(px(1000)),
-              borderBottomRightRadius(px(1000)),
-              borderBottomLeftRadius(px(1000)),
-            ],
+        style=(
+          style(.
+            addToRedBox([|
+              border(5->px, solid, green),
+              borderTopRightRadius(1000->px),
+              borderTopLeftRadius(1000->px),
+              borderBottomRightRadius(1000->px),
+              borderBottomLeftRadius(1000->px),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              borderTop(px(5), dashed, hex("FFF")),
-              borderRight(px(5), dotted, rgb(0, 0, 0)),
-              borderBottom(px(5), none, green),
-              borderLeft(px(5), solid, blue),
-            ],
+        style=(
+          style(.
+            addToRedBox([|
+              borderTop(5->px, dashed, hex("FFF")),
+              borderRight(5->px, dotted, rgb(0, 0, 0)),
+              borderBottom(5->px, none, green),
+              borderLeft(5->px, solid, blue),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [borderWidth(px(5)), borderStyle(solid), borderColor(blue)],
+        style=(
+          style(.
+            addToRedBox(
+            [|borderWidth(5->px), borderStyle(solid), borderColor(blue)|]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              borderTopWidth(px(5)),
+        style=(
+          style(.
+            addToRedBox([|
+              borderTopWidth(5->px),
               borderTopStyle(solid),
               borderTopColor(blue),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              borderBottomWidth(px(5)),
+        style=(
+          style( .
+            addToRedBox([|
+              borderBottomWidth(5->px),
               borderBottomStyle(solid),
               borderBottomColor(blue),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              borderLeftWidth(px(5)),
+        style=(
+          style(  .
+            addToRedBox([|
+              borderLeftWidth(5->px),
               borderLeftStyle(solid),
               borderLeftColor(blue),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              borderRightWidth(px(5)),
+        style=(
+          style(   .
+            addToRedBox([|
+              borderRightWidth(5->px),
               borderRightStyle(solid),
               borderRightColor(blue),
-            ],
+            |]),
           )
         )
       />
     </Section>
     <Section name="background">
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(    .
+            addToRedBox([|
               background(red),
               backgroundAttachment(scroll),
               backgroundClip(borderBox),
               backgroundOrigin(borderBox),
-              backgroundPosition(`hv((pct(50.), pct(50.)))),
+              backgroundPosition(`hv((50.->pct, 50.->pct))),
               backgroundRepeat(noRepeat),
-              backgroundSize(size(px(100), px(100))),
-            ],
+              backgroundSize(size(100->px, 100->px)),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              background(radialGradient([(zero, red), (pct(10.), blue)])),
+        style=(
+          style(     .
+            addToRedBox([|
+              background(radialGradient([(zero, red), (10.->pct, blue)])),
               backgroundAttachment(fixed),
               backgroundClip(contentBox),
               backgroundOrigin(contentBox),
               backgroundRepeat(repeat),
               backgroundSize(auto),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(      .
+            addToRedBox([|
               background(url("./img-29.jpg")),
               backgroundAttachment(local),
               backgroundClip(paddingBox),
               backgroundOrigin(paddingBox),
               backgroundRepeat(repeatX),
               backgroundSize(cover),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               backgroundColor(rgb(0, 0, 255)),
               backgroundImage(
                 linearGradient(
-                  deg(45.),
-                  [(zero, green), (pct(50.), red), (pct(100.), yellow)],
+                  45.->deg,
+                  [(zero, green), (50.->pct, red), (100.->pct, yellow)],
                 ),
               ),
               backgroundRepeat(repeatY),
               backgroundSize(contain),
-            ],
+            |]),
           )
         )
       />
     </Section>
     <Section name="cursor">
-      <div style=Css.(style(redBox @ [cursor(`auto)]))>
-        {text("auto")}
+      <div style=(style(. addToRedBox([|cursor(`auto)|])))>
+        {"auto"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`default)]))>
-        {text("default")}
+      <div style=(style(. addToRedBox([|cursor(`default)|])))>
+        {"default"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`none)]))>
-        {text("none")}
+      <div style=(style(. addToRedBox([|cursor(`none)|])))>
+        {"none"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`contextMenu)]))>
-        {text("context menu")}
+      <div style=(style(. addToRedBox([|cursor(`contextMenu)|])))>
+        {"context menu"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`help)]))>
-        {text("help")}
+      <div style=(style(. addToRedBox([|cursor(`help)|])))>
+        {"help"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`pointer)]))>
-        {text("pointer")}
+      <div style=(style(. addToRedBox([|cursor(`pointer)|])))>
+        {"pointer"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`progress)]))>
-        {text("progress")}
+      <div style=(style(. addToRedBox([|cursor(`progress)|])))>
+        {"progress"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`wait)]))>
-        {text("wait")}
+      <div style=(style(. addToRedBox([|cursor(`wait)|])))>
+        {"wait"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`cell)]))>
-        {text("cell")}
+      <div style=(style(. addToRedBox([|cursor(`cell)|])))>
+        {"cell"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`crosshair)]))>
-        {text("crosshair")}
+      <div style=(style(. addToRedBox([|cursor(`crosshair)|])))>
+        {"crosshair"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`text)]))>
-        {text("text")}
+      <div style=(style(. addToRedBox([|cursor(`text)|])))>
+        {"text"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`verticalText)]))>
-        {text("vert text")}
+      <div style=(style(. addToRedBox([|cursor(`verticalText)|])))>
+        {"vert text"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`alias)]))>
-        {text("alias")}
+      <div style=(style(. addToRedBox([|cursor(`alias)|])))>
+        {"alias"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`copy)]))>
-        {text("copy")}
+      <div style=(style(. addToRedBox([|cursor(`copy)|])))>
+        {"copy"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`move)]))>
-        {text("move")}
+      <div style=(style(. addToRedBox([|cursor(`move)|])))>
+        {"move"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`noDrop)]))>
-        {text("no drop")}
+      <div style=(style(. addToRedBox([|cursor(`noDrop)|])))>
+        {"no drop"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`notAllowed)]))>
-        {text("not allowed")}
+      <div style=(style(. addToRedBox([|cursor(`notAllowed)|])))>
+        {"not allowed"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`grab)]))>
-        {text("grab")}
+      <div style=(style(. addToRedBox([|cursor(`grab)|])))>
+        {"grab"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`grabbing)]))>
-        {text("grabbing")}
+      <div style=(style(. addToRedBox([|cursor(`grabbing)|])))>
+        {"grabbing"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`allScroll)]))>
-        {text("all scroll")}
+      <div style=(style(. addToRedBox([|cursor(`allScroll)|])))>
+        {"all scroll"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`colResize)]))>
-        {text("col resize")}
+      <div style=(style(. addToRedBox([|cursor(`colResize)|])))>
+        {"col resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`rowResize)]))>
-        {text("row resize")}
+      <div style=(style(. addToRedBox([|cursor(`rowResize)|])))>
+        {"row resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`nResize)]))>
-        {text("n resize")}
+      <div style=(style(. addToRedBox([|cursor(`nResize)|])))>
+        {"n resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`eResize)]))>
-        {text("e resize")}
+      <div style=(style(. addToRedBox([|cursor(`eResize)|])))>
+        {"e resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`sResize)]))>
-        {text("s resize")}
+      <div style=(style(. addToRedBox([|cursor(`sResize)|])))>
+        {"s resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`wResize)]))>
-        {text("w resize")}
+      <div style=(style(. addToRedBox([|cursor(`wResize)|])))>
+        {"w resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`neResize)]))>
-        {text("ne resize")}
+      <div style=(style(. addToRedBox([|cursor(`neResize)|])))>
+        {"ne resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`nwResize)]))>
-        {text("nw resize")}
+      <div style=(style(. addToRedBox([|cursor(`nwResize)|])))>
+        {"nw resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`seResize)]))>
-        {text("se resize")}
+      <div style=(style(. addToRedBox([|cursor(`seResize)|])))>
+        {"se resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`swResize)]))>
-        {text("sw resize")}
+      <div style=(style(. addToRedBox([|cursor(`swResize)|])))>
+        {"sw resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`ewResize)]))>
-        {text("ew resize")}
+      <div style=(style(. addToRedBox([|cursor(`ewResize)|])))>
+        {"ew resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`nsResize)]))>
-        {text("ns resize")}
+      <div style=(style(. addToRedBox([|cursor(`nsResize)|])))>
+        {"ns resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`neswResize)]))>
-        {text("nesw resize")}
+      <div style=(style(. addToRedBox([|cursor(`neswResize)|])))>
+        {"nesw resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`nwseResize)]))>
-        {text("nwse resize")}
+      <div style=(style(. addToRedBox([|cursor(`nwseResize)|])))>
+        {"nwse resize"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`zoomIn)]))>
-        {text("zoom in")}
+      <div style=(style(. addToRedBox([|cursor(`zoomIn)|])))>
+        {"zoom in"->React.string}
       </div>
-      <div style=Css.(style(redBox @ [cursor(`zoomOut)]))>
-        {text("zoom out")}
+      <div style=(style(. addToRedBox([|cursor(`zoomOut)|])))>
+        {"zoom out"->React.string}
       </div>
     </Section>
     <Section name="list">
       <ul>
-        <li style=Css.(style([listStyle(`disc, inside, none)])) />
-        <li style=Css.(style([listStyleType(`circle)])) />
-        <li style=Css.(style([listStyleType(`square)])) />
-        <li style=Css.(style([listStyleType(`decimal)])) />
-        <li style=Css.(style([listStyleType(`lowerAlpha)])) />
-        <li style=Css.(style([listStyleType(`upperAlpha)])) />
-        <li style=Css.(style([listStyleType(`lowerGreek)])) />
-        <li style=Css.(style([listStyleType(`lowerLatin)])) />
-        <li style=Css.(style([listStyleType(`upperLatin)])) />
-        <li style=Css.(style([listStyleType(`lowerRoman)])) />
-        <li style=Css.(style([listStyleType(`upperRoman)])) />
+        <li style=(style(. [|listStyle(`disc, inside, none)|])) />
+        <li style=(style(. [|listStyleType(`circle)|])) />
+        <li style=(style(. [|listStyleType(`square)|])) />
+        <li style=(style(. [|listStyleType(`decimal)|])) />
+        <li style=(style(. [|listStyleType(`lowerAlpha)|])) />
+        <li style=(style(. [|listStyleType(`upperAlpha)|])) />
+        <li style=(style(. [|listStyleType(`lowerGreek)|])) />
+        <li style=(style(. [|listStyleType(`lowerLatin)|])) />
+        <li style=(style(. [|listStyleType(`upperLatin)|])) />
+        <li style=(style(. [|listStyleType(`lowerRoman)|])) />
+        <li style=(style(. [|listStyleType(`upperRoman)|])) />
         <li
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               listStyleType(`disc),
               listStylePosition(inside),
               listStyleImage(url("./facebook.png")),
-            ])
+            |])
           )
         />
       </ul>
     </Section>
     <Section name="outline">
-      <div style=Css.(style(redBox @ [outline(px(5), `double, green)])) />
+      <div style=(style(. addToRedBox([|outline(5->px, `double, green)|]))) />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               outlineStyle(solid),
-              outlineWidth(px(5)),
+              outlineWidth(5->px),
               outlineColor(green),
-              outlineOffset(px(5)),
-            ],
+              outlineOffset(5->px),
+            |]),
           )
         )
       />
-      <div style=Css.(style(redBox @ [outline(px(5), `double, red)])) />
-      <div style=Css.(style(redBox @ [outline(px(5), `ridge, red)])) />
+      <div style=(style(. addToRedBox([|outline(5->px, `double, red)|]))) />
+      <div style=(style(. addToRedBox([|outline(5->px, `ridge, red)|]))) />
     </Section>
     <Section name="transform">
-      <div style=Css.(style(redBox @ [opacity(0.5)])) />
+      <div style=(style(. addToRedBox([|opacity(0.5)|]))) />
       <div
-        style=Css.(
-          style(
-            redBox @ [perspective(px(500)), transform(rotate(deg(10.)))],
+        style=(
+          style(.
+            addToRedBox([|perspective(500->px), transform(rotate(10.->deg))|]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              transforms([
-                translate(px(10), pct(10.)),
-                skew(deg(10.), deg(10.)),
-              ]),
-            ],
+        style=(
+          style( .
+            addToRedBox([|
+              transforms([|
+                translate(10->px, 10.->pct),
+                skew(10.->deg, 10.->deg),
+              |]),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              transform(rotate(deg(19.))),
-              transformOrigin(pct(50.), pct(50.)),
+        style=(
+          style(.
+            addToRedBox([|
+              transform(rotate(19.->deg)),
+              transformOrigin(50.->pct, 50.->pct),
               transformStyle(`preserve3d),
-              perspective(px(900)),
-              perspectiveOrigin(pct(10.), pct(10.)),
-            ],
+              perspective(900->px),
+              perspectiveOrigin(10.->pct, 10.->pct),
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              transform(translate(px(10), pct(10.))),
-              transformOrigin3d(px(10), px(10), px(10)),
-            ],
+        style=(
+          style(.
+            addToRedBox([|
+              transform(translate(10->px, 10.->pct)),
+              transformOrigin3d(10->px, 10->px, 10->px),
+            |]),
           )
         )
       />
     </Section>
     <Section name="transition">
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               transition(
                 ~duration=300,
                 ~delay=300,
                 ~timingFunction=easeInOut,
                 "transform",
               ),
-            ],
+            |]),
           )
         )
       />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
+        style=(
+          style(.
+            addToRedBox([|
               transitionProperty("height"),
               transitionDelay(300),
               transitionDuration(300),
               transitionTimingFunction(linear),
-            ],
+            |]),
           )
         )
       />
     </Section>
     <Section name="text">
       <p
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             color(black),
-            fontFamilies([`custom("Helvetica"), `sansSerif]),
-            fontSize(pt(18)),
+            fontFamilies([|`custom("Helvetica"), `sansSerif|]),
+            fontSize(18->pt),
             fontVariant(`smallCaps),
             fontStyle(italic),
             fontWeight(`num(300)),
-            letterSpacing(px(3)),
+            letterSpacing(3->px),
             lineHeight(`abs(2.)),
             textAlign(`left),
             textDecoration(underline),
             textDecorationColor(pink),
             textDecorationStyle(wavy),
-            textIndent(px(10)),
+            textIndent(10->px),
             textOverflow(clip),
-            textShadow(Shadow.text(~y=px(3), ~blur=px(2), black)),
+            textShadow(Shadow.text(~y=3->px, ~blur=2->px, black)),
             textTransform(capitalize),
             verticalAlign(sub),
             whiteSpace(normal),
             wordBreak(breakAll),
-            wordSpacing(px(20)),
+            wordSpacing(20->px),
             wordWrap(breakWord),
-          ])
+          |])
         )>
-        {text(
-           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-         )}
+        {
+           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+         ->React.string}
       </p>
-      <h2 style=Css.(style([width(pct(100.))]))>
-        {text("Named Font weights")}
+      <h2 style=(style(. [|width(100.->pct)|]))>
+        {"Named Font weights"->React.string}
       </h2>
       <span
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             fontWeight(thin),
-            paddingRight(px(10)),
-            borderRight(px(1), solid, black),
-          ])
+            paddingRight(10->px),
+            borderRight(1->px, solid, black),
+          |])
         )>
-        {text("thin")}
+        {"thin"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(extraLight), ...fontItem]))>
-        {text("extra light")}
+      <span style=(style(. [|fontWeight(extraLight)|]->concat(fontItem)))>
+        {"extra light"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(light), ...fontItem]))>
-        {text("light")}
+      <span style=(style(. [|fontWeight(light)|]->concat(fontItem)))>
+        {"light"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(normal), ...fontItem]))>
-        {text("normal")}
+      <span style=(style(. [|fontWeight(normal)|]->concat(fontItem)))>
+        {"normal"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(medium), ...fontItem]))>
-        {text("medium")}
+      <span style=(style(. [|fontWeight(medium)|]->concat(fontItem)))>
+        {"medium"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(semiBold), ...fontItem]))>
-        {text("semiBold")}
+      <span style=(style(. [|fontWeight(semiBold)|]->concat(fontItem)))>
+        {"semiBold"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(bold), ...fontItem]))>
-        {text("bold")}
+      <span style=(style(. [|fontWeight(bold)|]->concat(fontItem)))>
+        {"bold"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(extraBold), ...fontItem]))>
-        {text("extra bold")}
+      <span style=(style(. [|fontWeight(extraBold)|]->concat(fontItem)))>
+        {"extra bold"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(`black), ...fontItem]))>
-        {text("black")}
+      <span style=(style(. [|fontWeight(`black)|]->concat(fontItem)))>
+        {"black"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(lighter), ...fontItem]))>
-        {text("lighter")}
+      <span style=(style(. [|fontWeight(lighter)|]->concat(fontItem)))>
+        {"lighter"->React.string}
       </span>
-      <span style=Css.(style([fontWeight(bolder), ...fontItem]))>
-        {text("bolder")}
+      <span style=(style(. [|fontWeight(bolder)|]->concat(fontItem)))>
+        {"bolder"->React.string}
       </span>
     </Section>
-    //    <Section name="animation">
-    //      <div
-    //        style=Css.(
-    //          style(
-    //            redBox
-    //            @ [
-    //              animation(
-    //                ~duration=300,
-    //                ~delay=300,
-    //                ~direction=reverse,
-    //                ~timingFunction=linear,
-    //                ~fillMode=forwards,
-    //                ~playState=running,
-    //                ~iterationCount=infinite,
-    //                spin,
-    //              ),
-    //            ],
-    //          )
-    //        )
-    //      />
-    //      <div
-    //        style=Css.(
-    //          style(
-    //            redBox
-    //            @ [
-    //              animations([
-    //                Animation.shorthand(
-    //                  ~duration=300,
-    //                  ~iterationCount=infinite,
-    //                  spin,
-    //                ),
-    //                Animation.shorthand(
-    //                  ~duration=300,
-    //                  ~iterationCount=infinite,
-    //                  scaleAnimation,
-    //                ),
-    //              ]),
-    //            ],
-    //          )
-    //        )
-    //      />
-    //      <div
-    //        style=Css.(
-    //          style(
-    //            redBox
-    //            @ [
-    //              animationName(spin),
-    //              animationTimingFunction(easeIn),
-    //              animationDuration(300),
-    //              animationDelay(300),
-    //              animationDirection(normal),
-    //              animationFillMode(backwards),
-    //              animationPlayState(paused),
-    //              animationIterationCount(count(5)),
-    //            ],
-    //          )
-    //        )
-    //      />
-    //    </Section>
     <Section name="cascading">
-      {text("inherit")}
+      {"inherit"->React.string}
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             display(inherit_),
             position(inherit_),
             fontSize(inherit_),
             fontStyle(inherit_),
             lineHeight(inherit_),
-          ])
+          |])
         )
       />
-      {text("unset")}
+      {"unset"->React.string}
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             display(unset),
             position(unset),
             fontSize(unset),
             fontStyle(unset),
             lineHeight(unset),
-          ])
+          |])
         )
       />
     </Section>
     <Section name="columns">
-      <p style=Css.(style([columnCount(count(10))]))>
-        {text(
+      <p style=(style(. [|columnCount(count(10))|]))>
+        {
            "This is a bunch of text split into columns
              using the CSS `column-count` property. The text
-             is equally distributed over the columns.",
-         )}
+             is equally distributed over the columns."
+         ->React.string}
       </p>
     </Section>
     <Section name="resize">
-      <textarea style=Css.(style([resize(none)]))>
-        "Can't resize textarea"->text
+      <textarea style=(style(. [|resize(none)|]))>
+        "Can't resize textarea"->React.string
       </textarea>
       <div
-        style=Css.(
-          style([
-            marginLeft(px(20)),
+        style=(
+          style(. [|
+            marginLeft(20->px),
             overflow(scroll),
             resize(horizontal),
-          ])
+          |])
         )>
-        "Resizable div (horizontal)"->text
+        "Resizable div (horizontal)"->React.string
       </div>
       <div
-        style=Css.(
-          style([marginLeft(px(20)), overflow(scroll), resize(vertical)])
+        style=(
+          style(. [|marginLeft(20->px), overflow(scroll), resize(vertical)|])
         )>
-        "Resizable div (vertical)"->text
+        "Resizable div (vertical)"->React.string
       </div>
     </Section>
     <Section name="content">
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             position(relative),
-            after([
+            after([|
               contentRule(`none),
               position(absolute),
               top(zero),
               left(zero),
-              width(pct(100.)),
-              height(pct(100.)),
-              border(px(1), solid, black),
-            ]),
-          ])
+              width(100.->pct),
+              height(100.->pct),
+              border(1->px, solid, black),
+            |]),
+          |])
         )>
-        {text("none")}
+        {"none"->React.string}
       </div>
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             position(relative),
-            after([
+            after([|
               contentRule(`normal),
               position(absolute),
               top(zero),
               left(zero),
-              width(pct(100.)),
-              height(pct(100.)),
-              border(px(1), solid, black),
-            ]),
-          ])
+              width(100.->pct),
+              height(100.->pct),
+              border(1->px, solid, black),
+            |]),
+          |])
         )>
-        {text("normal")}
+        {"normal"->React.string}
       </div>
-      <div style=Css.(style([position(relative), marginLeft(px(20))]))>
+      <div style=(style(. [|position(relative), marginLeft(20->px)|]))>
         <a
           href="https://github.com/SentiaAnalytics/bs-css"
-          style=Css.(
-            style([
-              before([
+          style=(
+            style(. [|
+              before([|
                 contentRule(`text("external ")),
                 backgroundColor(red),
                 display(inlineBlock),
                 flexBasis(content /*for test*/),
-              ]),
-            ])
+              |]),
+            |])
           )>
-          {text("link")}
+          {"link"->React.string}
         </a>
       </div>
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             position(relative),
-            marginLeft(px(20)),
-            after([
+            marginLeft(20->px),
+            after([|
               contentRule(`text("")),
               position(absolute),
               top(zero),
               left(zero),
-              width(pct(100.)),
-              height(pct(100.)),
-              border(px(1), solid, black),
-            ]),
-          ])
+              width(100.->pct),
+              height(100.->pct),
+              border(1->px, solid, black),
+            |]),
+          |])
         )>
-        {text("empty content")}
+        {"empty content"->React.string}
       </div>
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             position(relative),
-            marginLeft(px(20)),
-            paddingLeft(px(20)),
-            after([
+            marginLeft(20->px),
+            paddingLeft(20->px),
+            after([|
               contentRule(`url("https://via.placeholder.com/18")),
               position(absolute),
               top(zero),
               left(zero),
-              width(px(18)),
-              height(px(18)),
-              border(px(1), solid, black),
-            ]),
-          ])
+              width(18->px),
+              height(18->px),
+              border(1->px, solid, black),
+            |]),
+          |])
         )>
-        {text("url")}
+        {"url"->React.string}
       </div>
       <div
-        style=Css.(
-          style([
-            marginLeft(px(20)),
+        style=(
+          style(. [|
+            marginLeft(20->px),
             counterReset(Types.CounterReset.reset("foo", ~value=1)),
-            before([
+            before([|
               contentRule(Types.Counter.counter("foo")),
-              border(px(1), solid, black),
-            ]),
-          ])
+              border(1->px, solid, black),
+            |]),
+          |])
         )>
-        {text("counter")}
+        {"counter"->React.string}
       </div>
       <div
-        style=Css.(
-          style([
+        style=(
+          style(. [|
             counterReset(Types.CounterReset.reset("foo", ~value=1)),
-            marginLeft(px(20)),
-          ])
+            marginLeft(20->px),
+          |])
         )>
         <div
-          style=Css.(
-            style([
+          style=(
+            style(. [|
               counterReset(Types.CounterReset.reset("foo", ~value=2)),
-              before([
+              before([|
                 contentRule(
                   Types.Counters.counters(
                     "foo",
@@ -1374,174 +1290,172 @@ let make = () =>
                     ~style=`upperRoman,
                   ),
                 ),
-                border(px(1), solid, black),
-              ]),
-            ])
+                border(1->px, solid, black),
+              |]),
+            |])
           )>
-          {text("counters")}
+          {"counters"->React.string}
         </div>
       </div>
       <div
-        style=Css.(
-          style([
-            marginLeft(px(20)),
-            before([
+        style=(
+          style(. [|
+            marginLeft(20->px),
+            before([|
               contentRule(`attr("class")),
-              border(px(1), solid, black),
-            ]),
-          ])
+              border(1->px, solid, black),
+            |]),
+          |])
         )>
-        {text("attr")}
+        {"attr"->React.string}
       </div>
       <div
-        style=Css.(
-          style([
-            marginLeft(px(20)),
-            before([
+        style=(
+          style(. [|
+            marginLeft(20->px),
+            before([|
               contentRule(
                 Types.Gradient.linearGradient(
-                  deg(45.),
-                  [(zero, red), (pct(100.), blue)],
+                  45.->deg,
+                  [(zero, red), (100.->pct, blue)],
                 ),
               ),
-              border(px(1), solid, black),
+              border(1->px, solid, black),
               display(`inlineBlock),
-              height(px(18)),
-              width(px(18)),
-            ]),
-          ])
+              height(18->px),
+              width(18->px),
+            |]),
+          |])
         )>
-        {text("linear gradient")}
+        {"linear gradient"->React.string}
       </div>
       <div
-        style=Css.(
-          style([
-            marginLeft(px(20)),
-            before([
-              contentRules([`openQuote, `text("foo"), `closeQuote]),
-              border(px(1), solid, black),
-            ]),
-          ])
+        style=(
+          style(. [|
+            marginLeft(20->px),
+            before([|
+              contentRules([|`openQuote, `text("foo"), `closeQuote|]),
+              border(1->px, solid, black),
+            |]),
+          |])
         )>
-        {text("contents (quotes)")}
+        {"contents (quotes)"->React.string}
       </div>
     </Section>
     <Section name="insertRule, the ultimate escape hatch">
       <div className="raw-css" />
     </Section>
     <Section name="merging style names">
-      <button style=mergedStyles> {text("Merged")} </button>
+      <button style=mergedStyles> {"Merged"->React.string} </button>
     </Section>
     <Section name="filter">
-      <div style=Css.(style(redBox @ [filter([`blur(`px(10))])])) />
-      <div style=Css.(style(redBox @ [filter([`brightness(50.)])])) />
-      <div style=Css.(style(redBox @ [filter([`contrast(50.)])])) />
+      <div style=(style(. addToRedBox([|filter([|`blur(10->px)|])|]))) />
+      <div style=(style(. addToRedBox([|filter([|`brightness(50.)|])|]))) />
+      <div style=(style(. addToRedBox([|filter([|`contrast(50.)|])|]))) />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              filter([
+        style=(
+          style(.
+            addToRedBox([|
+              filter([|
                 `dropShadow((
-                  `px(3),
-                  `px(3),
-                  `px(3),
+                  3->px,
+                  3->px,
+                  3->px,
                   `rgb((200, 100, 100)),
                 )),
-              ]),
-            ],
+              |]),
+            |]),
           )
         )
-      />
-      <div style=Css.(style(redBox @ [filter([`grayscale(50.)])])) />
+       />
+      <div style=(style(. addToRedBox([|filter([|`grayscale(50.)|])|]))) />
       <div
-        style=Css.(style(redBox @ [filter([`hueRotate(`deg(180.))])]))
+        style=(style(. addToRedBox([|filter([|`hueRotate(180.->deg)|])|])))
       />
-      <div style=Css.(style(redBox @ [filter([`invert(50.)])])) />
-      <div style=Css.(style(redBox @ [filter([`opacity(50.)])])) />
-      <div style=Css.(style(redBox @ [filter([`saturate(50.)])])) />
-      <div style=Css.(style(redBox @ [filter([`sepia(50.)])])) />
+      <div style=(style(. addToRedBox([|filter([|`invert(50.)|])|]))) />
+      <div style=(style(. addToRedBox([|filter([|`opacity(50.)|])|]))) />
+      <div style=(style(. addToRedBox([|filter([|`saturate(50.)|])|]))) />
+      <div style=(style(. addToRedBox([|filter([|`sepia(50.)|])|]))) />
       <div
-        style=Css.(
-          style(
-            redBox
-            @ [
-              filter([
+        style=(
+          style(.
+            addToRedBox([|
+              filter([|
                 `sepia(50.),
                 `saturate(50.),
                 `dropShadow((
-                  `px(3),
-                  `px(3),
-                  `px(3),
+                  3->px,
+                  3->px,
+                  3->px,
                   `rgb((200, 100, 100)),
                 )),
-              ]),
-            ],
+              |]),
+            |]),
           )
         )
       />
-      <svg height="0" style=Css.(style([display(`none)]))>
+      <svg height="0" style=(style(. [|display(none)|]))>
         <filter id="f1"> <feGaussianBlur stdDeviation="3" /> </filter>
       </svg>
-      <div style=Css.(style(redBox @ [filter([`url("#f1")])])) />
+      <div style=(style(. addToRedBox([|filter([|`url("#f1")|])|]))) />
     </Section>
     <Section name="direction">
       <Section name="ltr">
-        <div style=Css.(style([direction(`ltr), display(`flex)]))>
-          <div style=Css.(style(redBox))> {"1" |> text} </div>
-          <div style=Css.(style(redBox))> {"2" |> text} </div>
-          <div style=Css.(style(redBox))> {"3" |> text} </div>
-          <div style=Css.(style(redBox))> {"4" |> text} </div>
+        <div style=(style(. [|direction(`ltr), display(`flex)|]))>
+          <div style=(style(. redBox))> {"1"->React.string} </div>
+          <div style=(style(. redBox))> {"2"->React.string} </div>
+          <div style=(style(. redBox))> {"3"->React.string} </div>
+          <div style=(style(. redBox))> {"4"->React.string} </div>
         </div>
       </Section>
       <Section name="rtl">
-        <div style=Css.(style([direction(`rtl), display(`flex)]))>
-          <div style=Css.(style(redBox))> {"1" |> text} </div>
-          <div style=Css.(style(redBox))> {"2" |> text} </div>
-          <div style=Css.(style(redBox))> {"3" |> text} </div>
-          <div style=Css.(style(redBox))> {"4" |> text} </div>
+        <div style=(style(. [|direction(`rtl), display(`flex)|]))>
+          <div style=(style(. redBox))> {"1"->React.string} </div>
+          <div style=(style(. redBox))> {"2"->React.string} </div>
+          <div style=(style(. redBox))> {"3"->React.string} </div>
+          <div style=(style(. redBox))> {"4"->React.string} </div>
         </div>
       </Section>
       <Section name="unset">
-        <div style=Css.(style([direction(`unset), display(`flex)]))>
-          <div style=Css.(style(redBox))> {"1" |> text} </div>
-          <div style=Css.(style(redBox))> {"2" |> text} </div>
-          <div style=Css.(style(redBox))> {"3" |> text} </div>
-          <div style=Css.(style(redBox))> {"4" |> text} </div>
+        <div style=(style(. [|direction(`unset), display(`flex)|]))>
+          <div style=(style(. redBox))> {"1"->React.string} </div>
+          <div style=(style(. redBox))> {"2"->React.string} </div>
+          <div style=(style(. redBox))> {"3"->React.string} </div>
+          <div style=(style(. redBox))> {"4"->React.string} </div>
         </div>
       </Section>
     </Section>
     <Section name="object-fit">
       <img
-        style=Css.(style(redBox @ [objectFit(`fill)]))
+        style=(style(. addToRedBox([|objectFit(`fill)|])))
         src="./img-29.jpg"
       />
       <img
-        style=Css.(style(redBox @ [objectFit(`contain)]))
+        style=(style(. addToRedBox([|objectFit(`contain)|])))
         src="./img-29.jpg"
       />
       <img
-        style=Css.(style(redBox @ [objectFit(`cover)]))
+        style=(style(. addToRedBox([|objectFit(`cover)|])))
         src="./img-29.jpg"
       />
       <img
-        style=Css.(style(redBox @ [objectFit(`none)]))
+        style=(style(. addToRedBox([|objectFit(`none)|])))
         src="./img-29.jpg"
       />
       <img
-        style=Css.(style(redBox @ [objectFit(`scaleDown)]))
+        style=(style(. addToRedBox([|objectFit(`scaleDown)|])))
         src="./img-29.jpg"
       />
       <img
-        style=Css.(style(redBox @ [objectFit(`inherit_)]))
+        style=(style(. addToRedBox([|objectFit(`inherit_)|])))
         src="./img-29.jpg"
       />
       <img
-        style=Css.(style(redBox @ [objectFit(`initial)]))
+        style=(style(. addToRedBox([|objectFit(`initial)|])))
         src="./img-29.jpg"
       />
       <img
-        style=Css.(style(redBox @ [objectFit(`unset)]))
+        style=(style(. addToRedBox([|objectFit(`unset)|])))
         src="./img-29.jpg"
       />
     </Section>
