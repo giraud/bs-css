@@ -237,24 +237,24 @@ let make = () =>
     <Section name="Gradients">
       <div
         className={style(.
-          addToRedBox([background(linearGradient(deg(45.), list{(zero, red), (pct(100.), blue)}))]),
+          addToRedBox([background(linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]))]),
         )}
       />
       <div
         className={style(.
           addToRedBox([
-            background(repeatingLinearGradient(deg(45.), list{(zero, red), (pct(10.), blue)})),
+            background(repeatingLinearGradient(deg(45.), [(zero, red), (pct(10.), blue)])),
           ]),
         )}
       />
       <div
         className={style(.
-          addToRedBox([background(radialGradient(list{(zero, red), (pct(100.), blue)}))]),
+          addToRedBox([background(radialGradient([(zero, red), (pct(100.), blue)]))]),
         )}
       />
       <div
         className={style(.
-          addToRedBox([background(repeatingRadialGradient(list{(zero, red), (pct(10.), blue)}))]),
+          addToRedBox([background(repeatingRadialGradient([(zero, red), (pct(10.), blue)]))]),
         )}
       />
     </Section>
@@ -584,7 +584,7 @@ let make = () =>
       <div
         className={style(.
           addToRedBox([
-            background(radialGradient(list{(zero, red), (pct(10.), blue)})),
+            background(radialGradient([(zero, red), (pct(10.), blue)])),
             backgroundAttachment(fixed),
             backgroundClip(contentBox),
             backgroundOrigin(contentBox),
@@ -610,7 +610,7 @@ let make = () =>
           addToRedBox([
             backgroundColor(rgb(0, 0, 255)),
             backgroundImage(
-              linearGradient(deg(45.), list{(zero, green), (pct(50.), red), (pct(100.), yellow)}),
+              linearGradient(deg(45.), [(zero, green), (pct(50.), red), (pct(100.), yellow)]),
             ),
             backgroundRepeat(repeatY),
             backgroundSize(contain),
@@ -1021,9 +1021,7 @@ let make = () =>
         className={style(. [
           marginLeft(20->px),
           before([
-            contentRule(
-              Types.Gradient.linearGradient(deg(45.), list{(zero, red), (pct(100.), blue)}),
-            ),
+            contentRule(Types.Gradient.linearGradient(deg(45.), [(zero, red), (pct(100.), blue)])),
             border(1->px, solid, black),
             display(inlineBlock),
             height(18->px),

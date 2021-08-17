@@ -225,24 +225,24 @@ describe("Gradient background", () =>
       (
         r(
           background(
-            linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]),
+            linearGradient(deg(45.), [|(zero, red), (pct(100.), blue)|]),
           ),
         ),
         r(
           background(
             repeatingLinearGradient(
               deg(45.),
-              [(zero, red), (px(10), blue)],
+              [|(zero, red), (px(10), blue)|],
             ),
           ),
         ),
-        r(background(radialGradient([(zero, red), (pct(100.), blue)]))),
+        r(background(radialGradient([|(zero, red), (pct(100.), blue)|]))),
         r(
           background(
-            repeatingRadialGradient([
+            repeatingRadialGradient([|
               (zero, red),
               (Calc.(pct(20.) + px(5)), blue),
-            ]),
+            |]),
           ),
         ),
       )
@@ -757,14 +757,14 @@ describe("backgroundImage", () =>
       (
         r(backgroundImage(none)),
         r(backgroundImage(url("x"))),
-        r(backgroundImage(linearGradient(deg(5.), [(pct(10.), red)]))),
+        r(backgroundImage(linearGradient(deg(5.), [|(pct(10.), red)|]))),
         r(
           backgroundImage(
-            repeatingLinearGradient(rad(6.), [(pct(20.), black)]),
+            repeatingLinearGradient(rad(6.), [|(pct(20.), black)|]),
           ),
         ),
-        r(backgroundImage(radialGradient([(pct(30.), yellow)]))),
-        r(backgroundImage(repeatingRadialGradient([(pct(30.), yellow)]))),
+        r(backgroundImage(radialGradient([|(pct(30.), yellow)|]))),
+        r(backgroundImage(repeatingRadialGradient([|(pct(30.), yellow)|]))),
       )
       ->Js.Json.stringifyAny,
     )
@@ -785,7 +785,7 @@ describe("background shorhand", () =>
       (
         r(background(rgb(1, 2, 3))),
         r(background(url("x"))),
-        r(background(linearGradient(deg(5.), [(pct(10.), red)]))),
+        r(background(linearGradient(deg(5.), [|(pct(10.), red)|]))),
         r(background(none)),
       )
       ->Js.Json.stringifyAny,

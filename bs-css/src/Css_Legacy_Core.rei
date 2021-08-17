@@ -1707,20 +1707,20 @@ let skewY: Types.Angle.t => [> Types.Transform.t];
 let linearGradient:
   (
     Types.Angle.t,
-    list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))
+    array((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))
   ) =>
   [> Types.Gradient.t('colorOrVar)];
 let repeatingLinearGradient:
   (
     Types.Angle.t,
-    list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))
+    array((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))
   ) =>
   [> Types.Gradient.t('colorOrVar)];
 let radialGradient:
-  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) =>
+  array((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) =>
   [> Types.Gradient.t('colorOrVar)];
 let repeatingRadialGradient:
-  list((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) =>
+  array((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) =>
   [> Types.Gradient.t('colorOrVar)];
 
 let areas: list(string) => [> Types.GridTemplateAreas.t];

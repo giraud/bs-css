@@ -215,12 +215,12 @@ let make = () =>
       )}
     </Section>
     <Section name="gradients">
-      <RedBox rules=[background(linearGradient(45.->deg, list{(zero, red), (100.->pct, blue)}))] />
+      <RedBox rules=[background(linearGradient(45.->deg, [(zero, red), (100.->pct, blue)]))] />
       <RedBox
-        rules=[background(repeatingLinearGradient(45.->deg, list{(zero, red), (10.->pct, blue)}))]
+        rules=[background(repeatingLinearGradient(45.->deg, [(zero, red), (10.->pct, blue)]))]
       />
-      <RedBox rules=[background(radialGradient(list{(zero, red), (100.->pct, blue)}))] />
-      <RedBox rules=[background(repeatingRadialGradient(list{(zero, red), (10.->pct, blue)}))] />
+      <RedBox rules=[background(radialGradient([(zero, red), (100.->pct, blue)]))] />
+      <RedBox rules=[background(repeatingRadialGradient([(zero, red), (10.->pct, blue)]))] />
     </Section>
     <Section name="lengths">
       <RedBox rules=[height(ch(1.2)), width(10->px), maxHeight(50.->pct), maxWidth(100.->pct)] />
@@ -474,7 +474,7 @@ let make = () =>
       />
       <RedBox
         rules=[
-          background(radialGradient(list{(zero, red), (10.->pct, blue)})),
+          background(radialGradient([(zero, red), (10.->pct, blue)])),
           backgroundAttachment(fixed),
           backgroundClip(contentBox),
           backgroundOrigin(contentBox),
@@ -496,7 +496,7 @@ let make = () =>
         rules=[
           backgroundColor(rgb(0, 0, 255)),
           backgroundImage(
-            linearGradient(45.->deg, list{(zero, green), (50.->pct, red), (100.->pct, yellow)}),
+            linearGradient(45.->deg, [(zero, green), (50.->pct, red), (100.->pct, yellow)]),
           ),
           backgroundRepeat(repeatY),
           backgroundSize(contain),
@@ -809,11 +809,9 @@ let make = () =>
         style={style(. [
           marginLeft(20->px),
           before([
-            contentRule(
-              Types.Gradient.linearGradient(45.->deg, list{(zero, red), (100.->pct, blue)}),
-            ),
+            contentRule(linearGradient(45.->deg, [(zero, red), (100.->pct, blue)])),
             border(1->px, solid, black),
-            display(#inlineBlock),
+            display(inlineBlock),
             height(18->px),
             width(18->px),
           ]),

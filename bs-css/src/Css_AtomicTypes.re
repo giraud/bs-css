@@ -1490,10 +1490,10 @@ module OverflowWrap = {
 
 module Gradient = {
   type t('colorOrVar) = [
-    | `linearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingLinearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `radialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingRadialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `linearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingLinearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `radialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingRadialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
   ];
 
   let linearGradient = (angle, stops) => `linearGradient((angle, stops));
@@ -1508,10 +1508,10 @@ module Gradient = {
     | #Var.t as va => Var.toString(va);
   let string_of_stops = stops =>
     stops
-    ->Belt.List.map(((l, c)) =>
+    ->Belt.Array.map(((l, c)) =>
         string_of_color(c) ++ " " ++ Length.toString(l)
       )
-    ->join(", ");
+    ->Js.Array2.joinWith(", ");
 
   let toString =
     fun

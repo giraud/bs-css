@@ -1090,21 +1090,21 @@ module OverflowWrap: {
  */
 module Gradient: {
   type t('colorOrVar) = [
-    | `linearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingLinearGradient(Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `radialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingRadialGradient(list((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `linearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingLinearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `radialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingRadialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
   ];
 
   /** Linear gradients transition colors progressively along an imaginary line. */
-  let linearGradient: (Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
+  let linearGradient: (Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
   /** Radial gradients transition colors progressively from a center point (origin). */
-  let radialGradient: list((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
+  let radialGradient: array((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
 
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (linearGradient function). */
-  let repeatingLinearGradient: (Angle.t, list((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
+  let repeatingLinearGradient: (Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (radialGradient function). */
-  let repeatingRadialGradient: list((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
+  let repeatingRadialGradient: array((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
 
   let toString: t([< Color.t | Var.t]) => string;
 };

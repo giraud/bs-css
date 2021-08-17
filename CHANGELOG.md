@@ -1,6 +1,7 @@
 ## [Unreleased]
 
-- BREAKING CHANGE use rescript and @rescript/react
+- BREAKING CHANGE - use rescript and @rescript/react
+- BREAKING CHANGE - for better consistency in CssJs, use array instead of list in gradient definition
 - Fix global injection in legacy mode - [#238](https://github.com/giraud/bs-css/issues/238) 
 
 ## [14.0.2] - 2021-05-03
