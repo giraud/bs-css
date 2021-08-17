@@ -1,8 +1,13 @@
 open CssJs
 
-let concat = Belt.Array.concat
-
 insertRule(. ".raw-css { display:block; background-color: green; width: 50px; height: 50px; }")
+
+module Section = Comp.Section
+module RedBox = Comp.RedBox
+
+let concat = Belt.Array.concat
+let redBox = Comp.redBox
+let addToRedBox = rules => redBox->concat(rules)
 
 let fontItem = [marginLeft(10->px), paddingRight(10->px), borderRight(1->px, solid, black)]
 
@@ -12,16 +17,6 @@ let scaleAnimation = keyframes(. [
   (0, [transform(scale(0.3, 0.3))]),
   (100, [transform(scale(1.0, 1.0))]),
 ])
-
-let redBox = [
-  background(red),
-  borderBottom(5->px, solid, black),
-  width(50->px),
-  height(50->px),
-  margin(10->px),
-]
-
-let addToRedBox = rules => redBox->concat(rules)
 
 let miniBox = [border(2->px, solid, black), width(15->px), height(15->px), margin(1->px)]
 
@@ -58,24 +53,20 @@ let differentHeightLengths =
 let make = () =>
   <div>
     <Section name="Angles">
-      <div className={style(. addToRedBox([transform(rotate(deg(45.)))]))} />
-      <div className={style(. addToRedBox([transform(rotate(rad(3.1415)))]))} />
-      <div className={style(. addToRedBox([transform(rotate(grad(50.)))]))} />
-      <div className={style(. addToRedBox([transform(rotate(turn(1. /. 3.)))]))} />
+      <RedBox rules=[transform(rotate(deg(45.)))] />
+      <RedBox rules=[transform(rotate(rad(3.1415)))] />
+      <RedBox rules=[transform(rotate(grad(50.)))] />
+      <RedBox rules=[transform(rotate(turn(1. /. 3.)))] />
     </Section>
     <Section name="Colors">
-      <div className={style(. addToRedBox([background(red)]))} />
-      <div className={style(. addToRedBox([background(rgb(255, 0, 0))]))} />
-      <div className={style(. addToRedBox([background(rgba(255, 0, 0, #num(0.5)))]))} />
-      <div className={style(. addToRedBox([background(hsl(deg(255.), pct(100.), pct(50.)))]))} />
-      <div
-        className={style(.
-          addToRedBox([background(hsla(deg(255.), pct(100.), pct(50.), #num(0.5)))]),
-        )}
-      />
-      <div className={style(. addToRedBox([background(hex("FF0000"))]))} />
-      <div className={style(. addToRedBox([background(transparent)]))} />
-      <div className={style(. addToRedBox([background(currentColor), color(blue)]))} />
+      <RedBox rules=[background(red)] />
+      <RedBox rules=[background(rgb(255, 0, 0))] />
+      <RedBox rules=[background(rgba(255, 0, 0, #num(0.5)))] />
+      <RedBox rules=[background(hsl(deg(255.), pct(100.), pct(50.)))] />
+      <RedBox rules=[background(hsla(deg(255.), pct(100.), pct(50.), #num(0.5)))] />
+      <RedBox rules=[background(hex("FF0000"))] />
+      <RedBox rules=[background(transparent)] />
+      <RedBox rules=[background(currentColor), color(blue)] />
     </Section>
     <Section name="Named colors">
       {React.array(
@@ -235,113 +226,75 @@ let make = () =>
       )}
     </Section>
     <Section name="Gradients">
-      <div
-        className={style(.
-          addToRedBox([background(linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]))]),
-        )}
+      <RedBox rules=[background(linearGradient(deg(45.), [(zero, red), (pct(100.), blue)]))] />
+      <RedBox
+        rules=[background(repeatingLinearGradient(deg(45.), [(zero, red), (pct(10.), blue)]))]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            background(repeatingLinearGradient(deg(45.), [(zero, red), (pct(10.), blue)])),
-          ]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([background(radialGradient([(zero, red), (pct(100.), blue)]))]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([background(repeatingRadialGradient([(zero, red), (pct(10.), blue)]))]),
-        )}
-      />
+      <RedBox rules=[background(radialGradient([(zero, red), (pct(100.), blue)]))] />
+      <RedBox rules=[background(repeatingRadialGradient([(zero, red), (pct(10.), blue)]))] />
     </Section>
     <Section name="Lengths">
-      <div
-        className={style(.
-          addToRedBox([height(ch(1.2)), width(10->px), maxHeight(pct(50.)), maxWidth(pct(100.))]),
-        )}
-      />
+      <RedBox rules=[height(ch(1.2)), width(10->px), maxHeight(pct(50.)), maxWidth(pct(100.))] />
       differentHeightLengths
     </Section>
     <Section name="Calc">
-      <div
-        className={style(.
-          addToRedBox([
-            height({
-              open Calc
-              pt(14) - px(10)
-            }),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          height({
+            open Calc
+            pt(14) - px(10)
+          }),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            height({
-              open Calc
-              cm(0.2) + mm(10.)
-            }),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          height({
+            open Calc
+            cm(0.2) + mm(10.)
+          }),
+        ]
       />
     </Section>
     <Section name="Display">
-      <div className={style(. addToRedBox([display(block)]))} />
-      <div className={style(. addToRedBox([display(inline)]))} />
-      <div className={style(. addToRedBox([display(inlineBlock)]))} />
-      <div className={style(. addToRedBox([display(none)]))} />
-      <div className={style(. addToRedBox([display(flexBox)]))} />
+      <RedBox rules=[display(block)] />
+      <RedBox rules=[display(inline)] />
+      <RedBox rules=[display(inlineBlock)] />
+      <RedBox rules=[display(none)] />
+      <RedBox rules=[display(flexBox)] />
     </Section>
     <Section name="Position">
-      <div
-        className={style(.
-          addToRedBox([position(absolute), top(zero), left(zero), right(zero), bottom(zero)]),
-        )}
-      />
-      <div className={style(. addToRedBox([position(relative)]))} />
-      <div className={style(. addToRedBox([position(fixed), bottom(10->px), right(10->px)]))} />
-      <div className={style(. addToRedBox([position(static)]))} />
-      <div className={style(. addToRedBox([position(sticky)]))} />
+      <RedBox rules=[position(absolute), top(zero), left(zero), right(zero), bottom(zero)] />
+      <RedBox rules=[position(relative)] />
+      <RedBox rules=[position(fixed), bottom(10->px), right(10->px)] />
+      <RedBox rules=[position(static)] />
+      <RedBox rules=[position(sticky)] />
     </Section>
     <Section name="Padding & Margin">
-      <div className={style(. addToRedBox([padding(10->px), margin(10->px)]))} />
-      <div
-        className={style(.
-          addToRedBox([
-            paddingLeft(10->px),
-            paddingRight(10->px),
-            paddingTop(10->px),
-            paddingBottom(10->px),
-            marginLeft(10->px),
-            marginRight(10->px),
-            marginTop(10->px),
-            marginBottom(10->px),
-          ]),
-        )}
+      <RedBox rules=[padding(10->px), margin(10->px)] />
+      <RedBox
+        rules=[
+          paddingLeft(10->px),
+          paddingRight(10->px),
+          paddingTop(10->px),
+          paddingBottom(10->px),
+          marginLeft(10->px),
+          marginRight(10->px),
+          marginTop(10->px),
+          marginBottom(10->px),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([padding2(~v=10->px, ~h=20->px), margin2(~v=10->px, ~h=20->px)]),
-        )}
+      <RedBox rules=[padding2(~v=10->px, ~h=20->px), margin2(~v=10->px, ~h=20->px)] />
+      <RedBox
+        rules=[
+          padding3(~top=10->px, ~h=20->px, ~bottom=1->px),
+          margin3(~top=10->px, ~h=20->px, ~bottom=2->px),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            padding3(~top=10->px, ~h=20->px, ~bottom=1->px),
-            margin3(~top=10->px, ~h=20->px, ~bottom=2->px),
-          ]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([
-            padding4(~top=10->px, ~bottom=1->px, ~left=5->px, ~right=15->px),
-            margin4(~top=10->px, ~bottom=1->px, ~left=5->px, ~right=15->px),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          padding4(~top=10->px, ~bottom=1->px, ~left=5->px, ~right=15->px),
+          margin4(~top=10->px, ~bottom=1->px, ~left=5->px, ~right=15->px),
+        ]
       />
     </Section>
     <Section name="Grid">
@@ -427,19 +380,11 @@ let make = () =>
             alignItems(flexStart),
             justifyContent(flexEnd),
           ])}>
-          <div
-            className={style(.
-              addToRedBox([order(1), flexGrow(1.), flexShrink(1.), flexBasis(auto)]),
-            )}
-          />
-          <div className={style(. addToRedBox([flex(none)]))} />
-          <div
-            className={style(.
-              addToRedBox([order(1), flex3(~grow=1.5, ~shrink=0.8, ~basis=100->px)]),
-            )}
-          />
-          <div className={style(. addToRedBox([alignSelf(flexEnd)]))} />
-          <div className={style(. redBox)} />
+          <RedBox rules=[order(1), flexGrow(1.), flexShrink(1.), flexBasis(auto)] />
+          <RedBox rules=[flex(none)] />
+          <RedBox rules=[order(1), flex3(~grow=1.5, ~shrink=0.8, ~basis=100->px)] />
+          <RedBox rules=[alignSelf(flexEnd)] />
+          <RedBox />
         </div>
         <div
           className={style(. [
@@ -449,9 +394,7 @@ let make = () =>
             alignItems(baseline),
             justifyContent(flexStart),
           ])}>
-          <div className={style(. redBox)} />
-          <div className={style(. redBox)} />
-          <div className={style(. redBox)} />
+          <RedBox /> <RedBox /> <RedBox />
         </div>
         <div
           className={style(. [
@@ -461,9 +404,7 @@ let make = () =>
             alignItems(center),
             justifyContent(spaceBetween),
           ])}>
-          <div className={style(. redBox)} />
-          <div className={style(. addToRedBox([height(50->px), width(50->px)]))} />
-          <div className={style(. redBox)} />
+          <RedBox /> <RedBox rules=[height(50->px), width(50->px)] /> <RedBox />
         </div>
         <div
           className={style(. [
@@ -473,9 +414,7 @@ let make = () =>
             alignItems(flexEnd),
             justifyContent(flexEnd),
           ])}>
-          <div className={style(. redBox)} />
-          <div className={style(. addToRedBox([height(50->px), width(50->px)]))} />
-          <div className={style(. redBox)} />
+          <RedBox /> <RedBox rules=[height(50->px), width(50->px)] /> <RedBox />
         </div>
         <div
           className={style(. [
@@ -485,9 +424,7 @@ let make = () =>
             alignItems(stretch),
             justifyContent(spaceAround),
           ])}>
-          <div className={style(. redBox)} />
-          <div className={style(. addToRedBox([height(50->px), width(50->px)]))} />
-          <div className={style(. redBox)} />
+          <RedBox /> <RedBox rules=[height(50->px), width(50->px)] /> <RedBox />
         </div>
         <div
           className={style(. [
@@ -497,182 +434,126 @@ let make = () =>
             alignItems(stretch),
             justifyContent(spaceEvenly),
           ])}>
-          <div className={style(. redBox)} />
-          <div className={style(. addToRedBox([height(50->px), width(50->px)]))} />
-          <div className={style(. redBox)} />
+          <RedBox /> <RedBox rules=[height(50->px), width(50->px)] /> <RedBox />
         </div>
       </div>
     </Section>
     <Section name="Float">
-      <div className={style(. addToRedBox([CssJs.float(#left), clear(#right)]))} />
-      <div className={style(. addToRedBox([CssJs.float(#right), clear(#left)]))} />
-      <div className={style(. addToRedBox([CssJs.float(none), clear(both)]))} />
+      <RedBox rules=[CssJs.float(#left), clear(#right)] />
+      <RedBox rules=[CssJs.float(#right), clear(#left)] />
+      <RedBox rules=[CssJs.float(none), clear(both)] />
     </Section>
     <Section name="Overflow">
-      <div className={style(. addToRedBox([overflow(hidden)]))} />
-      <div className={style(. addToRedBox([overflow(visible)]))} />
-      <div className={style(. addToRedBox([overflow(auto)]))} />
-      <div className={style(. addToRedBox([overflow(scroll)]))} />
+      <RedBox rules=[overflow(hidden)] />
+      <RedBox rules=[overflow(visible)] />
+      <RedBox rules=[overflow(auto)] />
+      <RedBox rules=[overflow(scroll)] />
     </Section>
     <Section name="Border">
-      <div className={style(. addToRedBox([border(5->px, solid, blue), borderRadius(1000->px)]))} />
-      <div
-        className={style(.
-          addToRedBox([
-            border(5->px, solid, green),
-            borderTopRightRadius(1000->px),
-            borderTopLeftRadius(1000->px),
-            borderBottomRightRadius(1000->px),
-            borderBottomLeftRadius(1000->px),
-          ]),
-        )}
+      <RedBox rules=[border(5->px, solid, blue), borderRadius(1000->px)] />
+      <RedBox
+        rules=[
+          border(5->px, solid, green),
+          borderTopRightRadius(1000->px),
+          borderTopLeftRadius(1000->px),
+          borderBottomRightRadius(1000->px),
+          borderBottomLeftRadius(1000->px),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            borderTop(5->px, dashed, hex("FFF")),
-            borderRight(5->px, dotted, rgb(0, 0, 0)),
-            borderBottom(5->px, none, green),
-            borderLeft(5->px, solid, blue),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          borderTop(5->px, dashed, hex("FFF")),
+          borderRight(5->px, dotted, rgb(0, 0, 0)),
+          borderBottom(5->px, none, green),
+          borderLeft(5->px, solid, blue),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([borderWidth(5->px), borderStyle(solid), borderColor(blue)]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([borderTopWidth(5->px), borderTopStyle(solid), borderTopColor(blue)]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([
-            borderBottomWidth(5->px),
-            borderBottomStyle(solid),
-            borderBottomColor(blue),
-          ]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([borderLeftWidth(5->px), borderLeftStyle(solid), borderLeftColor(blue)]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([borderRightWidth(5->px), borderRightStyle(solid), borderRightColor(blue)]),
-        )}
-      />
+      <RedBox rules=[borderWidth(5->px), borderStyle(solid), borderColor(blue)] />
+      <RedBox rules=[borderTopWidth(5->px), borderTopStyle(solid), borderTopColor(blue)] />
+      <RedBox rules=[borderBottomWidth(5->px), borderBottomStyle(solid), borderBottomColor(blue)] />
+      <RedBox rules=[borderLeftWidth(5->px), borderLeftStyle(solid), borderLeftColor(blue)] />
+      <RedBox rules=[borderRightWidth(5->px), borderRightStyle(solid), borderRightColor(blue)] />
     </Section>
     <Section name="Background">
-      <div
-        className={style(.
-          addToRedBox([
-            background(red),
-            backgroundAttachment(scroll),
-            backgroundClip(borderBox),
-            backgroundOrigin(borderBox),
-            backgroundPosition(#hv(pct(50.), pct(50.))),
-            backgroundRepeat(noRepeat),
-            backgroundSize(size(100->px, 100->px)),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          background(red),
+          backgroundAttachment(scroll),
+          backgroundClip(borderBox),
+          backgroundOrigin(borderBox),
+          backgroundPosition(#hv(pct(50.), pct(50.))),
+          backgroundRepeat(noRepeat),
+          backgroundSize(size(100->px, 100->px)),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            background(radialGradient([(zero, red), (pct(10.), blue)])),
-            backgroundAttachment(fixed),
-            backgroundClip(contentBox),
-            backgroundOrigin(contentBox),
-            backgroundRepeat(repeat),
-            backgroundSize(auto),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          background(radialGradient([(zero, red), (pct(10.), blue)])),
+          backgroundAttachment(fixed),
+          backgroundClip(contentBox),
+          backgroundOrigin(contentBox),
+          backgroundRepeat(repeat),
+          backgroundSize(auto),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            background(url("./img-29.jpg")),
-            backgroundAttachment(local),
-            backgroundClip(paddingBox),
-            backgroundOrigin(paddingBox),
-            backgroundRepeat(repeatX),
-            backgroundSize(cover),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          background(url("./img-29.jpg")),
+          backgroundAttachment(local),
+          backgroundClip(paddingBox),
+          backgroundOrigin(paddingBox),
+          backgroundRepeat(repeatX),
+          backgroundSize(cover),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            backgroundColor(rgb(0, 0, 255)),
-            backgroundImage(
-              linearGradient(deg(45.), [(zero, green), (pct(50.), red), (pct(100.), yellow)]),
-            ),
-            backgroundRepeat(repeatY),
-            backgroundSize(contain),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          backgroundColor(rgb(0, 0, 255)),
+          backgroundImage(
+            linearGradient(deg(45.), [(zero, green), (pct(50.), red), (pct(100.), yellow)]),
+          ),
+          backgroundRepeat(repeatY),
+          backgroundSize(contain),
+        ]
       />
     </Section>
     <Section name="Cursor">
-      <div className={style(. addToRedBox([cursor(#auto)]))}> {"auto"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#default)]))}> {"default"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#none)]))}> {"none"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#contextMenu)]))}>
-        {"context menu"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#help)]))}> {"help"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#pointer)]))}> {"pointer"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#progress)]))}> {"progress"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#wait)]))}> {"wait"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#cell)]))}> {"cell"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#crosshair)]))}>
-        {"crosshair"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#text)]))}> {"text"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#verticalText)]))}>
-        {"vert text"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#alias)]))}> {"alias"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#copy)]))}> {"copy"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#move)]))}> {"move"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#noDrop)]))}> {"no drop"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#notAllowed)]))}>
-        {"not allowed"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#grab)]))}> {"grab"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#grabbing)]))}> {"grabbing"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#allScroll)]))}>
-        {"all scroll"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#colResize)]))}>
-        {"col resize"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#rowResize)]))}>
-        {"row resize"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#nResize)]))}> {"n resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#eResize)]))}> {"e resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#sResize)]))}> {"s resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#wResize)]))}> {"w resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#neResize)]))}> {"ne resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#nwResize)]))}> {"nw resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#seResize)]))}> {"se resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#swResize)]))}> {"sw resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#ewResize)]))}> {"ew resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#nsResize)]))}> {"ns resize"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#neswResize)]))}>
-        {"nesw resize"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#nwseResize)]))}>
-        {"nwse resize"->React.string}
-      </div>
-      <div className={style(. addToRedBox([cursor(#zoomIn)]))}> {"zoom in"->React.string} </div>
-      <div className={style(. addToRedBox([cursor(#zoomOut)]))}> {"zoom out"->React.string} </div>
+      <RedBox rules=[cursor(#auto)]> {"auto"->React.string} </RedBox>
+      <RedBox rules=[cursor(#default)]> {"default"->React.string} </RedBox>
+      <RedBox rules=[cursor(#none)]> {"none"->React.string} </RedBox>
+      <RedBox rules=[cursor(#contextMenu)]> {"context menu"->React.string} </RedBox>
+      <RedBox rules=[cursor(#help)]> {"help"->React.string} </RedBox>
+      <RedBox rules=[cursor(#pointer)]> {"pointer"->React.string} </RedBox>
+      <RedBox rules=[cursor(#progress)]> {"progress"->React.string} </RedBox>
+      <RedBox rules=[cursor(#wait)]> {"wait"->React.string} </RedBox>
+      <RedBox rules=[cursor(#cell)]> {"cell"->React.string} </RedBox>
+      <RedBox rules=[cursor(#crosshair)]> {"crosshair"->React.string} </RedBox>
+      <RedBox rules=[cursor(#text)]> {"text"->React.string} </RedBox>
+      <RedBox rules=[cursor(#verticalText)]> {"vert text"->React.string} </RedBox>
+      <RedBox rules=[cursor(#alias)]> {"alias"->React.string} </RedBox>
+      <RedBox rules=[cursor(#copy)]> {"copy"->React.string} </RedBox>
+      <RedBox rules=[cursor(#move)]> {"move"->React.string} </RedBox>
+      <RedBox rules=[cursor(#noDrop)]> {"no drop"->React.string} </RedBox>
+      <RedBox rules=[cursor(#notAllowed)]> {"not allowed"->React.string} </RedBox>
+      <RedBox rules=[cursor(#grab)]> {"grab"->React.string} </RedBox>
+      <RedBox rules=[cursor(#grabbing)]> {"grabbing"->React.string} </RedBox>
+      <RedBox rules=[cursor(#allScroll)]> {"all scroll"->React.string} </RedBox>
+      <RedBox rules=[cursor(#colResize)]> {"col resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#rowResize)]> {"row resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#nResize)]> {"n resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#eResize)]> {"e resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#sResize)]> {"s resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#wResize)]> {"w resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#neResize)]> {"ne resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#nwResize)]> {"nw resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#seResize)]> {"se resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#swResize)]> {"sw resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#ewResize)]> {"ew resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#nsResize)]> {"ns resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#neswResize)]> {"nesw resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#nwseResize)]> {"nwse resize"->React.string} </RedBox>
+      <RedBox rules=[cursor(#zoomIn)]> {"zoom in"->React.string} </RedBox>
+      <RedBox rules=[cursor(#zoomOut)]> {"zoom out"->React.string} </RedBox>
     </Section>
     <Section name="List">
       <ul>
@@ -697,65 +578,41 @@ let make = () =>
       </ul>
     </Section>
     <Section name="Outline">
-      <div className={style(. addToRedBox([outline(5->px, #double, green)]))} />
-      <div
-        className={style(.
-          addToRedBox([
-            outlineStyle(solid),
-            outlineWidth(5->px),
-            outlineColor(green),
-            outlineOffset(5->px),
-          ]),
-        )}
+      <RedBox rules=[outline(5->px, #double, green)] />
+      <RedBox
+        rules=[outlineStyle(solid), outlineWidth(5->px), outlineColor(green), outlineOffset(5->px)]
       />
-      <div className={style(. addToRedBox([outline(5->px, #double, red)]))} />
-      <div className={style(. addToRedBox([outline(5->px, #ridge, red)]))} />
+      <RedBox rules=[outline(5->px, #double, red)] />
+      <RedBox rules=[outline(5->px, #ridge, red)] />
     </Section>
     <Section name="Transform">
-      <div className={style(. addToRedBox([opacity(0.5)]))} />
-      <div className={style(. addToRedBox([perspective(500->px), transform(rotate(deg(10.)))]))} />
-      <div
-        className={style(.
-          addToRedBox([transforms([translate(10->px, pct(10.)), skew(deg(10.), deg(10.))])]),
-        )}
+      <RedBox rules=[opacity(0.5)] />
+      <RedBox rules=[perspective(500->px), transform(rotate(deg(10.)))] />
+      <RedBox rules=[transforms([translate(10->px, pct(10.)), skew(deg(10.), deg(10.))])] />
+      <RedBox
+        rules=[
+          transform(rotate(deg(19.))),
+          transformOrigin(pct(50.), pct(50.)),
+          transformStyle(#preserve3d),
+          perspective(900->px),
+          perspectiveOrigin(pct(10.), pct(10.)),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            transform(rotate(deg(19.))),
-            transformOrigin(pct(50.), pct(50.)),
-            transformStyle(#preserve3d),
-            perspective(900->px),
-            perspectiveOrigin(pct(10.), pct(10.)),
-          ]),
-        )}
-      />
-      <div
-        className={style(.
-          addToRedBox([
-            transform(translate(10->px, pct(10.))),
-            transformOrigin3d(10->px, 10->px, 10->px),
-          ]),
-        )}
+      <RedBox
+        rules=[transform(translate(10->px, pct(10.))), transformOrigin3d(10->px, 10->px, 10->px)]
       />
     </Section>
     <Section name="Transition">
-      <div
-        className={style(.
-          addToRedBox([
-            transition(~duration=300, ~delay=300, ~timingFunction=easeInOut, "transform"),
-          ]),
-        )}
+      <RedBox
+        rules=[transition(~duration=300, ~delay=300, ~timingFunction=easeInOut, "transform")]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            transitionProperty("height"),
-            transitionDelay(300),
-            transitionDuration(300),
-            transitionTimingFunction(linear),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          transitionProperty("height"),
+          transitionDelay(300),
+          transitionDuration(300),
+          transitionTimingFunction(linear),
+        ]
       />
     </Section>
     <Section name="Text">
@@ -826,45 +683,39 @@ let make = () =>
       </span>
     </Section>
     <Section name="Animation">
-      <div
-        className={style(.
-          addToRedBox([
-            animation(
-              ~duration=300,
-              ~delay=300,
-              ~direction=reverse,
-              ~timingFunction=linear,
-              ~fillMode=forwards,
-              ~playState=running,
-              ~iterationCount=infinite,
-              spin,
-            ),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          animation(
+            ~duration=300,
+            ~delay=300,
+            ~direction=reverse,
+            ~timingFunction=linear,
+            ~fillMode=forwards,
+            ~playState=running,
+            ~iterationCount=infinite,
+            spin,
+          ),
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            animations([
-              Animation.shorthand(~duration=300, ~iterationCount=infinite, spin),
-              Animation.shorthand(~duration=300, ~iterationCount=infinite, scaleAnimation),
-            ]),
+      <RedBox
+        rules=[
+          animations([
+            Animation.shorthand(~duration=300, ~iterationCount=infinite, spin),
+            Animation.shorthand(~duration=300, ~iterationCount=infinite, scaleAnimation),
           ]),
-        )}
+        ]
       />
-      <div
-        className={style(.
-          addToRedBox([
-            animationName(spin),
-            animationTimingFunction(easeIn),
-            animationDuration(300),
-            animationDelay(300),
-            animationDirection(normal),
-            animationFillMode(backwards),
-            animationPlayState(paused),
-            animationIterationCount(count(5)),
-          ]),
-        )}
+      <RedBox
+        rules=[
+          animationName(spin),
+          animationTimingFunction(easeIn),
+          animationDuration(300),
+          animationDelay(300),
+          animationDirection(normal),
+          animationFillMode(backwards),
+          animationPlayState(paused),
+          animationIterationCount(count(5)),
+        ]
       />
     </Section>
     <Section name="Cascading">
@@ -1046,59 +897,53 @@ let make = () =>
       <button className=mergedStyles> {"Merged"->React.string} </button>
     </Section>
     <Section name="Filter">
-      <div className={style(. addToRedBox([filter([#blur(10->px)])]))} />
-      <div className={style(. addToRedBox([filter([#brightness(50.)])]))} />
-      <div className={style(. addToRedBox([filter([#contrast(50.)])]))} />
-      <div
-        className={style(.
-          addToRedBox([filter([#dropShadow(3->px, 3->px, 3->px, #rgb(200, 100, 100))])]),
-        )}
-      />
-      <div className={style(. addToRedBox([filter([#grayscale(50.)])]))} />
-      <div className={style(. addToRedBox([filter([#hueRotate(#deg(180.))])]))} />
-      <div className={style(. addToRedBox([filter([#invert(50.)])]))} />
-      <div className={style(. addToRedBox([filter([#opacity(50.)])]))} />
-      <div className={style(. addToRedBox([filter([#saturate(50.)])]))} />
-      <div className={style(. addToRedBox([filter([#sepia(50.)])]))} />
-      <div
-        className={style(.
-          addToRedBox([
-            filter([
-              #sepia(50.),
-              #saturate(50.),
-              #dropShadow(3->px, 3->px, 3->px, rgb(200, 100, 100)),
-            ]),
+      <RedBox rules=[filter([#blur(10->px)])] />
+      <RedBox rules=[filter([#brightness(50.)])] />
+      <RedBox rules=[filter([#contrast(50.)])] />
+      <RedBox rules=[filter([#dropShadow(3->px, 3->px, 3->px, #rgb(200, 100, 100))])] />
+      <RedBox rules=[filter([#grayscale(50.)])] />
+      <RedBox rules=[filter([#hueRotate(#deg(180.))])] />
+      <RedBox rules=[filter([#invert(50.)])] />
+      <RedBox rules=[filter([#opacity(50.)])] />
+      <RedBox rules=[filter([#saturate(50.)])] />
+      <RedBox rules=[filter([#sepia(50.)])] />
+      <RedBox
+        rules=[
+          filter([
+            #sepia(50.),
+            #saturate(50.),
+            #dropShadow(3->px, 3->px, 3->px, rgb(200, 100, 100)),
           ]),
-        )}
+        ]
       />
       <svg height="0" className={style(. [display(none)])}>
         <filter id="f1"> <feGaussianBlur stdDeviation="3" /> </filter>
       </svg>
-      <div className={style(. addToRedBox([filter([url("#f1")])]))} />
+      <RedBox rules=[filter([url("#f1")])] />
     </Section>
     <Section name="Direction">
       <Section name="ltr">
         <div className={style(. [direction(#ltr), display(#flex)])}>
-          <div className={style(. redBox)}> {"1"->React.string} </div>
-          <div className={style(. redBox)}> {"2"->React.string} </div>
-          <div className={style(. redBox)}> {"3"->React.string} </div>
-          <div className={style(. redBox)}> {"4"->React.string} </div>
+          <RedBox> {"1"->React.string} </RedBox>
+          <RedBox> {"2"->React.string} </RedBox>
+          <RedBox> {"3"->React.string} </RedBox>
+          <RedBox> {"4"->React.string} </RedBox>
         </div>
       </Section>
       <Section name="rtl">
         <div className={style(. [direction(#rtl), display(#flex)])}>
-          <div className={style(. redBox)}> {"1"->React.string} </div>
-          <div className={style(. redBox)}> {"2"->React.string} </div>
-          <div className={style(. redBox)}> {"3"->React.string} </div>
-          <div className={style(. redBox)}> {"4"->React.string} </div>
+          <RedBox> {"1"->React.string} </RedBox>
+          <RedBox> {"2"->React.string} </RedBox>
+          <RedBox> {"3"->React.string} </RedBox>
+          <RedBox> {"4"->React.string} </RedBox>
         </div>
       </Section>
       <Section name="Unset">
         <div className={style(. [direction(#unset), display(#flex)])}>
-          <div className={style(. redBox)}> {"1"->React.string} </div>
-          <div className={style(. redBox)}> {"2"->React.string} </div>
-          <div className={style(. redBox)}> {"3"->React.string} </div>
-          <div className={style(. redBox)}> {"4"->React.string} </div>
+          <RedBox> {"1"->React.string} </RedBox>
+          <RedBox> {"2"->React.string} </RedBox>
+          <RedBox> {"3"->React.string} </RedBox>
+          <RedBox> {"4"->React.string} </RedBox>
         </div>
       </Section>
     </Section>
