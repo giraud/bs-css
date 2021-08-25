@@ -341,6 +341,12 @@ let borderRightStyle:
 let borderRightWidth: Types.Length.t => rule;
 
 let borderRadius: Types.Length.t => rule;
+let borderRadius4: (
+  ~topLeft: Types.Length.t,
+  ~topRight: Types.Length.t,
+  ~bottomLeft: Types.Length.t,
+  ~bottomRight: Types.Length.t
+) => rule;
 
 let borderSpacing: Types.Length.t => rule;
 
