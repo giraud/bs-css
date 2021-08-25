@@ -751,7 +751,7 @@ module LegacyAlignment: {
  https://developer.mozilla.org/docs/Web/CSS/text-align
  */
 module TextAlign: {
-  type t = [ | `left | `right | `center | `justify];
+  type t = [ | `start | `left | `right | `center | `justify];
 
   let toString: t => string;
 };
