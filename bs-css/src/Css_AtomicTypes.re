@@ -1052,10 +1052,11 @@ module LegacyAlignment = {
 };
 
 module TextAlign = {
-  type t = [ | `left | `right | `center | `justify];
+  type t = [ `start | `left | `right | `center | `justify];
 
   let toString =
     fun
+    | `start => "start"
     | `left => "left"
     | `right => "right"
     | `center => "center"
