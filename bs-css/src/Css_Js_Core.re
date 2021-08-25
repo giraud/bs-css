@@ -378,6 +378,16 @@ let borderLeftWidth = x => D("borderLeftWidth", Length.toString(x));
 let borderSpacing = x => D("borderSpacing", Length.toString(x));
 
 let borderRadius = x => D("borderRadius", Length.toString(x));
+let borderRadius4 = (~topLeft, ~topRight, ~bottomLeft, ~bottomRight) =>
+  D("borderRadius",
+    Length.toString(topLeft)
+      ++ " "
+      ++ Length.toString(topRight)
+      ++ " "
+      ++ Length.toString(bottomLeft)
+      ++ " "
+      ++ Length.toString(bottomRight)
+    );
 
 let borderRightColor = x => D("borderRightColor", string_of_color(x));
 
