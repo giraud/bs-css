@@ -593,7 +593,6 @@ let rowGap:
   ] =>
   rule;
 
-
 /**
  This prefixed property is being replaced by column-gap.
  */
@@ -1139,8 +1138,8 @@ let zIndex: int => rule;
  selectors
  ********* */
 
-let selector: (string, list(rule)) => rule;
-let media: (string, list(rule)) => rule;
+let selector: (. string, list(rule)) => rule;
+let media: (. string, list(rule)) => rule;
 
 /** type selector */
 

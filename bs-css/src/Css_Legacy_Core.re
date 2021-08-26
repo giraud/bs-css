@@ -1174,8 +1174,8 @@ let zIndex = x => D("zIndex", Js.Int.toString(x));
 
 /* Selectors */
 
-let media = (query, rules) => S("@media " ++ query, rules);
-let selector = (selector, rules) => S(selector, rules);
+let media = (. query, rules) => S("@media " ++ query, rules);
+let selector = (. selector, rules) => S(selector, rules);
 let pseudoClass = (selector, rules) => PseudoClass(selector, rules);
 
 let active = pseudoClass("active");
@@ -1237,19 +1237,19 @@ let target = pseudoClass("target");
 let valid = pseudoClass("valid");
 let visited = pseudoClass("visited");
 
-let after = selector("::after");
-let before = selector("::before");
-let firstLetter = selector("::first-letter");
-let firstLine = selector("::first-line");
-let selection = selector("::selection");
+let after = selector(. "::after", _);
+let before = selector(. "::before", _);
+let firstLetter = selector(. "::first-letter", _);
+let firstLine = selector(. "::first-line", _);
+let selection = selector(. "::selection", _);
 
-let child = x => selector(" > " ++ x);
-let children = selector(" > *");
-let directSibling = selector(" + ");
-let placeholder = selector("::placeholder");
-let siblings = selector(" ~ ");
+let child = x => selector(. " > " ++ x, _);
+let children = selector(. " > *", _);
+let directSibling = selector(. " + ", _);
+let placeholder = selector(. "::placeholder", _);
+let siblings = selector(. " ~ ", _);
 
-let anyLink = selector(":any-link");
+let anyLink = selector(. ":any-link", _);
 
 /* Type aliasing */
 
