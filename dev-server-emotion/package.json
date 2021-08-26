@@ -16,8 +16,8 @@
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "dependencies": {
-    "bs-css": "^14.0.0",
-    "bs-css-emotion": "^3.0.0"
+    "bs-css": "^15.0.0",
+    "bs-css-emotion": "^4.0.0"
   },
   "devDependencies": {
     "@rescript/react": "^0.10.0",

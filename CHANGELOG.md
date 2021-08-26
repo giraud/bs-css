@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [15.0.0] - 2021-08-26
+
 - BREAKING CHANGE - use rescript and @rescript/react
 - BREAKING CHANGE - for better consistency in CssJs, use array instead of list in gradient definition
 - BREAKING CHANGE - for better consistency in CssJs, uncurry selector and media functions - [#244](https://github.com/giraud/bs-css/issues/244) 
@@ -7,6 +9,8 @@
 - Fix global injection in legacy mode - [#238](https://github.com/giraud/bs-css/issues/238) 
 - Add borderRadius4 by [@davesnx](https://github.com/davesnx) - [#247](https://github.com/reasonml-labs/bs-css/pull/247)
 - Add `start in TextAlign by [@davesnx](https://github.com/davesnx) - [#246](https://github.com/reasonml-labs/bs-css/pull/246)
+
+bs-css-dom@3.0.0, bs-css-emotion@4.0.0, bs-css-fela@2.0.0
 
 ## [14.0.2] - 2021-05-03
 
