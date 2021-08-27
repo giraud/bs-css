@@ -1626,7 +1626,7 @@ __metadata:
   dependencies:
     "@emotion/cache": ^11.0.0
     "@emotion/css": ^11.0.0
-    bs-css: 15.0.0
+    bs-css: 15.0.1
     rescript: ^9.0.0
   languageName: unknown
   linkType: soft
