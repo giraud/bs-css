@@ -1008,17 +1008,17 @@ module OverflowAlignment = {
   let toString =
     fun
     | `safe(pa) => "safe " ++ PositionalAlignment.toString(pa)
-    | `unsafe(pa) => "unsafe " ++ PositionalAlignment.toString(pa)
+    | `unsafe(pa) => "unsafe " ++ PositionalAlignment.toString(pa);
 };
 
 module BaselineAlignment = {
-  type t = [ | `baseline | `firstBaseline | `lastBaseline ];
+  type t = [ | `baseline | `firstBaseline | `lastBaseline];
 
   let toString =
     fun
     | `baseline => "baseline"
     | `firstBaseline => "first baseline"
-    | `lastBaseline=> "last baseline";
+    | `lastBaseline => "last baseline";
 };
 
 module NormalAlignment = {
@@ -1052,7 +1052,7 @@ module LegacyAlignment = {
 };
 
 module TextAlign = {
-  type t = [ `start | `left | `right | `center | `justify];
+  type t = [ | `start | `left | `right | `center | `justify];
 
   let toString =
     fun
@@ -1491,10 +1491,18 @@ module OverflowWrap = {
 
 module Gradient = {
   type t('colorOrVar) = [
-    | `linearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingLinearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `linearGradient(
+        Angle.t,
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
+    | `repeatingLinearGradient(
+        Angle.t,
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
     | `radialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingRadialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingRadialGradient(
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
   ];
 
   let linearGradient = (angle, stops) => `linearGradient((angle, stops));
