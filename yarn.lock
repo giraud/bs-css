@@ -1611,7 +1611,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bs-css-dom@workspace:bs-css-dom"
   dependencies:
-    bs-css: 15.0.0
+    bs-css: 15.0.1
     rescript: ^9.0.0
   peerDependencies:
     "@rescript/react": ^0.10.0
@@ -1643,7 +1643,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"bs-css@15.0.0, bs-css@^15.0.0, bs-css@workspace:bs-css":
+"bs-css@15.0.1, bs-css@^15.0.0, bs-css@workspace:bs-css":
   version: 0.0.0-use.local
   resolution: "bs-css@workspace:bs-css"
   dependencies:
@@ -1652,6 +1652,13 @@ __metadata:
     rescript: ^9.0.0
   languageName: unknown
   linkType: soft
+
+"bs-css@npm:15.0.0":
+  version: 15.0.0
+  resolution: "bs-css@npm:15.0.0"
+  checksum: 5be785bf3c308d4a7de324d4903bb8495b3ea538a38f2796f4203900d9689907519ef03d4dffc3aec5f3fd52de30da8c4b2bdc61ec8c00086c7dae9861534796
+  languageName: node
+  linkType: hard
 
 "bser@npm:2.1.1":
   version: 2.1.1
