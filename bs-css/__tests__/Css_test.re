@@ -859,6 +859,32 @@ describe("columnGap", () =>
   )
 );
 
+describe("columnWidth", () =>
+  test("test values", () =>
+    expect(
+      (
+        r(columnWidth(auto)),
+        r(columnWidth(px(120))),
+        r(columnWidth(rem(6.))),
+        r(columnWidth(ch(18.))),
+        r(columnWidth(inherit_)),
+        r(columnWidth(initial)),
+        r(columnWidth(unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"columnWidth": "auto"},
+         {"columnWidth": "120px"},
+         {"columnWidth": "6rem"},
+         {"columnWidth": "18ch"},
+         {"columnWidth": "inherit"},
+         {"columnWidth": "initial"},
+         {"columnWidth": "unset"},
+       ))
+  )
+);
+
 describe("rowGap", () =>
   test("test values", () =>
     expect(

@@ -249,6 +249,24 @@ module ColumnGap: {
   let toString: t => string;
 };
 
+module ScrollBehavior: {
+  type t = [ | `auto | `smooth];
+
+  let toString: t => string;
+};
+
+module ColumnWidth: {
+  type t = [ | `auto];
+
+  let toString: t => string;
+};
+
+module CaretColor: {
+  type t = [ | `auto];
+
+  let toString: t => string;
+};
+
 module VerticalAlign: {
   type t = [
     | `baseline
