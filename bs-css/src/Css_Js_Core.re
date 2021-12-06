@@ -1129,6 +1129,38 @@ let visibility = x =>
     },
   );
 
+let scrollBehavior = x =>
+  D(
+    "scrollBehavior",
+    switch (x) {
+    | #ScrollBehavior.t as sb => ScrollBehavior.toString(sb)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let columnWidth = x =>
+  D(
+    "columnWidth",
+    switch (x) {
+    | #ColumnWidth.t as cw => ColumnWidth.toString(cw)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let caretColor = x =>
+  D(
+    "caretColor",
+    switch (x) {
+    | #CaretColor.t as ct => CaretColor.toString(ct)
+    | #Color.t as c => Color.toString(c)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let width = x =>
   D(
     "width",

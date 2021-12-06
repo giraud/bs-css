@@ -583,6 +583,41 @@ let columnGap:
   ] =>
   rule;
 
+/**
+ The scroll-behavior CSS property sets the behavior for a scrolling box when scrolling is triggered by the navigation
+ or CSSOM scrolling APIs.
+ */
+let scrollBehavior:
+  [< Types.ScrollBehavior.t | Types.Var.t | Types.Cascading.t] => rule;
+
+/**
+ The column-width CSS property sets the ideal column width in a multi-column layout.
+ The container will have as many columns as can fit without any of them having a width less than the column-width value.
+ If the width of the container is narrower than the specified value, the single column's width will be smaller than the declared column width.
+ */
+let columnWidth:
+  [<
+    Types.ColumnWidth.t
+    | Types.Length.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+/**
+ The caret-color CSS property sets the color of the insertion caret, the visible marker where the next character typed will be inserted.
+ This is sometimes referred to as the text input cursor. The caret appears in elements such as <input> or those with the contenteditable attribute.
+ The caret is typically a thin vertical line that flashes to help make it more noticeable. By default, it is black, but its color can be altered with this property.
+ */
+let caretColor:
+  [<
+    Types.CaretColor.t
+    | Types.Color.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
 let rowGap:
   [<
     Types.RowGap.t

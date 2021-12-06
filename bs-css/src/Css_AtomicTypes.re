@@ -302,6 +302,31 @@ module ColumnGap = {
     | `normal => "normal";
 };
 
+module ScrollBehavior = {
+  type t = [ | `auto | `smooth];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `smooth => "smooth"
+};
+
+module ColumnWidth = {
+  type t = [ | `auto];
+
+  let toString =
+    fun
+    | `auto => "auto";
+};
+
+module CaretColor = {
+  type t = [ | `auto];
+
+  let toString =
+    fun
+    | `auto => "auto";
+};
+
 module VerticalAlign = {
   type t = [
     | `baseline
