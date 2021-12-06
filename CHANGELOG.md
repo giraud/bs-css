@@ -281,8 +281,10 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/giraud/bs-css/compare/14.0.2...HEAD
-[14.0.0]: https://github.com/giraud/bs-css/compare/14.0.1...14.0.2
+[Unreleased]: https://github.com/giraud/bs-css/compare/15.0.2...HEAD
+[15.0.2]: https://github.com/giraud/bs-css/compare/15.0.1...15.0.2
+[15.0.1]: https://github.com/giraud/bs-css/compare/14.0.2...15.0.1
+[14.0.2]: https://github.com/giraud/bs-css/compare/14.0.1...14.0.2
 [14.0.1]: https://github.com/giraud/bs-css/compare/14.0.0...14.0.1
 [14.0.0]: https://github.com/giraud/bs-css/compare/13.4.1...14.0.0
 [13.4.1]: https://github.com/giraud/bs-css/compare/13.4.0...13.4.1
