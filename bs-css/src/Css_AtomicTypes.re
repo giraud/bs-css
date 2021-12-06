@@ -286,21 +286,15 @@ module GridAutoFlow = {
     | `rowDense => "row dense";
 };
 
-module RowGap = {
+module Gap = {
   type t = [ | `normal];
 
   let toString =
     fun
     | `normal => "normal";
 };
-
-module ColumnGap = {
-  type t = [ | `normal];
-
-  let toString =
-    fun
-    | `normal => "normal";
-};
+module RowGap = Gap;
+module ColumnGap = Gap;
 
 module ScrollBehavior = {
   type t = [ | `auto | `smooth];
@@ -308,7 +302,7 @@ module ScrollBehavior = {
   let toString =
     fun
     | `auto => "auto"
-    | `smooth => "smooth"
+    | `smooth => "smooth";
 };
 
 module ColumnWidth = {

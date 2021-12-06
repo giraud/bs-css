@@ -234,7 +234,9 @@ describe("Gradient background", () =>
             ),
           ),
         ),
-        r(background(radialGradient([|(zero, red), (pct(100.), blue)|]))),
+        r(
+          background(radialGradient([|(zero, red), (pct(100.), blue)|])),
+        ),
         r(
           background(
             repeatingRadialGradient([|
@@ -755,14 +757,18 @@ describe("backgroundImage", () =>
       (
         r(backgroundImage(none)),
         r(backgroundImage(url("x"))),
-        r(backgroundImage(linearGradient(deg(5.), [|(pct(10.), red)|]))),
+        r(
+          backgroundImage(linearGradient(deg(5.), [|(pct(10.), red)|])),
+        ),
         r(
           backgroundImage(
             repeatingLinearGradient(rad(6.), [|(pct(20.), black)|]),
           ),
         ),
         r(backgroundImage(radialGradient([|(pct(30.), yellow)|]))),
-        r(backgroundImage(repeatingRadialGradient([|(pct(30.), yellow)|]))),
+        r(
+          backgroundImage(repeatingRadialGradient([|(pct(30.), yellow)|])),
+        ),
       )
       ->Js.Json.stringifyAny,
     )
@@ -910,6 +916,55 @@ describe("rowGap", () =>
        ))
   )
 );
+
+describe("gap", () => {
+  test("test values single prop", () =>
+    expect(
+      (
+        r(gap(normal)),
+        r(gap(px(3))),
+        r(gap(em(2.5))),
+        r(gap(pct(3.))),
+        r(gap(inherit_)),
+        r(gap(initial)),
+        r(gap(unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gap": "normal"},
+         {"gap": "3px"},
+         {"gap": "2.5em"},
+         {"gap": "3%"},
+         {"gap": "inherit"},
+         {"gap": "initial"},
+         {"gap": "unset"},
+       ))
+  );
+  test("test values two props", () =>
+    expect(
+      (
+        r(gap2(~rowGap=normal, ~columnGap=normal)),
+        r(gap2(~rowGap=px(3), ~columnGap=px(3))),
+        r(gap2(~rowGap=em(2.5), ~columnGap=em(2.5))),
+        r(gap2(~rowGap=pct(3.), ~columnGap=pct(3.))),
+        r(gap2(~rowGap=inherit_, ~columnGap=inherit_)),
+        r(gap2(~rowGap=initial, ~columnGap=initial)),
+        r(gap2(~rowGap=unset, ~columnGap=unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"gap": "normal normal"},
+         {"gap": "3px 3px"},
+         {"gap": "2.5em 2.5em"},
+         {"gap": "3% 3%"},
+         {"gap": "inherit inherit"},
+         {"gap": "initial initial"},
+         {"gap": "unset unset"},
+       ))
+  );
+});
 
 describe("cursor", () =>
   test("test values", () =>

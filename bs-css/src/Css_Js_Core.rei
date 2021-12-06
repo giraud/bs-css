@@ -603,12 +603,7 @@ let scrollBehavior:
  If the width of the container is narrower than the specified value, the single column's width will be smaller than the declared column width.
  */
 let columnWidth:
-  [<
-    Types.ColumnWidth.t
-    | Types.Length.t
-    | Types.Var.t
-    | Types.Cascading.t
-  ] =>
+  [< Types.ColumnWidth.t | Types.Length.t | Types.Var.t | Types.Cascading.t] =>
   rule;
 
 /**
@@ -617,12 +612,7 @@ let columnWidth:
  The caret is typically a thin vertical line that flashes to help make it more noticeable. By default, it is black, but its color can be altered with this property.
  */
 let caretColor:
-  [<
-    Types.CaretColor.t
-    | Types.Color.t
-    | Types.Var.t
-    | Types.Cascading.t
-  ] =>
+  [< Types.CaretColor.t | Types.Color.t | Types.Var.t | Types.Cascading.t] =>
   rule;
 
 /**
@@ -648,8 +638,45 @@ let gridColumnStart: int => rule;
 /**
  The gap CSS property sets the gaps (gutters) between rows and columns. It is a shorthand for row-gap and column-gap.
  */
+let gap:
+  [<
+    Types.Gap.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+let gap2:
+  (
+    ~rowGap: [<
+               Types.Gap.t
+               | Types.Percentage.t
+               | Types.Length.t
+               | Types.Var.t
+               | Types.Cascading.t
+             ],
+    ~columnGap: [<
+                  Types.Gap.t
+                  | Types.Percentage.t
+                  | Types.Length.t
+                  | Types.Var.t
+                  | Types.Cascading.t
+                ]
+  ) =>
+  rule;
+
+/**
+ deprecated, use gap
+ */
 let gridGap:
-  [< Types.Percentage.t | Types.Length.t | Types.Var.t | Types.Cascading.t] =>
+  [<
+    Types.Gap.t
+    | Types.Percentage.t
+    | Types.Length.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
   rule;
 
 /**

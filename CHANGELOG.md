@@ -1,7 +1,8 @@
 ## [Unreleased]
 
 - Add scrollBehavior, columnWidth and caretColor by [@Amirmoh10](https://github.com/Amirmoh10) - [#249](https://github.com/reasonml-labs/bs-css/pull/249)
-
+- Add gap (shortcut to gridGap), and gap2
+ 
 ## [15.0.1] - 2021-08-26
 
 - BREAKING CHANGE - use rescript and @rescript/react

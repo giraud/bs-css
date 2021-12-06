@@ -157,6 +157,14 @@ module Converter = {
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c);
 
+  let string_of_gap =
+    fun
+    | #Gap.t as rg => Gap.toString(rg)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c);
+
   let string_of_position =
     fun
     | `auto => "auto"
@@ -616,16 +624,11 @@ let gridColumnEnd = n => D("gridColumnEnd", Js.Int.toString(n));
 let gridRow = (start, end') =>
   D("gridRow", Js.Int.toString(start) ++ " / " ++ Js.Int.toString(end'));
 
-let gridGap = x =>
-  D(
-    "gridGap",
-    switch (x) {
-    | #Percentage.t as p => Percentage.toString(p)
-    | #Length.t as l => Length.toString(l)
-    | #Var.t as va => Var.toString(va)
-    | #Cascading.t as c => Cascading.toString(c)
-    },
-  );
+let gap = x => D("gap", string_of_gap(x));
+let gridGap = x => D("gridGap", string_of_gap(x));
+
+let gap2 = (~rowGap, ~columnGap) =>
+  D("gap", string_of_gap(rowGap) ++ " " ++ string_of_gap(columnGap));
 
 let gridRowGap = x =>
   D(

@@ -237,17 +237,13 @@ module GridAutoFlow: {
   let toString: t => string;
 };
 
-module RowGap: {
+module Gap: {
   type t = [ | `normal];
 
   let toString: t => string;
 };
-
-module ColumnGap: {
-  type t = [ | `normal];
-
-  let toString: t => string;
-};
+module RowGap = Gap;
+module ColumnGap = Gap;
 
 module ScrollBehavior: {
   type t = [ | `auto | `smooth];
@@ -733,7 +729,7 @@ module OverflowAlignment: {
  https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Alignment#Baseline_alignment
  */
 module BaselineAlignment: {
-  type t = [ | `baseline | `firstBaseline | `lastBaseline ];
+  type t = [ | `baseline | `firstBaseline | `lastBaseline];
 
   let toString: t => string;
 };
@@ -1108,21 +1104,37 @@ module OverflowWrap: {
  */
 module Gradient: {
   type t('colorOrVar) = [
-    | `linearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingLinearGradient(Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `linearGradient(
+        Angle.t,
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
+    | `repeatingLinearGradient(
+        Angle.t,
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
     | `radialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
-    | `repeatingRadialGradient(array((Length.t, [< Color.t | Var.t] as 'colorOrVar)))
+    | `repeatingRadialGradient(
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
   ];
 
   /** Linear gradients transition colors progressively along an imaginary line. */
-  let linearGradient: (Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
+  let linearGradient:
+    (Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar))) =>
+    [> t('colorOrVar)];
   /** Radial gradients transition colors progressively from a center point (origin). */
-  let radialGradient: array((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
+  let radialGradient:
+    array((Length.t, [< Color.t | Var.t] as 'colorOrVar)) =>
+    [> t('colorOrVar)];
 
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (linearGradient function). */
-  let repeatingLinearGradient: (Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar))) => [> t('colorOrVar)];
+  let repeatingLinearGradient:
+    (Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar))) =>
+    [> t('colorOrVar)];
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (radialGradient function). */
-  let repeatingRadialGradient: array((Length.t, [< Color.t | Var.t] as 'colorOrVar)) => [> t('colorOrVar)];
+  let repeatingRadialGradient:
+    array((Length.t, [< Color.t | Var.t] as 'colorOrVar)) =>
+    [> t('colorOrVar)];
 
   let toString: t([< Color.t | Var.t]) => string;
 };
