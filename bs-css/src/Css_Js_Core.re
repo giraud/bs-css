@@ -293,6 +293,16 @@ let backgroundImage = x =>
     },
   );
 
+let maskImage = x =>
+  D(
+    "maskImage",
+    switch (x) {
+    | #MaskImage.t as mi => MaskImage.toString(mi)
+    | #Url.t as u => Url.toString(u)
+    | #Gradient.t as g => Gradient.toString(g)
+    },
+  );
+
 let backgroundOrigin = x =>
   D(
     "backgroundOrigin",
@@ -355,6 +365,36 @@ let backgroundRepeat = x =>
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
+  );
+
+let string_of_maskposition =
+  fun
+  | #MaskPosition.t as mp => MaskPosition.toString(mp)
+  | `hv(h, v) =>
+    (
+      switch (h) {
+      | #MaskPosition.X.t as h => MaskPosition.X.toString(h)
+      | #Length.t as l => Length.toString(l)
+      }
+    )
+    ++ " "
+    ++ (
+      switch (v) {
+      | #MaskPosition.Y.t as v => MaskPosition.Y.toString(v)
+      | #Length.t as l => Length.toString(l)
+      }
+    )
+  | #Length.t as l => Length.toString(l)
+  | #Var.t as va => Var.toString(va)
+  | #Cascading.t as c => Cascading.toString(c);
+
+let maskPosition = x =>
+  D("maskPosition", string_of_maskposition(x));
+
+let maskPositions = mp =>
+  D(
+    "maskPosition",
+    mp->Belt.Array.map(string_of_maskposition)->join(", "),
   );
 
 let borderBottomColor = x => D("borderBottomColor", string_of_color(x));
@@ -1137,6 +1177,26 @@ let scrollBehavior = x =>
     "scrollBehavior",
     switch (x) {
     | #ScrollBehavior.t as sb => ScrollBehavior.toString(sb)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let overScrollBehavior = x =>
+  D(
+    "overScrollBehavior",
+    switch (x) {
+    | #OverScrollBehavior.t as osb => OverScrollBehavior.toString(osb)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
+let overflowAnchor = x =>
+  D(
+    "overflowAnchor",
+    switch (x) {
+    | #OverflowAnchor.t as oa => OverflowAnchor.toString(oa)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },

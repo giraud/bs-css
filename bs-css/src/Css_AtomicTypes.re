@@ -305,6 +305,25 @@ module ScrollBehavior = {
     | `smooth => "smooth";
 };
 
+module OverScrollBehavior = {
+  type t = [ | `auto | `contain | `none];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `contain => "contain"
+    | `none => "none";
+};
+
+module OverflowAnchor= {
+  type t = [ | `auto | `none];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `none => "none";
+};
+
 module ColumnWidth = {
   type t = [ | `auto];
 
@@ -1415,6 +1434,38 @@ module BackgroundPosition = {
     | `center => "center";
 };
 
+module MaskPosition = {
+  module X = {
+    type t = [ | `left | `right | `center];
+
+    let toString =
+      fun
+      | `left => "left"
+      | `right => "right"
+      | `center => "center";
+  };
+
+  module Y = {
+    type t = [ | `top | `bottom | `center];
+
+    let toString =
+      fun
+      | `top => "top"
+      | `bottom => "bottom"
+      | `center => "center";
+  };
+
+  type t = [ X.t | Y.t];
+
+  let toString =
+    fun
+    | `left => "left"
+    | `right => "right"
+    | `top => "top"
+    | `bottom => "bottom"
+    | `center => "center";
+};
+
 module BackgroundRepeat = {
   type twoValue = [ | `repeat | `space | `round | `noRepeat];
   type t = [ | `repeatX | `repeatY | twoValue];
@@ -1562,6 +1613,14 @@ module Gradient = {
 };
 
 module BackgroundImage = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
+};
+
+module MaskImage = {
   type t = [ | `none];
 
   let toString =

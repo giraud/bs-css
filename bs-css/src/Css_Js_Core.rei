@@ -197,6 +197,14 @@ let backgroundImage:
   rule;
 
 /**
+ The mask-image CSS property sets the image that is used as mask layer for an element. 
+ By default this means the alpha channel of the mask image will be multiplied with the alpha channel of the element. 
+ This can be controlled with the mask-mode property. */
+let maskImage:
+  [< Types.MaskImage.t | Types.Url.t | Types.Gradient.t('gradient)] =>
+  rule;
+
+/**
  The background-origin CSS property sets the background's origin: from the border start,
  inside the border, or inside the padding.
  */
@@ -241,6 +249,38 @@ let backgroundPosition4:
     ~offsetX: Types.Length.t,
     ~y: Types.BackgroundPosition.Y.t,
     ~offsetY: Types.Length.t
+  ) =>
+  rule;
+
+/**
+ The mask-position CSS property sets the initial position, relative to the mask position layer set by mask-origin, 
+ for each defined mask image.
+ */
+let maskPosition:
+  [<
+    Types.MaskPosition.t
+    | `hv(
+        [ Types.MaskPosition.X.t | Types.Length.t],
+        [ Types.MaskPosition.Y.t | Types.Length.t],
+      )
+    | Types.Length.t
+    | Types.Var.t
+    | Types.Cascading.t
+  ] =>
+  rule;
+
+let maskPositions:
+  array(
+    [<
+      Types.MaskPosition.t
+      | `hv(
+          [ Types.MaskPosition.X.t | Types.Length.t],
+          [ Types.MaskPosition.Y.t | Types.Length.t],
+        )
+      | Types.Length.t
+      | Types.Var.t
+      | Types.Cascading.t
+    ],
   ) =>
   rule;
 
@@ -596,6 +636,20 @@ let columnGap:
  */
 let scrollBehavior:
   [< Types.ScrollBehavior.t | Types.Var.t | Types.Cascading.t] => rule;
+
+/**
+ The overscroll-behavior CSS property sets what a browser does when reaching the boundary of a scrolling area.
+ */
+let overScrollBehavior:
+  [< Types.OverScrollBehavior.t | Types.Var.t | Types.Cascading.t] => rule;
+
+/**
+ The overflow-anchor CSS property provides a way to opt out of the browser's scroll anchoring behavior, which adjusts scroll position to minimize content shifts.
+ Scroll anchoring behavior is enabled by default in any browser that supports it. Therefore, changing the value of this property is typically only required if 
+ you are experiencing problems with scroll anchoring in a document or part of a document and need to turn the behavior off.
+ */
+let overflowAnchor:
+  [< Types.OverflowAnchor.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
  The column-width CSS property sets the ideal column width in a multi-column layout.
