@@ -1,6 +1,6 @@
 {
     "name": "bs-css-fela",
-    "version": "2.0.2",
+    "version": "2.1.0",
     "description": "BuckleScript bindings for fela",
     "scripts": {
         "re:clean": "rescript clean",
@@ -20,7 +20,7 @@
         "url": "git+https://github.com/reasonml-labs/bs-css.git"
     },
     "dependencies": {
-        "bs-css": "15.0.2",
+        "bs-css": "15.1.0",
         "fela": "^11.0.0",
         "react-fela": "^11.0.0"
     },
