@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Add new types (overscrollBehavior, overflowAnchor, maskPosition, maskImage) on behalf of [Ahrefs](https://ahrefs.com/) - [#251](https://github.com/reasonml-labs/bs-css/pull/251)
+
 ## [15.0.2] - 2021-12-06
 
 - Add scrollBehavior, columnWidth and caretColor by [@Amirmoh10](https://github.com/Amirmoh10) - [#249](https://github.com/reasonml-labs/bs-css/pull/249)
