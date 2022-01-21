@@ -396,14 +396,10 @@ let string_of_maskposition =
   | #Var.t as va => Var.toString(va)
   | #Cascading.t as c => Cascading.toString(c);
 
-let maskPosition = x =>
-  D("maskPosition", string_of_maskposition(x));
+let maskPosition = x => D("maskPosition", string_of_maskposition(x));
 
 let maskPositions = mp =>
-  D(
-    "maskPosition",
-    mp->Belt.List.map(string_of_maskposition)->join(", "),
-  );
+  D("maskPosition", mp->Belt.List.map(string_of_maskposition)->join(", "));
 
 let borderBottomColor = x => D("borderBottomColor", string_of_color(x));
 
@@ -1177,11 +1173,11 @@ let scrollBehavior = x =>
     },
   );
 
-let overScrollBehavior = x =>
+let overscrollBehavior = x =>
   D(
-    "overScrollBehavior",
+    "overscrollBehavior",
     switch (x) {
-    | #OverScrollBehavior.t as osb => OverScrollBehavior.toString(osb)
+    | #OverscrollBehavior.t as osb => OverscrollBehavior.toString(osb)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },

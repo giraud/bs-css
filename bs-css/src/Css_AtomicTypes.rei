@@ -251,7 +251,7 @@ module ScrollBehavior: {
   let toString: t => string;
 };
 
-module OverScrollBehavior: {
+module OverscrollBehavior: {
   type t = [ | `auto | `contain | `none];
 
   let toString: t => string;

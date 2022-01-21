@@ -305,7 +305,7 @@ module ScrollBehavior = {
     | `smooth => "smooth";
 };
 
-module OverScrollBehavior = {
+module OverscrollBehavior = {
   type t = [ | `auto | `contain | `none];
 
   let toString =
@@ -315,7 +315,7 @@ module OverScrollBehavior = {
     | `none => "none";
 };
 
-module OverflowAnchor= {
+module OverflowAnchor = {
   type t = [ | `auto | `none];
 
   let toString =
