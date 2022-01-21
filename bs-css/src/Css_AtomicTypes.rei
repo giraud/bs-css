@@ -251,6 +251,18 @@ module ScrollBehavior: {
   let toString: t => string;
 };
 
+module OverScrollBehavior: {
+  type t = [ | `auto | `contain | `none];
+
+  let toString: t => string;
+};
+
+module OverflowAnchor: {
+  type t = [ | `auto | `none];
+
+  let toString: t => string;
+};
+
 module ColumnWidth: {
   type t = [ | `auto];
 
@@ -1016,6 +1028,27 @@ module BackgroundPosition: {
 };
 
 /**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position
+ */
+module MaskPosition: {
+  module X: {
+    type t = [ | `left | `right | `center];
+
+    let toString: t => string;
+  };
+
+  module Y: {
+    type t = [ | `top | `bottom | `center];
+
+    let toString: t => string;
+  };
+
+  type t = [ X.t | Y.t];
+
+  let toString: t => string;
+};
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/background-origin
  */
 module BackgroundRepeat: {
@@ -1143,6 +1176,15 @@ module Gradient: {
  https://developer.mozilla.org/docs/Web/CSS/background-image
  */
 module BackgroundImage: {
+  type t = [ | `none];
+
+  let toString: t => string;
+};
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image
+ */
+module MaskImage: {
   type t = [ | `none];
 
   let toString: t => string;
