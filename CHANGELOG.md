@@ -1,6 +1,10 @@
 ## [Unreleased]
 
+## [15.1.0] - 2022-01-20
+
 - Add new types (overscrollBehavior, overflowAnchor, maskPosition, maskImage) on behalf of [Ahrefs](https://ahrefs.com/) - [#251](https://github.com/reasonml-labs/bs-css/pull/251)
+
+bs-css-dom@3.1.0, bs-css-emotion@4.1.0, bs-css-fela@2.1.0
 
 ## [15.0.2] - 2021-12-06
 
@@ -283,7 +287,8 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/giraud/bs-css/compare/15.0.2...HEAD
+[Unreleased]: https://github.com/giraud/bs-css/compare/15.1.0...HEAD
+[15.1.0]: https://github.com/giraud/bs-css/compare/15.0.2...15.1.0
 [15.0.2]: https://github.com/giraud/bs-css/compare/15.0.1...15.0.2
 [15.0.1]: https://github.com/giraud/bs-css/compare/14.0.2...15.0.1
 [14.0.2]: https://github.com/giraud/bs-css/compare/14.0.1...14.0.2
