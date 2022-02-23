@@ -247,6 +247,11 @@ describe("Gradient background", () =>
             |]),
           ),
         ),
+        r(
+          background(
+            conicGradient(deg(45.), [|(zero, red), (pct(100.), blue)|]),
+          ),
+        ),
       )
       ->Js.Json.stringifyAny,
     )
@@ -258,6 +263,9 @@ describe("Gradient background", () =>
          {"background": "radial-gradient(#FF0000 0, #0000FF 100%)"},
          {
            "background": "repeating-radial-gradient(#FF0000 0, #0000FF calc(20% + 5px))",
+         },
+         {
+           "background": "conic-gradient(from 45deg, #FF0000 0, #0000FF 100%)",
          },
        ))
   )

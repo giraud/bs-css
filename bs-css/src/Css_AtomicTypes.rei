@@ -1149,6 +1149,10 @@ module Gradient: {
     | `repeatingRadialGradient(
         array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
       )
+    | `conicGradient(
+        Angle.t,
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
   ];
 
   /** Linear gradients transition colors progressively along an imaginary line. */
@@ -1167,6 +1171,10 @@ module Gradient: {
   /** Repeating gradients duplicate a gradient as much as necessary to fill a given area (radialGradient function). */
   let repeatingRadialGradient:
     array((Length.t, [< Color.t | Var.t] as 'colorOrVar)) =>
+    [> t('colorOrVar)];
+  /** Conic gradients transition colors rotated around a center point */
+  let conicGradient:
+    (Angle.t, array((Length.t, [< Color.t | Var.t] as 'colorOrVar))) =>
     [> t('colorOrVar)];
 
   let toString: t([< Color.t | Var.t]) => string;

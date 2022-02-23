@@ -1573,6 +1573,10 @@ module Gradient = {
     | `repeatingRadialGradient(
         array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
       )
+    | `conicGradient(
+        Angle.t,
+        array((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
   ];
 
   let linearGradient = (angle, stops) => `linearGradient((angle, stops));
@@ -1580,6 +1584,7 @@ module Gradient = {
     `repeatingLinearGradient((angle, stops));
   let radialGradient = stops => `radialGradient(stops);
   let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
+  let conicGradient = (angle, stops) => `conicGradient((angle, stops));
 
   let string_of_color =
     fun
@@ -1609,7 +1614,13 @@ module Gradient = {
     | `radialGradient(stops) =>
       "radial-gradient(" ++ string_of_stops(stops) ++ ")"
     | `repeatingRadialGradient(stops) =>
-      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")";
+      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    | `conicGradient(angle, stops) =>
+      "conic-gradient(from "
+      ++ Angle.toString(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")";
 };
 
 module BackgroundImage = {
