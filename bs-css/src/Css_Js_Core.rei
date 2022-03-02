@@ -1846,6 +1846,12 @@ let radialGradient:
 let repeatingRadialGradient:
   array((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)) =>
   [> Types.Gradient.t('colorOrVar)];
+let conicGradient:
+  (
+    Types.Angle.t,
+    array((Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar))
+  ) =>
+  [> Types.Gradient.t('colorOrVar)];
 
 let areas: list(string) => [> Types.GridTemplateAreas.t];
 let ident: string => [> Types.GridArea.t];

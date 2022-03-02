@@ -1478,6 +1478,7 @@ let linearGradient = Gradient.linearGradient;
 let repeatingLinearGradient = Gradient.repeatingLinearGradient;
 let radialGradient = Gradient.radialGradient;
 let repeatingRadialGradient = Gradient.repeatingRadialGradient;
+let conicGradient = Gradient.conicGradient;
 
 let areas = GridTemplateAreas.areas;
 let ident = GridArea.ident;
