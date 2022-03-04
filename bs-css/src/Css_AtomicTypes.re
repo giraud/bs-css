@@ -177,6 +177,15 @@ module Position = {
     | `sticky => "sticky";
 };
 
+module Isolation = {
+  type t = [ | `auto | `isolate];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `isolate => "isolate";
+};
+
 module Resize = {
   type t = [ | `none | `both | `horizontal | `vertical | `block | `inline];
 

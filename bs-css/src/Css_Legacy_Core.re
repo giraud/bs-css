@@ -997,6 +997,15 @@ let position = x =>
     },
   );
 
+let isolation = x =>
+  D(
+    "isolation",
+    switch (x) {
+    | #Isolation.t as i => Isolation.toString(i)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let justifySelf = x =>
   D(
     "justifySelf",
@@ -1403,6 +1412,8 @@ let relative = Position.relative;
 let static = Position.static;
 let fixed = `fixed;
 let sticky = Position.sticky;
+
+let isolate = `isolate;
 
 //let none = Resize.none;
 //let both = Resize.both;

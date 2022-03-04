@@ -155,6 +155,15 @@ module Position: {
   let toString: t => string;
 };
 
+/**
+ https://developer.mozilla.org/docs/Web/CSS/isolation
+ */
+module Isolation: {
+  type t = [ | `auto | `isolate];
+
+  let toString: t => string;
+};
+
 module Resize: {
   type t = [ | `none | `both | `horizontal | `vertical | `block | `inline];
 

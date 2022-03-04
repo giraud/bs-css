@@ -309,6 +309,28 @@ describe("Position", () => {
   );
 });
 
+describe("isolation", () => {
+  test("test values", () =>
+    expect(
+      (
+        r(isolation(auto)),
+        r(isolation(isolate)),
+        r(isolation(inherit_)),
+        r(isolation(initial)),
+        r(isolation(unset)),
+      )
+      ->Js.Json.stringifyAny,
+    )
+    |> toBeJson((
+         {"isolation": "auto"},
+         {"isolation": "isolate"},
+         {"isolation": "inherit"},
+         {"isolation": "initial"},
+         {"isolation": "unset"},
+       ))
+  )
+});
+
 describe("object-fit", () =>
   test("test values", () =>
     expect(
