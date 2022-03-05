@@ -13,9 +13,9 @@ If you know another implementation that can be added, send a link in an issue or
 ## Installation
 
 ```sh
-npm install --save bs-css-emotion
+npm install --save bs-css bs-css-emotion
 or
-yarn add bs-css-emotion
+yarn add bs-css bs-css-emotion
 ```
 
 In your `bsconfig.json`, include `"bs-css"` and `"bs-css-emotion"` in the `bs-dependencies`.
