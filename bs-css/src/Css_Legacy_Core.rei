@@ -1070,6 +1070,11 @@ let pointerEvents:
 let position: [< Types.Position.t | Types.Var.t | Types.Cascading.t] => rule;
 
 /**
+ The isolation CSS property determines whether an element must create a new stacking context.
+ */
+let isolation: [< Types.Isolation.t | Types.Cascading.t] => rule;
+
+/**
  The resize CSS property sets whether an element is resizable, and if so,
  in which directions.
  */
@@ -1615,6 +1620,8 @@ let relative: [> Types.Position.t];
 let static: [> Types.Position.t];
 let fixed: [> | `fixed];
 let sticky: [> Types.Position.t];
+
+let isolate: [> | `isolate];
 
 let horizontal: [> Types.Resize.t];
 let vertical: [> Types.Resize.t];
