@@ -1517,13 +1517,14 @@ module TextDecorationStyle = {
 };
 
 module Width = {
-  type t = [ | `auto | `fitContent | `maxContent];
+  type t = [ | `auto | `fitContent | `maxContent | `minContent];
 
   let toString =
     fun
     | `auto => "auto"
     | `fitContent => "fit-content"
-    | `maxContent => "max-content";
+    | `maxContent => "max-content"
+    | `minContent => "min-content";
 };
 
 module MaxWidth = {
