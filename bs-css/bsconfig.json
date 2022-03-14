@@ -12,8 +12,5 @@
             "type": "dev",
             "subdirs": true
         }
-    ],
-    "bs-dev-dependencies": [
-        "@glennsl/bs-jest"
     ]
 }
