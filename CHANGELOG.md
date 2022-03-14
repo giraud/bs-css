@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- Update `width` property with `maxContent` and `minContent` by [@RuslanGrigoryev](https://github.com/RuslanGrigoryev) - [#254](https://github.com/reasonml-labs/bs-css/pull/254)
+- Add `isolation` property by [@lucasweng](https://github.com/lucasweng) - [#253](https://github.com/reasonml-labs/bs-css/pull/253)
+- Removed dependency to bs-jest
+
 ## [15.1.1] - 2022-03-02
 
 - Add conic-gradient by [@happylinks](https://github.com/happylinks) - [#252](https://github.com/reasonml-labs/bs-css/pull/252)
