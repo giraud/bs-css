@@ -1,6 +1,6 @@
 {
   "name": "bs-css",
-  "version": "15.1.1",
+  "version": "15.2.0",
   "description": "Css types",
   "scripts": {
     "re:clean": "rescript clean",
@@ -11,7 +11,8 @@
   },
   "keywords": [
     "bucklescript",
-    "reason",
+    "rescript",
+    "reasonML",
     "css"
   ],
   "author": "Andreas Møller <andreas@sentia.ai>",

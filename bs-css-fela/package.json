@@ -1,7 +1,7 @@
 {
     "name": "bs-css-fela",
-    "version": "2.1.1",
-    "description": "BuckleScript bindings for fela",
+    "version": "2.2.0",
+    "description": "bs-css bindings for Fela",
     "scripts": {
         "re:clean": "rescript clean",
         "re:build": "rescript build",
@@ -10,7 +10,8 @@
     "keywords": [
         "fela",
         "bucklescript",
-        "reason",
+        "rescript",
+        "reasonML",
         "css"
     ],
     "author": "Hervé Giraud <giraud.contact@yahoo.fr>",
@@ -20,7 +21,7 @@
         "url": "git+https://github.com/reasonml-labs/bs-css.git"
     },
     "dependencies": {
-        "bs-css": "15.1.1",
+        "bs-css": "15.2.0",
         "fela": "^11.0.0",
         "react-fela": "^11.0.0"
     },

@@ -1,8 +1,12 @@
 ## [Unreleased]
+     
+## [15.2.0] - 2022-03-14
 
 - Update `width` property with `maxContent` and `minContent` by [@RuslanGrigoryev](https://github.com/RuslanGrigoryev) - [#254](https://github.com/reasonml-labs/bs-css/pull/254)
 - Add `isolation` property by [@lucasweng](https://github.com/lucasweng) - [#253](https://github.com/reasonml-labs/bs-css/pull/253)
 - Removed dependency to bs-jest
+
+bs-css-dom@3.2.0, bs-css-emotion@4.2.0, bs-css-fela@2.2.0
 
 ## [15.1.1] - 2022-03-02
 
@@ -298,6 +302,7 @@ than before, you can use `List.concat` instead or `@` operator.
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
 [Unreleased]: https://github.com/giraud/bs-css/compare/15.1.1...HEAD
+[15.2.0]: https://github.com/giraud/bs-css/compare/15.1.1...15.2.0
 [15.1.1]: https://github.com/giraud/bs-css/compare/15.1.0...15.1.1
 [15.1.0]: https://github.com/giraud/bs-css/compare/15.0.2...15.1.0
 [15.0.2]: https://github.com/giraud/bs-css/compare/15.0.1...15.0.2

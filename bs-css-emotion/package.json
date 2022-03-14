@@ -1,7 +1,7 @@
 {
   "name": "bs-css-emotion",
-  "version": "4.1.1",
-  "description": "BuckleScript bindings for emotion",
+  "version": "4.2.0",
+  "description": "bs-css bindings for Emotion",
   "scripts": {
     "re:clean": "rescript clean",
     "re:build": "rescript build",
@@ -10,7 +10,8 @@
   "keywords": [
     "emotion",
     "bucklescript",
-    "reason",
+    "rescript",
+    "reasonML",
     "css"
   ],
   "author": "Hervé Giraud <giraud.contact@yahoo.fr>",
@@ -22,7 +23,7 @@
   "dependencies": {
     "@emotion/cache": "^11.0.0",
     "@emotion/css": "^11.0.0",
-    "bs-css": "15.1.1"
+    "bs-css": "15.2.0"
   },
   "devDependencies": {
     "rescript": "^9.0.0"
