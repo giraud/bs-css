@@ -1781,6 +1781,15 @@ let bevel: [> | `bevel];
 let butt: [> | `butt];
 let square: [> | `square];
 
+let panX: [> | `panX];
+let panY: [> | `panY];
+let panLeft: [> | `panLeft];
+let panRight: [> | `panRight];
+let panUp: [> | `panUp];
+let panDown: [> | `panDown];
+let pinchZoom: [> | `pinchZoom];
+let manipulation: [> | `manipulation];
+
 let thin: [> Types.FontWeight.t];
 let extraLight: [> Types.FontWeight.t];
 let light: [> Types.FontWeight.t];
@@ -2110,3 +2119,5 @@ module SVG: {
   let stopColor: [< Types.Color.t | Types.Var.t] => rule;
   let stopOpacity: float => rule;
 };
+
+let touchAction: Types.TouchAction.t => rule;

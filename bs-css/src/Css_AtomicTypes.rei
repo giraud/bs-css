@@ -1412,3 +1412,23 @@ module SVG: {
     let toString: t => string;
   };
 };
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
+ */
+module TouchAction: {
+  type t = [ 
+    | `auto 
+    | `none 
+    | `panX 
+    | `panY 
+    | `panLeft 
+    | `panRight 
+    | `panUp 
+    | `panDown 
+    | `pinchZoom 
+    | `manipulation
+  ];
+
+  let toString: t => string;
+};

@@ -1655,6 +1655,15 @@ let bevel = `bevel;
 let butt = `butt;
 let square = `square;
 
+let panX = `panX;
+let panY = `panY;
+let panLeft = `panLeft
+let panRight = `panRight;
+let panUp = `panUp;
+let panDown = `panDown;
+let pinchZoom = `pinchZoom;
+let manipulation = `manipulation;
+
 let flex3 = (~grow, ~shrink, ~basis) =>
   D(
     "flex",
@@ -2295,3 +2304,5 @@ module SVG = {
   let stopColor = x => D("stopColor", string_of_color(x));
   let stopOpacity = x => D("stopOpacity", Js.Float.toString(x));
 };
+
+let touchAction = x => D("touchAction", x->TouchAction.toString);

@@ -1899,3 +1899,31 @@ module SVG = {
       | `contextStroke => "context-stroke";
   };
 };
+
+module TouchAction = {
+  type t = [ 
+    | `auto 
+    | `none 
+    | `panX 
+    | `panY 
+    | `panLeft 
+    | `panRight 
+    | `panUp 
+    | `panDown 
+    | `pinchZoom 
+    | `manipulation
+  ];
+
+  let toString = 
+    fun
+    | `auto => "auto"
+    | `none => "none"
+    | `panX => "pan-x"
+    | `panY => "pan-y"
+    | `panLeft => "pan-left"
+    | `panRight => "pan-right"
+    | `panUp => "pan-up"
+    | `panDown => "pan-down"
+    | `pinchZoom => "pinch-zoom"
+    | `manipulation => "manipulation"
+};
