@@ -1,6 +1,10 @@
 ## [Unreleased]
 
+## [15.3.0] - 2022-05-18
+
 - Add `touchAction` by [@RuslanGrigoryev](https://github.com/RuslanGrigoryev) - [#256](https://github.com/reasonml-labs/bs-css/pull/256)
+
+bs-css-dom@3.3.0, bs-css-emotion@4.3.0, bs-css-fela@2.3.0
 
 ## [15.2.0] - 2022-03-14
 
