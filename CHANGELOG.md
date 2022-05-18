@@ -1,5 +1,7 @@
 ## [Unreleased]
-     
+
+- Add `touchAction` by [@RuslanGrigoryev](https://github.com/RuslanGrigoryev) - [#256](https://github.com/reasonml-labs/bs-css/pull/256)
+
 ## [15.2.0] - 2022-03-14
 
 - Update `width` property with `maxContent` and `minContent` by [@RuslanGrigoryev](https://github.com/RuslanGrigoryev) - [#254](https://github.com/reasonml-labs/bs-css/pull/254)
