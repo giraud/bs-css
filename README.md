@@ -1,6 +1,6 @@
 # bs-css
 
-Statically typed DSL for writing css in reason.
+Statically typed DSL for writing css in reason and rescript.
 
 The bs-css library contains type css core definitions, it has different implementations:
 
