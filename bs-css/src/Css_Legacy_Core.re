@@ -1768,6 +1768,8 @@ let gridLengthToJs =
     "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
   | `calc(`sub, a, b) =>
     "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
+  | `calc(`mult, a, b) =>
+    "calc(" ++ Length.toString(a) ++ " * " ++ Length.toString(b) ++ ")"
   | `ch(x) => Js.Float.toString(x) ++ "ch"
   | `cm(x) => Js.Float.toString(x) ++ "cm"
   | `em(x) => Js.Float.toString(x) ++ "em"

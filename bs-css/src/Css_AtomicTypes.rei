@@ -78,7 +78,7 @@ module Length: {
     | `pc(float)
     | `pt(int)
     | `zero
-    | `calc([ | `add | `sub], t, t)
+    | `calc([ | `add | `sub | `mult ], t, t)
     | `percent(float)
   ];
 
@@ -1417,16 +1417,16 @@ module SVG: {
  * https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
  */
 module TouchAction: {
-  type t = [ 
-    | `auto 
-    | `none 
-    | `panX 
-    | `panY 
-    | `panLeft 
-    | `panRight 
-    | `panUp 
-    | `panDown 
-    | `pinchZoom 
+  type t = [
+    | `auto
+    | `none
+    | `panX
+    | `panY
+    | `panLeft
+    | `panRight
+    | `panUp
+    | `panDown
+    | `pinchZoom
     | `manipulation
   ];
 

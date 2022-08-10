@@ -84,7 +84,7 @@ module Length = {
     | `pc(float)
     | `pt(int)
     | `zero
-    | `calc([ | `add | `sub], t, t)
+    | `calc([ | `add | `sub | `mult], t, t)
     | `percent(float)
   ];
 
@@ -128,6 +128,8 @@ module Length = {
       "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
     | `calc(`sub, a, b) =>
       "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
+    | `calc(`mult, a, b) =>
+      "calc(" ++ toString(a) ++ " * " ++ toString(b) ++ ")"
     | `percent(x) => Js.Float.toString(x) ++ "%";
 };
 
@@ -1111,12 +1113,13 @@ module TextAlign = {
 };
 
 module WordBreak = {
-  type t = [ | `normal | `breakAll | `keepAll];
+  type t = [ | `normal | `breakAll | `breakWord | `keepAll];
 
   let toString =
     fun
     | `normal => "normal"
     | `breakAll => "break-all"
+    | `breakWord => "break-word"
     | `keepAll => "keep-all";
 };
 
@@ -1901,20 +1904,20 @@ module SVG = {
 };
 
 module TouchAction = {
-  type t = [ 
-    | `auto 
-    | `none 
-    | `panX 
-    | `panY 
-    | `panLeft 
-    | `panRight 
-    | `panUp 
-    | `panDown 
-    | `pinchZoom 
+  type t = [
+    | `auto
+    | `none
+    | `panX
+    | `panY
+    | `panLeft
+    | `panRight
+    | `panUp
+    | `panDown
+    | `pinchZoom
     | `manipulation
   ];
 
-  let toString = 
+  let toString =
     fun
     | `auto => "auto"
     | `none => "none"
