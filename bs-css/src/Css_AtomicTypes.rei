@@ -795,7 +795,7 @@ module TextAlign: {
  https://developer.mozilla.org/docs/Web/CSS/word-break
  */
 module WordBreak: {
-  type t = [ | `normal | `breakAll | `keepAll];
+  type t = [ | `normal | `breakAll | `breakWord | `keepAll];
 
   let toString: t => string;
 };
