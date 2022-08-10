@@ -388,6 +388,10 @@ module TimingFunction = {
     | `stepEnd
     | `steps(int, [ | `start | `end_])
     | `cubicBezier(float, float, float, float)
+    | `jumpStart
+    | `jumpEnd
+    | `jumpNone
+    | `jumpBoth
   ];
 
   let linear = `linear;
@@ -399,6 +403,10 @@ module TimingFunction = {
   let stepEnd = `stepEnd;
   let steps = (i, dir) => `steps((i, dir));
   let cubicBezier = (a, b, c, d) => `cubicBezier((a, b, c, d));
+  let jumpStart = `jumpStart;
+  let jumpEnd = `jumpEnd;
+  let jumpNone = `jumpNone;
+  let jumpBoth = `jumpBoth;
 
   let toString =
     fun
@@ -420,7 +428,11 @@ module TimingFunction = {
       ++ Js.Float.toString(c)
       ++ ", "
       ++ Js.Float.toString(d)
-      ++ ")";
+      ++ ")"
+    | `jumpStart => "jump-start"
+    | `jumpEnd => "jump-end"
+    | `jumpNone => "jump-none"
+    | `jumpBoth => "jump-both";
 };
 
 module RepeatValue = {

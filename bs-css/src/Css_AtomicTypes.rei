@@ -310,6 +310,10 @@ module TimingFunction: {
     | `stepEnd
     | `steps(int, [ | `start | `end_])
     | `cubicBezier(float, float, float, float)
+    | `jumpStart
+    | `jumpEnd
+    | `jumpNone
+    | `jumpBoth
   ];
 
   let linear: [> t];
@@ -321,6 +325,11 @@ module TimingFunction: {
   let stepEnd: [> t];
   let steps: (int, [ | `start | `end_]) => [> t];
   let cubicBezier: (float, float, float, float) => [> t];
+  let stepEnd: [> t];
+  let jumpStart: [> t];
+  let jumpEnd: [> t];
+  let jumpNone: [> t];
+  let jumpBoth: [> t];
 
   let toString: t => string;
 };
