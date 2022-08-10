@@ -1290,6 +1290,15 @@ module TransformStyle: {
 };
 
 /**
+ https://developer.mozilla.org/docs/Web/CSS/transform-box
+ */
+module TransformBox = {
+  type t = [ | `contentBox | `borderBox | `fillBox | `strokeBox | `viewBox];
+
+  let toString = t => string;
+};
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/list-style-image
  */
 module ListStyleImage: {

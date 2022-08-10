@@ -1733,6 +1733,18 @@ module TransformStyle = {
     | `flat => "flat";
 };
 
+module TransformBox = {
+  type t = [ | `contentBox | `borderBox | `fillBox | `strokeBox | `viewBox];
+
+  let toString =
+    fun
+    | `contentBox => "content-box"
+    | `borderBox => "border-box"
+    | `fillBox => "fill-box"
+    | `strokeBox => "stroke-box"
+    | `viewBox => "view-box"
+};
+
 module ListStyleImage = {
   type t = [ | `none];
 
