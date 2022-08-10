@@ -261,19 +261,21 @@ module FlexBasis = {
 };
 
 module Overflow = {
-  type t = [ | `hidden | `visible | `scroll | `auto];
+  type t = [ | `hidden | `visible | `scroll | `auto | `clip];
 
   let hidden = `hidden;
   let visible = `visible;
   let scroll = `scroll;
   let auto = `auto;
+  let clip = `clip;
 
   let toString =
     fun
     | `hidden => "hidden"
     | `visible => "visible"
     | `scroll => "scroll"
-    | `auto => "auto";
+    | `auto => "auto"
+    | `clip => "clip";
 };
 
 module Margin = {
