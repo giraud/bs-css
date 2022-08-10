@@ -1139,8 +1139,7 @@ let transformOrigin3d = (x, y, z) =>
     ++ " ",
   );
 
-let transformBox = (x) =>
-  D("transformBox", TransformBox.toString(x));
+let transformBox = (x) => D("transformBox", TransformBox.toString(x));
 
 let unsafe = (property, value) => D(property, value);
 
