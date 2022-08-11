@@ -1542,6 +1542,15 @@ module TextDecorationStyle = {
     | `wavy => "wavy";
 };
 
+module TextDecorationThickness = {
+  type t = [ | `fromFont | `auto ];
+
+  let toString =
+    fun
+    | `fromFont => "from-font"
+    | `auto => "auto";
+};
+
 module Width = {
   type t = [ | `auto | `fitContent | `maxContent | `minContent];
 

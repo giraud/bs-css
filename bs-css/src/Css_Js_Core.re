@@ -1085,6 +1085,18 @@ let textDecorationStyle = x =>
     },
   );
 
+let textDecorationThickness = x =>
+  D(
+    "textDecorationThickness",
+    switch (x) {
+    | #TextDecorationThickness.t as t => TextDecorationThickness.toString(t)
+    | #Length.t as l => Length.toString(l)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
+    },
+  );
+
 let textIndent = x =>
   D(
     "textIndent",
