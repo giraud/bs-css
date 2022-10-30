@@ -933,9 +933,9 @@ module TextTransform: {
 }
 
 module GridTemplateAreas: {
-  type t = [#none | #areas(list<string>)]
+  type t = [#none | #areas(array<string>)]
 
-  let areas: list<string> => [> t]
+  let areas: array<string> => [> t]
 
   let toString: t => string
 }

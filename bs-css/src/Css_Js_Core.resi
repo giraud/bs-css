@@ -1690,7 +1690,7 @@ let conicGradient: (
   array<(Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
 ) => [> Types.Gradient.t<'colorOrVar>]
 
-let areas: list<string> => [> Types.GridTemplateAreas.t]
+let areas: array<string> => [> Types.GridTemplateAreas.t]
 let ident: string => [> Types.GridArea.t]
 let numIdent: (int, string) => [> Types.GridArea.t]
 

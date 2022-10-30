@@ -63,7 +63,7 @@ describe("Filter", () =>
     expect(filter([#inherit_]))->toBe({"filter": "inherit"})
     expect(filter([#initial]))->toBe({"filter": "initial"})
     expect(filter([#unset]))->toBe({"filter": "unset"})
-    expect(filter([#url("myurl")]))->toBe({"filter": "url(myurl)"})
+    expect(filter([#url("myURL")]))->toBe({"filter": "url(myURL)"})
   })
 )
 
@@ -292,14 +292,14 @@ describe("Word spacing", () =>
 describe("gridTemplateAreas", () => {
   test("takes acceptable types & cascades", () => {
     expect(gridTemplateAreas(#none))->toBe({"gridTemplateAreas": "none"})
-    expect(gridTemplateAreas(#areas(list{"a"})))->toBe({"gridTemplateAreas": "'a'"})
+    expect(gridTemplateAreas(#areas(["a"])))->toBe({"gridTemplateAreas": "'a'"})
     expect(gridTemplateAreas(#inherit_))->toBe({"gridTemplateAreas": "inherit"})
     expect(gridTemplateAreas(#initial))->toBe({"gridTemplateAreas": "initial"})
     expect(gridTemplateAreas(#unset))->toBe({"gridTemplateAreas": "unset"})
   })
 
-  test("sucessfully combines list", () =>
-    expect(gridTemplateAreas(#areas(list{"a a a", "b b b"})))->toBe({
+  test("successfully combines list", () =>
+    expect(gridTemplateAreas(#areas(["a a a", "b b b"])))->toBe({
       "gridTemplateAreas": "'a a a' 'b b b'",
     })
   )
@@ -327,7 +327,7 @@ describe("GridArea", () => {
   })
 })
 
-describe("gridTemplateCoumns", () => {
+describe("gridTemplateColumns", () => {
   test("concatenates list", () => {
     expect(gridTemplateColumns([#fr(1.), #px(100), #auto]))->toBe({
       "gridTemplateColumns": "1fr 100px auto",
@@ -424,7 +424,7 @@ describe("backgroundImage", () =>
   })
 )
 
-describe("background shorhand", () =>
+describe("background shorthand", () =>
   test("test values", () => {
     expect(background(rgb(1, 2, 3)))->toBe({"background": "rgb(1, 2, 3)"})
     expect(background(url("x")))->toBe({"background": "url(x)"})

@@ -1348,14 +1348,15 @@ module TextTransform = {
 }
 
 module GridTemplateAreas = {
-  type t = [#none | #areas(list<string>)]
+  type t = [#none | #areas(array<string>)]
 
   let areas = x => #areas(x)
 
   let toString = x =>
     switch x {
     | #none => "none"
-    | #areas(l) => String.trim(List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "", l))
+    | #areas(items) =>
+      String.trim(Belt.Array.reduceU(items, "", (. carry, item) => carry ++ "'" ++ item ++ "' "))
     }
 }
 

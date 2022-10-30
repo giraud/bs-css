@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- BREAKING CHANGE - use an array for areas type
+
 ## [15.3.1] - 2022-10-30
 
 - Convert bs-css files to Rescript - [#260](https://github.com/giraud/bs-css/issues/260)

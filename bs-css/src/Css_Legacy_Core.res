@@ -65,7 +65,7 @@ module Make = (CssImpl: Css_Core.CssImplementationIntf): (
 
   let style = rules => CssImpl.make(. rules->toJson)
 
-  let merge = styles => CssImpl.mergeStyles(. styles->Array.of_list)
+  let merge = styles => CssImpl.mergeStyles(. styles->Belt.List.toArray)
   let merge2 = (s, s2) => merge(list{s, s2})
   let merge3 = (s, s2, s3) => merge(list{s, s2, s3})
   let merge4 = (s, s2, s3, s4) => merge(list{s, s2, s3, s4})
@@ -1345,7 +1345,7 @@ let radialGradient = Gradient.radialGradient
 let repeatingRadialGradient = Gradient.repeatingRadialGradient
 let conicGradient = Gradient.conicGradient
 
-let areas = GridTemplateAreas.areas
+let areas = items => GridTemplateAreas.areas(Belt.List.toArray(items))
 let ident = GridArea.ident
 let numIdent = GridArea.numIdent
 

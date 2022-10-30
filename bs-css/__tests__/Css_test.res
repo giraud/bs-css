@@ -294,14 +294,14 @@ describe("Word spacing", () =>
 describe("gridTemplateAreas", () => {
   test("takes acceptable types & cascades", () => {
     expect(gridTemplateAreas(#none))->toBe({"gridTemplateAreas": "none"})
-    expect(gridTemplateAreas(#areas(list{"a"})))->toBe({"gridTemplateAreas": "'a'"})
+    expect(gridTemplateAreas(#areas(["a"])))->toBe({"gridTemplateAreas": "'a'"})
     expect(gridTemplateAreas(#inherit_))->toBe({"gridTemplateAreas": "inherit"})
     expect(gridTemplateAreas(#initial))->toBe({"gridTemplateAreas": "initial"})
     expect(gridTemplateAreas(#unset))->toBe({"gridTemplateAreas": "unset"})
   })
 
   test("successfully combines list", () => {
-    expect(gridTemplateAreas(#areas(list{"a a a", "b b b"})))->toBe({
+    expect(gridTemplateAreas(#areas(["a a a", "b b b"])))->toBe({
       "gridTemplateAreas": "'a a a' 'b b b'",
     })
   })
