@@ -19,12 +19,10 @@ describe("Pseudo classes", () => {
     expect(firstChild([ruleSelector]))->toBe({":first-child": ruleJson});
     expect(firstOfType([ruleSelector]))->toBe({":first-of-type": ruleJson});
     expect(focus([ruleSelector]))->toBe({":focus": ruleJson});
-    expect(focusVisible([ruleSelector]))
-    ->toBe({":focus-visible": ruleJson});
+    expect(focusVisible([ruleSelector]))->toBe({":focus-visible": ruleJson});
     expect(focusWithin([ruleSelector]))->toBe({":focus-within": ruleJson});
     expect(hover([ruleSelector]))->toBe({":hover": ruleJson});
-    expect(indeterminate([ruleSelector]))
-    ->toBe({":indeterminate": ruleJson});
+    expect(indeterminate([ruleSelector]))->toBe({":indeterminate": ruleJson});
     expect(inRange([ruleSelector]))->toBe({":in-range": ruleJson});
     expect(invalid([ruleSelector]))->toBe({":invalid": ruleJson});
     expect(lastChild([ruleSelector]))->toBe({":last-child": ruleJson});
@@ -55,47 +53,31 @@ describe("Pseudo classes", () => {
   );
 
   test("test nth-child", () => {
-    expect(nthChild(`odd, [ruleSelector]))
-    ->toBe({":nth-child(odd)": ruleJson});
-    expect(nthChild(`even, [ruleSelector]))
-    ->toBe({":nth-child(even)": ruleJson});
-    expect(nthChild(`n(2), [ruleSelector]))
-    ->toBe({":nth-child(2n)": ruleJson});
-    expect(nthChild(`add((3, 4)), [ruleSelector]))
-    ->toBe({":nth-child(3n+4)": ruleJson});
+    expect(nthChild(`odd, [ruleSelector]))->toBe({":nth-child(odd)": ruleJson});
+    expect(nthChild(`even, [ruleSelector]))->toBe({":nth-child(even)": ruleJson});
+    expect(nthChild(`n(2), [ruleSelector]))->toBe({":nth-child(2n)": ruleJson});
+    expect(nthChild(`add((3, 4)), [ruleSelector]))->toBe({":nth-child(3n+4)": ruleJson});
   });
 
   test("test nth-last-child", () => {
-    expect(nthLastChild(`odd, [ruleSelector]))
-    ->toBe({":nth-last-child(odd)": ruleJson});
-    expect(nthLastChild(`even, [ruleSelector]))
-    ->toBe({":nth-last-child(even)": ruleJson});
-    expect(nthLastChild(`n(2), [ruleSelector]))
-    ->toBe({":nth-last-child(2n)": ruleJson});
-    expect(nthLastChild(`add((3, 4)), [ruleSelector]))
-    ->toBe({":nth-last-child(3n+4)": ruleJson});
+    expect(nthLastChild(`odd, [ruleSelector]))->toBe({":nth-last-child(odd)": ruleJson});
+    expect(nthLastChild(`even, [ruleSelector]))->toBe({":nth-last-child(even)": ruleJson});
+    expect(nthLastChild(`n(2), [ruleSelector]))->toBe({":nth-last-child(2n)": ruleJson});
+    expect(nthLastChild(`add((3, 4)), [ruleSelector]))->toBe({":nth-last-child(3n+4)": ruleJson});
   });
 
   test("test nth-last-of-type", () => {
-    expect(nthLastOfType(`odd, [ruleSelector]))
-    ->toBe({":nth-last-of-type(odd)": ruleJson});
-    expect(nthLastOfType(`even, [ruleSelector]))
-    ->toBe({":nth-last-of-type(even)": ruleJson});
-    expect(nthLastOfType(`n(2), [ruleSelector]))
-    ->toBe({":nth-last-of-type(2n)": ruleJson});
-    expect(nthLastOfType(`add((3, 4)), [ruleSelector]))
-    ->toBe({":nth-last-of-type(3n+4)": ruleJson});
+    expect(nthLastOfType(`odd, [ruleSelector]))->toBe({":nth-last-of-type(odd)": ruleJson});
+    expect(nthLastOfType(`even, [ruleSelector]))->toBe({":nth-last-of-type(even)": ruleJson});
+    expect(nthLastOfType(`n(2), [ruleSelector]))->toBe({":nth-last-of-type(2n)": ruleJson});
+    expect(nthLastOfType(`add((3, 4)), [ruleSelector]))->toBe({":nth-last-of-type(3n+4)": ruleJson});
   });
 
   test("test nth-of-type", () => {
-    expect(nthOfType(`odd, [ruleSelector]))
-    ->toBe({":nth-of-type(odd)": ruleJson});
-    expect(nthOfType(`even, [ruleSelector]))
-    ->toBe({":nth-of-type(even)": ruleJson});
-    expect(nthOfType(`n(2), [ruleSelector]))
-    ->toBe({":nth-of-type(2n)": ruleJson});
-    expect(nthOfType(`add((3, 4)), [ruleSelector]))
-    ->toBe({":nth-of-type(3n+4)": ruleJson});
+    expect(nthOfType(`odd, [ruleSelector]))->toBe({":nth-of-type(odd)": ruleJson});
+    expect(nthOfType(`even, [ruleSelector]))->toBe({":nth-of-type(even)": ruleJson});
+    expect(nthOfType(`n(2), [ruleSelector]))->toBe({":nth-of-type(2n)": ruleJson});
+    expect(nthOfType(`add((3, 4)), [ruleSelector]))->toBe({":nth-of-type(3n+4)": ruleJson});
   });
 });
 
