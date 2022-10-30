@@ -1697,7 +1697,7 @@ module MaskImage = {
     }
 }
 
-module GeometyBox = {
+module GeometryBox = {
   type t = [
     | #marginBox
     | #borderBox

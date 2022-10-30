@@ -425,7 +425,7 @@ let clipPath = x => D(
   switch x {
   | #...ClipPath.t as cp => ClipPath.toString(cp)
   | #...Url.t as u => Url.toString(u)
-  | #...GeometyBox.t as gb => GeometyBox.toString(gb)
+  | #...GeometryBox.t as gb => GeometryBox.toString(gb)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -1304,13 +1304,13 @@ let stepEnd = TimingFunction.stepEnd
 let steps = TimingFunction.steps
 let cubicBezier = TimingFunction.cubicBezier
 
-let marginBox = GeometyBox.marginBox
-//let borderBox = GeometyBox.borderBox;
-//let paddingBox = GeometyBox.paddingBox;
-//let contentBox = GeometyBox.contentBox;
-let fillBox = GeometyBox.fillBox
-let strokeBox = GeometyBox.strokeBox
-let viewBox = GeometyBox.viewBox
+let marginBox = GeometryBox.marginBox
+//let borderBox = GeometryBox.borderBox;
+//let paddingBox = GeometryBox.paddingBox;
+//let contentBox = GeometryBox.contentBox;
+let fillBox = GeometryBox.fillBox
+let strokeBox = GeometryBox.strokeBox
+let viewBox = GeometryBox.viewBox
 
 let translate = Transform.translate
 let translate3d = Transform.translate3d

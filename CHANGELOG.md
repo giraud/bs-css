@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 - BREAKING CHANGE - use an array for areas type
+- BREAKING CHANGE - rename Geomety to Geometry (missing r)
 
 ## [15.3.1] - 2022-10-30
 
