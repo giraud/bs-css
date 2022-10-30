@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [15.3.1] - 2022-10-30
+
+- Convert bs-css files to Rescript - [#260](https://github.com/giraud/bs-css/issues/260)
+
+bs-css-dom@3.3.1, bs-css-emotion@4.3.1, bs-css-fela@2.3.1
+
 ## [15.3.0] - 2022-05-18
 
 - Add `touchAction` by [@RuslanGrigoryev](https://github.com/RuslanGrigoryev) - [#256](https://github.com/reasonml-labs/bs-css/pull/256)
@@ -307,7 +313,9 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/giraud/bs-css/compare/15.1.1...HEAD
+[Unreleased]: https://github.com/giraud/bs-css/compare/15.3.1...HEAD
+[15.3.1]: https://github.com/giraud/bs-css/compare/15.3.0...15.3.1
+[15.3.0]: https://github.com/giraud/bs-css/compare/15.2.0...15.3.0
 [15.2.0]: https://github.com/giraud/bs-css/compare/15.1.1...15.2.0
 [15.1.1]: https://github.com/giraud/bs-css/compare/15.1.0...15.1.1
 [15.1.0]: https://github.com/giraud/bs-css/compare/15.0.2...15.1.0
