@@ -132,32 +132,34 @@ let styles = style(. [selector("input[type='text']", [padding(px(20))])])
 
 You should avoid trying to merge styles in the same list of rules or by concatinating lists. A list of rules is converted into a JS object before being passed to Emotion where every property becomes a key in the object. This means you lose any earlier rule if you have another rule with the same property later in the list. This is especially noticable [when writing sub-selectors and media queries](https://github.com/SentiaAnalytics/bs-css/issues/86)
 
-Trying to merge styles by just using `List.concat` can result in unexpected results.
+Trying to merge styles by just using concatenation can result in unexpected results.
 
 This example:
 
 ```rescript
-let base = Css.[
+open CssJs
+
+let base = [
   padding(px(0)),
   fontSize(px(1))
-];
-let overrides = Css.[
+]
+let overrides = [
   padding(px(20)),
   fontSize(px(24)),
   color(blue)
-];
-let media1 = Css.[
+]
+let media1 = [
   media("(max-width: 768px)", [
     padding(px(10))
   ])
-];
-let media2 = Css.[
+]
+let media2 = [
   media("(max-width: 768px)", [
     fontSize(px(16)),
     color(red)
   ])
-];
-let mergedStyles = [base, overrides, media1, media2]->List.concat->Css.style;
+]
+let mergedStyles = style(. Belt.Array.concatMany([base, overrides, media1, media2]))
 ```
 
 generates the following:
@@ -241,7 +243,7 @@ module Styles = {
    You can use either Css or CssJs: Css module is using lists, CssJs is using arrays.
    If you're targeting js and/or using Rescript, prefer CssJs
   */
-  open Css
+  open CssJs
 
   let card = style(. [
     display(flexBox),
@@ -287,7 +289,7 @@ let make = () => {
 You can define global css rules with `global`
 
 ```rescript       
-open Css
+open CssJs
 let renderer = createRenderer()
 
 renderGlobal(. renderer, "body", [margin(px(0))])
