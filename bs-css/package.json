@@ -1,6 +1,6 @@
 {
   "name": "bs-css",
-  "version": "15.3.0",
+  "version": "15.3.1",
   "description": "Css types",
   "scripts": {
     "re:clean": "rescript clean",
