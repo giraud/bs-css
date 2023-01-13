@@ -222,12 +222,13 @@ module FlexBasis: {
 }
 
 module Overflow: {
-  type t = [#hidden | #visible | #scroll | #auto]
+  type t = [#hidden | #visible | #scroll | #auto | #clip]
 
   let hidden: [> t]
   let visible: [> t]
   let scroll: [> t]
   let auto: [> t]
+  let clip: [> t]
 
   let toString: t => string
 }
