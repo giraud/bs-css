@@ -78,7 +78,7 @@ module Length: {
     | #pc(float)
     | #pt(int)
     | #zero
-    | #calc([#add | #sub], t, t)
+    | #calc([#add | #sub | #mult], t, t)
     | #percent(float)
   ]
 
@@ -222,12 +222,13 @@ module FlexBasis: {
 }
 
 module Overflow: {
-  type t = [#hidden | #visible | #scroll | #auto]
+  type t = [#hidden | #visible | #scroll | #auto | #clip]
 
   let hidden: [> t]
   let visible: [> t]
   let scroll: [> t]
   let auto: [> t]
+  let clip: [> t]
 
   let toString: t => string
 }
@@ -310,6 +311,10 @@ module TimingFunction: {
     | #stepEnd
     | #steps(int, [#start | #end_])
     | #cubicBezier(float, float, float, float)
+    | #jumpStart
+    | #jumpEnd
+    | #jumpNone
+    | #jumpBoth
   ]
 
   let linear: [> t]
@@ -321,6 +326,10 @@ module TimingFunction: {
   let stepEnd: [> t]
   let steps: (int, [#start | #end_]) => [> t]
   let cubicBezier: (float, float, float, float) => [> t]
+  let jumpStart: [> t]
+  let jumpEnd: [> t]
+  let jumpNone: [> t]
+  let jumpBoth: [> t]
 
   let toString: t => string
 }
@@ -1088,6 +1097,15 @@ module TextDecorationStyle: {
 }
 
 /**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness
+ */
+module TextDecorationThickness: {
+  type t = [#fromFont | #auto]
+
+  let toString: t => string
+}
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/width
  */
 module Width: {
@@ -1189,9 +1207,9 @@ module MaskImage: {
 }
 
 /**
- https://developer.mozilla.org/docs/Web/CSS/clip-path
+ https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
  */
-module GeometyBox: {
+module GeometryBox: {
   type t = [
     | #marginBox
     | #borderBox
@@ -1257,6 +1275,15 @@ module Flex: {
  */
 module TransformStyle: {
   type t = [#preserve3d | #flat]
+
+  let toString: t => string
+}
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/transform-box
+ */
+module TransformBox: {
+  type t = [#contentBox | #borderBox | #fillBox | #strokeBox | #viewBox]
 
   let toString: t => string
 }

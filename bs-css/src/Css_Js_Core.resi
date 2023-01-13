@@ -380,7 +380,7 @@ let clear: [< Types.Clear.t | Types.Var.t | Types.Cascading.t] => rule
 let clipPath: [<
   | Types.ClipPath.t
   | Types.Url.t
-  | Types.GeometyBox.t
+  | Types.GeometryBox.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -1643,13 +1643,13 @@ let stepEnd: [> Types.TimingFunction.t]
 let steps: (int, [#start | #end_]) => [> Types.TimingFunction.t]
 let cubicBezier: (float, float, float, float) => [> Types.TimingFunction.t]
 
-let marginBox: [> Types.GeometyBox.t]
-//let borderBox: [> Types.GeometyBox.t];
-//let paddingBox: [> Types.GeometyBox.t];
-//let contentBox: [> Types.GeometyBox.t];
-let fillBox: [> Types.GeometyBox.t]
-let strokeBox: [> Types.GeometyBox.t]
-let viewBox: [> Types.GeometyBox.t]
+let marginBox: [> Types.GeometryBox.t]
+//let borderBox: [> Types.GeometryBox.t];
+//let paddingBox: [> Types.GeometryBox.t];
+//let contentBox: [> Types.GeometryBox.t];
+let fillBox: [> Types.GeometryBox.t]
+let strokeBox: [> Types.GeometryBox.t]
+let viewBox: [> Types.GeometryBox.t]
 
 let translate: (Types.Length.t, Types.Length.t) => [> Types.Transform.t]
 let translate3d: (Types.Length.t, Types.Length.t, Types.Length.t) => [> Types.Transform.t]

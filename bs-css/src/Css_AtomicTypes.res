@@ -89,7 +89,7 @@ module Length = {
     | #pc(float)
     | #pt(int)
     | #zero
-    | #calc([#add | #sub], t, t)
+    | #calc([#add | #sub | #mult], t, t)
     | #percent(float)
   ]
 
@@ -128,9 +128,9 @@ module Length = {
     | #pc(x) => Js.Float.toString(x) ++ "pc"
     | #pt(x) => Js.Int.toString(x) ++ "pt"
     | #zero => "0"
-
     | #calc(#add, a, b) => "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
     | #calc(#sub, a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
+    | #calc(#mult, a, b) => "calc(" ++ toString(a) ++ " * " ++ toString(b) ++ ")"
     | #percent(x) => Js.Float.toString(x) ++ "%"
     }
 }
@@ -271,12 +271,13 @@ module FlexBasis = {
 }
 
 module Overflow = {
-  type t = [#hidden | #visible | #scroll | #auto]
+  type t = [#hidden | #visible | #scroll | #auto | #clip]
 
   let hidden = #hidden
   let visible = #visible
   let scroll = #scroll
   let auto = #auto
+  let clip = #clip
 
   let toString = x =>
     switch x {
@@ -284,6 +285,7 @@ module Overflow = {
     | #visible => "visible"
     | #scroll => "scroll"
     | #auto => "auto"
+    | #clip => "clip"
     }
 }
 
@@ -406,6 +408,10 @@ module TimingFunction = {
     | #stepEnd
     | #steps(int, [#start | #end_])
     | #cubicBezier(float, float, float, float)
+    | #jumpStart
+    | #jumpEnd
+    | #jumpNone
+    | #jumpBoth
   ]
 
   let linear = #linear
@@ -417,6 +423,10 @@ module TimingFunction = {
   let stepEnd = #stepEnd
   let steps = (i, dir) => #steps((i, dir))
   let cubicBezier = (a, b, c, d) => #cubicBezier((a, b, c, d))
+  let jumpStart = #jumpStart
+  let jumpEnd = #jumpEnd
+  let jumpNone = #jumpNone
+  let jumpBoth = #jumpBoth
 
   let toString = x =>
     switch x {
@@ -438,6 +448,10 @@ module TimingFunction = {
       Js.Float.toString(c) ++
       ", " ++
       Js.Float.toString(d) ++ ")"
+    | #jumpStart => "jump-start"
+    | #jumpEnd => "jump-end"
+    | #jumpNone => "jump-none"
+    | #jumpBoth => "jump-both"
     }
 }
 
@@ -1590,6 +1604,16 @@ module TextDecorationStyle = {
     }
 }
 
+module TextDecorationThickness = {
+  type t = [#fromFont | #auto]
+
+  let toString = x =>
+    switch x {
+    | #fromFont => "from-font"
+    | #auto => "auto"
+    }
+}
+
 module Width = {
   type t = [#auto | #fitContent | #maxContent | #minContent]
 
@@ -1765,6 +1789,19 @@ module TransformStyle = {
     switch x {
     | #preserve3d => "preserve-3d"
     | #flat => "flat"
+    }
+}
+
+module TransformBox = {
+  type t = [#contentBox | #borderBox | #fillBox | #strokeBox | #viewBox]
+
+  let toString = x =>
+    switch x {
+    | #contentBox => "content-box"
+    | #borderBox => "border-box"
+    | #fillBox => "fill-box"
+    | #strokeBox => "stroke-box"
+    | #viewBox => "view-box"
     }
 }
 

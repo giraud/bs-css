@@ -958,6 +958,16 @@ let textDecorationStyle = x => D(
   },
 )
 
+let textDecorationThickness = x => D(
+  "textDecorationThickness",
+  switch x {
+  | #...TextDecorationThickness.t as t => TextDecorationThickness.toString(t)
+  | #...Length.t as l => Length.toString(l)
+  | #...Var.t as va => Var.toString(va)
+  | #...Cascading.t as c => Cascading.toString(c)
+  },
+)
+
 let textIndent = x => D(
   "textIndent",
   switch x {
@@ -1007,6 +1017,8 @@ let transformOrigin3d = (x, y, z) => D(
   "transformOrigin",
   Length.toString(x) ++ (" " ++ (Length.toString(y) ++ (" " ++ (Length.toString(z) ++ " ")))),
 )
+
+let transformBox = x => D("transformBox", TransformBox.toString(x))
 
 let unsafe = (property, value) => D(property, value)
 
@@ -1397,6 +1409,7 @@ let fr = x => #fr(x)
 module Calc = {
   let \"-" = (a, b) => #calc(#sub, a, b)
   let \"+" = (a, b) => #calc(#add, a, b)
+  let \"*" = (a, b) => #calc(#mult, a, b)
 }
 let size = (x, y) => #size(x, y)
 
@@ -1544,6 +1557,7 @@ let string_of_minmax = x =>
   | #auto => "auto"
   | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
   | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
+  | #calc(#mult, a, b) => "calc(" ++ Length.toString(a) ++ " * " ++ Length.toString(b) ++ ")"
   | #ch(x) => Js.Float.toString(x) ++ "ch"
   | #cm(x) => Js.Float.toString(x) ++ "cm"
   | #em(x) => Js.Float.toString(x) ++ "em"
@@ -1572,6 +1586,7 @@ let string_of_dimension = x =>
   | #none => "none"
   | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
   | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
+  | #calc(#mult, a, b) => "calc(" ++ (Length.toString(a) ++ (" * " ++ (Length.toString(b) ++ ")")))
   | #ch(x) => Js.Float.toString(x) ++ "ch"
   | #cm(x) => Js.Float.toString(x) ++ "cm"
   | #em(x) => Js.Float.toString(x) ++ "em"
@@ -1613,6 +1628,7 @@ let gridLengthToJs = x =>
   | #auto => "auto"
   | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
   | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
+  | #calc(#mult, a, b) => "calc(" ++ (Length.toString(a) ++ (" * " ++ (Length.toString(b) ++ ")")))
   | #ch(x) => Js.Float.toString(x) ++ "ch"
   | #cm(x) => Js.Float.toString(x) ++ "cm"
   | #em(x) => Js.Float.toString(x) ++ "em"
