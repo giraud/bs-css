@@ -1197,9 +1197,9 @@ module MaskImage: {
 }
 
 /**
- https://developer.mozilla.org/docs/Web/CSS/clip-path
+ https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
  */
-module GeometyBox: {
+module GeometryBox: {
   type t = [
     | #marginBox
     | #borderBox
