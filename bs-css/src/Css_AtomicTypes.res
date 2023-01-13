@@ -1615,18 +1615,18 @@ module TextDecorationThickness = {
 }
 
 module Width = {
-  type t = [#auto | #fitContent | #maxContent | #minContent]
+  type t = [#auto | #fitContent(Length.t) | #maxContent | #minContent]
 
   let toString = x =>
     switch x {
     | #auto => "auto"
-    | #fitContent => "fit-content"
+    | #fitContent(l) => "fit-content(" ++ Length.toString(l) ++ ")"
     | #maxContent => "max-content"
     | #minContent => "min-content"
     }
 }
 
-module MaxWidth = {
+module None = {
   type t = [#none]
 
   let toString = x =>
@@ -1635,23 +1635,27 @@ module MaxWidth = {
     }
 }
 
+/* min-width and max-width can be set to 'none' and all Width values.
+ Here we only define are the 'none' since the external API ensures the composability of all cases */
+module MinWidth = None
+module MaxWidth = None
+
 module Height = {
-  type t = [#auto]
+  type t = [#auto | #fitContent(Length.t) | #maxContent | #minContent]
 
   let toString = x =>
     switch x {
     | #auto => "auto"
+    | #fitContent(l) => "fit-content(" ++ Length.toString(l) ++ ")"
+    | #maxContent => "max-content"
+    | #minContent => "min-content"
     }
 }
 
-module MaxHeight = {
-  type t = [#none]
-
-  let toString = x =>
-    switch x {
-    | #none => "none"
-    }
-}
+/* min-height and max-height can be set to 'none' and all Height values.
+ Here we only define are the 'none' since the external API ensures the composability of all cases */
+module MaxHeight = None
+module MinHeight = None
 
 module OverflowWrap = {
   type t = [#normal | #breakWord | #anywhere]
