@@ -1409,6 +1409,7 @@ let fr = x => #fr(x)
 module Calc = {
   let \"-" = (a, b) => #calc(#sub, a, b)
   let \"+" = (a, b) => #calc(#add, a, b)
+  let \"*" = (a, b) => #calc(#mult, a, b)
 }
 let size = (x, y) => #size(x, y)
 
@@ -1585,6 +1586,7 @@ let string_of_dimension = x =>
   | #none => "none"
   | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
   | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
+  | #calc(#mult, a, b) => "calc(" ++ (Length.toString(a) ++ (" * " ++ (Length.toString(b) ++ ")")))
   | #ch(x) => Js.Float.toString(x) ++ "ch"
   | #cm(x) => Js.Float.toString(x) ++ "cm"
   | #em(x) => Js.Float.toString(x) ++ "em"
@@ -1626,6 +1628,7 @@ let gridLengthToJs = x =>
   | #auto => "auto"
   | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
   | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
+  | #calc(#mult, a, b) => "calc(" ++ (Length.toString(a) ++ (" * " ++ (Length.toString(b) ++ ")")))
   | #ch(x) => Js.Float.toString(x) ++ "ch"
   | #cm(x) => Js.Float.toString(x) ++ "cm"
   | #em(x) => Js.Float.toString(x) ++ "em"
