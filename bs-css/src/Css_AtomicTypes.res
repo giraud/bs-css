@@ -1164,13 +1164,12 @@ module TextAlign = {
 }
 
 module WordBreak = {
-  type t = [#normal | #breakAll | #breakWord | #keepAll]
+  type t = [#normal | #breakAll | #keepAll]
 
   let toString = x =>
     switch x {
     | #normal => "normal"
     | #breakAll => "break-all"
-    | #breakWord => "break-word"
     | #keepAll => "keep-all"
     }
 }
