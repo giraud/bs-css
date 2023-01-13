@@ -795,7 +795,7 @@ module TextAlign: {
  https://developer.mozilla.org/docs/Web/CSS/word-break
  */
 module WordBreak: {
-  type t = [#normal | #breakAll | #breakWord | #keepAll]
+  type t = [#normal | #breakAll | #keepAll]
 
   let toString: t => string
 }
@@ -1092,6 +1092,15 @@ module TextDecorationLine: {
  */
 module TextDecorationStyle: {
   type t = [#solid | #double | #dotted | #dashed | #wavy]
+
+  let toString: t => string
+}
+
+/**
+ https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness
+ */
+module TextDecorationThickness: {
+  type t = [#fromFont | #auto]
 
   let toString: t => string
 }
