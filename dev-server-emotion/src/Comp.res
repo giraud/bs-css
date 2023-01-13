@@ -11,7 +11,7 @@ module Section = {
     )
 
     let section = style(. [
-      selector("& > h1", [fontFamily(#custom(arialNarrow)), marginTop(zero)]),
+      selector(. "& > h1", [fontFamily(#custom(arialNarrow)), marginTop(zero)]),
       position(relative),
       background(hex("f5f5f5")),
       margin(20->px),
@@ -33,7 +33,6 @@ module Section = {
     </section>
 }
 
-
 let redBox = [
   background(red),
   borderBottom(5->px, solid, black),
@@ -46,7 +45,9 @@ module RedBox = {
   @react.component
   let make = (~rules=?, ~children=?) =>
     <div
-     className={style(. rules->Belt.Option.mapWithDefaultU(redBox, (. r) => redBox->Belt.Array.concat(r)))}>
+      className={style(.
+        rules->Belt.Option.mapWithDefaultU(redBox, (. r) => redBox->Belt.Array.concat(r)),
+      )}>
       {switch children {
       | None => React.null
       | Some(c) => c
