@@ -1109,7 +1109,7 @@ module TextDecorationThickness: {
  https://developer.mozilla.org/docs/Web/CSS/width
  */
 module Width: {
-  type t = [#auto | #fitContent(Length.t) | #maxContent | #minContent]
+  type t = [#auto | #fitContent | #maxContent | #minContent]
 
   let toString: t => string
 }
@@ -1136,7 +1136,7 @@ module MinWidth: {
  https://developer.mozilla.org/docs/Web/CSS/height
  */
 module Height: {
-  type t = [#auto | #fitContent(Length.t) | #maxContent | #minContent]
+  type t = [#auto | #fitContent | #maxContent | #minContent]
 
   let toString: t => string
 }

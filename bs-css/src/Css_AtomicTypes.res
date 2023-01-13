@@ -1615,12 +1615,12 @@ module TextDecorationThickness = {
 }
 
 module Width = {
-  type t = [#auto | #fitContent(Length.t) | #maxContent | #minContent]
+  type t = [#auto | #fitContent | #maxContent | #minContent]
 
   let toString = x =>
     switch x {
     | #auto => "auto"
-    | #fitContent(l) => "fit-content(" ++ Length.toString(l) ++ ")"
+    | #fitContent => "fit-content"
     | #maxContent => "max-content"
     | #minContent => "min-content"
     }
@@ -1641,12 +1641,12 @@ module MinWidth = None
 module MaxWidth = None
 
 module Height = {
-  type t = [#auto | #fitContent(Length.t) | #maxContent | #minContent]
+  type t = [#auto | #fitContent | #maxContent | #minContent]
 
   let toString = x =>
     switch x {
     | #auto => "auto"
-    | #fitContent(l) => "fit-content(" ++ Length.toString(l) ++ ")"
+    | #fitContent => "fit-content"
     | #maxContent => "max-content"
     | #minContent => "min-content"
     }
