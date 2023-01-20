@@ -3,6 +3,11 @@
 - BREAKING CHANGE - use an array for areas type
 - BREAKING CHANGE - rename Geomety to Geometry (missing r)
 
+
+- Make height and width respect all the interface by [@davesnx](https://github.com/davesnx) - [#262](https://github.com/reasonml-labs/bs-css/pull/262)
+- Add missing values by [@davesnx](https://github.com/davesnx) - [#257](https://github.com/reasonml-labs/bs-css/pull/257)
+- Update README example to use CssJs and Rescript syntax by [hugihlynsson](https://github.com/hugihlynsson)
+
 ## [15.3.1] - 2022-10-30
 
 - Convert bs-css files to Rescript - [#260](https://github.com/giraud/bs-css/issues/260)
