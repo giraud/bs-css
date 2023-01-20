@@ -743,6 +743,7 @@ let marginBottom = x => D("marginBottom", marginToString(x))
 let maxHeight = x => D(
   "maxHeight",
   switch x {
+  | #...Height.t as mh => Height.toString(mh)
   | #...MaxHeight.t as mh => MaxHeight.toString(mh)
   | #...Percentage.t as p => Percentage.toString(p)
   | #...Length.t as l => Length.toString(l)
@@ -754,6 +755,7 @@ let maxHeight = x => D(
 let maxWidth = x => D(
   "maxWidth",
   switch x {
+  | #...Width.t as mw => Width.toString(mw)
   | #...MaxWidth.t as mw => MaxWidth.toString(mw)
   | #...Percentage.t as p => Percentage.toString(p)
   | #...Length.t as l => Length.toString(l)
@@ -766,6 +768,7 @@ let minHeight = x => D(
   "minHeight",
   switch x {
   | #...Height.t as h => Height.toString(h)
+  | #...MinHeight.t as h => MinHeight.toString(h)
   | #...Percentage.t as p => Percentage.toString(p)
   | #...Length.t as l => Length.toString(l)
   | #...Var.t as va => Var.toString(va)
@@ -777,6 +780,7 @@ let minWidth = x => D(
   "minWidth",
   switch x {
   | #...Width.t as w => Width.toString(w)
+  | #...MinWidth.t as w => MinWidth.toString(w)
   | #...Percentage.t as p => Percentage.toString(p)
   | #...Length.t as l => Length.toString(l)
   | #...Var.t as va => Var.toString(va)

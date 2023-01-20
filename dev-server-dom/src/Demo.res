@@ -12,8 +12,8 @@ let miniBox = [border(2->px, solid, black), width(15->px), height(15->px), margi
 let mergedStyles = merge(. [
   style(. [padding(0->px), fontSize(1->px)]),
   style(. [padding(20->px), fontSize(24->px), color(blue)]),
-  style(. [media("(maxWidth: 768px)", [padding(10->px)])]),
-  style(. [media("(maxWidth: 768px)", [fontSize(16->px), color(red)])]),
+  style(. [media(. "(maxWidth: 768px)", [padding(10->px)])]),
+  style(. [media(. "(maxWidth: 768px)", [fontSize(16->px), color(red)])]),
 ])
 
 let differentHeightLengths =
@@ -356,7 +356,7 @@ let make = () =>
           flexDirection(column),
           flexGrow(1.),
           alignItems(stretch),
-          selector("& > *", [marginBottom(10->px), width(100.->pct)]),
+          selector(. "& > *", [marginBottom(10->px), width(100.->pct)]),
         ])}>
         <div
           style={style(. [
@@ -625,6 +625,8 @@ let make = () =>
           wordBreak(breakAll),
           wordSpacing(20->px),
           wordWrap(breakWord),
+          width(#maxContent),
+          maxWidth(#maxContent),
         ])}>
         {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."->React.string}
       </p>

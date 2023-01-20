@@ -1124,10 +1124,19 @@ module MaxWidth: {
 }
 
 /**
+ https://developer.mozilla.org/docs/Web/CSS/max-width
+ */
+module MinWidth: {
+  type t = [#none]
+
+  let toString: t => string
+}
+
+/**
  https://developer.mozilla.org/docs/Web/CSS/height
  */
 module Height: {
-  type t = [#auto]
+  type t = [#auto | #fitContent | #maxContent | #minContent]
 
   let toString: t => string
 }
@@ -1136,6 +1145,15 @@ module Height: {
  https://developer.mozilla.org/docs/Web/CSS/max-height
  */
 module MaxHeight: {
+  type t = [#none]
+
+  let toString: t => string
+}
+
+/**
+ https://developer.mozilla.org/docs/Web/CSS/min-height
+ */
+module MinHeight: {
   type t = [#none]
 
   let toString: t => string

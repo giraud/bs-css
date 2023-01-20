@@ -23,8 +23,8 @@ let miniBox = [border(2->px, solid, black), width(15->px), height(15->px), margi
 let mergedStyles = merge(. [
   style(. [padding(0->px), fontSize(1->px)]),
   style(. [padding(20->px), fontSize(24->px), color(blue)]),
-  style(. [media("(max-width: 768px)", [padding(10->px)])]),
-  style(. [media("(max-width: 768px)", [fontSize(16->px), color(red)])]),
+  style(. [media(. "(max-width: 768px)", [padding(10->px)])]),
+  style(. [media(. "(max-width: 768px)", [fontSize(16->px), color(red)])]),
 ])
 
 let differentHeightLengths =
@@ -370,7 +370,7 @@ let make = () =>
           flexDirection(column),
           flexGrow(1.),
           alignItems(stretch),
-          selector("& > *", [marginBottom(10->px), width(pct(100.))]),
+          selector(. "& > *", [marginBottom(10->px), width(pct(100.))]),
         ])}>
         <div
           className={style(. [

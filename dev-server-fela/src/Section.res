@@ -10,7 +10,10 @@ module Styles = {
   )
 
   let section = style(. [
-    selector("& > h1", [fontFamily(#custom(arialNarrow)), fontWeight(#num(300)), marginTop(#zero)]),
+    selector(.
+      "& > h1",
+      [fontFamily(#custom(arialNarrow)), fontWeight(#num(300)), marginTop(#zero)],
+    ),
     position(#relative),
     background(hex("f5f5f5")),
     margin(px(20)),

@@ -810,6 +810,7 @@ let marginBottom: [< Types.Length.t | Types.Margin.t | Types.Var.t | Types.Casca
  It prevents the used value of the height property from becoming larger than the value specified for max-height.
  */
 let maxHeight: [<
+  | Types.Height.t
   | Types.MaxHeight.t
   | Types.Percentage.t
   | Types.Length.t
@@ -822,6 +823,7 @@ let maxHeight: [<
  It prevents the used value of the width property from becoming larger than the value specified by max-width.
  */
 let maxWidth: [<
+  | Types.Width.t
   | Types.MaxWidth.t
   | Types.Percentage.t
   | Types.Length.t
@@ -835,6 +837,7 @@ let maxWidth: [<
  */
 let minHeight: [<
   | Types.Height.t
+  | Types.MinHeight.t
   | Types.Percentage.t
   | Types.Length.t
   | Types.Var.t
@@ -847,6 +850,7 @@ let minHeight: [<
  */
 let minWidth: [<
   | Types.Width.t
+  | Types.MinWidth.t
   | Types.Percentage.t
   | Types.Length.t
   | Types.Var.t
