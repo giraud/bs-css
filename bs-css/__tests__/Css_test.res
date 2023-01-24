@@ -241,7 +241,7 @@ describe("transitions", () => {
   })
 
   test("should use options when present", () =>
-    expect(transition(~duration=3, ~delay=4, ~timingFunction=easeOut, "top"))->toBe({
+    expect(transition(~duration=#ms(3.), ~delay=#ms(4.), ~timingFunction=easeOut, "top"))->toBe({
       "transition": "3ms ease-out 4ms top",
     })
   )
@@ -267,8 +267,8 @@ describe("animation", () => {
   test("should use options when present", () =>
     expect(
       animation(
-        ~duration=300,
-        ~delay=400,
+        ~duration=#ms(300.),
+        ~delay=#ms(400.),
         ~direction=reverse,
         ~timingFunction=linear,
         ~fillMode=forwards,
