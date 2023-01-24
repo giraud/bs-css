@@ -109,7 +109,7 @@ let alignSelf: [<
  The animation-delay CSS property sets when an animation starts.
  The animation can start later, immediately from its beginning, or immediately and partway through the animation.
  */
-let animationDelay: int => rule
+let animationDelay: Types.Time.t => rule
 
 /**
  The animation-direction CSS property sets whether an animation should play forwards, backwards,
@@ -120,7 +120,7 @@ let animationDirection: Types.AnimationDirection.t => rule
 /**
  The animation-duration CSS property sets the length of time that an animation takes to complete one cycle.
  */
-let animationDuration: int => rule
+let animationDuration: Types.Time.t => rule
 
 /**
  The animation-fill-mode CSS property sets how a CSS animation applies styles to its target before and after
@@ -1026,9 +1026,9 @@ let transforms: array<Types.Transform.t> => rule
 let transformOrigin: (Types.Length.t, Types.Length.t) => rule
 let transformOrigin3d: (Types.Length.t, Types.Length.t, Types.Length.t) => rule
 
-let transitionDelay: int => rule
+let transitionDelay: Types.Time.t => rule
 
-let transitionDuration: int => rule
+let transitionDuration: Types.Time.t => rule
 
 let transitionProperty: string => rule
 
@@ -1835,8 +1835,8 @@ module Transition: {
   type t = [#value(string)]
 
   let shorthand: (
-    ~duration: int=?,
-    ~delay: int=?,
+    ~duration: Types.Time.t=?,
+    ~delay: Types.Time.t=?,
     ~timingFunction: Types.TimingFunction.t=?,
     string,
   ) => [> t]
@@ -1848,8 +1848,8 @@ let transitionValue: Transition.t => rule
 let transitionList: array<[Transition.t]> => rule
 
 let transition: (
-  ~duration: int=?,
-  ~delay: int=?,
+  ~duration: Types.Time.t=?,
+  ~delay: Types.Time.t=?,
   ~timingFunction: Types.TimingFunction.t=?,
   string,
 ) => rule
@@ -1863,8 +1863,8 @@ module Animation: {
   type t = [#value(string)]
 
   let shorthand: (
-    ~duration: int=?,
-    ~delay: int=?,
+    ~duration: Types.Time.t=?,
+    ~delay: Types.Time.t=?,
     ~direction: Types.AnimationDirection.t=?,
     ~timingFunction: Types.TimingFunction.t=?,
     ~fillMode: Types.AnimationFillMode.t=?,
@@ -1878,8 +1878,8 @@ module Animation: {
 
 let animationValue: Animation.t => rule
 let animation: (
-  ~duration: int=?,
-  ~delay: int=?,
+  ~duration: Types.Time.t=?,
+  ~delay: Types.Time.t=?,
   ~direction: Types.AnimationDirection.t=?,
   ~timingFunction: Types.TimingFunction.t=?,
   ~fillMode: Types.AnimationFillMode.t=?,
