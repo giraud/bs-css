@@ -90,7 +90,7 @@ module Converter = {
   let string_of_stops = stops =>
     stops->Belt.List.map(((l, c)) => Color.toString(c) ++ (" " ++ Length.toString(l)))->join(", ")
 
-  let string_of_time = t => Js.Int.toString(t) ++ "ms"
+  let string_of_time = t => Time.toString(t)
 
   let string_of_content = x =>
     switch x {
@@ -1937,7 +1937,7 @@ let transformStyle = x => D(
 module Transition = {
   type t = [#value(string)]
 
-  let shorthand = (~duration=0, ~delay=0, ~timingFunction=#ease, property) =>
+  let shorthand = (~duration=#ms(0.), ~delay=#ms(0.), ~timingFunction=#ease, property) =>
     #value(
       string_of_time(duration) ++
       (" " ++
@@ -1975,8 +1975,8 @@ module Animation = {
   type t = [#value(string)]
 
   let shorthand = (
-    ~duration=0,
-    ~delay=0,
+    ~duration=#ms(0.),
+    ~delay=#ms(0.),
     ~direction=#normal,
     ~timingFunction=#ease,
     ~fillMode=#none,
