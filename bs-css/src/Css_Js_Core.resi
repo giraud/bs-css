@@ -1823,6 +1823,7 @@ let fontFace: (
   ~fontStyle: Types.FontStyle.t=?,
   ~fontWeight: [< Types.FontWeight.t | Types.Var.t | Types.Cascading.t]=?,
   ~fontDisplay: Types.FontDisplay.t=?,
+  ~sizeAdjust: Types.Percentage.t=?,
   unit,
 ) => string
 
