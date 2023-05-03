@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [16.1.0] - 2023-05-03
+
+- Support size-adjust property for fontFace by [@WhyThat](https://github.com/WhyThat) - [#267](https://github.com/giraud/bs-css/pull/267)
+
+bs-css-dom@4.1.0, bs-css-emotion@5.1.0, bs-css-fela@3.1.0
+
 ## [16.0.0] - 2023-01-20
 
 - BREAKING CHANGE - use an array for areas type
@@ -325,7 +331,9 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/giraud/bs-css/compare/15.3.1...HEAD
+[Unreleased]: https://github.com/giraud/bs-css/compare/16.1.0...HEAD
+[16.1.0]: https://github.com/giraud/bs-css/compare/16.0.0...16.1.0
+[16.0.0]: https://github.com/giraud/bs-css/compare/15.3.1...16.0.0
 [15.3.1]: https://github.com/giraud/bs-css/compare/15.3.0...15.3.1
 [15.3.0]: https://github.com/giraud/bs-css/compare/15.2.0...15.3.0
 [15.2.0]: https://github.com/giraud/bs-css/compare/15.1.1...15.2.0
