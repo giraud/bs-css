@@ -33,9 +33,17 @@ type cache
 
 @module("@emotion/cache") external cache: cache = "cache"
 
-let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, ()) => {
+let fontFace = (
+  ~fontFamily,
+  ~src,
+  ~fontStyle=?,
+  ~fontWeight=?,
+  ~fontDisplay=?,
+  ~sizeAdjust=?,
+  (),
+) => {
   insertRule(.
-    Css_Js_Core.fontFace(~fontFamily, ~src, ~fontStyle?, ~fontWeight?, ~fontDisplay?, ()),
+    Css_Js_Core.fontFace(~fontFamily, ~src, ~fontStyle?, ~fontWeight?, ~fontDisplay?, ~sizeAdjust?, ()),
   )
   fontFamily
 }

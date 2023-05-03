@@ -1873,7 +1873,15 @@ let backgroundSize = x => D(
   },
 )
 
-let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, ()) => {
+let fontFace = (
+  ~fontFamily,
+  ~src,
+  ~fontStyle=?,
+  ~fontWeight=?,
+  ~fontDisplay=?,
+  ~sizeAdjust=?,
+  (),
+) => {
   let fontStyle = Js.Option.map((. value) => FontStyle.toString(value), fontStyle)
 
   let src =
@@ -1898,6 +1906,9 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, 
   let fontDisplay = Belt.Option.mapWithDefault(fontDisplay, "", f =>
     "font-display: " ++ FontDisplay.toString(f) ++ ";"
   )
+  let sizeAdjust = Belt.Option.mapWithDefault(sizeAdjust, "", s =>
+    "size-adjust: " ++ Types.Percentage.toString(s) ++ ";"
+  )
 
   `@font-face {
      font-family: ${fontFamily};
@@ -1905,6 +1916,7 @@ let fontFace = (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, 
      ${fontStyle}
      ${fontWeight}
      ${fontDisplay}
+     ${sizeAdjust}
    }`
 }
 
