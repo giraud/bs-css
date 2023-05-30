@@ -1977,7 +1977,7 @@ module Content = {
     | #noOpenQuote => "no-open-quote"
     | #noCloseQuote => "no-close-quote"
     | #attr(name) => "attr(" ++ name ++ ")"
-    | #text(value) => value
+    | #text(value) => "\"" ++ value ++ "\""
     }
 }
 
