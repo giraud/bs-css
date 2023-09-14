@@ -4,6 +4,8 @@
 
 - Support ReScript 11's uncurried mode by [@fhammerschmidt](https://github.com/fhammerschmidt) - [#269](https://github.com/giraud/bs-css/pull/269)
 
+bs-css-dom@4.2.0, bs-css-emotion@5.2.0, bs-css-fela@3.2.0
+
 ## [16.1.0] - 2023-05-03
 
 - Support size-adjust property for fontFace by [@WhyThat](https://github.com/WhyThat) - [#267](https://github.com/giraud/bs-css/pull/267)
