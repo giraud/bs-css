@@ -1,6 +1,6 @@
 {
   "name": "bs-css-dom",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "bs-css bindings for React DOM",
   "scripts": {
     "re:clean": "rescript clean",
@@ -21,7 +21,7 @@
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "dependencies": {
-    "bs-css": "16.1.0"
+    "bs-css": "16.2.0"
   },
   "peerDependencies": {
     "@rescript/react": "^0.10.0",
