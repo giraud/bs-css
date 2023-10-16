@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- BREAKING CHANGE - Reworked tho calc function - [#271](https://github.com/giraud/bs-css/issues/271)               
+- BREAKING CHANGE - Refactor time as Time, not int by  [@davesnx](https://github.com/davesnx) - [#264](https://github.com/reasonml-labs/bs-css/pull/264)
+
 ## [16.2.0] - 2023-05-03
 
 - Support ReScript 11's uncurried mode by [@fhammerschmidt](https://github.com/fhammerschmidt) - [#269](https://github.com/giraud/bs-css/pull/269)
