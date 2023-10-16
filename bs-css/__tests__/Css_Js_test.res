@@ -6,6 +6,25 @@ let toBe = (e, x) => Jest.toBe(e, x->Js.Json.stringifyAny)
 let expect = x =>
   Jest.expect(toJson([x])->Js.Json.stringifyAny) /* simple rule for more readable tests */
 
+describe("Height", () => {
+  test("test usage", () => {
+    expect(height(pct(80.)))->toBe({"height": "80%"})
+    expect(height(px(80)))->toBe({"height": "80px"})
+    expect(height(auto))->toBe({"height": "auto"})
+    expect(height(fitContent))->toBe({"height": "fit-content"})
+    expect(height(maxContent))->toBe({"height": "max-content"})
+    expect(height(minContent))->toBe({"height": "min-content"})
+    expect(height(#sub(pct(100.), px(20))))->toBe({"height": "calc(100% - 20px)"})
+    expect(
+      height({
+        open Calc
+        pct(100.) - px(20) + vw(1.) / 2.
+      }),
+    )->toBe({"height": "calc(calc(100% - 20px) + calc(1vw / 2))"})
+    expect(height(var("--foo")))->toBe({"height": "var(--foo)"})
+  })
+})
+
 describe("Var", () => {
   test("test usage (limited)", () => {
     expect(color(var("foo")))->toBe({"color": "var(--foo)"})
@@ -133,8 +152,10 @@ describe("Gradient background", () =>
     expect(background(radialGradient([(zero, red), (pct(100.), blue)])))->toBe({
       "background": "radial-gradient(#FF0000 0, #0000FF 100%)",
     })
-    open Calc
-    expect(background(repeatingRadialGradient([(zero, red), (pct(20.) + px(5), blue)])))->toBe({
+    //    open Calc
+    expect(
+      background(repeatingRadialGradient([(zero, red), (#add(pct(20.), px(5)), blue)])),
+    )->toBe({
       "background": "repeating-radial-gradient(#FF0000 0, #0000FF calc(20% + 5px))",
     })
     expect(background(conicGradient(deg(45.), [(zero, red), (pct(100.), blue)])))->toBe({
@@ -349,6 +370,11 @@ describe("gridTemplateColumns", () => {
     })
     expect(gridTemplateColumns([#repeat((#num(4), #minmax((#px(100), #fr(1.)))))]))->toBe({
       "gridTemplateColumns": "repeat(4, minmax(100px,1fr))",
+    })
+    expect(
+      gridTemplateColumns([#repeat((#num(4), #minmax((#px(100), #add(#percent(80.), #px(10))))))]),
+    )->toBe({
+      "gridTemplateColumns": "repeat(4, minmax(100px,calc(80% + 10px)))",
     })
   })
 })

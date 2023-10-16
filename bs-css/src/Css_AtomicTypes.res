@@ -72,7 +72,7 @@ module Url = {
 }
 
 module Length = {
-  type rec t = [
+  type t = [
     | #ch(float)
     | #em(float)
     | #ex(float)
@@ -89,7 +89,6 @@ module Length = {
     | #pc(float)
     | #pt(int)
     | #zero
-    | #calc([#add | #sub | #mult], t, t)
     | #percent(float)
   ]
 
@@ -110,7 +109,7 @@ module Length = {
   let pt = x => #pt(x)
   let zero = #zero
 
-  let rec toString = x =>
+  let toString = x =>
     switch x {
     | #ch(x) => Js.Float.toString(x) ++ "ch"
     | #em(x) => Js.Float.toString(x) ++ "em"
@@ -128,10 +127,21 @@ module Length = {
     | #pc(x) => Js.Float.toString(x) ++ "pc"
     | #pt(x) => Js.Int.toString(x) ++ "pt"
     | #zero => "0"
-    | #calc(#add, a, b) => "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
-    | #calc(#sub, a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
-    | #calc(#mult, a, b) => "calc(" ++ toString(a) ++ " * " ++ toString(b) ++ ")"
     | #percent(x) => Js.Float.toString(x) ++ "%"
+    }
+}
+
+module PercentageLengthCalc = {
+  type rec t = [Percentage.t | Length.t | #add(t, t) | #sub(t, t) | #mul(t, float) | #div(t, float)]
+
+  let rec toString = x =>
+    switch x {
+    | #...Percentage.t as p => Percentage.toString(p)
+    | #...Length.t as l => Length.toString(l)
+    | #add(a, b) => "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
+    | #sub(a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
+    | #mul(a, b) => "calc(" ++ toString(a) ++ " * " ++ Js.Float.toString(b) ++ ")"
+    | #div(a, b) => "calc(" ++ toString(a) ++ " / " ++ Js.Float.toString(b) ++ ")"
     }
 }
 
@@ -1670,11 +1680,14 @@ module OverflowWrap = {
 
 module Gradient = {
   type t<'colorOrVar> = [
-    | #linearGradient(Angle.t, array<(Length.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #repeatingLinearGradient(Angle.t, array<(Length.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #radialGradient(array<(Length.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #repeatingRadialGradient(array<(Length.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #conicGradient(Angle.t, array<(Length.t, [< Color.t | Var.t] as 'colorOrVar)>)
+    | #linearGradient(Angle.t, array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
+    | #repeatingLinearGradient(
+      Angle.t,
+      array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>,
+    )
+    | #radialGradient(array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
+    | #repeatingRadialGradient(array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
+    | #conicGradient(Angle.t, array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
   ]
 
   let linearGradient = (angle, stops) => #linearGradient((angle, stops))
@@ -1690,7 +1703,7 @@ module Gradient = {
     }
   let string_of_stops = stops =>
     stops
-    ->Belt.Array.map(((l, c)) => string_of_color(c) ++ " " ++ Length.toString(l))
+    ->Belt.Array.map(((l, c)) => string_of_color(c) ++ " " ++ PercentageLengthCalc.toString(l))
     ->Js.Array2.joinWith(", ")
 
   let toString = x =>

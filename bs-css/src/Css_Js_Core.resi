@@ -60,6 +60,19 @@ module Shadow: {
   let toString: t<'a> => string
 }
 
+module Calc: {
+  let \"-": (
+    Types.PercentageLengthCalc.t,
+    Types.PercentageLengthCalc.t,
+  ) => [> Types.PercentageLengthCalc.t]
+  let \"+": (
+    Types.PercentageLengthCalc.t,
+    Types.PercentageLengthCalc.t,
+  ) => [> Types.PercentageLengthCalc.t]
+  let \"*": (Types.PercentageLengthCalc.t, float) => [> Types.PercentageLengthCalc.t]
+  let \"/": (Types.PercentageLengthCalc.t, float) => [> Types.PercentageLengthCalc.t]
+}
+
 /* ********
  Properties
  ********** */
@@ -687,8 +700,7 @@ let gridTemplateAreas: [< Types.GridTemplateAreas.t | Types.Var.t | Types.Cascad
  */
 let height: [<
   | Types.Height.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -812,8 +824,7 @@ let marginBottom: [< Types.Length.t | Types.Margin.t | Types.Var.t | Types.Casca
 let maxHeight: [<
   | Types.Height.t
   | Types.MaxHeight.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -825,8 +836,7 @@ let maxHeight: [<
 let maxWidth: [<
   | Types.Width.t
   | Types.MaxWidth.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -838,8 +848,7 @@ let maxWidth: [<
 let minHeight: [<
   | Types.Height.t
   | Types.MinHeight.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -851,8 +860,7 @@ let minHeight: [<
 let minWidth: [<
   | Types.Width.t
   | Types.MinWidth.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -1065,8 +1073,7 @@ let visibility: [< Types.Visibility.t | Types.Var.t | Types.Cascading.t] => rule
  */
 let width: [<
   | Types.Width.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -1676,22 +1683,25 @@ let skewY: Types.Angle.t => [> Types.Transform.t]
 
 let linearGradient: (
   Types.Angle.t,
-  array<(Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
+  array<(Types.PercentageLengthCalc.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
 ) => [> Types.Gradient.t<'colorOrVar>]
 let repeatingLinearGradient: (
   Types.Angle.t,
-  array<(Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
+  array<(Types.PercentageLengthCalc.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
 ) => [> Types.Gradient.t<'colorOrVar>]
-let radialGradient: array<(Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)> => [>
+let radialGradient: array<(
+  Types.PercentageLengthCalc.t,
+  [< Types.Color.t | Types.Var.t] as 'colorOrVar,
+)> => [>
   | Types.Gradient.t<'colorOrVar>
 ]
 let repeatingRadialGradient: array<(
-  Types.Length.t,
+  Types.PercentageLengthCalc.t,
   [< Types.Color.t | Types.Var.t] as 'colorOrVar,
 )> => [> Types.Gradient.t<'colorOrVar>]
 let conicGradient: (
   Types.Angle.t,
-  array<(Types.Length.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
+  array<(Types.PercentageLengthCalc.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
 ) => [> Types.Gradient.t<'colorOrVar>]
 
 let areas: array<string> => [> Types.GridTemplateAreas.t]
@@ -1769,32 +1779,28 @@ let backgrounds: array<
 > => rule
 
 type minmax = [
-  | #fr(float)
+  | Types.PercentageLengthCalc.t
   | #minContent
   | #maxContent
   | #auto
-  | Types.Length.t
+  | #fr(float)
 ]
 
 type trackLength = [
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | #auto
-  | #fr(float)
   | #minContent
   | #maxContent
   | #minmax(minmax, minmax)
+  | #fr(float)
 ]
+
 type gridLength = [trackLength | #repeat(Types.RepeatValue.t, trackLength)]
 
-let gridAutoColumns: [< trackLength | #auto] => rule
-let gridAutoRows: [< trackLength | #auto] => rule
-let gridTemplateColumns: array<[< gridLength | #auto]> => rule
-let gridTemplateRows: array<[< gridLength | #auto]> => rule
-
-module Calc: {
-  let \"-": (Types.Length.t, Types.Length.t) => [> Types.Length.t]
-  let \"+": (Types.Length.t, Types.Length.t) => [> Types.Length.t]
-}
+let gridAutoColumns: trackLength => rule
+let gridAutoRows: trackLength => rule
+let gridTemplateColumns: array<gridLength> => rule
+let gridTemplateRows: array<gridLength> => rule
 
 let size: (Types.Length.t, Types.Length.t) => [> #size(Types.Length.t, Types.Length.t)]
 
