@@ -76,6 +76,13 @@ module Make = (CssImpl: Css_Core.CssImplementationIntf): (
     CssImpl.renderKeyframes(. renderer, List.fold_left(addStop, Js.Dict.empty(), frames))
 }
 
+module Calc = {
+  let \"-" = (a, b) => #sub(a, b)
+  let \"+" = (a, b) => #add(a, b)
+  let \"*" = (a, b) => #mul(a, b)
+  let \"/" = (a, b) => #div(a, b)
+}
+
 let join = (strings, separator) => {
   let rec run = (strings, acc) =>
     switch strings {
@@ -622,8 +629,7 @@ let height = x => D(
   "height",
   switch x {
   | #...Height.t as h => Height.toString(h)
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -745,8 +751,7 @@ let maxHeight = x => D(
   switch x {
   | #...Height.t as mh => Height.toString(mh)
   | #...MaxHeight.t as mh => MaxHeight.toString(mh)
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -757,8 +762,7 @@ let maxWidth = x => D(
   switch x {
   | #...Width.t as mw => Width.toString(mw)
   | #...MaxWidth.t as mw => MaxWidth.toString(mw)
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -769,8 +773,7 @@ let minHeight = x => D(
   switch x {
   | #...Height.t as h => Height.toString(h)
   | #...MinHeight.t as h => MinHeight.toString(h)
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -781,8 +784,7 @@ let minWidth = x => D(
   switch x {
   | #...Width.t as w => Width.toString(w)
   | #...MinWidth.t as w => MinWidth.toString(w)
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -1105,8 +1107,7 @@ let width = x => D(
   "width",
   switch x {
   | #...Width.t as w => Width.toString(w)
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -1410,11 +1411,6 @@ let zoomOut = Cursor.zoomOut
 let vw = x => #vw(x)
 let fr = x => #fr(x)
 
-module Calc = {
-  let \"-" = (a, b) => #calc(#sub, a, b)
-  let \"+" = (a, b) => #calc(#add, a, b)
-  let \"*" = (a, b) => #calc(#mult, a, b)
-}
 let size = (x, y) => #size(x, y)
 
 let all = #all
@@ -1556,118 +1552,62 @@ let flexBasis = x => D(
 
 let order = x => D("order", Js.Int.toString(x))
 
-let string_of_minmax = x =>
+type minmax = [PercentageLengthCalc.t | #minContent | #maxContent | #auto | #fr(float)]
+
+let minmaxToJs = x =>
   switch x {
-  | #auto => "auto"
-  | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
-  | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
-  | #calc(#mult, a, b) => "calc(" ++ Length.toString(a) ++ " * " ++ Length.toString(b) ++ ")"
-  | #ch(x) => Js.Float.toString(x) ++ "ch"
-  | #cm(x) => Js.Float.toString(x) ++ "cm"
-  | #em(x) => Js.Float.toString(x) ++ "em"
-  | #ex(x) => Js.Float.toString(x) ++ "ex"
-  | #mm(x) => Js.Float.toString(x) ++ "mm"
-  | #percent(x) => Js.Float.toString(x) ++ "%"
-  | #pt(x) => Js.Int.toString(x) ++ "pt"
-  | #px(x) => Js.Int.toString(x) ++ "px"
-  | #pxFloat(x) => Js.Float.toString(x) ++ "px"
-  | #rem(x) => Js.Float.toString(x) ++ "rem"
-  | #vh(x) => Js.Float.toString(x) ++ "vh"
-  | #vmax(x) => Js.Float.toString(x) ++ "vmax"
-  | #vmin(x) => Js.Float.toString(x) ++ "vmin"
-  | #vw(x) => Js.Float.toString(x) ++ "vw"
-  | #fr(x) => Js.Float.toString(x) ++ "fr"
-  | #inch(x) => Js.Float.toString(x) ++ "in"
-  | #pc(x) => Js.Float.toString(x) ++ "pc"
-  | #zero => "0"
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #minContent => "min-content"
   | #maxContent => "max-content"
-  }
-
-let string_of_dimension = x =>
-  switch x {
   | #auto => "auto"
-  | #none => "none"
-  | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
-  | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
-  | #calc(#mult, a, b) => "calc(" ++ (Length.toString(a) ++ (" * " ++ (Length.toString(b) ++ ")")))
-  | #ch(x) => Js.Float.toString(x) ++ "ch"
-  | #cm(x) => Js.Float.toString(x) ++ "cm"
-  | #em(x) => Js.Float.toString(x) ++ "em"
-  | #ex(x) => Js.Float.toString(x) ++ "ex"
-  | #mm(x) => Js.Float.toString(x) ++ "mm"
-  | #percent(x) => Js.Float.toString(x) ++ "%"
-  | #pt(x) => Js.Int.toString(x) ++ "pt"
-  | #px(x) => Js.Int.toString(x) ++ "px"
-  | #pxFloat(x) => Js.Float.toString(x) ++ "px"
-  | #rem(x) => Js.Float.toString(x) ++ "rem"
-  | #vh(x) => Js.Float.toString(x) ++ "vh"
-  | #vmax(x) => Js.Float.toString(x) ++ "vmax"
-  | #vmin(x) => Js.Float.toString(x) ++ "vmin"
-  | #vw(x) => Js.Float.toString(x) ++ "vw"
   | #fr(x) => Js.Float.toString(x) ++ "fr"
-  | #inch(x) => Js.Float.toString(x) ++ "in"
-  | #pc(x) => Js.Float.toString(x) ++ "pc"
-  | #zero => "0"
-  | #fitContent => "fit-content"
-  | #minContent => "min-content"
-  | #maxContent => "max-content"
-  | #minmax(a, b) => "minmax(" ++ (string_of_minmax(a) ++ ("," ++ (string_of_minmax(b) ++ ")")))
   }
-
-type minmax = [#fr(float) | #minContent | #maxContent | #auto | Length.t]
 
 type trackLength = [
-  | Length.t
+  | PercentageLengthCalc.t
   | #auto
-  | #fr(float)
   | #minContent
   | #maxContent
   | #minmax(minmax, minmax)
+  | #fr(float)
 ]
+
+let trackLengthToJs = x =>
+  switch x {
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
+  | #auto => "auto"
+  | #minContent => "min-content"
+  | #maxContent => "max-content"
+  | #fr(x) => Js.Float.toString(x) ++ "fr"
+  | #minmax(a, b) => "minmax(" ++ minmaxToJs(a) ++ "," ++ minmaxToJs(b) ++ ")"
+  }
+
 type gridLength = [trackLength | #repeat(RepeatValue.t, trackLength)]
 
 let gridLengthToJs = x =>
   switch x {
-  | #auto => "auto"
-  | #calc(#add, a, b) => "calc(" ++ (Length.toString(a) ++ (" + " ++ (Length.toString(b) ++ ")")))
-  | #calc(#sub, a, b) => "calc(" ++ (Length.toString(a) ++ (" - " ++ (Length.toString(b) ++ ")")))
-  | #calc(#mult, a, b) => "calc(" ++ (Length.toString(a) ++ (" * " ++ (Length.toString(b) ++ ")")))
-  | #ch(x) => Js.Float.toString(x) ++ "ch"
-  | #cm(x) => Js.Float.toString(x) ++ "cm"
-  | #em(x) => Js.Float.toString(x) ++ "em"
-  | #ex(x) => Js.Float.toString(x) ++ "ex"
-  | #mm(x) => Js.Float.toString(x) ++ "mm"
-  | #percent(x) => Js.Float.toString(x) ++ "%"
-  | #pt(x) => Js.Int.toString(x) ++ "pt"
-  | #px(x) => Js.Int.toString(x) ++ "px"
-  | #pxFloat(x) => Js.Float.toString(x) ++ "px"
-  | #rem(x) => Js.Float.toString(x) ++ "rem"
-  | #vh(x) => Js.Float.toString(x) ++ "vh"
-  | #inch(x) => Js.Float.toString(x) ++ "in"
-  | #pc(x) => Js.Float.toString(x) ++ "pc"
-  | #vmax(x) => Js.Float.toString(x) ++ "vmax"
-  | #vmin(x) => Js.Float.toString(x) ++ "vmin"
-  | #vw(x) => Js.Float.toString(x) ++ "vw"
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #fr(x) => Js.Float.toString(x) ++ "fr"
-  | #zero => "0"
+  | #auto => "auto"
   | #minContent => "min-content"
   | #maxContent => "max-content"
-  | #repeat(n, x) =>
-    "repeat(" ++ (RepeatValue.toString(n) ++ (", " ++ (string_of_dimension(x) ++ ")")))
-  | #minmax(a, b) => "minmax(" ++ (string_of_minmax(a) ++ ("," ++ (string_of_minmax(b) ++ ")")))
+  | #minmax(a, b) => "minmax(" ++ minmaxToJs(a) ++ "," ++ minmaxToJs(b) ++ ")"
+  | #repeat(n, x) => "repeat(" ++ RepeatValue.toString(n) ++ ", " ++ trackLengthToJs(x) ++ ")"
   }
 
-let string_of_dimensions = dimensions =>
-  dimensions |> List.map(gridLengthToJs) |> String.concat(" ")
+let gridTemplateColumns = dimensions => D(
+  "gridTemplateColumns",
+  dimensions |> List.map(gridLengthToJs) |> String.concat(" "),
+)
 
-let gridTemplateColumns = dimensions => D("gridTemplateColumns", string_of_dimensions(dimensions))
+let gridTemplateRows = dimensions => D(
+  "gridTemplateRows",
+  dimensions |> List.map(gridLengthToJs) |> String.concat(" "),
+)
 
-let gridTemplateRows = dimensions => D("gridTemplateRows", string_of_dimensions(dimensions))
+let gridAutoColumns = dimensions => D("gridAutoColumns", trackLengthToJs(dimensions))
 
-let gridAutoColumns = dimensions => D("gridAutoColumns", string_of_dimension(dimensions))
-
-let gridAutoRows = dimensions => D("gridAutoRows", string_of_dimension(dimensions))
+let gridAutoRows = dimensions => D("gridAutoRows", trackLengthToJs(dimensions))
 
 let gridArea = s => D(
   "gridArea",

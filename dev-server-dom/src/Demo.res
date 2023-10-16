@@ -590,13 +590,15 @@ let make = () =>
     </Section>
     <Section name="transition">
       <RedBox
-        rules=[transition(~duration=300, ~delay=300, ~timingFunction=easeInOut, "transform")]
+        rules=[
+          transition(~duration=#ms(300.), ~delay=#ms(300.), ~timingFunction=easeInOut, "transform"),
+        ]
       />
       <RedBox
         rules=[
           transitionProperty("height"),
-          transitionDelay(300),
-          transitionDuration(300),
+          transitionDelay(#ms(300.)),
+          transitionDuration(#ms(300.)),
           transitionTimingFunction(linear),
         ]
       />

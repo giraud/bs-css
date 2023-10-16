@@ -135,8 +135,10 @@ describe("Gradient background", () =>
     expect(background(radialGradient([(zero, red), (pct(100.), blue)])))->toBe({
       "background": "radial-gradient(#FF0000 0, #0000FF 100%)",
     })
-    open Calc
-    expect(background(repeatingRadialGradient([(zero, red), (pct(20.) + px(5), blue)])))->toBe({
+    //    open Calc
+    expect(
+      background(repeatingRadialGradient([(zero, red), (#add(pct(20.), px(5)), blue)])),
+    )->toBe({
       "background": "repeating-radial-gradient(#FF0000 0, #0000FF calc(20% + 5px))",
     })
     expect(background(conicGradient(deg(45.), [(zero, red), (pct(100.), blue)])))->toBe({
