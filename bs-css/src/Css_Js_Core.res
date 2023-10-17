@@ -122,29 +122,10 @@ module Converter = {
     | #...Cascading.t as c => Cascading.toString(c)
     }
 
-  let string_of_column_gap = x =>
-    switch x {
-    | #...ColumnGap.t as gcg => ColumnGap.toString(gcg)
-    | #...Percentage.t as p => Percentage.toString(p)
-    | #...Length.t as l => Length.toString(l)
-    | #...Var.t as va => Var.toString(va)
-    | #...Cascading.t as c => Cascading.toString(c)
-    }
-
-  let string_of_row_gap = x =>
-    switch x {
-    | #...RowGap.t as rg => RowGap.toString(rg)
-    | #...Percentage.t as p => Percentage.toString(p)
-    | #...Length.t as l => Length.toString(l)
-    | #...Var.t as va => Var.toString(va)
-    | #...Cascading.t as c => Cascading.toString(c)
-    }
-
   let string_of_gap = x =>
     switch x {
     | #...Gap.t as rg => Gap.toString(rg)
-    | #...Percentage.t as p => Percentage.toString(p)
-    | #...Length.t as l => Length.toString(l)
+    | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
     | #...Var.t as va => Var.toString(va)
     | #...Cascading.t as c => Cascading.toString(c)
     }
@@ -165,8 +146,7 @@ module Converter = {
 
   let string_of_dasharray = x =>
     switch x {
-    | #...Percentage.t as p => Percentage.toString(p)
-    | #...Length.t as l => Length.toString(l)
+    | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
     }
 }
 
@@ -451,9 +431,6 @@ let columnCount = x => D(
   },
 )
 
-let rowGap = x => D("rowGap", string_of_row_gap(x))
-let columnGap = x => D("columnGap", string_of_column_gap(x))
-
 let contentRule = x => D("content", string_of_content(x))
 let contentRules = xs => D("content", xs->Belt.Array.map(string_of_content)->join(" "))
 
@@ -594,8 +571,6 @@ let gridColumn = (start, end') => D(
   Js.Int.toString(start) ++ (" / " ++ Js.Int.toString(end')),
 )
 
-let gridColumnGap = x => D("gridColumnGap", string_of_column_gap(x))
-
 let gridColumnStart = n => D("gridColumnStart", Js.Int.toString(n))
 
 let gridColumnEnd = n => D("gridColumnEnd", Js.Int.toString(n))
@@ -606,23 +581,16 @@ let gridRow = (start, end') => D(
 )
 
 let gap = x => D("gap", string_of_gap(x))
+let columnGap = x => D("columnGap", string_of_gap(x))
+let rowGap = x => D("rowGap", string_of_gap(x))
+
 let gridGap = x => D("gridGap", string_of_gap(x))
+let gridColumnGap = x => D("gridColumnGap", string_of_gap(x))
+let gridRowGap = x => D("gridRowGap", string_of_gap(x))
 
 let gap2 = (~rowGap, ~columnGap) => D(
   "gap",
   string_of_gap(rowGap) ++ (" " ++ string_of_gap(columnGap)),
-)
-
-let rowGap = x => D("rowGap", string_of_row_gap(x))
-
-let gridRowGap = x => D(
-  "gridRowGap",
-  switch x {
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
-  | #...Var.t as va => Var.toString(va)
-  | #...Cascading.t as c => Cascading.toString(c)
-  },
 )
 
 let gridRowEnd = n => D("gridRowEnd", Js.Int.toString(n))
@@ -981,8 +949,7 @@ let textDecorationThickness = x => D(
 let textIndent = x => D(
   "textIndent",
   switch x {
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -1139,8 +1106,7 @@ let wordSpacing = x => D(
   "wordSpacing",
   switch x {
   | #...WordSpacing.t as w => WordSpacing.toString(w)
-  | #...Percentage.t as p => Percentage.toString(p)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },
@@ -1550,7 +1516,7 @@ let flexBasis = x => D(
   "flexBasis",
   switch x {
   | #...FlexBasis.t as b => FlexBasis.toString(b)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   },
 )
 

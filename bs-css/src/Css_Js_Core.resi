@@ -465,7 +465,7 @@ let flex: [< Types.Flex.t | #num(float)] => rule
  The flex-basis CSS property sets the initial main size of a flex item.
  It sets the size of the content box unless otherwise set with box-sizing.
  */
-let flexBasis: [< Types.FlexBasis.t | Types.Percentage.t | Types.Length.t] => rule
+let flexBasis: [< Types.FlexBasis.t | Types.PercentageLengthCalc.t] => rule
 
 /**
  The flex-direction CSS property sets how flex items are placed in the flex container defining the main axis and the direction (normal or reversed).
@@ -559,8 +559,7 @@ let gridColumnEnd: int => rule
  */
 let columnGap: [<
   | Types.ColumnGap.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -602,8 +601,7 @@ let caretColor: [< Types.CaretColor.t | Types.Color.t | Types.Var.t | Types.Casc
  */
 let gridColumnGap: [<
   | Types.ColumnGap.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -620,23 +618,20 @@ let gridColumnStart: int => rule
  */
 let gap: [<
   | Types.Gap.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
 let gap2: (
   ~rowGap: [<
     | Types.Gap.t
-    | Types.Percentage.t
-    | Types.Length.t
+    | Types.PercentageLengthCalc.t
     | Types.Var.t
     | Types.Cascading.t
   ],
   ~columnGap: [<
     | Types.Gap.t
-    | Types.Percentage.t
-    | Types.Length.t
+    | Types.PercentageLengthCalc.t
     | Types.Var.t
     | Types.Cascading.t
   ],
@@ -647,8 +642,7 @@ let gap2: (
  */
 let gridGap: [<
   | Types.Gap.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -669,15 +663,14 @@ let gridRowEnd: int => rule
 /**
  The row-gap CSS property sets the size of the gap (gutter) between an element's grid rows.
  */
-let gridRowGap: [< Types.Percentage.t | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule
+let gridRowGap: [< Types.PercentageLengthCalc.t | Types.Var.t | Types.Cascading.t] => rule
 
 /**
  The row-gap CSS property sets the size of the gap (gutter) between an element's grid rows.
  */
 let rowGap: [<
   | Types.RowGap.t
-  | Types.Percentage.t
-  | Types.Length.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -1000,7 +993,7 @@ let textDecorationStyle: [< Types.TextDecorationStyle.t | Types.Var.t | Types.Ca
  The text-indent CSS property sets the length of empty space (indentation)
  that is put before lines of text in a block.
  */
-let textIndent: [< Types.Percentage.t | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule
+let textIndent: [< Types.PercentageLengthCalc.t | Types.Var.t | Types.Cascading.t] => rule
 
 /**
  The text-overflow CSS property sets how hidden overflow content is signaled to users.
@@ -1093,8 +1086,7 @@ let wordBreak: [< Types.WordBreak.t | Types.Var.t | Types.Cascading.t] => rule
  */
 let wordSpacing: [<
   | Types.WordSpacing.t
-  | Types.Length.t
-  | Types.Percentage.t
+  | Types.PercentageLengthCalc.t
   | Types.Var.t
   | Types.Cascading.t
 ] => rule
@@ -1908,7 +1900,7 @@ module SVG: {
   let stroke: [< Types.Color.t | Types.Var.t] => rule
   let strokeDasharray: [<
     | #none
-    | #dasharray(array<[< Types.Length.t | Types.Percentage.t]>)
+    | #dasharray(array<Types.PercentageLengthCalc.t>)
   ] => rule
   let strokeLinecap: [#butt | #round | #square] => rule
   let strokeLinejoin: [#miter | #round | #bevel] => rule
