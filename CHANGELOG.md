@@ -2,9 +2,11 @@
          
 ## [17.0.1] - 2023-10-17
 
+The calc function is now defined outside the Length type.
+If you find missing usages, enter a github issue.
+
 - BREAKING CHANGE - Reworked the calc function - [#271](https://github.com/giraud/bs-css/issues/271)               
 - BREAKING CHANGE - Refactor time as Time, not int by [@davesnx](https://github.com/davesnx) - [#264](https://github.com/reasonml-labs/bs-css/pull/264)
-- 
 
 - Add missing quotes to contentRule if not present - [#263](https://github.com/giraud/bs-css/issues/263) 
 

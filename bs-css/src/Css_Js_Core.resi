@@ -369,7 +369,7 @@ let borderTopWidth: Types.Length.t => rule
 
 let borderWidth: Types.Length.t => rule
 
-let bottom: [< #auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule
+let bottom: [< #auto | Types.PercentageLengthCalc.t | Types.Var.t | Types.Cascading.t] => rule
 
 /**
  The box-sizing CSS property sets how the total width and height of an element is calculated.
@@ -735,7 +735,7 @@ let justifySelf: [<
   | Types.Cascading.t
 ] => rule
 
-let left: [< #auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule
+let left: [< #auto | Types.PercentageLengthCalc.t | Types.Var.t | Types.Cascading.t] => rule
 
 /**
  The letter-spacing CSS property sets the spacing behavior between text characters
@@ -790,30 +790,47 @@ let listStyleType: [< Types.ListStyleType.t | Types.Var.t | Types.Cascading.t] =
  */
 let listStylePosition: [< Types.ListStylePosition.t | Types.Var.t | Types.Cascading.t] => rule
 
-let margin: [< Types.Length.t | Types.Margin.t] => rule
+let margin: [< Types.PercentageLengthCalc.t | Types.Margin.t] => rule
 let margin2: (
-  ~v: [< Types.Length.t | Types.Margin.t],
-  ~h: [< Types.Length.t | Types.Margin.t],
+  ~v: [< Types.PercentageLengthCalc.t | Types.Margin.t],
+  ~h: [< Types.PercentageLengthCalc.t | Types.Margin.t],
 ) => rule
 let margin3: (
-  ~top: [< Types.Length.t | Types.Margin.t],
-  ~h: [< Types.Length.t | Types.Margin.t],
-  ~bottom: [< Types.Length.t | Types.Margin.t],
+  ~top: [< Types.PercentageLengthCalc.t | Types.Margin.t],
+  ~h: [< Types.PercentageLengthCalc.t | Types.Margin.t],
+  ~bottom: [< Types.PercentageLengthCalc.t | Types.Margin.t],
 ) => rule
 let margin4: (
-  ~top: [< Types.Length.t | Types.Margin.t],
-  ~right: [< Types.Length.t | Types.Margin.t],
-  ~bottom: [< Types.Length.t | Types.Margin.t],
-  ~left: [< Types.Length.t | Types.Margin.t],
+  ~top: [< Types.PercentageLengthCalc.t | Types.Margin.t],
+  ~right: [< Types.PercentageLengthCalc.t | Types.Margin.t],
+  ~bottom: [< Types.PercentageLengthCalc.t | Types.Margin.t],
+  ~left: [< Types.PercentageLengthCalc.t | Types.Margin.t],
 ) => rule
 
-let marginLeft: [< Types.Length.t | Types.Margin.t | Types.Var.t | Types.Cascading.t] => rule
-
-let marginRight: [< Types.Length.t | Types.Margin.t | Types.Var.t | Types.Cascading.t] => rule
-
-let marginTop: [< Types.Length.t | Types.Margin.t | Types.Var.t | Types.Cascading.t] => rule
-
-let marginBottom: [< Types.Length.t | Types.Margin.t | Types.Var.t | Types.Cascading.t] => rule
+let marginLeft: [<
+  | Types.PercentageLengthCalc.t
+  | Types.Margin.t
+  | Types.Var.t
+  | Types.Cascading.t
+] => rule
+let marginRight: [<
+  | Types.PercentageLengthCalc.t
+  | Types.Margin.t
+  | Types.Var.t
+  | Types.Cascading.t
+] => rule
+let marginTop: [<
+  | Types.PercentageLengthCalc.t
+  | Types.Margin.t
+  | Types.Var.t
+  | Types.Cascading.t
+] => rule
+let marginBottom: [<
+  | Types.PercentageLengthCalc.t
+  | Types.Margin.t
+  | Types.Var.t
+  | Types.Cascading.t
+] => rule
 
 /**
  The max-height CSS property sets the maximum height of an element.
@@ -907,23 +924,24 @@ let overflowY: Types.Overflow.t => rule
  */
 let overflowWrap: [< Types.OverflowWrap.t | Types.Var.t | Types.Cascading.t] => rule
 
-let padding: Types.Length.t => rule
-let padding2: (~v: Types.Length.t, ~h: Types.Length.t) => rule
-let padding3: (~top: Types.Length.t, ~h: Types.Length.t, ~bottom: Types.Length.t) => rule
+let padding: Types.PercentageLengthCalc.t => rule
+let padding2: (~v: Types.PercentageLengthCalc.t, ~h: Types.PercentageLengthCalc.t) => rule
+let padding3: (
+  ~top: Types.PercentageLengthCalc.t,
+  ~h: Types.PercentageLengthCalc.t,
+  ~bottom: Types.PercentageLengthCalc.t,
+) => rule
 let padding4: (
-  ~top: Types.Length.t,
-  ~right: Types.Length.t,
-  ~bottom: Types.Length.t,
-  ~left: Types.Length.t,
+  ~top: Types.PercentageLengthCalc.t,
+  ~right: Types.PercentageLengthCalc.t,
+  ~bottom: Types.PercentageLengthCalc.t,
+  ~left: Types.PercentageLengthCalc.t,
 ) => rule
 
-let paddingLeft: Types.Length.t => rule
-
-let paddingRight: Types.Length.t => rule
-
-let paddingTop: Types.Length.t => rule
-
-let paddingBottom: Types.Length.t => rule
+let paddingLeft: Types.PercentageLengthCalc.t => rule
+let paddingRight: Types.PercentageLengthCalc.t => rule
+let paddingTop: Types.PercentageLengthCalc.t => rule
+let paddingBottom: Types.PercentageLengthCalc.t => rule
 
 /**
  The perspective CSS property determines the distance between the z=0 plane and the user in order
@@ -964,7 +982,7 @@ let isolation: [< Types.Isolation.t | Types.Cascading.t] => rule
  */
 let resize: [< Types.Resize.t | Types.Var.t | Types.Cascading.t] => rule
 
-let right: [< #auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule
+let right: [< #auto | Types.PercentageLengthCalc.t | Types.Var.t | Types.Cascading.t] => rule
 
 /**
  The table-layout CSS property sets the algorithm used to lay out <table> cells, rows, and columns.
@@ -1020,7 +1038,7 @@ let textShadows: array<[Shadow.t<Shadow.text>]> => rule
  */
 let textTransform: [< Types.TextTransform.t | Types.Var.t | Types.Cascading.t] => rule
 
-let top: [< #auto | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule
+let top: [< #auto | Types.PercentageLengthCalc.t | Types.Var.t | Types.Cascading.t] => rule
 
 let transform: [< #none | Types.Transform.t] => rule
 

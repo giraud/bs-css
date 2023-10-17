@@ -139,7 +139,7 @@ module Converter = {
   let string_of_position = x =>
     switch x {
     | #auto => "auto"
-    | #...Length.t as l => Length.toString(l)
+    | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
     | #...Var.t as va => Var.toString(va)
     | #...Cascading.t as c => Cascading.toString(c)
     }
@@ -691,30 +691,32 @@ let listStylePosition = x => D(
   },
 )
 
-let marginToString = x =>
+let string_of_margin = x =>
   switch x {
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Margin.t as m => Margin.toString(m)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   }
 
-let margin = x => D("margin", marginToString(x))
-let margin2 = (~v, ~h) => D("margin", marginToString(v) ++ (" " ++ marginToString(h)))
+let margin = x => D("margin", string_of_margin(x))
+let margin2 = (~v, ~h) => D("margin", string_of_margin(v) ++ (" " ++ string_of_margin(h)))
 let margin3 = (~top, ~h, ~bottom) => D(
   "margin",
-  marginToString(top) ++ (" " ++ (marginToString(h) ++ (" " ++ marginToString(bottom)))),
+  string_of_margin(top) ++ (" " ++ (string_of_margin(h) ++ (" " ++ string_of_margin(bottom)))),
 )
 let margin4 = (~top, ~right, ~bottom, ~left) => D(
   "margin",
-  marginToString(top) ++
+  string_of_margin(top) ++
   (" " ++
-  (marginToString(right) ++ (" " ++ (marginToString(bottom) ++ (" " ++ marginToString(left)))))),
+  (string_of_margin(right) ++
+  (" " ++
+  (string_of_margin(bottom) ++ (" " ++ string_of_margin(left)))))),
 )
-let marginLeft = x => D("marginLeft", marginToString(x))
-let marginRight = x => D("marginRight", marginToString(x))
-let marginTop = x => D("marginTop", marginToString(x))
-let marginBottom = x => D("marginBottom", marginToString(x))
+let marginLeft = x => D("marginLeft", string_of_margin(x))
+let marginRight = x => D("marginRight", string_of_margin(x))
+let marginTop = x => D("marginTop", string_of_margin(x))
+let marginBottom = x => D("marginBottom", string_of_margin(x))
 
 let maxHeight = x => D(
   "maxHeight",
@@ -797,26 +799,30 @@ let overflowWrap = x => D(
   },
 )
 
-let padding = x => D("padding", Length.toString(x))
-let padding2 = (~v, ~h) => D("padding", Length.toString(v) ++ (" " ++ Length.toString(h)))
+let padding = x => D("padding", PercentageLengthCalc.toString(x))
+let padding2 = (~v, ~h) => D(
+  "padding",
+  PercentageLengthCalc.toString(v) ++ (" " ++ PercentageLengthCalc.toString(h)),
+)
 let padding3 = (~top, ~h, ~bottom) => D(
   "padding",
-  Length.toString(top) ++ (" " ++ (Length.toString(h) ++ (" " ++ Length.toString(bottom)))),
+  PercentageLengthCalc.toString(top) ++
+  (" " ++
+  (PercentageLengthCalc.toString(h) ++ (" " ++ PercentageLengthCalc.toString(bottom)))),
 )
 let padding4 = (~top, ~right, ~bottom, ~left) => D(
   "padding",
-  Length.toString(top) ++
+  PercentageLengthCalc.toString(top) ++
   (" " ++
-  (Length.toString(right) ++ (" " ++ (Length.toString(bottom) ++ (" " ++ Length.toString(left)))))),
+  (PercentageLengthCalc.toString(right) ++
+  (" " ++
+  (PercentageLengthCalc.toString(bottom) ++ (" " ++ PercentageLengthCalc.toString(left)))))),
 )
 
-let paddingBottom = x => D("paddingBottom", Length.toString(x))
-
-let paddingLeft = x => D("paddingLeft", Length.toString(x))
-
-let paddingRight = x => D("paddingRight", Length.toString(x))
-
-let paddingTop = x => D("paddingTop", Length.toString(x))
+let paddingBottom = x => D("paddingBottom", PercentageLengthCalc.toString(x))
+let paddingLeft = x => D("paddingLeft", PercentageLengthCalc.toString(x))
+let paddingRight = x => D("paddingRight", PercentageLengthCalc.toString(x))
+let paddingTop = x => D("paddingTop", PercentageLengthCalc.toString(x))
 
 let perspective = x => D(
   "perspective",
