@@ -6,6 +6,20 @@ let toBe = (e, x) => Jest.toBe(e, x->Js.Json.stringifyAny)
 let expect = x =>
   Jest.expect(toJson([x])->Js.Json.stringifyAny) /* simple rule for more readable tests */
 
+describe("borderTopStyle", () => {
+  test("test usage", () => {
+    expect(borderTopStyle(hidden))->toBe({"borderTopStyle": "hidden"})
+    expect(borderTopStyle(dotted))->toBe({"borderTopStyle": "dotted"})
+    expect(borderTopStyle(dashed))->toBe({"borderTopStyle": "dashed"})
+    expect(borderTopStyle(solid))->toBe({"borderTopStyle": "solid"})
+    expect(borderTopStyle(double))->toBe({"borderTopStyle": "double"})
+    expect(borderTopStyle(groove))->toBe({"borderTopStyle": "groove"})
+    expect(borderTopStyle(ridge))->toBe({"borderTopStyle": "ridge"})
+    expect(borderTopStyle(inset))->toBe({"borderTopStyle": "inset"})
+    expect(borderTopStyle(outset))->toBe({"borderTopStyle": "outset"})
+  })
+})
+
 describe("height", () => {
   test("test usage", () => {
     expect(height(pct(80.)))->toBe({"height": "80%"})

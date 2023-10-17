@@ -1403,6 +1403,10 @@ let contentBox = #contentBox
 let count = x => #count(x)
 let cover = #cover
 let dashed = #dashed
+let groove = #groove
+let ridge = #ridge
+let inset = #inset
+let outset = #outset
 let dotted = #dotted
 let flexBox = #flex
 let grid = #grid

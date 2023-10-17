@@ -1401,6 +1401,10 @@ let contentBox = #contentBox
 let count = x => #count(x)
 let cover = #cover
 let dashed = #dashed
+let groove = #groove
+let ridge = #ridge
+let inset = #inset
+let outset = #outset
 let dotted = #dotted
 let flexBox = #flex
 let grid = #grid
@@ -1733,7 +1737,7 @@ let borderTop = (px, style, color) => D(
   Length.toString(px) ++ (" " ++ (string_of_borderstyle(style) ++ (" " ++ string_of_color(color)))),
 )
 
-let borderTopStyle = x => D(" ", string_of_borderstyle(x))
+let borderTopStyle = x => D("borderTopStyle", string_of_borderstyle(x))
 
 let borderBottom = (px, style, color) => D(
   "borderBottom",
