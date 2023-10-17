@@ -119,45 +119,6 @@ let alignSelf: [<
 ] => rule
 
 /**
- The animation-delay CSS property sets when an animation starts.
- The animation can start later, immediately from its beginning, or immediately and partway through the animation.
- */
-let animationDelay: Types.Time.t => rule
-
-/**
- The animation-direction CSS property sets whether an animation should play forwards, backwards,
- or alternating back and forth.
- */
-let animationDirection: Types.AnimationDirection.t => rule
-
-/**
- The animation-duration CSS property sets the length of time that an animation takes to complete one cycle.
- */
-let animationDelay: Types.Time.t => rule
-
-/**
- The animation-fill-mode CSS property sets how a CSS animation applies styles to its target before and after
- its execution.
- */
-let animationFillMode: Types.AnimationFillMode.t => rule
-
-/**
- The animation-iteration-count CSS property sets the number of times an animation cycle should be played
- before stopping.
- */
-let animationIterationCount: Types.AnimationIterationCount.t => rule
-
-/**
- The animation-play-state CSS property sets whether an animation is running or paused.
- */
-let animationPlayState: Types.AnimationPlayState.t => rule
-
-/**
- The animation-timing-function CSS property sets how an animation progresses through the duration of each cycle.
- */
-let animationTimingFunction: Types.TimingFunction.t => rule
-
-/**
  The backdrop-filter CSS property lets you apply graphical effects such as blurring or color shifting to the
  area behind an element. Because it applies to everything behind the element, to see the effect you must
  make the element or its background at least partially transparent.
@@ -1895,6 +1856,45 @@ let animation: (
 let animations: list<[Animation.t]> => rule
 
 let animationName: animationName => rule
+
+/**
+ The animation-delay CSS property sets when an animation starts.
+ The animation can start later, immediately from its beginning, or immediately and partway through the animation.
+ */
+let animationDelay: Types.Time.t => rule
+
+/**
+ The animation-direction CSS property sets whether an animation should play forwards, backwards,
+ or alternating back and forth.
+ */
+let animationDirection: Types.AnimationDirection.t => rule
+
+/**
+ The animation-duration CSS property sets the length of time that an animation takes to complete one cycle.
+ */
+let animationDuration: Types.Time.t => rule
+
+/**
+ The animation-fill-mode CSS property sets how a CSS animation applies styles to its target before and after
+ its execution.
+ */
+let animationFillMode: Types.AnimationFillMode.t => rule
+
+/**
+ The animation-iteration-count CSS property sets the number of times an animation cycle should be played
+ before stopping.
+ */
+let animationIterationCount: Types.AnimationIterationCount.t => rule
+
+/**
+ The animation-play-state CSS property sets whether an animation is running or paused.
+ */
+let animationPlayState: Types.AnimationPlayState.t => rule
+
+/**
+ The animation-timing-function CSS property sets how an animation progresses through the duration of each cycle.
+ */
+let animationTimingFunction: Types.TimingFunction.t => rule
 
 /**
  SVG
