@@ -1,6 +1,6 @@
 ## [Unreleased]
          
-## [17.0.1] - 2023-10-17
+## [17.0.2] - 2023-10-17
 
 The calc function is now defined outside the Length type.
 If you find missing usages, enter a github issue.
@@ -10,7 +10,7 @@ If you find missing usages, enter a github issue.
 
 - Add missing quotes to contentRule if not present - [#263](https://github.com/giraud/bs-css/issues/263) 
 
-bs-css-dom@5.0.1, bs-css-emotion@6.0.1, bs-css-fela@4.0.1
+bs-css-dom@5.0.2, bs-css-emotion@6.0.2, bs-css-fela@4.0.2
 
 ## [16.2.0] - 2023-05-03
 
@@ -349,7 +349,9 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/giraud/bs-css/compare/16.1.0...HEAD
+[Unreleased]: https://github.com/giraud/bs-css/compare/17.0.2...HEAD
+[17.0.2]: https://github.com/giraud/bs-css/compare/16.2.0...17.0.2
+[16.2.0]: https://github.com/giraud/bs-css/compare/16.1.0...16.2.0
 [16.1.0]: https://github.com/giraud/bs-css/compare/16.0.0...16.1.0
 [16.0.0]: https://github.com/giraud/bs-css/compare/15.3.1...16.0.0
 [15.3.1]: https://github.com/giraud/bs-css/compare/15.3.0...15.3.1
