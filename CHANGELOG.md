@@ -1,4 +1,6 @@
 ## [Unreleased]
+         
+## [17.0.0] - 2023-10-17
 
 - BREAKING CHANGE - Reworked the calc function - [#271](https://github.com/giraud/bs-css/issues/271)               
 - BREAKING CHANGE - Refactor time as Time, not int by [@davesnx](https://github.com/davesnx) - [#264](https://github.com/reasonml-labs/bs-css/pull/264)
@@ -6,7 +8,7 @@
 
 - Add missing quotes to contentRule if not present - [#263](https://github.com/giraud/bs-css/issues/263) 
 
-bs-css-dom@x, bs-css-emotion@x, bs-css-fela@x
+bs-css-dom@5.0.0, bs-css-emotion@6.0.0, bs-css-fela@4.0.0
 
 ## [16.2.0] - 2023-05-03
 
