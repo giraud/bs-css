@@ -737,7 +737,14 @@ let make = () => {
       <div
         className={cx(
           redBox,
-          [transition(~duration=300, ~delay=300, ~timingFunction=easeInOut, "transform")],
+          [
+            transition(
+              ~duration=#ms(300.),
+              ~delay=#ms(300.),
+              ~timingFunction=easeInOut,
+              "transform",
+            ),
+          ],
         )}
       />
       <div
@@ -745,8 +752,8 @@ let make = () => {
           redBox,
           [
             transitionProperty("height"),
-            transitionDelay(300),
-            transitionDuration(300),
+            transitionDelay(#ms(300.)),
+            transitionDuration(#ms(300.)),
             transitionTimingFunction(linear),
           ],
         )}
@@ -807,8 +814,8 @@ let make = () => {
           redBox,
           [
             animation(
-              ~duration=300,
-              ~delay=300,
+              ~duration=#ms(300.),
+              ~delay=#ms(300.),
               ~direction=reverse,
               ~timingFunction=linear,
               ~fillMode=forwards,
@@ -824,9 +831,9 @@ let make = () => {
           redBox,
           [
             animations([
-              Animation.shorthand(~duration=300, ~iterationCount=infinite, spinAnimationName),
+              Animation.shorthand(~duration=#ms(300.), ~iterationCount=infinite, spinAnimationName),
               Animation.shorthand(
-                ~duration=300,
+                ~duration=#ms(300.),
                 ~iterationCount=infinite,
                 scaleAnimation(renderer),
               ),
@@ -840,8 +847,8 @@ let make = () => {
           [
             animationName(spinAnimationName),
             animationTimingFunction(easeIn),
-            animationDuration(300),
-            animationDelay(300),
+            animationDuration(#ms(300.)),
+            animationDelay(#ms(300.)),
             animationDirection(normal),
             animationFillMode(backwards),
             animationPlayState(paused),
