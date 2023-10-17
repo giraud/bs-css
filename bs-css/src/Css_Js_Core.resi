@@ -752,7 +752,12 @@ let letterSpacing: [<
  On block-level elements, it specifies the minimum height of line boxes within the element.
  On non-replaced inline elements, it specifies the height that is used to calculate line box height.
  */
-let lineHeight: [< Types.LineHeight.t | Types.Length.t | Types.Var.t | Types.Cascading.t] => rule
+let lineHeight: [<
+  | Types.LineHeight.t
+  | Types.PercentageLengthCalc.t
+  | Types.Var.t
+  | Types.Cascading.t
+] => rule
 
 /**
  The list-style CSS property is a shorthand to set list style properties list-style-type,

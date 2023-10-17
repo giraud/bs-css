@@ -115,7 +115,15 @@ module Length: {
 }
 
 module PercentageLengthCalc: {
-  type rec t = [Percentage.t | Length.t | #add(t, t) | #sub(t, t) | #mul(t, float) | #div(t, float)]
+  // sub is already used for other types, like verticalAlign
+  type rec t = [
+    | Percentage.t
+    | Length.t
+    | #add(t, t)
+    | #substract(t, t)
+    | #mul(t, float)
+    | #div(t, float)
+  ]
 
   let toString: t => string
 }

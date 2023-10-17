@@ -77,7 +77,7 @@ module Make = (CssImpl: Css_Core.CssImplementationIntf): (
 }
 
 module Calc = {
-  let \"-" = (a, b) => #sub(a, b)
+  let \"-" = (a, b) => #substract(a, b)
   let \"+" = (a, b) => #add(a, b)
   let \"*" = (a, b) => #mul(a, b)
   let \"/" = (a, b) => #div(a, b)
@@ -645,7 +645,7 @@ let lineHeight = x => D(
   "lineHeight",
   switch x {
   | #...LineHeight.t as h => LineHeight.toString(h)
-  | #...Length.t as l => Length.toString(l)
+  | #...PercentageLengthCalc.t as plc => PercentageLengthCalc.toString(plc)
   | #...Var.t as va => Var.toString(va)
   | #...Cascading.t as c => Cascading.toString(c)
   },

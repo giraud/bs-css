@@ -132,14 +132,21 @@ module Length = {
 }
 
 module PercentageLengthCalc = {
-  type rec t = [Percentage.t | Length.t | #add(t, t) | #sub(t, t) | #mul(t, float) | #div(t, float)]
+  type rec t = [
+    | Percentage.t
+    | Length.t
+    | #add(t, t)
+    | #substract(t, t)
+    | #mul(t, float)
+    | #div(t, float)
+  ]
 
   let rec toString = x =>
     switch x {
     | #...Percentage.t as p => Percentage.toString(p)
     | #...Length.t as l => Length.toString(l)
     | #add(a, b) => "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
-    | #sub(a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
+    | #substract(a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
     | #mul(a, b) => "calc(" ++ toString(a) ++ " * " ++ Js.Float.toString(b) ++ ")"
     | #div(a, b) => "calc(" ++ toString(a) ++ " / " ++ Js.Float.toString(b) ++ ")"
     }

@@ -17,7 +17,7 @@ describe("height", () => {
     expect(height(fitContent))->toBe({"height": "fit-content"})
     expect(height(maxContent))->toBe({"height": "max-content"})
     expect(height(minContent))->toBe({"height": "min-content"})
-    expect(height(#sub(pct(100.), px(20))))->toBe({"height": "calc(100% - 20px)"})
+    expect(height(#substract(pct(100.), px(20))))->toBe({"height": "calc(100% - 20px)"})
     expect(
       height({
         open Calc
