@@ -9,6 +9,43 @@ let toBe = (e, x) => Jest.toBe(e, x->Js.Json.stringifyAny)
 let expect = x =>
   Jest.expect(toJson(list{x})->Js.Json.stringifyAny) /* simple rule for more readable tests */
 
+describe("height", () => {
+  test("test usage", () => {
+    expect(height(pct(80.)))->toBe({"height": "80%"})
+    expect(height(px(80)))->toBe({"height": "80px"})
+    expect(height(auto))->toBe({"height": "auto"})
+    expect(height(fitContent))->toBe({"height": "fit-content"})
+    expect(height(maxContent))->toBe({"height": "max-content"})
+    expect(height(minContent))->toBe({"height": "min-content"})
+    expect(height(#sub(pct(100.), px(20))))->toBe({"height": "calc(100% - 20px)"})
+    expect(
+      height({
+        open Calc
+        pct(100.) - px(20) + vw(1.) / 2.
+      }),
+    )->toBe({"height": "calc(calc(100% - 20px) + calc(1vw / 2))"})
+    expect(height(var("--foo")))->toBe({"height": "var(--foo)"})
+  })
+})
+
+describe("contentRule", () => {
+  test("add missing quotes", () => {
+    expect(contentRule(#text("missing")))->toBe({"content": "\"missing\""})
+    expect(contentRule(#text("\"present\"")))->toBe({"content": "\"present\""})
+    expect(contentRule(#text("")))->toBe({"content": "\"\""})
+    expect(contentRule(#text("'single'")))->toBe({"content": "'single'"})
+  })
+
+  test("values", () => {
+    expect(contentRule(#none))->toBe({"content": "none"})
+    expect(contentRule(#normal))->toBe({"content": "normal"})
+    expect(contentRule(#openQuote))->toBe({"content": "open-quote"})
+    expect(contentRule(#closeQuote))->toBe({"content": "close-quote"})
+    expect(contentRule(#noOpenQuote))->toBe({"content": "no-open-quote"})
+    expect(contentRule(#noCloseQuote))->toBe({"content": "no-close-quote"})
+  })
+})
+
 describe("Var", () => {
   test("test usage (limited)", () => {
     expect(color(var("foo")))->toBe({"color": "var(--foo)"})
