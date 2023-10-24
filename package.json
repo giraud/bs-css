@@ -1,5 +1,6 @@
 {
     "private": true,
+    "packageManager": "yarn@4.3.1",
     "workspaces": [
         "bs-css",
         "bs-css-dom",
