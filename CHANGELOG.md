@@ -6,7 +6,7 @@
 
 - Add min/max in PercentageLengthCalc
 
-bs-css-dom@6.0.0, bs-css-emotion@7.0.0, bs-css-fela@5.0.0
+bs-css-dom@6.0.1, bs-css-emotion@7.0.1, bs-css-fela@5.0.1
 
 ## [17.0.2] - 2023-10-17
 
