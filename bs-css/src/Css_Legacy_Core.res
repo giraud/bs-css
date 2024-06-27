@@ -1228,6 +1228,9 @@ let auto = #auto
 let none = #none
 let text = #text
 
+let min = PercentageLengthCalc.min
+let max = PercentageLengthCalc.max
+
 let pct = Percentage.pct
 
 let ch = Length.ch

@@ -1411,6 +1411,15 @@ let auto: [> #auto]
 let none: [> #none]
 let text: [> #text]
 
+let min: (
+  Types.PercentageLengthCalc.t,
+  Types.PercentageLengthCalc.t,
+) => [> Types.PercentageLengthCalc.t]
+let max: (
+  Types.PercentageLengthCalc.t,
+  Types.PercentageLengthCalc.t,
+) => [> Types.PercentageLengthCalc.t]
+
 let pct: float => [> Types.Percentage.t]
 
 let ch: float => [> #ch(float)]

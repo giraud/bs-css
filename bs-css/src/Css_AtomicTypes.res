@@ -135,16 +135,23 @@ module PercentageLengthCalc = {
   type rec t = [
     | Percentage.t
     | Length.t
+    | #min(t, t)
+    | #max(t, t)
     | #add(t, t)
     | #substract(t, t)
     | #mul(t, float)
     | #div(t, float)
   ]
 
+  let min = (x, x') => #min(x, x')
+  let max = (x, x') => #max(x, x')
+
   let rec toString = x =>
     switch x {
     | #...Percentage.t as p => Percentage.toString(p)
     | #...Length.t as l => Length.toString(l)
+    | #min(a, b) => "min(" ++ toString(a) ++ ", " ++ toString(b) ++ ")"
+    | #max(a, b) => "max(" ++ toString(a) ++ ", " ++ toString(b) ++ ")"
     | #add(a, b) => "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
     | #substract(a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
     | #mul(a, b) => "calc(" ++ toString(a) ++ " * " ++ Js.Float.toString(b) ++ ")"

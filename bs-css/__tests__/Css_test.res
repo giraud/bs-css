@@ -625,3 +625,20 @@ describe("counter", () => {
     expect(counterIncrement(var("bar")))->toBe({"counterIncrement": "var(--bar)"})
   })
 })
+
+describe("functions", () => {
+  test("test usage", () => {
+    expect(height(min(pct(80.), px(120))))->toBe({"height": "min(80%, 120px)"})
+    expect(
+      maxHeight(
+        max(
+          40.->vh,
+          {
+            open! Calc
+            10.->rem + 20->px
+          },
+        ),
+      ),
+    )->toBe({"maxHeight": "max(40vh, calc(10rem + 20px))"})
+  })
+})

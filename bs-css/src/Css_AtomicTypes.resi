@@ -119,11 +119,16 @@ module PercentageLengthCalc: {
   type rec t = [
     | Percentage.t
     | Length.t
+    | #min(t, t)
+    | #max(t, t)
     | #add(t, t)
     | #substract(t, t)
     | #mul(t, float)
     | #div(t, float)
   ]
+
+  let min: (t, t) => [> #min(t, t)]
+  let max: (t, t) => [> #max(t, t)]
 
   let toString: t => string
 }
