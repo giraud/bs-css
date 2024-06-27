@@ -1,6 +1,6 @@
 {
   "name": "bs-css-dom",
-  "version": "5.0.2",
+  "version": "6.0.0",
   "description": "bs-css bindings for React DOM",
   "scripts": {
     "re:clean": "rescript clean",
