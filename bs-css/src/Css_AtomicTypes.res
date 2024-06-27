@@ -138,7 +138,7 @@ module PercentageLengthCalc = {
     | #min(t, t)
     | #max(t, t)
     | #add(t, t)
-    | #substract(t, t)
+    | #subtract(t, t)
     | #mul(t, float)
     | #div(t, float)
   ]
@@ -153,7 +153,7 @@ module PercentageLengthCalc = {
     | #min(a, b) => "min(" ++ toString(a) ++ ", " ++ toString(b) ++ ")"
     | #max(a, b) => "max(" ++ toString(a) ++ ", " ++ toString(b) ++ ")"
     | #add(a, b) => "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
-    | #substract(a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
+    | #subtract(a, b) => "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
     | #mul(a, b) => "calc(" ++ toString(a) ++ " * " ++ Js.Float.toString(b) ++ ")"
     | #div(a, b) => "calc(" ++ toString(a) ++ " / " ++ Js.Float.toString(b) ++ ")"
     }

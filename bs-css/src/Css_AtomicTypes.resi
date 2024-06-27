@@ -122,7 +122,7 @@ module PercentageLengthCalc: {
     | #min(t, t)
     | #max(t, t)
     | #add(t, t)
-    | #substract(t, t)
+    | #subtract(t, t)
     | #mul(t, float)
     | #div(t, float)
   ]

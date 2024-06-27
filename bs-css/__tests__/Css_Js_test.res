@@ -28,7 +28,7 @@ describe("height", () => {
     expect(height(fitContent))->toBe({"height": "fit-content"})
     expect(height(maxContent))->toBe({"height": "max-content"})
     expect(height(minContent))->toBe({"height": "min-content"})
-    expect(height(#substract(pct(100.), px(20))))->toBe({"height": "calc(100% - 20px)"})
+    expect(height(#subtract(pct(100.), px(20))))->toBe({"height": "calc(100% - 20px)"})
     expect(
       height({
         open Calc
@@ -43,7 +43,7 @@ describe("lineHeight", () => {
   test("test usage", () => {
     expect(lineHeight(pct(80.)))->toBe({"lineHeight": "80%"})
     expect(lineHeight(px(80)))->toBe({"lineHeight": "80px"})
-    expect(lineHeight(#substract(pct(100.), px(20))))->toBe({"lineHeight": "calc(100% - 20px)"})
+    expect(lineHeight(#subtract(pct(100.), px(20))))->toBe({"lineHeight": "calc(100% - 20px)"})
     expect(
       lineHeight({
         open Calc

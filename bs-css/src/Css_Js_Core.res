@@ -79,7 +79,7 @@ module Make = (CssImpl: Css_Core.CssImplementationIntf): (
 }
 
 module Calc = {
-  let \"-" = (a, b) => #substract(a, b)
+  let \"-" = (a, b) => #subtract(a, b)
   let \"+" = (a, b) => #add(a, b)
   let \"*" = (a, b) => #mul(a, b)
   let \"/" = (a, b) => #div(a, b)
