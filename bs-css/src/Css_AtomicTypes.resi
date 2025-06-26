@@ -581,7 +581,7 @@ module Cursor: {
 }
 
 module Color: {
-  type t = [
+  type base = [
     | #rgb(int, int, int)
     | #rgba(int, int, int, [#num(float) | Percentage.t])
     | #hsl(Angle.t, Percentage.t, Percentage.t)
@@ -590,14 +590,15 @@ module Color: {
     | #transparent
     | #currentColor
   ]
+  type t = [base | #lightDark(base, base)]
 
-  let rgb: (int, int, int) => [> t]
-  let rgba: (int, int, int, [#num(float) | Percentage.t]) => [> t]
-  let hsl: (Angle.t, Percentage.t, Percentage.t) => [> t]
-  let hsla: (Angle.t, Percentage.t, Percentage.t, [#num(float) | Percentage.t]) => [> t]
-  let hex: string => [> t]
-  let transparent: [> t]
-  let currentColor: [> t]
+  let rgb: (int, int, int) => [> base]
+  let rgba: (int, int, int, [#num(float) | Percentage.t]) => [> base]
+  let hsl: (Angle.t, Percentage.t, Percentage.t) => [> base]
+  let hsla: (Angle.t, Percentage.t, Percentage.t, [#num(float) | Percentage.t]) => [> base]
+  let hex: string => [> base]
+  let transparent: [> base]
+  let currentColor: [> base]
 
   let toString: t => string
 }

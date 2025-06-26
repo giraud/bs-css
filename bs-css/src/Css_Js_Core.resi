@@ -1479,18 +1479,18 @@ let hidden: [> #hidden]
 let visible: [> #visible]
 let scroll: [> #scroll]
 
-let rgb: (int, int, int) => [> Types.Color.t]
-let rgba: (int, int, int, [#num(float) | #percent(float)]) => [> Types.Color.t]
-let hsl: (Types.Angle.t, Types.Percentage.t, Types.Percentage.t) => [> Types.Color.t]
+let rgb: (int, int, int) => [> Types.Color.base]
+let rgba: (int, int, int, [#num(float) | #percent(float)]) => [> Types.Color.base]
+let hsl: (Types.Angle.t, Types.Percentage.t, Types.Percentage.t) => [> Types.Color.base]
 let hsla: (
   Types.Angle.t,
   Types.Percentage.t,
   Types.Percentage.t,
   [#num(float) | #percent(float)],
-) => [> Types.Color.t]
-let hex: string => [> Types.Color.t]
-let transparent: [> Types.Color.t]
-let currentColor: [> Types.Color.t]
+) => [> Types.Color.base]
+let hex: string => [> Types.Color.base]
+let transparent: [> Types.Color.base]
+let currentColor: [> Types.Color.base]
 
 let local: [> #local]
 

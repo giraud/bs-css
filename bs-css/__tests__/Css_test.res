@@ -88,6 +88,12 @@ describe("Color style", () =>
     expect(color(transparent))->toBe({"color": "transparent"})
     expect(color(hex("FFF")))->toBe({"color": "#FFF"})
     expect(color(currentColor))->toBe({"color": "currentColor"})
+    expect(color(#lightDark(#hex("AAA"), #hsl(deg(208.), #percent(10.), #percent(53.)))))->toBe({
+      "color": "light-dark(#AAA, hsl(208deg, 10%, 53%))",
+    })
+    expect(color(#lightDark(hex("AAA"), hsl(deg(208.), pct(10.), pct(53.)))))->toBe({
+      "color": "light-dark(#AAA, hsl(208deg, 10%, 53%))",
+    })
   })
 )
 

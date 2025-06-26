@@ -859,7 +859,7 @@ module Cursor = {
 }
 
 module Color = {
-  type t = [
+  type base = [
     | #rgb(int, int, int)
     | #rgba(int, int, int, [#num(float) | Percentage.t])
     | #hsl(Angle.t, Percentage.t, Percentage.t)
@@ -868,6 +868,7 @@ module Color = {
     | #transparent
     | #currentColor
   ]
+  type t = [base | #lightDark(base, base)]
 
   let rgb = (r, g, b) => #rgb((r, g, b))
   let rgba = (r, g, b, a) => #rgba((r, g, b, a))
@@ -883,7 +884,7 @@ module Color = {
     | #...Percentage.t as pc => Percentage.toString(pc)
     }
 
-  let toString = x =>
+  let toStringBase = x =>
     switch x {
     | #rgb(r, g, b) =>
       "rgb(" ++
@@ -920,6 +921,12 @@ module Color = {
     | #hex(s) => "#" ++ s
     | #transparent => "transparent"
     | #currentColor => "currentColor"
+    }
+
+  let toString = x =>
+    switch x {
+    | #...base as ba => toStringBase(ba)
+    | #lightDark(c, c') => "light-dark(" ++ toStringBase(c) ++ ", " ++ toStringBase(c') ++ ")"
     }
 }
 
