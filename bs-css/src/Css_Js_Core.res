@@ -273,7 +273,7 @@ let backgroundOrigin = x => D(
   },
 )
 
-let string_of_backgroundposition = x =>
+let string_of_background_position = x =>
   switch x {
   | #...BackgroundPosition.t as bp => BackgroundPosition.toString(bp)
   | #hv(h, v) =>
@@ -291,11 +291,11 @@ let string_of_backgroundposition = x =>
   | #...Cascading.t as c => Cascading.toString(c)
   }
 
-let backgroundPosition = x => D("backgroundPosition", string_of_backgroundposition(x))
+let backgroundPosition = x => D("backgroundPosition", string_of_background_position(x))
 
 let backgroundPositions = bp => D(
   "backgroundPosition",
-  bp->Belt.Array.map(string_of_backgroundposition)->join(", "),
+  bp->Belt.Array.map(string_of_background_position)->join(", "),
 )
 
 let backgroundPosition4 = (~x, ~offsetX, ~y, ~offsetY) => D(
@@ -318,7 +318,7 @@ let backgroundRepeat = x => D(
   },
 )
 
-let string_of_maskposition = x =>
+let string_of_mask_position = x =>
   switch x {
   | #...MaskPosition.t as mp => MaskPosition.toString(mp)
   | #hv(h, v) =>
@@ -336,9 +336,9 @@ let string_of_maskposition = x =>
   | #...Cascading.t as c => Cascading.toString(c)
   }
 
-let maskPosition = x => D("maskPosition", string_of_maskposition(x))
+let maskPosition = x => D("maskPosition", string_of_mask_position(x))
 
-let maskPositions = mp => D("maskPosition", mp->Belt.Array.map(string_of_maskposition)->join(", "))
+let maskPositions = mp => D("maskPosition", mp->Belt.Array.map(string_of_mask_position)->join(", "))
 
 let borderBottomColor = x => D("borderBottomColor", string_of_color(x))
 
@@ -773,7 +773,7 @@ let objectFit = x => D(
   },
 )
 
-let objectPosition = x => D("objectPosition", string_of_backgroundposition(x))
+let objectPosition = x => D("objectPosition", string_of_background_position(x))
 
 let opacity = x => D("opacity", Js.Float.toString(x))
 
@@ -1721,7 +1721,7 @@ let boxShadow = x => D(
 
 let boxShadows = x => D("boxShadow", x->Belt.Array.map(Shadow.toString)->join(", "))
 
-let string_of_borderstyle = x =>
+let string_of_border_style = x =>
   switch x {
   | #...BorderStyle.t as b => BorderStyle.toString(b)
   | #...Var.t as va => Var.toString(va)
@@ -1730,35 +1730,35 @@ let string_of_borderstyle = x =>
 
 let border = (px, style, color) => D(
   "border",
-  Length.toString(px) ++ " " ++ string_of_borderstyle(style) ++ " " ++ string_of_color(color),
+  Length.toString(px) ++ " " ++ string_of_border_style(style) ++ " " ++ string_of_color(color),
 )
-let borderStyle = x => D("borderStyle", string_of_borderstyle(x))
+let borderStyle = x => D("borderStyle", string_of_border_style(x))
 
 let borderLeft = (px, style, color) => D(
   "borderLeft",
-  Length.toString(px) ++ " " ++ string_of_borderstyle(style) ++ " " ++ string_of_color(color),
+  Length.toString(px) ++ " " ++ string_of_border_style(style) ++ " " ++ string_of_color(color),
 )
-let borderLeftStyle = x => D("borderLeftStyle", string_of_borderstyle(x))
+let borderLeftStyle = x => D("borderLeftStyle", string_of_border_style(x))
 
 let borderRight = (px, style, color) => D(
   "borderRight",
-  Length.toString(px) ++ " " ++ string_of_borderstyle(style) ++ " " ++ string_of_color(color),
+  Length.toString(px) ++ " " ++ string_of_border_style(style) ++ " " ++ string_of_color(color),
 )
 
-let borderRightStyle = x => D("borderRightStyle", string_of_borderstyle(x))
+let borderRightStyle = x => D("borderRightStyle", string_of_border_style(x))
 let borderTop = (px, style, color) => D(
   "borderTop",
-  Length.toString(px) ++ " " ++ string_of_borderstyle(style) ++ " " ++ string_of_color(color),
+  Length.toString(px) ++ " " ++ string_of_border_style(style) ++ " " ++ string_of_color(color),
 )
 
-let borderTopStyle = x => D("borderTopStyle", string_of_borderstyle(x))
+let borderTopStyle = x => D("borderTopStyle", string_of_border_style(x))
 
 let borderBottom = (px, style, color) => D(
   "borderBottom",
-  Length.toString(px) ++ " " ++ string_of_borderstyle(style) ++ " " ++ string_of_color(color),
+  Length.toString(px) ++ " " ++ string_of_border_style(style) ++ " " ++ string_of_color(color),
 )
 
-let borderBottomStyle = x => D("borderBottomStyle", string_of_borderstyle(x))
+let borderBottomStyle = x => D("borderBottomStyle", string_of_border_style(x))
 
 let background = x => D(
   "background",
