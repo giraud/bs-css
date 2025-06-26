@@ -140,10 +140,10 @@ module Angle: {
  */
   type t = [#deg(float) | #rad(float) | #grad(float) | #turn(float)]
 
-  let deg: float => t
-  let rad: float => t
-  let grad: float => t
-  let turn: float => t
+  let deg: float => [> t]
+  let rad: float => [> t]
+  let grad: float => [> t]
+  let turn: float => [> t]
 
   let toString: t => string
 }
@@ -583,9 +583,14 @@ module Cursor: {
 module Color: {
   type base = [
     | #rgb(int, int, int)
-    | #rgba(int, int, int, [#num(float) | Percentage.t])
-    | #hsl(Angle.t, Percentage.t, Percentage.t)
-    | #hsla(Angle.t, Percentage.t, Percentage.t, [#num(float) | Percentage.t])
+    | #rgba(int, int, int, [#num(float) | Percentage.t | Var.t])
+    | #hsl([Angle.t | Var.t], [Percentage.t | Var.t], [Percentage.t | Var.t])
+    | #hsla(
+      [Angle.t | Var.t],
+      [Percentage.t | Var.t],
+      [Percentage.t | Var.t],
+      [#num(float) | Percentage.t | Var.t],
+    )
     | #hex(string)
     | #transparent
     | #currentColor
@@ -593,9 +598,14 @@ module Color: {
   type t = [base | #lightDark(base, base)]
 
   let rgb: (int, int, int) => [> base]
-  let rgba: (int, int, int, [#num(float) | Percentage.t]) => [> base]
-  let hsl: (Angle.t, Percentage.t, Percentage.t) => [> base]
-  let hsla: (Angle.t, Percentage.t, Percentage.t, [#num(float) | Percentage.t]) => [> base]
+  let rgba: (int, int, int, [#num(float) | Percentage.t | Var.t]) => [> base]
+  let hsl: ([Angle.t | Var.t], [Percentage.t | Var.t], [Percentage.t | Var.t]) => [> base]
+  let hsla: (
+    [Angle.t | Var.t],
+    [Percentage.t | Var.t],
+    [Percentage.t | Var.t],
+    [#num(float) | Percentage.t | Var.t],
+  ) => [> base]
   let hex: string => [> base]
   let transparent: [> base]
   let currentColor: [> base]

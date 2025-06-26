@@ -1436,10 +1436,10 @@ let vmin: float => [> #vmin(float)]
 let vmax: float => [> #vmax(float)]
 let zero: [> #zero]
 
-let deg: float => Types.Angle.t
-let rad: float => Types.Angle.t
-let grad: float => Types.Angle.t
-let turn: float => Types.Angle.t
+let deg: float => [> Types.Angle.t]
+let rad: float => [> Types.Angle.t]
+let grad: float => [> Types.Angle.t]
+let turn: float => [> Types.Angle.t]
 
 let ltr: [> Types.Direction.t]
 let rtl: [> Types.Direction.t]
@@ -1466,13 +1466,17 @@ let visible: [> #visible]
 let scroll: [> #scroll]
 
 let rgb: (int, int, int) => [> Types.Color.base]
-let rgba: (int, int, int, [#num(float) | #percent(float)]) => [> Types.Color.base]
-let hsl: (Types.Angle.t, Types.Percentage.t, Types.Percentage.t) => [> Types.Color.base]
+let rgba: (int, int, int, [#num(float) | Types.Percentage.t | Types.Var.t]) => [> Types.Color.base]
+let hsl: (
+  [Types.Angle.t | Types.Var.t],
+  [Types.Percentage.t | Types.Var.t],
+  [Types.Percentage.t | Types.Var.t],
+) => [> Types.Color.base]
 let hsla: (
-  Types.Angle.t,
-  Types.Percentage.t,
-  Types.Percentage.t,
-  [#num(float) | #percent(float)],
+  [Types.Angle.t | Types.Var.t],
+  [Types.Percentage.t | Types.Var.t],
+  [Types.Percentage.t | Types.Var.t],
+  [#num(float) | Types.Percentage.t | Types.Var.t],
 ) => [> Types.Color.base]
 let hex: string => [> Types.Color.base]
 let transparent: [> Types.Color.base]

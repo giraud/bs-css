@@ -861,9 +861,14 @@ module Cursor = {
 module Color = {
   type base = [
     | #rgb(int, int, int)
-    | #rgba(int, int, int, [#num(float) | Percentage.t])
-    | #hsl(Angle.t, Percentage.t, Percentage.t)
-    | #hsla(Angle.t, Percentage.t, Percentage.t, [#num(float) | Percentage.t])
+    | #rgba(int, int, int, [#num(float) | Percentage.t | Var.t])
+    | #hsl([Angle.t | Var.t], [Percentage.t | Var.t], [Percentage.t | Var.t])
+    | #hsla(
+      [Angle.t | Var.t],
+      [Percentage.t | Var.t],
+      [Percentage.t | Var.t],
+      [#num(float) | Percentage.t | Var.t],
+    )
     | #hex(string)
     | #transparent
     | #currentColor
@@ -878,10 +883,23 @@ module Color = {
   let transparent = #transparent
   let currentColor = #currentColor
 
-  let string_of_alpha = x =>
-    switch x {
+  let string_of_hue = hue =>
+    switch hue {
+    | #...Angle.t as an => Angle.toString(an)
+    | #...Var.t as va => Var.toString(va)
+    }
+
+  let string_of_alpha = alpha =>
+    switch alpha {
     | #num(f) => Js.Float.toString(f)
     | #...Percentage.t as pc => Percentage.toString(pc)
+    | #...Var.t as va => Var.toString(va)
+    }
+
+  let string_of_percentage = percent =>
+    switch percent {
+    | #...Percentage.t as pc => Percentage.toString(pc)
+    | #...Var.t as va => Var.toString(va)
     }
 
   let toStringBase = x =>
@@ -904,18 +922,18 @@ module Color = {
       string_of_alpha(a) ++ ")"
     | #hsl(h, s, l) =>
       "hsl(" ++
-      Angle.toString(h) ++
+      string_of_hue(h) ++
       ", " ++
-      Percentage.toString(s) ++
+      string_of_percentage(s) ++
       ", " ++
-      Percentage.toString(l) ++ ")"
+      string_of_percentage(l) ++ ")"
     | #hsla(h, s, l, a) =>
       "hsla(" ++
-      Angle.toString(h) ++
+      string_of_hue(h) ++
       ", " ++
-      Percentage.toString(s) ++
+      string_of_percentage(s) ++
       ", " ++
-      Percentage.toString(l) ++
+      string_of_percentage(l) ++
       ", " ++
       string_of_alpha(a) ++ ")"
     | #hex(s) => "#" ++ s
