@@ -22,7 +22,7 @@
     "url": "git+https://github.com/reasonml-labs/bs-css.git"
   },
   "devDependencies": {
-    "jest": "^27.0.0",
+    "jest": "^30.0.0",
     "rescript": "^9.0.0"
   },
   "jest": {
