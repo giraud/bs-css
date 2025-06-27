@@ -148,13 +148,13 @@ let backgroundClip: [< Types.BackgroundClip.t | Types.Var.t | Types.Cascading.t]
 /**
  The background-image CSS property sets one or more background images on an element.
  */
-let backgroundImage: [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t<'gradient>] => rule
+let backgroundImage: [< Types.BackgroundImage.t | Types.Url.t | Types.Gradient.t] => rule
 
 /**
  The mask-image CSS property sets the image that is used as mask layer for an element.
  By default this means the alpha channel of the mask image will be multiplied with the alpha channel of the element.
  This can be controlled with the mask-mode property. */
-let maskImage: [< Types.MaskImage.t | Types.Url.t | Types.Gradient.t<'gradient>] => rule
+let maskImage: [< Types.MaskImage.t | Types.Url.t | Types.Gradient.t] => rule
 
 /**
  The background-origin CSS property sets the background's origin: from the border start,
@@ -369,7 +369,7 @@ let contentRule: [<
   | Types.Content.t
   | Types.Counter.t
   | Types.Counters.t
-  | Types.Gradient.t<'gradient>
+  | Types.Gradient.t
   | Types.Url.t
   | Types.Var.t
   | Types.Cascading.t
@@ -379,7 +379,7 @@ let contentRules: list<
     | Types.Content.t
     | Types.Counter.t
     | Types.Counters.t
-    | Types.Gradient.t<'gradient>
+    | Types.Gradient.t
     | Types.Url.t
   ],
 > => rule
@@ -1667,26 +1667,23 @@ let skewY: Types.Angle.t => [> Types.Transform.t]
 
 let linearGradient: (
   Types.Angle.t,
-  array<(Types.PercentageLengthCalc.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
-) => [> Types.Gradient.t<'colorOrVar>]
+  array<(Types.PercentageLengthCalc.t, [Types.Color.t | Types.Var.t])>,
+) => [> Types.Gradient.t]
 let repeatingLinearGradient: (
   Types.Angle.t,
-  array<(Types.PercentageLengthCalc.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
-) => [> Types.Gradient.t<'colorOrVar>]
-let radialGradient: array<(
-  Types.PercentageLengthCalc.t,
-  [< Types.Color.t | Types.Var.t] as 'colorOrVar,
-)> => [>
-  | Types.Gradient.t<'colorOrVar>
+  array<(Types.PercentageLengthCalc.t, [Types.Color.t | Types.Var.t])>,
+) => [> Types.Gradient.t]
+let radialGradient: array<(Types.PercentageLengthCalc.t, [Types.Color.t | Types.Var.t])> => [>
+  | Types.Gradient.t
 ]
 let repeatingRadialGradient: array<(
   Types.PercentageLengthCalc.t,
-  [< Types.Color.t | Types.Var.t] as 'colorOrVar,
-)> => [> Types.Gradient.t<'colorOrVar>]
+  [Types.Color.t | Types.Var.t],
+)> => [> Types.Gradient.t]
 let conicGradient: (
   Types.Angle.t,
-  array<(Types.PercentageLengthCalc.t, [< Types.Color.t | Types.Var.t] as 'colorOrVar)>,
-) => [> Types.Gradient.t<'colorOrVar>]
+  array<(Types.PercentageLengthCalc.t, [Types.Color.t | Types.Var.t])>,
+) => [> Types.Gradient.t]
 
 let areas: list<string> => [> Types.GridTemplateAreas.t]
 let ident: string => [> Types.GridArea.t]
@@ -1757,8 +1754,8 @@ let textDecoration: [
   | Types.Cascading.t
 ] => rule
 
-let background: [< Types.Color.t | Types.Url.t | Types.Gradient.t<'gradient> | #none] => rule
-let backgrounds: list<[< Types.Color.t | Types.Url.t | Types.Gradient.t<'gradient> | #none]> => rule
+let background: [< Types.Color.t | Types.Url.t | Types.Gradient.t | #none] => rule
+let backgrounds: list<[< Types.Color.t | Types.Url.t | Types.Gradient.t | #none]> => rule
 
 type minmax = [
   | Types.PercentageLengthCalc.t

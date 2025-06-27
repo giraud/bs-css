@@ -1742,15 +1742,12 @@ module OverflowWrap = {
 }
 
 module Gradient = {
-  type t<'colorOrVar> = [
-    | #linearGradient(Angle.t, array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #repeatingLinearGradient(
-      Angle.t,
-      array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>,
-    )
-    | #radialGradient(array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #repeatingRadialGradient(array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #conicGradient(Angle.t, array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
+  type t = [
+    | #linearGradient(Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #repeatingLinearGradient(Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #radialGradient(array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #repeatingRadialGradient(array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #conicGradient(Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
   ]
 
   let linearGradient = (angle, stops) => #linearGradient((angle, stops))
@@ -1764,6 +1761,7 @@ module Gradient = {
     | #...Color.t as co => Color.toString(co)
     | #...Var.t as va => Var.toString(va)
     }
+
   let string_of_stops = stops =>
     stops
     ->Belt.Array.map(((l, c)) => string_of_color(c) ++ " " ++ PercentageLengthCalc.toString(l))

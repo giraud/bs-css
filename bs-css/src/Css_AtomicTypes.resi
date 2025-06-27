@@ -1211,46 +1211,32 @@ module OverflowWrap: {
  https://developer.mozilla.org/docs/Web/CSS/gradient
  */
 module Gradient: {
-  type t<'colorOrVar> = [
-    | #linearGradient(Angle.t, array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #repeatingLinearGradient(
-      Angle.t,
-      array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>,
-    )
-    | #radialGradient(array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #repeatingRadialGradient(array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
-    | #conicGradient(Angle.t, array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>)
+  type t = [
+    | #linearGradient(Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #repeatingLinearGradient(Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #radialGradient(array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #repeatingRadialGradient(array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
+    | #conicGradient(Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>)
   ]
 
   /* * Linear gradients transition colors progressively along an imaginary line. */
-  let linearGradient: (
-    Angle.t,
-    array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>,
-  ) => [> t<'colorOrVar>]
+  let linearGradient: (Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>) => [> t]
   /* * Radial gradients transition colors progressively from a center point (origin). */
-  let radialGradient: array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)> => [>
-    | t<'colorOrVar>
-  ]
+  let radialGradient: array<(PercentageLengthCalc.t, [Color.t | Var.t])> => [> t]
 
   /* * Repeating gradients duplicate a gradient as much as necessary to fill a given area (linearGradient function). */
   let repeatingLinearGradient: (
     Angle.t,
-    array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>,
-  ) => [> t<'colorOrVar>]
+    array<(PercentageLengthCalc.t, [Color.t | Var.t])>,
+  ) => [> t]
   /* * Repeating gradients duplicate a gradient as much as necessary to fill a given area (radialGradient function). */
-  let repeatingRadialGradient: array<(
-    PercentageLengthCalc.t,
-    [< Color.t | Var.t] as 'colorOrVar,
-  )> => [>
-    | t<'colorOrVar>
+  let repeatingRadialGradient: array<(PercentageLengthCalc.t, [Color.t | Var.t])> => [>
+    | t
   ]
   /* * Conic gradients transition colors rotated around a center point */
-  let conicGradient: (
-    Angle.t,
-    array<(PercentageLengthCalc.t, [< Color.t | Var.t] as 'colorOrVar)>,
-  ) => [> t<'colorOrVar>]
+  let conicGradient: (Angle.t, array<(PercentageLengthCalc.t, [Color.t | Var.t])>) => [> t]
 
-  let toString: t<[< Color.t | Var.t]> => string
+  let toString: t => string
 }
 
 /**
