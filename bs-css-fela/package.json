@@ -1,6 +1,6 @@
 {
     "name": "bs-css-fela",
-    "version": "5.0.1",
+    "version": "5.1.0",
     "description": "bs-css bindings for Fela",
     "scripts": {
         "re:clean": "rescript clean",
@@ -21,7 +21,7 @@
         "url": "git+https://github.com/reasonml-labs/bs-css.git"
     },
     "dependencies": {
-        "bs-css": "18.0.0",
+        "bs-css": "18.1.0",
         "fela": "^11.0.0",
         "react-fela": "^11.0.0"
     },

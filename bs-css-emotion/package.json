@@ -1,6 +1,6 @@
 {
   "name": "bs-css-emotion",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "description": "bs-css bindings for Emotion",
   "scripts": {
     "re:clean": "rescript clean",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@emotion/cache": "^11.0.0",
     "@emotion/css": "^11.0.0",
-    "bs-css": "18.0.0"
+    "bs-css": "18.1.0"
   },
   "devDependencies": {
     "rescript": "^9.0.0"

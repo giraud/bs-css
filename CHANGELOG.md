@@ -1,5 +1,13 @@
 ## [Unreleased]
-         
+
+## [18.1.0] - 2025-06-27
+
+- Implement colorScheme function
+- Add lightDark function to Color.t
+- Add Var in Color.t
+
+bs-css-dom@6.1.0, bs-css-emotion@7.1.0, bs-css-fela@5.1.0
+
 ## [18.0.0] - 2024-06-27
 
 - BREAKING CHANGE - Fix spelling error with #substract - [#278](https://github.com/giraud/bs-css/issues/278)
@@ -357,7 +365,8 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/giraud/bs-css/compare/18.0.0...HEAD
+[Unreleased]: https://github.com/giraud/bs-css/compare/18.1.0...HEAD
+[18.1.0]: https://github.com/giraud/bs-css/compare/18.0.0...18.1.0
 [18.0.0]: https://github.com/giraud/bs-css/compare/17.0.2...18.0.0
 [17.0.2]: https://github.com/giraud/bs-css/compare/16.2.0...17.0.2
 [16.2.0]: https://github.com/giraud/bs-css/compare/16.1.0...16.2.0
