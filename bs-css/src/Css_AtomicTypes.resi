@@ -580,8 +580,20 @@ module Cursor: {
   let toString: t => string
 }
 
+module ColorScheme: {
+  type value = [
+    | #normal
+    | #light
+    | #dark
+    | #only
+  ]
+  type t = [value | #many(value, value)]
+
+  let toString: t => string
+}
+
 module Color: {
-  type base = [
+  type value = [
     | #rgb(int, int, int)
     | #rgba(int, int, int, [#num(float) | Percentage.t | Var.t])
     | #hsl([Angle.t | Var.t], [Percentage.t | Var.t], [Percentage.t | Var.t])
@@ -595,20 +607,20 @@ module Color: {
     | #transparent
     | #currentColor
   ]
-  type t = [base | #lightDark(base, base)]
+  type t = [value | #lightDark(value, value)]
 
-  let rgb: (int, int, int) => [> base]
-  let rgba: (int, int, int, [#num(float) | Percentage.t | Var.t]) => [> base]
-  let hsl: ([Angle.t | Var.t], [Percentage.t | Var.t], [Percentage.t | Var.t]) => [> base]
+  let rgb: (int, int, int) => [> value]
+  let rgba: (int, int, int, [#num(float) | Percentage.t | Var.t]) => [> value]
+  let hsl: ([Angle.t | Var.t], [Percentage.t | Var.t], [Percentage.t | Var.t]) => [> value]
   let hsla: (
     [Angle.t | Var.t],
     [Percentage.t | Var.t],
     [Percentage.t | Var.t],
     [#num(float) | Percentage.t | Var.t],
-  ) => [> base]
-  let hex: string => [> base]
-  let transparent: [> base]
-  let currentColor: [> base]
+  ) => [> value]
+  let hex: string => [> value]
+  let transparent: [> value]
+  let currentColor: [> value]
 
   let toString: t => string
 }

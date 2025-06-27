@@ -7,7 +7,7 @@
     "re:clean": "rescript clean",
     "re:build": "rescript build",
     "re:watch": "rescript build -w",
-    "serve": "../node_modules/.bin/esbuild ./lib/js/src/App.js --servedir=../www --outdir=../www/js --bundle --loader:.js=jsx --define:process.env.NODE_ENV=\\\"development\\\""
+    "dev": "rspack dev"
   },
   "author": "Hervé Giraud <giraud.contact@yahoo.fr>",
   "license": "ISC",
@@ -21,9 +21,12 @@
   },
   "devDependencies": {
     "@rescript/react": "^0.10.0",
-    "esbuild": "^0.9.0",
+    "@rspack/cli": "^1.4.0",
+    "@rspack/core": "^1.4.0",
+    "@rspack/plugin-react-refresh": "^1.4.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-refresh": "^0.17.0",
     "rescript": "^9.0.0"
   }
 }

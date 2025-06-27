@@ -76,6 +76,18 @@ describe("Var", () => {
 
 describe("Color style", () =>
   test("test values", () => {
+    expect(colorScheme(#normal))->toBe({"colorScheme": "normal"})
+    expect(colorScheme(#light))->toBe({"colorScheme": "light"})
+    expect(colorScheme(#dark))->toBe({"colorScheme": "dark"})
+    expect(colorScheme(#only))->toBe({"colorScheme": "only"})
+    expect(colorScheme(#many(#light, #dark)))->toBe({"colorScheme": "light dark"})
+    expect(colorScheme(#many(#dark, #light)))->toBe({"colorScheme": "dark light"})
+    expect(colorScheme(#many(#only, #light)))->toBe({"colorScheme": "only light"})
+  })
+)
+
+describe("Color style", () =>
+  test("test values", () => {
     expect(color(rgb(1, 2, 3)))->toBe({"color": "rgb(1, 2, 3)"})
     expect(color(rgba(4, 5, 6, #num(0.3))))->toBe({"color": "rgba(4, 5, 6, 0.3)"})
     expect(color(hsl(deg(7.), pct(8.), pct(9.))))->toBe({"color": "hsl(7deg, 8%, 9%)"})
@@ -493,6 +505,7 @@ describe("background shorthand", () =>
       "background": "linear-gradient(5deg, #FF0000 10%)",
     })
     expect(background(none))->toBe({"background": "none"})
+    expect(background(#lightDark(red, green)))->toBe({"background": "light-dark(#FF0000, #008000)"})
   })
 )
 

@@ -359,6 +359,11 @@ let clipPath: [<
   | Types.Cascading.t
 ] => rule
 
+/**
+ The color-scheme CSS property allows an element to indicate which color schemes it can comfortably be rendered in.
+ */
+let colorScheme: [< Types.ColorScheme.t | Types.Cascading.t] => rule
+
 let color: [< Types.Color.t | Types.Var.t] => rule
 
 /**
@@ -1479,22 +1484,22 @@ let hidden: [> #hidden]
 let visible: [> #visible]
 let scroll: [> #scroll]
 
-let rgb: (int, int, int) => [> Types.Color.base]
-let rgba: (int, int, int, [#num(float) | Types.Percentage.t | Types.Var.t]) => [> Types.Color.base]
+let rgb: (int, int, int) => [> Types.Color.value]
+let rgba: (int, int, int, [#num(float) | Types.Percentage.t | Types.Var.t]) => [> Types.Color.value]
 let hsl: (
   [Types.Angle.t | Types.Var.t],
   [Types.Percentage.t | Types.Var.t],
   [Types.Percentage.t | Types.Var.t],
-) => [> Types.Color.base]
+) => [> Types.Color.value]
 let hsla: (
   [Types.Angle.t | Types.Var.t],
   [Types.Percentage.t | Types.Var.t],
   [Types.Percentage.t | Types.Var.t],
   [#num(float) | #percent(float) | Types.Var.t],
-) => [> Types.Color.base]
-let hex: string => [> Types.Color.base]
-let transparent: [> Types.Color.base]
-let currentColor: [> Types.Color.base]
+) => [> Types.Color.value]
+let hex: string => [> Types.Color.value]
+let transparent: [> Types.Color.value]
+let currentColor: [> Types.Color.value]
 
 let local: [> #local]
 

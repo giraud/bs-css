@@ -418,6 +418,14 @@ let clipPath = x => D(
   },
 )
 
+let colorScheme = x => D(
+  "colorScheme",
+  switch x {
+  | #...ColorScheme.t as s => ColorScheme.toString(s)
+  | #...Cascading.t as c => Cascading.toString(c)
+  },
+)
+
 let color = x => D("color", string_of_color(x))
 
 let columnCount = x => D(

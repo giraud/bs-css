@@ -57,6 +57,32 @@ let make = () =>
       <RedBox rules=[background(transparent)] />
       <RedBox rules=[background(currentColor), color(blue)] />
     </Section>
+    <Section name="Color Scheme">
+      <div style={style(. [display(#flex), gap(#px(20))])}>
+        <div style={style(. [colorScheme(#light), backgroundColor(lightyellow)])}>
+          <div> {"color-scheme: light"->React.string} </div>
+          <div
+            style={style(. [
+              backgroundColor(#lightDark(#hex("000"), #hex("FFF"))),
+              border(#px(1), #solid, black),
+              width(#px(50)),
+              height(#px(50)),
+            ])}
+          />
+        </div>
+        <div style={style(. [colorScheme(#dark), backgroundColor(darkblue), color(white)])}>
+          <div> {"color-scheme: dark"->React.string} </div>
+          <div
+            style={style(. [
+              backgroundColor(#lightDark(#hex("000"), #hex("FFF"))),
+              border(#px(1), #solid, black),
+              width(#px(50)),
+              height(#px(50)),
+            ])}
+          />
+        </div>
+      </div>
+    </Section>
     <Section name="Named colors">
       {React.array(
         [

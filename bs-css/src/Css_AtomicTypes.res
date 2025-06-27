@@ -858,8 +858,32 @@ module Cursor = {
     }
 }
 
+module ColorScheme = {
+  type value = [
+    | #normal
+    | #light
+    | #dark
+    | #only
+  ]
+  type t = [value | #many(value, value)]
+
+  let toStringValue = x =>
+    switch x {
+    | #normal => "normal"
+    | #light => "light"
+    | #dark => "dark"
+    | #only => "only"
+    }
+
+  let toString = x =>
+    switch x {
+    | #...value as v => toStringValue(v)
+    | #many(v, v') => toStringValue(v) ++ " " ++ toStringValue(v')
+    }
+}
+
 module Color = {
-  type base = [
+  type value = [
     | #rgb(int, int, int)
     | #rgba(int, int, int, [#num(float) | Percentage.t | Var.t])
     | #hsl([Angle.t | Var.t], [Percentage.t | Var.t], [Percentage.t | Var.t])
@@ -873,7 +897,7 @@ module Color = {
     | #transparent
     | #currentColor
   ]
-  type t = [base | #lightDark(base, base)]
+  type t = [value | #lightDark(value, value)]
 
   let rgb = (r, g, b) => #rgb((r, g, b))
   let rgba = (r, g, b, a) => #rgba((r, g, b, a))
@@ -902,7 +926,7 @@ module Color = {
     | #...Var.t as va => Var.toString(va)
     }
 
-  let toStringBase = x =>
+  let toStringValue = x =>
     switch x {
     | #rgb(r, g, b) =>
       "rgb(" ++
@@ -943,8 +967,8 @@ module Color = {
 
   let toString = x =>
     switch x {
-    | #...base as ba => toStringBase(ba)
-    | #lightDark(c, c') => "light-dark(" ++ toStringBase(c) ++ ", " ++ toStringBase(c') ++ ")"
+    | #...value as ba => toStringValue(ba)
+    | #lightDark(c, c') => "light-dark(" ++ toStringValue(c) ++ ", " ++ toStringValue(c') ++ ")"
     }
 }
 
