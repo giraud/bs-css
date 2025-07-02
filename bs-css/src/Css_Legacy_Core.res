@@ -1586,12 +1586,12 @@ let gridLengthToJs = x =>
 
 let gridTemplateColumns = dimensions => D(
   "gridTemplateColumns",
-  dimensions |> List.map(gridLengthToJs) |> String.concat(" "),
+  String.concat(" ", List.map(gridLengthToJs, dimensions)),
 )
 
 let gridTemplateRows = dimensions => D(
   "gridTemplateRows",
-  dimensions |> List.map(gridLengthToJs) |> String.concat(" "),
+  String.concat(" ", List.map(gridLengthToJs, dimensions)),
 )
 
 let gridAutoColumns = dimensions => D("gridAutoColumns", trackLengthToJs(dimensions))
@@ -1811,15 +1811,12 @@ let fontFace = (
   (),
 ) => {
   let fontStyle = Js.Option.map((. value) => FontStyle.toString(value), fontStyle)
-  let src =
-    src
-    |> List.map(x =>
+  let src = String.concat(", ", List.map(x =>
       switch x {
       | #localUrl(value) => `local("${value}")`
       | #url(value) => `url("${value}")`
       }
-    )
-    |> String.concat(", ")
+    , src))
 
   let fontStyle = Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ (s ++ ";"))
   let fontWeight = Belt.Option.mapWithDefault(fontWeight, "", w =>

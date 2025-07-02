@@ -123,9 +123,6 @@ describe("Color style", () =>
 
 describe("Label", () => {
   test("test value", () => expect(label("a"))->toBe({"label": "a"}))
-  //  test("test classname", () =>
-  //    expect(style([label("theName")])) |> toContainString("theName")
-  //  );
 })
 
 describe("Filter", () =>
