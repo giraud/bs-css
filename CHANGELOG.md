@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [18.1.1] - 2025-07-16
+
+- Fix compilation errors for Rescript v12
+
+bs-css-dom@6.1.1, bs-css-emotion@7.1.1, bs-css-fela@5.1.1
+
 ## [18.1.0] - 2025-06-27
 
 - Implement colorScheme function
@@ -365,7 +371,8 @@ than before, you can use `List.concat` instead or `@` operator.
 
 Big thanks to [@baldurh](https://github.com/baldurh) and [@wegry](https://github.com/wegry) for their work on emotion.
 
-[Unreleased]: https://github.com/giraud/bs-css/compare/18.1.0...HEAD
+[Unreleased]: https://github.com/giraud/bs-css/compare/18.1.1...HEAD
+[18.1.1]: https://github.com/giraud/bs-css/compare/18.1.0...18.1.1
 [18.1.0]: https://github.com/giraud/bs-css/compare/18.0.0...18.1.0
 [18.0.0]: https://github.com/giraud/bs-css/compare/17.0.2...18.0.0
 [17.0.2]: https://github.com/giraud/bs-css/compare/16.2.0...17.0.2
