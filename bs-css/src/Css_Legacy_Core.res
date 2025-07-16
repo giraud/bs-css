@@ -71,9 +71,9 @@ module Make = (CssImpl: Css_Core.CssImplementationIntf): (
   let merge4 = (s, s2, s3, s4) => merge(list{s, s2, s3, s4})
 
   let keyframes = frames =>
-    CssImpl.makeKeyframes(. List.fold_left(addStop, Js.Dict.empty(), frames))
+    CssImpl.makeKeyframes(. frames->Belt.List.reduce(Js.Dict.empty(), addStop))
   let renderKeyframes = (renderer, frames) =>
-    CssImpl.renderKeyframes(. renderer, List.fold_left(addStop, Js.Dict.empty(), frames))
+    CssImpl.renderKeyframes(. renderer, frames->Belt.List.reduce(Js.Dict.empty(), addStop))
 }
 
 module Calc = {
@@ -1586,12 +1586,12 @@ let gridLengthToJs = x =>
 
 let gridTemplateColumns = dimensions => D(
   "gridTemplateColumns",
-  String.concat(" ", List.map(gridLengthToJs, dimensions)),
+  dimensions->Belt.List.map(gridLengthToJs)->Belt.List.toArray->Js.Array2.joinWith(" "),
 )
 
 let gridTemplateRows = dimensions => D(
   "gridTemplateRows",
-  String.concat(" ", List.map(gridLengthToJs, dimensions)),
+  dimensions->Belt.List.map(gridLengthToJs)->Belt.List.toArray->Js.Array2.joinWith(" "),
 )
 
 let gridAutoColumns = dimensions => D("gridAutoColumns", trackLengthToJs(dimensions))
@@ -1811,12 +1811,16 @@ let fontFace = (
   (),
 ) => {
   let fontStyle = Js.Option.map((. value) => FontStyle.toString(value), fontStyle)
-  let src = String.concat(", ", List.map(x =>
+  let src =
+    src
+    ->Belt.List.map(x =>
       switch x {
       | #localUrl(value) => `local("${value}")`
       | #url(value) => `url("${value}")`
       }
-    , src))
+    )
+    ->Belt.List.toArray
+    ->Js.Array2.joinWith(" ")
 
   let fontStyle = Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ (s ++ ";"))
   let fontWeight = Belt.Option.mapWithDefault(fontWeight, "", w =>
