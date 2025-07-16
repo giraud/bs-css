@@ -1820,7 +1820,7 @@ let fontFace = (
       }
     )
     ->Belt.List.toArray
-    ->Js.Array2.joinWith(" ")
+    ->Js.Array2.joinWith(", ")
 
   let fontStyle = Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ (s ++ ";"))
   let fontWeight = Belt.Option.mapWithDefault(fontWeight, "", w =>
